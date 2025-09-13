@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://media.licdn.com/dms/image/v2/D4E03AQEyDMhbqINgUg/profile-displayphoto-shrink_800_800/B4EZcERut2HYAc-/0/1748123448273?e=1760572800&v=beta&t=vC9rExnMdIMtH21mvEHol6msuIl8vdB_AgQFNpp6lSY">
+  <title>Santiago Sterling — Portafolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript"> emailjs.init('lEmL2-YcR05_6Sx6V')</script>
+  <style>
+    :root{
+      --glass-bg: rgba(255,255,255,0.06);
+      --glass-border: rgba(255,255,255,0.12);
+      --muted: #94a3b8;
+    }
+    html{
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      font-family: 'poppins', sans-serif;
+    }
+
+    .liquid-card{
+      background: linear-gradient(135deg,var(--glass-bg), rgba(255,255,255,0.02));
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+      border-radius: 14px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.45);
+    }
+
+        @keyframes spin-wait {
+          0%   { transform: rotate(0deg); }
+          40%  { transform: rotate(360deg); } /* Gira una vuelta */
+          100% { transform: rotate(360deg); } /* Se queda quieto */
+        }
+
+        .animate-spin-delay {
+          animation: spin-wait 5s linear infinite; /* Duración 5s (2s giro + 3s pausa) */
+        }
+
+
+    .accent-glow{ position:relative; overflow:hidden; }
+    .accent-glow:after{
+      content:"";
+      position:absolute;
+      inset:-50% ;
+      background-image: url("https://github.com/Santiago131440/BackgroundSantiagoSterling/blob/main/ChatGPT%20Image%20Sep%206,%202025,%2003_33_00%20PM.png?raw=true");
+      background-size: cover;
+      background-position: center; 
+      background-attachment: fixed;
+      transform: rotate(100deg);
+      animation: glide 20s linear infinite;
+      pointer-events:none;
+      z-index:0;
+      mix-blend-mode:overlay;
+    }
+    
+    @keyframes glide{0%{transform:translateX(-100%) rotate(15deg)}100%{transform:translateX(100%) rotate(15deg)}}
+
+
+    .floaty{ animation: floaty 6s ease-in-out infinite; }
+    @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+    /* Toggle switch styling */
+    .theme-btn{ transition: all .3s ease; }
+    .theme-btn.light{ background: linear-gradient(90deg,#ffffff,#f7f7fb); color:#0f172a; box-shadow: 0 6px 20px rgba(15,23,42,0.06); }
+    .theme-btn.dark{ background: linear-gradient(90deg,#0f172a,#071028); color:#e6eef8; box-shadow: 0 6px 20px rgba(2,6,23,0.6); }
+
+    /* File tile */
+    .file-tile{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; }
+
+    /* Small screens: tweak */
+    @media (max-width:640px){ .hide-sm{ display:none!important } }
+
+    /* Dark mode overrides */
+    .dark :root{ --glass-bg: rgba(7,9,23,0.36); --glass-border: rgba(255,255,255,0.06); }
+
+    /* Recruiter friendly typography emphasis */
+    .headline{ font-weight:700; letter-spacing: -0.6px; }
+
+    /* Animación de lluvia */
+      .icon-rain {
+        position: absolute;
+        top: -100px;
+        width: 80px;
+        height: 80px;
+        animation-name: fall;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-100px) rotate(0deg);
+        }
+        100% {
+          transform: translateY(120vh) rotate(360deg);
+        }
+      }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 text-slate-100 transition-colors duration-500" id="body">
+  <div class="max-w-7xl mx-auto p-6">
+    <!-- NAVBAR -->
+    <nav class="flex items-center justify-between mb-8">
+      <div class="flex items-center gap-4">
+        <div class="w-14 h-14 rounded-2xl liquid-card p-1 flex items-center justify-center accent-glow overflow-hidden">
+          <img src="https://media.licdn.com/dms/image/v2/D4E03AQEyDMhbqINgUg/profile-displayphoto-shrink_800_800/B4EZcERut2HYAc-/0/1748123448273?e=1760572800&v=beta&t=vC9rExnMdIMtH21mvEHol6msuIl8vdB_AgQFNpp6lSY" alt="Foto de perfil de Santiago Sterling" class="w-full h-full object-cover rounded-2xl">
+        </div>
+
+        <div>
+          <div class="headline text-4xl text-orange-500">Santiago Sterling</div>
+          <div class="text-s text-slate-200">Analista de Datos · Estadística aplicada</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+              <ul class="hidden md:flex gap-4 text-sm">
+                <li>
+                  <a href="#about" 
+                    class="px-4 py-2 rounded-full bg-white/10 text-orange-500 
+                            backdrop-blur-md border border-white/20 
+                            shadow-lg transition-all duration-300
+                            hover:scale-105 hover:bg-white/20 active:scale-95">
+                    Sobre mí
+                  </a>
+                </li>
+                <li>
+                  <a href="#cursos" 
+                    class="px-4 py-2 rounded-full bg-white/10 text-orange-500 
+                            backdrop-blur-md border border-white/20 
+                            shadow-lg transition-all duration-300
+                            hover:scale-105 hover:bg-white/20 active:scale-95">
+                    Cursos
+                  </a>
+                </li>
+                <li>
+                  <a href="#skills" 
+                    class="px-4 py-2 rounded-full bg-white/10 text-orange-500 
+                            backdrop-blur-md border border-white/20 
+                            shadow-lg transition-all duration-300
+                            hover:scale-105 hover:bg-white/20 active:scale-95">
+                    Habilidades
+                  </a>
+                </li>
+                <li>
+                  <a href="#projects" 
+                    class="px-4 py-2 rounded-full bg-white/10 text-orange-500 
+                            backdrop-blur-md border border-white/20 
+                            shadow-lg transition-all duration-300
+                            hover:scale-105 hover:bg-white/20 active:scale-95">
+                    Proyectos
+                  </a>
+                </li>
+                <li>
+                  <a href="#contact" 
+                    class="px-4 py-2 rounded-full bg-white/10 text-orange-500 
+                            backdrop-blur-md border border-white/20 
+                            shadow-lg transition-all duration-300
+                            hover:scale-105 hover:bg-white/20 active:scale-95">
+                    Contacto
+                  </a>
+                </li>
+              </ul>
+
+          <a href="https://www.linkedin.com/in/santisterling" target="_blank" rel="noopener noreferrer"
+            class="flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500 text-white font-semibold shadow hover:scale-105 transition">
+            
+            <!-- Logo de LinkedIn -->
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" 
+                alt="LinkedIn" class="w-5 h-5">
+             
+          </a>
+      </div>
+    </nav>
+
+    <!-- HERO / DASHBOARD -->
+    <header class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+      <div class="lg:col-span-2 p-6 liquid-card accent-glow floaty">
+        <div class="flex items-start justify-between">
+          <div>
+            <h2 class="text-3xl headline text-orange-500">Transformo datos en decisiones</h2>
+            <p class="px-4 py-2 text-slate-200 mt-2">¡Hola! Soy <strong>Santiago Sterling</strong>, Tecnólogo en análisis y desarrollo de software.</p>
+            <div class="mt-4 flex gap-3">
+              <a class="px-4 py-2 rounded-full bg-orange-500 text-white-900 font-semibold shadow hover:scale-105 transition" href="#projects">Ver proyectos</a>
+            </div>
+          </div>
+          <div class="hidden md:block text-right">
+            <div class="text-s text-slate-200">Key metrics</div>
+            <div class="mt-3 grid grid-cols-1 gap-3">
+              <div class="p-3 rounded-lg liquid-card w-48">
+                <div class="text-s text-slate-200">Proyectos profesionales</div>
+                <div class="text-2xl font-bold text-orange-500">8</div>
+              </div>
+              <div class="p-3 rounded-lg liquid-card w-48">
+                <div class="text-s text-slate-200">Horas de análisis</div>
+                <div class="text-2xl font-bold text-orange-500">+600</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- mini chart -->
+        <div class="mt-6">
+          <canvas id="miniChart" height="80"></canvas>
+        </div>
+      </div>
+
+      <aside class="p-6 liquid-card flex flex-col gap-4 bg-gradient-to-r from-slate-700 via-slate-550 to-gold-800 rounded-xl shadow-lg">
+        <div class="text-3xl font-semibold text-orange-500">Resumen rápido</div>
+        <div class="text-s text-slate-200">Experiencia en limpieza de datos, estadística aplicada y visualización interactiva, con enfoque en generar análisis accionables y dashboards útiles para la toma de decisiones.</div>
+
+      <div class="mt-4 grid grid-cols-1 gap-1">
+        <div class="p-1 rounded-md file-tile  text-center text-yellow-600 flex items-center justify-center gap-1">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen1.png?raw=true" 
+              alt="Logos" 
+              class="w-60 h-60 animate-spin-delay">
+        </div>
+      </div>
+
+      </aside>
+    </header>
+
+    <!-- CONTENT SECTIONS -->
+    <section id="about" class="mb-8">
+      <div class="p-6 liquid-card">
+        <h3 class="text-3xl font-semibold text-orange-500">Sobre mí</h3>
+        <p class="text-s text-slate-200 mt-2">Tecnólogo en analisis y desarrollo de software, con experiencia práctica en producción de informes que facilitan decisiones. Tengo enfoque en reproducibilidad, documentación clara y resultados cuantificables, desarrollo web, arquitectura de software y computación en la nube. Entusiasta por el aprendizaje continuo y motivado por proyectos desafiantes. Comprometido, proactivo y orientado al trabajo en equipo, con el objetivo de crear soluciones eficientes y escalables alineadas a las necesidades del negocio.</p>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 rounded-md file-tile">
+            <div class="text-s text-orange-500">Experiencia</div>
+            <div class="font-semibold text-lg text-slate-200">2 años en análisis de información</div>
+          </div>
+          <div class="p-4 rounded-md file-tile">
+            <div class="text-s text-orange-500">Educación</div>
+            <div class="font-semibold text-lg text-slate-200 ">Tecnólogo en Análisis y Desarrollo de Software (SENA)</div>
+          </div>
+          <div class="p-4 rounded-md file-tile">
+            <div class="text-s text-orange-500">Objetivo</div>
+            <div class="font-semibold text-lg text-slate-200">Especializarme en IA y análisis avanzado</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CURSOS -->
+    <section id="cursos" class="mb-8">
+      <h3 class="text-3xl font-semibold mb-4 text-orange-500">Cursos destacados</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
+              alt="Logo SENA"
+              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
+          <div class="flex items-start justify-between">
+            <div>
+              <h4 class="text-xl font-semibold  text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
+              <p class="text-s text-slate-200">Uso de Excel y Access para el desarrollo de aplicaciones administrativas empresariales.</p>
+            </div>
+            <div class="text-s text-orange-500">2025</div>
+          </div>
+        </article>
+
+        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
+              alt="Logo SENA"
+              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
+          <div class="flex items-start justify-between">
+            <div>
+              <h4 class="text-xl font-semibold  text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
+              <p class="text-s text-slate-200">Análisis exploratorio de datos en Python.</p>
+            </div>
+            <div class="text-m text-orange-500">2025</div>
+          </div>
+        </article>
+
+        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
+              alt="Logo SENA"
+              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
+          <div class="flex items-start justify-between">
+            <div>
+              <h4 class="text-xl font-semibold  text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
+              <p class="text-s text-slate-200">Variables y estructuras de control en Python.</p>
+            </div>
+            <div class="text-s text-orange-500">2025</div>
+          </div>
+        </article>
+
+        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
+              alt="Logo SENA"
+              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
+          <div class="flex items-start justify-between">
+            <div>
+              <h4 class="text-xl font-semibold  text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
+              <p class="text-s text-slate-200">Construcción de bases de datos con MySQL.</p>
+            </div>
+            <div class="text-s text-orange-500">2025</div>
+          </div>
+        </article>
+
+        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
+              alt="Logo SENA"
+              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
+          <div class="flex items-start justify-between">
+            <div>
+              <h4 class="text-xl font-semibold  text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
+              <p class="text-s text-slate-200">Desarrollo de applets/aplicaciones con uso de base de datos, redes, servlets y multimedia.</p>
+            </div>
+            <div class="text-s text-orange-500">2025</div>
+          </div>
+        </article>
+
+        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
+              alt="Logo SENA"
+              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
+          <div class="flex items-start justify-between relative z-10">
+            <div>
+              <h4 class="text-xl font-semibold text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
+              <p class="text-s text-slate-200">Manejo de pruebas de software.</p>
+            </div>
+            <div class="text-s text-orange-500">2025</div>
+          </div>
+        </article>
+
+        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
+              alt="Logo SENA"
+              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
+          <div class="flex items-start justify-between">
+            <div>
+              <h4 class="text-xl font-semibold  text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
+              <p class="text-s text-slate-200">Aplicación del marco de trabajo scrum para proyectos de desarrollo de software.</p>
+            </div>
+            <div class="text-s text-orange-500">2025</div>
+          </div>
+        </article>
+
+        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
+              alt="Logo SENA"
+              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
+          <div class="flex items-start justify-between relative z-10">
+            <div>
+              <h4 class="text-xl font-semibold text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
+              <p class="text-s text-slate-200">Procesos para software de calidad.</p>
+            </div>
+            <div class="text-s text-orange-500">2024</div>
+          </div>
+        </article>
+
+        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
+              alt="Logo SENA"
+              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
+          <div class="flex items-start justify-between relative z-10">
+            <div>
+              <h4 class="text-xl font-semibold text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
+              <p class="text-s text-slate-200">Modelos de calidad de software.</p>
+            </div>
+            <div class="text-s text-orange-500">2023</div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- HABILIDADES -->
+    <section id="skills" class="mb-2 relative overflow-hidden">
+
+      <!-- CONTENIDO -->
+      <div class="p-6 liquid-card relative z-10">
+        <h3 class="text-3xl font-semibold text-orange-500">Habilidades</h3>
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 rounded-md file-tile">
+            <div class="text-xl text-orange-500">Estadística</div>
+            <ul class="mt-2 text-s text-slate-200 list-disc list-inside">
+              <li>Modelado probabilístico</li>
+              <li>Pruebas de hipótesis</li>
+              <li>Análisis multivariante</li>
+              <li>Series temporales</li>
+              <li>Regresión lineal y logística</li>
+            </ul>
+          </div>
+          <div class="p-4 rounded-md file-tile">
+            <div class="text-xl text-orange-500">Lenguajes</div>
+            <ul class="mt-2 text-s text-slate-200 list-disc list-inside">
+              <li>Python (pandas, scikit-learn)</li>
+              <li>JavaScript (para dashboards interactivos)</li>
+              <li>C#</li>
+              <li>SQL / MySQL / PostgreSQL</li>
+              <li>Dax</li>
+            </ul>
+          </div>
+          <div class="p-4 rounded-md file-tile">
+            <div class="text-xl text-orange-500">Frameworks y Desarrollo</div>
+            <ul class="mt-2 text-s text-slate-200 list-disc list-inside">
+              <li>Django / Flask (para apps de datos)</li>
+              <li>Tailwind / CSS (presentación de dashboards)</li>
+              <li>.NET (si lo manejas en entornos empresariales)</li>
+              <li>APIs y automatización de procesos</li>
+            </ul>
+          </div>
+          <div class="p-4 rounded-md file-tile">
+            <div class="text-xl text-orange-500">Habilidades Complementarias</div>
+            <ul class="mt-2 text-s text-slate-200 list-disc list-inside">
+              <li>Git y GitHub (control de versiones)</li>
+              <li>Cloud (AWS, GCP, Azure básico)</li>
+              <li>Manipulación de datos en Big Data (Spark, Hadoop)</li>
+              <li>Seguridad y ética en el manejo de datos</li>
+              <li>Diseño de reportes ejecutivos</li>
+            </ul>
+          </div>
+          <div class="p-4 rounded-md file-tile">
+            <div class="text-xl text-orange-500">Herramientas de Análisis y Visualización</div>
+            <ul class="mt-2 text-s text-slate-200 list-disc list-inside">
+              <li>Excel Avanzado / Macros</li>
+              <li>Power BI</li>
+              <li>Power Pivot</li>
+              <li>Power Query</li>
+              <li>Tableau</li>
+              <li>Google Data Studio</li>
+              <li>Matplotlib / Seaborn</li>
+            </ul>
+          </div>
+          <div class="p-4 rounded-md file-tile">
+            <div class="text-xl text-orange-500">Soft skills</div>
+            <ul class="mt-2 text-s text-slate-200 list-disc list-inside">
+              <li>Comunicación para stakeholders</li>
+              <li>Trabajo en equipo interdisciplinario</li>
+              <li>Pensamiento crítico</li>
+              <li>Documentación reproducible</li>
+              <li>Metodologías ágiles (Scrum, Kanban)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section id="portfolio" class="mb-12 relative overflow-hidden">
+  <!-- FONDO DE ICONOS -->
+  <div class="rain-icons absolute inset-0 pointer-events-none">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20barras.png?raw=true" class="icon-rain" style="left: 5%; animation-duration: 6s;">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20barras.png?raw=true" class="icon-rain" style="left: 85%; animation-duration: 8s;">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20barras.png?raw=true" class="icon-rain" style="left: 45%; animation-duration: 5s;">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20tortas.png?raw=true" class="icon-rain" style="left: 65%; animation-duration: 7s;">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20tortas.png?raw=true" class="icon-rain" style="left: 25%; animation-duration: 9s;">
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="p-6 relative z-10">
+    <h3 class="text-3xl font-semibold text-orange-500 mb-6">Aportes Clave</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Proyecto 1 -->
+      <div class="p-4 rounded-xl shadow-lg bg-white/10 backdrop-blur-md border border-orange-400/50 hover:scale-105 transition-transform">
+        <img src="https://github.com/Santiago131440/Imagenes-Excel/blob/main/Imagen7.png?raw=true" alt="Proyecto" class="w-16 h-16 mx-auto mb-3">
+        <h4 class="text-lg font-bold text-orange-500 text-center">Recolección y Limpieza de Datos</h4>
+        <p class="text-sm text-slate-300 mt-2 text-center">
+          Capacidad para recopilar información desde diferentes fuentes (Excel, SQL, APIs) y aplicar técnicas de limpieza, normalización y validación de datos, garantizando que la base de análisis sea confiable.
+        </p>
+        <div class="flex justify-center mt-4">
+        </div>
+      </div>
+
+      <!-- Proyecto 2 -->
+      <div class="p-4 rounded-xl shadow-lg bg-white/10 backdrop-blur-md border border-orange-400/50 hover:scale-105 transition-transform">
+        <img src="https://github.com/Santiago131440/Imagenes-Excel/blob/main/Imagen9.png?raw=true" alt="Python" class="w-16 h-16 mx-auto mb-3">
+        <h4 class="text-lg font-bold text-orange-500 text-center">Análisis Exploratorio y Visualización</h4>
+        <p class="text-sm text-slate-300 mt-2 text-center">
+          Habilidad para identificar patrones, tendencias y anomalías mediante análisis exploratorio (EDA) y representarlos en gráficos claros usando herramientas como Power BI, Tableau o librerías de Python
+        </p>
+        <div class="flex justify-center mt-4">
+         </div>
+      </div>
+
+      <!-- Proyecto 3 -->
+      <div class="p-4 rounded-xl shadow-lg bg-white/10 backdrop-blur-md border border-orange-400/50 hover:scale-105 transition-transform">
+        <img src="https://github.com/Santiago131440/Imagenes-Excel/blob/main/Imagen8.png?raw=true" alt="SQL" class="w-16 h-16 mx-auto mb-3">
+        <h4 class="text-lg font-bold text-orange-500 text-center">Documentación y Comunicación de Resultados</h4>
+        <p class="text-sm text-slate-300 mt-2 text-center">
+          Facilidad para documentar procesos de análisis y comunicar hallazgos de forma simple, visual y comprensible para el equipo o los stakeholders, asegurando que los resultados se traduzcan en acciones.
+        </p>
+        <div class="flex justify-center mt-4">
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- PROJECTS -->
+<section id="projects" class="mb-8">
+  <div class="p-6 liquid-card relative z-10">
+  <h3 class="text-3xl font-semibold mb-4 text-orange-500">Proyectos destacados</h3>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+    <!-- Proyecto con carrusel -->
+    <article class="relative p-4 rounded-2xl liquid-card file-tile hover:shadow-2xl hover:scale-[1.02] transition-transform duration-300">
+      <div class="flex items-start justify-between mb-2">
+        <div>
+          <h4 class="text-xl text-orange-500">Control de inventario</h4>
+          <p class="text-s text-slate-200">Desarrollo de un sistema integral en Excel con macros y VBA, diseñado para la gestión eficiente de inventarios. La solución incluye funcionalidades para registrar nuevos productos, realizar ingresos y salidas de insumos, consultar el inventario actualizado en tiempo real tras cada movimiento, y generar reportes detallados de los registros de entradas y salidas, garantizando así la trazabilidad de la información. Adicionalmente, el sistema incorpora una opción para elaborar pedidos semanales y enviarlos directamente al almacén.</p>
+        </div>
+        <div class="text-s text-orange-500">2025</div>
+      </div>
+
+      <!-- Carrusel -->
+      <div class="relative mt-4 group">
+        <div class="carousel flex overflow-x-auto gap-2 snap-x snap-mandatory scrollbar-hide">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen1.png?raw=true" alt="Inventario 1"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen2.png?raw=true" alt="Inventario 2"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen3.png?raw=true" alt="Inventario 3"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen4.png?raw=true" alt="Inventario 4"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen5.png?raw=true" alt="Inventario 5"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen6.png?raw=true" alt="Inventario 6"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen7.png?raw=true" alt="Inventario 7"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen8.png?raw=true" alt="Inventario 8"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen9.png?raw=true" alt="Inventario 9"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen10.png?raw=true" alt="Inventario 10"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen11.png?raw=true" alt="Inventario 11"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen12.png?raw=true" alt="Inventario 12"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen13.png?raw=true" alt="Inventario 13"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen14.png?raw=true" alt="Inventario 14"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen15.png?raw=true" alt="Inventario 15"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen16.png?raw=true" alt="Inventario 16"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen17.png?raw=true" alt="Inventario 17"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen18.png?raw=true" alt="Inventario 18"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen19.png?raw=true" alt="Inventario 19"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen20.png?raw=true" alt="Inventario 20"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+        </div>
+      </div>
+    </article>
+
+    <!-- Otro proyecto -->
+    <article class="relative p-4 rounded-2xl liquid-card file-tile hover:shadow-2xl hover:scale-[1.02] transition-transform duration-300">
+      <div class="flex items-start justify-between mb-2">
+        <div>
+          <h4 class="text-xl font-semibold text-orange-500">Búsqueda de datos</h4>
+          <p class="text-s text-slate-200">Proceso de consulta de información en el sistema: inicialmente, se debe seleccionar el botón correspondiente al área de fabricación del producto. Posteriormente, se ingresa el nombre de la máquina o del tanque y, al confirmar la acción con el botón Aceptar, el sistema despliega automáticamente toda la información relacionada con la búsqueda realizada.</p>
+        </div>
+        <div class="text-s text-orange-500">2025</div>
+      </div>
+
+      <!-- Carrusel -->
+      <div class="relative mt-4 group">
+        <div class="carousel flex overflow-x-auto gap-2 snap-x snap-mandatory scrollbar-hide">
+          <img src="https://github.com/Santiago131440/Imagenes-Excel/blob/main/Captura%20de%20pantalla%202025-09-06%20191801.jpg?raw=true" alt="Busqueda de datos 1"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Excel/blob/main/Captura%20de%20pantalla%202025-09-06%20191906.jpg?raw=true" alt="Busqueda de datos 2"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Excel/blob/main/Captura%20de%20pantalla%202025-09-06%20191928.jpg?raw=true" alt="Busqueda de datos 2"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+        </div>
+      </div>
+    </article>
+
+    <!-- Otro proyecto -->
+    <article class="relative p-4 rounded-2xl liquid-card file-tile hover:shadow-2xl hover:scale-[1.02] transition-transform duration-300">
+      <div class="flex items-start justify-between mb-2">
+        <div>
+          <h4 class="text-xl font-semibold text-orange-500">Comparación entre Ordenes de producción</h4>
+          <p class="text-s text-slate-200">Este sistema está diseñado para comparar y validar información contenida en archivos de Excel de manera eficiente. En su etapa inicial, permite al usuario seleccionar y cargar un archivo sin restricciones respecto a su ubicación o nombre, lo que garantiza flexibilidad y facilidad de uso. Una vez cargado, el sistema procesa los datos y realiza la comparación de la información registrada, identificando coincidencias, diferencias y posibles inconsistencias. Esta funcionalidad facilita la trazabilidad de los datos, reduce el riesgo de errores manuales y optimiza el tiempo dedicado al análisis, convirtiéndose en una herramienta clave para la gestión y control de la información en entornos administrativos e industriales.</p>
+        </div>
+        <div class="text-s text-orange-500">2025 </div>
+      </div>
+
+      <!-- Carrusel -->
+      <div class="relative mt-4 group">
+        <div class="carousel flex overflow-x-auto gap-2 snap-x snap-mandatory scrollbar-hide">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%201.jpg?raw=true" alt="Modelo de datos 1"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%202.jpg?raw=true" alt="Modelo de datos 2"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%203.jpg?raw=true" alt="Modelo de datos 3"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%204.jpg?raw=true" alt="Modelo de datos 4"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%205.jpg?raw=true" alt="Modelo de datos 5"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%206.jpg?raw=true" alt="Modelo de datos 6"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%207.jpg?raw=true" alt="Modelo de datos 7"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+        </div>
+      </div>
+    </article>
+  </div>
+  </div>
+</section>
+
+    <!-- CONTACT -->
+     
+    <section id="contact" class="mb-12">          
+      <div class="p-6 rounded-2xl liquid-card">
+        <h3 class="text-3xl font-semibold text-orange-500">Contacto</h3>
+        <p class="text-s text-slate-200 mt-2">¿Buscas un perfil como el mío para tu equipo? Estoy disponible para nuevas oportunidades. Contáctame y conversemos.</p>
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-1 gap-4">
+<!--
+<form id="form" class="p-4 file-tile rounded-md">
+  <label class="text-sm text-orange-500">Nombre</label>
+  <input name="name" type="text" required 
+    class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-slate-600" />
+
+  <label class="text-sm mt-2 text-orange-500">Email</label>
+  <input name="email" type="email" required 
+    class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-slate-600" />
+
+  <label class="text-sm mt-2 text-orange-500">Mensaje</label>
+  <textarea name="message" rows="4" required 
+    class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-slate-600"></textarea>
+
+  <div class="mt-3">
+    <button type="submit" 
+      class="px-4 py-2 rounded-full bg-orange-500 text-white font-semibold shadow hover:scale-105 transition">
+      Enviar
+    </button>
+  </div>
+</form>
+-->
+
+    <div class="p-4 file-tile rounded-md bg-cover bg-center bg-no-repeat" 
+     style="background-image: url('https://media.istockphoto.com/id/687819690/es/foto/iglesia-de-san-antonio-cali-colombia.jpg?s=612x612&w=0&k=20&c=qdAb7LyIFq8VtQuoqMNVWTT-0TWOrsRmsIQBODJnBWw=');">
+
+  <!-- Fondo con opacidad para mejorar la legibilidad del texto -->
+  <div class="bg-black/80 p-6 rounded-md flex flex-col items-center justify-center text-center">
+    
+    <div class="text-s text-white max-w-lg">
+      Le invito a visitar mi perfil en LinkedIn, donde encontrará más información detallada 
+      sobre mi trayectoria laboral, experiencia y habilidades en el área de análisis de datos 
+      y desarrollo de software.
+    </div>
+
+    <br>
+
+    <a href="https://www.linkedin.com/in/santisterling" target="_blank" rel="noopener noreferrer"
+       class="flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-orange-500 text-white font-semibold shadow hover:scale-105 transition">
+      <!-- Logo de LinkedIn -->
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" 
+           alt="LinkedIn" class="w-5 h-5">
+      LinkedIn
+    </a>
+
+    <div class="mt-6 text-s text-white">
+      <div><strong>Ubicación:</strong> Cali, Colombia</div>
+    </div>
+  </div>
+</div>
+    </div>
+      </div>
+    </section>
+
+    <footer class="text-center text-slate-400 py-6">© <span id="year"></span> Desarrollado por Santiago Sterling — Analista de datos</footer>
+  </div>
+
+  <script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('miniChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Santiago Sterling - 2020', 'Santiago Sterling - 2021', 'Santiago Sterling - 2022', 'Santiago Sterling - 2023', 'Santiago Sterling - 2024', 'Santiago Sterling - 2025'],
+      datasets: [{
+        label: 'Curva de aprendizaje',
+        data: [10, 15, 8, 20, 18, 25],
+        borderColor: 'orange',
+        backgroundColor: 'rgba(255,165,0,0.2)',
+        tension: 0.5,
+        fill: true
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: { x: { display: false }, y: { display: false } }
+    }
+  });
+</script>
+
+<style>
+  .carousel::-webkit-scrollbar { display: none; }
+  .animate-fadeIn { animation: fadeIn 0.3s ease-in-out; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+</style>
+
+<script>
+  function openModal(src) {
+    document.getElementById("modalImage").src = src;
+    document.getElementById("imageModal").classList.remove("hidden");
+  }
+  function closeModal() {
+    document.getElementById("imageModal").classList.add("hidden");
+  }
+</script>
+</body>
+</html>
