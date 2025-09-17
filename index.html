@@ -59,6 +59,14 @@
       z-index:0;
       mix-blend-mode:overlay;
     }
+
+
+  .carousel::-webkit-scrollbar { display: none; }
+  .animate-fadeIn { animation: fadeIn 0.3s ease-in-out; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  } 
     
     @keyframes glide{0%{transform:translateX(-100%) rotate(15deg)}100%{transform:translateX(100%) rotate(15deg)}}
 
@@ -102,6 +110,146 @@
           transform: translateY(120vh) rotate(360deg);
         }
       }
+
+      <!-- Animación lenta para íconos -->
+  .animate-spin-slow {
+    animation: spin 18s linear infinite;
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(50px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(251, 146, 60, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(251, 146, 60, 0.6); }
+        }
+        
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        
+        .animate-float { 
+            animation: float 6s ease-in-out infinite; 
+        }
+        
+        .animate-slide-up { 
+            animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
+        }
+        
+        .animate-glow { 
+            animation: glow 3s ease-in-out infinite; 
+        }
+        
+        .timeline-line {
+            background: linear-gradient(to bottom, 
+                rgba(251, 146, 60, 0.8) 0%, 
+                rgba(251, 146, 60, 0.4) 50%, 
+                rgba(251, 146, 60, 0.8) 100%);
+        }
+        
+        .timeline-dot {
+            background: linear-gradient(135deg, #fb923c, #f97316);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        
+        .timeline-dot::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: rgba(251, 146, 60, 0.3);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .timeline-dot:hover::before {
+            opacity: 1;
+            animation: pulse-dot 1s infinite;
+        }
+        
+        .timeline-dot:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(251, 146, 60, 0.6);
+        }
+        
+        .job-card {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .job-card.visible {
+            animation: slideUp 0.8s ease-out forwards;
+        }
+        
+        .skill-badge {
+            background: rgba(251, 146, 60, 0.1);
+            border: 1px solid rgba(251, 146, 60, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .skill-badge:hover {
+            background: rgba(251, 146, 60, 0.2);
+            border-color: rgba(251, 146, 60, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(251, 146, 60, 0.3);
+        }
+        
+        .floating-icon {
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+        
+        .floating-icon:hover {
+            transform: scale(1.3) rotate(15deg);
+            filter: drop-shadow(0 0 15px rgba(251, 146, 60, 0.7));
+        }
+        
+        .card-expanded {
+            transform: scale(1.02);
+        }
+        
+        .card-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-expanded .card-content {
+            max-height: 600px;
+            opacity: 1;
+            padding-top: 1.5rem;
+        }
+        
+        .expand-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .card-expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 text-slate-100 transition-colors duration-500" id="body">
@@ -496,10 +644,203 @@
   </div>
 </section>
 
+<section id="experiencia" class="mb-12 relative overflow-hidden">
+    <!-- Container Principal -->
+    <div class="liquid-card rounded-3xl p-8 md:p-12 relative">
+        <h3 class="text-3xl font-semibold text-orange-500">Experiencia laboral</h3>
+        <br>
+        <p class="text-xl text-slate-400">
+            Mi trayectoria profesional en análisis de datos y optimización de procesos
+        </p>    
+        <br>            
+
+        <!-- Iconos flotantes de fondo -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-8 left-8 text-6xl text-orange-500/20 animate-float floating-icon pointer-events-auto">💼</div>
+            <div class="absolute bottom-8 right-8 text-6xl text-orange-500/20 floating-icon pointer-events-auto" style="animation: float 4s ease-in-out infinite reverse;">📊</div>
+            <div class="absolute top-1/2 right-12 text-5xl text-orange-500/15 animate-float floating-icon pointer-events-auto">⚙️</div>
+        </div>
+
+        <!-- Timeline Container -->
+        <div class="relative">
+            <!-- Línea del Timeline -->
+            <div class="absolute left-8 top-0 bottom-0 w-1 timeline-line rounded-full"></div>
+
+            <!-- Trabajo 1: Analista de Producción -->
+            <article class="job-card mb-12 relative" data-delay="200">
+                <!-- Punto del Timeline -->
+                <div class="absolute left-4 w-8 h-8 rounded-full timeline-dot flex items-center justify-center cursor-pointer z-10"
+                     onclick="toggleJobCard(this)">
+                    <span class="text-white font-bold text-sm">1</span>
+                </div>
+
+                <!-- Tarjeta del Trabajo -->
+                <div class="ml-20 liquid-card rounded-2xl p-6 hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
+                     style="background: url('https://github.com/Santiago131440/Imagenes-Excel/blob/main/ChatGPT%20Image%20Sep%2016,%202025,%2008_25_52%20PM.png?raw=true') center/cover no-repeat;">
+                    
+                    <!-- Logo de la empresa -->
+                    <img src="https://cosmoagro.com/wp-content/uploads/2025/01/LOGO-COSMOAGROSA1.svg" 
+                         alt="Logo Cosmoagro" 
+                         class="absolute top-4 right-4 w-16 h-16 object-contain bg-white/80 p-2 rounded-lg shadow-md">
+
+                    <!-- Header de la tarjeta -->
+                    <div class="flex items-center justify-between cursor-pointer relative z-10" onclick="toggleJobCard(this)">
+                        <div>
+                            <h3 class="text-2xl font-bold text-orange-500 mb-1">
+                                Analista de Producción
+                            </h3>
+                            <p class="text-slate-200 mb-2">Cosmoagro S.A. • Palmira, Valle del Cauca</p>
+                            <div class="flex items-center gap-2">
+                                <span class="px-3 py-1 bg-orange-500/20 text-orange-200 rounded-full text-sm font-medium">
+                                    Diciembre 2024 - Actualidad
+                                </span>
+                                <div class="flex items-center gap-1">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                    <span class="text-green-300 text-sm">Activo</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="expand-icon text-orange-500 text-2xl">
+                            ▼
+                        </div>
+                    </div>
+
+                    <!-- Contenido expandible -->
+                    <div class="card-content relative z-10">
+                        <div class="border-t border-slate-700 pt-6">
+                            <!-- Descripción -->
+                            <div class="mb-6">
+                                <h4 class="text-lg font-semibold text-orange-500 mb-3">Descripción del Rol</h4>
+                                <p class="text-slate-100 leading-relaxed">
+                                    Diseño y desarrollo de dashboards interactivos orientados al seguimiento de indicadores clave 
+                                    de planta y toma de decisiones estratégicas. Implementación de procesos ETL y automatización 
+                                    de reportes, logrando optimización significativa en tiempos de análisis.
+                                </p>
+                            </div>
+                            <!-- Logros destacados -->
+                            <div class="mb-6">
+                                <h4 class="text-lg font-semibold text-orange-500 mb-3">Logros Clave</h4>
+                                <div class="bg-slate-800/70 rounded-xl p-4">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-200">Reducción tiempo de reportes</span>
+                                        <span class="text-2xl font-bold text-orange-400">40%</span>
+                                    </div>
+                                    <div class="mt-2 w-full bg-slate-700 rounded-full h-2">
+                                        <div class="bg-gradient-to-r from-orange-500 to-red-500 h-2 rounded-full transition-all duration-1000" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Tecnologías -->
+                            <div>
+                                <h4 class="text-lg font-semibold text-orange-500 mb-3">Tecnologías</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">Power BI</span>
+                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">Tableau</span>
+                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">Python</span>
+                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">SQL</span>
+                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">ETL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Trabajo 2: Técnico Analista -->
+            <article class="job-card mb-12 relative" data-delay="400">
+                <!-- Punto del Timeline -->
+                <div class="absolute left-4 w-8 h-8 rounded-full timeline-dot flex items-center justify-center cursor-pointer z-10"
+                     onclick="toggleJobCard(this)">
+                    <span class="text-white font-bold text-sm">2</span>
+                </div>
+
+                <!-- Tarjeta del Trabajo -->
+                <div class="ml-20 liquid-card rounded-2xl p-6 hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
+                     style="background: url('https://github.com/Santiago131440/Imagenes-Excel/blob/main/ChatGPT%20Image%20Sep%2016,%202025,%2008_25_52%20PM.png?raw=true') center/cover no-repeat;">
+
+                    <!-- Logo de la empresa -->
+                    <img src="https://coca-colafemsa.com/assets/img/globales/kof-logo.png" 
+                         alt="Logo Coca Cola" 
+                         class="absolute top-4 right-4 w-16 h-16 object-contain bg-white/80 p-2 rounded-lg shadow-md">
+
+                    <!-- Header de la tarjeta -->
+                    <div class="flex items-center justify-between cursor-pointer relative z-10" onclick="toggleJobCard(this)">
+                        <div>
+                            <h3 class="text-2xl font-bold text-orange-500 mb-1">
+                                Técnico Analista
+                            </h3>
+                            <p class="text-slate-200 mb-2">Coca Cola Femsa • Cali, Colombia</p>
+                            <div class="flex items-center gap-2">
+                                <span class="px-3 py-1 bg-slate-600/50 text-slate-200 rounded-full text-sm font-medium">
+                                    Jul 2023 - Jun 2024
+                                </span>
+                                <div class="flex items-center gap-1">
+                                    <div class="w-2 h-2 bg-slate-500 rounded-full"></div>
+                                    <span class="text-slate-300 text-sm">Completado</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="expand-icon text-orange-500 text-2xl">
+                            ▼
+                        </div>
+                    </div>
+
+                    <!-- Contenido expandible -->
+                    <div class="card-content relative z-10">
+                        <div class="border-t border-slate-700 pt-6">
+                            <!-- Descripción -->
+                            <div class="mb-6">
+                                <h4 class="text-lg font-semibold text-orange-500 mb-3">Descripción del Rol</h4>
+                                <p class="text-slate-100 leading-relaxed">
+                                    Gestión integral de indicadores de eficiencia y control de inventarios mediante 
+                                    desarrollo de macros avanzadas y tableros dinámicos. Optimización de procesos 
+                                    con trazabilidad completa y reducción significativa de errores operativos.
+                                </p>
+                            </div>
+                            <!-- Logros destacados -->
+                            <div class="mb-6">
+                                <h4 class="text-lg font-semibold text-orange-500 mb-3">Logros Clave</h4>
+                                <div class="bg-slate-800/70 rounded-xl p-4">
+                                    <div class="text-center">
+                                        <div class="text-3xl font-bold text-orange-400 mb-1">100%</div>
+                                        <div class="text-sm text-slate-200">Trazabilidad Completa</div>
+                                        <div class="text-xs text-slate-300 mt-1">Insumos y materias primas</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Tecnologías -->
+                            <div>
+                                <h4 class="text-lg font-semibold text-orange-500 mb-3">Tecnologías</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">Excel Avanzado</span>
+                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">VBA</span>
+                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">Power BI</span>
+                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">SQL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+
+
+
 
     <!-- PROJECTS -->
 <section id="projects" class="mb-8">
-  <div class="p-6 liquid-card relative z-10">
+  <div class="p-6 relative z-10">
+        <!-- FONDO DE ICONOS -->
+  <div class="rain-icons absolute inset-0 pointer-events-none">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20barras.png?raw=true" class="icon-rain" style="left: 5%; animation-duration: 6s;">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20barras.png?raw=true" class="icon-rain" style="left: 85%; animation-duration: 8s;">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20barras.png?raw=true" class="icon-rain" style="left: 45%; animation-duration: 5s;">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20tortas.png?raw=true" class="icon-rain" style="left: 65%; animation-duration: 7s;">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20tortas.png?raw=true" class="icon-rain" style="left: 25%; animation-duration: 9s;">
+  </div>
   <h3 class="text-3xl font-semibold mb-4 text-orange-500">Proyectos destacados</h3>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
@@ -509,6 +850,7 @@
         <div>
           <h4 class="text-xl text-orange-500">Control de inventario</h4>
           <p class="text-s text-slate-200">Desarrollo de un sistema integral en Excel con macros y VBA, diseñado para la gestión eficiente de inventarios. La solución incluye funcionalidades para registrar nuevos productos, realizar ingresos y salidas de insumos, consultar el inventario actualizado en tiempo real tras cada movimiento, y generar reportes detallados de los registros de entradas y salidas, garantizando así la trazabilidad de la información. Adicionalmente, el sistema incorpora una opción para elaborar pedidos semanales y enviarlos directamente al almacén.</p>
+          <p class="text-s text-orange-500">Desliza las imagenes -> </p>
         </div>
         <div class="text-s text-orange-500">2025</div>
       </div>
@@ -586,6 +928,7 @@
         <div>
           <h4 class="text-xl font-semibold text-orange-500">Búsqueda de datos</h4>
           <p class="text-s text-slate-200">Proceso de consulta de información en el sistema: inicialmente, se debe seleccionar el botón correspondiente al área de fabricación del producto. Posteriormente, se ingresa el nombre de la máquina o del tanque y, al confirmar la acción con el botón Aceptar, el sistema despliega automáticamente toda la información relacionada con la búsqueda realizada.</p>
+          <p class="text-s text-orange-500">Desliza las imagenes -> </p>
         </div>
         <div class="text-s text-orange-500">2025</div>
       </div>
@@ -612,6 +955,7 @@
         <div>
           <h4 class="text-xl font-semibold text-orange-500">Comparación entre Ordenes de producción</h4>
           <p class="text-s text-slate-200">Este sistema está diseñado para comparar y validar información contenida en archivos de Excel de manera eficiente. En su etapa inicial, permite al usuario seleccionar y cargar un archivo sin restricciones respecto a su ubicación o nombre, lo que garantiza flexibilidad y facilidad de uso. Una vez cargado, el sistema procesa los datos y realiza la comparación de la información registrada, identificando coincidencias, diferencias y posibles inconsistencias. Esta funcionalidad facilita la trazabilidad de los datos, reduce el riesgo de errores manuales y optimiza el tiempo dedicado al análisis, convirtiéndose en una herramienta clave para la gestión y control de la información en entornos administrativos e industriales.</p>
+          <p class="text-s text-orange-500">Desliza las imagenes -> </p>
         </div>
         <div class="text-s text-orange-500">2025 </div>
       </div>
@@ -646,6 +990,24 @@
   </div>
   </div>
 </section>
+
+<!-- Modal de imágenes -->
+<div id="imageModal" class="fixed inset-0 hidden bg-black bg-opacity-90 flex flex-col items-center justify-center z-50 p-6 text-center">
+  <!-- Botón cerrar -->
+  <button onclick="closeModal()" class="absolute top-4 right-6 text-white text-4xl font-bold hover:text-orange-600 transition">&times;</button>
+  
+  <!-- Flecha izquierda -->
+  <button onclick="prevImage()" class="absolute left-4 text-white text-5xl font-bold hover:text-orange-600 transition">&#10094;</button>
+  
+  <!-- Imagen mostrada -->
+  <img id="modalImage" src="" class="max-h-[80%] max-w-[90%] rounded-lg shadow-2xl transition mb-4">
+  
+  <!-- Título del proyecto -->
+  <h3 id="modalTitle" class="text-2xl font-semibold text-orange-400 drop-shadow-lg"></h3>
+  
+  <!-- Flecha derecha -->
+  <button onclick="nextImage()" class="absolute right-4 text-white text-5xl font-bold hover:text-orange-500 transition">&#10095;</button>
+</div>
 
     <!-- CONTACT -->
      
@@ -736,15 +1098,6 @@
   });
 </script>
 
-<style>
-  .carousel::-webkit-scrollbar { display: none; }
-  .animate-fadeIn { animation: fadeIn 0.3s ease-in-out; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-</style>
-
 <script>
   function openModal(src) {
     document.getElementById("modalImage").src = src;
@@ -754,5 +1107,159 @@
     document.getElementById("imageModal").classList.add("hidden");
   }
 </script>
+
+
+
+
+    <script>
+        // Inicialización cuando la página carga
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTimeline();
+        });
+
+        // Función para inicializar el timeline con animaciones secuenciales
+        function initializeTimeline() {
+            const jobCards = document.querySelectorAll('.job-card');
+            
+            jobCards.forEach((card, index) => {
+                const delay = parseInt(card.dataset.delay) || (index * 200);
+                
+                setTimeout(() => {
+                    card.classList.add('visible');
+                }, delay);
+            });
+        }
+
+        // Función para expandir/contraer tarjetas de trabajo
+        function toggleJobCard(element) {
+            // Encontrar la tarjeta padre
+            const jobCard = element.closest('article');
+            const card = jobCard.querySelector('.liquid-card');
+            
+            // Toggle de la clase expanded
+            card.classList.toggle('card-expanded');
+            
+            // Efecto en el punto del timeline
+            const timelineDot = jobCard.querySelector('.timeline-dot');
+            if (card.classList.contains('card-expanded')) {
+                timelineDot.style.transform = 'scale(1.3)';
+                timelineDot.style.boxShadow = '0 0 25px rgba(251, 146, 60, 0.8)';
+            } else {
+                timelineDot.style.transform = 'scale(1)';
+                timelineDot.style.boxShadow = 'none';
+            }
+        }
+
+        // Efectos interactivos para iconos flotantes
+        document.querySelectorAll('.floating-icon').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                // Efecto de explosión temporal
+                this.style.transform = 'scale(1.8) rotate(360deg)';
+                this.style.filter = 'drop-shadow(0 0 30px rgba(251, 146, 60, 1))';
+                
+                // Resetear después de la animación
+                setTimeout(() => {
+                    this.style.transform = '';
+                    this.style.filter = '';
+                }, 800);
+            });
+        });
+
+        // Efecto de paralaje sutil en el mouse
+        document.addEventListener('mousemove', function(e) {
+            const mouseX = (e.clientX / window.innerWidth) - 0.5;
+            const mouseY = (e.clientY / window.innerHeight) - 0.5;
+            
+            document.querySelectorAll('.floating-icon').forEach((icon, index) => {
+                const multiplier = (index + 1) * 0.5;
+                const translateX = mouseX * 20 * multiplier;
+                const translateY = mouseY * 20 * multiplier;
+                
+                icon.style.transform = `translate(${translateX}px, ${translateY}px)`;
+            });
+        });
+
+        // Auto-expansión al scroll (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.6,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const card = entry.target.querySelector('.liquid-card');
+                    setTimeout(() => {
+                        if (!card.classList.contains('card-expanded')) {
+                            toggleJobCard(entry.target.querySelector('.timeline-dot'));
+                        }
+                    }, 800);
+                }
+            });
+        }, observerOptions);
+
+        // Observar todas las tarjetas de trabajo
+        document.querySelectorAll('.job-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+
+    <script>
+  // Guardamos todas las imágenes y asociamos el título del proyecto
+  const allImages = [];
+  document.querySelectorAll("#projects article").forEach(article => {
+    const projectTitle = article.querySelector("h4").innerText; // título del proyecto
+    article.querySelectorAll(".carousel img").forEach(img => {
+      allImages.push({
+        src: img.src,
+        title: projectTitle
+      });
+      // Redefinimos el onclick para que sepa el título
+      img.setAttribute("onclick", `openModal('${img.src}')`);
+    });
+  });
+
+  let currentIndex = 0;
+
+  // Abrir modal
+  function openModal(src) {
+    currentIndex = allImages.findIndex(item => item.src === src);
+    const modal = document.getElementById("imageModal");
+    document.getElementById("modalImage").src = allImages[currentIndex].src;
+    document.getElementById("modalTitle").innerText = allImages[currentIndex].title;
+    modal.classList.remove("hidden");
+  }
+
+  // Cerrar modal
+  function closeModal() {
+    document.getElementById("imageModal").classList.add("hidden");
+  }
+
+  // Imagen anterior
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
+    document.getElementById("modalImage").src = allImages[currentIndex].src;
+    document.getElementById("modalTitle").innerText = allImages[currentIndex].title;
+  }
+
+  // Imagen siguiente
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % allImages.length;
+    document.getElementById("modalImage").src = allImages[currentIndex].src;
+    document.getElementById("modalTitle").innerText = allImages[currentIndex].title;
+  }
+
+  // Navegación con teclado
+  document.addEventListener("keydown", function(e) {
+    if (!document.getElementById("imageModal").classList.contains("hidden")) {
+      if (e.key === "ArrowLeft") prevImage();
+      if (e.key === "ArrowRight") nextImage();
+      if (e.key === "Escape") closeModal();
+    }
+  });
+</script>
+
 </body>
 </html>
