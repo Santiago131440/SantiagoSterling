@@ -214,6 +214,28 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(251, 146, 60, 0.3);
         }
+
+            /* Animación con scroll */
+    .hidden-card {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease-in-out;
+    }
+    .show-card {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Animación para perfil */
+    .hidden-profile {
+      opacity: 0;
+      transform: translateY(100px);
+      transition: all 1.2s ease-in-out;
+    }
+    .show-profile {
+      opacity: 1;
+      transform: translateY(0);
+    }
         
         .floating-icon {
             transition: all 0.5s ease;
@@ -326,6 +348,26 @@
           </a>
       </div>
     </nav>
+
+      <!-- Sección con foto 
+  <section class="relative h-[120vh] flex items-end bg-cover bg-center mt-[70px]"
+    style="background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Sep%2024,%202025,%2007_27_40%20PM.png?raw=true');">
+    -->
+    
+    <!-- Perfil que sube con scroll -->
+<div class="ml-4"></div>
+<div class="relative z-10 mb-10 flex items-center justify-start ml-0 absolute left-0 top-0 hidden-profile" id="profile-block">
+  <img src="https://media.licdn.com/dms/image/v2/D4E03AQEyDMhbqINgUg/profile-displayphoto-shrink_800_800/B4EZcERut2HYAc-/0/1748123448273?e=1760572800&v=beta&t=vC9rExnMdIMtH21mvEHol6msuIl8vdB_AgQFNpp6lSY" alt="Foto perfil" class="rounded-full w-28 h-28 border-4 border-orange-400 shadow-lg">
+  <div class="ml-4"> <!-- Esto da espacio entre la foto y el texto -->
+    <h1 class="text-3xl font-bold text-orange-400">Santiago Sterling</h1>
+    <p class="text-gray-200 text-sm">Desarrollador de Software</p>
+  </div>
+</div>
+
+
+  </section>
+
+  <br>
 
     <!-- HERO / DASHBOARD -->
     <header class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
@@ -520,6 +562,289 @@
 
       </div>
     </section>
+
+<!-- CURSOS PLATZI -->
+<section id="cursos" class="mb-16 relative">
+  <h3 class="text-3xl font-bold mb-12 text-orange-500">
+  Cursos complementarios
+  </h3>
+
+  <!-- Grid dinámica -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    
+    <!-- Curso -->
+    <article class="relative group p-6 rounded-2xl bg-slate-900/50 border border-orange-500/30 backdrop-blur-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-orange-500/30 duration-500">
+      <!-- Logo Platzi -->
+      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
+           alt="Logo Platzi"
+           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
+
+      <!-- Contenido -->
+      <div class="flex flex-col h-full z-10 relative">
+        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          Curso Práctico de JavaScript
+        </h4>
+        <p class="text-sm text-slate-300 mt-2 flex-1">
+          Platzi
+        </p>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-sm font-semibold text-orange-500">2023</span>
+          <!-- Link al certificado -->
+          <a href="https://platzi.com/p/santisterling/curso/3271-course/diploma/detalle/" target="_blank"
+             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
+            Ver certificado
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Curso -->
+    <article class="relative group p-6 rounded-2xl bg-slate-900/50 border border-orange-500/30 backdrop-blur-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-orange-500/30 duration-500">
+      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
+           alt="Logo Platzi"
+           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
+      <div class="flex flex-col h-full z-10 relative">
+        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          Curso de Asincronismo con JavaScript
+        </h4>
+        <p class="text-sm text-slate-300 mt-2 flex-1">
+          Platzi
+        </p>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-sm font-semibold text-orange-500">2023</span>
+          <a href="https://platzi.com/p/santisterling/curso/3175-course/diploma/detalle/" target="_blank"
+             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
+            Ver certificado
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Curso -->
+    <article class="relative group p-6 rounded-2xl bg-slate-900/50 border border-orange-500/30 backdrop-blur-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-orange-500/30 duration-500">
+      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
+           alt="Logo Platzi"
+           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
+      <div class="flex flex-col h-full z-10 relative">
+        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          Curso de Manipulación del DOM
+        </h4>
+        <p class="text-sm text-slate-300 mt-2 flex-1">
+          Platzi
+        </p>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-sm font-semibold text-orange-500">2023</span>
+          <a href="https://platzi.com/p/santisterling/curso/2193-course/diploma/detalle/" target="_blank"
+             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
+            Ver certificado
+          </a>
+        </div>
+      </div>
+    </article>
+
+        <!-- Curso -->
+    <article class="relative group p-6 rounded-2xl bg-slate-900/50 border border-orange-500/30 backdrop-blur-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-orange-500/30 duration-500">
+      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
+           alt="Logo Platzi"
+           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
+      <div class="flex flex-col h-full z-10 relative">
+        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          Curso de Next.js
+        </h4>
+        <p class="text-sm text-slate-300 mt-2 flex-1">
+          Platzi
+        </p>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-sm font-semibold text-orange-500">2023</span>
+          <a href="https://platzi.com/p/santisterling/curso/1991-course/diploma/detalle/" target="_blank"
+             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
+            Ver certificado
+          </a>
+        </div>
+      </div>
+    </article>
+
+            <!-- Curso -->
+    <article class="relative group p-6 rounded-2xl bg-slate-900/50 border border-orange-500/30 backdrop-blur-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-orange-500/30 duration-500">
+      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
+           alt="Logo Platzi"
+           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
+      <div class="flex flex-col h-full z-10 relative">
+        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          Curso de Programación Orientada a Objetos: POO
+        </h4>
+        <p class="text-sm text-slate-300 mt-2 flex-1">
+          Platzi
+        </p>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-sm font-semibold text-orange-500">2023</span>
+          <a href="https://platzi.com/p/santisterling/curso/1474-course/diploma/detalle/" target="_blank"
+             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
+            Ver certificado
+          </a>
+        </div>
+      </div>
+    </article>
+
+                <!-- Curso -->
+    <article class="relative group p-6 rounded-2xl bg-slate-900/50 border border-orange-500/30 backdrop-blur-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-orange-500/30 duration-500">
+      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
+           alt="Logo Platzi"
+           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
+      <div class="flex flex-col h-full z-10 relative">
+        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          Curso Básico de JavaScript
+        </h4>
+        <p class="text-sm text-slate-300 mt-2 flex-1">
+          Platzi
+        </p>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-sm font-semibold text-orange-500">2023</span>
+          <a href="https://platzi.com/p/santisterling/curso/1814-course/diploma/detalle/" target="_blank"
+             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
+            Ver certificado
+          </a>
+        </div>
+      </div>
+    </article>
+
+    
+                <!-- Curso -->
+    <article class="relative group p-6 rounded-2xl bg-slate-900/50 border border-orange-500/30 backdrop-blur-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-orange-500/30 duration-500">
+      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
+           alt="Logo Platzi"
+           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
+      <div class="flex flex-col h-full z-10 relative">
+        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          Curso Básico de Tailwind 2 y 3
+        </h4>
+        <p class="text-sm text-slate-300 mt-2 flex-1">
+          Platzi
+        </p>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-sm font-semibold text-orange-500">2023</span>
+          <a href="https://platzi.com/p/santisterling/curso/2702-course/diploma/detalle/" target="_blank"
+             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
+            Ver certificado
+          </a>
+        </div>
+      </div>
+    </article>
+
+                    <!-- Curso -->
+    <article class="relative group p-6 rounded-2xl bg-slate-900/50 border border-orange-500/30 backdrop-blur-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-orange-500/30 duration-500">
+      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
+           alt="Logo Platzi"
+           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
+      <div class="flex flex-col h-full z-10 relative">
+        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          Curso Profesional de CSS Grid Layout
+        </h4>
+        <p class="text-sm text-slate-300 mt-2 flex-1">
+          Platzi
+        </p>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-sm font-semibold text-orange-500">2023</span>
+          <a href="https://platzi.com/p/santisterling/curso/2222-course/diploma/detalle/" target="_blank"
+             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
+            Ver certificado
+          </a>
+        </div>
+      </div>
+    </article>
+
+    
+                    <!-- Curso -->
+    <article class="relative group p-6 rounded-2xl bg-slate-900/50 border border-orange-500/30 backdrop-blur-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-orange-500/30 duration-500">
+      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
+           alt="Logo Platzi"
+           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
+      <div class="flex flex-col h-full z-10 relative">
+        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          Curso Práctico de Frontend Developer
+        </h4>
+        <p class="text-sm text-slate-300 mt-2 flex-1">
+          Platzi
+        </p>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-sm font-semibold text-orange-500">2023</span>
+          <a href="https://platzi.com/p/santisterling/curso/2477-course/diploma/detalle/" target="_blank"
+             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
+            Ver certificado
+          </a>
+        </div>
+      </div>
+    </article>
+
+                        <!-- Curso -->
+    <article class="relative group p-6 rounded-2xl bg-slate-900/50 border border-orange-500/30 backdrop-blur-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-orange-500/30 duration-500">
+      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
+           alt="Logo Platzi"
+           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
+      <div class="flex flex-col h-full z-10 relative">
+        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          Curso Práctico de HTML y CSS
+        </h4>
+        <p class="text-sm text-slate-300 mt-2 flex-1">
+          Platzi
+        </p>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-sm font-semibold text-orange-500">2023</span>
+          <a href="https://platzi.com/p/santisterling/curso/1758-course/diploma/detalle/" target="_blank"
+             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
+            Ver certificado
+          </a>
+        </div>
+      </div>
+    </article>
+
+                            <!-- Curso -->
+    <article class="relative group p-6 rounded-2xl bg-slate-900/50 border border-orange-500/30 backdrop-blur-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-orange-500/30 duration-500">
+      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
+           alt="Logo Platzi"
+           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
+      <div class="flex flex-col h-full z-10 relative">
+        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          Curso Práctico de Maquetación en CSS
+        </h4>
+        <p class="text-sm text-slate-300 mt-2 flex-1">
+          Platzi
+        </p>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-sm font-semibold text-orange-500">2023</span>
+          <a href="https://platzi.com/p/santisterling/curso/1744-course/diploma/detalle/" target="_blank"
+             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
+            Ver certificado
+          </a>
+        </div>
+      </div>
+    </article>
+
+                                <!-- Curso -->
+    <article class="relative group p-6 rounded-2xl bg-slate-900/50 border border-orange-500/30 backdrop-blur-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-orange-500/30 duration-500">
+      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
+           alt="Logo Platzi"
+           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
+      <div class="flex flex-col h-full z-10 relative">
+        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          Curso de Frontend Developer
+        </h4>
+        <p class="text-sm text-slate-300 mt-2 flex-1">
+          Platzi
+        </p>
+        <div class="mt-4 flex items-center justify-between">
+          <span class="text-sm font-semibold text-orange-500">2023</span>
+          <a href="https://platzi.com/p/santisterling/curso/2467-course/diploma/detalle/" target="_blank"
+             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
+            Ver certificado
+          </a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
 
     <!-- HABILIDADES -->
     <section id="skills" class="mb-2 relative overflow-hidden">
