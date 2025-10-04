@@ -1068,79 +1068,158 @@
   </div>
 </section>
 
-    <!-- HABILIDADES -->
-    <section id="skills" class="mb-2 relative overflow-hidden">
+<!-- HABILIDADES -->
+<section id="skills" class="mb-10 relative flex justify-center items-center py-12">
 
-      
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div class="w-[100%] max-w-7xl bg-slate-720 rounded-3xl shadow-xl relative overflow-hidden p-6 sm:p-10">
 
-      <!-- CONTENIDO -->
-      <div class="p-6 liquid-card relative z-10">
-        <h3 class="text-3xl font-semibold text-orange-500">Habilidades</h3>
-        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="p-4 rounded-md file-tile">
-            <div class="text-xl text-orange-500">Estadística</div>
-            <ul class="mt-2 text-s text-slate-200 list-disc list-inside">
-              <li>Modelado probabilístico</li>
-              <li>Pruebas de hipótesis</li>
-              <li>Análisis multivariante</li>
-              <li>Series temporales</li>
-              <li>Regresión lineal y logística</li>
-            </ul>
-          </div>
-          <div class="p-4 rounded-md file-tile">
-            <div class="text-xl text-orange-500">Lenguajes</div>
-            <ul class="mt-2 text-s text-slate-200 list-disc list-inside">
-              <li>Python (pandas, scikit-learn)</li>
-              <li>JavaScript (para dashboards interactivos)</li>
-              <li>C#</li>
-              <li>SQL / MySQL / PostgreSQL</li>
-              <li>Dax</li>
-            </ul>
-          </div>
-          <div class="p-4 rounded-md file-tile">
-            <div class="text-xl text-orange-500">Frameworks y Desarrollo</div>
-            <ul class="mt-2 text-s text-slate-200 list-disc list-inside">
-              <li>Django / Flask (para apps de datos)</li>
-              <li>Tailwind / CSS (presentación de dashboards)</li>
-              <li>.NET (si lo manejas en entornos empresariales)</li>
-              <li>APIs y automatización de procesos</li>
-            </ul>
-          </div>
-          <div class="p-4 rounded-md file-tile">
-            <div class="text-xl text-orange-500">Habilidades Complementarias</div>
-            <ul class="mt-2 text-s text-slate-200 list-disc list-inside">
-              <li>Git y GitHub (control de versiones)</li>
-              <li>Cloud (AWS, GCP, Azure básico)</li>
-              <li>Manipulación de datos en Big Data (Spark, Hadoop)</li>
-              <li>Seguridad y ética en el manejo de datos</li>
-              <li>Diseño de reportes ejecutivos</li>
-            </ul>
-          </div>
-          <div class="p-4 rounded-md file-tile">
-            <div class="text-xl text-orange-500">Herramientas de Análisis y Visualización</div>
-            <ul class="mt-2 text-s text-slate-200 list-disc list-inside">
-              <li>Excel Avanzado / Macros</li>
-              <li>Power BI</li>
-              <li>Power Pivot</li>
-              <li>Power Query</li>
-              <li>Tableau</li>
-              <li>Google Data Studio</li>
-              <li>Matplotlib / Seaborn</li>
-            </ul>
-          </div>
-          <div class="p-4 rounded-md file-tile">
-            <div class="text-xl text-orange-500">Soft skills</div>
-            <ul class="mt-2 text-s text-slate-200 list-disc list-inside">
-              <li>Comunicación para stakeholders</li>
-              <li>Trabajo en equipo interdisciplinario</li>
-              <li>Pensamiento crítico</li>
-              <li>Documentación reproducible</li>
-              <li>Metodologías ágiles (Scrum, Kanban)</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- ENCABEZADO -->
+    <h3 class="text-2xl sm:text-3xl font-bold text-orange-500 text-left mb-6">Habilidades</h3>
+
+    <!-- BOTONES DE CATEGORÍAS -->
+    <div class="flex overflow-x-auto gap-3 mb-8 pb-2 scrollbar-hide">
+      <button class="tab-btn flex-shrink-0 px-4 py-2 bg-slate-600 text-slate-200 rounded-xl hover:bg-orange-500 hover:text-white transition text-sm sm:text-base" data-target="estadistica">Estadística</button>
+      <button class="tab-btn flex-shrink-0 px-4 py-2 bg-slate-600 text-slate-200 rounded-xl hover:bg-orange-500 hover:text-white transition text-sm sm:text-base" data-target="lenguajes">Lenguajes</button>
+      <button class="tab-btn flex-shrink-0 px-4 py-2 bg-slate-600 text-slate-200 rounded-xl hover:bg-orange-500 hover:text-white transition text-sm sm:text-base" data-target="frameworks">Frameworks</button>
+      <button class="tab-btn flex-shrink-0 px-4 py-2 bg-slate-600 text-slate-200 rounded-xl hover:bg-orange-500 hover:text-white transition text-sm sm:text-base" data-target="complementarias">Complementarias</button>
+      <button class="tab-btn flex-shrink-0 px-4 py-2 bg-slate-600 text-slate-200 rounded-xl hover:bg-orange-500 hover:text-white transition text-sm sm:text-base" data-target="visualizacion">Visualización</button>
+      <button class="tab-btn flex-shrink-0 px-4 py-2 bg-slate-600 text-slate-200 rounded-xl hover:bg-orange-500 hover:text-white transition text-sm sm:text-base" data-target="soft">Soft Skills</button>
+    </div>
+
+    <!-- TARJETAS -->
+    <div class="relative">
+
+      <!-- Ejemplo de tarjeta -->
+<div id="estadistica" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
+  <!-- Imagen de fondo -->
+  <div class="absolute inset-0 bg-cover bg-center opacity-20"
+       style="background-image: url('https://media.istockphoto.com/id/1488294044/photo/businessman-works-on-laptop-showing-business-analytics-dashboard-with-charts-metrics-and-kpi.jpg?s=1024x1024&w=is&k=20&c=VpSNiVam6Fw3egrJYnP28mEEAXyCjFRjqV_k4PK5S04=');">
+  </div>
+  <!-- Capa de color semitransparente para contraste -->
+  <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
+  <!-- Contenido -->
+  <div class="relative z-10">
+    <h4 class="text-lg sm:text-xl font-semibold text-orange-500 mb-3">Estadística</h4>
+    <ul class="text-sm sm:text-base text-slate-200 list-disc list-inside space-y-1">
+      <li>Modelado probabilístico</li>
+      <li>Pruebas de hipótesis</li>
+      <li>Análisis multivariante</li>
+      <li>Series temporales</li>
+      <li>Regresión lineal y logística</li>
+    </ul>
+  </div>
+</div>
+
+
+<div id="lenguajes" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
+  <!-- Imagen de fondo -->
+  <div class="absolute inset-0 bg-cover bg-center opacity-20"
+       style="background-image: url('https://cdn.pixabay.com/photo/2015/09/05/20/02/coding-924920_1280.jpg');">
+  </div>
+  <!-- Capa de color semitransparente para contraste -->
+  <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
+  <!-- Contenido -->
+  <div class="relative z-10">
+    <h4 class="text-lg sm:text-xl font-semibold text-orange-500 mb-3">Lenguajes</h4>
+    <ul class="text-sm sm:text-base text-slate-200 list-disc list-inside space-y-1">
+      <li>Python (pandas, scikit-learn)</li>
+      <li>JavaScript (dashboards interactivos)</li>
+      <li>C#</li>
+      <li>SQL / MySQL / PostgreSQL</li>
+      <li>DAX</li>
+    </ul>
+  </div>
+</div>
+
+
+<div id="frameworks" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
+  <!-- Imagen de fondo -->
+  <div class="absolute inset-0 bg-cover bg-center opacity-20"
+       style="background-image: url('https://media.istockphoto.com/id/1093434408/photo/website-designer-creative-planning-application-development-draft-sketch-drawing-template.jpg?s=1024x1024&w=is&k=20&c=sXWt4G8UGSq7uGORv2vFheevU6_wv_BZqKJy-1577j8=');">
+  </div>
+  <!-- Capa de color semitransparente para contraste -->
+  <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
+  <!-- Contenido -->
+  <div class="relative z-10">
+    <h4 class="text-lg sm:text-xl font-semibold text-orange-500 mb-3">Frameworks y Desarrollo</h4>
+    <ul class="text-sm sm:text-base text-slate-200 list-disc list-inside space-y-1">
+      <li>Django / Flask</li>
+      <li>Tailwind / CSS</li>
+      <li>.NET</li>
+      <li>APIs y automatización</li>
+    </ul>
+  </div>
+</div>
+
+
+<div id="complementarias" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
+  <!-- Imagen de fondo -->
+  <div class="absolute inset-0 bg-cover bg-center opacity-20"
+       style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80');">
+  </div>
+  <!-- Capa de color semitransparente para contraste -->
+  <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
+  <!-- Contenido -->
+  <div class="relative z-10">
+    <h4 class="text-lg sm:text-xl font-semibold text-orange-500 mb-3">Habilidades Complementarias</h4>
+    <ul class="text-sm sm:text-base text-slate-200 list-disc list-inside space-y-1">
+      <li>Git y GitHub</li>
+      <li>Cloud (AWS, GCP, Azure)</li>
+      <li>Spark / Hadoop</li>
+      <li>Seguridad y ética</li>
+      <li>Reportes ejecutivos</li>
+    </ul>
+  </div>
+</div>
+
+
+<div id="visualizacion" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
+  <!-- Imagen de fondo -->
+  <div class="absolute inset-0 bg-cover bg-center opacity-20"
+       style="background-image: url('https://cdn.pixabay.com/photo/2017/03/08/20/12/viewing-machine-2127704_1280.jpg');">
+  </div>
+  <!-- Capa de color semitransparente para contraste -->
+  <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
+  <!-- Contenido -->
+  <div class="relative z-10">
+    <h4 class="text-lg sm:text-xl font-semibold text-orange-500 mb-3">Herramientas de Análisis y Visualización</h4>
+    <ul class="text-sm sm:text-base text-slate-200 list-disc list-inside space-y-1">
+      <li>Excel avanzado</li>
+      <li>Power BI / Tableau</li>
+      <li>Power Pivot / Query</li>
+      <li>Google Data Studio</li>
+      <li>Matplotlib / Seaborn</li>
+    </ul>
+  </div>
+</div>
+
+
+<div id="soft" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
+  <!-- Imagen de fondo -->
+  <div class="absolute inset-0 bg-cover bg-center opacity-20" 
+       style="background-image: url('https://media.istockphoto.com/id/1490859962/photo/power-soft-skills-multi-skills-responsibility-hr-human-resources-concept-personal-attribute.jpg?s=1024x1024&w=is&k=20&c=X8mzWwih8MU12GO-m4zLQV_OqQrTDzbUTbpnFYp7kHs=');">
+  </div>
+  <!-- Capa de color sutil encima (opcional, para mejorar contraste) -->
+  <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
+  <!-- Contenido -->
+  <div class="relative z-10">
+    <h4 class="text-lg sm:text-xl font-semibold text-orange-500 mb-3">Soft Skills</h4>
+    <ul class="text-sm sm:text-base text-slate-200 list-disc list-inside space-y-1">
+      <li>Comunicación efectiva</li>
+      <li>Trabajo en equipo</li>
+      <li>Pensamiento crítico</li>
+      <li>Documentación reproducible</li>
+      <li>Scrum / Kanban</li>
+    </ul>
+  </div>
+</div>
+
+
+    </div>
+  </div>
+</section>
+
 
 <section id="portfolio" class="mb-12 relative overflow-hidden">
   <!-- FONDO DE ICONOS -->
@@ -1830,6 +1909,48 @@
     }
   });
 </script>
+
+
+<!-- JS PARA CAMBIO DE TABS -->
+<script>
+  const buttons = document.querySelectorAll('.tab-btn');
+  const contents = document.querySelectorAll('.tab-content');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-target');
+
+      contents.forEach(c => c.classList.add('hidden'));
+      buttons.forEach(b => b.classList.remove('bg-orange-500', 'text-white'));
+
+      document.getElementById(target).classList.remove('hidden');
+      btn.classList.add('bg-orange-500', 'text-white');
+    });
+  });
+
+  if (buttons.length > 0) {
+    buttons[0].click();
+  }
+</script>
+
+<!-- Estilos extra para móviles -->
+<style>
+  .animate-fade {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  /* Ocultar scroll bar en móviles */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
 
 </body>
 </html>
