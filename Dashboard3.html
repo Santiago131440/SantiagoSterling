@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Colombia - Estadísticas</title>
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <style>
+    body {
+      background: url("https://media.istockphoto.com/id/2161036797/photo/colorful-facade-of-a-typical-house-in-guatape-colombia.jpg?s=1024x1024&w=is&k=20&c=hx1a6HM722dDR5jiUYz4V3E-AtKyP0T5q9xa5P0dHyQ=") no-repeat center center fixed;
+      background-size: cover;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col p-6 text-gray-800">
+
+  <!-- Encabezado -->
+  <header class="glass p-4 flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">Dashboard Colombia</h1>
+    <p class="text-sm">Datos de ejemplo Santiago Sterling</p>
+  </header>
+
+  <!-- Contenido -->
+  <main class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-grow">
+
+    <!-- Métricas -->
+    <section class="glass p-6 flex flex-col justify-center text-center">
+      <h2 class="text-xl font-semibold mb-4">Indicadores Generales</h2>
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <p class="text-3xl font-bold text-blue-600">324</p>
+          <span class="text-sm">Proyectos</span>
+        </div>
+        <div>
+          <p class="text-3xl font-bold text-green-600">16M</p>
+          <span class="text-sm">Usuarios</span>
+        </div>
+        <div>
+          <p class="text-3xl font-bold text-orange-600">98%</p>
+          <span class="text-sm">Crecimiento</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gráfica -->
+    <section class="glass p-6">
+      <h2 class="text-xl font-semibold mb-4">Estadísticas Nacionales</h2>
+      <canvas id="chartNacional"></canvas>
+    </section>
+
+    <!-- Mapa -->
+    <section class="glass p-6">
+      <h2 class="text-xl font-semibold mb-4">Mapa de Colombia</h2>
+      <div id="map" class="w-full h-64 rounded-xl"></div>
+    </section>
+
+  </main>
+
+  <!-- Pie -->
+  <footer class="glass p-4 text-center mt-6">
+    <p class="text-sm">Datos simulados - Ejemplo visual - Santiago Sterling</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Chart.js - gráfico de barras
+    const ctx = document.getElementById('chartNacional').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Antioquia', 'Cundinamarca', 'Valle', 'Atlántico', 'Santander'],
+        datasets: [{
+          label: 'Usuarios (miles)',
+          data: [120, 90, 70, 50, 40],
+          backgroundColor: ['#2563eb','#16a34a','#f59e0b','#ef4444','#8b5cf6']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+
+    // Leaflet - mapa Colombia
+    const map = L.map('map').setView([4.5709, -74.2973], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    // Datos simulados por departamentos
+    const departamentos = {
+      "Antioquia": [6.2442, -75.5812, 120],
+      "Cundinamarca": [4.7110, -74.0721, 90],
+      "Valle del Cauca": [3.4516, -76.5320, 70],
+      "Atlántico": [10.9685, -74.7813, 50],
+      "Santander": [7.1193, -73.1227, 40]
+    };
+
+    for (let dep in departamentos) {
+      let [lat, lng, valor] = departamentos[dep];
+      L.circleMarker([lat, lng], {
+        radius: valor/10,
+        color: '#2563eb',
+        fillOpacity: 0.6
+      }).addTo(map).bindPopup(`<b>${dep}</b><br>Usuarios: ${valor}k`);
+    }
+  </script>
+
+</body>
+</html>

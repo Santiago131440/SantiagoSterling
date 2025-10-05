@@ -1,0 +1,318 @@
+<!doctype html>
+
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard en proceso de construcción</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f3f6f8;
+      --glass: rgba(255,255,255,0.6);
+      --accent: #22c1c3;
+      --muted:#9aa4ae;
+      --card-shadow: 0 10px 30px rgba(16,24,40,0.08);
+      --glass-2: rgba(255,255,255,0.45);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      background: linear-gradient(180deg,#eef6f8 0%, #fff 60%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px;
+      color:#0b1220;
+    }/* container similar to image with rounded card */
+.frame{
+  width:1100px;
+  max-width:calc(100vw - 48px);
+  height:640px;
+  border-radius:28px;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns: 1fr 1.25fr;
+  background:linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.85));
+  box-shadow: 0 40px 80px rgba(2,6,23,0.08);
+  position:relative;
+  backdrop-filter: blur(8px);
+}
+
+/* left panel with a big hero image and abstract shape */
+.left{
+  position:relative;
+  padding:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background-image: url('https://images.unsplash.com/photo-1756806983687-203048d56220?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size:cover;
+  background-position:center;
+}
+.left::after{
+  content:'';
+  position:absolute; inset:24px; border-radius:20px;
+  background: linear-gradient(135deg, rgba(34,193,195,0.18), rgba(168,85,247,0.06));
+  z-index:1;
+  filter: blur(8px);
+  transform: rotate(-6deg);
+}
+.plant-card{
+  position:relative; z-index:2; width:78%; max-width:360px; background:var(--glass);
+  border-radius:18px; padding:24px; display:flex; flex-direction:column; align-items:center; gap:18px;
+  box-shadow: var(--card-shadow); backdrop-filter: blur(8px);
+  border:1px solid rgba(255,255,255,0.45);
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+.plant-card img{width:140px; height:140px; object-fit:cover; border-radius:12px; box-shadow:0 10px 30px rgba(2,6,23,0.12)}
+.plant-card h2{margin:0; font-size:22px; letter-spacing:-0.4px}
+.plant-card p{margin:0; color:var(--muted); font-size:13px}
+
+/* right area (content) */
+.right{
+  padding:36px 40px; display:flex; flex-direction:column; gap:16px; overflow:hidden;
+}
+.header{
+  display:flex; align-items:center; justify-content:space-between;
+}
+.title{
+  font-size:36px; font-weight:700; letter-spacing:-0.6px;
+}
+.sub{color:var(--muted); font-size:13px}
+
+/* table style */
+.table-wrap{margin-top:8px; background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4)); border-radius:14px; padding:12px; box-shadow: var(--card-shadow);}
+table{width:100%; border-collapse:collapse; font-size:14px}
+thead th{ text-align:left; color:var(--muted); font-weight:600; font-size:12px; padding:12px}
+tbody tr{background:transparent; transition:all .25s ease;}
+tbody tr:hover{background:rgba(34,193,195,0.04)}
+td{padding:14px 12px; vertical-align:middle;}
+.small{font-size:12px;color:var(--muted)}
+.badge{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:var(--glass-2); border:1px solid rgba(0,0,0,0.04)}
+
+/* control panel */
+.controls{display:flex; align-items:center; gap:12px}
+.btn{background:#0b1220;color:#fff;padding:10px 14px;border-radius:12px; display:inline-flex; align-items:center; gap:8px; cursor:pointer; border:none; box-shadow:0 6px 18px rgba(2,6,23,0.12)}
+.btn.ghost{background:transparent;color:var(--muted); border:1px solid rgba(11,18,32,0.06)}
+.icon{width:18px;height:18px; display:inline-block}
+
+/* chart area */
+.chart-card{display:flex; gap:18px; align-items:center; padding:14px; border-radius:12px; background:linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8)); box-shadow:var(--card-shadow)}
+.chart-left{flex:1}
+.chart-right{width:210px; display:flex; flex-direction:column; gap:12px}
+
+/* footer control like big rounded slider */
+.big-action{position:absolute; left:50%; bottom:24px; transform:translateX(-50%); background:linear-gradient(180deg,#ffffff, #f3f6f8); padding:10px 18px; border-radius:999px; display:flex; align-items:center; gap:12px; box-shadow:0 18px 40px rgba(2,6,23,0.08);}
+.dot{width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px}
+
+/* responsiveness */
+@media(max-width:980px){
+  .frame{grid-template-columns: 1fr; height:auto}
+  .big-action{position:relative; left:auto; transform:none; margin:14px auto 0}
+}
+
+  </style>
+</head>
+<body>
+  <div class="frame" role="application" aria-label="Dashboard estadístico">
+    <section class="left">
+      <div class="plant-card">
+        <img src="https://plus.unsplash.com/premium_photo-1719986264903-d57f5aa86e14?q=80&w=1295&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="imagen hero"/>
+        <h2>My storehouse</h2>
+        <p class="small">Panel de inventario y métricas</p>
+        <div style="display:flex; gap:8px; margin-top:6px">
+          <div class="badge">📦 128 items</div>
+          <div class="badge">📈 24% crecimiento</div>
+        </div>
+      </div>
+    </section><section class="right">
+  <div class="header">
+    <div>
+      <div class="title">Dashboard estadístico</div>
+      <div class="sub">Visión general · Mayo 2025</div>
+    </div>
+    <div class="controls">
+      <button class="btn ghost" id="btnFilter">Filtros</button>
+      <button class="btn" id="btnRefresh">Actualizar ⟳</button>
+      <button class="btn" id="btnToggle">Modo Oscuro</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Producto</th><th>Categoría</th><th>Stock</th><th>Ventas (30d)</th><th>Acción</th></tr>
+      </thead>
+      <tbody id="products">
+        <!-- rows will be injected -->
+      </tbody>
+    </table>
+  </div>
+
+  <div style="display:flex; gap:16px; margin-top:12px; align-items:flex-start">
+    <div class="chart-card" style="flex:1">
+      <div class="chart-left">
+        <canvas id="chart" width="400" height="170" aria-label="Gráfico de ventas"></canvas>
+      </div>
+      <div class="chart-right">
+        <div>
+          <div class="small">Ventas totales (30d)</div>
+          <div style="font-weight:700; font-size:20px">$42,780</div>
+        </div>
+        <div>
+          <div class="small">Conversion</div>
+          <div style="font-weight:700; font-size:20px">4.8%</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="width:260px">
+      <div style="background:var(--glass-2); padding:14px; border-radius:12px; box-shadow:var(--card-shadow)">
+        <div style="display:flex; align-items:center; justify-content:space-between">
+          <div>
+            <div class="small">Rendimiento</div>
+            <div style="font-weight:700">Excelente</div>
+          </div>
+          <div style="font-size:22px">⭐️ 4.7</div>
+        </div>
+        <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap">
+          <div class="badge">Inventario</div>
+          <div class="badge">Pedidos</div>
+          <div class="badge">Clientes</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center">
+    <div class="small">Última actualización: <span id="lastUpdate">ahora</span></div>
+    <div style="display:flex; gap:8px">
+      <button class="btn ghost" id="btnExport">Exportar</button>
+      <button class="btn" id="btnAdd">Nuevo Producto +</button>
+    </div>
+  </div>
+
+</section>
+
+<div class="big-action" role="group" aria-label="Acciones rápidas">
+  <div class="dot">🧭</div>
+  <div style="font-weight:600">Acciones rápidas</div>
+  <div style="width:1px; height:32px; background:rgba(0,0,0,0.06)"></div>
+  <button class="btn" id="btnQuick">Ir →</button>
+</div>
+
+  </div>  <!-- scripts -->  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <script>
+    // sample data
+    const sample = [
+      {name:'Herbs pods', cat:'Plantas', stock:42, sales:110},
+      {name:'Garden pack', cat:'Accesorios', stock:18, sales:84},
+      {name:'Outdoor light', cat:'Iluminación', stock:76, sales:65},
+      {name:'Soil mix', cat:'Sustratos', stock:26, sales:44},
+      {name:'Watering kit', cat:'Herramientas', stock:9, sales:98},
+      {name:'Planter XL', cat:'Macetas', stock:51, sales:72}
+    ];
+
+    const tbody = document.getElementById('products');
+    function renderRows(items){
+      tbody.innerHTML = '';
+      items.forEach((it, idx)=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${it.name}</strong><div class='small'>${it.cat}</div></td>
+          <td class='small'>${it.cat}</td>
+          <td>${it.stock}</td>
+          <td>${it.sales}</td>
+          <td><button class='btn ghost' data-idx='${idx}' onclick='showDetail(${idx})'>Ver</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+    renderRows(sample);
+
+    function showDetail(i){
+      const item = sample[i];
+      alert(item.name + " — Stock: " + item.stock + " — Ventas: " + item.sales);
+    }
+
+    // chart
+    const ctx = document.getElementById('chart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type:'line',
+      data:{
+        labels: Array.from({length:30}, (_,i)=> i+1),
+        datasets:[{
+          label:'Ventas diarias',
+          data: Array.from({length:30}, ()=> Math.floor(Math.random()*120)+20),
+          tension:0.36,
+          fill:true,
+          backgroundColor: 'rgba(34,193,195,0.12)',
+          borderColor: 'rgba(34,193,195,0.9)',
+          pointRadius:0
+        }]
+      },
+      options:{
+        plugins:{legend:{display:false}},
+        scales:{
+          x:{display:false},
+          y:{display:false}
+        },
+        responsive:true,
+        maintainAspectRatio:false
+      }
+    });
+
+    // controls
+    document.getElementById('btnRefresh').addEventListener('click', ()=>{
+      // simulate data refresh
+      sample.forEach(it=>{ it.sales = Math.floor(Math.random()*140); it.stock = Math.max(0, it.stock + (Math.floor(Math.random()*40)-20)); });
+      renderRows(sample);
+      // update chart
+      chart.data.datasets[0].data = Array.from({length:30}, ()=> Math.floor(Math.random()*120)+20);
+      chart.update();
+      document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+    });
+
+    document.getElementById('btnToggle').addEventListener('click', ()=>{
+      const root = document.documentElement;
+      if(root.style.getPropertyValue('--bg') === ''){
+        // enable dark
+        document.body.style.background = 'linear-gradient(180deg,#0b1220,#051225)';
+        document.body.style.color = '#e6eef7';
+        document.querySelectorAll('.btn').forEach(b=>{ b.style.background = '#0f1724'; b.style.color='#fff' })
+        document.getElementById('btnToggle').textContent = 'Modo Claro';
+      }else{
+        location.reload();
+      }
+    });
+
+    document.getElementById('btnAdd').addEventListener('click', ()=>{
+      const name = prompt('Nombre del producto nuevo');
+      if(!name) return;
+      const newP = {name, cat:'Nuevo', stock:Math.floor(Math.random()*60), sales:0};
+      sample.unshift(newP);
+      renderRows(sample);
+    });
+
+    document.getElementById('btnExport').addEventListener('click', ()=>{
+      const csv = [ ['Producto','Categoria','Stock','Ventas'], ...sample.map(s=>[s.name,s.cat,s.stock,s.sales]) ].map(r=> r.map(c=>`"${c}"`).join(',')).join('\n');
+      const blob = new Blob([csv], {type:'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'productos.csv'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // quick action
+    document.getElementById('btnQuick').addEventListener('click', ()=>{
+      alert('Acción rápida: abrir vista detallada de métricas');
+    });
+
+    // small accessibility tweak: keyboard focus for buttons
+    document.querySelectorAll('.btn, .btn.ghost').forEach(b=>{ b.addEventListener('keydown', (e)=>{ if(e.key==='Enter') b.click(); }) });
+
+  </script></body>
+</html>
