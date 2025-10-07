@@ -48,7 +48,7 @@
   display:flex;
   align-items:center;
   justify-content:center;
-  background-image: url('https://images.unsplash.com/photo-1756806983687-203048d56220?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-image: url('https://grupopineda.eu/wp-content/uploads/2022/03/shutterstock_1912601503.jpg');
   background-size:cover;
   background-position:center;
 }
@@ -115,30 +115,27 @@ td{padding:14px 12px; vertical-align:middle;}
   .big-action{position:relative; left:auto; transform:none; margin:14px auto 0}
 }
 
-  </style>
+</style>
 </head>
 <body>
   <div class="frame" role="application" aria-label="Dashboard estadístico">
     <section class="left">
       <div class="plant-card">
-        <img src="https://plus.unsplash.com/premium_photo-1719986264903-d57f5aa86e14?q=80&w=1295&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="imagen hero"/>
-        <h2>My storehouse</h2>
-        <p class="small">Panel de inventario y métricas</p>
+        <img src="https://estaticos.elcolombiano.com/binrepository/862x566/82c0/780d565/none/11101/YHGD/gettyimages-2231627936_48933493_20251004115917.jpg" alt="imagen hero"/>
+        <h2>Luis Diaz</h2>
+        <p class="small">Futbolista Colombiano</p>
         <div style="display:flex; gap:8px; margin-top:6px">
-          <div class="badge">📦 128 items</div>
-          <div class="badge">📈 24% crecimiento</div>
+          <div class="badge">128 Partidos</div>
+          <div class="badge">24% crecimiento</div>
         </div>
       </div>
-    </section><section class="right">
+    </section>
+  
+<section class="right">
   <div class="header">
     <div>
-      <div class="title">Dashboard estadístico</div>
-      <div class="sub">Visión general · Mayo 2025</div>
-    </div>
-    <div class="controls">
-      <button class="btn ghost" id="btnFilter">Filtros</button>
-      <button class="btn" id="btnRefresh">Actualizar ⟳</button>
-      <button class="btn" id="btnToggle">Modo Oscuro</button>
+      <div class="title">Estadísticas de inicio en Bayern, liga 2025-2026</div>
+      <div class="sub">Visión general · Octubre 2025</div>
     </div>
   </div>
 
@@ -153,7 +150,6 @@ td{padding:14px 12px; vertical-align:middle;}
     </table>
   </div>
 
-  <div style="display:flex; gap:16px; margin-top:12px; align-items:flex-start">
     <div class="chart-card" style="flex:1">
       <div class="chart-left">
         <canvas id="chart" width="400" height="170" aria-label="Gráfico de ventas"></canvas>
@@ -187,8 +183,6 @@ td{padding:14px 12px; vertical-align:middle;}
       </div>
     </div>
 
-  </div>
-
   <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center">
     <div class="small">Última actualización: <span id="lastUpdate">ahora</span></div>
     <div style="display:flex; gap:8px">
@@ -197,17 +191,17 @@ td{padding:14px 12px; vertical-align:middle;}
     </div>
   </div>
 
+  <div class="big-action" role="group" aria-label="Acciones rápidas">
+    <div class="dot"></div>
+    <div style="font-weight:600">Acciones rápidas</div>
+    <div style="width:1px; height:32px; background:rgba(0,0,0,0.06)"></div>
+    <button class="btn" id="btnQuick">Ir →</button>
+  </div>
 </section>
 
-<div class="big-action" role="group" aria-label="Acciones rápidas">
-  <div class="dot">🧭</div>
-  <div style="font-weight:600">Acciones rápidas</div>
-  <div style="width:1px; height:32px; background:rgba(0,0,0,0.06)"></div>
-  <button class="btn" id="btnQuick">Ir →</button>
-</div>
 
-  </div>  <!-- scripts -->  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <script>
-    // sample data
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
     const sample = [
       {name:'Herbs pods', cat:'Plantas', stock:42, sales:110},
       {name:'Garden pack', cat:'Accesorios', stock:18, sales:84},
@@ -239,7 +233,6 @@ td{padding:14px 12px; vertical-align:middle;}
       alert(item.name + " — Stock: " + item.stock + " — Ventas: " + item.sales);
     }
 
-    // chart
     const ctx = document.getElementById('chart').getContext('2d');
     const chart = new Chart(ctx, {
       type:'line',
@@ -263,30 +256,6 @@ td{padding:14px 12px; vertical-align:middle;}
         },
         responsive:true,
         maintainAspectRatio:false
-      }
-    });
-
-    // controls
-    document.getElementById('btnRefresh').addEventListener('click', ()=>{
-      // simulate data refresh
-      sample.forEach(it=>{ it.sales = Math.floor(Math.random()*140); it.stock = Math.max(0, it.stock + (Math.floor(Math.random()*40)-20)); });
-      renderRows(sample);
-      // update chart
-      chart.data.datasets[0].data = Array.from({length:30}, ()=> Math.floor(Math.random()*120)+20);
-      chart.update();
-      document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
-    });
-
-    document.getElementById('btnToggle').addEventListener('click', ()=>{
-      const root = document.documentElement;
-      if(root.style.getPropertyValue('--bg') === ''){
-        // enable dark
-        document.body.style.background = 'linear-gradient(180deg,#0b1220,#051225)';
-        document.body.style.color = '#e6eef7';
-        document.querySelectorAll('.btn').forEach(b=>{ b.style.background = '#0f1724'; b.style.color='#fff' })
-        document.getElementById('btnToggle').textContent = 'Modo Claro';
-      }else{
-        location.reload();
       }
     });
 
