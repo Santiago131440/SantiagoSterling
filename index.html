@@ -9,8 +9,6 @@
 
   gtag('config', 'G-60EZ6V283K');
 </script>
-
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,293 +17,22 @@
   <title>Santiago Sterling — Portafolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script type="text/javascript"> emailjs.init('lEmL2-YcR05_6Sx6V')</script>
-  <style>
-    :root{
-      --glass-bg: rgba(255,255,255,0.06);
-      --glass-border: rgba(255,255,255,0.12);
-      --muted: #94a3b8;
-    }
-    html{
-      font-family: 'Poppins', sans-serif;
-    }
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js"></script>
 
-    body {
-      background: linear-gradient(rgba(10, 20, 40, 0.9), rgba(10, 10, 30, 0.95)), 
-                  url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      min-height: 100vh;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .liquid-card{
-      background: linear-gradient(135deg,var(--glass-bg), rgba(255,255,255,0.02));
-      backdrop-filter: blur(10px) saturate(120%);
-      -webkit-backdrop-filter: blur(10px) saturate(120%);
-      border-radius: 14px;
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 10px 30px rgba(2,6,23,0.45);
-    }
-
-        @keyframes spin-wait {
-          0%   { transform: rotate(0deg); }
-          40%  { transform: rotate(360deg); } /* Gira una vuelta */
-          100% { transform: rotate(360deg); } /* Se queda quieto */
-        }
-
-        .animate-spin-delay {
-          animation: spin-wait 5s linear infinite; /* Duración 5s (2s giro + 3s pausa) */
-        }
-
-
-    .accent-glow{ position:relative; overflow:hidden; }
-    .accent-glow:after{
-      content:"";
-      position:absolute;
-      inset:-50% ;
-      background-image: url("https://github.com/Santiago131440/BackgroundSantiagoSterling/blob/main/ChatGPT%20Image%20Sep%206,%202025,%2003_33_00%20PM.png?raw=true");
-      background-size: cover;
-      background-position: center; 
-      background-attachment: fixed;
-      transform: rotate(100deg);
-      animation: glide 20s linear infinite;
-      pointer-events:none;
-      z-index:0;
-      mix-blend-mode:overlay;
-    }
-
-
-  .carousel::-webkit-scrollbar { display: none; }
-  .animate-fadeIn { animation: fadeIn 0.3s ease-in-out; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  } 
-    
-    @keyframes glide{0%{transform:translateX(-100%) rotate(15deg)}100%{transform:translateX(100%) rotate(15deg)}}
-
-
-    .floaty{ animation: floaty 6s ease-in-out infinite; }
-    @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-
-    /* Toggle switch styling */
-    .theme-btn{ transition: all .3s ease; }
-    .theme-btn.light{ background: linear-gradient(90deg,#ffffff,#f7f7fb); color:#0f172a; box-shadow: 0 6px 20px rgba(15,23,42,0.06); }
-    .theme-btn.dark{ background: linear-gradient(90deg,#0f172a,#071028); color:#e6eef8; box-shadow: 0 6px 20px rgba(2,6,23,0.6); }
-
-    /* File tile */
-    .file-tile{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; }
-
-    /* Small screens: tweak */
-    @media (max-width:640px){ .hide-sm{ display:none!important } }
-
-    /* Dark mode overrides */
-    .dark :root{ --glass-bg: rgba(7,9,23,0.36); --glass-border: rgba(255,255,255,0.06); }
-
-    /* Recruiter friendly typography emphasis */
-    .headline{ font-weight:700; letter-spacing: -0.6px; }
-
-    /* Animación de lluvia */
-      .icon-rain {
-        position: absolute;
-        top: -100px;
-        width: 80px;
-        height: 80px;
-        animation-name: fall;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-      }
-
-      @keyframes fall {
-        0% {
-          transform: translateY(-100px) rotate(0deg);
-        }
-        100% {
-          transform: translateY(120vh) rotate(360deg);
-        }
-      }
-
-      <!-- Animación lenta para íconos -->
-  .animate-spin-slow {
-    animation: spin 18s linear infinite;
-  }
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
-
-  
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
-        }
-        
-        @keyframes slideUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(50px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-        
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(251, 146, 60, 0.3); }
-            50% { box-shadow: 0 0 25px rgba(251, 146, 60, 0.6); }
-        }
-        
-        @keyframes pulse-dot {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        
-        .animate-float { 
-            animation: float 6s ease-in-out infinite; 
-        }
-        
-        .animate-slide-up { 
-            animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
-        }
-        
-        .animate-glow { 
-            animation: glow 3s ease-in-out infinite; 
-        }
-        
-        .timeline-line {
-            background: linear-gradient(to bottom, 
-                rgba(251, 146, 60, 0.8) 0%, 
-                rgba(251, 146, 60, 0.4) 50%, 
-                rgba(251, 146, 60, 0.8) 100%);
-        }
-        
-        .timeline-dot {
-            background: linear-gradient(135deg, #fb923c, #f97316);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
-        
-        .timeline-dot::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            background: rgba(251, 146, 60, 0.3);
-            border-radius: 50%;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .timeline-dot:hover::before {
-            opacity: 1;
-            animation: pulse-dot 1s infinite;
-        }
-        
-        .timeline-dot:hover {
-            transform: scale(1.2);
-            box-shadow: 0 0 20px rgba(251, 146, 60, 0.6);
-        }
-        
-        .job-card {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .job-card.visible {
-            animation: slideUp 0.8s ease-out forwards;
-        }
-        
-        .skill-badge {
-            background: rgba(251, 146, 60, 0.1);
-            border: 1px solid rgba(251, 146, 60, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .skill-badge:hover {
-            background: rgba(251, 146, 60, 0.2);
-            border-color: rgba(251, 146, 60, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(251, 146, 60, 0.3);
-        }
-
-            /* Animación con scroll */
-    .hidden-card {
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 1s ease-in-out;
-    }
-    .show-card {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Animación para perfil */
-    .hidden-profile {
-      opacity: 0;
-      transform: translateY(100px);
-      transition: all 1.2s ease-in-out;
-    }
-    .show-profile {
-      opacity: 1;
-      transform: translateY(0);
-    }
-        
-        .floating-icon {
-            transition: all 0.5s ease;
-            cursor: pointer;
-        }
-        
-        .floating-icon:hover {
-            transform: scale(1.3) rotate(15deg);
-            filter: drop-shadow(0 0 15px rgba(251, 146, 60, 0.7));
-        }
-        
-        .card-expanded {
-            transform: scale(1.02);
-        }
-        
-        .card-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .card-expanded .card-content {
-            max-height: 600px;
-            opacity: 1;
-            padding-top: 1.5rem;
-        }
-        
-        .expand-icon {
-            transition: transform 0.3s ease;
-        }
-        
-        .card-expanded .expand-icon {
-            transform: rotate(180deg);
-        }
-
-  </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 text-slate-100 transition-colors duration-500" id="body">
   <div class="max-w-7xl mx-auto p-6">
-    <!-- NAVBAR -->
     <nav class="flex items-center justify-between mb-8">
       <div class="flex items-center gap-4">
         <div class="w-14 h-14 rounded-2xl liquid-card p-1 flex items-center justify-center accent-glow overflow-hidden">
           <img src="https://media.licdn.com/dms/image/v2/D4E03AQEyDMhbqINgUg/profile-displayphoto-shrink_800_800/B4EZcERut2HYAc-/0/1748123448273?e=1760572800&v=beta&t=vC9rExnMdIMtH21mvEHol6msuIl8vdB_AgQFNpp6lSY" alt="Foto de perfil de Santiago Sterling" class="w-full h-full object-cover rounded-2xl">
         </div>
-
         <div>
           <div class="headline text-4xl text-orange-500">Santiago Sterling</div>
           <div class="text-s text-slate-200">Analista de Datos</div>
         </div>
       </div>
-
       <div class="flex items-center gap-4">
               <ul class="hidden md:flex gap-4 text-sm">
                 <li>
@@ -1461,19 +1188,39 @@
     <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20tortas.png?raw=true" class="icon-rain" style="left: 25%; animation-duration: 9s;">
   </div>
   <h3 class="text-3xl font-semibold mb-4 text-orange-500">Proyectos destacados</h3>
+  <br>
 
-  <p><h6><strong>Aviso sobre la confidencialidad y uso responsable de la información</strong></h6><br>
+ <h3 class="text-s font-semibold mb-4 text-orange-500">Aviso sobre la confidencialidad y uso responsable de la información</h3>
+  <button class="px-6 py-3 bg-orange-500 text-white font-semibold rounded-full shadow-md hover:bg-orange-600 transition-all duration-300" onclick="mostrarModal()">Ver aviso de confidencialidad</button>
 
-<h7>La información presentada en los proyectos, informes o material relacionado no corresponde a datos reales de ninguna empresa, entidad o persona natural. Todo el contenido ha sido elaborado únicamente con fines académicos, demostrativos o de desarrollo técnico, empleando valores, nombres y cifras de carácter ficticio o referencial.<br>
-
-Se respeta estrictamente la confidencialidad, privacidad y protección de la información de todas las empresas, colaboradores y terceros que puedan tener o haber tenido algún vínculo con los temas tratados. En ningún caso se divulga, utiliza ni replica información sensible, reservada o protegida por derechos de autor.<br>
-
-Este proyecto cumple con los lineamientos de la Ley 1581 de 2012 y el Decreto 1377 de 2013 sobre la protección de datos personales en Colombia, así como con los principios establecidos en el Reglamento General de Protección de Datos (GDPR – Reglamento (UE) 2016/679) en el ámbito internacional.<br>
-
-Adicionalmente, se observa lo dispuesto en la Ley 23 de 1982 y la Decisión Andina 351 de 1993 respecto a los derechos de autor y propiedad intelectual, garantizando que todo material, código o contenido utilizado en los proyectos es de creación propia, de dominio público o cuenta con las respectivas licencias.<br>
-
-En consecuencia, ninguna cifra, gráfico o referencia contenida en los documentos representa información verídica, oficial ni confidencial de persona o empresa alguna. El manejo ético y responsable de los datos es un principio esencial en el desarrollo de cada proyecto.</h7></p>
-
+  <!-- ======== MODAL ======== -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalBox">
+      <button class="close-btn" onclick="cerrarModal()">&times;</button>
+      <h4 class="text-s font-semibold mb-4 text-white-500"><strong>Aviso de Confidencialidad y Protección de Datos</strong></h4>
+      <br>
+      <p>
+        La información presentada en los proyectos, informes o material relacionado no corresponde a datos reales de ninguna empresa, entidad o persona natural. Todo el contenido ha sido elaborado únicamente con fines académicos, demostrativos o de desarrollo técnico, empleando valores, nombres y cifras de carácter ficticio o referencial.
+      </p>
+      <p>
+        Se respeta estrictamente la confidencialidad, privacidad y protección de la información de todas las empresas, colaboradores y terceros que puedan tener o haber tenido algún vínculo con los temas tratados. En ningún caso se divulga, utiliza ni replica información sensible, reservada o protegida por derechos de autor.
+      </p>
+      <p>
+        Este proyecto cumple con los lineamientos de la <strong>Ley 1581 de 2012</strong> y el <strong>Decreto 1377 de 2013</strong> sobre la protección de datos personales en Colombia, así como con los principios establecidos en el <strong>Reglamento General de Protección de Datos (GDPR – Reglamento (UE) 2016/679)</strong> en el ámbito internacional.
+      </p>
+      <p>
+        Adicionalmente, se observa lo dispuesto en la <strong>Ley 23 de 1982</strong> y la <strong>Decisión Andina 351 de 1993</strong> respecto a los derechos de autor y propiedad intelectual, garantizando que todo material, código o contenido utilizado en los proyectos es de creación propia, de dominio público o cuenta con las respectivas licencias.
+      </p>
+      <p>
+        En consecuencia, ninguna cifra, gráfico o referencia contenida en los documentos representa información verídica, oficial ni confidencial de persona o empresa alguna. El manejo ético y responsable de los datos es un principio esencial en el desarrollo de cada proyecto.
+      </p>
+      <br>
+      <p>
+        <strong>Santiago Sterling - 2025.</strong>
+      </p>
+    </div>
+  </div>
+<br>
 <br>
   <!-- BOTONES A DASHBOARDS -->
   <div class="flex gap-4 mb-6">
@@ -1661,34 +1408,11 @@ En consecuencia, ninguna cifra, gráfico o referencia contenida en los documento
         <h3 class="text-3xl font-semibold text-orange-500">Contacto</h3>
         <p class="text-s text-slate-200 mt-2">¿Buscas un perfil como el mío para tu equipo? Estoy disponible para nuevas oportunidades. Contáctame y conversemos.</p>
         <div class="mt-4 grid grid-cols-1 md:grid-cols-1 gap-4">
-<!--
-<form id="form" class="p-4 file-tile rounded-md">
-  <label class="text-sm text-orange-500">Nombre</label>
-  <input name="name" type="text" required 
-    class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-slate-600" />
-
-  <label class="text-sm mt-2 text-orange-500">Email</label>
-  <input name="email" type="email" required 
-    class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-slate-600" />
-
-  <label class="text-sm mt-2 text-orange-500">Mensaje</label>
-  <textarea name="message" rows="4" required 
-    class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-slate-600"></textarea>
-
-  <div class="mt-3">
-    <button type="submit" 
-      class="px-4 py-2 rounded-full bg-orange-500 text-white font-semibold shadow hover:scale-105 transition">
-      Enviar
-    </button>
-  </div>
-</form>
--->
 
     <div class="p-4 file-tile rounded-md bg-cover bg-center bg-no-repeat" 
      style="background-image: url('https://media.istockphoto.com/id/687819690/es/foto/iglesia-de-san-antonio-cali-colombia.jpg?s=612x612&w=0&k=20&c=qdAb7LyIFq8VtQuoqMNVWTT-0TWOrsRmsIQBODJnBWw=');">
-
-  <!-- Fondo con opacidad para mejorar la legibilidad del texto -->
-  <div class="bg-black/80 p-6 rounded-md flex flex-col items-center justify-center text-center">
+ 
+     <div class="bg-black/80 p-6 rounded-md flex flex-col items-center justify-center text-center">
     
     <div class="text-s text-white max-w-lg">
       Le invito a visitar mi perfil en LinkedIn, donde encontrará más información detallada 
@@ -1700,7 +1424,7 @@ En consecuencia, ninguna cifra, gráfico o referencia contenida en los documento
 
     <a href="https://www.linkedin.com/in/santisterling" target="_blank" rel="noopener noreferrer"
        class="flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-orange-500 text-white font-semibold shadow hover:scale-105 transition">
-      <!-- Logo de LinkedIn -->
+
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" 
            alt="LinkedIn" class="w-5 h-5">
       LinkedIn
@@ -1717,252 +1441,6 @@ En consecuencia, ninguna cifra, gráfico o referencia contenida en los documento
 
     <footer class="text-center text-slate-400 py-6">© <span id="year"></span> Desarrollado por Santiago Sterling — Analista de datos</footer>
   </div>
-
-  <script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  const ctx = document.getElementById('miniChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Santiago Sterling - 2020', 'Santiago Sterling - 2021', 'Santiago Sterling - 2022', 'Santiago Sterling - 2023', 'Santiago Sterling - 2024', 'Santiago Sterling - 2025'],
-      datasets: [{
-        label: 'Curva de aprendizaje',
-        data: [10, 15, 8, 20, 18, 25],
-        borderColor: 'orange',
-        backgroundColor: 'rgba(255,165,0,0.2)',
-        tension: 0.5,
-        fill: true
-      }]
-    },
-    options: {
-      plugins: { legend: { display: false } },
-      scales: { x: { display: false }, y: { display: false } }
-    }
-  });
-</script>
-
-<script>
-  function openModal(src) {
-    document.getElementById("modalImage").src = src;
-    document.getElementById("imageModal").classList.remove("hidden");
-  }
-  function closeModal() {
-    document.getElementById("imageModal").classList.add("hidden");
-  }
-</script>
-
-
-
-
-    <script>
-        // Inicialización cuando la página carga
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeTimeline();
-        });
-
-        // Función para inicializar el timeline con animaciones secuenciales
-        function initializeTimeline() {
-            const jobCards = document.querySelectorAll('.job-card');
-            
-            jobCards.forEach((card, index) => {
-                const delay = parseInt(card.dataset.delay) || (index * 200);
-                
-                setTimeout(() => {
-                    card.classList.add('visible');
-                }, delay);
-            });
-        }
-
-        // Función para expandir/contraer tarjetas de trabajo
-        function toggleJobCard(element) {
-            // Encontrar la tarjeta padre
-            const jobCard = element.closest('article');
-            const card = jobCard.querySelector('.liquid-card');
-            
-            // Toggle de la clase expanded
-            card.classList.toggle('card-expanded');
-            
-            // Efecto en el punto del timeline
-            const timelineDot = jobCard.querySelector('.timeline-dot');
-            if (card.classList.contains('card-expanded')) {
-                timelineDot.style.transform = 'scale(1.3)';
-                timelineDot.style.boxShadow = '0 0 25px rgba(251, 146, 60, 0.8)';
-            } else {
-                timelineDot.style.transform = 'scale(1)';
-                timelineDot.style.boxShadow = 'none';
-            }
-        }
-
-        // Efectos interactivos para iconos flotantes
-        document.querySelectorAll('.floating-icon').forEach(icon => {
-            icon.addEventListener('click', function(e) {
-                e.stopPropagation();
-                
-                // Efecto de explosión temporal
-                this.style.transform = 'scale(1.8) rotate(360deg)';
-                this.style.filter = 'drop-shadow(0 0 30px rgba(251, 146, 60, 1))';
-                
-                // Resetear después de la animación
-                setTimeout(() => {
-                    this.style.transform = '';
-                    this.style.filter = '';
-                }, 800);
-            });
-        });
-
-        // Efecto de paralaje sutil en el mouse
-        document.addEventListener('mousemove', function(e) {
-            const mouseX = (e.clientX / window.innerWidth) - 0.5;
-            const mouseY = (e.clientY / window.innerHeight) - 0.5;
-            
-            document.querySelectorAll('.floating-icon').forEach((icon, index) => {
-                const multiplier = (index + 1) * 0.5;
-                const translateX = mouseX * 20 * multiplier;
-                const translateY = mouseY * 20 * multiplier;
-                
-                icon.style.transform = `translate(${translateX}px, ${translateY}px)`;
-            });
-        });
-
-        // Auto-expansión al scroll (Intersection Observer)
-        const observerOptions = {
-            threshold: 0.6,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const card = entry.target.querySelector('.liquid-card');
-                    setTimeout(() => {
-                        if (!card.classList.contains('card-expanded')) {
-                            toggleJobCard(entry.target.querySelector('.timeline-dot'));
-                        }
-                    }, 800);
-                }
-            });
-        }, observerOptions);
-
-        // Observar todas las tarjetas de trabajo
-        document.querySelectorAll('.job-card').forEach(card => {
-            observer.observe(card);
-        });
-    </script>
-
-    <script>
-  // Guardamos todas las imágenes y asociamos el título del proyecto
-  const allImages = [];
-  document.querySelectorAll("#projects article").forEach(article => {
-    const projectTitle = article.querySelector("h4").innerText; // título del proyecto
-    article.querySelectorAll(".carousel img").forEach(img => {
-      allImages.push({
-        src: img.src,
-        title: projectTitle
-      });
-      // Redefinimos el onclick para que sepa el título
-      img.setAttribute("onclick", `openModal('${img.src}')`);
-    });
-  });
-
-  let currentIndex = 0;
-
-  // Abrir modal
-  function openModal(src) {
-    currentIndex = allImages.findIndex(item => item.src === src);
-    const modal = document.getElementById("imageModal");
-    document.getElementById("modalImage").src = allImages[currentIndex].src;
-    document.getElementById("modalTitle").innerText = allImages[currentIndex].title;
-    modal.classList.remove("hidden");
-  }
-
-  // Cerrar modal
-  function closeModal() {
-    document.getElementById("imageModal").classList.add("hidden");
-  }
-
-  // Imagen anterior
-  function prevImage() {
-    currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
-    document.getElementById("modalImage").src = allImages[currentIndex].src;
-    document.getElementById("modalTitle").innerText = allImages[currentIndex].title;
-  }
-
-  // Imagen siguiente
-  function nextImage() {
-    currentIndex = (currentIndex + 1) % allImages.length;
-    document.getElementById("modalImage").src = allImages[currentIndex].src;
-    document.getElementById("modalTitle").innerText = allImages[currentIndex].title;
-  }
-
-  // Navegación con teclado
-  document.addEventListener("keydown", function(e) {
-    if (!document.getElementById("imageModal").classList.contains("hidden")) {
-      if (e.key === "ArrowLeft") prevImage();
-      if (e.key === "ArrowRight") nextImage();
-      if (e.key === "Escape") closeModal();
-    }
-  });
-</script>
-
-<script>
-  const toggleBtn = document.getElementById("toggleCursos");
-  const extraCursos = document.getElementById("cursos-extra");
-
-  toggleBtn.addEventListener("click", () => {
-    if (extraCursos.classList.contains("hidden")) {
-      extraCursos.classList.remove("hidden");
-      toggleBtn.textContent = "Ocultar";
-    } else {
-      extraCursos.classList.add("hidden");
-      toggleBtn.textContent = "Ver más";
-      document.getElementById("cursos").scrollIntoView({ behavior: "smooth" });
-    }
-  });
-</script>
-
-
-<!-- JS PARA CAMBIO DE TABS -->
-<script>
-  const buttons = document.querySelectorAll('.tab-btn');
-  const contents = document.querySelectorAll('.tab-content');
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.getAttribute('data-target');
-
-      contents.forEach(c => c.classList.add('hidden'));
-      buttons.forEach(b => b.classList.remove('bg-orange-500', 'text-white'));
-
-      document.getElementById(target).classList.remove('hidden');
-      btn.classList.add('bg-orange-500', 'text-white');
-    });
-  });
-
-  if (buttons.length > 0) {
-    buttons[0].click();
-  }
-</script>
-
-<!-- Estilos extra para móviles -->
-<style>
-  .animate-fade {
-    animation: fadeIn 0.5s ease-in-out;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  /* Ocultar scroll bar en móviles */
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-</style>
 
 </body>
 </html>
