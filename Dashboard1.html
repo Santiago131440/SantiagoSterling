@@ -1,351 +1,451 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard en proceso de construcción</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ventas totales</title>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family: 'Poppins','Segoe UI',sans-serif;
+      background: linear-gradient(rgba(15,23,42,0.5),rgba(30,41,59,0.2)),
+        url("https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2020,%202025,%2008_44_39%20PM.png?raw=true")
+        no-repeat center center fixed;
+      background-size:cover;color:#f8fafc;min-height:100vh;padding:30px;display:flex;justify-content:center;
+    }
+    .container{width:100%;max-width:1400px;display:flex;flex-direction:column;gap:20px}
+    header{background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);padding:18px;border-radius:14px;text-align:center;border:1px solid rgba(255,255,255,0.08)}
+    h1{font-size:1.8rem}
+    .subtitle{color:#cbd5e1;font-size:0.95rem}
+
+  
+    .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+    .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    select,input{background:rgba(255,255,255,0.08);color:#fff;border:none;padding:10px;border-radius:8px}
+    .actions{display:flex;gap:10px}
+    button{background:linear-gradient(90deg,#3b82f6,#a855f7);color:#fff;border:none;padding:10px 14px;border-radius:10px;cursor:pointer}
+    button.secondary{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08)}
+    button:active{transform:translateY(1px)}
+
+  
+    .metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+    .metric-card{background:rgba(255,255,255,0.06);padding:14px;border-radius:12px;text-align:center}
+    .metric-label{font-size:0.85rem;color:#cbd5e1;text-transform:uppercase}
+    .metric-value{font-size:1.6rem;font-weight:700;margin-top:6px}
+
+    .charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+    .chart-card{background:rgba(255,255,255,0.06);padding:12px;border-radius:12px}
+    .chart-title{text-align:center;margin-bottom:8px;font-weight:600;color:#f1f5f9}
+
+   
+    .data-table{background:rgba(255,255,255,0.06);padding:14px;border-radius:12px;overflow:auto}
+    table{width:100%;border-collapse:collapse;color:#f8fafc}
+    th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:left}
+    th{font-size:0.8rem;color:#cbd5e1;text-transform:uppercase}
+
+  
+    #dashboardArea {
+      display:flex;
+      flex-direction:column;
+      gap:16px
     }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: 
-    linear-gradient(rgba(71, 61, 0, 0.6), rgba(65, 65, 65, 0.6)), 
-    url("https://github.com/Santiago131440/Imagenes-Excel/blob/main/ChatGPT%20Image%20Oct%206,%202025,%2007_49_15%20PM.png?raw=true") 
-      no-repeat center center fixed;
-  background-size: cover;
-  color: #f0f0f0; /* Texto más claro para contraste */
-  padding: 20px;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-}
-
-
-    .container {
-      width: 100%;
-      max-width: 1400px;
-    }
-
-    header {
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      background: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 25px;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      margin-bottom: 25px;
-    }
-
-    h1 {
-      color: #0f172a;
-      font-size: 2.2em;
-      margin-bottom: 5px;
-    }
-
-    .subtitle {
-      color: #334155;
-      font-size: 0.95em;
-    }
-
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-bottom: 25px;
-    }
-
-    .metric-card {
-      backdrop-filter: blur(20px) saturate(200%);
-      -webkit-backdrop-filter: blur(20px) saturate(200%);
-      background: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 25px;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .metric-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 45px rgba(0,0,0,0.3);
-    }
-
-    .metric-label {
-      color: #475569;
-      font-size: 0.85em;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .metric-value {
-      font-size: 2.4em;
-      font-weight: bold;
-      background: linear-gradient(135deg, #3b82f6, #a855f7, #ec4899);
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 5px;
-    }
-
-    .metric-change {
-      font-size: 0.85em;
-      color: #16a34a;
-    }
-
-    .metric-change.negative {
-      color: #dc2626;
-    }
-
-    .charts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-      gap: 20px;
-      margin-bottom: 25px;
-    }
-
-    .chart-card {
-      backdrop-filter: blur(20px) saturate(200%);
-      -webkit-backdrop-filter: blur(20px) saturate(200%);
-      background: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 25px;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    }
-
-    .chart-title {
-      font-size: 1.2em;
-      color: #0f172a;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-
-    .chart-container {
-      position: relative;
-      height: 300px;
-    }
-
-    .data-table {
-      backdrop-filter: blur(20px) saturate(200%);
-      -webkit-backdrop-filter: blur(20px) saturate(200%);
-      background: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 25px;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      color: #0f172a;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-    }
-
-    th {
-      background: rgba(0,0,0,0.05);
-      font-weight: 600;
-      color: #334155;
-      text-transform: uppercase;
-      font-size: 0.8em;
-      letter-spacing: 0.5px;
-    }
-
-    tr:hover {
-      background: rgba(0,0,0,0.05);
-    }
-
-    .status-badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 0.8em;
-      font-weight: 600;
-    }
-
-    .status-high {
-      background: rgba(16,185,129,0.15);
-      color: #059669;
-    }
-
-    .status-medium {
-      background: rgba(251,191,36,0.15);
-      color: #d97706;
-    }
-
-    .status-low {
-      background: rgba(239,68,68,0.15);
-      color: #dc2626;
-    }
-
-    @media (max-width: 768px) {
-      .charts-grid {
-        grid-template-columns: 1fr;
-      }
-      .metrics-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width:600px){
+      .toolbar{flex-direction:column;align-items:stretch}
+      .actions{justify-content:center}
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>Dashboard de Análisis Estadístico</h1>
-      <p class="subtitle">Análisis en tiempo real de métricas y tendencias</p>
+      <h1>VENTAS TOTALES GENERADAS</h1>
+      <p class="subtitle">Totales generados a partir del seguimientos de las transacciones realizadas.</p>
     </header>
 
-    <div class="metrics-grid">
-      <div class="metric-card">
-        <div class="metric-label">Total Registros</div>
-        <div class="metric-value">12,458</div>
-        <div class="metric-change">↑ 12.5% vs mes anterior</div>
+    
+    <div class="toolbar">
+      <div class="filters">
+        <label for="yearFilter" style="display:flex;align-items:center;gap:8px">
+          <small>Año</small>
+          <select id="yearFilter">
+            <option value="2024" selected>2024</option>
+            <option value="2023">2023</option>
+          </select>
+        </label>
+
+        <label for="regionFilter" style="display:flex;align-items:center;gap:8px">
+          <small>Región</small>
+          <select id="regionFilter">
+            <option value="todas">Todas</option>
+            <option value="norte">Norte</option>
+            <option value="centro">Centro</option>
+            <option value="sur">Sur</option>
+          </select>
+        </label>
+
+        <label for="categoryFilter" style="display:flex;align-items:center;gap:8px">
+          <small>Categoría</small>
+          <select id="categoryFilter">
+            <option value="todas">Todas</option>
+            <option value="A">Sterling 1</option>
+            <option value="B">Sterling 2</option>
+            <option value="C">Sterling 3</option>
+          </select>
+        </label>
       </div>
 
-      <div class="metric-card">
-        <div class="metric-label">Media General</div>
-        <div class="metric-value">78.4</div>
-        <div class="metric-change">↑ 5.2% mejora</div>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-label">Desviación Estándar</div>
-        <div class="metric-value">15.6</div>
-        <div class="metric-change negative">↓ 2.1% reducción</div>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-label">Tasa de Conversión</div>
-        <div class="metric-value">32.8%</div>
-        <div class="metric-change">↑ 8.3% incremento</div>
-      </div>
-    </div>
-
-    <!-- Gráficos -->
-    <div class="charts-grid">
-      <div class="chart-card">
-        <h3 class="chart-title">Tendencia Temporal</h3>
-        <div class="chart-container"><canvas id="lineChart"></canvas></div>
-      </div>
-
-      <div class="chart-card">
-        <h3 class="chart-title">Distribución por Categoría</h3>
-        <div class="chart-container"><canvas id="barChart"></canvas></div>
-      </div>
-
-      <div class="chart-card">
-        <h3 class="chart-title">Composición de Datos</h3>
-        <div class="chart-container"><canvas id="pieChart"></canvas></div>
-      </div>
-
-      <div class="chart-card">
-        <h3 class="chart-title">Correlación de Variables</h3>
-        <div class="chart-container"><canvas id="scatterChart"></canvas></div>
+      <div class="actions">
+        <button id="exportExcelBtn">📊 Exportar a Excel</button>
+        <button id="exportPdfBtn">📄 Exportar a PDF (con imagen)</button>
+        <button id="downloadImageBtn" class="secondary">🖼 Descargar Imagen</button>
       </div>
     </div>
 
-    <!-- Tabla -->
-    <div class="data-table">
-      <h3 class="chart-title">Resumen de Datos Estadísticos</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Métrica</th><th>Valor</th><th>Percentil 25</th><th>Mediana</th><th>Percentil 75</th><th>Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Ventas</td><td>$245,680</td><td>$180,000</td><td>$220,000</td><td>$280,000</td><td><span class="status-badge status-high">Alto</span></td></tr>
-          <tr><td>Usuarios Activos</td><td>8,542</td><td>6,200</td><td>7,800</td><td>9,100</td><td><span class="status-badge status-high">Alto</span></td></tr>
-          <tr><td>Tiempo Respuesta (ms)</td><td>124</td><td>95</td><td>110</td><td>145</td><td><span class="status-badge status-medium">Medio</span></td></tr>
-          <tr><td>Tasa de Rebote</td><td>28.5%</td><td>20%</td><td>25%</td><td>35%</td><td><span class="status-badge status-medium">Medio</span></td></tr>
-          <tr><td>Errores del Sistema</td><td>42</td><td>30</td><td>38</td><td>55</td><td><span class="status-badge status-low">Bajo</span></td></tr>
-          <tr><td>Satisfacción Cliente</td><td>4.6/5</td><td>4.2</td><td>4.5</td><td>4.8</td><td><span class="status-badge status-high">Alto</span></td></tr>
-        </tbody>
-      </table>
+   
+    <div id="dashboardArea">
+      
+      <section class="metrics-grid" id="metricsGrid">
+        <div class="metric-card">
+          <div class="metric-label">Total Ventas</div>
+          <div class="metric-value" id="totalVentas">$0</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Productos Vendidos</div>
+          <div class="metric-value" id="productosVendidos">0</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Clientes Activos</div>
+          <div class="metric-value" id="clientesActivos">0</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Tasa de Conversión</div>
+          <div class="metric-value" id="tasaConversion">0%</div>
+        </div>
+      </section>
+
+     
+      <section class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Tendencia Mensual</div>
+          <div style="height:260px width:200px"><canvas id="lineChart"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-title">Distribución por Producto</div>
+          <div style="height:260px width:200px"><canvas id="barChart"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-title">Segmentación por Categoría</div>
+          <div style="height:260px width:200px"><canvas id="pieChart"></canvas></div>
+        </div>
+      </section>
+
+     
+      <section class="data-table">
+        <h3 style="margin-bottom:10px">Detalle de Datos Filtrados</h3>
+        <table id="detailTable">
+          <thead>
+            <tr><th>Producto</th><th>Unidades</th><th>Categoria</th><th>Región</th><th>Mes</th><th>Venta ($)</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
     </div>
   </div>
 
   <script>
-    const lightOptions = {
-      plugins: {
-        legend: {
-          labels: { color: "#0f172a" }
-        }
+ 
+  const database = {
+    2024: {
+      norte: {
+        ventas: 5200000, productos: 12800, clientes: 4200, conversion: 35,
+        monthly:[5200000,480000,450000,540000,560000,470000,600000,520000,500000,490000],
+        productosData:[25000,28000,24000,29000,32000],
+        categorias:[40,25,20,15],
+        detalle: generateDetalle('norte',2024)
       },
-      scales: {
-        x: {
-          ticks: { color: "#1e293b" },
-          grid: { color: "rgba(0,0,0,0.1)" }
-        },
-        y: {
-          ticks: { color: "#1e293b" },
-          grid: { color: "rgba(0,0,0,0.1)" }
-        }
+      centro: {
+        ventas: 4700000, productos: 11500, clientes: 3800, conversion: 32,
+        monthly:[420000,430000,450000,480000,520000,460000,500000,470000,440000,430000],
+        productosData:[22000,26000,21000,25000,28000],
+        categorias:[30,30,25,15],
+        detalle: generateDetalle('centro',2024)
+      },
+      sur: {
+        ventas: 3950000, productos: 9600, clientes: 3100, conversion: 28,
+        monthly:[350000,360000,340000,380000,420000,400000,430000,420000,410000,370000],
+        productosData:[18000,21000,19000,20000,18000],
+        categorias:[25,35,25,15],
+        detalle: generateDetalle('sur',2024)
       }
+    },
+    2023: {
+      norte: {
+        ventas: 4600000, productos: 11000, clientes: 4000, conversion: 30,
+        monthly:[420000,390000,400000,420000,460000,420000,480000,450000,430000,420000],
+        productosData:[21000,24000,20000,23000,26000],
+        categorias:[35,25,25,15],
+        detalle: generateDetalle('norte',2023)
+      },
+      centro: {
+        ventas: 4200000, productos: 10200, clientes: 3500, conversion: 28,
+        monthly:[380000,390000,400000,420000,440000,410000,450000,430000,410000,400000],
+        productosData:[1900,2300,2000,2200,2500],
+        categorias:[30,30,25,15],
+        detalle: generateDetalle('centro',2023)
+      },
+      sur: {
+        ventas: 3600000, productos: 8800, clientes: 2800, conversion: 25,
+        monthly:[320000,330000,310000,350000,380000,360000,390000,370000,360000,350000],
+        productosData:[1600,1900,1700,1800,1600],
+        categorias:[25,35,25,15],
+        detalle: generateDetalle('sur',2023)
+      }
+    }
+  };
+
+  function generateDetalle(region, year){
+    const prods = ['Prod A','Prod B','Prod C','Prod D','Prod E'];
+    const categorias = ['A','B','C','C','B'];
+    const rows = [];
+    for(let m=1;m<=10;m++){
+      for(let i=0;i<prods.length;i++){
+        const unidades = Math.floor(Math.random()*15000)+200;
+        const venta = unidades * (Math.floor(Math.random()*500)+20);
+        rows.push({producto:prods[i], unidades, categoria: categorias[i], region, mes: m, venta});
+      }
+    }
+    return rows;
+  }
+
+  const lineCtx = document.getElementById('lineChart');
+  const barCtx = document.getElementById('barChart');
+  const pieCtx = document.getElementById('pieChart');
+
+  const lineChart = new Chart(lineCtx, {
+    type:'line',
+    data:{labels:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct'],
+      datasets:[{label:'Ventas', data:[], borderColor:'#3b82f6', backgroundColor:'rgba(59,130,246,0.25)', fill:true, tension:0.4}]},
+    options:{plugins:{legend:{labels:{color:'#fff'}}},scales:{x:{ticks:{color:'#fff'}},y:{ticks:{color:'#fff'}}}}
+  });
+
+  const barChart = new Chart(barCtx, {
+    type:'bar',
+    data:{labels:['Prod A','Prod B','Prod C','Prod D','Prod E'], datasets:[{label:'Unidades', data:[], backgroundColor:['#3b82f6','#a855f7','#10b981','#ef4444','#fbbf24']}]},
+    options:{plugins:{legend:{labels:{color:'#fff'}}},scales:{x:{ticks:{color:'#fff'}},y:{ticks:{color:'#fff'}}}}
+  });
+
+  const pieChart = new Chart(pieCtx, {
+    type:'doughnut',
+    data:{labels:['Cat A','Cat B','Cat C','Cat D'], datasets:[{data:[], backgroundColor:['#3b82f6','#a855f7','#10b981','#fbbf24']}]},
+    options:{plugins:{legend:{labels:{color:'#fff'}, position:'bottom'}}}
+  });
+
+  const yearFilter = document.getElementById('yearFilter');
+  const regionFilter = document.getElementById('regionFilter');
+  const categoryFilter = document.getElementById('categoryFilter');
+
+  const totalVentasEl = document.getElementById('totalVentas');
+  const productosVendidosEl = document.getElementById('productosVendidos');
+  const clientesActivosEl = document.getElementById('clientesActivos');
+  const tasaConversionEl = document.getElementById('tasaConversion');
+
+  const detailTableBody = document.querySelector('#detailTable tbody');
+  const dashboardArea = document.getElementById('dashboardArea');
+
+  let lastCaptureDataUrl = null;
+
+  function applyFiltersAndAggregate(){
+    const year = yearFilter.value;
+    const region = regionFilter.value;
+    const category = categoryFilter.value;
+
+    const regionesList = (region === 'todas') ? Object.keys(database[year]) : [region];
+
+    let ventasSum = 0, productosSum = 0, clientesSum = 0, conversionSum = 0;
+    const detalleFiltrado = [];
+
+    regionesList.forEach(r => {
+      const block = database[year][r];
+      ventasSum += block.ventas;
+      productosSum += block.productos;
+      clientesSum += block.clientes;
+      conversionSum += block.conversion;
+
+      block.detalle.forEach(row=>{
+        if(category === 'todas' || row.categoria === category) detalleFiltrado.push({...row, year, region: r});
+      });
+    });
+
+    const conversionAvg = Math.round(conversionSum / regionesList.length);
+
+    totalVentasEl.textContent = `$${ventasSum.toLocaleString()}`;
+    productosVendidosEl.textContent = productosSum.toLocaleString();
+    clientesActivosEl.textContent = clientesSum.toLocaleString();
+    tasaConversionEl.textContent = `${conversionAvg}%`;
+
+    detailTableBody.innerHTML = '';
+    detalleFiltrado.slice(0,200).forEach(r=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${r.producto}</td><td>${r.unidades.toLocaleString()}</td><td>${r.categoria}</td><td>${r.region}</td><td>${r.mes}</td><td>$${r.venta.toLocaleString()}</td>`;
+      detailTableBody.appendChild(tr);
+    });
+
+    const sampleRegion = regionesList[0];
+    const block = database[year][sampleRegion];
+
+    lineChart.data.datasets[0].data = block.monthly.slice();
+    barChart.data.datasets[0].data = block.productosData.slice();
+    pieChart.data.datasets[0].data = block.categorias.slice();
+
+    lineChart.update(); barChart.update(); pieChart.update();
+
+    return {
+      year, region, category,
+      metrics: { ventas: ventasSum, productos: productosSum, clientes: clientesSum, conversion: conversionAvg },
+      detail: detalleFiltrado
     };
+  }
 
-    // Línea
-    new Chart(document.getElementById('lineChart').getContext('2d'), {
-      type: 'line',
-      data: {
-        labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct'],
-        datasets: [
-          { label: 'Ventas 2024', data: [65,72,81,78,92,88,95,102,98,108], borderColor:'#3b82f6', backgroundColor:'rgba(59,130,246,0.2)', tension:0.4, fill:true },
-          { label: 'Ventas 2023', data: [58,65,70,68,75,72,78,82,80,85], borderColor:'#a855f7', backgroundColor:'rgba(168,85,247,0.2)', tension:0.4, fill:true }
-        ]
-      },
-      options: lightOptions
-    });
+  [yearFilter, regionFilter, categoryFilter].forEach(el => el.addEventListener('change', ()=>{ applyFiltersAndAggregate(); }));
 
-    // Barras
-    new Chart(document.getElementById('barChart').getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['Producto A','Producto B','Producto C','Producto D','Producto E'],
-        datasets: [{
-          label: 'Unidades Vendidas',
-          data: [2840,3250,2100,2920,3480],
-          backgroundColor:['rgba(59,130,246,0.8)','rgba(168,85,247,0.8)','rgba(16,185,129,0.8)','rgba(239,68,68,0.8)','rgba(251,191,36,0.8)'],
-          borderWidth:2
-        }]
-      },
-      options: lightOptions
-    });
 
-    // Pastel
-    new Chart(document.getElementById('pieChart').getContext('2d'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Segmento A','Segmento B','Segmento C','Segmento D','Otros'],
-        datasets: [{
-          data: [35,28,20,12,5],
-          backgroundColor:['rgba(59,130,246,0.8)','rgba(168,85,247,0.8)','rgba(16,185,129,0.8)','rgba(239,68,68,0.8)','rgba(107,114,128,0.8)'],
-          borderColor:'#fff',
-          borderWidth:2
-        }]
-      },
-      options: { plugins: { legend: { labels:{color:"#0f172a"}, position:'right' } } }
-    });
+  applyFiltersAndAggregate();
 
-    // Dispersión
-    const scatterData = Array.from({length:50},()=>({x:Math.random()*100,y:Math.random()*100}));
-    new Chart(document.getElementById('scatterChart').getContext('2d'), {
-      type: 'scatter',
-      data: { datasets:[{ label:'Correlación X-Y', data:scatterData, backgroundColor:'rgba(59,130,246,0.6)', borderColor:'#3b82f6', pointRadius:5, pointHoverRadius:7 }] },
-      options: lightOptions
-    });
+  async function captureDashboard(){
+
+    const opts = { scale: 2, useCORS:true, backgroundColor: null };
+    const canvas = await html2canvas(dashboardArea, opts);
+    const dataUrl = canvas.toDataURL('image/png', 0.9);
+    lastCaptureDataUrl = dataUrl;
+    return dataUrl;
+  }
+
+  document.getElementById('exportPdfBtn').addEventListener('click', async ()=>{
+    try {
+      const { jsPDF } = window.jspdf;
+      const data = applyFiltersAndAggregate();
+      const imgData = await captureDashboard();
+
+      const pdf = new jsPDF({orientation:'landscape', unit:'pt', format:'a4'});
+
+      const pageW = pdf.internal.pageSize.getWidth();
+      const pageH = pdf.internal.pageSize.getHeight();
+      const img = new Image();
+      img.src = imgData;
+      img.onload = function(){
+        const imgW = pageW - 40;
+        const ratio = img.width / img.height;
+        const imgH = imgW / ratio;
+        pdf.addImage(imgData, 'PNG', 20, 20, imgW, imgH);
+
+        pdf.setFontSize(12);
+        pdf.setTextColor(0,0,0);
+        const startY = imgH + 40;
+        let y = startY;
+        pdf.setFontSize(14);
+        pdf.text(`Resumen (Año: ${data.year} · Región: ${data.region} · Categoría: ${data.category})`, 20, y);
+        y += 20;
+        pdf.setFontSize(11);
+        pdf.text(`Total Ventas: $${data.metrics.ventas.toLocaleString()}`, 20, y); y+=16;
+        pdf.text(`Productos Vendidos: ${data.metrics.productos.toLocaleString()}`, 20, y); y+=16;
+        pdf.text(`Clientes Activos: ${data.metrics.clientes.toLocaleString()}`, 20, y); y+=16;
+        pdf.text(`Tasa de Conversión: ${data.metrics.conversion}%`, 20, y); y+=24;
+
+        const headers = ['Producto','Unidades','Categoria','Region','Mes','Venta'];
+        const rows = data.detail.slice(0,10).map(r => [r.producto, r.unidades, r.categoria, r.region, r.mes, `$${r.venta.toLocaleString()}`]);
+
+        let tx = 20;
+        y += 6;
+        pdf.setFontSize(10);
+        pdf.text(headers.join(' | '), tx, y); y+=12;
+        rows.forEach(row => { pdf.text(row.join(' | '), tx, y); y+=10; });
+
+        const filename = `Reporte_Dashboard_${data.year}_${data.region}_${data.category}.pdf`;
+        pdf.save(filename);
+      };
+    } catch (err) {
+      console.error(err);
+      alert('Error generando PDF: ' + err.message);
+    }
+  });
+
+  document.getElementById('downloadImageBtn').addEventListener('click', async ()=>{
+    try {
+      const dataUrl = await captureDashboard();
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = `Dashboard_${Date.now()}.png`;
+      a.click();
+    } catch(err){
+      console.error(err);
+      alert('No se pudo capturar la imagen: ' + err.message);
+    }
+  });
+
+  document.getElementById('exportExcelBtn').addEventListener('click', async ()=>{
+    try {
+      const data = applyFiltersAndAggregate();
+
+      const resumen = [
+        {Campo:'Año', Valor: data.year},
+        {Campo:'Región', Valor: data.region},
+        {Campo:'Categoría', Valor: data.category},
+        {Campo:'Total Ventas', Valor: data.metrics.ventas},
+        {Campo:'Productos Vendidos', Valor: data.metrics.productos},
+        {Campo:'Clientes Activos', Valor: data.metrics.clientes},
+        {Campo:'Tasa de Conversión (%)', Valor: data.metrics.conversion}
+      ];
+
+      const detalleRows = data.detail.map(r => ({
+        Producto: r.producto,
+        Unidades: r.unidades,
+        Categoria: r.categoria,
+        Region: r.region,
+        Mes: r.mes,
+        Venta: r.venta
+      }));
+
+      const wb = XLSX.utils.book_new();
+      const ws1 = XLSX.utils.json_to_sheet(resumen, {header:['Campo','Valor']});
+      XLSX.utils.book_append_sheet(wb, ws1, 'Resumen');
+
+      const ws2 = XLSX.utils.json_to_sheet(detalleRows.slice(0,1000));
+      XLSX.utils.book_append_sheet(wb, ws2, 'Detalle');
+
+      const imgDataUrl = await captureDashboard();
+      const ws3 = XLSX.utils.aoa_to_sheet([['Imagen (abra el archivo PNG generado)'],[imgDataUrl]]);
+      XLSX.utils.book_append_sheet(wb, ws3, 'Imagen');
+
+      const wbout = XLSX.write(wb, {bookType:'xlsx', type:'array'});
+      const blob = new Blob([wbout], {type:'application/octet-stream'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const fname = `Reporte_Dashboard_${data.year}_${data.region}_${data.category}.xlsx`;
+      a.download = fname;
+      a.click();
+      URL.revokeObjectURL(url);
+
+      const imgLink = document.createElement('a');
+      imgLink.href = imgDataUrl;
+      imgLink.download = `Dashboard_${Date.now()}.png`;
+      imgLink.click();
+
+    } catch (err) {
+      console.error(err);
+      alert('Error exportando Excel: ' + err.message);
+    }
+  });
+
   </script>
 </body>
-</html>>
+</html>
