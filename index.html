@@ -370,6 +370,104 @@
       background-color: #999;
     }
 
+    .portfolio-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  .portfolio-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 2rem;
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 10px 40px rgba(255, 165, 0, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .portfolio-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(255,165,0,0.15), transparent 70%);
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+
+  .portfolio-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 50px rgba(255, 165, 0, 0.3);
+  }
+
+  .portfolio-card:hover::before {
+    opacity: 1;
+  }
+
+  .portfolio-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #ffa500;
+    font-weight: 600;
+  }
+
+  .portfolio-card p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Botón elegante */
+  .portfolio-btn {
+    display: inline-block;
+    padding: 10px 24px;
+    color: #fff;
+    background: linear-gradient(135deg, #ff8c00, #ffa500);
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 20px rgba(255,165,0,0.3);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(6px);
+  }
+
+  .portfolio-btn:hover {
+    background: linear-gradient(135deg, #ffa500, #ffb733);
+    box-shadow: 0 6px 25px rgba(255,165,0,0.5);
+    transform: translateY(-2px);
+  }
+
+  /* Animación de brillo líquido */
+  .portfolio-card::after {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.2), transparent 60%);
+    transform: rotate(25deg);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .portfolio-card:hover::after {
+    opacity: 0.5;
+    animation: shimmer 1.5s forwards;
+  }
+
+  @keyframes shimmer {
+    from { transform: translate(-100%, -100%) rotate(25deg); }
+    to { transform: translate(100%, 100%) rotate(25deg); }
+  }
+
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 text-slate-100 transition-colors duration-500" id="body">
@@ -1204,7 +1302,7 @@
 <div id="estadistica" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
   <!-- Imagen de fondo -->
   <div class="absolute inset-0 bg-cover bg-center opacity-20"
-       style="background-image: url('https://media.istockphoto.com/id/1488294044/photo/businessman-works-on-laptop-showing-business-analytics-dashboard-with-charts-metrics-and-kpi.jpg?s=1024x1024&w=is&k=20&c=VpSNiVam6Fw3egrJYnP28mEEAXyCjFRjqV_k4PK5S04=');">
+       style="background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_13_26%20PM.png?raw=true');">
   </div>
   <!-- Capa de color semitransparente para contraste -->
   <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
@@ -1225,7 +1323,7 @@
 <div id="lenguajes" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
   <!-- Imagen de fondo -->
   <div class="absolute inset-0 bg-cover bg-center opacity-20"
-       style="background-image: url('https://cdn.pixabay.com/photo/2015/09/05/20/02/coding-924920_1280.jpg');">
+       style="background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_18_02%20PM.png?raw=true');">
   </div>
   <!-- Capa de color semitransparente para contraste -->
   <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
@@ -1246,7 +1344,7 @@
 <div id="frameworks" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
   <!-- Imagen de fondo -->
   <div class="absolute inset-0 bg-cover bg-center opacity-20"
-       style="background-image: url('https://media.istockphoto.com/id/1093434408/photo/website-designer-creative-planning-application-development-draft-sketch-drawing-template.jpg?s=1024x1024&w=is&k=20&c=sXWt4G8UGSq7uGORv2vFheevU6_wv_BZqKJy-1577j8=');">
+       style="background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_41_28%20PM.png?raw=true');">
   </div>
   <!-- Capa de color semitransparente para contraste -->
   <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
@@ -1266,7 +1364,7 @@
 <div id="complementarias" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
   <!-- Imagen de fondo -->
   <div class="absolute inset-0 bg-cover bg-center opacity-20"
-       style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80');">
+       style="background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2008_15_16%20PM.png?raw=true');">
   </div>
   <!-- Capa de color semitransparente para contraste -->
   <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
@@ -1595,18 +1693,31 @@
 <br>
 <br>
   <!-- BOTONES A DASHBOARDS -->
-  <div class="flex gap-4 mb-6">
-    <a href="Dashboard1.html" class="px-4 py-2 bg-orange-500 text-white rounded-lg shadow-md hover:bg-orange-600 transition">Dashboard de Ventas</a>
-    </div>
-    <div class="flex gap-4 mb-6">
-    <a href="Dashboard2.html" class="px-4 py-2 bg-orange-500 text-white rounded-lg shadow-md hover:bg-orange-600 transition">Dashboard Futbol</a>
-    </div>
-    <div class="flex gap-4 mb-6">
-    <a href="Dashboard3.html" class="px-4 py-2 bg-orange-500 text-white rounded-lg shadow-md hover:bg-orange-600 transition">Dashboard Colombia</a>
-    </div>
-    <div class="flex gap-4 mb-6">
-    <a href="Test.html" class="px-4 py-2 bg-orange-500 text-white rounded-lg shadow-md hover:bg-orange-600 transition">Test analisis de datos</a>
-    </div>
+<section class="portfolio-container">
+  <div class="portfolio-card">
+    <h3>Dashboard de Ventas</h3>
+    <p>Visualización interactiva de KPIs y métricas comerciales.</p>
+    <a href="Dashboard1.html" class="portfolio-btn">Ver Proyecto</a>
+  </div>
+
+  <div class="portfolio-card">
+    <h3>Análisis estadístico Luis Díaz</h3>
+    <p>Los datos mas relevantes de la carrera de Luis Díaz, Jugador de fútbol nacido en Colombia.</p>
+    <a href="Dashboard2.html" class="portfolio-btn">Ver Proyecto</a>
+  </div>
+
+  <div class="portfolio-card">
+    <h3>Dashboard Colombia</h3>
+    <p>Datos macroeconómicos e indicadores nacionales.</p>
+    <a href="Dashboard3.html" class="portfolio-btn">Ver Proyecto</a>
+  </div>
+
+  <div class="portfolio-card">
+    <h3>Test Análisis de Datos</h3>
+    <p>Evaluación de conocimientos en análisis y visualización.</p>
+    <a href="Test.html" class="portfolio-btn">Ver Proyecto</a>
+  </div>
+</section>
     <br>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
