@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dashboard responsive</title>
+  <title>Estadísticas Luis Díaz</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://github.com/Santiago131440/SantiagoSterling/blob/main/1000234043.jpg?raw=true">
   <style>
     :root {
       --bg: #f3f6f8;
@@ -16,9 +17,7 @@
       font-family: 'Inter', system-ui, sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -164,6 +163,7 @@
       background: var(--glass);
       padding: 16px;
       border-radius: 16px;
+      box-shadow: var(--card-shadow);
     }
 
     canvas {
@@ -203,94 +203,77 @@
       background: #eef6f8;
       font-size: 20px;
     }
+    .dot img {
+        width: 70%;
+        height: 70%;
+        object-fit: contain;
+        border-radius: 8px;
+      }
 
     /* 📱 Media Queries */
     @media (max-width: 768px) {
-      .left, .right {
-        padding: 20px;
-      }
-
-      .plant-card {
-        padding: 16px;
-      }
-
-      .plant-card img {
-        width: 100px;
-        height: 100px;
-      }
-
-      .right .title {
-        font-size: 22px;
-      }
-
-      .btn {
-        font-size: 13px;
-        padding: 8px 12px;
-      }
-
-      .big-action {
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .dot {
-        width: 36px;
-        height: 36px;
-      }
+      .left, .right { padding: 20px; }
+      .plant-card { padding: 16px; }
+      .plant-card img { width: 100px; height: 100px; }
+      .right .title { font-size: 22px; }
+      .btn { font-size: 13px; padding: 8px 12px; }
+      .big-action { flex-direction: column; gap: 8px; }
+      .dot { width: 36px; height: 36px; }
     }
   </style>
 </head>
+
 <body>
   <div class="frame">
     
     <section class="left">
       <div class="plant-card">
         <img src="https://estaticos.elcolombiano.com/binrepository/862x566/82c0/780d565/none/11101/YHGD/gettyimages-2231627936_48933493_20251004115917.jpg" alt="imagen hero" />
-        <h2>Luis Diaz</h2>
+        <h2>Luis Fernando Díaz Marulanda</h2>
         <p class="small">Futbolista Colombiano</p>
         <div>
-          <span class="badge">128 Partidos</span>
-          <span class="badge">24% crecimiento</span>
+          <span class="badge">12 Partidos jugados</span>
+          <span class="badge">Dorsal(es): 7</span>
         </div>
       </div>
     </section>
 
     <section class="right">
-      <div class="title">Estadísticas de inicio en Bayern, liga 2025-2026</div>
-      <div class="sub">Visión general · Octubre 2025</div>
+      <div class="title">Estadísticas de desempeño en el campo</div>
+      <div class="sub">Visión general · 22 de Octubre de 2025</div>
 
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Producto</th><th>Categoría</th><th>Stock</th><th>Ventas</th><th>Acción</th>
+              <th>Temporada</th><th>Equipo</th><th>Partidos</th><th>Goles</th><th>Acción</th>
             </tr>
           </thead>
           <tbody id="products"></tbody>
         </table>
       </div>
 
-      <div class="chart-card">
-        <canvas id="chart"></canvas>
-      </div>
+      <!-- 📊 GRÁFICOS DASHBOARD -->
+      <div class="chart-card"><p>Gráfico de eficiencia: partidos vs goles por temporada (Valores en porcentaje)</p><canvas id="chartLine"></canvas></div>
+      <div class="chart-card"><p>Estadísticas generales</p><canvas id="chartBar"></canvas></div>
+      <div class="chart-card"><p>Gráfico de atributos</p><canvas id="chartRadar"></canvas></div>
 
       <div style="margin-top:16px;">
-        <span class="badge">Inventario</span>
-        <span class="badge">Pedidos</span>
-        <span class="badge">Clientes</span>
+        <span class="badge">1005 Minutos jugados</span>
+        <span class="badge">4 Asistencias</span>
+        <span class="badge">3 tarjetas amarillas</span>
       </div>
 
       <div style="margin-top:20px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px">
         <small>Última actualización: <span id="lastUpdate">ahora</span></small>
-        <div>
-          <button class="btn ghost" id="btnExport">Exportar</button>
-          <button class="btn" id="btnAdd">Nuevo Producto +</button>
-        </div>
+        <div><button class="btn ghost" id="btnExport">Exportar trayectoria</button></div>
       </div>
 
       <div class="big-action">
-        <div class="dot">⚡</div>
-        <div style="font-weight:600">Acciones rápidas</div>
+        <div class="dot">
+          <img src="https://media.licdn.com/dms/image/v2/D4E03AQFM3Wl3d2jpyA/profile-displayphoto-crop_800_800/B4EZn4eAGJJAAI-/0/1760810238860?e=1762992000&v=beta&t=jDmJ2zR7Y2G-d2mUmiJoxLyTqxXqleMne3H10E_7DnM" alt="icono" />
+        </div>
+        <div style="font-weight:600">Desarrollado por:</div>
         <button class="btn" id="btnQuick">Ir →</button>
       </div>
     </section>
@@ -298,13 +281,21 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+    // Tabla de datos
     const sample = [
-      {name:'Herbs pods', cat:'Plantas', stock:42, sales:110},
-      {name:'Garden pack', cat:'Accesorios', stock:18, sales:84},
-      {name:'Outdoor light', cat:'Iluminación', stock:76, sales:65},
-      {name:'Soil mix', cat:'Sustratos', stock:26, sales:44},
-      {name:'Watering kit', cat:'Herramientas', stock:9, sales:98},
-      {name:'Planter XL', cat:'Macetas', stock:51, sales:72}
+      {name:'2025/2026', cat:'Bayern Munich', stock:12, sales:7},
+      {name:'2024/2025', cat:'Liverpool', stock:50, sales:17},
+      {name:'2023/2024', cat:'Liverpool', stock:51, sales:13},
+      {name:'2022/2023', cat:'Liverpool', stock:21, sales:5},
+      {name:'2021/2022', cat:'Liverpool', stock:26, sales:6},
+      {name:'2021/2022', cat:'Porto', stock:28, sales:16},
+      {name:'2020/2021', cat:'Porto', stock:47, sales:11},
+      {name:'2019/2020', cat:'Porto', stock:50, sales:14},
+      {name:'2018/2019', cat:'Junior', stock:24, sales:3},
+      {name:'2017/2018', cat:'Junior', stock:59, sales:16},
+      {name:'2016/2017', cat:'Junior', stock:23, sales:1},
+      {name:'2016/2017', cat:'Barranquilla', stock:21, sales:1},
+      {name:'2015/2016', cat:'Barranquilla', stock:21, sales:2},
     ];
 
     const tbody = document.getElementById('products');
@@ -326,53 +317,103 @@
 
     function showDetail(i){
       const item = sample[i];
-      alert(item.name + " — Stock: " + item.stock + " — Ventas: " + item.sales);
+      alert(item.name + " — Partidos Jugados: " + item.stock + " — Goles: " + item.sales);
     }
 
-    const ctx = document.getElementById('chart').getContext('2d');
-    const chart = new Chart(ctx, {
-      type:'line',
-      data:{
-        labels: Array.from({length:30}, (_,i)=> i+1),
-        datasets:[{
-          label:'Ventas diarias',
-          data: Array.from({length:30}, ()=> Math.floor(Math.random()*120)+20),
-          tension:0.36,
-          fill:true,
-          backgroundColor: 'rgba(34,193,195,0.12)',
-          borderColor: 'rgba(34,193,195,0.9)',
-          pointRadius:0
+    //  DATOS DE LOS GRÁFICOS (editable)
+    const lineData = {
+      labels: ['15/16', '16/17', '16/17', '17/18', '18/19', '19/20', '20/21', '21/22', '21/22', '22/23', '23/24', '24/25', '25/26'],
+      values: [10, 5, 4, 27, 13, 28, 23, 57, 23, 24, 25, 34, 58]
+    };
+
+    const barData = {
+      labels: ['Centros', 'Precisión', 'Voleas', 'Definición', 'Pases cortos', 'Potencia', 'Resistencia', 'Tiros lejanos', 'Salto', 'Fuerza'],
+      values: [76, 71, 81, 83, 77, 85, 87, 81, 84, 69]
+    };
+
+    const radarData = {
+      labels: ['Ritmo', 'Tiro', 'Pase', 'Regate', 'Defensa', 'Físico'],
+      values: [90, 76, 76, 88, 54, 82]
+    };
+
+    Chart.defaults.font.family = 'Inter';
+    Chart.defaults.color = '#444';
+    Chart.defaults.plugins.legend.display = false;
+
+    //  LINE CHART
+    new Chart(document.getElementById('chartLine'), {
+      type: 'line',
+      data: {
+        labels: lineData.labels,
+        datasets: [{
+          data: lineData.values,
+          tension: 0.4,
+          fill: true,
+          backgroundColor: 'rgba(34,193,195,0.15)',
+          borderColor: 'rgba(34,193,195,1)',
+          pointBackgroundColor: '#22c1c3'
         }]
       },
-      options:{
-        plugins:{legend:{display:false}},
-        scales:{
-          x:{display:false},
-          y:{display:false}
-        },
-        responsive:true,
-        maintainAspectRatio:false
+      options: { responsive:true, maintainAspectRatio:false }
+    });
+
+    // BAR CHART
+    new Chart(document.getElementById('chartBar'), {
+      type: 'bar',
+      data: {
+        labels: barData.labels,
+        datasets: [{
+          data: barData.values,
+          backgroundColor: 'rgba(34,193,195,0.7)',
+          borderRadius: 8
+        }]
+      },
+      options: { responsive:true, maintainAspectRatio:false }
+    });
+
+    // RADAR CHART
+    new Chart(document.getElementById('chartRadar'), {
+      type: 'radar',
+      data: {
+        labels: radarData.labels,
+        datasets: [{
+          data: radarData.values,
+          fill: true,
+          backgroundColor: 'rgba(34,193,195,0.15)',
+          borderColor: 'rgba(34,193,195,0.9)',
+          pointBackgroundColor: '#22c1c3'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          r: {
+            angleLines: { color: 'rgba(0,0,0,0.05)' },
+            grid: { color: 'rgba(0,0,0,0.05)' },
+            suggestedMin: 0,
+            suggestedMax: 100,
+            ticks: { display: false },
+            pointLabels: { color: '#444', font: { size: 12 } }
+          }
+        }
       }
     });
 
-    document.getElementById('btnAdd').addEventListener('click', ()=>{
-      const name = prompt('Nombre del producto nuevo');
-      if(!name) return;
-      const newP = {name, cat:'Nuevo', stock:Math.floor(Math.random()*60), sales:0};
-      sample.unshift(newP);
-      renderRows(sample);
-    });
-
+    // Exportar CSV
     document.getElementById('btnExport').addEventListener('click', ()=>{
-      const csv = [ ['Producto','Categoria','Stock','Ventas'], ...sample.map(s=>[s.name,s.cat,s.stock,s.sales]) ].map(r=> r.map(c=>`"${c}"`).join(',')).join('\n');
+      const csv = [ ['Temporada','Equipo','Partidos','Goles'], ...sample.map(s=>[s.name,s.cat,s.stock,s.sales]) ]
+      .map(r=> r.map(c=>`"${c}"`).join(',')).join('\n');
       const blob = new Blob([csv], {type:'text/csv'});
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'productos.csv'; a.click();
+      const a = document.createElement('a');
+      a.href = url; a.download = 'luis_diaz_trayectoria.csv'; a.click();
       URL.revokeObjectURL(url);
     });
 
+    // Botón de acción
     document.getElementById('btnQuick').addEventListener('click', ()=>{
-      alert('Acción rápida: abrir vista detallada de métricas');
+      alert('Santiago Sterling - Analista de Datos');
     });
   </script>
 </body>
