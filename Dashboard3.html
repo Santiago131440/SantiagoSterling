@@ -1,127 +1,612 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Colombia - Estadísticas</title>
-  <!-- TailwindCSS -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard Colombia</title>
+
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
   <style>
     body {
-      background: url("https://github.com/Santiago131440/Imagenes-Excel/blob/main/ChatGPT%20Image%20Oct%206,%202025,%2007_24_29%20PM.png?raw=true") no-repeat center center fixed;
+      background: url('https://media.istockphoto.com/id/2077180655/es/foto/background-floor-shadow-wall-kitchen-concrete-white-texture-light-texture-abstract-mockup.jpg?s=612x612&w=0&k=20&c=X54ep_x83T3mn_A5k0aMj86n7BxR6LLkmBj8q9CRinY=');
       background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
     }
-    .glass {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 20px;
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+    /* Liquid glass effect for cards */
+    .glass-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.55));
+      backdrop-filter: blur(8px) saturate(120%);
+      -webkit-backdrop-filter: blur(8px) saturate(120%);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 6px 18px rgba(2,6,23,0.35);
     }
+    /* Accent green like image */
+    .accent-green { color: #25c06b; }
+    .accent-green-bg { background: linear-gradient(90deg,#22c06a,#8ef2b1); }
+    /* Tiny chart container style */
+    .mini-chart { height: 70px; width: 140px; }
+    /* Map city dot */
+    .city-dot { transition: transform .15s ease, r .15s ease; cursor: pointer;}
+    .city-dot:hover { transform: scale(1.18); }
+    /* Responsive grid tweak for many charts */
+    @media (min-width: 1280px) {
+      .xl-3 { grid-template-columns: repeat(3, minmax(0,1fr)) }
+    }
+    /* Dark sidebar accent */
+    .sidebar { background: linear-gradient(180deg,#0b0f13,#121418); border-right: 1px solid rgba(255,255,255,0.03); }
   </style>
 </head>
-<body class="min-h-screen flex flex-col p-6 text-gray-800">
+<body class="antialiased bg-gray-100 text-gray-800">
 
-  <!-- Encabezado -->
-  <header class="glass p-4 flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold">Dashboard Colombia</h1>
-    <p class="text-sm">Datos de ejemplo Santiago Sterling</p>
-  </header>
+  <div class="min-h-screen flex">
 
-  <!-- Contenido -->
-  <main class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-grow">
+    <!-- MAIN -->
+    <main class="flex-1 p-4 md:p-8">
+      <!-- Header -->
+      <header class="flex items-center justify-between mb-6">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold">Estadísticas sobre Colombia</h1>
+          <p class="text-sm text-gray-500">Datos importantes de Colombia</p>
+        </div>
 
-    <!-- Métricas -->
-    <section class="glass p-6 flex flex-col justify-center text-center">
-      <h2 class="text-xl font-semibold mb-4">Indicadores Generales</h2>
-      <div class="grid grid-cols-3 gap-4">
-        <div>
-          <p class="text-3xl font-bold text-blue-600">324</p>
-          <span class="text-sm">Proyectos</span>
+        <div class="flex items-center gap-4">
+          <!-- Filters -->
+          <div class="flex gap-2 items-center">
+            <select id="metricSelect" class="rounded-lg p-2 text-sm glass-card">
+              <option value="revenue">Ingresos</option>
+              <option value="customers">Clientes</option>
+              <option value="orders">Pedidos</option>
+              <option value="profit">Ganancias</option>
+            </select>
+            <input id="dateRange" type="month" class="rounded-lg p-2 text-sm glass-card" />
+            <button id="resetFilters" class="px-3 py-2 glass-card rounded-lg">Reiniciar</button>
+          </div>
+
+          <!-- Profile -->
+          <div class="flex items-center gap-3">
+            <div class="hidden md:block text-right">
+              <div class="font-medium">Santiago Sterling</div>
+              <div class="text-xs text-gray-500">analista de datos</div>
+            </div>
+            <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">SS</div>
+          </div>
         </div>
-        <div>
-          <p class="text-3xl font-bold text-green-600">16M</p>
-          <span class="text-sm">Usuarios</span>
+      </header>
+
+      <!-- TOP METRICS -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="glass-card p-4 rounded-xl">
+          <div class="text-xs text-gray-500">Clientes totales</div>
+          <div class="text-2xl font-bold" id="totalCustomers">21,978</div>
+          <div class="text-sm text-green-600">+15% desde el último mes</div>
         </div>
-        <div>
-          <p class="text-3xl font-bold text-orange-600">98%</p>
-          <span class="text-sm">Crecimiento</span>
+
+        <div class="glass-card p-4 rounded-xl">
+          <div class="text-xs text-gray-500">Clientes activos</div>
+          <div class="text-2xl font-bold" id="activeCustomers">10,369</div>
+          <div class="text-sm text-red-500">-9% desde el último mes</div>
         </div>
+
+        <div class="glass-card p-4 rounded-xl">
+          <div class="text-xs text-gray-500">Ganancia total</div>
+          <div class="text-2xl font-bold" id="profitTotal">$64,981.97</div>
+          <div class="text-sm text-green-600">+7.2% desde el último mes</div>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl">
+          <div class="text-xs text-gray-500">Gasto Total</div>
+          <div class="text-2xl font-bold" id="expenseTotal">$18,158.21</div>
+          <div class="text-sm text-red-500">-2% desde el último mes</div>
+        </div>
+      </section>
+
+      <!-- MAIN GRID -->
+      <section class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+        <!-- Left column: big sales overview + small widgets -->
+        <div class="col-span-2 grid grid-cols-1 gap-4">
+          <div class="glass-card p-4 rounded-xl">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <h2 class="font-semibold">Resumen de ventas</h2>
+                <div class="text-xs text-gray-500">Vista mensual</div>
+              </div>
+            </div>
+
+            <canvas id="salesChart" class="w-full" height="180"></canvas>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="glass-card p-4 rounded-xl">
+              <div class="text-xs text-gray-500">Usuarios de escritorio</div>
+              <div class="text-2xl font-bold">31.12%</div>
+              <div class="h-3 bg-green-300 rounded-full mt-3 w-3/4"></div>
+              <small class="text-xs text-gray-400">-15% desde el último mes</small>
+            </div>
+
+            <div class="glass-card p-4 rounded-xl">
+              <div class="text-xs text-gray-500">Usuarios de celular</div>
+              <div class="text-2xl font-bold">62.88%</div>
+              <div class="h-3 bg-green-300 rounded-full mt-3 w-full"></div>
+              <small class="text-xs text-gray-400">+8% desde el último mes</small>
+            </div>
+
+            <div class="glass-card p-4 rounded-xl">
+              <div class="text-xs text-gray-500">Tasa de conversión</div>
+              <div class="text-2xl font-bold">4.52%</div>
+              <canvas id="miniSpark" class="mini-chart mt-3"></canvas>
+            </div>
+          </div>
+
+          <!-- Multiple small charts -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="glass-card p-4 rounded-xl">
+              <h3 class="text-sm font-medium">Pedidos</h3>
+              <canvas id="ordersChart" height="80"></canvas>
+            </div>
+
+            <div class="glass-card p-4 rounded-xl">
+              <h3 class="text-sm font-medium">Ingresos por categoría</h3>
+              <canvas id="catChart" height="80"></canvas>
+            </div>
+
+            <div class="glass-card p-4 rounded-xl">
+              <h3 class="text-sm font-medium">Crecimiento de los clientes</h3>
+              <canvas id="growthChart" height="80"></canvas>
+            </div>
+
+            <div class="glass-card p-4 rounded-xl">
+              <h3 class="text-sm font-medium">Margen de ganancias</h3>
+              <canvas id="marginChart" height="80"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right column: map + schedule -->
+        <aside class="space-y-4">
+          <div class="glass-card p-4 rounded-xl">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="font-semibold">Mapa de Colombia — Ciudades</h3>
+                <div class="text-xs text-gray-500">Haz clic sobre una ciudad para ver mas detalles</div>
+              </div>
+              <div class="text-sm">
+                <select id="deptFilter" class="rounded-lg p-1 text-sm glass-card">
+                  <option value="all">Todos los Departamentos</option>
+                  <option value="bogota">Bogotá</option>
+                  <option value="antioquia">Antioquia</option>
+                  <option value="valle">Valle del Cauca</option>
+                  <option value="atlantic">Atlántico</option>
+                  <option value="bolivar">Bolívar</option>
+                  <option value="santander">Santander</option>
+                  <option value="risaralda">Risaralda</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Map container: simplified stylized SVG map placeholder -->
+            <div id="mapWrapper" class="mt-3 relative h-72 bg-gradient-to-b from-white to-gray-100 rounded-lg overflow-hidden">
+              <!-- background subtle grid -->
+              <svg class="absolute inset-0 w-full h-full" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="1">
+                    <stop offset="0%" stop-color="#eefdf3" />
+                    <stop offset="100%" stop-color="#e6f9ef" />
+                  </linearGradient>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#g1)"/>
+                <!-- stylized country silhouette (simplified blob) -->
+                <path d="M130,480 C90,400 120,280 230,250 C290,230 340,200 420,220 C500,240 620,220 680,170 C720,140 740,80 700,60 C660,40 540,80 480,90 C430,100 350,60 300,80 C260,95 210,140 180,200 C140,280 160,360 190,420 C210,460 170,500 130,480 Z"
+                      fill="rgba(14,165,105,0.06)" stroke="rgba(14,165,105,0.18)" stroke-width="2"/>
+              </svg>
+
+              <!-- city points positioned relatively inside map wrapper -->
+              <svg id="cityLayer" class="absolute inset-0 w-full h-full" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet" pointer-events="none">
+                <!-- We'll render city circles by JS for interactivity; fallback static circles -->
+                <!-- Example static circles (positions approximate) -->
+                <g id="cities" pointer-events="all"></g>
+              </svg>
+            </div>
+
+            <div id="cityInfo" class="mt-3 hidden p-3 rounded-lg bg-white/60 border border-white/30">
+              <div id="cityName" class="font-semibold"></div>
+              <div id="cityStats" class="text-sm text-gray-600"></div>
+            </div>
+          </div>
+
+          <div class="glass-card p-4 rounded-xl">
+            <h3 class="font-semibold mb-2">Horario</h3>
+            <ul class="space-y-3 text-sm text-gray-700">
+              <li class="flex items-start justify-between">
+                <div>
+                  <div class="font-medium">Análisis de los datos recolectados</div>
+                  <div class="text-xs text-gray-500">Buscar en páginas web</div>
+                </div>
+                <div class="text-xs text-gray-500">09:30 AM</div>
+              </li>
+
+              <li class="flex items-start justify-between">
+                <div>
+                  <div class="font-medium">Despliegue de negocio</div>
+                  <div class="text-xs text-gray-500">Datos estructurados con enfoque financiero</div>
+                </div>
+                <div class="text-xs text-gray-500">11:35 AM</div>
+              </li>
+
+              <li class="flex items-start justify-between">
+                <div>
+                  <div class="font-medium">Machine Learning</div>
+                  <div class="text-xs text-gray-500">Modelado de datos estratégicos</div>
+                </div>
+                <div class="text-xs text-gray-500">12:00 PM</div>
+              </li>
+
+              <li class="flex items-start justify-between">
+                <div>
+                  <div class="font-medium">Ciencia de datos</div>
+                  <div class="text-xs text-gray-500">Predicción de informes estadisticos con IA</div>
+                </div>
+                <div class="text-xs text-gray-500">12:30 PM</div>
+              </li>
+
+              <li class="flex items-start justify-between">
+                <div>
+                  <div class="font-medium">Cotización de sitio</div>
+                  <div class="text-xs text-gray-500">Análisis de las ventajas y desventajas</div>
+                </div>
+                <div class="text-xs text-gray-500">01:15 PM</div>
+              </li>
+            </ul>
+          </div>
+
+        </aside>
+      </section>
+
+      <!-- FOOTER CHARTS -->
+      <section class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="glass-card p-4 rounded-xl">
+          <h4 class="font-semibold">Pedidos mensuales</h4>
+          <canvas id="monthlyOrders" height="120"></canvas>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl">
+          <h4 class="font-semibold">Top departamentos por ingresos</h4>
+          <canvas id="deptChart" height="120"></canvas>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl">
+          <h4 class="font-semibold">Opinión del cliente</h4>
+          <canvas id="sentimentChart" height="120"></canvas>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Modal placeholder (simple) -->
+  <div id="modal" class="fixed inset-0 flex items-end md:items-center justify-center p-4 pointer-events-none">
+    <div id="modalCard" class="glass-card p-4 rounded-xl w-full max-w-xl transform translate-y-6 opacity-0 transition-all pointer-events-auto">
+      <div class="flex justify-between items-start">
+        <div>
+          <h3 id="modalTitle" class="font-semibold">Detalles por ciudad</h3>
+          <p id="modalSub" class="text-sm text-gray-500">Información de la ciudad</p>
+        </div>
+        <button id="closeModal" class="text-gray-600">✕</button>
       </div>
-    </section>
+      <div id="modalContent" class="mt-3">
+        <!-- filled by JS -->
+      </div>
+    </div>
+  </div>
 
-    <!-- Gráfica -->
-    <section class="glass p-6">
-      <h2 class="text-xl font-semibold mb-4">Estadísticas Nacionales</h2>
-      <canvas id="chartNacional"></canvas>
-    </section>
+<script>
+/* ---------------------------
+   Data & Utilities
+   --------------------------- */
+const cities = [
+  { id:'bogota', name:'Bogotá', dept:'bogota', x:410, y:260, pop:8_000_000 },
+  { id:'medellin', name:'Medellín', dept:'antioquia', x:340, y:200, pop:2_500_000 },
+  { id:'cali', name:'Cali', dept:'valle', x:300, y:320, pop:2_200_000 },
+  { id:'barranquilla', name:'Barranquilla', dept:'atlantic', x:620, y:150, pop:1_200_000 },
+  { id:'cartagena', name:'Cartagena', dept:'bolivar', x:620, y:190, pop:1_000_000 },
+  { id:'bucaramanga', name:'Bucaramanga', dept:'santander', x:500, y:160, pop:600_000 },
+  { id:'pereira', name:'Pereira', dept:'risaralda', x:360, y:300, pop:450_000 }
+];
 
-    <!-- Mapa -->
-    <section class="glass p-6">
-      <h2 class="text-xl font-semibold mb-4">Mapa de Colombia</h2>
-      <div id="map" class="w-full h-64 rounded-xl"></div>
-    </section>
+// Deterministic pseudo random generator (seeded)
+function mulberry32(a) {
+  return function() {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    var t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  }
+}
+const rand = mulberry32(123456);
 
-  </main>
+/* Generate fake metric data per city */
+function generateCityData(city, months=12) {
+  const base = Math.round(city.pop / 1000);
+  let arr = [];
+  for (let i=0;i<months;i++){
+    const jitter = Math.round((rand()-0.5)*base*0.2);
+    arr.push(Math.max(0, base + jitter + Math.round(Math.sin(i/2)*base*0.12)));
+  }
+  return arr;
+}
 
-  <!-- Pie -->
-  <footer class="glass p-4 text-center mt-6">
-    <p class="text-sm">Datos simulados - Ejemplo visual - Santiago Sterling</p>
-  </footer>
+/* global state */
+const state = {
+  metric: 'revenue',
+  month: null,
+  selectedCity: null,
+};
 
-  <!-- Scripts -->
-  <script>
-    // Chart.js - gráfico de barras
-    const ctx = document.getElementById('chartNacional').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Antioquia', 'Cundinamarca', 'Valle', 'Atlántico', 'Santander'],
-        datasets: [{
-          label: 'Usuarios (miles)',
-          data: [120, 90, 70, 50, 40],
-          backgroundColor: ['#2563eb','#16a34a','#f59e0b','#ef4444','#8b5cf6']
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: false }
-        }
-      }
-    });
+/* create a dataset map */
+const cityDatasets = {};
+cities.forEach(c => cityDatasets[c.id] = generateCityData(c, 12));
 
-    // Leaflet - mapa Colombia
-    const map = L.map('map').setView([4.5709, -74.2973], 5);
+/* Months labels */
+const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
-    }).addTo(map);
+/* ---------------------------
+   Chart Initialization
+   --------------------------- */
 
-    // Datos simulados por departamentos
-    const departamentos = {
-      "Antioquia": [6.2442, -75.5812, 120],
-      "Cundinamarca": [4.7110, -74.0721, 90],
-      "Valle del Cauca": [3.4516, -76.5320, 70],
-      "Atlántico": [10.9685, -74.7813, 50],
-      "Santander": [7.1193, -73.1227, 40]
-    };
-
-    for (let dep in departamentos) {
-      let [lat, lng, valor] = departamentos[dep];
-      L.circleMarker([lat, lng], {
-        radius: valor/10,
-        color: '#2563eb',
-        fillOpacity: 0.6
-      }).addTo(map).bindPopup(`<b>${dep}</b><br>Usuarios: ${valor}k`);
+/* Sales Chart (big) */
+const salesCtx = document.getElementById('salesChart').getContext('2d');
+const salesChart = new Chart(salesCtx, {
+  type: 'bar',
+  data: {
+    labels: months,
+    datasets: [{
+      label: 'Ventas (k)',
+      data: Array.from({length:12}, (_,i)=> Math.round( (rand()*6 + 4) * 1000 )),
+      backgroundColor: 'rgba(34,197,94,0.9)',
+      borderRadius: 8,
+      barPercentage: 0.6
+    }]
+  },
+  options: {
+    responsive:true,
+    plugins: { legend: { display:false } },
+    scales: {
+      y: { beginAtZero:true, ticks: { callback: v=> v>=1000? (v/1000)+'k' : v } }
     }
-  </script>
+  }
+});
+
+/* Mini spark */
+const miniCtx = document.getElementById('miniSpark').getContext('2d');
+const miniSpark = new Chart(miniCtx, {
+  type: 'line',
+  data: { labels: months.slice(0,7), datasets: [{ data: months.slice(0,7).map(()=> Math.round(rand()*20+10)), fill:true, tension:0.4 }]},
+  options: { responsive:true, plugins:{legend:{display:false}}, scales:{x:{display:false},y:{display:false}}}
+});
+
+/* Small Charts */
+function makeSmallChart(elemId, type, data, opts){
+  const ctx = document.getElementById(elemId).getContext('2d');
+  return new Chart(ctx, {
+    type,
+    data,
+    options: Object.assign({responsive:true, plugins:{legend:{display:false}}}, opts||{})
+  });
+}
+
+const ordersChart = makeSmallChart('ordersChart', 'doughnut', {
+  labels:['Online','Store'],
+  datasets:[{data:[65,35], backgroundColor:['rgba(34,197,94,0.9)','rgba(147,197,253,0.9)']}]
+});
+
+const catChart = makeSmallChart('catChart','pie', {
+  labels:['Retail','Services','Wholesale'],
+  datasets:[{data:[45,30,25]}]
+});
+
+const growthChart = makeSmallChart('growthChart','line', {
+  labels: months.slice(0,7),
+  datasets:[{data: months.slice(0,7).map(()=> Math.round(rand()*200+80)), fill:true }]
+});
+
+const marginChart = makeSmallChart('marginChart','bar', {
+  labels:['Q1','Q2','Q3','Q4'],
+  datasets:[{data:[12,15,10,18]}]
+});
+
+/* Footer charts */
+const monthlyOrders = makeSmallChart('monthlyOrders','bar', {
+  labels: months,
+  datasets:[{data: Array.from({length:12}, ()=> Math.round(rand()*600+200)), backgroundColor:'rgba(99,102,241,0.9)'}]
+});
+
+const deptChart = makeSmallChart('deptChart','polarArea', {
+  labels:['Bogotá','Antioquia','Valle','Atlántico','Bolívar'],
+  datasets:[{data:[45,25,15,8,7]}]
+});
+
+const sentimentChart = makeSmallChart('sentimentChart','doughnut', {
+  labels:['Positiva','Neutral','Negativa'],
+  datasets:[{data:[55,30,15]}]
+});
+
+/* ---------------------------
+   Map Rendering & Interaction
+   --------------------------- */
+
+const cityLayer = document.getElementById('cities');
+
+function renderCities(filterDept='all'){
+  cityLayer.innerHTML = '';
+  cities.forEach(c=>{
+    if (filterDept !== 'all' && c.dept !== filterDept) return;
+    // circle group
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('transform', `translate(${c.x},${c.y})`);
+    g.setAttribute('data-id', c.id);
+    g.innerHTML = `
+      <circle class="city-dot" r="8" fill="#16a34a" stroke="#0d7a3d" stroke-width="2"></circle>
+      <circle r="18" fill="rgba(16,185,129,0.07)"></circle>
+    `;
+    g.style.pointerEvents = 'auto';
+    g.addEventListener('mouseenter', ()=> showTooltip(c));
+    g.addEventListener('mouseleave', hideTooltip);
+    g.addEventListener('click', ()=> selectCity(c));
+    cityLayer.appendChild(g);
+  });
+}
+
+function showTooltip(c){
+  // show small floating tooltip near cursor — but for simplicity show in cityInfo
+  const info = document.getElementById('cityInfo');
+  document.getElementById('cityName').innerText = c.name;
+  const dataSum = cityDatasets[c.id].reduce((a,b)=>a+b,0);
+  document.getElementById('cityStats').innerText = `Population: ${c.pop.toLocaleString()} · Metric sample: ${dataSum}`;
+  info.classList.remove('hidden');
+}
+
+function hideTooltip(){
+  // keep shown until click; simple hide
+  const info = document.getElementById('cityInfo');
+  info.classList.add('hidden');
+}
+
+function selectCity(c){
+  state.selectedCity = c.id;
+  updateModal(c);
+  updateChartsForCity(c.id);
+  // center visual feedback: enlarge selected dot
+  document.querySelectorAll('#cities g').forEach(g=> g.querySelector('circle').setAttribute('r',8));
+  const selected = document.querySelector(`#cities g[data-id="${c.id}"]`);
+  if (selected) selected.querySelector('circle').setAttribute('r',12);
+}
+
+/* modal */
+const modal = document.getElementById('modal');
+const modalCard = document.getElementById('modalCard');
+function updateModal(c){
+  document.getElementById('modalTitle').innerText = c.name + ' — Detalles';
+  const content = document.getElementById('modalContent');
+  content.innerHTML = `
+    <div class="grid grid-cols-2 gap-3">
+      <div class="p-2 bg-white/80 rounded-lg">
+        <div class="text-xs text-gray-500">Population</div>
+        <div class="font-bold">${c.pop.toLocaleString()}</div>
+      </div>
+      <div class="p-2 bg-white/80 rounded-lg">
+        <div class="text-xs text-gray-500">Dept</div>
+        <div class="font-bold">${c.dept}</div>
+      </div>
+      <div class="col-span-2 mt-2">
+        <div class="text-xs text-gray-500">Last 12 months (${state.metric})</div>
+        <canvas id="cityMiniChart" height="80"></canvas>
+      </div>
+    </div>
+  `;
+  // show modal (simple)
+  modal.style.pointerEvents = 'auto';
+  modalCard.style.transform = 'translateY(0)';
+  modalCard.style.opacity = '1';
+  // render city mini chart
+  setTimeout(()=> {
+    const ctx = document.getElementById('cityMiniChart').getContext('2d');
+    if (window._cityMini) window._cityMini.destroy();
+    window._cityMini = new Chart(ctx, {
+      type:'line',
+      data: { labels: months, datasets:[{ data: cityDatasets[c.id], fill:true, tension:0.4 }]},
+      options:{ plugins:{legend:{display:false}} }
+    });
+  }, 120);
+}
+
+/* close modal */
+document.getElementById('closeModal').addEventListener('click', ()=>{
+  modal.style.pointerEvents = 'none';
+  modalCard.style.transform = 'translateY(6px)';
+  modalCard.style.opacity = '0';
+});
+
+/* update charts when city selected */
+function updateChartsForCity(cityId){
+  // Example: change salesChart to show combined city value for each month
+  const data = cityDatasets[cityId];
+  salesChart.data.datasets[0].data = data.map(v => v * 4); // scale for visibility
+  salesChart.update();
+
+  // update footer dept chart to highlight department
+  const deptLabels = deptChart.data.labels;
+  deptChart.data.datasets[0].backgroundColor = deptLabels.map(lbl => lbl.toLowerCase().includes(cities.find(c=>c.id===cityId).dept.split(' ')[0]) ? 'rgba(34,197,94,0.9)' : 'rgba(209,213,219,0.9)');
+  deptChart.update();
+}
+
+/* Initial render */
+renderCities();
+
+/* Department filter behavior */
+document.getElementById('deptFilter').addEventListener('change', (e)=>{
+  renderCities(e.target.value);
+});
+
+/* Metric filter */
+document.getElementById('metricSelect').addEventListener('change', (e)=>{
+  state.metric = e.target.value;
+  // Just update some numbers and charts (fake)
+  document.getElementById('totalCustomers').innerText = Math.round(18000 + rand()*12000).toLocaleString();
+  document.getElementById('profitTotal').innerText = `$${(40000 + rand()*40000).toFixed(2)}`;
+  // refresh sales chart colors
+  salesChart.data.datasets[0].backgroundColor = state.metric === 'revenue' ? 'rgba(34,197,94,0.9)' : 'rgba(99,102,241,0.9)';
+  salesChart.update();
+});
+
+/* Reset filters */
+document.getElementById('resetFilters').addEventListener('click', ()=>{
+  document.getElementById('deptFilter').value = 'all';
+  document.getElementById('metricSelect').value = 'revenue';
+  renderCities('all');
+  salesChart.data.datasets[0].data = Array.from({length:12}, ()=> Math.round(rand()*9000+1000));
+  salesChart.update();
+});
+
+/* Quick event button */
+document.getElementById('quickEventBtn').addEventListener('click', ()=>{
+  alert('Joining Business Sprint (simulado).');
+});
+
+/* Buttons month/week */
+document.getElementById('btnWeek').addEventListener('click', ()=>{
+  salesChart.config.type = 'line';
+  salesChart.update();
+});
+document.getElementById('btnMonth').addEventListener('click', ()=>{
+  salesChart.config.type = 'bar';
+  salesChart.update();
+});
+
+/* Quick selection on load */
+setTimeout(()=> {
+  selectCity(cities[0]);
+}, 700);
+
+/* Make small charts interactive on click */
+['ordersChart','catChart','growthChart','marginChart'].forEach(id=>{
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', ()=> alert('Interactive mini-chart clicked (simulado).'));
+});
+
+/* Responsive: redraw cities on resize to ensure viewBox scaling correct */
+window.addEventListener('resize', ()=> {
+  // re-render to ensure circles are visible after resize
+  const deptFilter = document.getElementById('deptFilter').value;
+  renderCities(deptFilter);
+});
+
+</script>
 
 </body>
 </html>
