@@ -1,0 +1,105 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Poppins','Segoe UI',sans-serif;
+  background: linear-gradient(rgba(15,23,42,0.5),rgba(30,41,59,0.2)),
+    url("https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2020,%202025,%2008_44_39%20PM.png?raw=true")
+    no-repeat center center fixed;
+  background-size: cover;
+  color: #f8fafc;
+  min-height: 100vh;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.container { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 20px; }
+
+header {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  padding: 18px;
+  border-radius: 14px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+h1 { font-size: 1.8rem; }
+.subtitle { color: #cbd5e1; font-size: 0.95rem; }
+
+.toolbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+select, input {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.actions { display: flex; gap: 10px; }
+
+button {
+  background: linear-gradient(90deg,#3b82f6,#a855f7);
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+button:active { transform: translateY(1px); }
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+  gap: 12px;
+}
+
+.metric-card {
+  background: rgba(255,255,255,0.06);
+  padding: 14px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.metric-label { font-size: 0.85rem; color: #cbd5e1; text-transform: uppercase; }
+.metric-value { font-size: 1.6rem; font-weight: 700; margin-top: 6px; }
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+  gap: 16px;
+}
+
+.chart-card {
+  background: rgba(255,255,255,0.06);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.chart-title { text-align: center; margin-bottom: 8px; font-weight: 600; color: #f1f5f9; }
+
+.data-table {
+  background: rgba(255,255,255,0.06);
+  padding: 14px;
+  border-radius: 12px;
+  overflow: auto;
+}
+
+table { width: 100%; border-collapse: collapse; color: #f8fafc; }
+th, td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.04); text-align: left; }
+th { font-size: 0.8rem; color: #cbd5e1; text-transform: uppercase; }
+
+#dashboardArea { display: flex; flex-direction: column; gap: 16px; }
+
+@media (max-width:600px){
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .actions { justify-content: center; }
+}
