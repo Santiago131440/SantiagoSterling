@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restaurante La Kolina</title>
+  <meta name="description" content="Restaurante de cocina de autor. Reservas, menú, galería y ubicación. Efecto Liquid Glass estilo iOS." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'ui-sans-serif', 'system-ui']
+          },
+          colors: {
+            accent: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e'
+            }
+          },
+          boxShadow: {
+            glass: '0 1px 0 rgba(255,255,255,0.35) inset, 0 10px 30px rgba(2,132,199,0.20)'
+          },
+          backdropBlur: {
+            30: '30px'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    /* Fondo dinámico con gradientes y partículas */
+    .bg-orb {
+      position: fixed; inset: -20vmax; filter: blur(80px); opacity: .55; z-index: -2;
+      background: radial-gradient(35vmax 35vmax at 15% 20%, #38bdf8 0%, transparent 60%),
+                  radial-gradient(40vmax 40vmax at 85% 10%, #22d3ee 0%, transparent 60%),
+                  radial-gradient(35vmax 35vmax at 80% 80%, #008026 0%, transparent 60%),
+                  radial-gradient(35vmax 35vmax at 20% 85%, #fa0000 0%, transparent 60%);
+    }
+    .particle { position: fixed; inset: 0; pointer-events: none; z-index: -1; }
+    .glass { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.28);
+             box-shadow: 0 10px 30px rgba(0,0,0,.15), 0 1px 0 rgba(255,255,255,.35) inset;
+             backdrop-filter: blur(20px) saturate(120%);
+             -webkit-backdrop-filter: blur(20px) saturate(120%);
+             border-radius: 22px; }
+    .glass-strong { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35);
+             box-shadow: 0 20px 50px rgba(2,132,199,.25), 0 1px 0 rgba(255,255,255,.45) inset;
+             backdrop-filter: blur(30px) saturate(140%);
+             -webkit-backdrop-filter: blur(30px) saturate(140%);
+             border-radius: 26px; }
+    /* Modo oscuro automático según preferencia del SO */
+    @media (prefers-color-scheme: dark) {
+      html:not(.light) { color-scheme: dark; }
+    }
+    /* Efecto tilt 3D suave para tarjetas */
+    .tilt { transform-style: preserve-3d; transition: transform .12s ease-out; }
+    .tilt > * { transform: translateZ(12px); }
+    /* Texturas sutiles */
+    .noise::before { content: ""; position: absolute; inset: 0; opacity:.05; pointer-events:none; mix-blend-mode: overlay;
+      background-image: url('data:image/svg+xml;utf8,)}
+      <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140">\
+        <filter id="n">\
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>\
+          <feColorMatrix type="saturate" values="0"/>\
+          <feComponentTransfer>\
+            <feFuncA type="table" tableValues="0 0.4"/>\
+          </feComponentTransfer>\
+        </filter>\
+        <rect width="100%" height="100%" filter="url(%23n)" opacity="0.35"/>\
+      </svg>'); }
+  </style>
+</head>
+<body class="font-sans antialiased bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 selection:bg-accent-300/60 selection:text-slate-900">
+  <div class="bg-orb"></div>
+  <canvas id="particles" class="particle"></canvas>
+
+  <!-- Navbar -->
+  <header class="fixed top-0 inset-x-0 z-40">
+    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+      <div class="glass flex items-center justify-between px-4 py-3">
+        <a href="#" class="flex items-center gap-2">
+          <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white/70 text-accent-700 dark:bg-white/10 dark:text-accent-300 ring-1 ring-white/40">🍽️</span>
+          <span class="text-lg font-semibold tracking-tight">La Kolina</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6 text-sm">
+          <a href="#menu" class="hover:text-accent-700 dark:hover:text-accent-300">Menú</a>
+          <a href="#reservas" class="hover:text-accent-700 dark:hover:text-accent-300">Reservas</a>
+          <a href="#galeria" class="hover:text-accent-700 dark:hover:text-accent-300">Galería</a>
+          <a href="#ubicacion" class="hover:text-accent-700 dark:hover:text-accent-300">Ubicación</a>
+          <button id="themeToggle" class="ml-2 px-3 py-1.5 rounded-xl glass text-sm">Modo</button>
+          <a href="#reservas" class="ml-2 inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-accent-600 text-white hover:bg-accent-700 transition-colors shadow-lg shadow-accent-600/20">
+            Reservar
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative pt-36 pb-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div class="space-y-6">
+          <h1 class="text-4xl sm:text-5xl font-semibold leading-tight">
+            Donde la naturaleza y la <span class="bg-gradient-to-r from-red-600 via-cyan-500 via-red-500 via-yellow-500 to-cyan-500 bg-clip-text text-transparent">gastronomía</span> se encuentran
+          </h1>
+          <p class="text-lg text-slate-600 dark:text-slate-300">
+            ¡Tu plato favorito, en el lugar que amas!
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <a href="#menu" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl glass-strong shadow-glass hover:scale-[1.02] active:scale-95 transition">
+              Ver Menú
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a href="#reservas" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xl hover:scale-[1.02] active:scale-95 transition">
+              Reservar ahora
+            </a>
+          </div>
+          <div class="flex items-center gap-6 pt-4">
+            <div class="flex -space-x-3">
+              <img alt="Cliente" class="w-10 h-10 rounded-full ring-2 ring-white/60" src="https://lh3.googleusercontent.com/p/AF1QipOJoKP-LSrmE9wssMBUteIEyFk2g8MD4xcB73cH=s680-w680-h510-rw"/>
+              <img alt="Cliente" class="w-10 h-10 rounded-full ring-2 ring-white/60" src="https://lh3.googleusercontent.com/p/AF1QipOJl7G9JbTbHC2_i3SX7eklvCPEEwGJM8MVFtZ3=s680-w680-h510-rw"/>
+              <img alt="Cliente" class="w-10 h-10 rounded-full ring-2 ring-white/60" src="https://lh3.googleusercontent.com/p/AF1QipMLjAYDeXlv4h3BKX0uNtXO2hnGiAQTgUdHQUQC=s680-w680-h510-rw"/>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-300"><strong>Ingredientes</strong> basados en recetas naturales</p>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="glass noise p-3 md:p-4 tilt" data-tilt>
+            <img alt="Plato estrella" class="rounded-2xl w-full h-[420px] object-cover" src="https://lh3.googleusercontent.com/p/AF1QipNtu8ZWMPC7pN0fZEIS6FSVgO3c0EHfiAtE53ze=s680-w680-h510-rw "/>
+          </div>
+          <div class="absolute -bottom-8 -left-6 md:-left-10 glass-strong px-5 py-4 backdrop-blur-30">
+            <p class="text-sm">Abierto</p>
+            <p class="text-sm">Martesy miércoles <span class="font-semibold">11:00–15:00</span></p>
+            <p class="text-sm">Jueves, viernes, sábado y domingo <span class="font-semibold">11:00–23:00</span></p>
+            <p class="text-sm">Lunes <span class="font-semibold">Cerrado</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Destacados -->
+  <section class="py-10">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="glass p-5 tilt" data-tilt>
+          <h3 class="font-semibold mb-1">Ingredientes locales</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300">Producto fresco de mercados del Valle y el Pacífico.</p>
+        </div>
+        <div class="glass p-5 tilt" data-tilt>
+          <h3 class="font-semibold mb-1">Cocina abierta</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300">Vive el espectáculo gastronómico en primera fila.</p>
+        </div>
+        <div class="glass p-5 tilt" data-tilt>
+          <h3 class="font-semibold mb-1">Maridajes</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300">Carta de vinos y coctelería de autor.</p>
+        </div>
+        <div class="glass p-5 tilt" data-tilt>
+          <h3 class="font-semibold mb-1">Eventos</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300">Salón privado para celebraciones y catas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menú -->
+  <section id="menu" class="py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-10 text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl font-semibold">Nuestro Menú</h2>
+        <p class="text-slate-600 dark:text-slate-300 mt-2">Clásicos reinterpretados con técnica contemporánea.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Plato -->
+        <article class="relative glass p-4 overflow-hidden tilt" data-tilt>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipPmuhFXpG-WgHoVeXlONPd2bvMaMfA0hD1rg7EH=s680-w680-h510-rw" alt="Ceviche de Camarón" class="w-full h-48 object-cover rounded-xl"/>
+          <div class="mt-4 flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold">Ceviche de Camarón</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Leche de tigre de coco, mango y ají dulce.</p>
+            </div>
+            <span class="font-semibold">$42.000</span>
+          </div>
+        </article>
+
+        <article class="relative glass p-4 overflow-hidden tilt" data-tilt>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipMLjAYDeXlv4h3BKX0uNtXO2hnGiAQTgUdHQUQC=s680-w680-h510-rw" alt="Lomo en salsa de café" class="w-full h-48 object-cover rounded-xl"/>
+          <div class="mt-4 flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold">Lomo en salsa de café</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Reducción de café del Cauca y panela.</p>
+            </div>
+            <span class="font-semibold">$58.000</span>
+          </div>
+        </article>
+
+        <article class="relative glass p-4 overflow-hidden tilt" data-tilt>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipOJl7G9JbTbHC2_i3SX7eklvCPEEwGJM8MVFtZ3=s680-w680-h510-rw" alt="Arroz del Pacífico" class="w-full h-48 object-cover rounded-xl"/>
+          <div class="mt-4 flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold">Arroz del Pacífico</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Mejillones, calamar y langostino al azafrán.</p>
+            </div>
+            <span class="font-semibold">$49.000</span>
+          </div>
+        </article>
+
+        <article class="relative glass p-4 overflow-hidden tilt" data-tilt>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipOJoKP-LSrmE9wssMBUteIEyFk2g8MD4xcB73cH=s680-w680-h510-rw" alt="Ensalada de Aguacate" class="w-full h-48 object-cover rounded-xl"/>
+          <div class="mt-4 flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold">Ensalada de Aguacate</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Brotes, pepino, vinagreta de maracuyá.</p>
+            </div>
+            <span class="font-semibold">$29.000</span>
+          </div>
+        </article>
+
+        <article class="relative glass p-4 overflow-hidden tilt" data-tilt>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipOJl7G9JbTbHC2_i3SX7eklvCPEEwGJM8MVFtZ3=s680-w680-h510-rw" alt="Pescado al coco" class="w-full h-48 object-cover rounded-xl"/>
+          <div class="mt-4 flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold">Pescado al coco</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Filete del día en crema de coco y jengibre.</p>
+            </div>
+            <span class="font-semibold">$55.000</span>
+          </div>
+        </article>
+
+        <article class="relative glass p-4 overflow-hidden tilt" data-tilt>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipOgA1bOO9Ml5mXdqkLbdZCfdkGJgkSySwtuKJwk=s680-w680-h510-rw" alt="Postre de Lulo" class="w-full h-48 object-cover rounded-xl"/>
+          <div class="mt-4 flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold">Postre de Luló</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Crema helada, merengue y salsa de lulada.</p>
+            </div>
+            <span class="font-semibold">$23.000</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reserva -->
+  <section id="reservas" class="py-20">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div class="space-y-3">
+          <h2 class="text-3xl font-semibold">Reserva tu mesa</h2>
+          <p class="text-slate-600 dark:text-slate-300">Confirmación instantánea por correo. ¡Te esperamos!</p>
+          <ul class="text-sm text-slate-600 dark:text-slate-300 list-disc pl-5">
+            <li>Hasta 10 personas por reserva.</li>
+            <li>Eventos privados con menú degustación.</li>
+            <li>Opciones vegetarianas y sin gluten.</li>
+          </ul>
+        </div>
+        <form id="reserveForm" class="glass-strong p-6 space-y-4">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="text-sm">Nombre</label>
+              <input required type="text" name="nombre" class="mt-1 w-full rounded-xl bg-white/70 dark:bg-white/10 border border-white/50 dark:border-white/20 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-400"/>
+            </div>
+            <div>
+              <label class="text-sm">Correo</label>
+              <input required type="email" name="correo" class="mt-1 w-full rounded-xl bg-white/70 dark:bg-white/10 border border-white/50 dark:border-white/20 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-400"/>
+            </div>
+            <div>
+              <label class="text-sm">Fecha</label>
+              <input required type="date" name="fecha" class="mt-1 w-full rounded-xl bg-white/70 dark:bg-white/10 border border-white/50 dark:border-white/20 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-400"/>
+            </div>
+            <div>
+              <label class="text-sm">Hora</label>
+              <input required type="time" name="hora" class="mt-1 w-full rounded-xl bg-white/70 dark:bg-white/10 border border-white/50 dark:border-white/20 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-400"/>
+            </div>
+            <div>
+              <label class="text-sm">Personas</label>
+              <select name="personas" class="mt-1 w-full rounded-xl bg-white/70 dark:bg-white/10 border border-white/50 dark:border-white/20 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-400">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-sm">Teléfono</label>
+              <input required type="tel" name="telefono" class="mt-1 w-full rounded-xl bg-white/70 dark:bg-white/10 border border-white/50 dark:border-white/20 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-400"/>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm">Comentarios</label>
+            <textarea name="comentarios" rows="3" class="mt-1 w-full rounded-xl bg-white/70 dark:bg-white/10 border border-white/50 dark:border-white/20 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-400" placeholder="Alergias, ocasión especial, etc."></textarea>
+          </div>
+          <button class="w-full justify-center inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-accent-600 text-white hover:bg-accent-700 transition-colors">
+            Confirmar reserva
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+          <p id="reserveMsg" class="text-sm text-center"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galería -->
+  <section id="galeria" class="py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-10 text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl font-semibold">Galería</h2>
+        <p class="text-slate-600 dark:text-slate-300 mt-2">Ambientes, barra y algunos de nuestros platos.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="aspect-[4/3] overflow-hidden rounded-2xl glass noise">
+          <img class="w-full h-full object-cover hover:scale-105 transition" src="https://lh3.googleusercontent.com/p/AF1QipM--sBLGTNcW4u3DVaq3rWODPqAbzb_zGfy4TuP=s680-w680-h510-rw" alt="Salón principal"/>
+        </div>
+        <div class="aspect-[4/3] overflow-hidden rounded-2xl glass noise">
+          <img class="w-full h-full object-cover hover:scale-105 transition" src="https://lh3.googleusercontent.com/p/AF1QipNt0MXKLkEjUsfxW0OR23Gj63MoqES4n1s1Q_9y=s680-w680-h510-rw" alt="Barra de cocteles"/>
+        </div>
+        <div class="aspect-[4/3] overflow-hidden rounded-2xl glass noise">
+          <img class="w-full h-full object-cover hover:scale-105 transition" src="https://lh3.googleusercontent.com/p/AF1QipP41lWnN8CLO7bETrScDNyUWqExzK1ZqfK2EI8Y=s680-w680-h510-rw" alt="Terraza"/>
+        </div>
+        <div class="aspect-[4/3] overflow-hidden rounded-2xl glass noise">
+          <img class="w-full h-full object-cover hover:scale-105 transition" src="https://lh3.googleusercontent.com/p/AF1QipPk7fOOGueL3Uyy6mD6iA7UO6z7Mk53mQteL9d4=s680-w680-h510-rw" alt="Pasta fresca"/>
+        </div>
+        <div class="aspect-[4/3] overflow-hidden rounded-2xl glass noise">
+          <img class="w-full h-full object-cover hover:scale-105 transition" src="https://lh3.googleusercontent.com/p/AF1QipPb2zPvuBY5ryjO11GZUsminhvRlm7MGshrMMXc=s680-w680-h510-rw" alt="Carnes a la parrilla"/>
+        </div>
+        <div class="aspect-[4/3] overflow-hidden rounded-2xl glass noise">
+          <img class="w-full h-full object-cover hover:scale-105 transition" src="https://lh3.googleusercontent.com/p/AF1QipM4cMY7P1PCvmR1kRK3OAj1Ht34Nar1XY2ss_Dn=s680-w680-h510-rw" alt="Postres"/>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Opiniones -->
+  <section class="py-20">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass p-6">
+          <p class="text-sm text-slate-700 dark:text-slate-200">“Brutal el arroz del Pacífico y la coctelería. Servicio impecable.”</p>
+          <div class="mt-4 flex items-center gap-3">
+            <img class="w-9 h-9 rounded-full" src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=120&auto=format&fit=crop" alt="Cliente"/>
+            <div>
+              <p class="text-sm font-medium">Laura G.</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Local Guide</p>
+            </div>
+          </div>
+        </div>
+        <div class="glass p-6">
+          <p class="text-sm text-slate-700 dark:text-slate-200">“Cocina abierta y maridajes excelentes. Volveré sin duda.”</p>
+          <div class="mt-4 flex items-center gap-3">
+            <img class="w-9 h-9 rounded-full" src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=120&auto=format&fit=crop" alt="Cliente"/>
+            <div>
+              <p class="text-sm font-medium">Daniel P.</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Foodie</p>
+            </div>
+          </div>
+        </div>
+        <div class="glass p-6">
+          <p class="text-sm text-slate-700 dark:text-slate-200">“El lomo en salsa de café es una locura. Atención 10/10.”</p>
+          <div class="mt-4 flex items-center gap-3">
+            <img class="w-9 h-9 rounded-full" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=120&auto=format&fit=crop" alt="Cliente"/>
+            <div>
+              <p class="text-sm font-medium">Camila R.</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Crítica local</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ubicación / Footer -->
+  <footer id="ubicacion" class="pt-20 pb-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-10 items-start">
+        <div class="space-y-4">
+          <h3 class="text-2xl font-semibold">Visítanos</h3>
+          <p class="text-slate-600 dark:text-slate-300">Barrio Trinidad etapa 2, Cra. 4 Oe. #16-119, Br. Trinidad Etap 2, Yumbo, Valle del Cauca, Colombia</p>
+          <div class="flex gap-3">
+            <a href="#reservas" class="inline-flex items-center gap-2 px-4 py-2 rounded-2xl glass">Reservas</a>
+            <a href="tel:+573124287376" class="inline-flex items-center gap-2 px-4 py-2 rounded-2xl glass">Llámanos</a>
+          </div>
+          <p class="text-xs text-slate-500">© <span id="year"></span> Sabores del Valle. Todos los derechos reservados.</p>
+        </div>
+        <div class="glass overflow-hidden">
+          <iframe title="Mapa" class="w-full h-72" style="border:0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d997.108885885491!2d-76.538!3d3.446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a6d47f3f4c4b%3A0x0000000000000000!2sSan%20Antonio%2C%20Cali!5e0!3m2!1ses!2sco!4v1710000000000"></iframe>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts: modo, tilt, partículas, reserva fake -->
+  <script>
+    // Año
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Preferencia de tema
+    const themeBtn = document.getElementById('themeToggle');
+    const preferDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      const saved = localStorage.getItem('theme');
+      const dark = saved ? saved === 'dark' : preferDark.matches;
+      document.documentElement.classList.toggle('dark', dark);
+      themeBtn.textContent = dark ? 'Claro' : 'Oscuro';
+    };
+    apply();
+    themeBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      apply();
+    });
+    preferDark.addEventListener('change', apply);
+
+    // Tilt 3D suave
+    const tilts = document.querySelectorAll('[data-tilt]');
+    const strength = 10; // grados
+    tilts.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - r.left; const y = e.clientY - r.top;
+        const midX = r.width / 2; const midY = r.height / 2;
+        const rotY = ((x - midX) / midX) * strength;
+        const rotX = -((y - midY) / midY) * strength;
+        card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateX(0) rotateY(0)';
+      });
+    });
+
+    // Partículas flotantes mejoradas
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles;
+    function resize(){ 
+      W = canvas.width = window.innerWidth; 
+      H = canvas.height = window.innerHeight; 
+    }
+    window.addEventListener('resize', resize); 
+    resize();
+
+    function spawn(){
+      particles = new Array(60).fill().map(()=>({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        r: Math.random()*3 + 1.5,
+        baseR: 0,
+        vx: (Math.random()-0.5)*0.2,
+        vy: (Math.random()-0.5)*0.2,
+        a: Math.random()*Math.PI*2,
+        twinkle: Math.random()*100
+      }));
+    }
+    spawn();
+
+    function loop(t){
+      ctx.clearRect(0,0,W,H);
+      particles.forEach(p=>{
+        p.x += p.vx + Math.sin(t/2000 + p.a) * 0.1;
+        p.y += p.vy + Math.cos(t/2500 + p.a) * 0.1;
+
+        if(p.x < -50) p.x = W+50;
+        if(p.x > W+50) p.x = -50;
+        if(p.y < -50) p.y = H+50;
+        if(p.y > H+50) p.y = -50;
+
+        const flicker = 0.5 + 1.5 * Math.sin((t/1000) + p.twinkle);
+
+        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r*2);
+        g.addColorStop(0, `rgba(255,255,255,${0.6*flicker})`);
+        g.addColorStop(1, `rgba(255,255,255,0)`);
+
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r*2, 0, Math.PI*2);
+        ctx.fill();
+      });
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    spawn();
+    function loop(){
+      ctx.clearRect(0,0,W,H);
+      particles.forEach(p=>{
+        p.x+=p.vx; p.y+=p.vy; p.a+=0.01;
+        if(p.x<0||p.x>W) p.vx*=-1;
+        if(p.y<0||p.y>H) p.vy*=-1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.fill();
+      });
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    // Envío simulado de reserva
+    const form = document.getElementById('reserveForm');
+    const msg = document.getElementById('reserveMsg');
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      msg.textContent = 'Enviando…';
+      try {
+        // Simulación local
+        await new Promise(r=>setTimeout(r, 900));
+        msg.textContent = '✅ ¡Reserva recibida! Te hemos enviado un correo de confirmación.';
+      } catch (err) {
+        msg.textContent = '❌ Hubo un error. Intenta de nuevo.';
+      }
+    });
+  </script>
+
+</body>
+</html>
