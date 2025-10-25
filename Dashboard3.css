@@ -1,0 +1,32 @@
+body {
+  background: url('https://media.istockphoto.com/id/2077180655/es/foto/background-floor-shadow-wall-kitchen-concrete-white-texture-light-texture-abstract-mockup.jpg?s=612x612&w=0&k=20&c=X54ep_x83T3mn_A5k0aMj86n7BxR6LLkmBj8q9CRinY=');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Liquid glass effect */
+.glass-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.55));
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.35);
+}
+
+.accent-green { color: #25c06b; }
+.accent-green-bg { background: linear-gradient(90deg,#22c06a,#8ef2b1); }
+
+.mini-chart { height: 70px; width: 140px; }
+
+.city-dot { transition: transform .15s ease, r .15s ease; cursor: pointer; }
+.city-dot:hover { transform: scale(1.18); }
+
+@media (min-width: 1280px) {
+  .xl-3 { grid-template-columns: repeat(3, minmax(0,1fr)) }
+}
+
+.sidebar {
+  background: linear-gradient(180deg,#0b0f13,#121418);
+  border-right: 1px solid rgba(255,255,255,0.03);
+}
