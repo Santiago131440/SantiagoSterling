@@ -1,281 +1,350 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="https://media.licdn.com/dms/image/v2/D4E03AQEyDMhbqINgUg/profile-displayphoto-shrink_800_800/B4EZcERut2HYAc-/0/1748123448273?e=1760572800&v=beta&t=vC9rExnMdIMtH21mvEHol6msuIl8vdB_AgQFNpp6lSY">
- 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Santiago Sterling - Experiencia Laboral</title>
-    <style>
-        /* ===== Reset de estilos ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Santiago Sterling - Experiencia Laboral</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="https://github.com/Santiago131440/SantiagoSterling/blob/main/1000234043.jpg?raw=true">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
-        body {
-            display: flex;
-            min-height: 100vh;
-            background: url('https://github.com/Santiago131440/Imagenes-Excel/blob/main/ChatGPT%20Image%20Sep%2016,%202025,%2008_15_21%20PM.png?raw=true');
-            color: #333;
-            font-size: 16px;
-            margin: 0;
-            overflow-x: hidden;
-            font-family: 'Poppins', sans-serif;
-        }
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: url('https://github.com/Santiago131440/SantiagoSterling/blob/main/Fondo%20abstracto%20oscuro.jpg?raw=true') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      overflow-x: hidden;
+    }
 
-        /* ===== Sidebar ===== */
-        .sidebar {
-            width: 250px;
-            backdrop-filter: blur(10px);
-            color: #ff7920;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            z-index: 999;
-            transition: transform 0.3s ease;
-        }
+    /* ===== Sidebar / Navbar ===== */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      width: 260px;
+      padding: 25px;
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.15);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
 
-        .user-info {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+    .user-info {
+      text-align: center;
+      margin-bottom: 25px;
+    }
 
-        .user-info img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-bottom: 10px;
-            border: 3px solid #ff7920;
-            transition: transform 0.3s ease;
-        }
+    .user-info img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid #ff7920;
+      transition: transform 0.3s ease;
+    }
 
-        .user-info h3 {
-            margin: 5px 0;
-            font-size: 18px;
-        }
+    .user-info img:hover {
+      transform: scale(1.08);
+    }
 
-        .sidebar ul {
-            list-style: none;
-            margin-top: 30px;
-        }
+    .user-info h3 {
+      color: #ff7920;
+      margin-top: 10px;
+      font-size: 18px;
+    }
 
-        .sidebar ul li {
-            margin: 15px 0;
-        }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 25px;
+    }
 
-        .sidebar ul li a {
-            color: #ff7920;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s, padding-left 0.3s;
-        }
+    .sidebar ul li {
+      margin: 18px 0;
+    }
 
-        .sidebar ul li a:hover {
-            color: #ffffff;
-            padding-left: 10px;
-        }
+    .sidebar ul li a {
+      color: #ff7920;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
 
-        /* ===== Contenido Principal ===== */
-        .content {
-            flex-grow: 1;
-            padding: 30px;
-            margin-left: 270px;
-            transition: all 0.3s ease;
-            background: linear-gradient(90deg, rgba(92, 49, 1, 0.7), rgba(27, 39, 70, 0.9));
-        }
+    .sidebar ul li a:hover {
+      color: #fff;
+      padding-left: 8px;
+    }
 
-        header h1 {
-            margin-bottom: 20px;
-            font-size: 28px;
-            color: #ff7920;
-        }
+    /* ===== Botón menú móvil ===== */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1000;
+    }
 
-        /* Pestañas */
-        .tabs {
-            margin-bottom: 30px;
-        }
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 3px;
+      background: #ff7920;
+      margin: 5px 0;
+      border-radius: 3px;
+    }
 
-        /* Sección contenido */
-        section {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
+    /* ===== Contenido ===== */
+    .content {
+      margin-left: 280px;
+      padding: 40px;
+      transition: all 0.4s ease;
+    }
 
-        section.hidden {
-            opacity: 0;
-            transform: translateY(20px);
-            position: absolute;
-            z-index: -1;
-        }
+    header h1 {
+      font-size: 30px;
+      color: #ff7920;
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px rgba(255, 121, 32, 0.4);
+    }
 
-        .overview {
-            margin-bottom: 20px;
-        }
+    section {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(12px) saturate(150%);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+      color: #fff;
+      animation: fadeIn 0.6s ease;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            overflow: hidden;
-        }
+    section h2 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
 
-        th, td {
-            padding: 15px;
-            text-align: center;
-            border-bottom: 1px solid #eee;
-        }
+    .overview {
+      margin-bottom: 25px;
+    }
 
-        th {
-            background: rgba(236, 240, 241, 0.8);
-            font-weight: bold;
-        }
+    /* ===== Tabla ===== */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 12px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+    }
 
-        td img {
-            width: 30px;
-            height: 30px;
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+    }
 
-        /* Animación hover de avatar */
-        .user-info img:hover {
-            transform: scale(1.1);
-        }
+    th, td {
+      padding: 14px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                background: rgba(0, 0, 0, 0.5);
-                backdrop-filter: blur(8px);
-            }
+    th {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ff7920;
+      font-weight: 600;
+    }
 
-            .content {
-                margin-left: 0;
-                padding: 15px;
-            }
+    td {
+      color: #f2f2f2;
+    }
 
-            .tab-button {
-                font-size: 14px;
-                padding: 8px 15px;
-            }
+    td img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
 
-            table {
-                font-size: 14px;
-            }
-        }
-    </style>
+    /* ===== Animaciones ===== */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translateY(-100%);
+      }
+
+      .sidebar.active {
+        transform: translateY(0);
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .content {
+        margin-left: 0;
+        margin-top: 80px;
+        padding: 20px;
+      }
+
+      table {
+        min-width: unset;
+      }
+    }
+
+    @media (max-width: 480px) {
+      th, td {
+        padding: 10px 8px;
+        font-size: 13px;
+      }
+
+      header h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <div class="sidebar">
-        <div class="user-info">
-            <img src="https://media.licdn.com/dms/image/v2/D4E03AQEyDMhbqINgUg/profile-displayphoto-shrink_800_800/B4EZcERut2HYAc-/0/1748123448273?e=1763596800&v=beta&t=9kIjmdNXL1AzFcHn8nnOmO0Lk0EQa2Pqg50fUFCtNtg" alt="Usuario">
-            <h3>Santiago Sterling</h3>
-            <p>Tecnologo en análisis y desarrollo de software</p>
-        </div>
-        <ul>
-            <li><a href="index.html">Volver al inicio</a></li>
-        </ul>
+  <button class="menu-toggle" id="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="sidebar" id="sidebar">
+    <div class="user-info">
+      <img src="https://github.com/Santiago131440/SantiagoSterling/blob/main/1000234043.jpg?raw=true" alt="Usuario">
+      <h3>Santiago Sterling</h3>
+      <p style="color: #fff; font-size: 13px;">Tecnólogo en análisis y desarrollo de software</p>
     </div>
+    <ul>
+      <li><a href="index.html">Volver al inicio</a></li>
+    </ul>
+  </div>
 
-    <div class="content">
-        <header>
-            <h1>Experiencia laboral</h1>
-        </header>
+  <div class="content">
+    <header>
+      <h1>Experiencia Laboral</h1>
+    </header>
 
-        <section id="mis-rutas">
-            <div class="overview">
-                <h2> Evolución profesional: cada desafío impulsa un nuevo logro.</h2>
-                <br>
-                <div class="stats">
-                    <span class="stat">Conoce el camino que he trazado a lo largo de mi experiencia laboral y crecimiento profesional.</span>
-                </div>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Nombre de la empresa</th>
-                        <th>Puesto</th>
-                        <th>Duración</th>
-                        <th>Fecha Inicio</th>
-                        <th>Fecha Fin</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><img src="https://media.licdn.com/dms/image/v2/D4E0BAQGeJ2pfflXEQw/company-logo_200_200/company-logo_200_200/0/1733431041127/cosmoagro_logo?e=1763596800&v=beta&t=hfYUVLOfc6SkC83CV32mOoXz3tsDGfSunsenxQfugWw" alt="Icono"></td>
-                        <td>Cosmoagro S.A.</td>
-                        <td>Analista de producción</td>
-                        <td>-</td>
-                        <td>10/12/2024</td>
-                        <td>Actualmente</td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://media.licdn.com/dms/image/v2/D560BAQG5O5uIcWBZrw/company-logo_200_200/B56ZnewhdbH8AI-/0/1760378888031/coca_cola_femsa_logo?e=1763596800&v=beta&t=YShctvO7Cq3XKvU4_7JCdkfLME28pgxZc1dbKBJGOUE" alt="Icono"></td>
-                        <td>Coca Cola Femsa</td>
-                        <td>Técnico analista</td>
-                        <td>1 año</td>
-                        <td>07/07/2023</td>
-                        <td>07/06/2024</td>
-		            </tr>
-                    <tr>
-                        <td><img src="https://media.licdn.com/dms/image/v2/C4E0BAQFDVFHqQl0HXA/company-logo_200_200/company-logo_200_200/0/1671813583164/cadena_sa_logo?e=1763596800&v=beta&t=AoX5exJ96lZ_qV8KJQSbYKJojyO64r0IX50SfuKNZKU" alt="Icono"></td>
-                        <td>Cadena S.A.</td>
-                        <td>Supervisor de producción</td>
-                        <td>3 años y 2 meses</td>
-                        <td>20/01/2020</td>
-                        <td>17/02/2023</td>
-		            </tr>
-                    <tr>
-                        <td><img src="https://media.licdn.com/dms/image/v2/D4E0BAQHP_yUmV932NQ/company-logo_200_200/company-logo_200_200/0/1736358901657/postobon_sa_logo?e=1763596800&v=beta&t=J1_T-_St-GyyLNMI5euD2KzhQRnbrVLQTZFMsGAUl6w" alt="Icono"></td>
-                        <td>Postobón S.A.</td>
-                        <td>Analista de producción</td>
-                        <td>6 meses</td>
-                        <td>08/03/2019</td>
-                        <td>06/08/2019</td>
-		            </tr>
+    <section>
+      <div class="overview">
+        <h2>Evolución profesional</h2>
+        <p>Cada desafío impulsa un nuevo logro. Conoce el camino que he trazado a lo largo de mi experiencia laboral y crecimiento profesional.</p>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Empresa</th>
+              <th>Puesto</th>
+              <th>Duración</th>
+              <th>Inicio</th>
+              <th>Fin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><img src="https://media.licdn.com/dms/image/v2/D4E0BAQGeJ2pfflXEQw/company-logo_200_200/company-logo_200_200/0/1733431041127/cosmoagro_logo?e=1763596800&v=beta&t=hfYUVLOfc6SkC83CV32mOoXz3tsDGfSunsenxQfugWw" alt=""></td>
+              <td>Cosmoagro S.A.</td>
+              <td>Analista de producción</td>
+              <td>-</td>
+              <td>2024/12/10</td>
+              <td>Actualmente</td>
+            </tr>
+            <tr>
+              <td><img src="https://media.licdn.com/dms/image/v2/D560BAQG5O5uIcWBZrw/company-logo_200_200/B56ZnewhdbH8AI-/0/1760378888031/coca_cola_femsa_logo?e=1763596800&v=beta&t=YShctvO7Cq3XKvU4_7JCdkfLME28pgxZc1dbKBJGOUE" alt=""></td>
+              <td>Coca Cola Femsa</td>
+              <td>Técnico analista</td>
+              <td>1 año</td>
+              <td>2023/07/07</td>
+              <td>2024/06/07</td>
+            </tr>
+            <tr>
+              <td><img src="https://media.licdn.com/dms/image/v2/C4E0BAQFDVFHqQl0HXA/company-logo_200_200/company-logo_200_200/0/1671813583164/cadena_sa_logo?e=1763596800&v=beta&t=AoX5exJ96lZ_qV8KJQSbYKJojyO64r0IX50SfuKNZKU" alt=""></td>
+              <td>Cadena S.A.</td>
+              <td>Supervisor de producción</td>
+              <td>3 años y 2 meses</td>
+              <td>2020/01/20</td>
+              <td>2023/02/17</td>
+            </tr>
+            <tr>
+              <td><img src="https://media.licdn.com/dms/image/v2/D4E0BAQHP_yUmV932NQ/company-logo_200_200/company-logo_200_200/0/1736358901657/postobon_sa_logo?e=1763596800&v=beta&t=J1_T-_St-GyyLNMI5euD2KzhQRnbrVLQTZFMsGAUl6w" alt=""></td>
+              <td>Postobón S.A.</td>
+              <td>Analista de producción</td>
+              <td>6 meses</td>
+              <td>2019/03/08</td>
+              <td>2019/08/06</td>
+            </tr>
                     <tr>
                         <td><img src="https://media.licdn.com/dms/image/v2/D560BAQG_BXmFja-4pw/company-logo_200_200/company-logo_200_200/0/1711924076610/laboratorios_osa_logo?e=1763596800&v=beta&t=w5-g-o6ghxae_OOhSlmf-ChhQUuYn0rqEu_StyJXIPA" alt="Icono"></td>
                         <td>Laboratorios OSA S.A.S.</td>
                         <td>Analista de producción</td>
                         <td>10 meses</td>
-                        <td>16/06/2018</td>
-                        <td>06/03/2019</td>
+                        <td>2018/06/16</td>
+                        <td>2019/03/06</td>
 		            </tr>
                     <tr>
                         <td><img src="https://media.licdn.com/dms/image/v2/D4E0BAQH4sGusiklnCQ/company-logo_200_200/company-logo_200_200/0/1720466430993/smurfit_kappa_group_logo?e=1763596800&v=beta&t=VxuGufF7SsIKhFTnHkc5Cfk1Gvxt-3ne0qeaIG1iTvU" alt="Icono"></td>
                         <td>Smurfit Kappa S.A.</td>
                         <td>Incremento de producción</td>
                         <td>1 año</td>
-                        <td>24/03/2017</td>
-                        <td>24/03/2018</td>
+                        <td>2017/03/24</td>
+                        <td>2018/03/24</td>
 		            </tr>
                     <tr>
                         <td><img src="https://media.licdn.com/dms/image/v2/D4E0BAQFE4wbbTlhexw/company-logo_200_200/B4EZkVlB_uGwAM-/0/1757003653708/ingenieria_en_manualidades_logistica_logo?e=1763596800&v=beta&t=2rAEQw_DeK555GSLj3Yya4T8MhuhmRqgP5t4E524cm8" alt="Icono"></td>
                         <td>Ingeniería en Manualidades S.A.S.</td>
                         <td>Aprendiz SENA</td>
                         <td>7 meses</td>
-                        <td>07/04/2016</td>
-                        <td>07/10/2016</td>
+                        <td>2016/04/07</td>
+                        <td>2016/10/07</td>
 		            </tr>
-                    </tbody>
-                   </table>
-</Body>
-</html>
-	
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
 
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
