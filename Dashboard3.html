@@ -4,23 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dashboard Colombia</title>
-
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
-  <!-- Estilos externos -->
   <link rel="stylesheet" href="Dashboard3.css">
 </head>
-<body class="antialiased bg-gray-100 text-gray-800">
 
+  <body class="antialiased bg-gray-100 text-gray-800">
   <div class="min-h-screen flex">
 
-    <!-- MAIN -->
     <main class="flex-1 p-4 md:p-8">
-      <!-- Header -->
       <header class="flex items-center justify-between mb-6">
         <div>
           <h1 class="text-2xl md:text-3xl font-bold">Estadísticas sobre Colombia</h1>
@@ -28,7 +20,6 @@
         </div>
 
         <div class="flex items-center gap-4">
-          <!-- Filters -->
           <div class="flex gap-2 items-center">
             <select id="metricSelect" class="rounded-lg p-2 text-sm glass-card">
               <option value="revenue">Ingresos</option>
@@ -39,8 +30,7 @@
             <input id="dateRange" type="month" class="rounded-lg p-2 text-sm glass-card" />
             <button id="resetFilters" class="px-3 py-2 glass-card rounded-lg">Reiniciar</button>
           </div>
-
-          <!-- Profile -->
+          
           <div class="flex items-center gap-3">
             <div class="hidden md:block text-right">
               <div class="font-medium">Santiago Sterling</div>
@@ -50,8 +40,7 @@
           </div>
         </div>
       </header>
-
-      <!-- TOP METRICS -->
+      
       <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div class="glass-card p-4 rounded-xl">
           <div class="text-xs text-gray-500">Clientes totales</div>
@@ -77,8 +66,7 @@
           <div class="text-sm text-red-500">-2% desde el último mes</div>
         </div>
       </section>
-
-      <!-- MAIN GRID -->
+      
       <section class="grid grid-cols-1 xl:grid-cols-3 gap-4">
         <!-- Left column: big sales overview + small widgets -->
         <div class="col-span-2 grid grid-cols-1 gap-4">
@@ -113,8 +101,7 @@
               <canvas id="miniSpark" class="mini-chart mt-3"></canvas>
             </div>
           </div>
-
-          <!-- Multiple small charts -->
+          
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="glass-card p-4 rounded-xl">
               <h3 class="text-sm font-medium">Pedidos</h3>
@@ -139,7 +126,6 @@
 
         </div>
 
-        <!-- Right column: map + schedule -->
         <aside class="space-y-4">
           <div class="glass-card p-4 rounded-xl">
             <div class="flex items-center justify-between">
@@ -228,7 +214,6 @@
         </aside>
       </section>
 
-      <!-- FOOTER CHARTS -->
       <section class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div class="glass-card p-4 rounded-xl">
           <h4 class="font-semibold">Pedidos mensuales</h4>
@@ -249,7 +234,6 @@
     </main>
   </div>
 
-  <!-- Modal -->
   <div id="modal" class="fixed inset-0 flex items-end md:items-center justify-center p-4 pointer-events-none">
     <div id="modalCard" class="glass-card p-4 rounded-xl w-full max-w-xl transform translate-y-6 opacity-0 transition-all pointer-events-auto">
       <div class="flex justify-between items-start">
@@ -263,7 +247,6 @@
     </div>
   </div>
 
-  <!-- Script externo -->
   <script src="Dashboard3.js"></script>
 </body>
 </html>
