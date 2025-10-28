@@ -49,7 +49,7 @@
       background: radial-gradient(35vmax 35vmax at 15% 20%, #38bdf8 0%, transparent 60%),
                   radial-gradient(40vmax 40vmax at 85% 10%, #22d3ee 0%, transparent 60%),
                   radial-gradient(35vmax 35vmax at 80% 80%, #008026 0%, transparent 60%),
-                  radial-gradient(35vmax 35vmax at 20% 85%, #fa0000 0%, transparent 60%);
+                  radial-gradient(35vmax 35vmax at 20% 85%, #faa200 0%, transparent 60%);
     }
     .particle { position: fixed; inset: 0; pointer-events: none; z-index: -1; }
     .glass { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.28);
@@ -93,12 +93,18 @@
     <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
       <div class="glass flex items-center justify-between px-4 py-3">
         <a href="#" class="flex items-center gap-2">
-          <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white/70 text-accent-700 dark:bg-white/10 dark:text-accent-300 ring-1 ring-white/40">🍽️</span>
+          <span class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/70 dark:bg-white/10 ring-1 ring-white/40 overflow-hidden">
+            <img 
+              src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/55011e90-d274-45b8-ba1f-1c64708f7d1f.png?raw=true" 
+              alt="Logo" 
+              class="w-full h-full object-cover"
+            >
+          </span>
+
           <span class="text-lg font-semibold tracking-tight">La Kolina</span>
         </a>
         <div class="hidden md:flex items-center gap-6 text-sm">
           <a href="#menu" class="hover:text-accent-700 dark:hover:text-accent-300">Menú</a>
-          <a href="#reservas" class="hover:text-accent-700 dark:hover:text-accent-300">Reservas</a>
           <a href="#galeria" class="hover:text-accent-700 dark:hover:text-accent-300">Galería</a>
           <a href="#ubicacion" class="hover:text-accent-700 dark:hover:text-accent-300">Ubicación</a>
           <button id="themeToggle" class="ml-2 px-3 py-1.5 rounded-xl glass text-sm">Modo</button>
@@ -145,8 +151,8 @@
             <img alt="Plato estrella" class="rounded-2xl w-full h-[420px] object-cover" src="https://lh3.googleusercontent.com/p/AF1QipNtu8ZWMPC7pN0fZEIS6FSVgO3c0EHfiAtE53ze=s680-w680-h510-rw "/>
           </div>
           <div class="absolute -bottom-8 -left-6 md:-left-10 glass-strong px-5 py-4 backdrop-blur-30">
-            <p class="text-sm">Abierto</p>
-            <p class="text-sm">Martesy miércoles <span class="font-semibold">11:00–15:00</span></p>
+            <p class="text-2xl"><strong>Horarios de atención: </strong></p>
+            <p class="text-sm">Martes y miércoles <span class="font-semibold">11:00–15:00</span></p>
             <p class="text-sm">Jueves, viernes, sábado y domingo <span class="font-semibold">11:00–23:00</span></p>
             <p class="text-sm">Lunes <span class="font-semibold">Cerrado</span></p>
           </div>
@@ -160,20 +166,20 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <div class="glass p-5 tilt" data-tilt>
-          <h3 class="font-semibold mb-1">Ingredientes locales</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-300">Producto fresco de mercados del Valle y el Pacífico.</p>
+          <h3 class="font-semibold mb-1">Gastronomía de alta calidad</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300">Cada plato está cuidadosamente elaborado con ingredientes frescos y sabores auténticos.</p>
         </div>
         <div class="glass p-5 tilt" data-tilt>
-          <h3 class="font-semibold mb-1">Cocina abierta</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-300">Vive el espectáculo gastronómico en primera fila.</p>
+          <h3 class="font-semibold mb-1">Entorno natural y vistas únicas</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300">Ubicado en una zona elevada, ofrece un paisaje espectacular de las montañas del Valle.</p>
         </div>
         <div class="glass p-5 tilt" data-tilt>
-          <h3 class="font-semibold mb-1">Maridajes</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-300">Carta de vinos y coctelería de autor.</p>
+          <h3 class="font-semibold mb-1">Ambiente elegante y acogedor</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300">El diseño del restaurante combina modernidad con un toque rústico, creando un espacio cálido.</p>
         </div>
         <div class="glass p-5 tilt" data-tilt>
-          <h3 class="font-semibold mb-1">Eventos</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-300">Salón privado para celebraciones y catas.</p>
+          <h3 class="font-semibold mb-1">Atención personalizada y servicio excepcional</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300">El personal se destaca por su amabilidad y profesionalismo, brindando una atención rápida y cordial.</p>
         </div>
       </div>
     </div>
@@ -184,7 +190,7 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mb-10 text-center max-w-2xl mx-auto">
         <h2 class="text-3xl font-semibold">Nuestro Menú</h2>
-        <p class="text-slate-600 dark:text-slate-300 mt-2">Clásicos reinterpretados con técnica contemporánea.</p>
+        <p class="text-slate-600 dark:text-slate-300 mt-2">¡Más que un menú, una experiencia para los sentidos!</p>
       </div>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -193,10 +199,10 @@
           <img src="https://lh3.googleusercontent.com/p/AF1QipPmuhFXpG-WgHoVeXlONPd2bvMaMfA0hD1rg7EH=s680-w680-h510-rw" alt="Ceviche de Camarón" class="w-full h-48 object-cover rounded-xl"/>
           <div class="mt-4 flex items-start justify-between gap-4">
             <div>
-              <h3 class="font-semibold">Ceviche de Camarón</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300">Leche de tigre de coco, mango y ají dulce.</p>
+              <h3 class="font-semibold">Medallones lomo viche - 300gr</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300">En salsa de vino tinto, sobre una cama de puré de papa.</p>
             </div>
-            <span class="font-semibold">$42.000</span>
+            <span class="font-semibold">$57.900</span>
           </div>
         </article>
 
@@ -204,10 +210,10 @@
           <img src="https://lh3.googleusercontent.com/p/AF1QipMLjAYDeXlv4h3BKX0uNtXO2hnGiAQTgUdHQUQC=s680-w680-h510-rw" alt="Lomo en salsa de café" class="w-full h-48 object-cover rounded-xl"/>
           <div class="mt-4 flex items-start justify-between gap-4">
             <div>
-              <h3 class="font-semibold">Lomo en salsa de café</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300">Reducción de café del Cauca y panela.</p>
+              <h3 class="font-semibold">Canastillas de plátano con hogo</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Caribeño.</p>
             </div>
-            <span class="font-semibold">$58.000</span>
+            <span class="font-semibold">$7.000</span>
           </div>
         </article>
 
@@ -215,10 +221,10 @@
           <img src="https://lh3.googleusercontent.com/p/AF1QipOJl7G9JbTbHC2_i3SX7eklvCPEEwGJM8MVFtZ3=s680-w680-h510-rw" alt="Arroz del Pacífico" class="w-full h-48 object-cover rounded-xl"/>
           <div class="mt-4 flex items-start justify-between gap-4">
             <div>
-              <h3 class="font-semibold">Arroz del Pacífico</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300">Mejillones, calamar y langostino al azafrán.</p>
+              <h3 class="font-semibold">Filete de pollo - 250gr</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Acompañado de puré de maduro o puré de papa, vegetales salteados.</p>
             </div>
-            <span class="font-semibold">$49.000</span>
+            <span class="font-semibold">$32.400</span>
           </div>
         </article>
 
@@ -226,10 +232,10 @@
           <img src="https://lh3.googleusercontent.com/p/AF1QipOJoKP-LSrmE9wssMBUteIEyFk2g8MD4xcB73cH=s680-w680-h510-rw" alt="Ensalada de Aguacate" class="w-full h-48 object-cover rounded-xl"/>
           <div class="mt-4 flex items-start justify-between gap-4">
             <div>
-              <h3 class="font-semibold">Ensalada de Aguacate</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300">Brotes, pepino, vinagreta de maracuyá.</p>
+              <h3 class="font-semibold">Hamburguesa la kolina</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Carne angus 200G, vegetales frescos, tomates asados, tocineta, queso cheddar, queso philadelphia, mermelada de cebolla, acompañada de papas a la francesa.</p>
             </div>
-            <span class="font-semibold">$29.000</span>
+            <span class="font-semibold">$33.900</span>
           </div>
         </article>
 
@@ -237,10 +243,10 @@
           <img src="https://lh3.googleusercontent.com/p/AF1QipOJl7G9JbTbHC2_i3SX7eklvCPEEwGJM8MVFtZ3=s680-w680-h510-rw" alt="Pescado al coco" class="w-full h-48 object-cover rounded-xl"/>
           <div class="mt-4 flex items-start justify-between gap-4">
             <div>
-              <h3 class="font-semibold">Pescado al coco</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300">Filete del día en crema de coco y jengibre.</p>
+              <h3 class="font-semibold">Bondiola de cerdo - 300gr</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300">En salsa de cerveza acompañada de puré rústico y manzanas confitadas.</p>
             </div>
-            <span class="font-semibold">$55.000</span>
+            <span class="font-semibold">$45.900</span>
           </div>
         </article>
 
@@ -248,10 +254,10 @@
           <img src="https://lh3.googleusercontent.com/p/AF1QipOgA1bOO9Ml5mXdqkLbdZCfdkGJgkSySwtuKJwk=s680-w680-h510-rw" alt="Postre de Lulo" class="w-full h-48 object-cover rounded-xl"/>
           <div class="mt-4 flex items-start justify-between gap-4">
             <div>
-              <h3 class="font-semibold">Postre de Luló</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300">Crema helada, merengue y salsa de lulada.</p>
+              <h3 class="font-semibold">Baby Beef - 400gr</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300">En salsa de champiñones acompañado de puré de papa y vegetales salteados.</p>
             </div>
-            <span class="font-semibold">$23.000</span>
+            <span class="font-semibold">$55.900</span>
           </div>
         </article>
       </div>
@@ -355,35 +361,37 @@
 
   <!-- Opiniones -->
   <section class="py-20">
+    <h2 class="text-3xl text-center font-semibold">¿Qué dicen algunos de nuestros clientes sobre nosotros?</h2>
+    <br>
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
       <div class="grid md:grid-cols-3 gap-6">
         <div class="glass p-6">
-          <p class="text-sm text-slate-700 dark:text-slate-200">“Brutal el arroz del Pacífico y la coctelería. Servicio impecable.”</p>
+          <p class="text-sm text-slate-700 dark:text-slate-200">“La Kolina Restaurante es un lugar espectacular. La vista, el ambiente y la atención son de primera. Ideal para disfrutar una comida tranquila rodeado de naturaleza y buena energía.”</p>
           <div class="mt-4 flex items-center gap-3">
             <img class="w-9 h-9 rounded-full" src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=120&auto=format&fit=crop" alt="Cliente"/>
             <div>
-              <p class="text-sm font-medium">Laura G.</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400">Local Guide</p>
+              <p class="text-sm font-medium">Jaime G.</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Asistió al restaurante</p>
             </div>
           </div>
         </div>
         <div class="glass p-6">
-          <p class="text-sm text-slate-700 dark:text-slate-200">“Cocina abierta y maridajes excelentes. Volveré sin duda.”</p>
+          <p class="text-sm text-slate-700 dark:text-slate-200">“Excelente experiencia gastronómica. Los platos son deliciosos y presentados con mucho detalle. El servicio es amable y rápido. Sin duda, uno de los mejores lugares para comer en Yumbo.”</p>
           <div class="mt-4 flex items-center gap-3">
             <img class="w-9 h-9 rounded-full" src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=120&auto=format&fit=crop" alt="Cliente"/>
             <div>
               <p class="text-sm font-medium">Daniel P.</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400">Foodie</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Asistió al restaurante</p>
             </div>
           </div>
         </div>
         <div class="glass p-6">
-          <p class="text-sm text-slate-700 dark:text-slate-200">“El lomo en salsa de café es una locura. Atención 10/10.”</p>
+          <p class="text-sm text-slate-700 dark:text-slate-200">“Un sitio encantador, perfecto para compartir en pareja o con amigos. La combinación entre el paisaje, la música y la comida crea una experiencia inolvidable. ¡Totalmente recomendado!”</p>
           <div class="mt-4 flex items-center gap-3">
             <img class="w-9 h-9 rounded-full" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=120&auto=format&fit=crop" alt="Cliente"/>
             <div>
               <p class="text-sm font-medium">Camila R.</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400">Crítica local</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Asistió al restaurante</p>
             </div>
           </div>
         </div>
@@ -397,15 +405,19 @@
       <div class="grid md:grid-cols-2 gap-10 items-start">
         <div class="space-y-4">
           <h3 class="text-2xl font-semibold">Visítanos</h3>
-          <p class="text-slate-600 dark:text-slate-300">Barrio Trinidad etapa 2, Cra. 4 Oe. #16-119, Br. Trinidad Etap 2, Yumbo, Valle del Cauca, Colombia</p>
+          <p class="text-slate-600 dark:text-slate-300">Carrera 4 Oeste #16-119, Barrio Trinidad Etapa 2, Yumbo, Valle del Cauca, Colombia</p>
           <div class="flex gap-3">
-            <a href="#reservas" class="inline-flex items-center gap-2 px-4 py-2 rounded-2xl glass">Reservas</a>
+            <a href="#reservas" class="ml-2 inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-accent-600 text-white hover:bg-accent-700 transition-colors shadow-lg shadow-accent-600/20">
+            Reservar
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
             <a href="tel:+573124287376" class="inline-flex items-center gap-2 px-4 py-2 rounded-2xl glass">Llámanos</a>
           </div>
-          <p class="text-xs text-slate-500">© <span id="year"></span> Sabores del Valle. Todos los derechos reservados.</p>
+          <p class="text-xs text-slate-500">© <span id="year"></span> Restaurante la kolina.</p>
+
         </div>
         <div class="glass overflow-hidden">
-          <iframe title="Mapa" class="w-full h-72" style="border:0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d997.108885885491!2d-76.538!3d3.446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a6d47f3f4c4b%3A0x0000000000000000!2sSan%20Antonio%2C%20Cali!5e0!3m2!1ses!2sco!4v1710000000000"></iframe>
+          <iframe title="Mapa" class="w-full h-72" style="border:0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d996.2653956762643!2d-76.510473!3d3.5909817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30abd6af605c07%3A0x1a9ba5c487b92dbc!2sLa%20Kolina%20Restaurante!5e0!3m2!1ses!2sco!4v1730060000000"></iframe>
         </div>
       </div>
     </div>
@@ -526,9 +538,9 @@
       try {
         // Simulación local
         await new Promise(r=>setTimeout(r, 900));
-        msg.textContent = '✅ ¡Reserva recibida! Te hemos enviado un correo de confirmación.';
+        msg.textContent = '¡Reserva recibida! Te hemos enviado un correo de confirmación.';
       } catch (err) {
-        msg.textContent = '❌ Hubo un error. Intenta de nuevo.';
+        msg.textContent = 'Hubo un error. Intenta de nuevo.';
       }
     });
   </script>
