@@ -3,347 +3,174 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Santiago Sterling - Experiencia Laboral</title>
+  <title>Experiencia laboral Santiago Sterling</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/png" href="https://github.com/Santiago131440/SantiagoSterling/blob/main/1000234043.jpg?raw=true">
-  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+    :root {
+      --transition-speed: 1.2s;
     }
 
     body {
-      display: flex;
-      flex-direction: column;
+      margin: 0;
       min-height: 100vh;
-      background: url('https://github.com/Santiago131440/SantiagoSterling/blob/main/Fondo%20abstracto%20oscuro.jpg?raw=true') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
+      color: #222;
       overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      transition: background-image var(--transition-speed) ease-in-out;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
     }
 
-    /* ===== Sidebar / Navbar ===== */
-    .sidebar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      height: 100vh;
-      width: 260px;
-      padding: 25px;
-      backdrop-filter: blur(15px);
-      background: rgba(255, 255, 255, 0.15);
-      border-right: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      z-index: 999;
+    /* Imágenes del fondo */
+    .bg-1 { background-image: url('https://media.istockphoto.com/id/692318428/photo/stairs.jpg?s=1024x1024&w=is&k=20&c=PSWIY_clMKCEL2aSfzSThSzZXodxIoGtKd1l8CxtRnA='); }
+    .bg-2 { background-image: url('https://media.istockphoto.com/id/1307794659/photo/hexagons-pattern-geometric-abstract-background-with-simple-hexagonal-elements.jpg?s=1024x1024&w=is&k=20&c=nEUiboApcC8KcEwbHbaN4LCnx98nNdd1_1k9OWTVpkg='); }
+    .bg-3 { background-image: url('https://media.istockphoto.com/id/1189574497/photo/geometric-waves-abstract-white-background.jpg?s=1024x1024&w=is&k=20&c=MwdRrRofedBz6-twyHId3_1uNJ7M6vzTr3aJF3XExZQ='); }
+    .bg-4 { background-image: url('https://media.istockphoto.com/id/1222649586/photo/abstract-white-background.jpg?s=1024x1024&w=is&k=20&c=ZUaC0o8oi3xZoZ8omIDUHvq5TRxOvva5X7kC76w11fw='); }
+    .bg-5 { background-image: url('https://media.istockphoto.com/id/1263650497/photo/abstract-growing-vortex-flow-computer-generated-3d-rendering-modern-composition-futuristic.jpg?s=1024x1024&w=is&k=20&c=UoNim_B2BxL1ULlIcRJ_sm0MnZ8xX-ZME5OESOJMeno='); }
+    .bg-6 { background-image: url('https://media.istockphoto.com/id/1434170296/photo/abstract-white-space-with-bright-ethereal-wave-of-elements.jpg?s=1024x1024&w=is&k=20&c=8vlmRx5nnppSP3nOjnrzAz-wZ_8YYPIzLjkANELBZJs='); }
+
+    /* Efecto glass */
+    .glass {
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background-color: rgba(255, 255, 255, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
     }
 
-    .user-info {
-      text-align: center;
-      margin-bottom: 25px;
+    .nav-blur {
+      backdrop-filter: blur(25px);
+      background: rgba(255, 255, 255, 0.65);
     }
 
-    .user-info img {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      border: 3px solid #ff7920;
-      transition: transform 0.3s ease;
-    }
-
-    .user-info img:hover {
-      transform: scale(1.08);
-    }
-
-    .user-info h3 {
-      color: #ff7920;
-      margin-top: 10px;
-      font-size: 18px;
-    }
-
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 25px;
-    }
-
-    .sidebar ul li {
-      margin: 18px 0;
-    }
-
-    .sidebar ul li a {
-      color: #ff7920;
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-
-    .sidebar ul li a:hover {
-      color: #fff;
-      padding-left: 8px;
-    }
-
-    /* ===== Botón menú móvil ===== */
-    .menu-toggle {
-      display: none;
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(10px);
-      border: none;
-      padding: 10px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      z-index: 1000;
-    }
-
-    .menu-toggle span {
-      display: block;
-      width: 24px;
-      height: 3px;
-      background: #ff7920;
-      margin: 5px 0;
-      border-radius: 3px;
-    }
-
-    /* ===== Contenido ===== */
-    .content {
-      margin-left: 280px;
-      padding: 40px;
-      transition: all 0.4s ease;
-    }
-
-    header h1 {
-      font-size: 30px;
-      color: #ff7920;
-      margin-bottom: 25px;
-      text-shadow: 0 0 10px rgba(255, 121, 32, 0.4);
-    }
-
-    section {
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(12px) saturate(150%);
-      border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-      color: #fff;
-      animation: fadeIn 0.6s ease;
-    }
-
-    section h2 {
-      color: #fff;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-
-    .overview {
-      margin-bottom: 25px;
-    }
-
-    /* ===== Tabla ===== */
-    .table-container {
-      width: 100%;
-      overflow-x: auto;
-      border-radius: 12px;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 700px;
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    th, td {
-      padding: 14px;
-      text-align: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    th {
-      background: rgba(255, 255, 255, 0.25);
-      color: #ff7920;
-      font-weight: 600;
-    }
-
-    td {
-      color: #f2f2f2;
-    }
-
-    td img {
-      width: 32px;
-      height: 32px;
+    .profile-img {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
     }
 
-    /* ===== Animaciones ===== */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ===== Responsive ===== */
-    @media (max-width: 900px) {
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: fixed;
-        top: 0;
-        left: 0;
-        transform: translateY(-100%);
-      }
-
-      .sidebar.active {
-        transform: translateY(0);
-      }
-
-      .menu-toggle {
-        display: block;
-      }
-
-      .content {
-        margin-left: 0;
-        margin-top: 80px;
-        padding: 20px;
-      }
-
-      table {
-        min-width: unset;
-      }
-    }
-
-    @media (max-width: 480px) {
-      th, td {
-        padding: 10px 8px;
-        font-size: 13px;
-      }
-
-      header h1 {
-        font-size: 22px;
-      }
-    }
+    html { scroll-behavior: smooth; }
   </style>
 </head>
+<body class="bg-1 transition-all duration-1000">
 
-<body>
-
-  <button class="menu-toggle" id="menu-toggle">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-
-  <div class="sidebar" id="sidebar">
-    <div class="user-info">
-      <img src="https://github.com/Santiago131440/SantiagoSterling/blob/main/1000234043.jpg?raw=true" alt="Usuario">
-      <h3>Santiago Sterling</h3>
-      <p style="color: #fff; font-size: 13px;">Tecnólogo en análisis y desarrollo de software</p>
-    </div>
-    <ul>
-      <li><a href="index.html">Volver al inicio</a></li>
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 w-full nav-blur z-50 flex justify-between items-center px-8 py-4">
+    <h1 class="text-xl font-bold tracking-wide">Mas sobre mi experiencia laboral</h1>
+    <ul class="hidden md:flex space-x-6">
+      <li><a href="#sobre-mi" class="hover:text-blue-600 transition">Sobre mí</a></li>
+      <li><a href="#habilidades" class="hover:text-blue-600 transition">Habilidades</a></li>
+      <li><a href="#estudios" class="hover:text-blue-600 transition">Estudios</a></li>
+      <li><a href="#experiencia" class="hover:text-blue-600 transition">Experiencia</a></li>
+      <li><a href="#proyectos" class="hover:text-blue-600 transition">Proyectos</a></li>
+      <li><a href="#contacto" class="hover:text-blue-600 transition">Contacto</a></li>
     </ul>
-  </div>
+  </nav>
 
-  <div class="content">
-    <header>
-      <h1>Experiencia Laboral</h1>
-    </header>
+  <!-- Portada -->
+  <section class="h-screen flex flex-col justify-center items-center px-6 text-center">
+    <div class="glass rounded-3xl p-10 max-w-lg">
+      <img src="https://github.com/Santiago131440/SantiagoSterling/blob/main/1000234043.jpg?raw=true" alt="Foto de perfil" class="profile-img mx-auto mb-4" />
+      <h2 class="text-3xl font-bold mb-2">Hola, soy Santiago Sterling</h2>
+      <p class="text-gray-700 mb-4">Tecnólogo en análisis y desarrollo de software.</p>
+      <a href="#sobre-mi" class="inline-block bg-white text-blue-600 font-semibold px-5 py-2 rounded-xl hover:bg-blue-600 hover:text-white transition">Ver más</a>
+    </div>
+  </section>
 
-    <section>
-      <div class="overview">
-        <h2>Evolución profesional</h2>
-        <p>Cada desafío impulsa un nuevo logro. Conoce el camino que he trazado a lo largo de mi experiencia laboral y crecimiento profesional.</p>
-      </div>
+  <!-- Contenido -->
+  <main class="space-y-32 pb-32 px-6 md:px-20 text-gray-900">
 
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Empresa</th>
-              <th>Puesto</th>
-              <th>Duración</th>
-              <th>Inicio</th>
-              <th>Fin</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><img src="https://media.licdn.com/dms/image/v2/D4E0BAQGeJ2pfflXEQw/company-logo_200_200/company-logo_200_200/0/1733431041127/cosmoagro_logo?e=1763596800&v=beta&t=hfYUVLOfc6SkC83CV32mOoXz3tsDGfSunsenxQfugWw" alt=""></td>
-              <td>Cosmoagro S.A.</td>
-              <td>Analista de producción</td>
-              <td>-</td>
-              <td>2024/12/10</td>
-              <td>Actualmente</td>
-            </tr>
-            <tr>
-              <td><img src="https://media.licdn.com/dms/image/v2/D560BAQG5O5uIcWBZrw/company-logo_200_200/B56ZnewhdbH8AI-/0/1760378888031/coca_cola_femsa_logo?e=1763596800&v=beta&t=YShctvO7Cq3XKvU4_7JCdkfLME28pgxZc1dbKBJGOUE" alt=""></td>
-              <td>Coca Cola Femsa</td>
-              <td>Técnico analista</td>
-              <td>1 año</td>
-              <td>2023/07/07</td>
-              <td>2024/06/07</td>
-            </tr>
-            <tr>
-              <td><img src="https://media.licdn.com/dms/image/v2/C4E0BAQFDVFHqQl0HXA/company-logo_200_200/company-logo_200_200/0/1671813583164/cadena_sa_logo?e=1763596800&v=beta&t=AoX5exJ96lZ_qV8KJQSbYKJojyO64r0IX50SfuKNZKU" alt=""></td>
-              <td>Cadena S.A.</td>
-              <td>Supervisor de producción</td>
-              <td>3 años y 2 meses</td>
-              <td>2020/01/20</td>
-              <td>2023/02/17</td>
-            </tr>
-            <tr>
-              <td><img src="https://media.licdn.com/dms/image/v2/D4E0BAQHP_yUmV932NQ/company-logo_200_200/company-logo_200_200/0/1736358901657/postobon_sa_logo?e=1763596800&v=beta&t=J1_T-_St-GyyLNMI5euD2KzhQRnbrVLQTZFMsGAUl6w" alt=""></td>
-              <td>Postobón S.A.</td>
-              <td>Analista de producción</td>
-              <td>6 meses</td>
-              <td>2019/03/08</td>
-              <td>2019/08/06</td>
-            </tr>
-                    <tr>
-                        <td><img src="https://media.licdn.com/dms/image/v2/D560BAQG_BXmFja-4pw/company-logo_200_200/company-logo_200_200/0/1711924076610/laboratorios_osa_logo?e=1763596800&v=beta&t=w5-g-o6ghxae_OOhSlmf-ChhQUuYn0rqEu_StyJXIPA" alt="Icono"></td>
-                        <td>Laboratorios OSA S.A.S.</td>
-                        <td>Analista de producción</td>
-                        <td>10 meses</td>
-                        <td>2018/06/16</td>
-                        <td>2019/03/06</td>
-		            </tr>
-                    <tr>
-                        <td><img src="https://media.licdn.com/dms/image/v2/D4E0BAQH4sGusiklnCQ/company-logo_200_200/company-logo_200_200/0/1720466430993/smurfit_kappa_group_logo?e=1763596800&v=beta&t=VxuGufF7SsIKhFTnHkc5Cfk1Gvxt-3ne0qeaIG1iTvU" alt="Icono"></td>
-                        <td>Smurfit Kappa S.A.</td>
-                        <td>Incremento de producción</td>
-                        <td>1 año</td>
-                        <td>2017/03/24</td>
-                        <td>2018/03/24</td>
-		            </tr>
-                    <tr>
-                        <td><img src="https://media.licdn.com/dms/image/v2/D4E0BAQFE4wbbTlhexw/company-logo_200_200/B4EZkVlB_uGwAM-/0/1757003653708/ingenieria_en_manualidades_logistica_logo?e=1763596800&v=beta&t=2rAEQw_DeK555GSLj3Yya4T8MhuhmRqgP5t4E524cm8" alt="Icono"></td>
-                        <td>Ingeniería en Manualidades S.A.S.</td>
-                        <td>Aprendiz SENA</td>
-                        <td>7 meses</td>
-                        <td>2016/04/07</td>
-                        <td>2016/10/07</td>
-		            </tr>
-          </tbody>
-        </table>
+    <section id="sobre-mi" class="glass rounded-3xl p-10">
+      <h2 class="text-2xl font-bold mb-4">Evolución profesional</h2>
+      <p>Cada desafío impulsa un nuevo logro. Conoce el camino que he trazado a lo largo de mi experiencia laboral y crecimiento profesional.</p>
+    </section>
+
+    <section id="habilidades" class="glass rounded-3xl p-10">
+      <h2 class="text-2xl font-bold mb-4">Empresas</h2>
+      <ul class="grid md:grid-cols-3 gap-4">
+        <li class="p-4 bg-white/50 rounded-xl text-center">HTML / CSS / JavaScript</li>
+        <li class="p-4 bg-white/50 rounded-xl text-center">Tailwind / React</li>
+        <li class="p-4 bg-white/50 rounded-xl text-center">Node.js / Express</li>
+        <li class="p-4 bg-white/50 rounded-xl text-center">Python / Django</li>
+        <li class="p-4 bg-white/50 rounded-xl text-center">Bases de datos SQL / MongoDB</li>
+        <li class="p-4 bg-white/50 rounded-xl text-center">Diseño UI / UX</li>
+      </ul>
+    </section>
+
+    <section id="estudios" class="glass rounded-3xl p-10">
+      <h2 class="text-2xl font-bold mb-4">Estudios</h2>
+      <ul class="space-y-2">
+        <li><strong>Tecnólogo en Análisis y Desarrollo de Software</strong> – SENA</li>
+        <li><strong>Tecnólogo en Gestión de Producción Industrial</strong> – SENA</li>
+      </ul>
+    </section>
+
+    <section id="experiencia" class="glass rounded-3xl p-10">
+      <h2 class="text-2xl font-bold mb-4">Experiencia Laboral</h2>
+      <p>8 años de experiencia en plantas de producción, optimizando procesos y aplicando metodologías de mejora continua. Actualmente enfocado en el desarrollo de software, creando sistemas como <strong>Quantix</strong> para la gestión de inventarios.</p>
+    </section>
+
+    <section id="proyectos" class="glass rounded-3xl p-10">
+      <h2 class="text-2xl font-bold mb-4">Proyectos</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white/50 p-4 rounded-xl hover:scale-105 transition">
+          <h3 class="font-semibold mb-2">Quantix</h3>
+          <p>Sistema inteligente de gestión de inventarios con analítica y trazabilidad en tiempo real.</p>
+        </div>
+        <div class="bg-white/50 p-4 rounded-xl hover:scale-105 transition">
+          <h3 class="font-semibold mb-2">Portfolio 3D</h3>
+          <p>Portafolio interactivo con animaciones 3D, modo oscuro y efectos Liquid Glass.</p>
+        </div>
+        <div class="bg-white/50 p-4 rounded-xl hover:scale-105 transition">
+          <h3 class="font-semibold mb-2">Abogados Cali</h3>
+          <p>Diseño web profesional para firmas legales, con interfaz elegante y responsive.</p>
+        </div>
       </div>
     </section>
-  </div>
+
+    <section id="contacto" class="glass rounded-3xl p-10 text-center">
+      <h2 class="text-2xl font-bold mb-4">Contacto</h2>
+      <p class="mb-4">¿Quieres trabajar conmigo? Escríbeme:</p>
+      <form class="max-w-md mx-auto space-y-4">
+        <input type="text" placeholder="Tu nombre" class="w-full p-3 rounded-xl bg-white/70 focus:outline-none">
+        <input type="email" placeholder="Tu correo" class="w-full p-3 rounded-xl bg-white/70 focus:outline-none">
+        <textarea placeholder="Tu mensaje" class="w-full p-3 rounded-xl bg-white/70 focus:outline-none h-32"></textarea>
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700 transition">Enviar</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="text-center text-sm py-6 text-gray-600">
+    © 2025 Santiago Sterling · Desarrollado con ❤️ y TailwindCSS
+  </footer>
 
   <script>
-    const menuToggle = document.getElementById('menu-toggle');
-    const sidebar = document.getElementById('sidebar');
-    menuToggle.addEventListener('click', () => {
-      sidebar.classList.toggle('active');
+    // Animaciones suaves al hacer scroll
+    ScrollReveal().reveal('.glass', { 
+      duration: 1000, 
+      distance: '50px', 
+      origin: 'bottom', 
+      easing: 'ease-in-out', 
+      interval: 100 
+    });
+
+    // Fondos dinámicos según la posición del scroll
+    const backgrounds = ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'bg-5', 'bg-6'];
+    const sections = document.querySelectorAll('section');
+    const body = document.body;
+
+    window.addEventListener('scroll', () => {
+      let index = Math.floor(window.scrollY / (document.body.scrollHeight / backgrounds.length));
+      index = Math.min(index, backgrounds.length - 1);
+      body.className = backgrounds[index] + " transition-all duration-1000";
     });
   </script>
 </body>
