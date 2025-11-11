@@ -220,7 +220,6 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
         </svg>
       </a>
-      <button id="scrollGuide" class="glass rounded-2xl px-5 py-3 hover:scale-[1.02] active:scale-95">Ver test completo</button>
     </div>
   </div>
 </section>
@@ -578,16 +577,6 @@
       document.body.appendChild(a); a.click();
       URL.revokeObjectURL(url); a.remove();
     });
-
-    // Botón guía: desplaza por secciones con una pequeña animación
-    document.getElementById('scrollGuide').addEventListener('click', ()=>{
-      const ids = Array.from({length:10}, (_,i)=> `#q-${i+1}`);
-      let i = 0;
-      const step = ()=>{
-        if(i >= ids.length) return; goto(ids[i++]); setTimeout(step, 400);
-      };
-      step();
-    });
   </script>
 
   
@@ -618,3 +607,4 @@
 
 </body>
 </html>
+
