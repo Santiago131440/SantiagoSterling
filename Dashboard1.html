@@ -11,15 +11,18 @@
        =========================== */
     :root{
       --accent:#e46600; /* morado brillante similar */
-      --black:#0b0b0b;
+      --black:#383838;
       --white:#ffffff;
       --muted:#f5f5f7;
       --max-width:1200px;
       --gap:24px;
       --ff-sans: 'Helvetica Neue', Arial, sans-serif;
+      --section-height: 100vh; /* Cambia a 80vh o 120vh según quieras */
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html,body{
+      height:100%
+    }
     body{
       margin:0;
       font-family:var(--ff-sans);
@@ -30,6 +33,7 @@
       line-height:1.3;
       overflow-x:hidden;
     }
+
     a{color:inherit;text-decoration:none}
 
     /* ===========================
@@ -67,16 +71,16 @@
     /* ===========================
        Hero - reproducción imagen
        =========================== */
-    .hero{
-      width:100%;
-      min-height:84vh;
-      display:flex;
-      position:relative;
-      align-items:flex-start;
-      justify-content:flex-start;
-      overflow:hidden;
-      background:var(--accent);
-    }
+     .hero {
+       width: 100%;
+       height: 100vh; /* Altura igual al alto total de la ventana */
+       display: flex;
+       position: relative;
+       align-items: flex-start;
+       justify-content: flex-start; /* Centra horizontalmente el contenido */
+       overflow: hidden;
+       background: var(--accent);
+      }
 
     /* left column with logo and small text */
     .hero-left{
@@ -152,13 +156,16 @@
     /* ===========================
        Alternación de secciones: blanco/negro
        =========================== */
-    .section{
-      width:100%;
-      padding:80px 6vw;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-    }
+.section {
+  width: 100%;
+  height: var(--section-height, 100vh); /* Altura modificable desde root */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scroll-snap-align: start; /* Alinea la sección al inicio */
+  scroll-snap-stop: always;
+  transition: background 0.5s ease;
+}
     .container{max-width:var(--max-width);width:100%}
     .white{
       background:var(--white);
@@ -271,7 +278,7 @@
         <h2 class="reveal">Proyectos destacados</h2>
         <p class="text-muted reveal">Diseño web, identidad visual, y desarrollo front-end a medida — seleccionamos proyectos que combinan tipografía potente y layouts limpios.</p>
 
-        <div style="height:20px"></div>
+        <div style="height:150px"></div>
 
         <div class="services">
           <div class="card reveal">
@@ -398,10 +405,10 @@
     <footer class="white">
       <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
         <div>
-          <strong>Van Holtz Studio</strong>
-          <div class="text-muted">© 2025 · Todos los derechos reservados</div>
+          <strong>W &amp; STERLING COMPANY</strong>
+          <div class="text-muted">2025</div>
         </div>
-        <div class="text-muted">Diseño &amp; Desarrollo — Santiago</div>
+        <div class="text-muted">Diseño &amp; Desarrollo</div>
       </div>
     </footer>
 
@@ -491,3 +498,4 @@
   </script>
 </body>
 </html>
+
