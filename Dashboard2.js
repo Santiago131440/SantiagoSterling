@@ -129,12 +129,10 @@ document.getElementById('btnExport').addEventListener('click', ()=>{
 });
 
 // Botón de acción
-document.getElementById('btnQuick').addEventListener('click', () => {
-  // Muestra la alerta (opcional)
-  alert('Santiago Sterling - Desarrollador de software');
-  
+document.getElementById('btnQuick').addEventListener('click', () => { 
   // Redirige a index.html
   window.location.href = 'index.html';
 });
+
 
 
