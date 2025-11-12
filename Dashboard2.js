@@ -131,8 +131,9 @@ document.getElementById('btnExport').addEventListener('click', ()=>{
 // Botón de acción
 document.getElementById('btnQuick').addEventListener('click', () => { 
   // Redirige a index.html
-  window.location.href = 'index.html';
+  window.location.href = 'index.html#projects';
 });
+
 
 
 
