@@ -129,6 +129,12 @@ document.getElementById('btnExport').addEventListener('click', ()=>{
 });
 
 // Botón de acción
-document.getElementById('btnQuick').addEventListener('click', ()=>{
-  alert('Santiago Sterling - Analista de Datos');
+document.getElementById('btnQuick').addEventListener('click', () => {
+  // Muestra la alerta (opcional)
+  alert('Santiago Sterling - Desarrollador de software');
+  
+  // Redirige a index.html
+  window.location.href = 'index.html';
 });
+
+
