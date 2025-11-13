@@ -15,7 +15,7 @@
 
     // playlist inicial (tracks de ejemplo públicos)
     let tracks = [
-      {title:'SoundHelix Song 1', artist:'SoundHelix', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'},
+      {title:'Happy Together', artist:'The Turtles', src:'https://www.youtube.com/watch?v=G_JVf84vfBQ&list=RDG_JVf84vfBQ&start_radio=1'},
       {title:'SoundHelix Song 2', artist:'SoundHelix', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'},
       {title:'SoundHelix Song 3', artist:'SoundHelix', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'}
     ];
