@@ -47,10 +47,10 @@ body {
   font-family: 'Inter', Arial, system-ui;
 }
 
-/* 🎵 CONTENEDOR PRINCIPAL */
+/* CONTENEDOR PRINCIPAL */
 .player-wrap {
-  width: 960px;
-  max-width: 96%;
+  width: 1200px;
+  max-width: 120%;
   background: var(--card);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
