@@ -1,3 +1,4 @@
+/* 🎨 VARIABLES BASE */
 :root {
   --bg: linear-gradient(145deg, #e9eef6 0%, #f8f9fb 100%);
   --card: rgba(255, 255, 255, 0.35);
@@ -6,13 +7,31 @@
   --shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
   --blur: 22px;
   --radius: 20px;
+  --glow: rgba(111, 66, 193, 0.15);
   font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   color: #1a1a1a;
+  color-scheme: light dark;
+  transition: 
+    background 0.8s ease-in-out,
+    color 0.8s ease-in-out,
+    box-shadow 0.8s ease-in-out,
+    filter 0.8s ease-in-out;
+}
+
+/* 🌙 ANIMACIÓN GENERAL DE TRANSICIÓN ENTRE MODOS */
+@keyframes themeFade {
+  0% { opacity: 0; filter: blur(8px) brightness(1.3); }
+  100% { opacity: 1; filter: blur(0) brightness(1); }
 }
 
 * {
   box-sizing: border-box;
-  transition: all 0.3s ease;
+  transition: 
+    background 0.5s ease, 
+    color 0.5s ease, 
+    border 0.5s ease, 
+    box-shadow 0.5s ease, 
+    transform 0.25s ease;
 }
 
 body {
@@ -24,8 +43,10 @@ body {
   justify-content: center;
   padding: 28px;
   backdrop-filter: blur(var(--blur));
+  animation: themeFade 1s ease forwards;
 }
 
+/* 🎵 CONTENEDOR PRINCIPAL */
 .player-wrap {
   width: 960px;
   max-width: 96%;
@@ -57,6 +78,7 @@ header h1 {
   -webkit-text-fill-color: transparent;
 }
 
+/* 🎧 ÁREA PRINCIPAL */
 .main {
   display: grid;
   grid-template-columns: 360px 1fr;
@@ -78,6 +100,7 @@ header h1 {
   cursor: pointer;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(16px);
+  transition: all 0.3s ease;
 }
 
 .add-area:hover {
@@ -123,6 +146,7 @@ header h1 {
   cursor: pointer;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
+  position: relative;
 }
 
 .track:hover {
@@ -199,7 +223,7 @@ header h1 {
   color: var(--muted);
 }
 
-/* CONTROLS */
+/* CONTROLES */
 .controls {
   display: flex;
   align-items: center;
@@ -234,6 +258,7 @@ header h1 {
   box-shadow: 0 6px 18px rgba(111, 66, 193, 0.3);
 }
 
+/* PROGRESO */
 .progress-wrap {
   display: flex;
   align-items: center;
@@ -269,7 +294,7 @@ header h1 {
   box-shadow: 0 0 8px rgba(111, 66, 193, 0.6);
 }
 
-/* VOLUME */
+/* 🎚️ VOLUMEN */
 .volume-wrap {
   display: flex;
   align-items: center;
@@ -321,8 +346,45 @@ footer {
   }
 }
 
-/* ANIMACIONES */
+/* 🔮 ANIMACIONES */
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.97); }
   to { opacity: 1; transform: scale(1); }
+}
+
+/* 🌙 MODO OSCURO */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: linear-gradient(145deg, #0f111a 0%, #1a1d27 100%);
+    --card: rgba(20, 20, 28, 0.45);
+    --muted: #a1a1b3;
+    --accent: #9d7aff;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --glow: rgba(157, 122, 255, 0.2);
+  }
+
+  body {
+    color: #f1f1f7;
+    animation: themeFade 1s ease forwards;
+  }
+
+  .player-wrap {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .add-area,
+  .track,
+  .cover,
+  .btn {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .btn.play {
+    background: var(--accent);
+    box-shadow: 0 6px 20px rgba(157, 122, 255, 0.4);
+  }
+
+  .progress .bar {
+    background: linear-gradient(90deg, var(--accent), #c7b5ff);
+  }
 }
