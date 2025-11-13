@@ -6,6 +6,7 @@
   <title>Santiago Sterling</title>
   <meta name="description" content="Hola, soy Santiago Sterling." />
   <link rel="stylesheet" href="Dashboard1.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -13,6 +14,7 @@
 
     <header>
       <nav class="nav">
+        <div class="logo">Santiago Sterling</div>
         <a href="#work">Trabajo</a>
         <a href="#gallery">Imagenes</a>
         <a href="#about">Acerca de</a>
@@ -43,26 +45,138 @@
     <!-- Sección blanca - servicios -->
     <section class="section white" id="work">
       <div class="container">
-        <h4 class="reveal">Proyectos destacados</h4>
-        <p class="text-muted reveal">Diseño web, identidad visual, y desarrollo front-end a medida — seleccionamos proyectos que combinan tipografía potente y layouts limpios.</p>
-
         <div style="height:150px"></div>
+      <div class="controls" aria-hidden="true">
+      <!-- icons on right -->
+      <div class="icon-btn" title="Agregar">
+        <!-- plus -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 5v14M5 12h14" stroke="#111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
 
-        <div class="services">
-          <div class="card reveal">
-            <h3>Branding &amp; Identidad</h3>
-            <p>Creación de sistemas visuales que funcionan tanto en web como en impresión. Procesos iterativos con entregables claros.</p>
-          </div>
-          <div class="card reveal">
-            <h3>Web Interactiva</h3>
-            <p>Landing pages con microinteracciones, animaciones CSS y buen rendimiento en móviles.</p>
-          </div>
-          <div class="card reveal">
-            <h3>UI / UX</h3>
-            <p>Diseños centrados en la conversión y en la experiencia del usuario con prototipos navegables.</p>
-          </div>
-        </div>
+      <div class="icon-btn" title="Buscar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M21 21l-4.35-4.35" stroke="#111" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="11" cy="11" r="6" stroke="#111" stroke-width="1.3" fill="none"/>
+        </svg>
+      </div>
 
+      <div class="icon-btn" title="Más">
+        <svg width="4" height="20" viewBox="0 0 4 20" fill="none" aria-hidden="true">
+          <circle cx="2" cy="4" r="2" fill="#111" />
+          <circle cx="2" cy="10" r="2" fill="#111" />
+          <circle cx="2" cy="16" r="2" fill="#111" />
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <nav class="top-nav" role="navigation" aria-label="Navegación principal">
+    <div class="muted">Spotify</div>
+    <div class="muted">Favoritos</div>
+    <div class="current" aria-current="page">Listas de reproducción</div>
+    <div class="muted">Pistas</div>
+    <div class="muted">Álbumes</div>
+    <div class="muted">Artistas</div>
+    <div class="muted">Carpetas</div>
+  </nav>
+
+  <main>
+    <section class="panel" aria-label="Lista de reproducción - panel">
+      <div class="playlists" role="list" aria-label="Listas">
+        <!-- Playlist 1 -->
+        <article class="playlist" role="listitem" aria-labelledby="pl1-title">
+          <div class="cover" aria-hidden="true">
+            <!-- music note icon -->
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8-2V6l-7 2v7" stroke="#fff" stroke-opacity="0.7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div id="pl1-title" class="pl-title">Recién añadidas</div>
+          <div class="pl-sub">277 pistas</div>
+        </article>
+
+        <!-- Playlist 2 -->
+        <article class="playlist" role="listitem" aria-labelledby="pl2-title">
+          <div class="cover" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8-2V6l-7 2v7" stroke="#fff" stroke-opacity="0.7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div id="pl2-title" class="pl-title">Más escuchadas</div>
+          <div class="pl-sub">100 pistas</div>
+        </article>
+
+        <!-- Playlist 3 -->
+        <article class="playlist" role="listitem" aria-labelledby="pl3-title">
+          <div class="cover" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8-2V6l-7 2v7" stroke="#fff" stroke-opacity="0.7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div id="pl3-title" class="pl-title">Últimas escuchadas</div>
+          <div class="pl-sub">100 pistas</div>
+        </article>
+
+        <!-- Playlist 4 -->
+        <article class="playlist" role="listitem" aria-labelledby="pl4-title">
+          <div class="cover" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8-2V6l-7 2v7" stroke="#fff" stroke-opacity="0.7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div id="pl4-title" class="pl-title">Pistas favoritas</div>
+          <div class="pl-sub">2 pistas</div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Player (fixed) -->
+  <div class="player" role="region" aria-label="Reproductor">
+    <div class="left">
+      <div class="thumb" aria-hidden="true">
+        <!-- small note circle -->
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8-2V6l-7 2v7" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="song">
+        <div class="title" id="song-title">Little Bad Girl - Club Instrumental</div>
+        <div class="artist">David Guetta</div>
+      </div>
+    </div>
+
+    <div class="controls" role="group" aria-label="Controles de reproducción">
+      <button class="btn" title="Anterior" id="prevBtn" aria-label="Pista anterior">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6v12l8.5-6L6 6zM18 6v12" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <button class="btn play" id="playBtn" aria-pressed="false" aria-label="Reproducir/Pausa" title="Reproducir">
+        <svg id="playIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 4l14 8-14 8V4z" fill="#fff" />
+        </svg>
+        <svg id="pauseIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="display:none">
+          <path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="#fff"/>
+        </svg>
+      </button>
+
+      <button class="btn" title="Siguiente" id="nextBtn" aria-label="Siguiente pista">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M18 6V18L9.5 12 18 6zM6 6v12" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="queue-btn" title="Cola" aria-label="Ver cola">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 6h18M3 12h10M3 18h18" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
       </div>
     </section>
 
@@ -190,6 +304,7 @@
   <script src="Dashboard1.js"></script>
 </body>
 </html>
+
 
 
 
