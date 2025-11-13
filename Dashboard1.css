@@ -5,7 +5,7 @@
       --accent:#e46600; /* morado brillante similar */
       --black:#292828;
       --white:#ffffff;
-      --muted:#969696;
+      --muted:#666666;
       --max-width:1200px;
       --gap:24px;
       --ff-sans: 'Helvetica Neue', Arial, sans-serif;
@@ -412,4 +412,5 @@
     .muted{
       color:var(--muted)
     }
+
 
