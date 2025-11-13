@@ -44,6 +44,7 @@ body {
   padding: 28px;
   backdrop-filter: blur(var(--blur));
   animation: themeFade 1s ease forwards;
+  font-family: 'Inter', Arial, system-ui;
 }
 
 /* 🎵 CONTENEDOR PRINCIPAL */
