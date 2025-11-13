@@ -12,16 +12,15 @@
     <header>
       <h1>Santiago Sterling</h1>
       <div style="color:var(--muted)">Lista personal</div>
+        <label class="add-area" id="dropArea" for="fileInput" tabindex="0">
+          Carga archivos (MP3, M4A).
+          <input class="file-input" id="fileInput" type="file" accept="audio/*" multiple>
+        </label>
     </header>
 
     <div class="main">
       <!-- LEFT: playlist + add files -->
       <div class="playlist-col">
-        <label class="add-area" id="dropArea" for="fileInput" tabindex="0">
-          Carga archivos (MP3, M4A).
-          <input class="file-input" id="fileInput" type="file" accept="audio/*" multiple>
-        </label>
-        <br>
 
         <div class="list" id="playlist" aria-label="Lista de reproducción">
           <!-- tracks inserted por JS -->
