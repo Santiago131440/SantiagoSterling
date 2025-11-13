@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reproductor de Música - Demo</title>
+  <style>
+    :root{
+      --bg:#f5f7fb; --card:#fff; --muted:#6b7280; --accent:#6f42c1;
+      --shadow: 0 8px 24px rgba(16,24,40,0.06);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+    .player-wrap{width:960px;max-width:96%;background:var(--card);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+    header{padding:22px 28px;border-bottom:1px solid #efefef;display:flex;align-items:center;justify-content:space-between}
+    header h1{margin:0;font-size:20px}
+    .main{display:grid;grid-template-columns:360px 1fr;gap:18px;padding:20px}
+    /* playlist column */
+    .playlist-col{padding:10px}
+    .add-area{border:2px dashed #e6e7ec;border-radius:12px;padding:14px;text-align:center;color:var(--muted);cursor:pointer}
+    .add-area.dragover{background:#f3f0ff;border-color:var(--accent);color:var(--accent)}
+    .file-input{display:none}
+    .list{margin-top:12px;max-height:420px;overflow:auto;padding-right:6px}
+    .track{
+      display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;cursor:pointer;
+    }
+    .track:hover{background:#fbf7ff}
+    .track.active{background:linear-gradient(90deg, rgba(111,66,193,0.08), rgba(111,66,193,0.02));border-left:4px solid var(--accent);padding-left:8px}
+    .track .meta{flex:1;min-width:0}
+    .track .title{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .track .artist{font-size:13px;color:var(--muted)}
+    /* player column */
+    .player-col{display:flex;flex-direction:column;gap:12px;padding:6px 10px}
+    .cover{
+      height:240px;border-radius:12px;background:linear-gradient(180deg,#e9e7f6,#fff);
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted);
+    }
+    .now{display:flex;align-items:center;justify-content:space-between;padding:8px 2px}
+    .now .info{display:flex;flex-direction:column;gap:4px}
+    .now .info .title{font-size:18px;font-weight:700}
+    .now .info .artist{color:var(--muted)}
+    /* controls */
+    .controls{display:flex;align-items:center;gap:10px;justify-content:center;padding:6px}
+    .btn{background:transparent;border:0;padding:10px;border-radius:8px;cursor:pointer}
+    .btn.play{background:var(--accent);color:#fff;padding:12px 16px;border-radius:12px}
+    .progress-wrap{display:flex;align-items:center;gap:12px;padding:0 8px}
+    .time{font-size:13px;color:var(--muted);width:48px;text-align:center}
+    .progress{flex:1;height:8px;background:#eee;border-radius:8px;position:relative;cursor:pointer}
+    .progress .bar{position:absolute;left:0;top:0;height:100%;width:0%;background:var(--accent);border-radius:8px}
+    .volume-wrap{display:flex;align-items:center;gap:8px;padding:0 8px}
+    input[type=range]{-webkit-appearance:none;background:transparent}
+    input[type=range]::-webkit-slider-runnable-track{height:6px;background:#eee;border-radius:6px}
+    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);margin-top:-5px}
+    footer{padding:12px 20px;border-top:1px solid #efefef;font-size:13px;color:var(--muted);display:flex;justify-content:space-between}
+    /* responsive */
+    @media (max-width:820px){
+      .main{grid-template-columns:1fr;gap:12px}
+      .cover{height:200px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="player-wrap" role="application" aria-label="Reproductor de música">
+    <header>
+      <h1>Mi Reproductor</h1>
+      <div style="color:var(--muted)">Lista personal</div>
+    </header>
+
+    <div class="main">
+      <!-- LEFT: playlist + add files -->
+      <div class="playlist-col">
+        <label class="add-area" id="dropArea" for="fileInput" tabindex="0">
+          Arrastra archivos aquí o haz click para añadir (MP3, M4A).<br><small>Puedes añadir varios.</small>
+          <input class="file-input" id="fileInput" type="file" accept="audio/*" multiple>
+        </label>
+
+        <div class="list" id="playlist" aria-label="Lista de reproducción">
+          <!-- tracks inserted por JS -->
+        </div>
+      </div>
+
+      <!-- RIGHT: player -->
+      <div class="player-col">
+        <div class="cover" id="cover">Carátula</div>
+
+        <div class="now">
+          <div class="info">
+            <div id="nowTitle" class="title">-</div>
+            <div id="nowArtist" class="artist">-</div>
+          </div>
+          <div style="min-width:110px;text-align:right">
+            <div style="font-size:13px;color:var(--muted)">Reproduciendo</div>
+            <div id="nowIndex" style="font-weight:600">0 / 0</div>
+          </div>
+        </div>
+
+        <div class="controls" aria-hidden="false">
+          <button class="btn" id="prevBtn" title="Anterior">⏮</button>
+          <button class="btn play" id="playBtn" title="Reproducir/Pausar" aria-pressed="false">▶️</button>
+          <button class="btn" id="nextBtn" title="Siguiente">⏭</button>
+        </div>
+
+        <div class="progress-wrap" aria-label="Barra de progreso">
+          <div class="time" id="currentTime">0:00</div>
+          <div class="progress" id="progressBar" role="slider" aria-valuemin="0" aria-valuemax="100" tabindex="0">
+            <div class="bar" id="progressBarFill"></div>
+          </div>
+          <div class="time" id="duration">0:00</div>
+        </div>
+
+        <div class="volume-wrap">
+          <div style="min-width:60px;color:var(--muted)">Volumen</div>
+          <input id="volume" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volumen">
+        </div>
+
+        <!-- element audio escondido -->
+        <audio id="audio" preload="metadata"></audio>
+      </div>
+    </div>
+
+    <footer>
+      <div>Soporta archivos locales y pistas de ejemplo.</div>
+      <div style="color:var(--muted)">Atajos: Space = play/pause · ← → = anterior/siguiente</div>
+    </footer>
+  </div>
+
+  <script>
+    /***********************
+     * Reproductor completo
+     ***********************/
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('playBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressBarFill');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+    const volumeEl = document.getElementById('volume');
+    const playlistEl = document.getElementById('playlist');
+    const nowTitle = document.getElementById('nowTitle');
+    const nowArtist = document.getElementById('nowArtist');
+    const nowIndex = document.getElementById('nowIndex');
+    const cover = document.getElementById('cover');
+
+    // playlist inicial (tracks de ejemplo públicos)
+    let tracks = [
+      {title:'SoundHelix Song 1', artist:'SoundHelix', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'},
+      {title:'SoundHelix Song 2', artist:'SoundHelix', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'},
+      {title:'SoundHelix Song 3', artist:'SoundHelix', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'}
+    ];
+
+    let current = 0;
+    let isPlaying = false;
+
+    // Render playlist
+    function renderPlaylist(){
+      playlistEl.innerHTML = '';
+      tracks.forEach((t,i) => {
+        const el = document.createElement('div');
+        el.className = 'track' + (i===current ? ' active' : '');
+        el.dataset.index = i;
+        el.innerHTML = `<div style="width:12px;text-align:center">${i+1}</div>
+                        <div class="meta">
+                          <div class="title">${escapeHtml(t.title || 'Sin título')}</div>
+                          <div class="artist">${escapeHtml(t.artist || 'Desconocido')}</div>
+                        </div>
+                        <div style="width:60px;text-align:right;color:var(--muted);font-size:13px">${t.file ? 'local' : 'online'}</div>`;
+        el.addEventListener('click', () => {
+          loadTrack(i);
+          play();
+        });
+        playlistEl.appendChild(el);
+      });
+      nowIndex.textContent = `${current+1} / ${tracks.length}`;
+      highlightActive();
+    }
+
+    function highlightActive(){
+      [...playlistEl.children].forEach((c, idx) => {
+        c.classList.toggle('active', idx === current);
+      });
+    }
+
+    // Load current track metadata to UI and audio src
+    function loadTrack(index = 0){
+      if (!tracks.length) return;
+      current = Math.max(0, Math.min(index, tracks.length - 1));
+      audio.src = tracks[current].src;
+      nowTitle.textContent = tracks[current].title || 'Sin título';
+      nowArtist.textContent = tracks[current].artist || 'Desconocido';
+      nowIndex.textContent = `${current+1} / ${tracks.length}`;
+      cover.textContent = tracks[current].title ? tracks[current].title.split(' ')[0] : 'Carátula';
+      highlightActive();
+      // intentar cargar metadata de duración
+      audio.load();
+    }
+
+    function play(){
+      audio.play().then(()=> {
+        isPlaying = true;
+        playBtn.textContent = '⏸';
+        playBtn.setAttribute('aria-pressed','true');
+      }).catch(e => {
+        console.warn('No se pudo reproducir automáticamente:', e);
+      });
+    }
+    function pause(){
+      audio.pause();
+      isPlaying = false;
+      playBtn.textContent = '▶️';
+      playBtn.setAttribute('aria-pressed','false');
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (!audio.src) loadTrack(current);
+      if (isPlaying) pause(); else play();
+    });
+    prevBtn.addEventListener('click', () => {
+      if (tracks.length === 0) return;
+      current = (current - 1 + tracks.length) % tracks.length;
+      loadTrack(current);
+      play();
+    });
+    nextBtn.addEventListener('click', () => {
+      if (tracks.length === 0) return;
+      current = (current + 1) % tracks.length;
+      loadTrack(current);
+      play();
+    });
+
+    // Progress updates
+    audio.addEventListener('timeupdate', () => {
+      if (!audio.duration || isNaN(audio.duration)) return;
+      const pct = (audio.currentTime / audio.duration) * 100;
+      progressFill.style.width = pct + '%';
+      currentTimeEl.textContent = formatTime(audio.currentTime);
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    // seek by click or keyboard
+    function seekTo(clientX){
+      const rect = progressBar.getBoundingClientRect();
+      const x = Math.min(Math.max(clientX - rect.left, 0), rect.width);
+      const pct = x / rect.width;
+      if (audio.duration) audio.currentTime = pct * audio.duration;
+    }
+    progressBar.addEventListener('click', (e) => seekTo(e.clientX));
+    progressBar.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') audio.currentTime = Math.max(0, audio.currentTime - 5);
+      if (e.key === 'ArrowRight') audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 5);
+    });
+
+    // when track ends -> next
+    audio.addEventListener('ended', () => {
+      current = (current + 1) % tracks.length;
+      loadTrack(current);
+      play();
+    });
+
+    // volume
+    volumeEl.addEventListener('input', () => {
+      audio.volume = parseFloat(volumeEl.value);
+    });
+
+    // load duration when metadata loaded
+    audio.addEventListener('loadedmetadata', () => {
+      durationEl.textContent = formatTime(audio.duration || 0);
+    });
+
+    // keyboard shortcuts
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') { e.preventDefault(); if (isPlaying) pause(); else play(); }
+      if (e.code === 'ArrowRight') { e.preventDefault(); nextBtn.click(); }
+      if (e.code === 'ArrowLeft') { e.preventDefault(); prevBtn.click(); }
+    });
+
+    // Add local files (drag & drop + file input)
+    const fileInput = document.getElementById('fileInput');
+    const dropArea = document.getElementById('dropArea');
+
+    dropArea.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', (ev)=> {
+      const files = Array.from(ev.target.files);
+      addFiles(files);
+      fileInput.value = '';
+    });
+
+    // drag events
+    ['dragenter','dragover'].forEach(evt => {
+      dropArea.addEventListener(evt, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        dropArea.classList.add('dragover');
+      });
+    });
+    ['dragleave','drop'].forEach(evt => {
+      dropArea.addEventListener(evt, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        dropArea.classList.remove('dragover');
+      });
+    });
+    dropArea.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const files = Array.from(dt.files).filter(f => f.type.startsWith('audio/'));
+      addFiles(files);
+    });
+
+    function addFiles(files){
+      files.forEach(f => {
+        const url = URL.createObjectURL(f);
+        tracks.push({title:f.name.replace(/\.[^/.]+$/, ""), artist: 'Local', src: url, file: true});
+      });
+      renderPlaylist();
+      // if first addition and nothing loaded, load first
+      if (!audio.src && tracks.length) loadTrack(0);
+    }
+
+    // helper: format seconds to M:SS
+    function formatTime(sec){
+      if (!sec || isNaN(sec)) return '0:00';
+      const s = Math.floor(sec % 60).toString().padStart(2,'0');
+      const m = Math.floor(sec/60);
+      return `${m}:${s}`;
+    }
+
+    // simple escape to avoid HTML injection in titles
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    // init
+    renderPlaylist();
+    loadTrack(0);
+
+    // Optional: release object URLs when page unloads
+    window.addEventListener('beforeunload', () => {
+      tracks.filter(t => t.file && t.src.startsWith('blob:')).forEach(t => URL.revokeObjectURL(t.src));
+    });
+  </script>
+</body>
+</html>
