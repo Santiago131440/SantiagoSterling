@@ -20,7 +20,9 @@
   let tracks = [
     { title:'SoundHelix Song 1', artist:'SoundHelix', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', type:'mp3' },
     { title:'SoundHelix Song 2', artist:'SoundHelix', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', type:'mp3' },
-    { title:'Happy Together', artist:'The Turtles', src:'https://www.youtube.com/watch?v=G_JVf84vfBQ&list=RDG_JVf84vfBQ&start_radio=1', type:'youtube' }
+    { title:'Happy Together', artist:'The Turtles', src:'https://www.youtube.com/watch?v=G_JVf84vfBQ&list=RDG_JVf84vfBQ&start_radio=1', type:'youtube' },
+    { title:'Music Sessions #0/66', artist:'Daddy Yankee & BZRP', src:'https://www.youtube.com/watch?v=qNw8ejrI0nM&list=RDqNw8ejrI0nM&start_radio=1', type:'youtube' },
+    { title:'Bohemian Rhapsody (Official Video Remastered)', artist:'Queen', src:'https://www.youtube.com/watch?v=fJ9rUzIMcZQ&list=RDfJ9rUzIMcZQ&start_radio=1', type:'youtube' },
   ];
 
   let current = 0;
