@@ -74,7 +74,7 @@ header h1 {
   margin: 0;
   font-size: 20px;
   font-weight: 700;
-  background: linear-gradient(90deg, var(--accent), #9f7aea, #0421C2);
+  background: linear-gradient(90deg, var(--accent), #9f7aea, #6874D4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -290,7 +290,7 @@ header h1 {
   top: 0;
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, var(--accent), #b19cd9, #0421C2);
+  background: linear-gradient(90deg, var(--accent), #b19cd9, #6874D4);
   border-radius: 8px;
   box-shadow: 0 0 8px rgba(111, 66, 193, 0.6);
 }
