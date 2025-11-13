@@ -23,6 +23,7 @@
     { title:'Happy Together', artist:'The Turtles', src:'https://www.youtube.com/watch?v=G_JVf84vfBQ&list=RDG_JVf84vfBQ&start_radio=1', type:'youtube' },
     { title:'Music Sessions #0/66', artist:'Daddy Yankee & BZRP', src:'https://www.youtube.com/watch?v=qNw8ejrI0nM&list=RDqNw8ejrI0nM&start_radio=1', type:'youtube' },
     { title:'Bohemian Rhapsody (Official Video Remastered)', artist:'Queen', src:'https://www.youtube.com/watch?v=fJ9rUzIMcZQ&list=RDfJ9rUzIMcZQ&start_radio=1', type:'youtube' },
+    { title:'Oh que será?', artist:'Willie Colón', src:'https://www.youtube.com/watch?v=qdYqwE2lsv0&list=RDqdYqwE2lsv0&start_radio=1', type:'youtube' },
   ];
 
   let current = 0;
