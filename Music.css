@@ -68,6 +68,7 @@ header {
   align-items: center;
   justify-content: space-between;
   backdrop-filter: blur(18px);
+  background: linear-gradient(90deg, var(--accent), #9f7aea, #FC0000);
 }
 
 header h1 {
