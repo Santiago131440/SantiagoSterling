@@ -9,7 +9,7 @@
   --radius: 20px;
   --glow: rgba(255, 66, 0, 0.15);
   font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  color: #1a1a1a;
+  color: #3D3D3D;
   color-scheme: light dark;
   transition: 
     background 0.8s ease-in-out,
@@ -311,7 +311,7 @@ input[type=range] {
 
 input[type=range]::-webkit-slider-runnable-track {
   height: 6px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(245, 247, 251, 0.3);
   border-radius: 6px;
 }
 
@@ -365,7 +365,7 @@ footer {
   }
 
   body {
-    color: #f1f1f7;
+    color: linear-gradient(145deg, #FEFEFE 0%, #F0F0F0 100%);
     animation: themeFade 1s ease forwards;
   }
 
