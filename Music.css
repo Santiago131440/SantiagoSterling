@@ -68,14 +68,13 @@ header {
   align-items: center;
   justify-content: space-between;
   backdrop-filter: blur(18px);
-  background: linear-gradient(90deg, var(--accent), #9f7aea, #FC0000);
 }
 
 header h1 {
   margin: 0;
   font-size: 20px;
   font-weight: 700;
-  background: linear-gradient(90deg, var(--accent), #9f7aea, #6874D4);
+  background: linear-gradient(90deg, var(--accent), #855CFF, #6874D4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -94,7 +93,7 @@ header h1 {
 }
 
 .add-area {
-  border: 2px dashed rgba(255, 255, 255, 0.35);
+  border: 2px dashed linear-gradient(90deg, #855CFF, #6874D4);
   border-radius: 12px;
   padding: 14px;
   text-align: center;
@@ -387,6 +386,6 @@ footer {
   }
 
   .progress .bar {
-    background: linear-gradient(90deg, var(--accent), #c7b5ff);
+    background: linear-gradient(90deg, var(--accent), #855CFF);
   }
 }
