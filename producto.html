@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Red Pericial</title>
+
+  <!-- Tailwind Play CDN (rápido para prototipos) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind config (colores y tipografías elegantes)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#0b0b0b',
+            gold: '#caa34a',
+            cream: '#f7f2eb',
+            slateSoft: '#f4f6f8'
+          },
+          fontFamily: {
+            display: ['Cinzel', 'serif'],
+            body: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Micro-accentos para darle ese look 'premium' */
+    .subtle-glass {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
+      backdrop-filter: blur(6px) saturate(120%);
+      -webkit-backdrop-filter: blur(6px) saturate(120%);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .gold-line {
+      background: linear-gradient(90deg, transparent, rgba(202,163,74,0.9), transparent);
+      height: 3px;
+      border-radius: 6px;
+    }
+
+    /* Hero background overlay para sensación premium */
+.hero-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+
+    /* Pequeñas animaciones */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(12px) scale(0.995);
+      transition: all 700ms cubic-bezier(.2,.9,.25,1);
+    }
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Efecto sutil de contenedor central */
+    .container-wide { max-width: 1200px; }
+  </style>
+</head>
+<body class="bg-ink text-cream leading-relaxed antialiased">
+
+  <!-- NAVBAR -->
+  <header class="w-full fixed z-40 top-0 left-0">
+    <div class="backdrop-blur-md bg-black/40 border-b border-white/5">
+      <div class="mx-auto container-wide px-6 py-4 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-4">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold/90 to-gold/60 flex items-center justify-center text-ink font-display">R</div>
+          <div>
+            <div class="font-display text-lg tracking-widest">RED PERICIAL</div>
+            <div class="text-xs text-white/60 -mt-1">Asesorias especializadas</div>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8 text-sm text-white/85">
+          <a class="hover:text-gold transition" href="#coleccion">Colección</a>
+          <a class="hover:text-gold transition" href="#maestria">Maestría</a>
+          <a class="hover:text-gold transition" href="#servicios">Servicios</a>
+          <a class="hover:text-gold transition" href="#contacto">Contacto</a>
+        </nav>
+
+        <div class="hidden md:flex gap-4 items-center">
+          <button class="px-4 py-2 rounded-full border border-white/6 text-sm subtle-glass">Iniciar sesión</button>
+          <button class="px-4 py-2 rounded-full font-medium text-ink bg-gold">Reservar</button>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button id="menuBtn" class="md:hidden p-2 rounded-md border border-white/6 subtle-glass">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobileMenu" class="md:hidden hidden px-6 pb-6">
+        <nav class="flex flex-col gap-3 text-sm">
+          <a href="#coleccion" class="py-2 border-b border-white/6">Colección</a>
+          <a href="#maestria" class="py-2 border-b border-white/6">Maestría</a>
+          <a href="#servicios" class="py-2 border-b border-white/6">Servicios</a>
+          <a href="#contacto" class="py-2">Contacto</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+ <main class="mt-20">
+  <section class="hero-bg relative min-h-[78vh] flex items-center overflow-hidden">
+
+    <!-- CONTENEDOR DE VIDEOS -->
+    <div class="absolute inset-0 -z-10">
+      <video class="hero-video absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-1000"
+        autoplay muted loop playsinline>
+        <source src="https://cdn.pixabay.com/video/2018/11/16/19368-301525727_large.mp4" type="video/mp4">
+      </video>
+
+      <video class="hero-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+        autoplay muted loop playsinline>
+        <source src="https://cdn.pixabay.com/video/2023/07/19/172173-846731312_large.mp4" type="video/mp4">
+      </video>
+
+      <video class="hero-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+        autoplay muted loop playsinline>
+        <source src="https://cdn.pixabay.com/video/2022/06/03/119181-717336673_large.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- OVERLAY -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50"></div>
+
+    <!-- CONTENIDO -->
+    <div class="mx-auto container-wide px-6 py-28 relative z-10">
+      <div class="max-w-3xl">
+        <div class="gold-line w-24 mb-8"></div>
+        <h1 class="font-display text-5xl md:text-6xl leading-tight tracking-tight text-cream">
+          <strong>RED PERICIAL</strong>
+        </h1>
+        <h5 class="font-display text-lg md:text-lg leading-tight tracking-tight text-cream">
+          El faro que guía la justicia.
+        </h5>
+
+        <p class="mt-6 text-lg text-white/80">
+          Red Pericial representa confianza, liderazgo y visión, siendo un espacio donde la ley no solo se interpreta, sino que se honra con vocación, precisión y respeto.
+        </p>
+
+        <div class="mt-8 flex gap-4">
+          <a href="#coleccion" class="px-6 py-3 rounded-full bg-gold text-ink font-medium shadow-lg">Ver Profesionales</a>
+          <a href="#servicios" class="px-6 py-3 rounded-full border border-white/6 subtle-glass">Solicitar asesoría</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Degradado de transición -->
+    <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black via-black/70 to-transparent pointer-events-none"></div>
+  </section>
+
+
+    <!-- SOBRE LA MARCA -->
+    <section class="py-20 bg-black">
+      <div class="mx-auto container-wide px-6 grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="font-display text-3xl text-cream mb-4" data-reveal>Un servicio privado para el apoyo médico legal de las instituciones.</h2>
+          <p class="text-white/75 mb-6" data-reveal>
+            Aseoría técnica especializada dispuesta para dar soporte a la defensa judicial institucional, para dar soporte como medio de oposición a las pretensiones económicas de los demandantes en juicios relacionados con la responsabilidad Médica e institucional.
+          </p>
+
+          <ul class="space-y-3 text-white/70">
+            <li class="flex items-start gap-3" data-reveal>
+              <span class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">✓</span>
+              <div>
+                <div class="font-medium">Materiales nobles</div>
+                <div class="text-sm">Selección rigurosa de metales, maderas y pieles.</div>
+              </div>
+            </li>
+            <li class="flex items-start gap-3" data-reveal>
+              <span class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">✓</span>
+              <div>
+                <div class="font-medium">Hecho a mano</div>
+                <div class="text-sm">Talleres con artesanos certificados.</div>
+              </div>
+            </li>
+            <li class="flex items-start gap-3" data-reveal>
+              <span class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">✓</span>
+              <div>
+                <div class="font-medium">Garantía vitalicia</div>
+                <div class="text-sm">Servicio posventa y mantenimiento exclusivo.</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="rounded-2xl overflow-hidden subtle-glass p-6" data-reveal>
+          <img src="https://cdn.pixabay.com/photo/2023/12/15/18/40/ai-generated-8451277_1280.png" alt="Taller artesano" class="w-full h-80 object-cover rounded-xl shadow-xl">
+        </div>
+      </div>
+    </section>
+
+    <!-- COLECCIÓN DESTACADA -->
+    <section id="coleccion" class="py-20 bg-cream text-ink">
+      <div class="mx-auto container-wide px-6">
+        <div class="text-center mb-12" data-reveal>
+          <h3 class="font-display text-2xl">Profesionales</h3>
+          <p class="mt-2 text-sm text-ink/70">Piezas seleccionadas — edición limitada</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Card 1 -->
+<article class="group relative rounded-3xl overflow-hidden shadow-xl bg-white transition-all duration-700 w-80 h-120">
+  <!-- Imagen -->
+  <img 
+    class="w-full h-64 object-cover transition-all duration-700 group-hover:h-full group-hover:scale-110 absolute inset-0 z-0" 
+    src="https://cdn.pixabay.com/photo/2021/11/08/11/33/justice-6778953_1280.jpg" 
+    alt="Pieza 1"
+  >
+  <!-- Capa oscura elegante -->
+  <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-60 transition-all duration-700 z-10"></div>
+  <!-- Contenido -->
+  <div class="relative z-20 p-6 h-64 flex flex-col justify-end transition-all duration-700">
+    <div>
+      <h4 class="font-semibold text-lg transition-colors duration-700 group-hover:text-[#cfa45d]">
+        Asesoría Judicial Preventiva
+      </h4>
+      <p class="mt-2 text-sm transition-colors duration-700 text-ink/70 group-hover:text-[#cfa45d]">
+        Se orienta a evitar conflictos legales antes de que lleguen a los juzgados. Su objetivo principal es prevenir demandas, sanciones o litigios futuros.
+      </p>
+    </div>
+    <div class="mt-4 flex items-center justify-between">
+      <div class="font-semibold transition-colors duration-700 group-hover:text-[#cfa45d]">
+        Desde COP 28.500.000
+      </div>
+      <a class="text-sm underline transition-colors duration-700 group-hover:text-[#cfa45d]" href="#">
+        Ver detalle
+      </a>
+    </div>
+  </div>
+</article>
+
+
+          <!-- Card 2 -->
+          <article class="rounded-3xl overflow-hidden shadow-lg bg-white">
+            <img class="w-full h-64 object-cover" src="https://cdn.pixabay.com/photo/2021/11/08/11/33/justice-6778953_1280.jpg" alt="Pieza 2">
+            <div class="p-6">
+              <h4 class="font-medium text-lg">Asesoría Judicial Contenciosa (Defensa en procesos)</h4>
+              <p class="mt-2 text-sm text-ink/60">Se da cuando ya existe un conflicto y se requiere representación directa ante autoridades judiciales. Su finalidad es defender los derechos del cliente dentro de un proceso formal.</p>
+              <div class="mt-4 flex items-center justify-between">
+                <div class="font-semibold"> Desde COP 32.000.000</div>
+                <a class="text-sm underline" href="#">Ver detalle</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+ <article class="group relative rounded-3xl overflow-hidden shadow-xl bg-white transition-all duration-700 w-80 h-120">
+  <!-- Imagen -->
+  <img 
+    class="w-full h-64 object-cover transition-all duration-700 group-hover:h-full group-hover:scale-110 absolute inset-0 z-0" 
+    src="https://cdn.pixabay.com/photo/2021/11/08/11/33/justice-6778953_1280.jpg" 
+    alt="Pieza 1"
+  >
+  <!-- Capa oscura elegante -->
+  <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-60 transition-all duration-700 z-10"></div>
+  <!-- Contenido -->
+  <div class="relative z-20 p-6 h-64 flex flex-col justify-end transition-all duration-700">
+    <div>
+      <h4 class="font-semibold text-lg transition-colors duration-700 group-hover:text-[#cfa45d]">
+        Asesoría Judicial Preventiva
+      </h4>
+      <p class="mt-2 text-sm transition-colors duration-700 text-ink/70 group-hover:text-[#cfa45d]">
+        Se orienta a evitar conflictos legales antes de que lleguen a los juzgados. Su objetivo principal es prevenir demandas, sanciones o litigios futuros.
+      </p>
+    </div>
+    <div class="mt-4 flex items-center justify-between">
+      <div class="font-semibold transition-colors duration-700 group-hover:text-[#cfa45d]">
+        Desde COP 28.500.000
+      </div>
+      <a class="text-sm underline transition-colors duration-700 group-hover:text-[#cfa45d]" href="#">
+        Ver detalle
+      </a>
+    </div>
+  </div>
+</article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS/EXPERIENCIAS -->
+    <section id="servicios" class="py-20 bg-ink text-cream">
+      <div class="mx-auto container-wide px-6">
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+          <div data-reveal>
+            <h3 class="font-display text-3xl">Servicios exclusivos</h3>
+            <p class="mt-4 text-white/70">Experiencias privadas en showroom, personalización de piezas, y servicio de mantenimiento a domicilio.</p>
+
+            <ul class="mt-6 space-y-4 text-white/80">
+              <li>Showroom privado y degustación</li>
+              <li>Grabado y personalización a medida</li>
+              <li>Programa de mantenimiento premium</li>
+            </ul>
+
+            <div class="mt-8">
+              <a href="#contacto" class="px-6 py-3 rounded-md bg-gold text-ink font-medium">Agendar experiencia</a>
+            </div>
+          </div>
+
+          <div class="rounded-2xl overflow-hidden subtle-glass p-6" data-reveal>
+            <img src="https://images.unsplash.com/photo-1526045612212-70caf35c14df?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=8e5f4a3d2c1b0a9f8e7d6c5b4a3f2e1d" alt="Servicios" class="w-full h-80 object-cover rounded-xl shadow-xl">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="py-20 bg-cream text-ink">
+      <div class="mx-auto container-wide px-6 text-center mb-10" data-reveal>
+        <h3 class="font-display text-2xl">Lo que dicen de nosotros</h3>
+      </div>
+
+      <div class="mx-auto container-wide px-6 grid md:grid-cols-3 gap-6">
+        <blockquote class="p-6 rounded-2xl subtle-glass">
+          <p class="italic">"La atención y el acabado son incomparables. Una pieza para toda la vida."</p>
+          <cite class="block mt-4 font-medium">— M. Rodríguez</cite>
+        </blockquote>
+        <blockquote class="p-6 rounded-2xl subtle-glass">
+          <p class="italic">"Experiencia exclusiva, desde la reserva hasta la entrega."</p>
+          <cite class="block mt-4 font-medium">— L. Fernández</cite>
+        </blockquote>
+        <blockquote class="p-6 rounded-2xl subtle-glass">
+          <p class="italic">"Atención personalizada y una calidad que sorprende."</p>
+          <cite class="block mt-4 font-medium">— C. Ortega</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- CONTACTO / FOOTER -->
+    <section id="contacto" class="py-20 bg-ink text-cream">
+      <div class="mx-auto container-wide px-6 grid md:grid-cols-2 gap-10 items-center">
+        <div data-reveal>
+          <h3 class="font-display text-3xl">Contacto</h3>
+          <p class="mt-4 text-white/70">Agende una consulta privada o solicite información sobre disponibilidad y personalización.</p>
+
+          <div class="mt-6 text-white/80">
+            <p class="font-medium">Showroom — Calle Ficticia 123, Cali, Colombia</p>
+            <p class="mt-2">Tel: +57 2 123 4567</p>
+            <p class="mt-2">Email: contacto@atelier.co</p>
+          </div>
+        </div>
+
+        <form class="p-6 bg-white rounded-2xl text-ink shadow-lg" onsubmit="handleSubmit(event)" data-reveal>
+          <div class="grid gap-4">
+            <input required class="border border-slate-200 rounded-md px-4 py-3" placeholder="Nombre" name="name" />
+            <input required type="email" class="border border-slate-200 rounded-md px-4 py-3" placeholder="Correo" name="email" />
+            <textarea required class="border border-slate-200 rounded-md px-4 py-3" rows="4" placeholder="¿En qué podemos ayudarle?" name="message"></textarea>
+            <div class="flex items-center justify-between">
+              <button class="px-5 py-3 rounded-md bg-ink text-cream">Enviar</button>
+              <span class="text-sm text-ink/60">Respuesta en 48 hrs hábiles</span>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <footer class="mt-12 border-t border-white/6 pt-8 text-white/60 text-sm">
+        <div class="mx-auto container-wide px-6 flex flex-col md:flex-row items-center justify-between">
+          <div>© <span id="year"></span> Atelier. Todos los derechos reservados.</div>
+          <div class="mt-4 md:mt-0">Política de privacidad · Términos</div>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    // Small UI interactivity
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn?.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Form handling (demo)
+    function handleSubmit(e){
+      e.preventDefault();
+      const f = e.target;
+      const data = new FormData(f);
+      // Simulación: mostrar confirmación
+      alert('Gracias, ' + data.get('name') + '. Su mensaje fue enviado.');
+      f.reset();
+    }
+
+    // Reveal animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.12});
+
+    document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+  </script>
+
+  <script>
+  const videos = document.querySelectorAll('.hero-video');
+  let current = 0;
+  const intervalTime = 8000; // tiempo entre videos (8 segundos)
+
+  setInterval(() => {
+    videos[current].classList.remove('opacity-100');
+    videos[current].classList.add('opacity-0');
+
+    current = (current + 1) % videos.length;
+
+    videos[current].classList.remove('opacity-0');
+    videos[current].classList.add('opacity-100');
+  }, intervalTime);
+</script>
+
+</body>
+</html>
