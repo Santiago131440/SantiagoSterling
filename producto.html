@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/png" href="https://github.com/Santiago131440/SantiagoSterling/blob/main/41984825-8dbf-4f36-ab7d-02b5c6e603f4.png?raw=true">
   <title>Red Pericial</title>
 
   <!-- Tailwind Play CDN (rápido para prototipos) -->
@@ -51,6 +52,46 @@
   overflow: hidden;
 }
 
+.gold-shine{
+  background: linear-gradient(
+    110deg,
+    #8a6a1f 0%,
+    #d4af37 35%,
+    #ffffff 40%,
+    #d4af37 45%,
+    #8a6a1f 80%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmer 12s linear infinite;
+}
+
+@keyframes goldShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.nav-glow {
+    position: relative;
+  }
+
+  .nav-glow::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    background: radial-gradient(circle, rgba(212,175,55,0.35) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 999px;
+    z-index: -1;
+  }
+
+  .nav-glow:hover::after {
+    opacity: 1;
+  }
+
+
 
     /* Pequeñas animaciones */
     [data-reveal] {
@@ -74,23 +115,37 @@
     <div class="backdrop-blur-md bg-black/40 border-b border-white/5">
       <div class="mx-auto container-wide px-6 py-4 flex items-center justify-between">
         <a href="#" class="flex items-center gap-4">
-          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold/90 to-gold/60 flex items-center justify-center text-ink font-display">R</div>
+          <div class="w-10 h-10 rounded-full overflow-hidden">
+            <img 
+              src="https://github.com/Santiago131440/SantiagoSterling/blob/main/Logo%20solo.jpg?raw=true" 
+              alt="Avatar de usuario"
+              class="w-full h-full object-cover"
+            >
+          </div>
+
           <div>
             <div class="font-display text-lg tracking-widest">RED PERICIAL</div>
-            <div class="text-xs text-white/60 -mt-1">Asesorias especializadas</div>
+            <div class="text-xs text-white/60 -mt-1">Asesorías especializadas</div>
           </div>
         </a>
 
-        <nav class="hidden md:flex items-center gap-8 text-sm text-white/85">
-          <a class="hover:text-gold transition" href="#coleccion">Colección</a>
-          <a class="hover:text-gold transition" href="#maestria">Maestría</a>
-          <a class="hover:text-gold transition" href="#servicios">Servicios</a>
-          <a class="hover:text-gold transition" href="#contacto">Contacto</a>
-        </nav>
+<nav class="hidden md:flex items-center gap-8 text-sm text-white/85">
+  <a class="nav-glow hover:text-gold transition" href="#servicios">Nosotros</a>
+  <a class="nav-glow hover:text-gold transition" href="#maestria">Servicios</a>
+  <a class="nav-glow hover:text-gold transition" href="#servicios">Noticias de interés</a>
+  <a class="nav-glow hover:text-gold transition" href="#contacto">Blog</a>
+</nav>
 
         <div class="hidden md:flex gap-4 items-center">
-          <button class="px-4 py-2 rounded-full border border-white/6 text-sm subtle-glass">Iniciar sesión</button>
-          <button class="px-4 py-2 rounded-full font-medium text-ink bg-gold">Reservar</button>
+          <button
+          onclick="document.querySelector('#coleccion').scrollIntoView({ behavior: 'smooth' });"
+          class="px-4 py-2 rounded-full border border-white/6 text-sm subtle-glass">Ver profesionales</button>
+          <button 
+            onclick="document.querySelector('#contacto').scrollIntoView({ behavior: 'smooth' });"
+            class="px-4 py-2 rounded-full font-medium text-ink bg-gold">
+            Contáctanos
+          </button>
+
         </div>
 
         <!-- Mobile menu button -->
@@ -104,10 +159,10 @@
       <!-- Mobile menu -->
       <div id="mobileMenu" class="md:hidden hidden px-6 pb-6">
         <nav class="flex flex-col gap-3 text-sm">
-          <a href="#coleccion" class="py-2 border-b border-white/6">Colección</a>
-          <a href="#maestria" class="py-2 border-b border-white/6">Maestría</a>
-          <a href="#servicios" class="py-2 border-b border-white/6">Servicios</a>
-          <a href="#contacto" class="py-2">Contacto</a>
+          <a href="#coleccion" class="py-2 border-b border-white/6">Nosotros</a>
+          <a href="#maestria" class="py-2 border-b border-white/6">Servicios</a>
+          <a href="#servicios" class="py-2 border-b border-white/6">Noticias de interés</a>
+          <a href="#contacto" class="py-2">Blog</a>
         </nav>
       </div>
     </div>
@@ -141,12 +196,12 @@
     <!-- CONTENIDO -->
     <div class="mx-auto container-wide px-6 py-28 relative z-10">
       <div class="max-w-3xl">
-        <div class="gold-line w-24 mb-8"></div>
-        <h1 class="font-display text-5xl md:text-6xl leading-tight tracking-tight text-cream">
+        <div class="gold-line w-40 mb-8"></div>
+        <h1 class="font-display text-5xl md:text-6xl leading-tight tracking-tight gold-shine">
           <strong>RED PERICIAL</strong>
         </h1>
         <h5 class="font-display text-lg md:text-lg leading-tight tracking-tight text-cream">
-          El faro que guía la justicia.
+          ¿Que nos representa?
         </h5>
 
         <p class="mt-6 text-lg text-white/80">
@@ -154,8 +209,8 @@
         </p>
 
         <div class="mt-8 flex gap-4">
-          <a href="#coleccion" class="px-6 py-3 rounded-full bg-gold text-ink font-medium shadow-lg">Ver Profesionales</a>
-          <a href="#servicios" class="px-6 py-3 rounded-full border border-white/6 subtle-glass">Solicitar asesoría</a>
+          <a href="#contacto" class="px-6 py-3 rounded-full bg-gold text-ink font-medium shadow-lg">Contáctanos</a>
+          <a href="#coleccion" class="px-6 py-3 rounded-full border border-white/6 subtle-glass">Ver profesionales</a>
         </div>
       </div>
     </div>
@@ -169,38 +224,38 @@
     <section class="py-20 bg-black">
       <div class="mx-auto container-wide px-6 grid md:grid-cols-2 gap-12 items-center">
         <div>
-          <h2 class="font-display text-3xl text-cream mb-4" data-reveal>Un servicio privado para el apoyo médico legal de las instituciones.</h2>
+          <h2 class="font-display text-3xl text-cream mb-4" data-reveal>¿Qué somos?</h2>
           <p class="text-white/75 mb-6" data-reveal>
-            Aseoría técnica especializada dispuesta para dar soporte a la defensa judicial institucional, para dar soporte como medio de oposición a las pretensiones económicas de los demandantes en juicios relacionados con la responsabilidad Médica e institucional.
+            Servicio privado de apoyo médico-legal para instituciones, que ofrece asesoría técnica especializada en la defensa judicial frente a reclamaciones económicas por responsabilidad médica e institucional, integrado en un proyecto pericial exclusivo para clínicas y hospitales, con una oferta cerrada del servicio desde una casa pericial especializada.
           </p>
 
           <ul class="space-y-3 text-white/70">
             <li class="flex items-start gap-3" data-reveal>
               <span class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">✓</span>
               <div>
-                <div class="font-medium">Materiales nobles</div>
-                <div class="text-sm">Selección rigurosa de metales, maderas y pieles.</div>
+                <div class="font-medium">Apoyo Médico-Legal Privado</div>
+                <div class="text-sm">Un servicio privado para el apoyo médico-legal de las instituciones</div>
               </div>
             </li>
             <li class="flex items-start gap-3" data-reveal>
               <span class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">✓</span>
               <div>
-                <div class="font-medium">Hecho a mano</div>
-                <div class="text-sm">Talleres con artesanos certificados.</div>
+                <div class="font-medium">Defensa Técnica Médica</div>
+                <div class="text-sm">Asesoría técnica en defensa por responsabilidad médica.</div>
               </div>
             </li>
             <li class="flex items-start gap-3" data-reveal>
               <span class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">✓</span>
               <div>
-                <div class="font-medium">Garantía vitalicia</div>
-                <div class="text-sm">Servicio posventa y mantenimiento exclusivo.</div>
+                <div class="font-medium">Proyecto Pericial Institucional</div>
+                <div class="text-sm">Proyecto pericial exclusivo para clínicas y hospitales.</div>
               </div>
             </li>
           </ul>
         </div>
 
-        <div class="rounded-2xl overflow-hidden subtle-glass p-6" data-reveal>
-          <img src="https://cdn.pixabay.com/photo/2023/12/15/18/40/ai-generated-8451277_1280.png" alt="Taller artesano" class="w-full h-80 object-cover rounded-xl shadow-xl">
+        <div class="rounded-2xl overflow-hidden subtle-glass p-4" data-reveal>
+          <img src="https://www.simposiofiscal.com/wp-content/uploads/2022/02/Paquete-blindaje-medico-1200x800.jpg" alt="Taller artesano" class="w-90 h-90 object-cover rounded-xl shadow-xl">
         </div>
       </div>
     </section>
@@ -209,86 +264,62 @@
     <section id="coleccion" class="py-20 bg-cream text-ink">
       <div class="mx-auto container-wide px-6">
         <div class="text-center mb-12" data-reveal>
-          <h3 class="font-display text-2xl">Profesionales</h3>
-          <p class="mt-2 text-sm text-ink/70">Piezas seleccionadas — edición limitada</p>
+          <h3 class="font-display text-2xl">Servicios</h3>
+          <p class="mt-2 text-sm text-ink/70">Servicios ofertados — Paquetes exclusivos</p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-4 gap-8">
           <!-- Card 1 -->
-<article class="group relative rounded-3xl overflow-hidden shadow-xl bg-white transition-all duration-700 w-80 h-120">
-  <!-- Imagen -->
-  <img 
-    class="w-full h-64 object-cover transition-all duration-700 group-hover:h-full group-hover:scale-110 absolute inset-0 z-0" 
-    src="https://cdn.pixabay.com/photo/2021/11/08/11/33/justice-6778953_1280.jpg" 
-    alt="Pieza 1"
-  >
-  <!-- Capa oscura elegante -->
-  <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-60 transition-all duration-700 z-10"></div>
-  <!-- Contenido -->
-  <div class="relative z-20 p-6 h-64 flex flex-col justify-end transition-all duration-700">
-    <div>
-      <h4 class="font-semibold text-lg transition-colors duration-700 group-hover:text-[#cfa45d]">
-        Asesoría Judicial Preventiva
-      </h4>
-      <p class="mt-2 text-sm transition-colors duration-700 text-ink/70 group-hover:text-[#cfa45d]">
-        Se orienta a evitar conflictos legales antes de que lleguen a los juzgados. Su objetivo principal es prevenir demandas, sanciones o litigios futuros.
-      </p>
-    </div>
-    <div class="mt-4 flex items-center justify-between">
-      <div class="font-semibold transition-colors duration-700 group-hover:text-[#cfa45d]">
-        Desde COP 28.500.000
-      </div>
-      <a class="text-sm underline transition-colors duration-700 group-hover:text-[#cfa45d]" href="#">
-        Ver detalle
-      </a>
-    </div>
-  </div>
-</article>
-
-
+          <article class="rounded-3xl overflow-hidden shadow-lg bg-white">
+            <img class="w-full h-64 object-cover" src="https://media.istockphoto.com/id/1465316262/photo/businessman-inspecting-paperwork-document-of-business-data-analysis-working-management-report.jpg?s=1024x1024&w=is&k=20&c=4fE6KAnT4jBdMb1d1TVFOELKjKuEgkus0pJ6araaDVQ=" alt="Pieza 2">
+            <div class="p-6">
+              <h4 class="font-medium text-lg">Servicio 1</h4>
+              <p class="mt-2 text-sm text-ink/60">Junta Médica Pericial</p>
+              <div class="mt-4 flex items-center justify-between">
+                <div class="font-semibold"> Paquete de serivicios anuales</div>
+                <a class="text-sm underline" href="#">Ver</a>
+              </div>
+            </div>
+          </article>
           <!-- Card 2 -->
           <article class="rounded-3xl overflow-hidden shadow-lg bg-white">
-            <img class="w-full h-64 object-cover" src="https://cdn.pixabay.com/photo/2021/11/08/11/33/justice-6778953_1280.jpg" alt="Pieza 2">
+            <img class="w-full h-64 object-cover" src="https://media.istockphoto.com/id/1319031310/photo/doctor-writing-a-medical-prescription.jpg?s=1024x1024&w=is&k=20&c=nChrkueWF_kh09Gsm_cjWYAY1BnyQ3XMt9ITykBiIYQ=" alt="Pieza 2">
             <div class="p-6">
-              <h4 class="font-medium text-lg">Asesoría Judicial Contenciosa (Defensa en procesos)</h4>
-              <p class="mt-2 text-sm text-ink/60">Se da cuando ya existe un conflicto y se requiere representación directa ante autoridades judiciales. Su finalidad es defender los derechos del cliente dentro de un proceso formal.</p>
+              <h4 class="font-medium text-lg">Servicio 2</h4>
+              <p class="mt-2 text-sm text-ink/60">Dictamen médico especializado de opinión y contradicción con sustentación</p>
               <div class="mt-4 flex items-center justify-between">
-                <div class="font-semibold"> Desde COP 32.000.000</div>
-                <a class="text-sm underline" href="#">Ver detalle</a>
+                <div class="font-semibold"> Peritajes de comprobación</div>
+                <a class="text-sm underline" href="#">Ver</a>
               </div>
             </div>
           </article>
 
           <!-- Card 3 -->
- <article class="group relative rounded-3xl overflow-hidden shadow-xl bg-white transition-all duration-700 w-80 h-120">
-  <!-- Imagen -->
-  <img 
-    class="w-full h-64 object-cover transition-all duration-700 group-hover:h-full group-hover:scale-110 absolute inset-0 z-0" 
-    src="https://cdn.pixabay.com/photo/2021/11/08/11/33/justice-6778953_1280.jpg" 
-    alt="Pieza 1"
-  >
-  <!-- Capa oscura elegante -->
-  <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-60 transition-all duration-700 z-10"></div>
-  <!-- Contenido -->
-  <div class="relative z-20 p-6 h-64 flex flex-col justify-end transition-all duration-700">
-    <div>
-      <h4 class="font-semibold text-lg transition-colors duration-700 group-hover:text-[#cfa45d]">
-        Asesoría Judicial Preventiva
-      </h4>
-      <p class="mt-2 text-sm transition-colors duration-700 text-ink/70 group-hover:text-[#cfa45d]">
-        Se orienta a evitar conflictos legales antes de que lleguen a los juzgados. Su objetivo principal es prevenir demandas, sanciones o litigios futuros.
-      </p>
-    </div>
-    <div class="mt-4 flex items-center justify-between">
-      <div class="font-semibold transition-colors duration-700 group-hover:text-[#cfa45d]">
-        Desde COP 28.500.000
-      </div>
-      <a class="text-sm underline transition-colors duration-700 group-hover:text-[#cfa45d]" href="#">
-        Ver detalle
-      </a>
-    </div>
-  </div>
-</article>
+           <article class="rounded-3xl overflow-hidden shadow-lg bg-white">
+            <img class="w-full h-64 object-cover" src="https://media.istockphoto.com/id/1719539154/photo/home-care-healthcare-professional-hugging-senior-patient.jpg?s=1024x1024&w=is&k=20&c=rwt38eO7Y6WUo-GqWKxV9m7VaSQy8BqIugoy2S_7WGI=" alt="Pieza 2">
+            <div class="p-6">
+              <h4 class="font-medium text-lg">Servicio 3</h4>
+              <p class="mt-2 text-sm text-ink/60">Asesoría Médico Legal: Estrategia Defensa</p>
+              <div class="mt-4 flex items-center justify-between">
+                <div class="font-semibold"> Calificación Del Riesgo Legal Procesal</div>
+                <a class="text-sm underline" href="#">Ver</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+           <article class="rounded-3xl overflow-hidden shadow-lg bg-white">
+            <img class="w-full h-64 object-cover" src="https://media.istockphoto.com/id/1783743772/photo/female-speaker-giving-a-presentation-during-business-seminar-at-convention-center.jpg?s=1024x1024&w=is&k=20&c=_vG6anN_hY8YxPUBtwa8sXu0W7B6e6Qt7KxuDGNPlpE=" alt="Pieza 2">
+            <div class="p-6">
+              <h4 class="font-medium text-lg">Servicio 4</h4>
+              <p class="mt-2 text-sm text-ink/60">Programa de Capacitación Responsabilidad Médica para funcionarios</p>
+              <div class="mt-4 flex items-center justify-between">
+                <div class="font-semibold"> contratistas</div>
+                <a class="text-sm underline" href="#">Ver</a>
+              </div>
+            </div>
+          </article>
+
         </div>
       </div>
     </section>
@@ -298,17 +329,18 @@
       <div class="mx-auto container-wide px-6">
         <div class="grid md:grid-cols-2 gap-10 items-center">
           <div data-reveal>
-            <h3 class="font-display text-3xl">Servicios exclusivos</h3>
-            <p class="mt-4 text-white/70">Experiencias privadas en showroom, personalización de piezas, y servicio de mantenimiento a domicilio.</p>
+            <h3 class="font-display text-3xl">Fundamentación legal</h3>
+            <p class="mt-4 text-white/70">Código de Procedimiento Administrativo y de lo Contencioso Administrativo Artículo 222. Reglas especiales para las entidades públicas.</p>
 
             <ul class="mt-6 space-y-4 text-white/80">
-              <li>Showroom privado y degustación</li>
-              <li>Grabado y personalización a medida</li>
-              <li>Programa de mantenimiento premium</li>
+              <li>1. Para aportar el dictamen pericial o contradecirlo en los casos previstos en la ley, se faculta a las entidades públicas para que mediante contratación directa seleccionen los expertos que atenderán la prueba pericial requerida en un proceso judicial. Esta pericia también podrá ser contratada durante las restricciones establecidas en la Ley 996 de 2005. </li>
+              <br>
+              <li>Con el mismo fin se podrán contratar asesorías técnicas. </li>
+              <li>2. Cuando la experticia sea rendida por una entidad pública el juez deberá ordenar honorarios a favor de esta.</li>
             </ul>
 
             <div class="mt-8">
-              <a href="#contacto" class="px-6 py-3 rounded-md bg-gold text-ink font-medium">Agendar experiencia</a>
+              <a href="#contacto" class="px-6 py-3 rounded-full bg-gold text-ink font-medium">Obtener mas información</a>
             </div>
           </div>
 
@@ -327,16 +359,16 @@
 
       <div class="mx-auto container-wide px-6 grid md:grid-cols-3 gap-6">
         <blockquote class="p-6 rounded-2xl subtle-glass">
-          <p class="italic">"La atención y el acabado son incomparables. Una pieza para toda la vida."</p>
-          <cite class="block mt-4 font-medium">— M. Rodríguez</cite>
+          <p class="italic">“La red pericial demuestra un nivel de profesionalismo excepcional. Su acompañamiento jurídico y técnico ha sido clave para fortalecer la defensa de nuestra institución, aportando conceptos claros, bien sustentados y oportunos que generan total confianza.”</p>
+          <cite class="block mt-4 font-medium">— Wendy Gutíerrez</cite>
         </blockquote>
         <blockquote class="p-6 rounded-2xl subtle-glass">
-          <p class="italic">"Experiencia exclusiva, desde la reserva hasta la entrega."</p>
-          <cite class="block mt-4 font-medium">— L. Fernández</cite>
+          <p class="italic">“El servicio prestado por este equipo de abogados periciales ha superado nuestras expectativas. Su conocimiento en responsabilidad médica y su capacidad de análisis detallado nos brindan seguridad y respaldo en cada proceso judicial.”</p>
+          <cite class="block mt-4 font-medium">— Santiago Sterling</cite>
         </blockquote>
         <blockquote class="p-6 rounded-2xl subtle-glass">
-          <p class="italic">"Atención personalizada y una calidad que sorprende."</p>
-          <cite class="block mt-4 font-medium">— C. Ortega</cite>
+          <p class="italic">“Destacamos la eficiencia, ética y compromiso de esta red pericial. Su asesoría especializada ha optimizado nuestra gestión legal y ha protegido los intereses institucionales con rigor técnico y alto sentido de responsabilidad.”</p>
+          <cite class="block mt-4 font-medium">— Karym Bedoya</cite>
         </blockquote>
       </div>
     </section>
@@ -346,12 +378,12 @@
       <div class="mx-auto container-wide px-6 grid md:grid-cols-2 gap-10 items-center">
         <div data-reveal>
           <h3 class="font-display text-3xl">Contacto</h3>
-          <p class="mt-4 text-white/70">Agende una consulta privada o solicite información sobre disponibilidad y personalización.</p>
+          <p class="mt-4 text-white/70">Agende una asesoría privada para obtener mas detalles de como podemos solucionar tu caso.</p>
 
           <div class="mt-6 text-white/80">
-            <p class="font-medium">Showroom — Calle Ficticia 123, Cali, Colombia</p>
-            <p class="mt-2">Tel: +57 2 123 4567</p>
-            <p class="mt-2">Email: contacto@atelier.co</p>
+            <p class="font-medium">Calle 50 # 50 - 50, Cali, Colombia</p>
+            <p class="mt-2">Tel: +57 312 123 4567</p>
+            <p class="mt-2">Email: atencionalusuario@redpericial.com</p>
           </div>
         </div>
 
@@ -362,7 +394,7 @@
             <textarea required class="border border-slate-200 rounded-md px-4 py-3" rows="4" placeholder="¿En qué podemos ayudarle?" name="message"></textarea>
             <div class="flex items-center justify-between">
               <button class="px-5 py-3 rounded-md bg-ink text-cream">Enviar</button>
-              <span class="text-sm text-ink/60">Respuesta en 48 hrs hábiles</span>
+              <span class="text-sm text-ink/60">Respuesta en 3 días hábiles</span>
             </div>
           </div>
         </form>
@@ -370,7 +402,7 @@
 
       <footer class="mt-12 border-t border-white/6 pt-8 text-white/60 text-sm">
         <div class="mx-auto container-wide px-6 flex flex-col md:flex-row items-center justify-between">
-          <div>© <span id="year"></span> Atelier. Todos los derechos reservados.</div>
+          <div>© <span id="year"></span> Red Pericial | Cali, Colombia | Desarrollado por Santiago Sterling</div>
           <div class="mt-4 md:mt-0">Política de privacidad · Términos</div>
         </div>
       </footer>
