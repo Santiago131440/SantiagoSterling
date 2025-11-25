@@ -1,0 +1,210 @@
+/* styles.css - CSS adicional y utilidades (complementa Tailwind) */
+
+/* Base overrides and custom tokens */
+:root{
+  --gold: #d4af37;
+  --glass: rgba(255,255,255,0.04);
+  --muted: rgba(255,255,255,0.6);
+  --accent: linear-gradient(90deg,#ffd27a,#ffb84d);
+  --radius-lg: 18px;
+  --shadow-strong: 0 18px 60px rgba(2,6,23,0.6);
+  --glass-2: rgba(255,255,255,0.02);
+}
+
+/* Reset element focus for accessibility */
+:focus{
+  outline: 3px solid rgba(212,175,55,0.18);
+  outline-offset: 2px;
+}
+
+/* Utility classes used in the markup but not provided by Tailwind CDN */
+.bg-gold{ background: linear-gradient(90deg,#ffd27a,#ffb84d); }
+.text-gold{ color: var(--gold); }
+.blur-xl{ filter: blur(14px); }
+
+/* Custom card shadow and glass */
+.card-3d{
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  box-shadow: var(--shadow-strong);
+  padding: 1rem;
+}
+
+/* Buttons */
+.button-primary{
+  background: var(--accent);
+  color: #0b0b0b;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform .18s ease, box-shadow .18s ease;
+  box-shadow: 0 8px 30px rgba(212,175,55,0.12);
+}
+.button-primary:hover{ transform: translateY(-4px); box-shadow: 0 12px 40px rgba(212,175,55,0.18); }
+
+/* Fancy underline for headings */
+.fancy-underline{
+  position: relative;
+  display: inline-block;
+}
+.fancy-underline::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(90deg,#ffd27a,#ffb84d);
+  opacity: 0.18;
+  border-radius: 8px;
+}
+
+/* Animated badges */
+.badge-animate{
+  display:inline-block;
+  padding:0.4rem 0.6rem;
+  border-radius:999px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  transition: transform .25s cubic-bezier(.2,.9,.2,1), box-shadow .25s;
+}
+.badge-animate:hover{ transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,0.6); }
+
+/* Reveal animations used by JS */
+.reveal{
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .8s ease, transform .8s cubic-bezier(.2,.9,.2,1);
+}
+.reveal.visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Project card specific */
+.projectCard{
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.projectCard:hover{ transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
+
+/* Modal styles */
+#projectModal .modal-body{
+  max-height: 60vh;
+  overflow: auto;
+}
+
+/* Custom scrollbar for modal */
+#projectModal::-webkit-scrollbar, #projectModal .modal-body::-webkit-scrollbar{ height: 8px; width: 8px; }
+#projectModal::-webkit-scrollbar-thumb, #projectModal .modal-body::-webkit-scrollbar-thumb{ background: rgba(255,255,255,0.08); border-radius: 8px; }
+
+/* Fancy timeline */
+.timeline{
+  position: relative;
+  padding-left: 2rem;
+}
+.timeline::before{
+  content:"";
+  position:absolute;
+  left:10px;
+  top:0;
+  bottom:0;
+  width:3px;
+  background: linear-gradient(180deg,#ffd27a 0%, #ffb84d 100%);
+  opacity: 0.14;
+  border-radius: 3px;
+}
+.timeline-item{
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
+}
+.timeline-item::before{
+  content:"";
+  position:absolute;
+  left:-3px;
+  top:6px;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 6px rgba(212,175,55,0.08);
+}
+
+/* Fancy code block for case details */
+.code-style{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+  background: linear-gradient(180deg, rgba(0,0,0,0.3), rgba(255,255,255,0.02));
+  padding: 1rem;
+  border-radius: 12px;
+  color: #000000;
+  font-size: 0.875rem;
+  overflow:auto;
+}
+
+/* Responsive tweak */
+@media (max-width: 900px){
+  .container{ padding-left: 1rem; padding-right: 1rem; }
+}
+
+/* Additional decorative shapes (for rich visual) */
+.decor-shape-1{
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  right: -40px;
+  top: -40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 20% 20%, rgba(255,223,132,0.12), rgba(255,223,132,0.02));
+  transform: rotate(12deg);
+  pointer-events:none;
+}
+
+/* Helper for inaccessible content (screen readers) */
+.sr-only{
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px,1px,1px,1px);
+  white-space: nowrap;
+}
+
+/* CONTACT FORM LOADER */
+.loader{
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.12);
+  border-top-color: var(--gold);
+  animation: spin 1s linear infinite;
+}
+@keyframes spin{ to{ transform: rotate(360deg); } }
+
+/* Utility for large text gradient */
+.gradient-text{
+  background: linear-gradient(90deg,#ffd27a,#ffb84d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* polished link underline */
+a.underline-hover{ position: relative; }
+a.underline-hover::after{
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg,#ffd27a,#ffb84d);
+  transition: width .28s ease;
+  border-radius: 3px;
+}
+a.underline-hover:hover::after{ width: 100%; }
+
+/* long-form content styles */
+article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
+
+/* END - styles.css (enough reglas y utilidades para complementar Tailwind) */

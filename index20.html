@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portafolio — [Tu Nombre] | UX-focused Frontend Engineer</title>
+  <meta name="description" content="Portafolio profesional enfocado en UX, frontend y diseño de productos digitales.">
+  <meta name="keywords" content="portafolio, frontend, UI, UX, diseñador, desarrollador">
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <!-- Tailwind Play CDN (no build required) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom fonts (system fallback used to avoid external requests) -->
+  <link rel="stylesheet" href="styles20.css">
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100 antialiased leading-relaxed">
+  <!-- SKIP LINK -->
+  <a class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-gold text-black px-3 py-2 rounded" href="#main">Saltar al contenido</a>
+
+  <!-- NAV / HERO -->
+  <header class="sticky top-4 z-50 container mx-auto px-6">
+    <nav class="backdrop-blur-sm bg-white/3 border border-white/6 rounded-2xl p-3 shadow-xl flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl grid place-items-center bg-gradient-to-tr from-yellow-300 to-yellow-500 text-black font-extrabold">SR</div>
+        <div>
+          <div class="text-lg font-extrabold">[Tu Nombre]</div>
+          <div class="text-xs text-slate-300">Frontend Engineer · UX Designer</div>
+        </div>
+      </div>
+
+      <div class="hidden lg:flex items-center gap-4">
+        <a href="#about" class="text-slate-200 hover:text-gold transition">Sobre</a>
+        <a href="#skills" class="text-slate-200 hover:text-gold transition">Habilidades</a>
+        <a href="#projects" class="text-slate-200 hover:text-gold transition">Proyectos</a>
+        <a href="#cases" class="text-slate-200 hover:text-gold transition">Casos</a>
+        <a href="#testimonials" class="text-slate-200 hover:text-gold transition">Testimonios</a>
+        <a href="#contact" class="px-4 py-2 rounded-md bg-gradient-to-r from-yellow-300 to-yellow-500 text-black font-semibold shadow">Contrátame</a>
+      </div>
+
+      <div class="lg:hidden">
+        <button id="menuBtn" aria-expanded="false" aria-label="Abrir menú" class="p-2 rounded-md bg-white/5">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile menu (hidden by default) -->
+    <div id="mobileMenu" class="mt-2 hidden bg-white/3 border border-white/6 rounded-2xl p-4 shadow-lg">
+      <a class="block py-2" href="#about">Sobre</a>
+      <a class="block py-2" href="#skills">Habilidades</a>
+      <a class="block py-2" href="#projects">Proyectos</a>
+      <a class="block py-2" href="#contact">Contacto</a>
+    </div>
+  </header>
+
+  <main id="main" class="container mx-auto px-6 mt-12">
+    <!-- HERO BLOCK -->
+    <section id="hero" class="grid lg:grid-cols-2 gap-8 items-center">
+      <div class="space-y-6">
+        <p class="inline-flex items-center gap-3 text-sm text-gold font-semibold">
+          <span class="px-2 py-1 bg-white/7 rounded-full">UX · Frontend · Product</span>
+          <span class="text-slate-300">Disponible para contratos remotos</span>
+        </p>
+
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+          Construyo productos digitales memorables — <span class="text-gold">UX estratégico</span> y <span class="underline decoration-gold/60">frontend moderno</span>.
+        </h1>
+
+        <p class="text-slate-300 max-w-2xl">
+          Soy desarrollador frontend con fuerte enfoque en experiencia de usuario. Diseño flujos, prototipos y desarrollo interfaces accesibles y de alto rendimiento. Trabajo desde la investigación hasta la entrega, con métricas y pruebas de usuario.
+        </p>
+
+        <div class="flex flex-wrap gap-3 items-center">
+          <a href="proyectos20.html" class="px-5 py-3 rounded-lg bg-gradient-to-r from-gold to-yellow-500 text-black font-semibold shadow-lg hover:scale-105 transition">Ver proyectos</a>
+          <a href="#contact" class="px-4 py-3 rounded-lg border border-white/8 text-slate-100 hover:border-gold transition">Solicitar entrevista</a>
+          <a id="downloadCV" href="#" class="px-4 py-3 rounded-lg text-sm text-slate-200 bg-white/3 hover:bg-white/5 transition">Descargar CV</a>
+        </div>
+
+        <div class="flex gap-6 mt-4">
+          <div>
+            <div class="text-xs text-slate-400">Proyectos entregados</div>
+            <div class="text-2xl font-extrabold">48</div>
+          </div>
+          <div>
+            <div class="text-xs text-slate-400">Años de experiencia</div>
+            <div class="text-2xl font-extrabold">4+</div>
+          </div>
+          <div>
+            <div class="text-xs text-slate-400">Clientes satisfechos</div>
+            <div class="text-2xl font-extrabold">22</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative">
+        <!-- Visual card with floating elements -->
+        <div class="rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-slate-800 to-slate-700 p-6">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-gradient-to-br from-indigo-600 to-violet-600 p-4 rounded-xl">
+              <div class="text-xs text-white/80">Caso: Dashboard Agro</div>
+              <div class="text-white font-bold text-lg mt-2">Mejoras UX → +32% conversión</div>
+              <p class="text-white/80 mt-3 text-sm">Rediseño de panel, simplificación de flujos y acceso rápido a KPIs.</p>
+            </div>
+            <div class="bg-gradient-to-br from-emerald-600 to-teal-500 p-4 rounded-xl">
+              <div class="text-xs text-white/80">Producto: Music App</div>
+              <div class="text-white font-bold text-lg mt-2">Microinteracciones nativas</div>
+              <p class="text-white/80 mt-3 text-sm">Animaciones fluidas y experiencia tipo app para streaming.</p>
+            </div>
+          </div>
+
+          <!-- mockup image -->
+          <div class="mt-6 rounded-xl overflow-hidden shadow-lg">
+            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1200&auto=format&fit=crop" alt="Mockup" class="w-full h-56 object-cover">
+          </div>
+
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-sm text-slate-300">Diseño basado en métricas y tests</div>
+            <div class="flex items-center gap-3">
+              <button id="viewCase" class="px-3 py-2 rounded-md bg-white/5 hover:bg-white/8">Ver caso</button>
+              <button id="playDemo" class="px-3 py-2 rounded-md bg-white/5 hover:bg-white/8">Demo</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- floating badges -->
+        <div class="absolute -top-6 -right-6 w-36 h-36 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-500 blur-xl opacity-40 pointer-events-none"></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="mt-20 bg-white/3 border border-white/6 rounded-2xl p-8 shadow-lg">
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="md:col-span-2 space-y-4">
+          <h2 class="text-2xl font-extrabold">Sobre mí</h2>
+          <p class="text-slate-300">Soy [Tu Nombre], especializado en diseño de experiencias y desarrollo frontend. Me enfoco en resolver problemas reales con un enfoque basado en investigación, pruebas y métricas. Trabajo con equipos multidisciplinary para construir productos escalables.</p>
+
+          <div class="grid sm:grid-cols-2 gap-4 mt-4">
+            <div class="p-4 rounded-xl bg-white/5">
+              <div class="text-xs text-slate-400">Proceso</div>
+              <ul class="mt-2 text-slate-200 text-sm list-disc list-inside">
+                <li>Investigación & entrevistas</li>
+                <li>Ideación y wireframes</li>
+                <li>Prototipado y pruebas con usuarios</li>
+                <li>Implementación y optimización</li>
+              </ul>
+            </div>
+
+            <div class="p-4 rounded-xl bg-white/5">
+              <div class="text-xs text-slate-400">Herramientas</div>
+              <div class="flex gap-2 flex-wrap mt-2">
+                <span class="px-2 py-1 rounded bg-white/6">Figma</span>
+                <span class="px-2 py-1 rounded bg-white/6">React</span>
+                <span class="px-2 py-1 rounded bg-white/6">Next.js</span>
+                <span class="px-2 py-1 rounded bg-white/6">Tailwind</span>
+                <span class="px-2 py-1 rounded bg-white/6">Framer</span>
+                <span class="px-2 py-1 rounded bg-white/6">Google Analytics</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <a href="#contact" class="inline-block px-4 py-2 rounded-md bg-gradient-to-r from-gold to-yellow-400 text-black font-semibold">Trabajemos juntos</a>
+            <a href="#projects" class="ml-3 text-slate-200 underline">Ver proyectos destacados</a>
+          </div>
+        </div>
+
+        <aside class="p-4 rounded-xl bg-gradient-to-br from-slate-800 to-slate-700">
+          <div class="text-xs text-slate-400">Datos rápidos</div>
+          <div class="mt-2 text-slate-100">
+            <p><strong>Ubicación:</strong> Cali, Colombia</p>
+            <p><strong>Rol:</strong> Frontend Engineer / UX Designer</p>
+            <p><strong>Disponibilidad:</strong> Contrato remoto / Freelance</p>
+            <p><strong>LinkedIn:</strong> /in/tu-perfil</p>
+          </div>
+
+          <div class="mt-4">
+            <div class="text-xs text-slate-400">Stack técnico (nivel)</div>
+            <div class="mt-2 space-y-2">
+              <div class="w-full bg-white/6 rounded-full h-3 overflow-hidden">
+                <div class="h-3 bg-gold rounded-full w-80 transition-all" style="width:85%"></div>
+              </div>
+              <div class="w-full bg-white/6 rounded-full h-3 overflow-hidden">
+                <div class="h-3 bg-gold rounded-full w-60 transition-all" style="width:75%"></div>
+              </div>
+              <div class="w-full bg-white/6 rounded-full h-3 overflow-hidden">
+                <div class="h-3 bg-gold rounded-full w-48 transition-all" style="width:60%"></div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SKILLS / METRICS -->
+    <section id="skills" class="mt-12 grid lg:grid-cols-3 gap-6">
+      <div class="bg-white/3 p-6 rounded-2xl shadow">
+        <h3 class="text-lg font-semibold">Habilidades UX</h3>
+        <ul class="mt-3 space-y-3 text-slate-300">
+          <li class="flex items-center justify-between"><span>Arquitectura de información</span><span class="text-sm">Experto</span></li>
+          <li class="flex items-center justify-between"><span>Prototipado</span><span class="text-sm">Avanzado</span></li>
+          <li class="flex items-center justify-between"><span>Pruebas de usuario</span><span class="text-sm">Avanzado</span></li>
+          <li class="flex items-center justify-between"><span>Investigación cualitativa</span><span class="text-sm">Intermedio</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-white/3 p-6 rounded-2xl shadow">
+        <h3 class="text-lg font-semibold">Habilidades Frontend</h3>
+        <div class="mt-3 space-y-4">
+          <div>
+            <div class="text-sm text-slate-300">React / Next.js</div>
+            <div class="w-full bg-white/6 h-3 rounded-full mt-2 overflow-hidden"><div class="h-3 bg-gold rounded-full" style="width:90%"></div></div>
+          </div>
+          <div>
+            <div class="text-sm text-slate-300">HTML / CSS / Accessibility</div>
+            <div class="w-full bg-white/6 h-3 rounded-full mt-2 overflow-hidden"><div class="h-3 bg-gold rounded-full" style="width:92%"></div></div>
+          </div>
+          <div>
+            <div class="text-sm text-slate-300">Performance & SEO</div>
+            <div class="w-full bg-white/6 h-3 rounded-full mt-2 overflow-hidden"><div class="h-3 bg-gold rounded-full" style="width:78%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white/3 p-6 rounded-2xl shadow">
+        <h3 class="text-lg font-semibold">Proceso de trabajo</h3>
+        <ol class="mt-3 list-decimal list-inside text-slate-300 space-y-2">
+          <li>Brief y objetivos</li>
+          <li>Investigación & prototipado</li>
+          <li>Tests y métricas</li>
+          <li>Despliegue y seguimiento</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="mt-16">
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-extrabold">Proyectos destacados</h2>
+        <div class="flex gap-2 items-center">
+          <button class="filterBtn px-3 py-2 rounded-md bg-white/5" data-filter="all">Todos</button>
+          <button class="filterBtn px-3 py-2 rounded-md bg-white/5" data-filter="frontend">Frontend</button>
+          <button class="filterBtn px-3 py-2 rounded-md bg-white/5" data-filter="ux">UX</button>
+          <button class="filterBtn px-3 py-2 rounded-md bg-white/5" data-filter="product">Product</button>
+        </div>
+      </div>
+
+      <div id="projectsGrid" class="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- project cards (repetitive rich markup for length + SEO) -->
+        <article class="projectCard p-4 rounded-2xl bg-white/4 border border-white/6 hover:scale-105 transform transition" data-category="frontend">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop" alt="Proyecto 1" class="w-full h-40 object-cover rounded-md">
+          <div class="mt-3">
+            <h3 class="font-semibold text-lg">Dashboard Agro</h3>
+            <p class="text-sm text-slate-300 mt-1">Panel de control con visualización de KPIs en tiempo real y acciones rápidas.</p>
+            <div class="mt-3 flex items-center gap-3">
+              <span class="text-xs px-2 py-1 rounded bg-white/6">React</span>
+              <span class="text-xs px-2 py-1 rounded bg-white/6">Charts</span>
+              <button class="ml-auto viewProject px-3 py-1 rounded bg-gold text-black font-semibold" data-title="Dashboard Agro">Ver</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="projectCard p-4 rounded-2xl bg-white/4 border border-white/6 hover:scale-105 transform transition" data-category="ux">
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" alt="Proyecto 2" class="w-full h-40 object-cover rounded-md">
+          <div class="mt-3">
+            <h3 class="font-semibold text-lg">Landing Legal</h3>
+            <p class="text-sm text-slate-300 mt-1">Remake para despacho legal con enfoque en conversiones y confianza.</p>
+            <div class="mt-3 flex items-center gap-3">
+              <span class="text-xs px-2 py-1 rounded bg-white/6">HTML</span>
+              <span class="text-xs px-2 py-1 rounded bg-white/6">A/B Tests</span>
+              <button class="ml-auto viewProject px-3 py-1 rounded bg-gold text-black font-semibold" data-title="Landing Legal">Ver</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="projectCard p-4 rounded-2xl bg-white/4 border border-white/6 hover:scale-105 transform transition" data-category="frontend">
+          <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop" alt="Proyecto 3" class="w-full h-40 object-cover rounded-md">
+          <div class="mt-3">
+            <h3 class="font-semibold text-lg">Reproductor Musical</h3>
+            <p class="text-sm text-slate-300 mt-1">App tipo nativa con microinteracciones, listas y mini-player.</p>
+            <div class="mt-3 flex items-center gap-3">
+              <span class="text-xs px-2 py-1 rounded bg-white/6">React</span>
+              <span class="text-xs px-2 py-1 rounded bg-white/6">Audio</span>
+              <button class="ml-auto viewProject px-3 py-1 rounded bg-gold text-black font-semibold" data-title="Reproductor Musical">Ver</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Repeat additional project entries to enrich content (for recruiters, more detail) -->
+        <article class="projectCard p-4 rounded-2xl bg-white/4 border border-white/6 hover:scale-105 transform transition" data-category="product">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop" alt="Proyecto 4" class="w-full h-40 object-cover rounded-md">
+          <div class="mt-3">
+            <h3 class="font-semibold text-lg">Marketplace B2B</h3>
+            <p class="text-sm text-slate-300 mt-1">Ecosistema para compradores y vendedores con onboarding guiado.</p>
+            <div class="mt-3 flex items-center gap-3">
+              <span class="text-xs px-2 py-1 rounded bg-white/6">Product</span>
+              <span class="text-xs px-2 py-1 rounded bg-white/6">Auth</span>
+              <button class="ml-auto viewProject px-3 py-1 rounded bg-gold text-black font-semibold" data-title="Marketplace B2B">Ver</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="projectCard p-4 rounded-2xl bg-white/4 border border-white/6 hover:scale-105 transform transition" data-category="ux">
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Proyecto 5" class="w-full h-40 object-cover rounded-md">
+          <div class="mt-3">
+            <h3 class="font-semibold text-lg">Onboarding de producto</h3>
+            <p class="text-sm text-slate-300 mt-1">Flow de onboarding con guías contextuales y métricas integradas.</p>
+            <div class="mt-3 flex items-center gap-3">
+              <span class="text-xs px-2 py-1 rounded bg-white/6">UX</span>
+              <span class="text-xs px-2 py-1 rounded bg-white/6">Research</span>
+              <button class="ml-auto viewProject px-3 py-1 rounded bg-gold text-black font-semibold" data-title="Onboarding de producto">Ver</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section id="cases" class="mt-16 bg-white/3 p-8 rounded-2xl shadow-lg">
+      <h2 class="text-2xl font-extrabold">Casos de estudio</h2>
+
+      <div class="mt-6 grid lg:grid-cols-2 gap-6">
+        <article class="p-6 bg-white/4 rounded-xl">
+          <h3 class="font-semibold">Dashboard Agro — Mejora de conversión</h3>
+          <p class="text-slate-300 mt-2">Resumen: Reestructuración del dashboard y creación de acciones rápidas. Resultado: reducción del tiempo de decisión y aumento de conversiones en +32%.</p>
+
+          <div class="mt-4 grid grid-cols-2 gap-4">
+            <div class="bg-white/5 p-4 rounded">
+              <div class="text-xs text-slate-300">Problema</div>
+              <div class="mt-2 text-slate-100">Usuarios tardaban en encontrar métricas clave.</div>
+            </div>
+            <div class="bg-white/5 p-4 rounded">
+              <div class="text-xs text-slate-300">Solución</div>
+              <div class="mt-2 text-slate-100">Rediseño, filtros inteligentes y accesos rápidos.</div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <details class="bg-white/6 p-3 rounded">
+              <summary class="font-medium">Ver pasos y métricas</summary>
+              <ol class="mt-3 list-decimal list-inside text-slate-200">
+                <li>Research con 12 usuarios</li>
+                <li>Wireframes y test A/B</li>
+                <li>Implementación y seguimiento 8 semanas</li>
+                <li>Resultados: +32% conversión, -21% tiempo de tareas</li>
+              </ol>
+            </details>
+          </div>
+        </article>
+
+        <article class="p-6 bg-white/4 rounded-xl">
+          <h3 class="font-semibold">Reproductor Musical — Engagement</h3>
+          <p class="text-slate-300 mt-2">Resumen: Microinteracciones y descubrimiento musical mejorado. Resultado: +48% tiempo en sesión.</p>
+
+          <div class="mt-4 grid grid-cols-2 gap-4">
+            <div class="bg-white/5 p-4 rounded">
+              <div class="text-xs text-slate-300">Problema</div>
+              <div class="mt-2 text-slate-100">Pérdida de retención en onboarding.</div>
+            </div>
+            <div class="bg-white/5 p-4 rounded">
+              <div class="text-xs text-slate-300">Solución</div>
+              <div class="mt-2 text-slate-100">Gamificación ligera y recomendaciones personalizadas.</div>
+            </div>
+          </div>
+
+        </article>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="mt-16">
+      <h2 class="text-2xl font-extrabold">Testimonios</h2>
+
+      <div class="mt-6 grid md:grid-cols-2 gap-6">
+        <blockquote class="p-6 bg-white/4 rounded-2xl">
+          <p class="text-slate-200">"La colaboración con [Tu Nombre] fue excepcional. Mejoró nuestro flujo y métricas de conversión rápidamente."</p>
+          <footer class="mt-3 text-sm text-slate-300">— CEO, AgriTech</footer>
+        </blockquote>
+
+        <blockquote class="p-6 bg-white/4 rounded-2xl">
+          <p class="text-slate-200">"Destacó por el detalle en accesibilidad y tests de usuario. Recomendado 100%."</p>
+          <footer class="mt-3 text-sm text-slate-300">— Product Lead, MusicApp</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- BLOG PREVIEW -->
+    <section id="blog" class="mt-16">
+      <h2 class="text-2xl font-extrabold">Artículos & aprendizajes</h2>
+      <div class="mt-6 grid md:grid-cols-3 gap-6">
+        <article class="p-5 bg-white/4 rounded-lg">
+          <h4 class="font-semibold">Cómo medir UX para startups</h4>
+          <p class="text-slate-300 text-sm mt-2">Guía práctica sobre métricas accionables para early-stage.</p>
+        </article>
+        <article class="p-5 bg-white/4 rounded-lg">
+          <h4 class="font-semibold">Microinteracciones que convierten</h4>
+          <p class="text-slate-300 text-sm mt-2">Implementación simple con ejemplos de código.</p>
+        </article>
+        <article class="p-5 bg-white/4 rounded-lg">
+          <h4 class="font-semibold">Performance: Core Web Vitals</h4>
+          <p class="text-slate-300 text-sm mt-2">Checklist rápido para optimizar páginas críticas.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="mt-16 bg-white/3 p-8 rounded-2xl shadow-lg">
+      <h2 class="text-2xl font-extrabold">Contacto</h2>
+      <p class="text-slate-300 mt-2">¿Tienes un proyecto o una vacante? Escríbeme y coordinamos una llamada.</p>
+
+      <div class="mt-6 grid md:grid-cols-2 gap-6">
+        <form id="contactForm" class="space-y-4">
+          <div>
+            <label class="text-sm text-slate-300">Nombre</label>
+            <input required name="name" class="w-full mt-1 p-3 rounded-md bg-white/5 border border-white/6" placeholder="Tu nombre">
+          </div>
+          <div>
+            <label class="text-sm text-slate-300">Correo</label>
+            <input required type="email" name="email" class="w-full mt-1 p-3 rounded-md bg-white/5 border border-white/6" placeholder="tu@correo.com">
+          </div>
+          <div>
+            <label class="text-sm text-slate-300">Asunto</label>
+            <input name="subject" class="w-full mt-1 p-3 rounded-md bg-white/5 border border-white/6" placeholder="Asunto">
+          </div>
+          <div class="md:col-span-2">
+            <label class="text-sm text-slate-300">Mensaje</label>
+            <textarea required name="message" rows="6" class="w-full mt-1 p-3 rounded-md bg-white/5 border border-white/6" placeholder="Cuéntame tu idea..."></textarea>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button id="sendBtn" class="px-5 py-3 rounded-lg bg-gradient-to-r from-gold to-yellow-400 text-black font-semibold">Enviar mensaje</button>
+            <div id="formStatus" class="text-sm text-slate-300"></div>
+          </div>
+
+        </form>
+
+        <aside class="p-4 rounded-xl bg-gradient-to-br from-slate-800 to-slate-700">
+          <h4 class="font-semibold">Más formas de contacto</h4>
+          <p class="text-slate-300 mt-2"><strong>Email:</strong> hola@[tudominio].com</p>
+          <p class="text-slate-300"><strong>Teléfono:</strong> +57 300 000 0000</p>
+          <p class="text-slate-300 mt-3">O descarga mi CV y escríbeme por LinkedIn.</p>
+
+          <div class="mt-4">
+            <a id="downloadCV2" href="#" class="inline-block px-4 py-2 rounded bg-white/5">Descargar CV</a>
+            <a href="#" class="ml-2 inline-block px-4 py-2 rounded bg-white/5">LinkedIn</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="mt-16 text-center text-slate-400">
+      <div>© <span id="year"></span> [Tu Nombre]. Diseño y desarrollo enfocado en UX.</div>
+    </footer>
+  </main>
+
+  <!-- PROJECT MODAL -->
+  <div id="projectModal" aria-hidden="true" class="fixed inset-0 hidden items-center justify-center z-50 bg-black/60">
+    <div class="bg-slate-900 rounded-2xl w-11/12 max-w-4xl p-6">
+      <div class="flex items-start justify-between">
+        <h3 id="modalTitle" class="text-xl font-semibold">Proyecto</h3>
+        <button id="closeModal" class="p-2 rounded bg-white/5">Cerrar</button>
+      </div>
+      <div id="modalBody" class="mt-4 text-slate-200">Detalles...</div>
+    </div>
+  </div>
+
+  <script src="script20.js" defer></script>
+</body>
+</html>
