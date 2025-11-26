@@ -112,7 +112,7 @@
     const content = `
       <div class="grid lg:grid-cols-2 gap-4">
         <div>
-          <img src="https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=1200&auto=format&fit=crop" alt="${title}" class="w-full h-44 object-cover rounded" />
+          <img src="https://media.licdn.com/dms/image/v2/D4E0BAQF_Zodbepfpgw/company-logo_200_200/B4EZpPOsjIIwAI-/0/1762265844448/postobon_sa_logo?e=1765411200&v=beta&t=7euBC-FLcp0x4E2l5AV4EUrH_wXPiiQyetSONPEOTBU" alt="${title}" class="w-full h-44 object-cover rounded" />
         </div>
         <div>
           <h4 class="font-semibold">${title}</h4>
@@ -218,7 +218,7 @@
       // Fallback to text file to avoid PDF generation complexity
       const link = document.createElement("a");
       link.href = URL.createObjectURL(new Blob([cvText], { type: "text/plain" }));
-      link.download = "CV-[Tu-Nombre].txt";
+      link.download = "CV-Santiago Sterling.txt";
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -226,7 +226,7 @@
   });
 
   function generateSimpleCV() {
-    return `CV - [Tu Nombre]\nRol: Frontend Engineer / UX Designer\nUbicación: Cali, Colombia\nContacto: hola@[tudominio].com\n\nResumen:\nDesarrollador enfocado en UX...\n\nHabilidades:\n- React, Next.js, Tailwind\n- Figma, Prototipado\n- Accessibilidad\n\nProyectos destacados:\n- Dashboard Agro\n- Reproductor Musical\n- Landing Legal\n`;
+    return `CV - Santiago Sterling\nRol: Desarrollador de software\nUbicación: Cali, Colombia\nContacto: santisterling@gmail.com\n\nResumen:\nTecnólogo en Análisis y Desarrollo de Software y en Gestión de Producción Industrial, con más de ocho años de experiencia en plantas de manufactura. Mi perfil combina la eficiencia industrial con la innovación tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y crear soluciones escalables. Cuento con formación en frontend y backend (HTML, CSS, JavaScript, React, Node.js, Python, Django, entre otros) y en metodologías industriales como Lean Manufacturing, Kaizen y control de inventarios. Me interesa especializarme en inteligencia artificial aplicada a la industria y en el desarrollo de soluciones que integren la Industria 4.0 con tecnologías digitales inteligentes.\n\nHabilidades:\n- React, Next.js, Tailwind\n- Figma, Prototipado\n- Accessibilidad\n\nProyectos destacados:\n- Dashboards\n- Reproductor Musical\n- Test de preguntas\n`;
   }
 
   /* Small canvas animation in hero (if needed) */
@@ -299,3 +299,28 @@
   };
 
 })();
+
+const text = "Código con propósito, diseño con impacto, soluciones que marcan la diferencia.";
+const typingElement = document.getElementById("typingText");
+let index = 0;
+let isDeleting = false;
+
+function typeEffect() {
+  if (!isDeleting && index < text.length) {
+    typingElement.textContent += text.charAt(index);
+    index++;
+    setTimeout(typeEffect, 100);
+  } 
+  else if (isDeleting && index > 0) {
+    typingElement.textContent = text.substring(0, index - 1);
+    index--;
+    setTimeout(typeEffect, 60);
+  } 
+  else {
+    isDeleting = !isDeleting;
+    setTimeout(typeEffect, 1500);
+  }
+}
+
+// Espera unos segundos antes de iniciar
+setTimeout(typeEffect, 2000);
