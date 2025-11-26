@@ -172,6 +172,33 @@
       lastTap = now;
     });
 
+
+    //---------------------Código de NavBar-----------------//
+        const buttons = document.querySelectorAll('.filter-menu button');
+    const indicator = document.querySelector('.indicator');
+
+    function updateIndicator(el) {
+      indicator.style.width = el.offsetWidth + 'px';
+      indicator.style.left = el.offsetLeft + 'px';
+    }
+
+    // Inicializamos indicador en el primer botón activo
+    const activeButton = document.querySelector('.filter-menu button.active');
+    updateIndicator(activeButton);
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        updateIndicator(button);
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      const current = document.querySelector('.filter-menu button.active');
+      updateIndicator(current);
+    });
+
     // Note about CORS / X-Frame-Options:
     // - algunos sitios (ej: google, muchas apps) bloquean ser embebidos en iframe.
     // - si ves un mensaje de bloqueo, considera usar una URL clonada o una captura/preview generada del sitio.
