@@ -14,45 +14,48 @@
 </head>
 <body class="bg-gradient-to-br from-slate-100 via-gray-200 to-slate-100 text-slate-100 antialiased leading-relaxed">
   
-  <a class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-gold text-black px-3 py-2 rounded" href="#main">Saltar al contenido</a>
+  <a class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-gold text-black px-3 py-2 rounded" href="#main">.</a>
   <header class="sticky top-4 z-50 container mx-auto px-6">
-    <nav class="backdrop-blur-sm bg-white/3 border border-white/6 rounded-full p-3 shadow-xl flex items-center justify-between">
+    <nav class="backdrop-blur-sm bg-black/60 border border-white/20 rounded-2xl p-3 shadow-xl flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="avatar-liquid">
           <img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar">
           </div>
         <div>
-          <div class="text-lg font-extrabold text-slate-900">Santiago Sterling</div>
-          <div class="text-xs text-slate-700">Tecnologo en análisis y desarrollo de sotware</div>
+          <div class="text-sm font-extrabold text-white">Santiago Sterling</div>
+          <div class="text-xs text-white">Tecnologo en análisis y desarrollo de sotware</div>
         </div>
       </div>
 
       <div class="hidden lg:flex items-center gap-4">
-        <a href="#about" class="text-slate-500 hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Sobre</a>
-        <a class="text-gray-300">|</a>
-        <a href="#skills" class="text-slate-600 hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Habilidades</a>
-        <a class="text-gray-300">|</a>
-        <a href="#projects" class="text-slate-700 hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Proyectos</a>
-        <a class="text-gray-300">|</a>
-        <a href="#cases" class="text-slate-800 hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Casos</a>
-        <a class="text-gray-300">|</a>
-        <a href="#testimonials" class="text-slate-900 hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Testimonios</a>
-        <a class="text-gray-300">|</a>
+        <a href="#about" class="text-white-500 hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Sobre mi</a>
+        <a href="#skills" class="text-white-600 hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Habilidades</a>
+        <a href="#projects" class="text-white-700 hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Proyectos</a>
+        <a href="#cases" class="text-white-800 hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Casos</a>
+        <a href="#testimonials" class="text-white-900 hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Testimonios</a>
         <a href="#contact" class="btn-liquid text-xs">Contacto</a>
       </div>
 
-      <div class="lg:hidden">
-        <button id="menuBtn" aria-expanded="false" aria-label="Abrir menú" class="p-2 rounded-md bg-white/5">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
-      </div>
+<div class="lg:hidden">
+  <button id="menuBtn" aria-expanded="false" aria-label="Abrir menú" class="p-2 rounded-md bg-white/5 text-black">
+    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+      <!-- Icono Hamburguesa -->
+      <path id="iconHamburger" d="M4 6h16M4 12h16M4 18h16"/>
+
+      <!-- Icono X -->
+      <path id="iconClose" d="M6 18L18 6M6 6l12 12" class="hidden"/>
+
+    </svg>
+  </button>
+</div>
     </nav>
 
     <div id="mobileMenu" class="mt-2 hidden bg-white/3 border border-white/6 rounded-2xl p-4 shadow-lg">
-      <a class="block py-2" href="#about">Sobre</a>
-      <a class="block py-2" href="#skills">Habilidades</a>
-      <a class="block py-2" href="#projects">Proyectos</a>
-      <a class="block py-2" href="#contact">Contacto</a>
+      <a class="block py-2 text-black" href="#about">Sobre mi</a>
+      <a class="block py-2 text-black" href="#skills">Habilidades</a>
+      <a class="block py-2 text-black" href="#projects">Proyectos</a>
+      <a class="block py-2 text-black" href="#contact">Contacto</a>
     </div>
   </header>
 
@@ -139,65 +142,109 @@
     </section>
 
     <!-- ABOUT -->
-        <section id="about" class="mt-20 rounded-2xl p-8 shadow-lg border"
-        style="
-          --bg-color: linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.85),
-            rgba(230, 230, 230, 0.7),
-            rgba(255, 255, 255, 0.795)
-          );
-          --border-color: rgba(243, 243, 243, 0.904);
-          background: var(--bg-color);
-          border-color: var(--border-color);
-        "
-      >
+        <section id="about"
+          class="mt-20 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20"
+          style="
+            --bg-color: linear-gradient(
+             
+              #0c0c0c,
+              #000000,
+              #000000
+            );
+            background: var(--bg-color);
+          "
+        >
 
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="md:col-span-2 space-y-4">
-          <h2 class="text-2xl text-slate-900 font-bold">Sobre mí</h2>
-          <p class="text-slate-300 text-slate-700">Tecnólogo en Análisis y desarrollo de software y Tecnólogo en Gestión de la Producción Industrial con más de 8 años de experiencia en manufactura, enfocado en optimización de procesos mediante tecnología, automatización y análisis de datos, con interés en inteligencia artificial e Industria 4.0.</p>
+          <div class="max-w-7xl mx-auto px-6 rounded-3xl shadow-7xl border border-white/40 py-12">
 
-          <div class="grid sm:grid-cols-2 gap-4 mt-4">
-            <div class="p-4 rounded-xl bg-black/5">
-              <div class="text-xs text-slate-900">Proceso</div>
-              <ul class="mt-2 text-slate-700 text-sm list-disc list-inside">
-                <li>Investigación & entrevistas</li>
-                <li>Ideación y wireframes</li>
-                <li>Prototipado y pruebas con usuarios</li>
-                <li>Implementación y optimización</li>
-              </ul>
-            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="md:col-span-2 space-y-4">
 
-            <div class="p-4 rounded-xl bg-black/5">
-              <div class="text-xs text-slate-900">Herramientas</div>
-              <div class="flex gap-2 flex-wrap mt-2 text-slate-700">
-                <span class="px-2 py-1 rounded bg-black/5 rounded-full">Figma</span>
-                <span class="px-2 py-1 rounded bg-black/5 rounded-full">React</span>
-                <span class="px-2 py-1 rounded bg-black/5 rounded-full">Next.js</span>
-                <span class="px-2 py-1 rounded bg-black/5 rounded-full">Tailwind</span>
-                <span class="px-2 py-1 rounded bg-black/5 rounded-full">Framer</span>
-                <span class="px-2 py-1 rounded bg-black/5 rounded-full">Google Analytics</span>
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 titulosSterling-text">
+                  <br>
+                  Sobre mi
+                </h1>
+                <br>
+                <br>
+                <span class="px-2 py-1 bg-gradient-to-r font-bold from-orange-500 via-amber-400 to-rose-500 bg-clip-text text-transparent rounded-full">Disfruto crear sistemas que optimicen procesos y aporten valor real.</span>
+
+                <p class="text-xl font-semibold mb-4 text-white">
+                  Tecnólogo en Análisis y desarrollo de software <span class="text-gray-400">y Tecnólogo en Gestión de la Producción Industrial con más de 8 años de experiencia en manufactura, </span>enfocado en optimización de procesos mediante tecnología, automatización y análisis de datos, con interés en inteligencia artificial e Industria 4.0.
+                </p>
+
+                <div class="grid sm:grid-cols-2 gap-4 mt-4">
+
+                  <div class="p-4 rounded-xl bg-white/10 backdrop-blur-md">
+                    <div class="text-xs text-white">Proceso</div>
+                    <ul class="mt-2 text-white text-sm list-disc list-inside">
+                      <h4>Experiencia en gestión de producción, control de inventarios y mejora continua.</h4>
+                    </ul>
+                  </div>
+
+                  <div class="p-4 rounded-xl bg-white/30 backdrop-blur-md">
+                    <div class="text-xs text-white">Objetivo</div>
+                    <div class="flex gap-2 flex-wrap mt-2 text-white">
+                      <span>Colaborar en proyectos que combinen automatización, analítica y desarrollo web.</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+          <aside 
+            class="p-6 rounded-2xl relative border overflow-hidden backdrop-blur-lg text-white"
+            style="
+              background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Nov%2026,%202025,%2001_35_18%20PM.png?raw=true');
+              background-size: cover;
+              background-position: center;
+            "
+          >
+            <!-- Capa oscura para mejorar legibilidad -->
+            <div class="absolute inset-0 bg-black/60"></div>
+
+            <!-- Contenido -->
+            <div class="relative z-10">
+              <div class="text-2xl text-emerald-400 font-bold">Datos rápidos</div>
+              <div class="mt-3 space-y-1 text-lg">
+                <p><strong>Ubicación:</strong> Cali, Colombia.</p>
+                <p><strong>Rol:</strong> Desarrollador de software.</p>
+                <p><strong>Disponibilidad:</strong> Contrato inmediato.</p>
+                <p><strong>LinkedIn:</strong> in/santiago-sterling-0a02a116a/</p>
               </div>
             </div>
-          </div>
-        </div>
+          </aside>
 
-        <aside class="p-4 rounded-xl bg-gradient-to-br from-stone-300 via-zinc-200 to-rose-100">
-          <div class="text-xs text-slate-900">Datos rápidos</div>
-          <div class="mt-2 text-slate-700">
-            <p><strong>Ubicación:</strong> Cali, Colombia</p>
-            <p><strong>Rol:</strong> Desarrollador de software</p>
-            <p><strong>Disponibilidad:</strong> Contrato </p>
-            <p><strong>LinkedIn:</strong> in/santiago-sterling-0a02a116a/</p>
+            </div>
+
           </div>
-          </div>
-        </aside>
-      </div>
-    </section>
+        </section>
 
     <!-- SKILLS / METRICS -->
     <section id="skills" class="mt-12 grid lg:grid-cols-3 gap-6">
+      <div class="text-center mb-16 fade-in">
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 gradient-text">
+                Estudios Realizados.
+            </h1>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="flex justify-center gap-6 mb-12 flex-wrap">
+            <button class="filter-btn active text-white text-sm font-medium px-4 py-2 rounded-full" data-category="all">
+                Todos
+            </button>
+            <button class="filter-btn text-gray-400 hover:text-white text-sm font-medium px-4 py-2 rounded-full" data-category="innovation">
+                Sena
+            </button>
+            <button class="filter-btn text-gray-400 hover:text-white text-sm font-medium px-4 py-2 rounded-full" data-category="camera">
+                Platzi
+            </button>
+            <button class="filter-btn text-gray-400 hover:text-white text-sm font-medium px-4 py-2 rounded-full" data-category="performance">
+                Performance
+            </button>
+            <button class="filter-btn text-gray-400 hover:text-white text-sm font-medium px-4 py-2 rounded-full" data-category="intelligence">
+                Intelligence
+            </button>
+        </div>
       <div class="bg-white p-6 rounded-2xl shadow">
         <h3 class="text-lg font-semibold text-orange-500">Habilidades UX</h3>
         <ul class="mt-3 space-y-3 text-slate-700">
@@ -241,12 +288,6 @@
     <section id="projects" class="mt-16">
       <div class="flex items-center justify-between">
         <h2 class="text-3xl font-extrabold text-black">Experiencia laboral</h2>
-        <div class="flex gap-2 items-center">
-          <button class="filterBtn px-6 py-0 rounded-full bg-black/5" data-filter="all">Todo</button>
-          <button class="filterBtn px-6 py-0 rounded-full bg-black/5" data-filter="frontend">Frontend</button>
-          <button class="filterBtn px-6 py-0 rounded-full bg-black/5" data-filter="ux">UX</button>
-          <button class="filterBtn px-6 py-0 rounded-full bg-black/5" data-filter="product">Product</button>
-        </div>
       </div>
 
       <div id="projectsGrid" class="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
