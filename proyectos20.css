@@ -100,3 +100,36 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+
+        /* CÓDIGO DE NAVBAR */
+    .filter-menu {
+      display: flex;
+      gap: 30px;
+      font-size: 1rem;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .filter-menu button {
+      background: none;
+      border: none;
+      color: #aaa;
+      cursor: pointer;
+      position: relative;
+      padding: 5px 0;
+      font-size: 1rem;
+    }
+
+    .filter-menu button.active {
+      color: #fff;
+    }
+
+    /* Indicador debajo del filtro activo */
+    .indicator {
+      position: absolute;
+      bottom: -5px;
+      height: 3px;
+      width: 0;
+      background: #fff;
+      transition: all 0.3s ease;
+    }
