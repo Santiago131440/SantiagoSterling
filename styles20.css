@@ -11,6 +11,12 @@
   --glass-2: rgba(255,255,255,0.02);
 }
 
+body{
+  font-family: 'Inter', sans-serif;
+  color: #000000;
+  padding: 32px;
+}
+
 /* Reset element focus for accessibility */
 :focus{
   outline: 3px solid rgba(212,175,55,0.18);
@@ -207,4 +213,98 @@ a.underline-hover:hover::after{ width: 100%; }
 /* long-form content styles */
 article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
 
-/* END - styles.css (enough reglas y utilidades para complementar Tailwind) */
+.btn-liquid {
+  position: relative;
+  display: inline-block;  
+  padding: 2px 20px;
+  border-radius: 9999px;
+  color: #000000;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.25),
+    rgba(255,255,255,0.05)
+  );
+  border: 1px solid rgba(255,255,255,0.25);
+  box-shadow:
+    0 8px 30px rgba(0,0,0,0.12),
+    inset 0 0 20px rgba(255,255,255,0.15);
+  transition: all 0.35s ease;
+}
+
+/* Brillo líquido animado */
+.btn-liquid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.6),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Hover estilo iOS */
+.btn-liquid:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow:
+    0 15px 40px rgba(0,0,0,0.18),
+    inset 0 0 25px rgba(255,255,255,0.25);
+}
+
+.btn-liquid:hover::before {
+  opacity: 1;
+}
+
+.avatar-liquid {
+  width: 54px;
+  height: 54px;
+  border-radius: 60px;
+  padding: 2px;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.35),
+    rgba(255,255,255,0.05)
+  );
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  box-shadow:
+    0 8px 25px rgba(0,0,0,0.15),
+    inset 0 0 12px rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Imagen interna */
+.avatar-liquid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 60px;
+}
+
+/* Reflejo estilo vidrio Apple */
+.avatar-liquid::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.45),
+    transparent
+  );
+  transform: rotate(25deg);
+  opacity: 0.6;
+}
