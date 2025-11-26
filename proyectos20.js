@@ -17,9 +17,7 @@
     const rotRight = document.getElementById('rotRight');
     const fullscreenBtn = document.getElementById('fullscreenBtn');
     const openOriginal = document.getElementById('openOriginal');
-    const openAllSites = document.getElementById('openAllSites');
     const gallery = document.getElementById('gallery');
-    const thumbList = document.getElementById('thumbList');
     const previewFrame = document.getElementById('previewFrame');
     const miniIframe = document.getElementById('miniIframe');
 
@@ -40,11 +38,11 @@
         t.title = s.name;
         const img = document.createElement('img');
         // quick preview image using service (if CORS block, falls back to svg)
-        img.src = 'https://github.com/Santiago131440/Imagenes-Excel/blob/main/807d99af-55ed-4443-b627-02e8c1cfe2ec.png?raw=true' + encodeURIComponent(s.url);
+        img.src = 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Captura%20de%20pantalla%202025-11-26%20172007.jpg?raw=true' + encodeURIComponent(s.url);
         img.alt = s.name;
         img.onerror = () => {
           // fallback to a generated canvas-like placeholder image
-          img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns='https://github.com/Santiago131440/Imagenes-Excel/blob/main/4a807114-9bae-4ead-8cc9-f24f76cf484c.png?raw=true' width='400' height='240'><rect width='100%' height='100%' fill='#0b1220'/><text x='50%' y='50%' fill='#7c3aed' font-family='Arial' font-size='20' dominant-baseline='middle' text-anchor='middle'>${s.name}</text></svg>`);
+          img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns='https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Captura%20de%20pantalla%202025-11-26%20171931.jpg?raw=true' width='400' height='240'><rect width='100%' height='100%' fill='#0b1220'/><text x='50%' y='50%' fill='#fd7a00ff' font-family='Arial' font-size='20' dominant-baseline='middle' text-anchor='middle'>${s.name}</text></svg>`);
         };
         t.appendChild(img);
         t.addEventListener('click', ()=> selectSite(s.id));
@@ -145,12 +143,6 @@
 
     // Open original in new tab
     openOriginal.addEventListener('click', ()=>{
-      const url = currentSite?.url || miniIframe.src;
-      window.open(url, '_blank', 'noopener,noreferrer');
-    });
-
-    // Open selected (same as openOriginal)
-    openAllSites.addEventListener('click', ()=>{
       const url = currentSite?.url || miniIframe.src;
       window.open(url, '_blank', 'noopener,noreferrer');
     });
