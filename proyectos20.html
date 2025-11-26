@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Proyectos realizados</title>
+  <title>Proyectos Destacados</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/98182135?v=4">
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,57 +13,62 @@
   <!-- Estilos personalizados -->
   <link rel="stylesheet" href="proyectos20.css">
 </head>
-<body>
-
+<body class="bg-gradient-to-br from-black to-black text-white antialiased leading-relaxed">
+<br>
   <div class="showcase-wrap">
 
-    <header class="flex items-center justify-between mb-6">
+    <header class="flex items-center justify-center text-center mb-6">
+      
       <div>
-        <h1 class="text-2xl font-extrabold">Proyectos destacados — Mini Webs</h1>
-        <p class="text-sm text-slate-700 mt-1">Explora mis proyectos en vista previa o accede al sitio completo con un solo clic.</p>
-      </div>
-
-      <div class="hidden md:flex items-center gap-3">
-        <button id="openAllSites" class="glass-btn">Abrir seleccionado ↗</button>
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 mt-16 titulosSterling-text">Proyectos destacados.</h1><br>
+        <span class="px-2 py-1 text-3xl bg-gradient-to-r font-bold from-orange-500 via-amber-400 to-rose-500 bg-clip-text text-transparent rounded-full">Explora mis proyectos</span>
+        <p class="text-xl font-semibold mb-4 text-white mt-1">En vista previa o accede al sitio completo con un solo clic.</p>
       </div>
     </header>
 
     <!-- CONTROLES -->
-    <div class="controls-panel">
-      <!-- device selector -->
+<div class="controls-panel flex items-center justify-between">
+  <!-- left section: device selector + gallery -->
+  <div class="flex items-center gap-6">
+    <!-- device selector -->
+    <div class="flex items-center gap-2">
+      <label class="text-xl font-semibold mb-4 text-white mt-1">Dispositivo: </label>
       <div class="flex items-center gap-2">
-        <label class="text-xs text-slate-700">Dispositivo</label>
-        <div class="flex items-center gap-2">
-          <button id="btnMobile" class="glass-btn" aria-pressed="true">Mobile</button>
-          <button id="btnDesktop" class="glass-btn" aria-pressed="false">Desktop</button>
-        </div>
-      </div>
-
-      <!-- gallery -->
-      <div class="flex items-center gap-3">
-        <label class="text-xs text-slate-700">Proyectos: </label>
-        <div id="gallery" class="flex items-center gap-2">
-          <!-- thumbs inserted by JS -->
-        </div>
-      </div>
-
-      <!-- zoom & rotate -->
-      <div class="flex items-center gap-3 ml-auto">
-        <label class="text-xs text-slate-700">Zoom</label>
-        <input id="zoom" type="range" min="50" max="150" value="100" class="h-1 w-40" />
-        <label class="text-xs text-slate-700 ml-3">Rotar</label>
-        <div class="flex items-center gap-2">
-          <button id="rotLeft" class="glass-btn">⟲</button>
-          <button id="rotRight" class="glass-btn">⟳</button>
-        </div>
-      </div>
-
-      <!-- fullscreen -->
-      <div class="flex items-center gap-2 ml-3">
-        <button id="fullscreenBtn" class="glass-btn">Abrir en Fullscreen</button>
-        <button id="openOriginal" class="glass-btn">Abrir original ↗</button>
+        <button id="btnMobile" class="glass-btn" aria-pressed="true">Mobile</button>
+        <button id="btnDesktop" class="glass-btn" aria-pressed="false">Desktop</button>
       </div>
     </div>
+
+    <!-- gallery -->
+    <div class="flex items-center gap-3">
+      <label class="text-xl font-semibold mb-4 text-white mt-1">Proyectos: </label>
+      <div id="gallery" class="flex items-center gap-2">
+        <!-- thumbs inserted by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- right section: zoom & rotate + fullscreen -->
+  <div class="flex items-center gap-6">
+    <!-- zoom & rotate -->
+    <div class="flex items-center gap-3">
+      <label class="text-xl font-semibold mb-4 text-white mt-1">Zoom: </label>
+      <input id="zoom" type="range" min="50" max="150" value="100" class="h-1 w-40" />
+      <label class="text-xl font-semibold mb-4 text-white mt-1">Rotar: </label>
+      <div class="flex items-center gap-2">
+        <button id="rotLeft" class="glass-btn">⟲</button>
+        <button id="rotRight" class="glass-btn">⟳</button>
+      </div>
+    </div>
+
+    <!-- fullscreen -->
+    <div class="flex items-center gap-2">
+      <button id="fullscreenBtn" class="glass-btn">Abrir en Fullscreen</button>
+      <button id="openOriginal" class="glass-btn">Abrir original ↗</button>
+    </div>
+  </div>
+</div>
+
 
     <!-- DEVICE FRAME -->
     <div id="deviceFrame" class="device-frame device-mobile mt-6">
@@ -72,8 +78,8 @@
           <span class="frame-dot dot-yellow"></span>
           <span class="frame-dot dot-green"></span>
         </div>
-        <div class="text-xs text-slate-200">Vista interactiva — puedes navegar en la página seleccionada aquí abajo</div>
-        <div class="text-xs text-slate-200">Previsualización</div>
+        <div class="text-xs text-white">Vista interactiva — puedes navegar en la página seleccionada aquí abajo</div>
+        <div class="text-xs text-white">Previsualización</div>
       </div>
 
       <div id="previewViewport" class="preview-viewport p-6 flex justify-center">
@@ -88,22 +94,64 @@
         </div>
       </div>
     </div>
-
-    <!-- Footer controls + gallery -->
-    <div class="mt-6 flex items-start gap-6">
-      <div class="w-full md:w-3/4">
-        <p class="text-sm text-slate-700">Controles: usa Zoom para acercar/alejar la miniatura (afecta solo la vista); Rotación para simular orientación; Fullscreen para ver en todo el viewport; Abrir original abre la url en nueva pestaña.</p>
-      </div>
-
-      <div class="w-full md:w-1/4">
+      <br>
+      <!-- right section: URLs en la galería -->
+      <div class="w-full md:w-full items-center justify-center text-center">
         <div class="bg-gradient-to-br from-white/2 to-white/1 p-3 rounded-xl border border-white/4">
-          <div class="text-xs text-slate-700 mb-2">URLs en la galería</div>
-          <div id="thumbList" class="grid grid-cols-2 gap-2">
+          <div class="text-xl font-semibold mb-4 text-white mt-1">URLs en la galería</div>
+          <div id="thumbList" class="grid grid-cols-8 gap-2">
             <!-- thumbnails generados por JS -->
           </div>
         </div>
       </div>
     </div>
+
+    <!-- FOOTER -->
+    <footer class="mt-12 bg-gradient-to-br from-black/90 to-black/80 text-white p-8 rounded-2xl border border-white/10">
+      <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 text-center md:text-left">
+        
+        <!-- Sección: Sobre mí -->
+        <div>
+          <h2 class="text-2xl font-bold mb-4">Proyectos realizados</h2>
+          <p class="text-sm text-white/80">
+            Mis proyectos representan la combinación de creatividad, innovación y funcionalidad. Cada uno ha sido desarrollado pensando en la experiencia del usuario y en soluciones eficientes, aplicando buenas prácticas de desarrollo web y software. Desde aplicaciones interactivas hasta maquetación de sitios web, cada proyecto refleja mi capacidad para enfrentar retos y transformar ideas en productos digitales de calidad.
+          </p>
+        </div>
+
+        <!-- Sección: Enlaces rápidos -->
+        <div>
+          <h2 class="text-2xl font-bold mb-4">Enlaces rápidos</h2>
+          <ul class="text-sm text-white/80 space-y-2">
+            <li><a href="index20.html" class="hover:text-amber-400 transition-colors">Inicio</a></li>
+            <li><a href="index20.html#projects" class="hover:text-amber-400 transition-colors">Experiencia Laboral</a></li>
+            <li><a href="index20.html#contact" class="hover:text-amber-400 transition-colors">Contacto</a></li>
+          </ul>
+        </div>
+
+        <!-- Sección: Redes sociales -->
+        <div>
+          <h2 class="text-2xl font-bold mb-4">Sígueme</h2>
+          <div class="flex justify-center md:justify-start gap-4 mt-2">
+            <a href="https://github.com/Santiago131440" target="_blank" class="glass-btn px-3 py-2 text-white font-semibold rounded-lg hover:bg-white/10 transition">
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/santiago-sterling" target="_blank" class="glass-btn px-3 py-2 text-white font-semibold rounded-lg hover:bg-white/10 transition">
+              LinkedIn
+            </a>
+            <a href="mailto:example@email.com" class="glass-btn px-3 py-2 text-white font-semibold rounded-lg hover:bg-white/10 transition">
+              Email
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Créditos -->
+      <div class="mt-8 text-center text-white/50 text-sm">
+        &copy; 2025 Santiago Sterling. Todos los derechos reservados.
+      </div>
+    </footer>
+
+
 
   </div>
 
