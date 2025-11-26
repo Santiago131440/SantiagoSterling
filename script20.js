@@ -1,13 +1,3 @@
-/* script.js - lógica interactiva y animaciones
-   Funcionalidades:
-   - Menú móvil
-   - Reveal on scroll (IntersectionObserver)
-   - Filtro de proyectos
-   - Modal de proyecto con contenido dinámico
-   - Simulación de envío de formulario (loader + validación)
-   - Descarga de CV (simulado)
-   - Pequeña animación canvas para hero (fallback)
-*/
 
 (() => {
   "use strict";
@@ -50,30 +40,6 @@
     c.style.transitionDelay = `${idx * 60}ms`;
     c.classList.add("reveal");
   });
-
-  /* Project filter */
-  const filterBtns = $$(".filterBtn");
-  const projectsGrid = $("#projectsGrid");
-  if (filterBtns.length && projectsGrid) {
-    filterBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const filter = btn.dataset.filter;
-        $$(".filterBtn").forEach(b => b.classList.remove("bg-gold", "text-black"));
-        btn.classList.add("bg-gold", "text-black");
-
-        $$(".projectCard").forEach(card => {
-          const cat = card.dataset.category || "all";
-          if (filter === "all" || filter === cat) {
-            card.style.display = "block";
-            setTimeout(() => { card.classList.remove("hidden"); }, 20);
-          } else {
-            card.style.display = "none";
-            card.classList.add("hidden");
-          }
-        });
-      });
-    });
-  }
 
   /* Project modal (dynamic content) */
   const modal = $("#projectModal");
@@ -300,7 +266,7 @@
 
 })();
 
-const text = "Código con propósito, diseño con impacto, soluciones que marcan la diferencia.";
+const text = "Transformo problemas en software funcional.";
 const typingElement = document.getElementById("typingText");
 let index = 0;
 let isDeleting = false;
