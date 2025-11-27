@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Windows 11 Simulation Ultra</title>
+<link rel="stylesheet" href="windows.css">
+</head>
+
+<body>
+
+<!-- ============================================================
+     ESCRITORIOS (MULTIPLE DESKTOPS)
+============================================================ -->
+<div id="desktop-container">
+
+    <!-- Escritorio 1 -->
+    <div id="desktop1" class="desktop active">
+
+        <!-- ICONOS DEL ESCRITORIO -->
+        <div class="desktop-icon" data-app="explorer">
+            <img src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/folder-icon.png">
+            <span>Archivos</span>
+        </div>
+
+        <div class="desktop-icon" data-app="browser">
+            <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-apps/512/internet-web-browser-icon.png">
+            <span>Navegador</span>
+        </div>
+
+        <div class="desktop-icon" data-app="notes">
+            <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-mimetypes/512/text-x-generic-icon.png">
+            <span>Notas</span>
+        </div>
+
+        <div class="desktop-icon" data-app="player">
+            <img src="https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Music-icon.png">
+            <span>Reproductor</span>
+        </div>
+
+        <!-- PAPELERA -->
+        <div class="desktop-icon" data-app="recycle-bin" id="recycleBinIcon">
+            <img src="https://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/512/recycle-bin-icon.png">
+            <span>Papelera</span>
+        </div>
+
+    </div>
+
+
+    <!-- Escritorio 2 -->
+    <div id="desktop2" class="desktop">
+
+        <div class="desktop-icon" data-app="notes">
+            <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-mimetypes/512/text-x-generic-icon.png">
+            <span>Notas 2</span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     CONTENEDOR DE VENTANAS (todas las ventanas van aquí)
+============================================================ -->
+<div id="windowsContainer"></div>
+
+
+<!-- ============================================================
+     MENÚ INICIO
+============================================================ -->
+<div id="startMenu" class="start-menu hidden">
+
+    <div class="start-header">
+        <h2>Inicio</h2>
+    </div>
+
+    <div class="start-apps">
+
+        <div class="start-app" data-app="explorer">
+            <img src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/folder-icon.png">
+            <span>Explorador</span>
+        </div>
+
+        <div class="start-app" data-app="browser">
+            <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-apps/512/internet-web-browser-icon.png">
+            <span>Navegador</span>
+        </div>
+
+        <div class="start-app" data-app="notes">
+            <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-mimetypes/512/text-x-generic-icon.png">
+            <span>Bloc de Notas</span>
+        </div>
+
+        <div class="start-app" data-app="player">
+            <img src="https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Music-icon.png">
+            <span>Multimedia</span>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <div class="start-option" id="openWallpaperPanel">Cambiar fondo</div>
+    <div class="start-option" id="openDesktopSwitcher">Cambiar escritorio</div>
+
+</div>
+
+
+<!-- ============================================================
+     CAMBIAR FONDO WALLPAPER PANEL
+============================================================ -->
+<div id="wallpaperPanel" class="panel hidden">
+    <h2>Cambiar Fondo</h2>
+    <input type="file" id="wallpaperInput">
+
+    <div id="wallpaperList">
+        <img src="https://cdn.pixabay.com/photo/2019/08/08/13/50/wheat-4393023_1280.jpg">
+        <img src="https://cdn.pixabay.com/photo/2019/08/08/13/50/wheat-4393023_1280.jpg">
+        <img src="https://cdn.pixabay.com/photo/2019/08/08/13/50/wheat-4393023_1280.jpg">
+        <img src="https://cdn.pixabay.com/photo/2019/08/08/13/50/wheat-4393023_1280.jpg">
+    </div>
+
+    <button id="closeWallpaperPanel">Cerrar</button>
+</div>
+
+
+<!-- ============================================================
+     PANEL VOLUMEN / WIFI / RELOJ
+============================================================ -->
+<div id="volumePanel" class="panel hidden">
+    <h3>Volumen</h3>
+    <input type="range" min="0" max="100" value="80">
+</div>
+
+<div id="wifiPanel" class="panel hidden">
+    <h3>Redes WiFi</h3>
+    <ul>
+        <li>Red Hogar (Fuerte)</li>
+        <li>MiWifi 5Ghz</li>
+        <li>Compartido Celular</li>
+    </ul>
+</div>
+
+<div id="clockPanel" class="panel hidden">
+    <h3>Fecha y Hora</h3>
+    <div id="clockFull"></div>
+</div>
+
+
+<!-- ============================================================
+     MENÚ CONTEXTUAL DEL ESCRITORIO
+============================================================ -->
+<ul id="contextMenu" class="context-menu hidden">
+    <li id="ctxOpen">Abrir</li>
+    <li id="ctxRename">Renombrar</li>
+    <li id="ctxDelete">Eliminar</li>
+</ul>
+
+
+<!-- ============================================================
+     BARRA DE TAREAS
+============================================================ -->
+<div id="taskbar">
+
+    <div id="startButton" class="taskbar-center-btn">⊞</div>
+
+    <div id="taskButtons" class="taskbar-apps"></div>
+
+    <div class="taskbar-right">
+        <div id="volumeIcon" class="task-icon">🔊</div>
+        <div id="wifiIcon" class="task-icon">📶</div>
+        <div id="clock" class="task-icon">00:00</div>
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     SCRIPTS
+============================================================ -->
+<script src="windows.js"></script>
+
+</body>
+</html>

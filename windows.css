@@ -1,0 +1,428 @@
+/* ============================================================
+   WINDOWS 11 SIMULATION ULTRA - CSS COMPLETO
+============================================================ */
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    font-family: "Segoe UI", sans-serif;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* ============================================================
+   FONDO (Wallpaper)
+============================================================ */
+body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #0e0e0e;
+}
+
+/* ============================================================
+   ESCRITORIOS
+============================================================ */
+.desktop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 48px);
+    display: none;
+}
+
+.desktop.active {
+    display: block;
+}
+
+/* ============================================================
+   ICONOS DEL ESCRITORIO
+============================================================ */
+.desktop-icon {
+    width: 85px;
+    text-align: center;
+    padding: 6px;
+    margin: 8px;
+    border-radius: 8px;
+    position: absolute;
+    cursor: default;
+    transition: background 0.15s;
+}
+
+.desktop-icon img {
+    width: 48px;
+    height: 48px;
+}
+
+.desktop-icon span {
+    color: white;
+    text-shadow: 0 0 2px black;
+    font-size: 13px;
+}
+
+.desktop-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.desktop-icon.dragging {
+    opacity: 0.5;
+    border: 1px dashed #fff;
+}
+
+/* ============================================================
+   VENTANAS
+============================================================ */
+.window {
+    position: absolute;
+    width: 480px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(18px) saturate(1.5);
+    background: rgba(30, 30, 30, 0.45);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 0 25px rgba(0,0,0,0.35);
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(.97);
+    }
+}
+
+.window-header {
+    height: 36px;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 12px 12px 0 0;
+    cursor: grab;
+}
+
+.window-header span {
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.window-header:active {
+    cursor: grabbing;
+}
+
+.window-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.win-btn {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.1s, color 0.1s;
+    font-size: 12px;
+}
+
+.win-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.win-btn.close:hover {
+    background: #e81123;
+}
+
+.window-content {
+    flex: 1;
+    overflow: auto;
+    padding: 10px;
+    color: white;
+}
+
+/* Animación maximizar / restaurar */
+.window.maximized {
+    animation: maximize 0.2s ease-out;
+}
+
+@keyframes maximize {
+    from {
+        transform: scale(0.95);
+        opacity: 0.6;
+    }
+}
+
+/* Snap Assist highlight */
+.snap-highlight {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: calc(100% - 48px);
+    border: 2px dashed rgba(255,255,255,0.5);
+    pointer-events: none;
+}
+
+.snap-highlight.right {
+    left: 50%;
+}
+
+/* ============================================================
+   EXPLORADOR DE ARCHIVOS
+============================================================ */
+.explorer-container {
+    display: flex;
+    height: 100%;
+}
+
+.explorer-sidebar {
+    width: 160px;
+    background: rgba(255,255,255,0.06);
+    border-right: 1px solid rgba(255,255,255,0.15);
+    padding: 10px;
+}
+
+.explorer-sidebar div {
+    padding: 8px;
+    font-size: 14px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.explorer-sidebar div:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+.explorer-main {
+    flex: 1;
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.folder-item, .file-item {
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.folder-item img, .file-item img {
+    width: 48px;
+    height: 48px;
+}
+
+/* ============================================================
+   MENÚ INICIO
+============================================================ */
+.start-menu {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 60px;
+    width: 420px;
+    background: rgba(40,40,40,0.45);
+    backdrop-filter: blur(25px);
+    border-radius: 18px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    animation: fadeInUp 0.15s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+}
+
+.start-header h2 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.start-apps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.start-app {
+    width: 110px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 12px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.06);
+}
+
+.start-app:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+.start-app img {
+    width: 36px;
+    margin-bottom: 8px;
+}
+
+.start-app span {
+    color: white;
+    font-size: 13px;
+}
+
+.start-option {
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    color: white;
+}
+
+.start-option:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+/* ============================================================
+   PANELS (WiFi, Volumen, Reloj)
+============================================================ */
+.panel {
+    position: fixed;
+    right: 15px;
+    bottom: 60px;
+    background: rgba(40,40,40,0.45);
+    backdrop-filter: blur(25px);
+    padding: 15px;
+    border-radius: 12px;
+    width: 230px;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+}
+
+/* ============================================================
+   MENÚ CONTEXTUAL
+============================================================ */
+.context-menu {
+    position: fixed;
+    background: rgba(40,40,40,0.75);
+    backdrop-filter: blur(15px);
+    list-style: none;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 6px 0;
+    width: 180px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.35);
+    z-index: 999999;
+}
+
+.context-menu li {
+    padding: 10px 15px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.context-menu li:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+.hidden {
+    display: none;
+}
+
+/* ============================================================
+   TASKBAR (BARRA DE TAREAS)
+============================================================ */
+#taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    background: rgba(25,25,25,0.65);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.taskbar-center-btn {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    margin-right: 12px;
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+}
+
+.taskbar-center-btn:hover {
+    background: rgba(255,255,255,0.18);
+}
+
+.taskbar-apps {
+    display: flex;
+    gap: 8px;
+}
+
+.task-btn {
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.10);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    color: white;
+}
+
+.task-btn img {
+    width: 20px;
+}
+
+.task-btn:hover {
+    background: rgba(255,255,255,0.20);
+}
+
+.task-btn.active {
+    background: rgba(255,255,255,0.30);
+}
+
+.taskbar-right {
+    position: absolute;
+    right: 14px;
+    display: flex;
+    gap: 12px;
+}
+
+.task-icon {
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.task-icon:hover {
+    color: #ddd;
+}
