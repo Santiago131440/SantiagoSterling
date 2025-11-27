@@ -37,7 +37,14 @@ body {
     width: 100%;
     height: calc(100% - 48px);
     display: none;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 90px);
+    gap: 20px;
+    padding: 20px;
+    align-content: flex-start;
 }
+
 
 .desktop.active {
     display: block;
@@ -50,11 +57,13 @@ body {
     width: 85px;
     text-align: center;
     padding: 6px;
-    margin: 8px;
     border-radius: 8px;
-    position: absolute;
     cursor: default;
     transition: background 0.15s;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .desktop-icon img {
@@ -426,3 +435,4 @@ body {
 .task-icon:hover {
     color: #ddd;
 }
+
