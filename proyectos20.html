@@ -44,15 +44,15 @@
     <div class="flex items-center gap-2">
       <label class="text-xl font-semibold mb-4 text-white mt-1">Dispositivo: </label>
       <div class="flex items-center gap-2">
-        <button id="btnMobile" class="glass-btn" aria-pressed="true">Mobile</button>
-        <button id="btnDesktop" class="glass-btn" aria-pressed="false">Desktop</button>
+        <button id="btnMobile" class="glass-btn hover:bg-white/30 hover:text-amber-400" aria-pressed="true">Mobile</button>
+        <button id="btnDesktop" class="glass-btn hover:bg-white/30 hover:text-rose-400" aria-pressed="false">Desktop</button>
       </div>
     </div>
 
     <!-- gallery -->
     <div class="flex items-center gap-3">
       <label class="text-xl font-semibold mb-4 text-white mt-1">Proyectos: </label>
-      <div id="gallery" class="flex items-center gap-2">
+      <div id="gallery" class="flex items-center border border-white/10 hover:border-white/30 rounded-lg px-2 py-30 hover:bg-white/5 gap-2">
         <!-- thumbs inserted by JS -->
       </div>
     </div>
@@ -66,15 +66,15 @@
       <input id="zoom" type="range" min="50" max="150" value="100" class="h-1 w-40" />
       <label class="text-xl font-semibold mb-4 text-white mt-1">Rotar: </label>
       <div class="flex items-center gap-2">
-        <button id="rotLeft" class="glass-btn">⟲</button>
-        <button id="rotRight" class="glass-btn">⟳</button>
+        <button id="rotLeft" class="glass-btn hover:bg-white/30 hover:text-red-700">⟲</button>
+        <button id="rotRight" class="glass-btn hover:bg-white/30 hover:text-red-700">⟳</button>
       </div>
     </div>
 
     <!-- fullscreen -->
     <div class="flex items-center gap-2">
-      <button id="fullscreenBtn" class="glass-btn">Abrir en Fullscreen</button>
-      <button id="openOriginal" class="glass-btn">Abrir original ↗</button>
+      <button id="fullscreenBtn" class="glass-btn hover:bg-white/30 hover:text-emerald-400">Abrir en Fullscreen</button>
+      <button id="openOriginal" class="glass-btn hover:bg-white/30 hover:text-sky-400">Abrir original ↗</button>
     </div>
   </div>
 </div>
@@ -88,7 +88,7 @@
           <span class="frame-dot dot-yellow"></span>
           <span class="frame-dot dot-green"></span>
         </div>
-        <div class="text-xs text-white">Vista interactiva — puedes navegar en la página seleccionada aquí abajo</div>
+        <div class="text-xs text-white bg-white/5 hover:text-white/60 rounded-full py-1 px-12 bg-white-700 ">Vista interactiva — puedes navegar en la página seleccionada aquí abajo</div>
         <div class="text-xs text-white">Previsualización</div>
       </div>
 
@@ -108,8 +108,8 @@
       <!-- right section: URLs en la galería -->
       <div class="w-full md:w-full items-center justify-center text-center">
         <div class="bg-gradient-to-br from-white/2 to-white/1 p-3 rounded-xl border border-white/4">
-          <div class="text-xl font-semibold mb-4 text-white mt-1">URLs en la galería</div>
-          <div id="thumbList" class="grid grid-cols-8 gap-2">
+          <div class="text-xl font-semibold mb-4 text-white mt-1">Proyectos:</div>
+          <div id="thumbList" class="grid grid-cols-10 gap-2">
             <!-- thumbnails generados por JS -->
           </div>
         </div>
@@ -142,13 +142,13 @@
         <div>
           <h2 class="text-2xl font-bold mb-4">Sígueme</h2>
           <div class="flex justify-center md:justify-start gap-4 mt-2">
-            <a href="https://github.com/Santiago131440" target="_blank" class="glass-btn px-3 py-2 text-white font-semibold rounded-lg hover:bg-white/10 transition">
+            <a href="https://github.com/Santiago131440" target="_blank" class="glass-btn text-white font-semibold rounded-lg hover:bg-white/10 transition">
               GitHub
             </a>
-            <a href="https://www.linkedin.com/in/santiago-sterling" target="_blank" class="glass-btn px-3 py-2 text-white font-semibold rounded-lg hover:bg-white/10 transition">
+            <a href="https://www.linkedin.com/in/santiago-sterling" target="_blank" class="glass-btn text-white font-semibold rounded-lg hover:bg-white/10 transition">
               LinkedIn
             </a>
-            <a href="mailto:example@email.com" class="glass-btn px-3 py-2 text-white font-semibold rounded-lg hover:bg-white/10 transition">
+            <a href="mailto:example@email.com" class="glass-btn text-white font-semibold rounded-lg hover:bg-white/10 transition">
               Email
             </a>
           </div>
@@ -169,5 +169,3 @@
   <script src="proyectos20.js"></script>
 </body>
 </html>
-
-
