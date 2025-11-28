@@ -83,7 +83,7 @@
     .glass-btn{
       background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
       border:1px solid rgba(255, 255, 255, 0.699);
-      padding:4px 18px;border-radius:10px;color:#e6eef8;font-weight:600;
+      padding:1px 25px;border-radius:10px;color:#e6eef8;font-weight:600;
       Color: rgb(255, 255, 255);
     }
 
