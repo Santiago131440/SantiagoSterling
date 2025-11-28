@@ -78,7 +78,7 @@
     const content = `
       <div class="grid lg:grid-cols-2 gap-4">
         <div>
-          <img src="https://media.licdn.com/dms/image/v2/D4E0BAQF_Zodbepfpgw/company-logo_200_200/B4EZpPOsjIIwAI-/0/1762265844448/postobon_sa_logo?e=1765411200&v=beta&t=7euBC-FLcp0x4E2l5AV4EUrH_wXPiiQyetSONPEOTBU" alt="${title}" class="w-full h-44 object-cover rounded" />
+          <img src="https://cdn.pixabay.com/photo/2025/11/10/21/55/sunset-9949027_1280.jpg" alt="${title}" class="w-full h-44 object-cover rounded" />
         </div>
         <div>
           <h4 class="font-semibold">${title}</h4>
@@ -290,3 +290,4 @@ function typeEffect() {
 
 // Espera unos segundos antes de iniciar
 setTimeout(typeEffect, 2000);
+
