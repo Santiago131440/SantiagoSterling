@@ -119,55 +119,6 @@
     <button id="closeWallpaperPanel">Cerrar</button>
 </div>
 
-<style>
-/* Panel centrado y ajustado */
-#wallpaperPanel {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90vw;
-    max-width: 500px;
-    max-height: 90vh;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* previene que nada salga */
-}
-
-/* Titulos y elementos internos */
-#wallpaperPanel h2 {
-    margin-top: 0;
-}
-
-/* Área de imágenes con scroll */
-#wallpaperList {
-    margin-top: 15px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    overflow-y: auto;
-    flex-grow: 1; /* ocupa todo el espacio disponible */
-}
-
-/* Ajuste visual de imágenes */
-#wallpaperList img {
-    width: 100%;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* Botón abajo, siempre visible */
-#closeWallpaperPanel {
-    margin-top: 15px;
-    padding: 10px;
-}
-</style>
-
-
 
 <!-- ============================================================
      PANEL VOLUMEN / WIFI / RELOJ
