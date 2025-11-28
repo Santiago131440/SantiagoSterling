@@ -56,7 +56,7 @@ Escribe tus notas aquí...
     },
 
     player: {
-        title: "Reproductor Multimedia",
+        title: "Sterling Music Player",
         icon: "https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Music-icon.png",
         content: `
             <h3>Audio</h3>
@@ -632,3 +632,4 @@ function switchDesktop(n) {
 ============================================================ */
 
 console.log("Windows 11 Simulation Ultra - Sistema listo.");
+
