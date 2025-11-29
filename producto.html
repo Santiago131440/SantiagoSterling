@@ -139,10 +139,10 @@
         <div class="hidden md:flex gap-4 items-center">
           <button
           onclick="document.querySelector('#coleccion').scrollIntoView({ behavior: 'smooth' });"
-          class="px-4 py-2 rounded-full border border-white/6 text-sm subtle-glass">Ver profesionales</button>
+          class="px-8 py-1 rounded-full border border-white/6 hover:bg-white/100 hover:text-black hover:font-semibold text-sm subtle-glass">Ver profesionales</button>
           <button 
             onclick="document.querySelector('#contacto').scrollIntoView({ behavior: 'smooth' });"
-            class="px-4 py-2 rounded-full font-medium text-ink bg-gold">
+            class="px-8 py-1 rounded-full font-medium text-ink bg-gold hover:bg-gold/80 hover:text-white">
             Contáctanos
           </button>
 
@@ -209,8 +209,8 @@
         </p>
 
         <div class="mt-8 flex gap-4">
-          <a href="#contacto" class="px-6 py-3 rounded-full bg-gold text-ink font-medium shadow-lg">Contáctanos</a>
-          <a href="#coleccion" class="px-6 py-3 rounded-full border border-white/6 subtle-glass">Ver profesionales</a>
+          <a href="#contacto" class="px-8 py-1 rounded-full bg-gold text-ink font-medium shadow-lg hover:bg-gold/80 hover:text-white">Contáctanos</a>
+          <a href="#coleccion" class="px-8 py-1 rounded-full border border-white/6 subtle-glass hover:font-semibold">Ver profesionales</a>
         </div>
       </div>
     </div>
@@ -224,7 +224,7 @@
     <section class="py-20 bg-black">
       <div class="mx-auto container-wide px-6 grid md:grid-cols-2 gap-12 items-center">
         <div>
-          <h2 class="font-display text-3xl text-cream mb-4" data-reveal>¿Qué somos?</h2>
+          <h2 class="font-display text-7xl text-cream mb-4" data-reveal>¿Qué somos?</h2>
           <p class="text-white/75 mb-6" data-reveal>
             Servicio privado de apoyo médico-legal para instituciones, que ofrece asesoría técnica especializada en la defensa judicial frente a reclamaciones económicas por responsabilidad médica e institucional, integrado en un proyecto pericial exclusivo para clínicas y hospitales, con una oferta cerrada del servicio desde una casa pericial especializada.
           </p>
@@ -264,8 +264,8 @@
     <section id="coleccion" class="py-20 bg-cream text-ink">
       <div class="mx-auto container-wide px-6">
         <div class="text-center mb-12" data-reveal>
-          <h3 class="font-display text-2xl">Servicios</h3>
-          <p class="mt-2 text-sm text-ink/70">Servicios ofertados — Paquetes exclusivos</p>
+          <h3 class="font-display text-7xl">Servicios</h3>
+          <p class="mt-2 text-xl text-ink/70 font-display">Servicios ofertados — Paquetes exclusivos</p>
         </div>
 
         <div class="grid md:grid-cols-4 gap-8">
@@ -273,23 +273,23 @@
           <article class="rounded-3xl overflow-hidden shadow-lg bg-white">
             <img class="w-full h-64 object-cover" src="https://media.istockphoto.com/id/1465316262/photo/businessman-inspecting-paperwork-document-of-business-data-analysis-working-management-report.jpg?s=1024x1024&w=is&k=20&c=4fE6KAnT4jBdMb1d1TVFOELKjKuEgkus0pJ6araaDVQ=" alt="Pieza 2">
             <div class="p-6">
-              <h4 class="font-medium text-lg">Servicio 1</h4>
+              <h4 class="font-bold text-lg">Servicio 1</h4>
               <p class="mt-2 text-sm text-ink/60">Junta Médica Pericial</p>
-              <div class="mt-4 flex items-center justify-between">
-                <div class="font-semibold"> Paquete de serivicios anuales</div>
-                <a class="text-sm underline" href="#">Ver</a>
+              <div class="mt-6 flex items-center justify-between">
+                <div class="font-semibold"> Paquete de Servicios Anuales</div>
+                <a class="text-sm border text-center border-black rounded-xl hover:bg-gold hover:border-slate-200 hover:shadow-xl hover:text-white" href="#">Obtener más información</a>
               </div>
             </div>
           </article>
           <!-- Card 2 -->
-          <article class="rounded-3xl overflow-hidden shadow-lg bg-white">
+          <article class="rounded-3xl overflow-hidden shadow-lg bg-white flex flex-col">
             <img class="w-full h-64 object-cover" src="https://media.istockphoto.com/id/1319031310/photo/doctor-writing-a-medical-prescription.jpg?s=1024x1024&w=is&k=20&c=nChrkueWF_kh09Gsm_cjWYAY1BnyQ3XMt9ITykBiIYQ=" alt="Pieza 2">
             <div class="p-6">
-              <h4 class="font-medium text-lg">Servicio 2</h4>
+              <h4 class="font-bold text-lg">Servicio 2</h4>
               <p class="mt-2 text-sm text-ink/60">Dictamen médico especializado de opinión y contradicción con sustentación</p>
-              <div class="mt-4 flex items-center justify-between">
+              <div class="mt-auto flex items-center justify-between">
                 <div class="font-semibold"> Peritajes de comprobación</div>
-                <a class="text-sm underline" href="#">Ver</a>
+                <a class="text-sm border text-center border-black rounded-xl hover:bg-gold hover:border-slate-200 hover:shadow-xl hover:text-white" href="#">Obtener más información</a>
               </div>
             </div>
           </article>
@@ -298,11 +298,11 @@
            <article class="rounded-3xl overflow-hidden shadow-lg bg-white">
             <img class="w-full h-64 object-cover" src="https://media.istockphoto.com/id/1719539154/photo/home-care-healthcare-professional-hugging-senior-patient.jpg?s=1024x1024&w=is&k=20&c=rwt38eO7Y6WUo-GqWKxV9m7VaSQy8BqIugoy2S_7WGI=" alt="Pieza 2">
             <div class="p-6">
-              <h4 class="font-medium text-lg">Servicio 3</h4>
+              <h4 class="font-bold text-lg">Servicio 3</h4>
               <p class="mt-2 text-sm text-ink/60">Asesoría Médico Legal: Estrategia Defensa</p>
               <div class="mt-4 flex items-center justify-between">
                 <div class="font-semibold"> Calificación Del Riesgo Legal Procesal</div>
-                <a class="text-sm underline" href="#">Ver</a>
+                <a class="text-sm border text-center border-black rounded-xl hover:bg-gold hover:border-slate-200 hover:shadow-xl hover:text-white" href="#">Obtener más información</a>
               </div>
             </div>
           </article>
@@ -311,11 +311,11 @@
            <article class="rounded-3xl overflow-hidden shadow-lg bg-white">
             <img class="w-full h-64 object-cover" src="https://media.istockphoto.com/id/1783743772/photo/female-speaker-giving-a-presentation-during-business-seminar-at-convention-center.jpg?s=1024x1024&w=is&k=20&c=_vG6anN_hY8YxPUBtwa8sXu0W7B6e6Qt7KxuDGNPlpE=" alt="Pieza 2">
             <div class="p-6">
-              <h4 class="font-medium text-lg">Servicio 4</h4>
+              <h4 class="font-bold text-lg">Servicio 4</h4>
               <p class="mt-2 text-sm text-ink/60">Programa de Capacitación Responsabilidad Médica para funcionarios</p>
               <div class="mt-4 flex items-center justify-between">
-                <div class="font-semibold"> contratistas</div>
-                <a class="text-sm underline" href="#">Ver</a>
+                <div class="font-semibold"> Contratistas</div>
+                <a class="text-sm border text-center border-black rounded-xl hover:bg-gold hover:border-slate-200 hover:shadow-xl hover:text-white" href="#">Obtener más información</a>
               </div>
             </div>
           </article>
@@ -329,7 +329,7 @@
       <div class="mx-auto container-wide px-6">
         <div class="grid md:grid-cols-2 gap-10 items-center">
           <div data-reveal>
-            <h3 class="font-display text-3xl">Fundamentación legal</h3>
+            <h3 class="font-display text-7xl">Fundamentación legal</h3>
             <p class="mt-4 text-white/70">Código de Procedimiento Administrativo y de lo Contencioso Administrativo Artículo 222. Reglas especiales para las entidades públicas.</p>
 
             <ul class="mt-6 space-y-4 text-white/80">
@@ -340,7 +340,7 @@
             </ul>
 
             <div class="mt-8">
-              <a href="#contacto" class="px-6 py-3 rounded-full bg-gold text-ink font-medium">Obtener mas información</a>
+              <a href="#contacto" class="px-8 py-2 rounded-full bg-gold text-ink font-medium">Obtener mas información</a>
             </div>
           </div>
 
@@ -354,7 +354,7 @@
     <!-- TESTIMONIOS -->
     <section class="py-20 bg-cream text-ink">
       <div class="mx-auto container-wide px-6 text-center mb-10" data-reveal>
-        <h3 class="font-display text-2xl">Lo que dicen de nosotros</h3>
+        <h3 class="font-display text-7xl">Lo que dicen de nosotros</h3>
       </div>
 
       <div class="mx-auto container-wide px-6 grid md:grid-cols-3 gap-6">
@@ -374,11 +374,11 @@
     </section>
 
     <!-- CONTACTO / FOOTER -->
-    <section id="contacto" class="py-20 bg-ink text-cream">
+    <section id="contacto" class="py-20 bg-ink text-white">
       <div class="mx-auto container-wide px-6 grid md:grid-cols-2 gap-10 items-center">
         <div data-reveal>
-          <h3 class="font-display text-3xl">Contacto</h3>
-          <p class="mt-4 text-white/70">Agende una asesoría privada para obtener mas detalles de como podemos solucionar tu caso.</p>
+          <h3 class="font-display text-7xl">Contacto</h3>
+          <p class="mt-4 text-2xl text-cream">Agende una asesoría privada para obtener mas detalles de como podemos solucionar tu caso.</p>
 
           <div class="mt-6 text-white/80">
             <p class="font-medium">Calle 50 # 50 - 50, Cali, Colombia</p>
@@ -387,14 +387,14 @@
           </div>
         </div>
 
-        <form class="p-6 bg-white rounded-2xl text-ink shadow-lg" onsubmit="handleSubmit(event)" data-reveal>
+        <form class="p-6 bg-ink rounded-2xl text-ink shadow-lg border border-white/10" onsubmit="handleSubmit(event)" data-reveal>
           <div class="grid gap-4">
-            <input required class="border border-slate-200 rounded-md px-4 py-3" placeholder="Nombre" name="name" />
-            <input required type="email" class="border border-slate-200 rounded-md px-4 py-3" placeholder="Correo" name="email" />
-            <textarea required class="border border-slate-200 rounded-md px-4 py-3" rows="4" placeholder="¿En qué podemos ayudarle?" name="message"></textarea>
+            <input required class="border border-white/10 rounded-full px-8 py-2 bg-ink/40 text-white" placeholder="Nombre" name="name" />
+            <input required type="email" class="border border-white/10 rounded-full px-8 py-2 bg-ink/40 text-white" placeholder="Correo" name="email" />
+            <textarea required class="border border-white/10 rounded-2xl px-4 py-3 bg-ink/40 text-white" rows="4" placeholder="¿En qué podemos ayudarle?" name="message"></textarea>
             <div class="flex items-center justify-between">
-              <button class="px-5 py-3 rounded-md bg-ink text-cream">Enviar</button>
-              <span class="text-sm text-ink/60">Respuesta en 3 días hábiles</span>
+              <button class="px-8 py-0 rounded-full border border-white bg-ink text-cream hover:bg-white hover:text-black hover:font-bold shadow-sm shadow-white">Enviar</button>
+              <span class="text-sm text-white">Respuesta en 3 días hábiles</span>
             </div>
           </div>
         </form>
