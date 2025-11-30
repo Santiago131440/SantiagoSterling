@@ -98,11 +98,12 @@ const fileSystem = {
             Documentos: {
                 type: "folder",
                 contents: {
-                    "informe.txt": { 
+                  "informe.txt": { 
                         type: "file", 
                         app: "notes",
                         content: "- Comprar pan\n- Revisar proyecto Quantix\n- Enviar reporte"
                     },
+
 
                     "lista.md": { 
                         type: "file", 
@@ -700,5 +701,6 @@ window.addEventListener("load", () => {
         // Cambia "portafolio.html" por la ruta real de tu archivo
         window.location.href = "index20.html";
     });
+
 
 
