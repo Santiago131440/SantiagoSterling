@@ -101,37 +101,7 @@ const fileSystem = {
                     "informe.txt": { 
                         type: "file", 
                         app: "notes",
-                        content: "mi-proyecto/
-│
-├── public/
-│   ├── index.html
-│   ├── favicon.ico        (opcional)
-│   └── assets/
-│       ├── img/           (imágenes)
-│       ├── icons/         (iconos)
-│       └── fonts/         (fuentes)
-│
-├── src/
-│   ├── styles/
-│   │   ├── input.css      (archivo donde importas Tailwind)
-│   │   └── components/    (opcional)
-│   │       └── botones.css
-│   │
-│   ├── js/
-│   │   ├── main.js
-│   │   └── utils.js
-│   │
-│   └── pages/             (si tu proyecto tiene más páginas)
-│       ├── home.html
-│       └── about.html
-│
-├── dist/                  (salida generada después del build)
-│   └── estilos.css
-│
-├── tailwind.config.js     (configuración de Tailwind)
-├── package.json           (si usas npm)
-├── postcss.config.js      (para build de Tailwind)
-└── README.md"
+                        content: "- Comprar pan\n- Revisar proyecto Quantix\n- Enviar reporte"
                     },
 
                     "lista.md": { 
@@ -730,4 +700,5 @@ window.addEventListener("load", () => {
         // Cambia "portafolio.html" por la ruta real de tu archivo
         window.location.href = "index20.html";
     });
+
 
