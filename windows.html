@@ -29,25 +29,14 @@
         </div>
 
         <div class="desktop-icon" data-app="player">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/VLC_Icon.svg/529px-VLC_Icon.svg.png">
+            <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Musica%20OS.png?raw=true">
             <span>Sterling Music Player</span>
         </div>
 
         <!-- PAPELERA -->
         <div class="desktop-icon" data-app="recycle-bin" id="recycleBinIcon">
-            <img src="https://c0.klipartz.com/pngpicture/537/831/gratis-png-papelera-de-reciclaje-ventanas-de-basura-7-papeleras-y-cestos-de-papel-iconos-de-computadora-thumbnail.png">
+            <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Papelera%20OS.png?raw=true">
             <span>Papelera</span>
-        </div>
-
-    </div>
-
-
-    <!-- Escritorio 2 -->
-    <div id="desktop2" class="desktop">
-
-        <div class="desktop-icon" data-app="notes">
-            <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-mimetypes/512/text-x-generic-icon.png">
-            <span>Notas 2</span>
         </div>
 
     </div>
@@ -78,26 +67,27 @@
         </div>
 
         <div class="start-app" data-app="browser">
-            <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-apps/512/internet-web-browser-icon.png">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%28February_2022%29.svg/48px-Google_Chrome_icon_%28February_2022%29.svg.png">
             <span>Navegador</span>
         </div>
 
         <div class="start-app" data-app="notes">
             <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-mimetypes/512/text-x-generic-icon.png">
-            <span>Bloc de Notas</span>
+            <span>Notas</span>
         </div>
 
         <div class="start-app" data-app="player">
-            <img src="https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Music-icon.png">
+            <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Musica%20OS.png?raw=true.png">
             <span>Sterling Music Player</span>
         </div>
 
     </div>
-
-    <hr>
+    <br>
+    <hr style="border: 1px solid #ffffffad;">
 
     <div class="start-option" id="openWallpaperPanel">Cambiar fondo</div>
-    <div class="start-option" id="openDesktopSwitcher">Cambiar escritorio</div>
+    <div class="start-option" id="openDesktopSwitcher">Volver al portafolio</div>
+
 
 </div>
 
@@ -105,19 +95,100 @@
 <!-- ============================================================
      CAMBIAR FONDO WALLPAPER PANEL
 ============================================================ -->
-<div id="wallpaperPanel" class="panel hidden">
+<div id="wallpaperPanel" class="panel hidden" 
+     style="padding:20px; width:400px; max-height:500px; overflow:auto;">
+
     <h2>Cambiar Fondo</h2>
+    <br>
+    <p>Explora los fondos disponibles o sube tu propia imagen para personalizar tu experiencia.</p>
+    <br>
     <input type="file" id="wallpaperInput">
 
-    <div id="wallpaperList">
-        <img src="https://cdn.pixabay.com/photo/2019/08/08/13/50/wheat-4393023_1280.jpg">
-        <img src="https://cdn.pixabay.com/photo/2019/08/08/13/50/wheat-4393023_1280.jpg">
-        <img src="https://cdn.pixabay.com/photo/2019/08/08/13/50/wheat-4393023_1280.jpg">
-        <img src="https://cdn.pixabay.com/photo/2019/08/08/13/50/wheat-4393023_1280.jpg">
+    <div id="wallpaperList" 
+    
+         style="
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+         ">
+
+        <img src="https://cdn.pixabay.com/photo/2014/07/16/05/18/beach-394503_1280.jpg" 
+             style="
+                width: 100%;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 8px;
+                cursor:pointer;
+             ">
+
+        <img src="https://cdn.pixabay.com/photo/2019/08/08/13/50/wheat-4393023_1280.jpg" 
+             style="
+                width: 100%;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 8px;
+                cursor:pointer;
+             ">
+
+        <img src="https://cdn.pixabay.com/photo/2024/02/23/18/59/desert-8592629_1280.jpg" 
+             style="
+                width: 100%;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 8px;
+                cursor:pointer;
+             ">
+
+        <img src="https://cdn.pixabay.com/photo/2022/10/26/07/44/contrast-7547668_1280.jpg" 
+             style="
+                width: 100%;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 8px;
+                cursor:pointer;
+             ">
+
+        <img src="https://cdn.pixabay.com/photo/2025/05/14/16/21/facade-9599968_1280.jpg" 
+             style="
+                width: 100%;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 8px;
+                cursor:pointer;
+             ">
+
+        <img src="https://cdn.pixabay.com/photo/2025/10/27/17/37/plant-9920904_960_720.jpg" 
+             style="
+                width: 100%;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 8px;
+                cursor:pointer;
+             ">
     </div>
 
-    <button id="closeWallpaperPanel">Cerrar</button>
+    <button id="closeWallpaperPanel" 
+            style="
+            margin-top:15px;
+            padding:6px 30px;
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color:white;
+            border:none;
+            border-radius:60px;
+            font-size:15px;
+            font-weight:600;
+            cursor:pointer;
+            box-shadow:0 4px 10px rgba(0,0,0,0.15);
+            transition:all .25s ease;
+            ">
+            Cerrar
+    </button>
 </div>
+
 
 
 <!-- ============================================================
@@ -159,7 +230,27 @@
 ============================================================ -->
 <div id="taskbar">
 
-    <div id="startButton" class="taskbar-center-btn">⊞</div>
+    <div id="startButton" class="taskbar-center-btn">
+        <div style="
+            width:40px;
+            height:40px;
+            border-radius:16px;
+            background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-shrink:0;
+        ">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2C7 2 3 6 3 11c0 4.5 3.4 8 7.8 8.9L12 22l1.2-2.1C17.6 19 21 15.5 21 11c0-5-4-9-9-9z"
+                stroke="rgba(255,255,255,0.9)"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+        </div>
+    </div>
+
 
     <div id="taskButtons" class="taskbar-apps"></div>
 
