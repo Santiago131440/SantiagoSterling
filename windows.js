@@ -1,10 +1,3 @@
-/* ============================================================
-   WINDOWS 11 SIMULATION ULTRA - SISTEMA COMPLETO JS
-============================================================ */
-
-/* ============================================================
-   VARIABLES GLOBALES
-============================================================ */
 
 let activeWindows = {};
 let zCounter = 50;
@@ -37,49 +30,64 @@ const apps = {
 
     browser: {
         title: "Navegador",
-        icon: "https://icons.iconarchive.com/icons/papirus-team/papirus-apps/512/internet-web-browser-icon.png",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%28February_2022%29.svg/48px-Google_Chrome_icon_%28February_2022%29.svg.png",
         content: `
-            <h2>Navegador Simulado</h2>
-            <p>Esto es un navegador básico solo para demostración.</p>
-            <input type="text" placeholder="Escribe una URL... (no funciona)">
-        `
+        <div style="
+            width:100%;
+            height:80vh;
+            border-radius: 12px;
+            overflow:hidden;
+            border: 2px solid transparent;
+
+        ">
+            <iframe 
+                src="https://www.bing.com/search?q=Google"
+                style="width:100%; height:100%; border:none;"
+            ></iframe>
+        </div>
+    `
     },
+
 
     notes: {
         title: "Bloc de Notas",
         icon: "https://icons.iconarchive.com/icons/papirus-team/papirus-mimetypes/512/text-x-generic-icon.png",
         content: `
-            <textarea style="width:100%; height:100%; background:rgba(255,255,255,0.1); border:0; color:white; padding:10px;">
-Escribe tus notas aquí...
+            <textarea style="width:100%; height:100%; background:rgba(255, 255, 255, 0); border:0; color:white; padding:10px;">
+        Escribe tus notas aquí...
             </textarea>
         `
     },
 
     player: {
         title: "Sterling Music Player",
-        icon: "https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Music-icon.png",
+        icon: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Musica%20OS.png?raw=true",
         content: `
-            <h3>Audio</h3>
-            <audio controls style="width:100%;">
-                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-            </audio>
-
-            <h3 style="margin-top:20px;">Video</h3>
-            <video controls width="100%">
-                <source src="https://www.w3schools.com/html/mov_bbb.mp4">
-            </video>
+            <div style="
+                width:100%;
+                height:80vh;
+                border-radius: 12px;
+                overflow:hidden;
+                border: 2px solid #ccc;
+            ">
+                <iframe 
+                    src="https://santiago131440.github.io/SantiagoSterling/Music.html" 
+                    style="width:100%; height:100%; border:none;"
+                ></iframe>
+            </div>
         `
     },
 
+
     "recycle-bin": {
         title: "Papelera",
-        icon: "https://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/512/recycle-bin-icon.png"
+        icon: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Papelera%20OS.png?raw=true"
     }
 };
 
 
 /* ============================================================
-   SISTEMA DE ARCHIVOS SIMULADO
+   SISTEMA DE ARCHIVOS
 ============================================================ */
 
 const fileSystem = {
@@ -90,10 +98,39 @@ const fileSystem = {
             Documentos: {
                 type: "folder",
                 contents: {
-                    "informe.txt": { type: "file", app: "notes" },
-                    "lista.md": { type: "file", app: "notes" }
+                    "informe.txt": { 
+                        type: "file", 
+                        app: "notes",
+                        content: "Informe del sistema:\n- Estado: OK\n- Usuario: Santiago\n- Última edición: Hoy"
+                    },
+
+                    "lista.md": { 
+                        type: "file", 
+                        app: "notes",
+                        content: "- Comprar pan\n- Revisar proyecto Quantix\n- Enviar reporte"
+                    },
+
+                    "tareas.txt": { 
+                        type: "file", 
+                        app: "notes",
+                        content: "Tareas pendientes:\n1. Completar interfaz\n2. Revisar errores\n3. Enviar versión final"
+                    },
+
+                    "recordatorio.txt": { 
+                        type: "file", 
+                        app: "notes",
+                        content: "Recordatorio:\nNo olvidar hacer backup de todo."
+                    },
+
+                    "proyecto.md": { 
+                        type: "file", 
+                        app: "notes",
+                        content: "# Proyecto IA\nEste es el archivo principal del proyecto."
+                    }
                 }
             },
+
+
 
             Música: {
                 type: "folder",
@@ -111,6 +148,29 @@ const fileSystem = {
         }
     }
 };
+
+function openTextFile(content) {
+    // Crear ventana de notas temporal
+    const appName = "notes_" + Date.now();
+
+    apps[appName] = {
+        title: "Archivo de Texto",
+        icon: apps.notes.icon,
+        content: `
+            <textarea style="
+                width:100%; 
+                height:100%; 
+                background:rgba(255,255,255,0); 
+                border:0; 
+                color:white; 
+                padding:10px;
+            ">${content}</textarea>
+        `
+    };
+
+    openApp(appName);
+}
+
 
 
 /* ============================================================
@@ -463,10 +523,8 @@ document.getElementById("ctxDelete").onclick = () => {
 function loadRecycleBin(win) {
     const area = win.querySelector(".app-area");
 
-    area.innerHTML = "<h3>Papelera</h3>";
-
     if (recycleBin.length === 0) {
-        area.innerHTML += "<p>La papelera está vacía.</p>";
+        area.innerHTML += "<p>La papelera está vacía, elimina aplicaciones para que se vean en esta carpeta.</p>";
         return;
     }
 
@@ -503,7 +561,7 @@ function loadExplorer(win, folder) {
     const sidebar = area.querySelector(".explorer-sidebar");
     const main = area.querySelector(".explorer-main");
 
-    sidebar.innerHTML = `<div data-path="root">Este equipo</div>`;
+    sidebar.innerHTML = `<div data-path="root">Repositorios</div>`;
 
     sidebar.querySelector("div").onclick = () => loadFolder(main, fileSystem.root);
 
@@ -524,8 +582,8 @@ function loadFolder(main, folder) {
                 </div>`;
         } else if (item.type === "file") {
             main.innerHTML += `
-                <div class="file-item" onclick="openApp('${item.app}')">
-                    <img src="https://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/512/file-icon.png">
+                <div class="file-item" onclick="openTextFile(\`${item.content || ""}\`)">
+                    <img src="https://cdn.pixabay.com/photo/2016/01/23/16/02/book-1157658_1280.png">
                     <span>${name}</span>
                 </div>`
         }
@@ -613,23 +671,32 @@ document.querySelectorAll("#wallpaperList img").forEach(img => {
         document.body.style.backgroundImage = `url('${img.src}')`;
 });
 
-
 /* ============================================================
-   MULTI ESCRITORIO (BÁSICO)
+   POSICIONES INICIALES FIJAS PARA ICONOS DEL ESCRITORIO
+   (SIN QUITAR SU MOVILIDAD)
 ============================================================ */
 
-function switchDesktop(n) {
-    document.querySelectorAll(".desktop").forEach(d =>
-        d.classList.remove("active")
-    );
+window.addEventListener("load", () => {
+    const initialPositions = {
+        explorer: { left: 30, top: 20 },
+        browser: { left: 30, top: 120 },
+        notes: { left: 30, top: 220 },
+        player: { left: 30, top: 320 },
+        "recycle-bin": { left: 30, top: 420 }
+    };
 
-    document.getElementById("desktop" + n).classList.add("active");
-}
+    document.querySelectorAll(".desktop-icon").forEach(icon => {
+        const app = icon.dataset.app;
 
+        if (initialPositions[app]) {
+            icon.style.position = "absolute";
+            icon.style.left = initialPositions[app].left + "px";
+            icon.style.top = initialPositions[app].top + "px";
+        }
+    });
+});
 
-/* ============================================================
-   FIN DEL SISTEMA
-============================================================ */
-
-console.log("Windows 11 Simulation Ultra - Sistema listo.");
-
+    document.getElementById("openDesktopSwitcher").addEventListener("click", function () {
+        // Cambia "portafolio.html" por la ruta real de tu archivo
+        window.location.href = "index20.html";
+    });
