@@ -53,7 +53,7 @@ const apps = {
         title: "Bloc de Notas",
         icon: "https://icons.iconarchive.com/icons/papirus-team/papirus-mimetypes/512/text-x-generic-icon.png",
         content: `
-            <textarea style="width:100%; height:100%; background:rgba(255, 255, 255, 0); border:0; color:white; padding:10px;">
+            <textarea style="width:90vw; height:70vh; background:rgba(255, 255, 255, 0); border:0; color:white; padding:10px;">
         Escribe tus notas aquí...
             </textarea>
         `
@@ -98,10 +98,16 @@ const fileSystem = {
             Documentos: {
                 type: "folder",
                 contents: {
-                  "informe.txt": { 
+                  "ReadMe.txt": { 
                         type: "file", 
-                        app: "notes",
-                        content: "- Comprar pan\n- Revisar proyecto Quantix\n- Enviar reporte"
+                        app: "note",
+                        content: `¡Hola! Soy Santiago Sterling
+Tecnólogo en análisis y desarrollo de software y tecnólogo en Producción Industrial
+
+Soy un tecnólogo en Gestión de Producción Industrial con más de 8 años de experiencia en plantas de manufactura, y también tecnólogo en Análisis y Desarrollo de Software (SENA).
+
+Mi propósito es integrar la eficiencia industrial con la inteligencia tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y generar soluciones escalables.`
+
                     },
 
 
@@ -159,8 +165,8 @@ function openTextFile(content) {
         icon: apps.notes.icon,
         content: `
             <textarea style="
-                width:100%; 
-                height:100%; 
+                width:90vw; 
+                height:10vh; 
                 background:rgba(255,255,255,0); 
                 border:0; 
                 color:white; 
@@ -698,9 +704,8 @@ window.addEventListener("load", () => {
 });
 
     document.getElementById("openDesktopSwitcher").addEventListener("click", function () {
-        // Cambia "portafolio.html" por la ruta real de tu archivo
+        // Cambia "index20.html" por la ruta real de tu archivo
         window.location.href = "index20.html";
     });
-
 
 
