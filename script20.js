@@ -108,10 +108,8 @@
           <summary class="font-medium">Ver procedimiento detallado</summary>
           <div class="mt-3 code-style">
             // pasos (ejemplo)
-            1) Investigación → entrevistas y métricas
-            2) Diseño → wireframes y prototipos
-            3) Desarrollo → componentes reutilizables
-            4) Validación → tests con usuarios
+            1) Santiago Sterling
+            2) Hola mundo
           </div>
         </details>
       </div>
