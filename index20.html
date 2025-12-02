@@ -1,4 +1,5 @@
 
+
 <!doctype html>
 <html lang="es">
 <head>
@@ -23,8 +24,8 @@
           <img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar">
           </div>
         <div>
-          <div class="text-sm font-extrabold text-white">Santiago Sterling</div>
-          <div class="text-xs text-white">Tecnologo en análisis y desarrollo de sotware</div>
+          <div class="text-sm font-extrabold text-white" href="#main">Santiago Sterling</div>
+          <div class="text-xs text-white" href="#main">Tecnologo en análisis y desarrollo de software</div>
         </div>
       </div>
 
@@ -61,71 +62,27 @@
   </header>
 
   <main id="main" class="container mx-auto px-6 mt-12">
-    <section id="hero" class="grid lg:grid-cols-2 gap-8 items-center">
+    <section id="hero" class="grid lg:grid-cols-1 gap-8 items-center">
       <div class="space-y-6">
         <p class="inline-flex items-center gap-3 text-sm text-gold font-semibold">
           <span class="px-2 py-1 bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500 bg-clip-text text-transparent rounded-full">Portafolio > API > Santiago Sterling</span>
           <span class="text-emerald-500">| Disponible</span>
         </p>
-
+        <br>
+        <br>
         <h1 class="px-10 py-10 text-4xl md:text-6xl font-extrabold leading-tight tracking-tight text-slate-800">
-          Hola, mi nombre es <span class="bg-gradient-to-r from-yellow-300 via-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">Santiago Sterling</span> y <span class="decoration-gold/60">soy desarrollador de sotware</span>.
+          Hola, mi nombre es <span class="bg-gradient-to-r from-yellow-300 via-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">Santiago Sterling</span> y <span class="decoration-gold/60">soy desarrollador de software</span>.
         </h1>
-
+        <br>
+        <br>
         <div class="flex flex-wrap gap-3 items-center">
           <a href="proyectos20.html" class="px-6 py-1 rounded-full bg-gradient-to-r from-[#7A5C1C] via-[#D4AF37] to-[#F7E27B] text-white  font-semibold shadow-lg hover:scale-105 transition">Proyectos</a>
           <a href="windows.html" class="px-6 py-1 rounded-full bg-gradient-to-r from-[#7A5C1C] via-[#D4AF37] to-[#F7E27B] text-white  font-semibold shadow-lg hover:scale-105 transition">Repositorio</a>
           <a id="downloadCV" href="#" class="px-6 py-2 rounded-full text-sm text-slate-700 bg-black/5 hover:bg-white/5  transition">Descarga un resumen sobre mi</a>
         </div>
       </div>
-
-      <div class="relative">
-        <!-- Visual card with floating elements -->
-        <div class="rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-slate-200 via-white to-slate-300 p-6">
-          <div class="grid grid-cols-2 gap-4">
-            <div class="bg-gradient-to-br from-sky-600 to-cyan-900 p-4 rounded-xl">
-              <div class="text-xs text-white/80">Proyectos entregados:</div>
-              <div class="text-white font-bold text-lg mt-2">+17</div>
-              <p class="text-white/80 mt-3 text-sm">Código limpio.</p>
-            </div>
-            <div class="bg-gradient-to-br from-emerald-600 to-teal-500 p-4 rounded-xl">
-              <div class="text-xs text-white/80">Clientes satisfechos:</div>
-              <div class="text-white font-bold text-lg mt-2">+5</div>
-              <p class="text-white/80 mt-3 text-sm">Automatización inteligente.</p>
-            </div>
-          </div>
-
-          <!-- mockup image -->
-            <div class="relative mt-6 rounded-xl overflow-hidden shadow-lg">
-              
-              <video 
-                class="w-full h-56 object-cover"
-                autoplay
-                muted
-                loop
-                playsinline>
-                <source src="https://cdn.pixabay.com/video/2020/07/01/43559-436237492_tiny.mp4" type="video/mp4">
-                Santiago Sterling Video.
-              </video>
-
-              <!-- Texto animado -->
-              <div class="absolute inset-0 flex items-down justify-center">
-                <span id="typingText" class="text-white-500 text-lg md:text-xl font-semibold tracking-wide drop-shadow-lg"></span>
-              </div>
-
-            </div>
-
-          <div class="mt-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-            </div>
-          </div>
-        </div>
-
-        <!-- floating badges -->
-        <div class="absolute -top-6 -right-6 w-36 h-36 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-500 blur-xl opacity-40 pointer-events-none"></div>
-      </div>
     </section>
-
+    <br>
     <!-- ABOUT -->
         <section id="about"
           class="mt-20 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20"
@@ -498,56 +455,67 @@
     </section>
 
     <!-- CASE STUDIES -->
-    <section id="cases" class="mt-16 bg-white/3 p-8 rounded-2xl shadow-lg">
-      <h2 class="text-2xl font-extrabold">Casos de estudio</h2>
+    <section 
+  id="cases"
+  class="mt-16 p-8 rounded-2xl shadow-lg w-full
+         bg-[url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Dec%202,%202025,%2009_49_54%20AM.png?raw=true')]
+         bg-cover bg-center bg-no-repeat relative">
 
-      <div class="mt-6 grid lg:grid-cols-2 gap-6">
-        <article class="p-6 bg-white/4 rounded-xl">
-          <h3 class="font-semibold">Dashboard Agro — Mejora de conversión</h3>
-          <p class="text-slate-300 mt-2">Resumen: Reestructuración del dashboard y creación de acciones rápidas. Resultado: reducción del tiempo de decisión y aumento de conversiones en +32%.</p>
+  <!-- Overlay para mejorar la lectura -->
+  <div class="absolute inset-0 bg-black/50 rounded-2xl"></div>
 
-          <div class="mt-4 grid grid-cols-2 gap-4">
-            <div class="bg-white/5 p-4 rounded">
-              <div class="text-xs text-slate-300">Problema</div>
-              <div class="mt-2 text-slate-100">Usuarios tardaban en encontrar métricas clave.</div>
-            </div>
-            <div class="bg-white/5 p-4 rounded">
-              <div class="text-xs text-slate-300">Solución</div>
-              <div class="mt-2 text-slate-100">Rediseño, filtros inteligentes y accesos rápidos.</div>
-            </div>
+  <div class="relative z-10">
+    <h2 class="text-2xl font-extrabold text-white">Casos de estudio</h2>
+
+    <div class="mt-6 grid lg:grid-cols-2 gap-6">
+      <article class="p-6 bg-white/10 backdrop-blur-md rounded-xl">
+        <h3 class="font-semibold text-white">Dashboard Agro — Mejora de conversión</h3>
+        <p class="text-slate-200 mt-2">Resumen: Reestructuración del dashboard y creación de acciones rápidas. Resultado: reducción del tiempo de decisión y aumento de conversiones en +32%.</p>
+
+        <div class="mt-4 grid grid-cols-2 gap-4">
+          <div class="bg-white/10 p-4 rounded">
+            <div class="text-xs text-slate-300">Problema</div>
+            <div class="mt-2 text-slate-100">Usuarios tardaban en encontrar métricas clave.</div>
           </div>
-
-          <div class="mt-4">
-            <details class="bg-white/6 p-3 rounded">
-              <summary class="font-medium">Ver pasos y métricas</summary>
-              <ol class="mt-3 list-decimal list-inside text-slate-200">
-                <li>Research con 12 usuarios</li>
-                <li>Wireframes y test A/B</li>
-                <li>Implementación y seguimiento 8 semanas</li>
-                <li>Resultados: +32% conversión, -21% tiempo de tareas</li>
-              </ol>
-            </details>
+          <div class="bg-white/10 p-4 rounded">
+            <div class="text-xs text-slate-300">Solución</div>
+            <div class="mt-2 text-slate-100">Rediseño, filtros inteligentes y accesos rápidos.</div>
           </div>
-        </article>
+        </div>
 
-        <article class="p-6 bg-white/4 rounded-xl">
-          <h3 class="font-semibold">Reproductor Musical — Engagement</h3>
-          <p class="text-slate-300 mt-2">Resumen: Microinteracciones y descubrimiento musical mejorado. Resultado: +48% tiempo en sesión.</p>
+        <div class="mt-4">
+          <details class="bg-white/10 p-3 rounded">
+            <summary class="font-medium text-white">Ver pasos y métricas</summary>
+            <ol class="mt-3 list-decimal list-inside text-slate-200">
+              <li>Research con 12 usuarios</li>
+              <li>Wireframes y test A/B</li>
+              <li>Implementación y seguimiento 8 semanas</li>
+              <li>Resultados: +32% conversión, -21% tiempo de tareas</li>
+            </ol>
+          </details>
+        </div>
+      </article>
 
-          <div class="mt-4 grid grid-cols-2 gap-4">
-            <div class="bg-white/5 p-4 rounded">
-              <div class="text-xs text-slate-300">Problema</div>
-              <div class="mt-2 text-slate-100">Pérdida de retención en onboarding.</div>
-            </div>
-            <div class="bg-white/5 p-4 rounded">
-              <div class="text-xs text-slate-300">Solución</div>
-              <div class="mt-2 text-slate-100">Gamificación ligera y recomendaciones personalizadas.</div>
-            </div>
+      <article class="p-6 bg-white/10 backdrop-blur-md rounded-xl">
+        <h3 class="font-semibold text-white">Reproductor Musical — Engagement</h3>
+        <p class="text-slate-200 mt-2">Resumen: Microinteracciones y descubrimiento musical mejorado. Resultado: +48% tiempo en sesión.</p>
+
+        <div class="mt-4 grid grid-cols-2 gap-4">
+          <div class="bg-white/10 p-4 rounded">
+            <div class="text-xs text-slate-300">Problema</div>
+            <div class="mt-2 text-slate-100">Pérdida de retención en onboarding.</div>
           </div>
+          <div class="bg-white/10 p-4 rounded">
+            <div class="text-xs text-slate-300">Solución</div>
+            <div class="mt-2 text-slate-100">Gamificación ligera y recomendaciones personalizadas.</div>
+          </div>
+        </div>
+      </article>
 
-        </article>
-      </div>
-    </section>
+    </div>
+  </div>
+</section>
+
 
     <!-- TESTIMONIALS -->
     <section id="testimonials" class="mt-16">
