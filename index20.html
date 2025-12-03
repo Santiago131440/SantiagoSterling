@@ -176,22 +176,51 @@
       <br>
 
   <!-- FILTROS -->
-  <div class="flex justify-center mb-20">
-    <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
-      <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900">
-        Todos
-      </button>
-      <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900">
-        Tecnologías
-      </button>
-      <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900">
-        Sena
-      </button>
-      <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900">
-        Platzi
-      </button>
-    </div>
+<!-- CONTENEDOR DE FILTROS -->
+<div class="flex justify-center mb-10 px-4">
+  <div id="filterBar" class="relative backdrop-blur-xl bg-white/10 border border-white/30 shadow-2xl rounded-full px-2 py-2 flex gap-1 items-center">
+    
+    <!-- Slider (animación entre botones) -->
+    <span id="slider" class="absolute bg-white/30 backdrop-blur-xl rounded-full h-9 transition-all duration-300 -z-10"></span>
+
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="tech">Tecnologías</button>
+    <button class="filter-btn" data-filter="sena">Sena</button>
+    <button class="filter-btn" data-filter="platzi">Platzi</button>
   </div>
+</div>
+
+<!-- SECCIÓN DE CURSOS -->
+<div id="courses" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+
+  <!-- Curso -->
+  <div class="course-card" data-category="tech">
+    <h3 class="title">Curso de HTML y CSS</h3>
+    <p class="source">Tecnologías</p>
+  </div>
+
+  <div class="course-card" data-category="sena">
+    <h3 class="title">Programación Básica</h3>
+    <p class="source">Sena</p>
+  </div>
+
+  <div class="course-card" data-category="platzi">
+    <h3 class="title">Curso de JavaScript</h3>
+    <p class="source">Platzi</p>
+  </div>
+
+  <div class="course-card" data-category="tech">
+    <h3 class="title">Curso de Python</h3>
+    <p class="source">Tecnologías</p>
+  </div>
+
+  <div class="course-card" data-category="platzi">
+    <h3 class="title">Curso de Diseño UI</h3>
+    <p class="source">Platzi</p>
+  </div>
+
+</div>
+
 
   <!-- CONTENEDOR TARJETAS -->
   <div class="grid lg:grid-cols-3 gap-6">
@@ -618,6 +647,7 @@
   <script src="script20.js" defer></script>
 </body>
 </html>
+
 
 
 
