@@ -290,4 +290,23 @@ function typeEffect() {
 // Espera unos segundos antes de iniciar
 setTimeout(typeEffect, 2000);
 
+// Sección nueva 03/12/2025
+
+@keyframes fadeUp {
+  0% { 
+    opacity: 0; 
+    transform: translateY(40px) scale(.97);
+    filter: blur(4px);
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 1s cubic-bezier(.25, .46, .45, .94) forwards;
+}
 
