@@ -290,20 +290,3 @@ function typeEffect() {
 // Espera unos segundos antes de iniciar
 setTimeout(typeEffect, 2000);
 
-// Código nuevo 03/12/2025 fade up tarjetas
-const items = document.querySelectorAll('.fade-up');
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.animationDelay = entry.target.dataset.delay || "0s";
-      entry.target.classList.add('animate');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.2 });
-
-items.forEach((el, i) => {
-  el.dataset.delay = `${i * 0.15}s`; // escalonado Apple
-  observer.observe(el);
-});
