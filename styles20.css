@@ -290,22 +290,3 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-
-@keyframes fadeUp {
-  0% { 
-    opacity: 0; 
-    transform: translateY(40px) scale(.97);
-    filter: blur(4px);
-  }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
-}
-
-.fade-up {
-  opacity: 0;
-  animation: fadeUp 1s cubic-bezier(.25, .46, .45, .94) forwards;
-}
