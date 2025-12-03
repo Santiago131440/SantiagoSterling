@@ -290,23 +290,20 @@ function typeEffect() {
 // Espera unos segundos antes de iniciar
 setTimeout(typeEffect, 2000);
 
-// Sección nueva 03/12/2025
+// Código nuevo 03/12/2025 fade up tarjetas
+const items = document.querySelectorAll('.fade-up');
 
-@keyframes fadeUp {
-  0% { 
-    opacity: 0; 
-    transform: translateY(40px) scale(.97);
-    filter: blur(4px);
-  }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
-}
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationDelay = entry.target.dataset.delay || "0s";
+      entry.target.classList.add('animate');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
 
-.fade-up {
-  opacity: 0;
-  animation: fadeUp 1s cubic-bezier(.25, .46, .45, .94) forwards;
-}
-
+items.forEach((el, i) => {
+  el.dataset.delay = `${i * 0.15}s`; // escalonado Apple
+  observer.observe(el);
+});
