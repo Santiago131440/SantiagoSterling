@@ -289,3 +289,50 @@ function typeEffect() {
 
 // Espera unos segundos antes de iniciar
 setTimeout(typeEffect, 2000);
+
+
+
+
+
+  const buttons = document.querySelectorAll(".filter-btn");
+  const slider = document.getElementById("slider");
+  const courses = document.querySelectorAll(".course-card");
+
+  function moveSlider(activeBtn) {
+    const rect = activeBtn.getBoundingClientRect();
+    const parentRect = activeBtn.parentElement.getBoundingClientRect();
+
+    slider.style.width = rect.width + "px";
+    slider.style.left = (rect.left - parentRect.left) + "px";
+  }
+
+  // Activar por defecto el botón "Todos"
+  window.addEventListener("load", () => {
+    const defaultBtn = document.querySelector('.filter-btn[data-filter="all"]');
+    moveSlider(defaultBtn);
+  });
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      
+      // Activar botón
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      // Mover slider
+      moveSlider(btn);
+
+      // Filtro de cursos
+      const filter = btn.dataset.filter;
+
+      courses.forEach(course => {
+        if (filter === "all" || course.dataset.category === filter) {
+          course.style.display = "block";
+          setTimeout(() => (course.style.opacity = 1), 10);
+        } else {
+          course.style.opacity = 0;
+          setTimeout(() => (course.style.display = "none"), 200);
+        }
+      });
+    });
+  });
