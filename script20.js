@@ -289,4 +289,3 @@ function typeEffect() {
 
 // Espera unos segundos antes de iniciar
 setTimeout(typeEffect, 2000);
-
