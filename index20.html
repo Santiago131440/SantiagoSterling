@@ -11,19 +11,25 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles20.css">
   <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/98182135?v=4">
+
 </head>
-<body class="bg-gradient-to-br from-white via-white to-white text-slate-100 antialiased leading-relaxed">
-  
-  <a class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-gold text-black px-3 py-2 rounded" href="#main">.</a>
+
+<body class="text-slate-100 antialiased leading-relaxed">
+
+
+  <!-- 🔥 VIDEO DE FONDO: SOLO HEADER -->
+  <div id="videoHeaderContainer">
+    <video src="https://cdn.pixabay.com/video/2024/12/03/244754_large.mp4" autoplay muted loop></video>
+  </div>
+
   <header class="sticky top-4 z-50 container mx-auto px-6">
     <nav class="backdrop-blur-sm bg-black/60 border border-white/20 rounded-2xl p-3 shadow-xl flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="avatar-liquid">
           <img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar">
-          </div>
+        </div>
         <div>
-          <div class="text-sm font-extrabold text-white" href="#main">Santiago Sterling</div>
-          <div class="text-xs text-white" href="#main">Tecnologo en análisis y desarrollo de software</div>
+          <a class="text-sm font-extrabold text-white" href="#main">Santiago Sterling</a>
         </div>
       </div>
 
@@ -36,19 +42,14 @@
         <a href="#contact" class="btn-liquid text-xs">Contacto</a>
       </div>
 
-<div class="lg:hidden">
-  <button id="menuBtn" aria-expanded="false" aria-label="Abrir menú" class="p-2 rounded-md bg-white/5 text-white">
-    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-
-      <!-- Icono Hamburguesa -->
-      <path id="iconHamburger" d="M4 6h16M4 12h16M4 18h16"/>
-
-      <!-- Icono X -->
-      <path id="iconClose" d="M6 18L18 6M6 6l12 12" class="hidden"/>
-
-    </svg>
-  </button>
-</div>
+      <div class="lg:hidden">
+        <button id="menuBtn" aria-expanded="false" aria-label="Abrir menú" class="p-2 rounded-md bg-white/5 text-white">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path id="iconHamburger" d="M4 6h16M4 12h16M4 18h16"/>
+            <path id="iconClose" d="M6 18L18 6M6 6l12 12" class="hidden"/>
+          </svg>
+        </button>
+      </div>
     </nav>
 
     <div id="mobileMenu" class="mt-2 hidden bg-white/3 border border-white/6 rounded-2xl p-4 shadow-lg">
@@ -58,32 +59,31 @@
       <a class="block py-2 text-black" href="#contact">Contacto</a>
     </div>
   </header>
-
   <main id="main" class="container mx-auto px-6 mt-12">
+
+    <!-- HERO -->
     <section id="hero" class="grid lg:grid-cols-1 gap-8 items-center">
       <div class="space-y-6">
         <p class="inline-flex items-center gap-3 text-sm text-gold font-semibold">
-          <span class="px-2 py-1 bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500 bg-clip-text text-transparent rounded-full">Portafolio > Santiago Sterling</span>
-          <span class="text-emerald-500">| Disponible</span>
+          <span class="px-2 py-1 text-white bg-clip-text rounded-full">Portafolio > Santiago Sterling</span>
+          <span class="text-emerald-500">| En línea</span>
         </p>
-        <br>
-        <br>
-        <h1 class="px-10 py-10 text-4xl md:text-6xl font-extrabold leading-tight tracking-tight text-slate-800">
+
+        <h1 class="px-10 py-10 text-4xl md:text-6xl font-extrabold leading-tight tracking-tight text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]">
           ¡Hola!, soy <span class="bg-gradient-to-r from-yellow-300 via-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">Santiago Sterling</span> y <span class="decoration-gold/60">contribuyo al crecimiento organizacional mediante el diseño y la implementación de soluciones digitales</span>.
         </h1>
-        <br>
-        <br>
-        <div class="flex flex-wrap gap-3 items-center">
-          <a href="proyectos20.html" class="px-6 py-1 rounded-full bg-gradient-to-r from-[#7A5C1C] via-[#D4AF37] to-[#F7E27B] text-white  font-semibold shadow-lg hover:scale-105 transition">Proyectos</a>
-          <a href="windows.html" class="px-6 py-1 rounded-full bg-gradient-to-r from-[#7A5C1C] via-[#D4AF37] to-[#F7E27B] text-white  font-semibold shadow-lg hover:scale-105 transition">Repositorio</a>
-          <a id="downloadCV" href="#" class="px-6 py-2 rounded-full text-sm text-slate-700 bg-black/5 hover:bg-white/5  transition">Descarga un resumen sobre mi</a>
+
+        <div class="mb-30 flex flex-wrap gap-3 items-center">
+          <a href="proyectos20.html" class="px-6 py-1 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#D4AF37] to-[#D4AF37] text-white font-semibold shadow-lg hover:scale-105 transition">Proyectos</a>
+          <a href="windows.html" class="px-6 py-1 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#D4AF37] to-[#D4AF37] text-white font-semibold shadow-lg hover:scale-105 transition">Repositorio</a>
+          <a id="downloadCV" href="#" class="px-6 py-2 rounded-full text-sm text-slate-700 bg-black/5 hover:bg-white/5 transition">Descarga un resumen sobre mi</a>
         </div>
       </div>
     </section>
-    <br>
+
     <!-- ABOUT -->
         <section id="about"
-          class="mt-20 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20"
+          class="mt-4 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20"
           style="
             --bg-color: linear-gradient(
              
@@ -649,34 +649,3 @@ class="mt-16 p-8 rounded-2xl shadow-lg w-full
   <script src="script20.js" defer></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
