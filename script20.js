@@ -331,3 +331,145 @@ setTimeout(typeEffect, 2000);
 
     });
   });
+
+//CODIGO PARA EL CARRUSEL DE IMAGENES//
+  function openModal(src) {
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4';
+    modal.onclick = () => modal.remove();
+    
+    const img = document.createElement('img');
+    img.src = src;
+    img.className = 'max-w-full max-h-full rounded-lg';
+    
+    modal.appendChild(img);
+    document.body.appendChild(modal);
+  }
+
+//TECLAS DE NAVEGACIÓN Y TITULOS DE IMAGENES
+  let currentImageIndex = 0;
+  let images = [];
+
+  function openModal(src) {
+    // Obtener todas las imágenes del carrusel
+    images = Array.from(document.querySelectorAll('.carousel img')).map(img => ({
+      src: img.src,
+      alt: img.alt
+    }));
+    
+    // Encontrar el índice de la imagen clickeada
+    currentImageIndex = images.findIndex(img => img.src === src);
+    
+    showModalImage();
+  }
+
+  function showModalImage() {
+    // Eliminar modal anterior si existe
+    const existingModal = document.getElementById('imageModal');
+    if (existingModal) existingModal.remove();
+    
+    const modal = document.createElement('div');
+    modal.id = 'imageModal';
+    modal.className = 'fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4';
+    
+    modal.innerHTML = `
+      <div class="relative max-w-6xl w-full h-full flex flex-col items-center justify-center">
+        <!-- Botón cerrar -->
+        <button 
+          onclick="closeModal()" 
+          class="absolute top-4 right-4 text-white hover:text-red-500 transition-colors z-10 bg-black/50 rounded-full p-2 backdrop-blur-sm"
+          aria-label="Cerrar"
+        >
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+
+        <!-- Título -->
+        <div class="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg">
+          <h3 class="text-white font-semibold text-lg">${images[currentImageIndex].alt}</h3>
+          <p class="text-slate-300 text-sm">${currentImageIndex + 1} / ${images.length}</p>
+        </div>
+
+        <!-- Botón anterior -->
+        <button 
+          onclick="previousImage()" 
+          class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all hover:scale-110 backdrop-blur-sm ${currentImageIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}"
+          ${currentImageIndex === 0 ? 'disabled' : ''}
+          aria-label="Imagen anterior"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+
+        <!-- Imagen -->
+        <img 
+          src="${images[currentImageIndex].src}" 
+          alt="${images[currentImageIndex].alt}"
+          class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain"
+        >
+
+        <!-- Botón siguiente -->
+        <button 
+          onclick="nextImage()" 
+          class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all hover:scale-110 backdrop-blur-sm ${currentImageIndex === images.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}"
+          ${currentImageIndex === images.length - 1 ? 'disabled' : ''}
+          aria-label="Imagen siguiente"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+
+        <!-- Indicadores de navegación con teclado -->
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg">
+          <p class="text-slate-300 text-sm">Usa ← → para navegar | ESC para cerrar</p>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Cerrar al hacer clic en el fondo
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    
+    // Navegación con teclado
+    document.addEventListener('keydown', handleKeyPress);
+  }
+
+  function nextImage() {
+    if (currentImageIndex < images.length - 1) {
+      currentImageIndex++;
+      showModalImage();
+    }
+  }
+
+  function previousImage() {
+    if (currentImageIndex > 0) {
+      currentImageIndex--;
+      showModalImage();
+    }
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('imageModal');
+    if (modal) modal.remove();
+    document.removeEventListener('keydown', handleKeyPress);
+  }
+
+  function handleKeyPress(e) {
+    switch(e.key) {
+      case 'ArrowRight':
+        nextImage();
+        break;
+      case 'ArrowLeft':
+        previousImage();
+        break;
+      case 'Escape':
+        closeModal();
+        break;
+    }
+  }
