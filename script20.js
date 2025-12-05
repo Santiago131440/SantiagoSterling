@@ -1,5 +1,6 @@
 
 
+
 (() => {
   "use strict";
 
@@ -289,3 +290,44 @@ function typeEffect() {
 
 // Espera unos segundos antes de iniciar
 setTimeout(typeEffect, 2000);
+
+
+  const buttons = document.querySelectorAll(".filter-btn");
+  const cards = document.querySelectorAll(".card-item");
+
+  // Activar por defecto "Todos"
+  document.querySelector('.filter-btn[data-category="all"]')
+          .classList.add("active");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+      // Cambiar estado visual del botón
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const category = btn.dataset.category;
+
+      cards.forEach(card => {
+        // Ocultar con transición
+        card.classList.add("card-hide");
+
+        setTimeout(() => {
+          if (category === "all" || card.dataset.category === category) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+
+          // Mostrar con animación suave
+          setTimeout(() => {
+            if (card.style.display === "block") {
+              card.classList.remove("card-hide");
+            }
+          }, 20);
+
+        }, 300);
+      });
+
+    });
+  });
