@@ -1,6 +1,7 @@
 
 
 
+
 /* styles.css - CSS adicional y utilidades (complementa Tailwind) */
 
 /* Base overrides and custom tokens */
@@ -317,50 +318,156 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
     }
 
 
-/* ------ Código nuevo de estudios realizados -----*/
-.container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 600px;
-  }
-  .card {
-    display: flex;
-    align-items: center;
-    background-color: #bdbdbd;
-    color: white;
-    border-radius: 60px;
-    padding: 5px 5px;
-    font-size: 2px;
-  }
-  .icon {
-    background-color: #0D5673;
-    flex-shrink: 0;
-    margin-right: 15px;
-    border-radius: 60px;
-  }
-  .icon svg {
-    width: 36px;
-    height: 36px;
-    fill: white;
-  }
-  .text-content {
-    flex-grow: 1;
-  }
-  .title {
-    font-weight: bold;
-    font-size: 14px;
-    margin: 0 0 3px 0;
-  }
-  .subtitle {
-    font-size: 12px;
-    margin: 0;
-    font-weight: normal;
-  }
-  .date {
-    font-weight: bold;
-    font-size: 16px;
-    margin-left: 15px;
-    white-space: nowrap;
-  }
+    /* APORTES CLAVE */
+            .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            margin-bottom: 100px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #333;
+        }
 
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .description {
+            font-size: 1.25rem;
+            line-height: 1.7;
+            color: #e0e0e0;
+        }
+
+        .footnote {
+            font-size: 0.75rem;
+            vertical-align: super;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .description {
+                font-size: 1.1rem;
+            }
+        }
+
+
+
+    /* Tarjetas estilo Apple Glass */
+        .courses-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .course-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .course-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b4b4b4 0%, #d6d6d6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            flex-shrink: 0;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-icon:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(90deg, #e6e6e6 0%, #f8f8f8 100%);
+            color: rgb(0, 0, 0);
+        }
+
+        .course-badge {
+            flex: 1;
+            background: linear-gradient(90deg, #b4b4b4 0%, #d6d6d6 100%);
+            color: rgb(231, 231, 231);
+            padding: 6px 10px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .course-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(90deg, #e6e6e6 0%, #f8f8f8 100%);
+            color: rgb(0, 0, 0);
+        }
+
+        .course-title {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .course-year {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 768px) {
+            .course-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 26px;
+            }
+
+            .course-badge {
+                padding: 15px 20px;
+            }
+
+            .course-title,
+            .course-year {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .course-title,
+            .course-year {
+                font-size: 10px;
+            }
+        }
