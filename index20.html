@@ -95,7 +95,10 @@
           "
         >
 
-          <div class="max-w-7xl mx-auto px-6 rounded-3xl shadow-7xl border border-white/40 py-12">
+  <div class="flex justify-center items-center min-h-screen px-4 md:px-6">
+    <div class="w-full max-w-6xl mx-auto">
+        <div class="rounded-3xl shadow-7xl border border-white/40 py-12 px-6 md:px-10">
+
 
             <div class="grid md:grid-cols-3 gap-6">
               <div class="md:col-span-2 space-y-4">
@@ -163,7 +166,7 @@
         <br>
 
     <!-- SKILLS / METRICS -->
-    <section id="skills" class="mt-12">
+ <section id="skills" class="mt-12">
 
   <!-- TÍTULO -->
   <div class="text-center mb-6 fade-in">
@@ -171,129 +174,270 @@
       Estudios Realizados
     </h1>
   </div>
-      <br>
-
+  <br>
   <!-- FILTROS -->
 <div class="flex justify-center mb-20">
   <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
 
-    <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900">
+    <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900" data-category="all">
       Todos
     </button>
 
-    <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900">
+    <button class="filter-btn px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900" data-category="tecnologias">
       Tecnologías
     </button>
 
-    <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900">
+    <button class="filter-btn px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900" data-category="sena">
       Sena
     </button>
 
-    <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900">
+    <button class="filter-btn px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900" data-category="platzi">
       Platzi
     </button>
 
   </div>
 </div>
-      
-      <!----------------- CONTENEDOR ESTUDIOS REALIZADOS ------------------->
 
-        <div class="container">
-    <div class="card">
-      <div class="icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <circle cx="12" cy="12" r="12" fill="#0D5673"/>
-          <circle cx="12" cy="8" r="3" fill="white"/>
-          <path fill="white" d="M12 11c-3 0-5 1.5-5 3v1h10v-1c0-1.5-2-3-5-3z"/>
-        </svg>
-      </div>
-      <div class="text-content">
-        <p class="title">SERVICIO NACIONAL DE APRENDIZAJE SENA</p>
-        <p class="subtitle">Curso en Excel básico</p>
-      </div>
-      <div class="date">Abr-2025</div>
-    </div>
+  <!-- TARJETAS (Estilo iOS 26 / Apple Glass) -->
+  <div class="container">
 
-    <div class="card">
-      <div class="icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <circle cx="12" cy="12" r="12" fill="#0D5673"/>
-          <circle cx="12" cy="8" r="3" fill="white"/>
-          <path fill="white" d="M12 11c-3 0-5 1.5-5 3v1h10v-1c0-1.5-2-3-5-3z"/>
-        </svg>
-      </div>
-      <div class="text-content">
-        <p class="title">SERVICIO NACIONAL DE APRENDIZAJE SENA</p>
-        <p class="subtitle">Curso en Excel básico</p>
-      </div>
-      <div class="date">Abr-2025</div>
-    </div>
+            <div class="courses-list" data-category="sena">
+            <div class="course-item">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Tecnología en análisis y desarrollo de software.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
 
-    <div class="card">
-      <div class="icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <circle cx="12" cy="12" r="12" fill="#0D5673"/>
-          <circle cx="12" cy="8" r="3" fill="white"/>
-          <path fill="white" d="M12 11c-3 0-5 1.5-5 3v1h10v-1c0-1.5-2-3-5-3z"/>
-        </svg>
-      </div>
-      <div class="text-content">
-        <p class="title">SERVICIO NACIONAL DE APRENDIZAJE SENA</p>
-        <p class="subtitle">Curso en Excel básico</p>
-      </div>
-      <div class="date">Abr-2025</div>
-    </div>
-  </div>
+                    <div class="courses-list" data-category="sena">
+            <div class="course-item">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Tecnología en gestión de la producción industrial.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+        
+        <div class="courses-list" data-category="sena">
+            <div class="course-item">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Uso de Excel y Access para el desarrollo de aplicaciones administrativas empresariales.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
 
-  <!-- CONTENEDOR TARJETAS -->
-  <div class="grid lg:grid-cols-3 gap-6">
+            <div class="course-item" data-category="sena">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Análisis exploratorio de datos en Python.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="sena">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Variables y estructuras de control en Python.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="sena">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Construcción de bases de datos con MySQL.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="sena">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Desarrollo de applets/aplicaciones con uso de base de datos, redes, servlets y multimedia.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="sena">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Manejo de pruebas de software.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="sena">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Aplicación del marco de trabajo scrum para proyectos de desarrollo de software.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="sena">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Procesos para software de calidad.</span>
+                    <span class="course-year">2024</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="sena">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Modelos de calidad de software.</span>
+                    <span class="course-year">2023</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="tecnologias">
+                <div class="course-icon">
+                  <img src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/platzi.webp" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Curso de Frontend Developer</span>
+                    <span class="course-year">2023</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="tecnologias">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Curso de Programación orientada a objetos: POO</span>
+                    <span class="course-year">2023</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="tecnologias">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Curso de fundamentos de Bases de Datos</span>
+                    <span class="course-year">2023</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="tecnologias">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Construcción de bases de datos con MySQL.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="tecnologias">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Construcción de bases de datos con MySQL.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="tecnologias">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Construcción de bases de datos con MySQL.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="tecnologias">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Construcción de bases de datos con MySQL.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="tecnologias">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Construcción de bases de datos con MySQL.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="tecnologias">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Construcción de bases de datos con MySQL.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="tecnologias">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Construcción de bases de datos con MySQL.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
+            
+            <div class="course-item" data-category="tecnologias">
+                <div class="course-icon">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Construcción de bases de datos con MySQL.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
 
-    <div class="bg-white p-6 rounded-2xl shadow">
-      <h3 class="text-lg font-semibold text-orange-500">aprendizaje</h3>
-      <ul class="mt-3 space-y-3 text-slate-700">
-        <li class="flex items-center justify-between"><span>Arquitectura de información</span><span class="text-sm">Experto</span></li>
-        <li class="flex items-center justify-between"><span>Prototipado</span><span class="text-sm">Avanzado</span></li>
-        <li class="flex items-center justify-between"><span>Pruebas de usuario</span><span class="text-sm">Avanzado</span></li>
-        <li class="flex items-center justify-between"><span>Investigación cualitativa</span><span class="text-sm">Intermedio</span></li>
-      </ul>
-    </div>
-
-    <div class="bg-white p-6 rounded-2xl shadow">
-      <h3 class="text-lg font-semibold text-amber-500">Habilidades Frontend</h3>
-      <div class="mt-3 space-y-4">
-        <div>
-          <div class="text-sm text-slate-700">React / Next.js</div>
-          <div class="w-full bg-white/6 h-3 rounded-full mt-2 overflow-hidden">
-            <div class="h-3 bg-gold rounded-full" style="width:90%"></div>
-          </div>
+            <div class="course-item" data-category="sena">
+                <div class="course-icon">
+                  <img src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/platzi.webp" alt="Icono del curso" class="w-10 h-10 object-cover rounded-lg">
+                </div>
+                <div class="course-badge">
+                    <span class="course-title">Desarrollo de applets/aplicaciones con uso de base de datos, redes, servlets y multimedia.</span>
+                    <span class="course-year">2025</span>
+                </div>
+            </div>
         </div>
-        <div>
-          <div class="text-sm text-slate-700 ">HTML / CSS / Accessibility</div>
-          <div class="w-full bg-white/6 h-3 rounded-full mt-2 overflow-hidden">
-            <div class="h-3 bg-gold rounded-full" style="width:92%"></div>
-          </div>
-        </div>
-        <div>
-          <div class="text-sm text-slate-700">Performance & SEO</div>
-          <div class="w-full bg-white/6 h-3 rounded-full mt-2 overflow-hidden">
-            <div class="h-3 bg-gold rounded-full" style="width:78%"></div>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <div class="bg-white p-6 rounded-2xl shadow">
-      <h3 class="text-lg font-semibold text-rose-500">Proceso de trabajo</h3>
-      <ol class="mt-3 list-decimal list-inside text-slate-700 space-y-2">
-        <li>Brief y objetivos</li>
-        <li>Investigación & prototipado</li>
-        <li>Tests y métricas</li>
-        <li>Despliegue y seguimiento</li>
-      </ol>
-    </div>
-
-  </div>
 </section>
+
 <br>
 <br>
 <br>
@@ -596,39 +740,62 @@ class="mt-16 p-8 rounded-2xl shadow-lg w-full
     <br>
 
     <!-- BLOG PREVIEW -->
-<section id="blog" class="mt-16">
-  <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+  <section id="blog"
+          class="mt-4 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20"
+          style="
+            --bg-color: linear-gradient(
+             
+              #0c0c0c,
+              #000000,
+              #000000
+            );
+            background: var(--bg-color);
+          "
+        >
+  <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterling-text">
     Aportes claves
   </h2>
+  <br>
+  <br>
+  <br>
+  <br>
 
-  <div class="mt-6 grid md:grid-cols-3 gap-6">
+ <div class="container flex justify-center items-center min-h-screen px-5 md:px-10">
+    <div class="w-full max-w-4xl mx-auto py-16">
 
-    <article class="p-5 bg-white rounded-lg">
-      <h4 class="font-semibold text-black">
-        Habilidad para programar y resolver problemas
-      </h4>
-      <p class="text-black text-sm mt-2">
-        Tengo facilidad para escribir código limpio y estructurado, implementando algoritmos que resuelven problemas de manera eficiente.
-      </p>
-    </article>
+        <div class="content-grid">
+            <div>
+                <h1 class="text-3xl titulosSterling-text font-bold">Habilidad para programar y resolver problemas</h1>
+            </div>
+            <div>
+                <p class="description text-white/50">
+                    Tengo facilidad para escribir código limpio y estructurado, implementando algoritmos que resuelven problemas de manera eficiente.
+                </p>
+            </div>
+        </div>
 
-    <article class="p-5 bg-white rounded-lg">
-      <h4 class="font-semibold text-black">
-        Compromiso con la calidad y pruebas rigurosas
-      </h4>
-      <p class="text-black text-sm mt-2">
-        Me aseguro de que el software funcione correctamente mediante pruebas, depuración y atención a la estabilidad y el rendimiento.
-      </p>
-    </article>
+        <div class="content-grid">
+            <div>
+                <h1 class="text-3xl titulosSterling-text font-bold">Compromiso con la calidad y pruebas rigurosas</h1>
+            </div>
+            <div>
+                <p class="description text-white/50">
+                    Me aseguro de que el software funcione correctamente mediante pruebas, depuración y atención a la estabilidad y el rendimiento.
+                </p>
+            </div>
+        </div>
 
-    <article class="p-5 bg-white rounded-lg">
-      <h4 class="font-semibold text-black">
-        Orientación al diseño y experiencia del usuario
-      </h4>
-      <p class="text-black text-sm mt-2">
-        Creo soluciones intuitivas y funcionales, enfocadas en una interfaz clara y en la mejor experiencia posible para el usuario.
-      </p>
-    </article>
+        <div class="content-grid">
+            <div>
+                <h1 class="text-3xl titulosSterling-text font-bold">Orientación al diseño y experiencia del usuario</h1>
+            </div>
+            <div>
+                <p class="description text-white/50">
+                   Creo soluciones intuitivas y funcionales, enfocadas en una interfaz clara y en la mejor experiencia posible para el usuario.
+                </p>
+            </div>
+        </div>
+    </div>
 
   </div>
 </section>
@@ -690,7 +857,7 @@ class="mt-16 p-8 rounded-2xl shadow-lg w-full
   <div id="projectModal" aria-hidden="true" class="fixed inset-0 hidden items-center justify-center z-50 bg-black/60">
     <div class="bg-slate-900 rounded-2xl w-11/12 max-w-4xl p-6">
       <div class="flex items-start justify-between">
-        <h3 id="modalTitle" class="text-xl font-semibold">Proyecto</h3>
+        <h3 id="modalTitle" class="text-xl font-semibold text-black">Proyecto</h3>
         <button id="closeModal" class="p-2 rounded bg-white/5">Cerrar</button>
       </div>
       <div id="modalBody" class="mt-4 text-slate-200">Detalles...</div>
@@ -700,8 +867,3 @@ class="mt-16 p-8 rounded-2xl shadow-lg w-full
   <script src="script20.js" defer></script>
 </body>
 </html>
-
-
-
-
-
