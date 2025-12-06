@@ -1,6 +1,3 @@
-
-
-
 (() => {
   "use strict";
 
@@ -473,3 +470,72 @@ setTimeout(typeEffect, 2000);
         break;
     }
   }
+
+  // CÓDIGO DE HABILIDADES
+
+  // Obtener todos los botones de pestañas y contenidos
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+
+// Función para mostrar una pestaña específica
+function showTab(targetId) {
+  // Ocultar todos los contenidos
+  tabContents.forEach(content => {
+    content.classList.add('hidden');
+  });
+  
+  // Remover estado activo de todos los botones
+  tabButtons.forEach(btn => {
+    btn.classList.remove;
+    btn.classList.add;
+  });
+  
+  // Mostrar el contenido seleccionado
+  const targetContent = document.getElementById(targetId);
+  if (targetContent) {
+    targetContent.classList.remove('hidden');
+  }
+  
+  // Activar el botón seleccionado
+  const activeButton = document.querySelector(`[data-target="${targetId}"]`);
+  if (activeButton) {
+    activeButton.classList.remove;
+    activeButton.classList.add;
+  }
+}
+
+// Agregar event listeners a los botones
+tabButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const target = button.getAttribute('data-target');
+    showTab(target);
+  });
+});
+
+// Mostrar la primera pestaña por defecto al cargar
+if (tabButtons.length > 0) {
+  const firstTarget = tabButtons[0].getAttribute('data-target');
+  showTab(firstTarget);
+}
+
+
+//CODIGO SOBRE HABILIDADES
+
+  const tabs = document.querySelectorAll(".tab-btn");
+  const titleBar = document.getElementById("mac-window-title");
+
+  const titles = {
+    lenguajes: "Lenguajes de Programación",
+    frameworks: "Frameworks y Desarrollo",
+    complementarias: "Habilidades Complementarias",
+    soft: "Habilidades Sociales"
+  };
+
+  tabs.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const target = btn.getAttribute("data-target");
+
+      // Cambiar el título dinámicamente
+      titleBar.textContent = titles[target] || "Skills & Tech Stack";
+    });
+  });
