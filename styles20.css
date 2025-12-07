@@ -411,8 +411,8 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
             flex: 1;
             background: linear-gradient(90deg, #b4b4b4 0%, #d6d6d6 100%);
             color: rgb(231, 231, 231);
-            padding: 6px 10px;
-            border-radius: 50px;
+            padding: 4px 8px;
+            border-radius: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -448,7 +448,7 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
             }
 
             .course-badge {
-                padding: 15px 20px;
+                padding: 8px 10px;
             }
 
             .course-title,
