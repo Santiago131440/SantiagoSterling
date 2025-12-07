@@ -412,7 +412,7 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
             background: linear-gradient(90deg, #b4b4b4 0%, #d6d6d6 100%);
             color: rgb(231, 231, 231);
             padding: 4px 8px;
-            border-radius: 20px;
+            border-radius: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
