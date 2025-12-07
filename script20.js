@@ -421,7 +421,7 @@ setTimeout(typeEffect, 2000);
 
         <!-- Indicadores de navegación con teclado -->
         <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg">
-          <p class="text-slate-300 text-sm">Usa ← → para navegar | ESC para cerrar</p>
+          <p class="text-slate-300 text-sm">Si estás en PC usa ← → para navegar | ESC para cerrar</p>
         </div>
       </div>
     `;
