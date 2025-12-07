@@ -539,3 +539,21 @@ if (tabButtons.length > 0) {
       titleBar.textContent = titles[target] || "Skills & Tech Stack";
     });
   });
+
+// CODGIDO SOBRE APPS DE ICONOS EN HABILIDADES
+
+document.querySelectorAll(".app-mac").forEach(app => {
+  app.addEventListener("click", () => {
+    const target = app.dataset.app;
+    document.querySelector("#modal-" + target).classList.remove("hidden");
+  });
+});
+
+/* Cerrar clic fuera */
+document.addEventListener("click", (e) => {
+  document.querySelectorAll(".modal-mac").forEach(modal => {
+    if (!modal.contains(e.target) && !e.target.closest(".app-mac")) {
+      modal.classList.add("hidden");
+    }
+  });
+});
