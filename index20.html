@@ -761,16 +761,81 @@
 
       <!-- LENGUAJES -->
       <div id="lenguajes" class="tab-content hidden relative rounded-xl p-6 shadow-inner overflow-hidden w-full text-center bg-white/40 backdrop-blur-lg border border-white/40">
-        <div class="absolute inset-0 bg-slate-800 bg-opacity-5"></div>
-        <div class="relative z-10">
-          <ul class="text-sm sm:text-base text-black list-disc list-inside space-y-1 text-left mx-auto w-fit">
-            <li>Python</li>
-            <li>Javascript - NodeJS</li>
-            <li>C#</li>
-            <li>SQL - MySQL</li>
-          </ul>
-        </div>
+  <div class="absolute inset-0 bg-slate-800 bg-opacity-5"></div>
+  <div class="relative z-10">
+
+    <!-- GRID de aplicaciones -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 justify-center items-center">
+
+      <!-- Python -->
+      <div class="app-mac" data-app="python">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="app-icon-img">
+        <p class="app-label">Python</p>
       </div>
+
+      <!-- JavaScript / NodeJS -->
+      <div class="app-mac" data-app="js">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="app-icon-img">
+        <p class="app-label">JavaScript - NodeJS</p>
+      </div>
+
+      <!-- C# -->
+      <div class="app-mac" data-app="csharp">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" class="app-icon-img">
+        <p class="app-label">C#</p>
+      </div>
+
+      <!-- SQL / MySQL -->
+      <div class="app-mac" data-app="sql">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="app-icon-img">
+        <p class="app-label">SQL - MySQL</p>
+      </div>
+
+    </div>
+
+    <!-- Ventanas flotantes tipo macOS -->
+    <div id="modal-python" class="modal-mac hidden">
+      <div class="modal-bar">
+        <span class="mac-btn red"></span>
+        <span class="mac-btn yellow"></span>
+        <span class="mac-btn green"></span>
+      </div>
+      <h2 class="modal-title">Python</h2>
+      <p class="modal-text">Lenguaje versátil ideal para IA, backend, automatización y análisis de datos.</p>
+    </div>
+
+    <div id="modal-js" class="modal-mac hidden">
+      <div class="modal-bar">
+        <span class="mac-btn red"></span>
+        <span class="mac-btn yellow"></span>
+        <span class="mac-btn green"></span>
+      </div>
+      <h2 class="modal-title">JavaScript / NodeJS</h2>
+      <p class="modal-text">Perfecto para desarrollo web, APIs en Node y aplicaciones interactivas.</p>
+    </div>
+
+    <div id="modal-csharp" class="modal-mac hidden">
+      <div class="modal-bar">
+        <span class="mac-btn red"></span>
+        <span class="mac-btn yellow"></span>
+        <span class="mac-btn green"></span>
+      </div>
+      <h2 class="modal-title">C#</h2>
+      <p class="modal-text">Utilizado en aplicaciones de escritorio, backend y desarrollo en Unity.</p>
+    </div>
+
+    <div id="modal-sql" class="modal-mac hidden">
+      <div class="modal-bar">
+        <span class="mac-btn red"></span>
+        <span class="mac-btn yellow"></span>
+        <span class="mac-btn green"></span>
+      </div>
+      <h2 class="modal-title">SQL / MySQL</h2>
+      <p class="modal-text">Base fundamental para gestión de datos, consultas y sistemas transaccionales.</p>
+    </div>
+
+  </div>
+</div>
 
       <!-- FRAMEWORKS -->
       <div id="frameworks" class="tab-content hidden relative rounded-xl p-6 shadow-inner overflow-hidden w-full text-center bg-white/40 backdrop-blur-lg border border-white/40">
