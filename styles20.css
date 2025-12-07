@@ -583,9 +583,11 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
   font-size: 1.1rem;
   font-weight: bold;
   margin-bottom: 6px;
+  color:black;
 }
 .modal-text {
   font-size: 0.85rem;
+  color: black;
 }
 
 /* Cerrar clickeando afuera */
