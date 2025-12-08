@@ -1,208 +1,155 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Experiencia laboral Santiago Sterling</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/png" href="https://github.com/Santiago131440/SantiagoSterling/blob/main/1000234043.jpg?raw=true">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/scrollreveal"></script>
-  <style>
-    :root {
-      font-family: 'Poppins', sans-serif;
-      --transition-speed: 1.2s;
-    }
 
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Proyectos - Portafolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .liquid-glass-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        .liquid-glass-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(28, 28, 30, 0.1);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        .group:hover .liquid-glass-effect::before {
+             backdrop-filter: blur(8px) saturate(120%);
+             -webkit-backdrop-filter: blur(8px) saturate(120%);
+             background: rgba(28, 28, 30, 0);
+        }
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: radial-gradient(circle at 20% 20%, #4A00E0 0%, transparent 40%),
+                              radial-gradient(circle at 80% 70%, #8E2DE2 0%, transparent 40%);
+            background-color: #101022;
+            opacity: 0.4;
+            transform: scale(1.2);
+        }
+    </style>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2525f4",
+              "background-light": "#f5f5f8",
+              "background-dark": "#101022",
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
     body {
-      margin: 0;
-      min-height: 100vh;
-      color: #222;
-      overflow-x: hidden;
-      font-family: 'Poppins', sans-serif;
-      background: #fff;
-      transition: background-image var(--transition-speed) ease-in-out;
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      min-height: max(884px, 100dvh);
     }
-
-    /* Imágenes del fondo */
-    .bg-1 { background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/pexels-pat-whelen-2913248-5735892.jpg?raw=true'); }
-    .bg-2 { background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Secuencia%201.jpg?raw=true'); }
-    .bg-3 { background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Secuencia%202.jpg?raw=true'); }
-    .bg-4 { background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Secuencia%203.jpg?raw=true'); }
-    .bg-5 { background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/pexels-rodolfo-fernandes-12166755-6409584.jpg?raw=true'); }
-    .bg-6 { background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/pexels-rodolfo-fernandes-12166755-6409584.jpg?raw=true'); }
-
-    /* Efecto glass */
-    .glass {
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      background-color: rgba(255, 255, 255, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-    }
-
-    .nav-blur {
-      backdrop-filter: blur(25px);
-      background: rgba(255, 255, 255, 0.65);
-    }
-
-    .profile-img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid rgba(255, 255, 255, 0.4);
-      box-shadow: 0 0 15px rgba(255,255,255,0.5);
-    }
-
-    html { scroll-behavior: smooth; }
   </style>
-</head>
-<body class="bg-1 transition-all duration-1000">
-
-  <!-- Navbar -->
-  <nav class="fixed top-0 left-0 w-full nav-blur z-50 flex justify-between items-center px-8 py-4">
-    <h1 class="text-xl text-orange-500 font-bold tracking-wide">Más sobre mi experiencia laboral</h1>
-    <ul class="hidden md:flex space-x-6">
-					  <a href="index.html" 
-					     class="inline-block px-5 py-2.5 bg-orange-500 text-white font-semibold 
-					            rounded-lg shadow-md transition-all duration-300 ease-in-out 
-					            hover:bg-orange-700 hover:shadow-lg hover:-translate-y-0.5 "
-						  style="--radius: 30px; border-radius: var(--radius);">
-					    Volver al inicio
-					  </a>
-
-    </ul>
-  </nav>
-
-  <!-- Portada -->
-  <section class="h-screen flex flex-col justify-center items-center px-6 text-center">
-    <div class="glass rounded-3xl p-10 max-w-lg">
-      <img src="https://github.com/Santiago131440/SantiagoSterling/blob/main/1000234043.jpg?raw=true" alt="Foto de perfil" class="profile-img mx-auto mb-4" />
-      <h2 class="text-3xl text-orange-500 font-bold mb-2">Excelencia, Innovación, Análisis</h2>
-      <p class="text-gray-700 mb-4">Cada desafío impulsa un nuevo logro. Conoce el camino que he trazado a lo largo de mi experiencia laboral y crecimiento profesional.</p>
-    </div>
-  </section>
-
-  <!-- Contenido -->
-  <main class="space-y-32 pb-32 px-6 md:px-20 text-gray-900">
-
-    <section id="sobre-mi" class="glass rounded-3xl p-10">
-      <h2 class="text-2xl text-orange-500 font-bold mb-4">Evolución profesional</h2>
-      <p>Soy un profesional con sólida experiencia en el área de producción industrial, donde he liderado y optimizado procesos para mejorar la eficiencia, la calidad y la productividad en entornos de manufactura. A lo largo de mi trayectoria he implementado mejoras continuas, gestionado recursos y aplicado metodologías orientadas a resultados medibles.</p>
-    </section>
-
-    <section id="habilidades" class="glass rounded-3xl p-10">
-      <h2 class="text-2xl text-orange-500 font-bold mb-4">Logros</h2>
-      <ul class="grid md:grid-cols-3 gap-4">
-        <li class="p-4 bg-white/50 rounded-xl text-center"><strong>Optimización de procesos industriales mediante software personalizado</strong>, logrando reducir tiempos de producción y mejorar la trazabilidad de datos en planta.</li>
-        <li class="p-4 bg-white/50 rounded-xl text-center"><strong>Desarrollo de sistemas web con integración de bases de datos</strong> (MySQL, PostgreSQL) para gestión operativa y control de inventarios en tiempo real.</li>
-        <li class="p-4 bg-white/50 rounded-xl text-center"><strong>Diseño e implementación de aplicaciones escalables</strong> aplicando principios de arquitectura limpia y metodologías ágiles (Scrum/Kanban).</li>
-        <li class="p-4 bg-white/50 rounded-xl text-center"><strong>Automatización de reportes y análisis de datos</strong> mediante herramientas de inteligencia de negocios (Power BI, Python, Excel avanzado).</li>
-        <li class="p-4 bg-white/50 rounded-xl text-center"><strong>Adaptación y aprendizaje continuo en nuevas tecnologías</strong>, incluyendo desarrollo frontend moderno (React, Tailwind, APIs REST) y fundamentos de inteligencia artificial aplicada a procesos empresariales.</li>
-        <li class="p-4 bg-white/50 rounded-xl text-center"><strong>Desarrollo de dashboards interactivos</strong> para visualización de KPIs industriales, mejorando la toma de decisiones estratégicas.</li>
-      </ul>
-    </section>
-
-    <section id="estudios" class="glass rounded-3xl p-10">
-      <h2 class="text-2xl text-orange-500 font-bold mb-4">Estudios</h2>
-      <ul class="space-y-2">
-        <li><strong>Tecnólogo en Análisis y Desarrollo de Software</strong> – SENA</li>
-        <li><strong>Tecnólogo en Gestión de Producción Industrial</strong> – SENA</li>
-      </ul>
-    </section>
-
-    <section id="experiencia" class="glass rounded-3xl p-10">
-      <h2 class="text-2xl text-orange-500 font-bold mb-4">Perfil Laboral</h2>
-      <p>8 años de experiencia en plantas de producción, optimizando procesos y aplicando metodologías de mejora continua. Actualmente enfocado en el desarrollo de software, creando sistemas como <strong>Quantix</strong> para la gestión de inventarios.</p>
-    </section>
-
-    <section id="proyectos" class="glass rounded-3xl p-10">
-      <h2 class="text-2xl text-orange-500 font-bold mb-4">Experiencia Laboral</h2>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-white/50 p-4 rounded-xl hover:scale-105 transition">
-          <h3 class="font-semibold mb-2">Cosmoagro S.A. | Analista de producción</h3>
-          <p>2024/12/10 - Actualidad</p>
-        </div>
-        <div class="bg-white/50 p-4 rounded-xl hover:scale-105 transition">
-          <h3 class="font-semibold mb-2">Coca Cola FEMSA | Técnico analista</h3>
-          <p>2023/07/07 - 2024/06/07</p>
-	  <p>1 año</p>
-        </div>
-        <div class="bg-white/50 p-4 rounded-xl hover:scale-105 transition">
-          <h3 class="font-semibold mb-2">Cadena S.A. | Supervisor de producción</h3>
-          <p>2020/01/20 - 2023/02/17</p>
-	  <p>3 años y 2 meses</p>
-        </div>
-	<div class="bg-white/50 p-4 rounded-xl hover:scale-105 transition">
-          <h3 class="font-semibold mb-2">Postobón S.A. | Analista de producción</h3>
-          <p>2019/03/08 - 2019/08/06</p>
-	  <p>6 meses</p>
-        </div>
-        <div class="bg-white/50 p-4 rounded-xl hover:scale-105 transition">
-          <h3 class="font-semibold mb-2">Laboratorios OSA S.A.S. | Analista de producción</h3>
-          <p>2018/06/16 - 2019/03/06</p>
-	  <p>10 meses</p>
-        </div>
-        <div class="bg-white/50 p-4 rounded-xl hover:scale-105 transition">
-          <h3 class="font-semibold mb-2">Smurfit Kappa S.A. | Incremento de producción</h3>
-          <p>2017/03/24 - 2018/03/24</p>
-	  <p>1 Año</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="experiencia" class="glass rounded-3xl p-10">
-      <h2 class="text-2xl text-orange-500 font-bold mb-4">Etapa Practica</h2>
-          <h3 class="font-semibold mb-2">Ingeniería en manualidades S.A.S. | Aprendiz SENA (SERVICIO NACIONAL DE APRENDIZAJE)</h3>
-          <p>2016/04/07 - 2016/10/07</p>
-	  <p>7 meses</p>
-
-    </section>
-
-    <section id="contacto" class="glass rounded-3xl p-10 text-center">
-					  <a href="index.html#projects" 
-					     class="inline-block px-5 py-2.5 bg-orange-500 text-white font-semibold 
-					            rounded-lg shadow-md transition-all duration-300 ease-in-out 
-					            hover:bg-orange-700 hover:shadow-lg hover:-translate-y-0.5 "
-						  style="--radius: 30px; border-radius: var(--radius);">
-					    Volver al inicio
-					  </a>
-
-      </form>
-    </section>
-
-  </main>
-
-  <footer class="text-center text-sm py-6 text-gray-600">
-    Desarrollado por Santiago Sterling - 2025
-  </footer>
-
-  <script>
-    // Animaciones suaves al hacer scroll
-    ScrollReveal().reveal('.glass', { 
-      duration: 1000, 
-      distance: '50px', 
-      origin: 'bottom', 
-      easing: 'ease-in-out', 
-      interval: 100 
-    });
-
-    // Fondos dinámicos según la posición del scroll
-    const backgrounds = ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'bg-5', 'bg-6'];
-    const sections = document.querySelectorAll('section');
-    const body = document.body;
-
-    window.addEventListener('scroll', () => {
-      let index = Math.floor(window.scrollY / (document.body.scrollHeight / backgrounds.length));
-      index = Math.min(index, backgrounds.length - 1);
-      body.className = backgrounds[index] + " transition-all duration-1000";
-    });
-  </script>
-</body>
-</html>
-
-
+  </head>
+<body class="bg-background-dark font-display">
+<div class="parallax-bg"></div>
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-transparent dark group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-20 backdrop-blur-lg bg-background-dark/50">
+<div class="flex flex-col gap-2 p-4 pb-2">
+<div class="flex items-center h-12 justify-between">
+<div class="flex size-12 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-white/80" style="font-size: 28px;">arrow_back_ios_new</span>
+</div>
+</div>
+<p class="text-white tracking-light text-[28px] font-bold leading-tight px-2">Proyectos</p>
+</div>
+</div>
+<!-- Main Content: Projects Grid -->
+<main class="flex-1 px-4 py-6">
+<div class="grid grid-cols-1 gap-6">
+<!-- Project Card 1 -->
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="relative rounded-xl overflow-hidden aspect-[4/3] liquid-glass-effect">
+<img class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" data-alt="Abstract screenshot of an e-commerce website with bold colors and product images" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA60yYKWUxID0ZoxE3XKKJRMwG83K0mO1AmXA9VCtDiRLOpdnjFg5WgXXY9FT06VxaiPfrTl3MLCRFSOpvi-DDwIBzkWIxmFWPwM3uYIeputWmpogzbm5x7q5Gex64BKSs_cEVi8-GlCMUguP_9h5ilJEo5pUqL6jQ43cpchYvwRmPWr5a_HlZ9kDPibFdfe4qY5_Q8OdX03OGVT8LUgVjSfQ_oHCUU1QvUDg2rESVzOz73zetcon6lJH72EVBwVteEEkxFm5kO8bU"/>
+</div>
+<div class="flex flex-col px-2">
+<h3 class="text-lg font-bold text-gray-100">E-commerce Redesign</h3>
+<p class="text-sm text-gray-400">Plataforma de compras con React y Next.js</p>
+<div class="flex flex-wrap gap-2 mt-3">
+<span class="text-xs font-medium text-blue-300 bg-blue-500/20 px-3 py-1 rounded-full">React</span>
+<span class="text-xs font-medium text-purple-300 bg-purple-500/20 px-3 py-1 rounded-full">Next.js</span>
+<span class="text-xs font-medium text-green-300 bg-green-500/20 px-3 py-1 rounded-full">Tailwind</span>
+</div>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="relative rounded-xl overflow-hidden aspect-[4/3] liquid-glass-effect">
+<img class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" data-alt="Code editor showing lines of Swift code for an iOS app" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ4hWfJ1CErRwE-GrEn6cxBz4K00GfanVdeDgu_at6EeLn0_Gi7R_Pq_cyrwKFlErDg8Y18SrZAP6Ju8duCQZ_IKUmbRZNeG4dSJ4HrNjUyrMJtpKv92Jh_VblBUa8bHhQAeLnQb8jFgUEGX1eqmPve5SE4XM5pYS_XbVXQBwlnIHY-IOxe6RTi85DlNkbqASxUPSV2Eow2UERWdQzoZGe37l-c8d-_I5MnSLRRlRODqwcq9HlDfW6FDMo8r80X44Np7M3gZHyGrQ"/>
+</div>
+<div class="flex flex-col px-2">
+<h3 class="text-lg font-bold text-gray-100">App de Fitness para iOS</h3>
+<p class="text-sm text-gray-400">Seguimiento de entrenamientos con SwiftUI</p>
+<div class="flex flex-wrap gap-2 mt-3">
+<span class="text-xs font-medium text-orange-300 bg-orange-500/20 px-3 py-1 rounded-full">SwiftUI</span>
+<span class="text-xs font-medium text-red-300 bg-red-500/20 px-3 py-1 rounded-full">Firebase</span>
+<span class="text-xs font-medium text-indigo-300 bg-indigo-500/20 px-3 py-1 rounded-full">Combine</span>
+</div>
+</div>
+</div>
+<!-- Project Card 3 -->
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="relative rounded-xl overflow-hidden aspect-[4/3] liquid-glass-effect">
+<img class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" data-alt="A web analytics dashboard with colorful charts and graphs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTOsPnVEWFU_QqfDqWidxDOHa6UiEWYukFfoFbmn7OMGFGAAOY2jk1Bi8MH_sAZAT3ehE04upJ5zS_geS9Tjz1Cl6DQUjcOaLvHNzlVkx_JO5yDuyBsCoWQGwG2e3_dbPi2WYOKijxDOGT6wQdO9sGdK94kb-Mf3TVZjHIrKGVDNnRKSXdu3TLAGy_6Tkkg1E-Semqf8i9Cxv0BZUQHDi0D8bp1c6MXvPw0Ar0BCZe94sNl_-SztPCV48PXqaCmz6jIXTrYu9RLnw"/>
+</div>
+<div class="flex flex-col px-2">
+<h3 class="text-lg font-bold text-gray-100">Dashboard Analítico</h3>
+<p class="text-sm text-gray-400">Visualización de datos con Vue.js y D3</p>
+<div class="flex flex-wrap gap-2 mt-3">
+<span class="text-xs font-medium text-teal-300 bg-teal-500/20 px-3 py-1 rounded-full">Vue.js</span>
+<span class="text-xs font-medium text-yellow-300 bg-yellow-500/20 px-3 py-1 rounded-full">TypeScript</span>
+<span class="text-xs font-medium text-pink-300 bg-pink-500/20 px-3 py-1 rounded-full">D3.js</span>
+</div>
+</div>
+</div>
+<!-- Project Card 4 -->
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="relative rounded-xl overflow-hidden aspect-[4/3] liquid-glass-effect">
+<img class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" data-alt="Laptop displaying code for a backend server application" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA893ILKq6Aaf5tt4u73UkHIBE_e7r_3ypSGyd_ipUqwXrOoBHokL7NiA4jRlKSI4Tus4L1Nil5vdp-L0i3NfWSVbmDPahV9Yjzf7WXwfSt7TAowKYQKYJJ4TjDEc4UYwgv50YsYmuSid343k-0XM18tU0K69eICk7BfAmW5lF4lphRVQLvulIP6KXIyrgPbDIqYeWQBovGsInqhekaxs29PYtQQekm706hLHJFoYXuCCL1BN7-lMGD_r21BORB1eQ-geklgRJLBeI"/>
+</div>
+<div class="flex flex-col px-2">
+<h3 class="text-lg font-bold text-gray-100">API para Red Social</h3>
+<p class="text-sm text-gray-400">Backend escalable con Node.js y GraphQL</p>
+<div class="flex flex-wrap gap-2 mt-3">
+<span class="text-xs font-medium text-lime-300 bg-lime-500/20 px-3 py-1 rounded-full">Node.js</span>
+<span class="text-xs font-medium text-rose-300 bg-rose-500/20 px-3 py-1 rounded-full">GraphQL</span>
+<span class="text-xs font-medium text-cyan-300 bg-cyan-500/20 px-3 py-1 rounded-full">PostgreSQL</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
