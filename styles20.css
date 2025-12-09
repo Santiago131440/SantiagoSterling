@@ -490,6 +490,13 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
   transform: translateY(0) !important;
 }
 
+/* --- Hover flotante estilo iOS --- */
+.tab-content:hover {
+  transform: translateY(-6px) scale(1.015);
+  transition: 0.35s cubic-bezier(.25,.1,.25,1);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+}
+
 
 /* --- Suavizado general (Apple feel) --- */
 * {
@@ -514,8 +521,8 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
 
 /* Hover estilo dock */
 .app-mac:hover .app-icon-img {
-  transform: scale(0.15);
-  filter: brightness(0.2);
+  transform: scale(1.15);
+  filter: brightness(1.2);
 }
 
 /* LABEL */
@@ -576,4 +583,3 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
 
 /* Cerrar clickeando afuera */
 .modal-mac.hidden { display: none; }
-
