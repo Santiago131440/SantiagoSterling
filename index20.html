@@ -350,7 +350,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2024/12/10</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">Actualidad</span>
-      <button class="ml-auto viewProject px-10 py-1 rounded-full bg-gold text-black font-semibold" data-title="Cosmoagro S.A.">Ver</button>
+      <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer" data-title="Cosmoagro S.A.">Ver</button>
     </div>
   </div>
 </article>
@@ -383,7 +383,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2023/07/07</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2024/06/07</span>
-      <button class="ml-auto viewProject px-10 py-1 rounded-full bg-gold text-black font-semibold" data-title="Coca Cola Femsa">Ver</button>
+      <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer" data-title="Coca Cola Femsa">Ver</button>
     </div>
   </div>
 </article>
@@ -415,7 +415,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2020/01/20</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2023/02/17</span>
-      <button class="ml-auto viewProject px-10 py-1 rounded-full bg-gold text-black font-semibold" data-title="Cadena S.A.">Ver</button>
+      <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer" data-title="Cadena S.A.">Ver</button>
     </div>
   </div>
 </article>
@@ -448,7 +448,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/03/08</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/08/06</span>
-      <button class="ml-auto viewProject px-10 py-1 rounded-full bg-gold text-black font-semibold" data-title="Postobón S.A.">Ver</button>
+      <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer" data-title="Postobón S.A.">Ver</button>
     </div>
   </div>
 </article>
@@ -482,7 +482,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2018/06/16</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/03/06</span>
-      <button class="ml-auto viewProject px-10 py-1 rounded-full bg-gold text-black font-semibold" data-title="Laboratorios OSA S.A.">Ver</button>
+      <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer" data-title="Laboratorios OSA S.A.">Ver</button>
     </div>
   </div>
 </article>
@@ -514,7 +514,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2017/03/24</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2018/03/24</span>
-      <button class="ml-auto viewProject px-10 py-1 rounded-full bg-gold text-black font-semibold" data-title="Smurfit Westrock S.A.">Ver</button>
+      <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer" data-title="Smurfit Westrock S.A.">Ver</button>
     </div>
   </div>
 </article>
@@ -981,8 +981,8 @@
             <textarea required name="message" rows="6" class="w-full mt-1 p-3 rounded-md bg-white/5 border border-white/6" placeholder="Cuéntame tu idea..."></textarea>
           </div>
 
-          <div class="flex items-center gap-3">
-            <button id="sendBtn" class="px-5 py-3 rounded-lg bg-gradient-to-r from-gold to-yellow-400 text-black font-semibold">Enviar mensaje</button>
+          <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
+            <button id="sendBtn" class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Enviar mensaje</button>
             <div id="formStatus" class="text-sm text-slate-300"></div>
           </div>
 
@@ -994,7 +994,7 @@
           <p class="text-slate-300"><strong>Teléfono:</strong> +57 300 000 0000</p>
           <p class="text-slate-300 mt-3">O descarga mi CV y escríbeme por LinkedIn.</p>
 
-          <div class="mt-4">
+           <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
             <a id="downloadCV2" href="#" class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Descargar CV</a>
             <a href="#" class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">LinkedIn</a>
           </div>
@@ -1022,4 +1022,5 @@
   <script src="script20.js" defer></script>
 </body>
 </html>
+
 
