@@ -503,6 +503,7 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
   scroll-behavior: smooth;
   transition: all 0.25s ease;
 }
+
 /* ICONOS */
 .app-icon-img {
   width: 60px;
@@ -516,16 +517,6 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
   box-shadow: 
     inset 0 0 10px rgba(255,255,255,0.8),
     0 5px 15px rgba(0,0,0,0.15);
-}
-
-/* Animación flotante estilo iOS */
-.app-mac {
-  animation: float 3s ease-in-out infinite;
-  animation-delay: calc(-1s * var(--i));
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0);}
-  50% { transform: translateY(-6px);}
 }
 
 /* Hover estilo dock */
