@@ -1,1 +1,346 @@
 
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ventana estilo macOS — Ejemplo</title>
+
+  <!-- Tipos de letra: uso de fuentes del sistema para aspecto Apple -->
+  <style>
+    :root{
+      --bg:#0f1724; /* fondo general */
+      --window-bg: rgba(255,255,255,0.78);
+      --glass-border: rgba(255,255,255,0.12);
+      --accent:#0b2b66; /* azul oscuro para los bloques */
+      --accent-text:#ffd66b; /* amarillo cálido para el texto del bloque */
+      --text:#0b1220;
+      --muted:#5b6470;
+      --control-red:#ff5f57;
+      --control-yellow:#ffbd2e;
+      --control-green:#28c840;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(13,25,56,0.6), transparent 10%),
+                  linear-gradient(180deg, #071028 0%, #071728 60%, #071021 100%), 
+                  var(--bg);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px;
+      box-sizing:border-box;
+    }
+
+    /* CONTENEDOR VENTANA */
+    .mac-window {
+      width: 980px;
+      max-width:95vw;
+      border-radius:14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(250,250,250,0.76));
+      box-shadow:
+        0 50px 80px rgba(3,6,23,0.65),
+        0 20px 40px rgba(2,6,36,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+      border: 1px solid var(--glass-border);
+      overflow:hidden;
+      transform: translateZ(0);
+      backdrop-filter: blur(8px) saturate(120%);
+      -webkit-backdrop-filter: blur(8px) saturate(120%);
+      position:relative;
+      transition: transform .45s cubic-bezier(.2,.9,.25,1), box-shadow .45s;
+      animation: floaty 6s ease-in-out infinite;
+    }
+
+    @keyframes floaty{
+      0%{ transform: translateY(0px); }
+      50%{ transform: translateY(-8px); }
+      100%{ transform: translateY(0px); }
+    }
+
+    /* TOP BAR */
+    .mac-window .titlebar{
+      height:48px;
+      display:flex;
+      align-items:center;
+      padding:0 14px;
+      gap:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+      border-bottom:1px solid rgba(11,18,28,0.04);
+    }
+
+    .controls{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      width:88px;
+    }
+
+    .control {
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15);
+      transition: transform .18s ease;
+    }
+    .control:active{ transform: scale(.92); }
+    .c-red{ background: var(--control-red); }
+    .c-yellow{ background: var(--control-yellow); }
+    .c-green{ background: var(--control-green); }
+
+    /* Navegación / barra URL */
+    .navbar{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex:1;
+      margin-left:6px;
+    }
+
+    .nav-icons{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      color:var(--muted);
+      font-size:14px;
+      opacity:.95;
+    }
+
+    .nav-icons button{
+      background:transparent;
+      border:none;
+      height:30px;
+      width:30px;
+      border-radius:6px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+    .nav-icons button:hover{
+      background: rgba(10,15,30,0.04);
+    }
+    .url-bar{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      background: rgba(10,18,30,0.04);
+      border-radius:10px;
+      border: 1px solid rgba(10,20,35,0.02);
+      min-width:220px;
+      max-width:62%;
+      font-size:13px;
+      color:var(--text);
+      box-shadow: inset 0 -1px 0 rgba(255,255,255,0.35);
+    }
+    .url-host{
+      font-weight:600;
+      color:#0f1724;
+      opacity:.85;
+    }
+
+    /* ICONO DE SITIO */
+    .fav {
+      width:18px;height:18px;border-radius:4px;background:linear-gradient(135deg,#0b2b66,#0a5ad8);
+      display:inline-block; box-shadow: 0 2px 6px rgba(10,30,80,0.2);
+    }
+
+    /* CONTENIDO */
+    .content{
+      padding:28px 36px;
+      display:flex;
+      align-items:flex-start;
+      gap:28px;
+      min-height:360px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(245,245,245,0.02));
+    }
+
+    /* area del texto (imitando la imagen) */
+    .article{
+      flex:1;
+      max-width:820px;
+      background:transparent;
+      color:var(--text);
+      font-size:28px;
+      line-height:1.28;
+      font-family: "Georgia", "Times New Roman", serif;
+      letter-spacing: -0.2px;
+    }
+
+    /* estilo de los bloques resaltados como la imagen */
+    .highlight {
+      display:block;
+      background: linear-gradient(180deg,var(--accent), #071a54);
+      color:var(--accent-text);
+      padding:10px 14px;
+      border-radius:4px;
+      margin:6px 0;
+      font-weight:600;
+      box-shadow: 0 6px 18px rgba(6,14,40,0.22);
+      transform-origin:left center;
+      animation: appear .6s ease both;
+    }
+    @keyframes appear{
+      from{ transform: translateY(6px) scale(.995); opacity:0; }
+      to{ transform: translateY(0) scale(1); opacity:1; }
+    }
+
+    /* texto normal */
+    .normal {
+      color:var(--text);
+      display:block;
+      margin-top:12px;
+      font-size:26px;
+      font-weight:500;
+      color:#0b1220;
+      opacity:.96;
+    }
+
+    /* esquina con "like" (imitación de la imagen) */
+    .corner-like{
+      position:absolute;
+      right:14px;
+      bottom:14px;
+      opacity:.9;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    /* sombra extra y efecto hover */
+    .mac-window:hover{
+      transform: translateY(-6px) scale(1.004);
+      box-shadow:
+        0 70px 120px rgba(3,6,23,0.72),
+        0 30px 60px rgba(2,6,36,0.5);
+    }
+
+    /* responsive */
+    @media (max-width:720px){
+      .article{ font-size:18px; line-height:1.2; }
+      .content{ padding:18px; }
+      .titlebar{ height:44px; padding:0 10px; }
+    }
+
+    /* Efecto parallax sutil con el ratón */
+    .parallax{
+      transform: translateZ(0);
+      will-change: transform;
+    }
+
+    /* destacado del encabezado */
+    .header-line{
+      font-family: -apple-system, "SF Pro Display", "Segoe UI", Roboto;
+      font-weight:600;
+      font-size:30px;
+      color:var(--text);
+      margin-bottom:12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="mac-window parallax" id="macWindow" aria-label="Ventana estilo macOS">
+    <div class="titlebar">
+      <div class="controls" aria-hidden="true">
+        <div class="control c-red" title="Cerrar"></div>
+        <div class="control c-yellow" title="Minimizar"></div>
+        <div class="control c-green" title="Maximizar"></div>
+      </div>
+
+      <div class="navbar" role="navigation" aria-label="Barra de navegación">
+        <div class="nav-icons" aria-hidden="true">
+          <button title="Atrás" onclick="flash(this)">&larr;</button>
+          <button title="Adelante" onclick="flash(this)">&rarr;</button>
+        </div>
+
+        <div class="url-bar" role="textbox" aria-readonly="true">
+          <span class="fav" aria-hidden="true"></span>
+          <div style="display:flex;flex-direction:column;min-width:0;">
+            <div style="font-size:12px;color:var(--muted);margin-bottom:2px;">xatakandroid.com</div>
+            <div class="url-host" style="font-size:13px;">xatakandroid.com</div>
+          </div>
+        </div>
+
+        <div style="margin-left:auto; display:flex; gap:10px; align-items:center;">
+          <button title="Recargar" onclick="flash(this)" style="background:transparent;border:none;cursor:pointer;font-size:18px;">&#10227;</button>
+          <button title="Nueva pestaña" onclick="flash(this)" style="background:transparent;border:none;cursor:pointer;font-size:18px;">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <article class="article" lang="es">
+        <div class="header-line">Según la información de ARA,</div>
+
+        <!-- Aquí replicamos los bloques resaltados de la imagen -->
+        <span class="highlight">las fuerzas de seguridad</span>
+        <span class="highlight">admiten que las escuchas</span>
+        <span class="highlight">telefónicas tradicionales ya no</span>
+        <span class="highlight">son útiles para investigar a</span>
+        <span class="highlight">estas bandas.</span>
+
+        <span class="normal">Ahora se comunican exclusivamente a través de aplicaciones cifradas.</span>
+      </article>
+
+      <!-- columna lateral opcional (decorativa) -->
+      <aside style="width:180px; display:flex;flex-direction:column; gap:12px; align-items:flex-end;">
+        <!-- tarjeta mock -->
+        <div style="width:140px; border-radius:12px; padding:12px; background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(245,245,245,0.86)); box-shadow: 0 10px 30px rgba(10,18,35,0.06); border:1px solid rgba(11,18,28,0.03); font-size:12px; color:var(--muted);">
+          <strong style="display:block;color:#07122a;margin-bottom:6px;">Fuente</strong>
+          ARA · Informe interno
+        </div>
+
+        <div style="width:140px; height:86px; border-radius:12px; padding:12px; display:flex;align-items:center;justify-content:center; color:var(--muted); font-size:13px; border:1px dashed rgba(8,12,20,0.04);">
+          Diseño Apple-like
+        </div>
+      </aside>
+    </div>
+
+    <div class="corner-like">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="opacity:.95">
+        <path d="M12 21s-6.716-4.35-9-7.065C0.636 11.7 2 6 7 6c2.2 0 3.4 1.4 5 3.5C13.6 7.4 14.8 6 17 6c5 0 6.364 5.7 4 7.935C18.716 16.65 12 21 12 21z" fill="#ff6b81"/>
+      </svg>
+      1.2K
+    </div>
+  </div>
+
+  <script>
+    // Pequeñas interacciones visuales — parallax y "flash" de botones
+    (function(){
+      const box = document.getElementById('macWindow');
+      let rect = box.getBoundingClientRect();
+
+      function onMove(e){
+        const cx = rect.left + rect.width/2;
+        const cy = rect.top + rect.height/2;
+        const mx = (e.clientX - cx) / rect.width;
+        const my = (e.clientY - cy) / rect.height;
+        // rota y mueve sutilmente
+        box.style.transform = `perspective(900px) rotateX(${ -my * 3 }deg) rotateY(${ mx * 3 }deg) translateZ(6px)`;
+      }
+
+      function onLeave(){
+        box.style.transform = '';
+      }
+
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseleave', onLeave);
+      window.addEventListener('resize', ()=> rect = box.getBoundingClientRect());
+
+      // función para efecto al pulsar iconos
+      window.flash = function(btn){
+        btn.style.transform = 'scale(.94)';
+        setTimeout(()=> btn.style.transform = '', 160);
+      };
+    })();
+  </script>
+</body>
+</html>
