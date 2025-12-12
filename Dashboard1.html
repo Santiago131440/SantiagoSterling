@@ -3,310 +3,588 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Santiago Sterling</title>
-  <meta name="description" content="Hola, soy Santiago Sterling." />
-  <link rel="stylesheet" href="Dashboard1.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <title>Editor de Video - Single File (HTML + Tailwind)</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Small extra styles for timeline and floating preview */
+    .timeline-track { height: 72px; }
+    .clip { height: 56px; border-radius: 6px; overflow: hidden; }
+    .thumb { object-fit: cover; width: 100%; height: 100%; }
+    .range-input { -webkit-appearance: none; width: 100%; height: 6px; background: transparent; }
+    .range-input::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: #111827; border-radius: 50%; }
+    /* simple scrollbar */
+    .timeline { scrollbar-width: thin; }
+  </style>
 </head>
-<body>
-
-  <div class="site">
-
-    <header>
-      <nav class="nav">
-        <a href="#work">Trabajo</a>
-        <a href="#gallery">Imagenes</a>
-        <a href="#about">Acerca de</a>
-        <a href="#contact">Contacto</a>
-      </nav>
+<body class="bg-slate-100 text-slate-800 p-6">
+  <div class="max-w-[1200px] mx-auto">
+    <header class="flex items-center justify-between mb-4">
+      <h1 class="text-2xl font-semibold">Editor de Video - Archivo Único</h1>
+      <div class="text-sm text-slate-600">Arrastra medios, organízalos en la línea de tiempo y exporta.</div>
     </header>
 
-    <!-- HERO -->
-    <section class="hero" role="region" aria-label="Hero">
-      <div class="hero-left">
-        <div class="brand">SANTIAGO<br/>STERLING<br/>
-          <small>Tecnologo en análisis y desarrollo de software</small>
+    <main class="grid grid-cols-12 gap-4">
+      <!-- Left: controls -->
+      <section class="col-span-4 bg-white rounded-xl p-4 shadow">
+        <h2 class="font-medium mb-2">Importar medios</h2>
+        <div class="mb-3">
+          <label class="block text-xs text-slate-600">Imágenes / Videos / Audio</label>
+          <input id="fileInput" type="file" accept="image/*,video/*,audio/*" multiple class="mt-2" />
         </div>
-        <div class="hero-meta">Análisis exhaustivo</div>
-      </div>
-
-      <div class="hero-typography" aria-hidden="true">
-        <div class="stack">
-          <div class="outline">/ALGORITMOS</div>
-          <div class="outline">API</div>
-          <div class="solid">/SCRIPT</div>
-          <div class="solid">IA</div>
-          <div class="solid">/SOFTWARE</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sección blanca - servicios -->
-    <section class="section white" id="work">
-      <div class="container">
-        <div style="height:150px"></div>
-      <div class="logo">Santiago Sterling</div>
-      <div class="controls" aria-hidden="true">
-      <!-- icons on right -->
-      <div class="icon-btn" title="Agregar">
-        <!-- plus -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M12 5v14M5 12h14" stroke="#111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-
-      <div class="icon-btn" title="Buscar">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M21 21l-4.35-4.35" stroke="#111" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="11" cy="11" r="6" stroke="#111" stroke-width="1.3" fill="none"/>
-        </svg>
-      </div>
-
-      <div class="icon-btn" title="Más">
-        <svg width="4" height="20" viewBox="0 0 4 20" fill="none" aria-hidden="true">
-          <circle cx="2" cy="4" r="2" fill="#111" />
-          <circle cx="2" cy="10" r="2" fill="#111" />
-          <circle cx="2" cy="16" r="2" fill="#111" />
-        </svg>
-      </div>
-    </div>
-  </header>
-
-  <nav class="top-nav" role="navigation" aria-label="Navegación principal">
-    <div class="muted">Spotify</div>
-    <div class="muted">Favoritos</div>
-    <div class="current" aria-current="page">Proyectos</div>
-    <div class="muted">Pistas</div>
-    <div class="muted">Álbumes</div>
-    <div class="muted">Artistas</div>
-    <div class="muted">Carpetas</div>
-  </nav>
-
-  <main>
-    <section class="panel" aria-label="Lista de reproducción - panel">
-      <div class="playlists" role="list" aria-label="Listas">
-        <!-- Playlist 1 -->
-        <article class="playlist" role="listitem" aria-labelledby="pl1-title">
-          <div class="cover" aria-hidden="true">
-            <!-- music note icon -->
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M9 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8-2V6l-7 2v7" stroke="#fff" stroke-opacity="0.7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div id="pl1-title" class="pl-title">Recién añadidas</div>
-          <div class="pl-sub">277 pistas</div>
-        </article>
-
-        <!-- Playlist 2 -->
-        <article class="playlist" role="listitem" aria-labelledby="pl2-title">
-          <div class="cover" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M9 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8-2V6l-7 2v7" stroke="#fff" stroke-opacity="0.7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div id="pl2-title" class="pl-title">Más escuchadas</div>
-          <div class="pl-sub">100 pistas</div>
-        </article>
-
-        <!-- Playlist 3 -->
-        <article class="playlist" role="listitem" aria-labelledby="pl3-title">
-          <div class="cover" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M9 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8-2V6l-7 2v7" stroke="#fff" stroke-opacity="0.7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div id="pl3-title" class="pl-title">Últimas escuchadas</div>
-          <div class="pl-sub">100 pistas</div>
-        </article>
-
-        <!-- Playlist 4 -->
-        <article class="playlist" role="listitem" aria-labelledby="pl4-title">
-          <div class="cover" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M9 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8-2V6l-7 2v7" stroke="#fff" stroke-opacity="0.7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div id="pl4-title" class="pl-title">Pistas favoritas</div>
-          <div class="pl-sub">2 pistas</div>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <!-- Player (fixed) -->
-  <div class="player" role="region" aria-label="Reproductor">
-    <div class="left">
-      <div class="thumb" aria-hidden="true">
-        <!-- small note circle -->
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M9 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8-2V6l-7 2v7" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div class="song">
-        <div class="title" id="song-title">Conexión de API - Proyecto Backend</div>
-        <div class="artist">Santiago Sterling</div>
-      </div>
-    </div>
-
-    <div class="controls" role="group" aria-label="Controles de reproducción">
-      <button class="btn" title="Anterior" id="prevBtn" aria-label="Pista anterior">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M6 6v12l8.5-6L6 6zM18 6v12" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-
-      <button class="btn play" id="playBtn" aria-pressed="false" aria-label="Reproducir/Pausa" title="Reproducir">
-        <svg id="playIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M6 4l14 8-14 8V4z" fill="#fff" />
-        </svg>
-        <svg id="pauseIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="display:none">
-          <path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="#fff"/>
-        </svg>
-      </button>
-
-      <button class="btn" title="Siguiente" id="nextBtn" aria-label="Siguiente pista">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M18 6V18L9.5 12 18 6zM6 6v12" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-
-      <div class="queue-btn" title="Cola" aria-label="Ver cola">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M3 6h18M3 12h10M3 18h18" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-      </div>
-    </section>
-
-    <!-- Sección negra grande -->
-    <section class="section black">
-      <div class="container split">
-        <div>
-          <h2 class="big-text reveal">Soluciones que funcionan en escala</h2>
-          <p class="text-muted reveal">Estrategia, arquitectura de información y desarrollo: todo alineado para resultados medibles.</p>
-        </div>
-        <div>
-          <p class="reveal">Nuestra aproximación combina experimentación con disciplina técnica. Construimos componentes reutilizables, sistemas de diseño y entregables listos para producción.</p>
-          <ul class="text-muted reveal">
-            <li>Componentes accesibles y responsivos</li>
-            <li>Rendimiento optimizado</li>
-            <li>Documentación y handoff para desarrollo</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Galería -->
-    <section class="section white" id="gallery">
-      <div class="container">
-        <h2 class="reveal">Galería</h2>
-        <p class="text-muted reveal">Imágenes de proyectos y muestras visuales. Haz clic para ampliar.</p>
-
-        <div style="height:20px"></div>
-
-        <div class="gallery" aria-live="polite">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_18_02%20PM.png?raw=true" alt="Muestra 1" data-large="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_18_02%20PM.png?raw=true">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_18_02%20PM.png?raw=true" alt="Muestra 2" data-large="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_18_02%20PM.png?raw=true">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_18_02%20PM.png?raw=true" alt="Muestra 3" data-large="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_18_02%20PM.png?raw=true">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_18_02%20PM.png?raw=true" alt="Muestra 4" data-large="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_18_02%20PM.png?raw=true">
+        <div class="mb-3">
+          <label class="block text-xs text-slate-600">Arrastrar aquí</label>
+          <div id="dropArea" class="mt-2 border-dashed border-2 border-slate-300 rounded-lg p-6 text-center text-sm bg-slate-50">Suelta archivos aquí</div>
         </div>
 
-      </div>
-    </section>
+        <h3 class="font-medium mt-4">Clips importados</h3>
+        <div id="mediaList" class="mt-2 space-y-2 max-h-72 overflow-auto"></div>
 
-    <!-- Sección negra con testimonios -->
-    <section class="section black">
-      <div class="container">
-        <h2 class="reveal">Testimonios</h2>
-        <p class="text-muted reveal">Lo que dicen los clientes sobre el trabajo colaborativo y la entrega puntual.</p>
-
-        <div style="height:18px"></div>
-
-        <div class="services">
-          <div class="card reveal">
-            <p>"Excelente manejo del proyecto y comunicación clara durante todo el proceso."</p>
-            <small class="text-muted">— Cliente A</small>
-          </div>
-          <div class="card reveal">
-            <p>"Diseño sobresaliente, atención a detalle y entregables listos para producción."</p>
-            <small class="text-muted">— Cliente B</small>
-          </div>
-          <div class="card reveal">
-            <p>"Equipo flexible, cumplió tiempos y expectativas."</p>
-            <small class="text-muted">— Cliente C</small>
+        <div class="mt-4 border-t pt-3">
+          <h3 class="font-medium">Exportar</h3>
+          <div class="mt-2 space-y-2">
+            <label class="block text-xs">Resolución</label>
+            <select id="exportResolution" class="w-full p-2 border rounded">
+              <option value="1280x720">1280 × 720 (720p)</option>
+              <option value="1920x1080">1920 × 1080 (1080p)</option>
+              <option value="854x480">854 × 480 (480p)</option>
+            </select>
+            <label class="block text-xs mt-2">Formato (webm recomendado)</label>
+            <button id="exportBtn" class="w-full bg-emerald-600 text-white p-2 rounded">Exportar video</button>
+            <div id="exportStatus" class="text-sm text-slate-600 mt-2"></div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Sobre nosotros -->
-    <section class="section white" id="about">
-      <div class="container">
-        <h2 class="reveal">Sobre el estudio</h2>
-        <p class="text-muted reveal">Somos un estudio que mezcla diseño y código. Fuerte énfasis en tipografía, composición y sistemas escalables.</p>
+      <!-- Right: preview + timeline -->
+      <section class="col-span-8">
+        <div class="bg-white rounded-xl p-4 shadow mb-4">
+          <div class="flex gap-3 items-start">
+            <div class="flex-1">
+              <div class="bg-black rounded-md overflow-hidden relative" style="aspect-ratio:16/9" id="previewWrap">
+                <!-- Canvas for rendering preview frames -->
+                <canvas id="previewCanvas" class="w-full h-full"></canvas>
+                <div id="playOverlay" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div id="playIcon" class="bg-white/90 rounded-full p-3 shadow hidden">▶</div>
+                </div>
+              </div>
 
-        <div style="height:20px"></div>
+              <div class="mt-3 flex items-center gap-3">
+                <button id="playBtn" class="px-3 py-1 rounded bg-slate-800 text-white">Reproducir</button>
+                <button id="pauseBtn" class="px-3 py-1 rounded bg-slate-200">Pausa</button>
+                <label class="flex items-center gap-2 text-sm text-slate-600">Vel: <input id="playRate" type="range" min="0.25" max="2" step="0.05" value="1" class="w-36" /></label>
+                <div class="ml-auto text-sm text-slate-600">Duración: <span id="totalDuration">0.00s</span></div>
+              </div>
+            </div>
 
-        <div class="split">
-          <div>
-            <h3>Metodología</h3>
-            <p>Discovery, prototipado, iteración y entrega. Documentación clara y componentes reutilizables.</p>
-          </div>
-          <div>
-            <h3>Equipo</h3>
-            <p>Diseñadores, desarrolladores frontend y gestores de proyecto con experiencia en entregas globales.</p>
+            <div style="width:220px">
+              <h4 class="text-sm font-medium mb-2">Propiedades actuales</h4>
+              <div id="props" class="text-sm text-slate-700 space-y-2">
+                <div>Selecciona un clip para ver y editar.</div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Contacto -->
-    <section class="section black" id="contact">
-      <div class="container">
-        <h2 class="reveal">Contacta</h2>
-        <p class="text-muted reveal">Escríbenos para estimaciones, colaboraciones o brief creativo.</p>
-
-        <div style="height:20px"></div>
-
-        <form class="contact-form reveal" onsubmit="handleContact(event)">
-          <input type="text" name="name" placeholder="Nombre" required />
-          <input type="email" name="email" placeholder="correo@ejemplo.com" required />
-          <textarea name="message" rows="6" placeholder="Escribe tu mensaje..." required></textarea>
-          <div style="display:flex;gap:12px;align-items:center;margin-top:6px">
-            <button class="btn" type="submit" style="background:var(--white);color:var(--black)">Enviar</button>
-            <button type="button" class="btn" onclick="toggleTheme()" style="background:transparent;border:1px solid rgba(255,255,255,0.12);color:var(--white)">Modo</button>
+        <!-- Timeline -->
+        <div class="bg-white rounded-xl p-3 shadow">
+          <h3 class="font-medium mb-2">Línea de tiempo (clic en clip para seleccionar)</h3>
+          <div id="timeline" class="timeline relative overflow-auto flex gap-2 items-start p-2 bg-slate-50 rounded timeline-track" style="min-width:100%;">
+            <!-- timeline clips will be appended here -->
           </div>
-        </form>
-
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="white">
-      <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-        <div>
-          <strong>W &amp; STERLING COMPANY</strong>
-          <div class="text-muted">2025</div>
+          <div class="mt-3 text-xs text-slate-500">Puedes arrastrar para reordenar (simple), ajustar inicio/fin con recortes.</div>
         </div>
-        <div class="text-muted">Diseño &amp; Desarrollo</div>
-      </div>
-    </footer>
 
+      </section>
+    </main>
+
+    <footer class="mt-6 text-sm text-slate-500">Hecho con ❤️ — Editor simple en un solo archivo. Soporta recorte, volumen, orden y export (webm).</footer>
   </div>
 
-  <!-- Modal -->
-  <div class="modal" id="modal">
-    <div class="inner"><img src="" alt="Ampliada" id="modalImg"></div>
-  </div>
+  <!-- Hidden media elements container -->
+  <div id="hiddenMedia" style="display:none"></div>
 
-  <script src="Dashboard1.js"></script>
+  <script>
+  // Simple single-file video editor implementation
+  // Not a full NLE: basic timeline, trimming, ordering, preview rendering to canvas, export to webm using MediaRecorder.
+
+  const fileInput = document.getElementById('fileInput');
+  const dropArea = document.getElementById('dropArea');
+  const mediaList = document.getElementById('mediaList');
+  const timeline = document.getElementById('timeline');
+  const previewCanvas = document.getElementById('previewCanvas');
+  const ctx = previewCanvas.getContext('2d');
+  const previewWrap = document.getElementById('previewWrap');
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const playRate = document.getElementById('playRate');
+  const props = document.getElementById('props');
+  const totalDurationLabel = document.getElementById('totalDuration');
+  const exportBtn = document.getElementById('exportBtn');
+  const exportStatus = document.getElementById('exportStatus');
+  const exportResolution = document.getElementById('exportResolution');
+
+  // State
+  let mediaItems = []; // {id, file, type, url, duration, start=0, end=duration, volume=1}
+  let timelineOrder = []; // ids in order
+  let selectedId = null;
+  let isPlaying = false;
+  let playStart = 0; // playback clock (s)
+  let playTime = 0;
+  let lastTick = 0;
+  let rafId = null;
+
+  function createID() { return Math.random().toString(36).slice(2,9); }
+
+  // Helpers to read media metadata
+  function loadFileAsURL(file) {
+    return URL.createObjectURL(file);
+  }
+
+  async function probeDuration(file, url, type) {
+    return new Promise((resolve) => {
+      if (type === 'image') return resolve(0);
+      const el = document.createElement(type==='audio'?'audio':'video');
+      el.preload = 'metadata';
+      el.src = url;
+      el.addEventListener('loadedmetadata', () => {
+        const d = el.duration || 0;
+        el.src = '';
+        resolve(d);
+      });
+      el.addEventListener('error', ()=> resolve(0));
+    });
+  }
+
+  function addMediaFiles(files){
+    for (const f of files) addSingleFile(f);
+  }
+
+  async function addSingleFile(file){
+    const t = file.type;
+    let type = 'other';
+    if (t.startsWith('image/')) type = 'image';
+    else if (t.startsWith('video/')) type = 'video';
+    else if (t.startsWith('audio/')) type = 'audio';
+
+    const url = loadFileAsURL(file);
+    const id = createID();
+    let duration = 0;
+    if (type === 'video' || type === 'audio') {
+      duration = await probeDuration(file, url, type);
+    }
+
+    const item = { id, file, type, url, duration, start:0, end: Math.max(0,duration), volume:1, muted:false };
+    mediaItems.push(item);
+    timelineOrder.push(id);
+    renderMediaList();
+    renderTimeline();
+    calcTotalDuration();
+  }
+
+  function renderMediaList(){
+    mediaList.innerHTML = '';
+    for (const item of mediaItems){
+      const el = document.createElement('div');
+      el.className = 'flex items-center gap-3 p-2 border rounded';
+      el.innerHTML = `
+        <div class="w-16 h-12 bg-slate-100 rounded overflow-hidden flex items-center justify-center">
+          ${item.type === 'image' ? `<img src='${item.url}' class='thumb'/>` : item.type === 'video' ? `<video src='${item.url}' class='thumb' muted></video>` : `<div class='text-xs'>Audio</div>`}
+        </div>
+        <div class='flex-1'>
+          <div class='font-medium text-sm'>${escapeHtml(item.file.name)}</div>
+          <div class='text-xs text-slate-500'>${item.type} ${item.duration?('— ' + formatTime(item.duration)):''}</div>
+        </div>
+        <div class='flex flex-col gap-2'>
+          <button data-id='${item.id}' class='addToTimeline px-2 py-1 rounded bg-indigo-600 text-white text-xs'>Agregar</button>
+        </div>
+      `;
+      mediaList.appendChild(el);
+      if (item.type === 'video') {
+        const vid = el.querySelector('video');
+        vid.addEventListener('loadedmetadata', ()=>{});
+      }
+    }
+
+    // attach handlers
+    mediaList.querySelectorAll('.addToTimeline').forEach(b=>{
+      b.onclick = (e)=>{
+        const id = e.currentTarget.dataset.id;
+        // If already in timeline, ignore (we allow duplicates by cloning item)
+        const original = mediaItems.find(x=>x.id===id);
+        if (original) {
+          // clone object with new id
+          const clone = {...original, id: createID(), url: original.url, file: original.file};
+          mediaItems.push(clone);
+          timelineOrder.push(clone.id);
+          renderMediaList(); renderTimeline(); calcTotalDuration();
+        }
+      }
+    });
+  }
+
+  function renderTimeline(){
+    // For simplicity show fixed width segments proportional to duration but with min width
+    timeline.innerHTML = '';
+    const total = calcTotalDuration(true);
+    const baseWidth = Math.max(200, total*80); // scale
+
+    for (const id of timelineOrder){
+      const item = mediaItems.find(m=>m.id===id);
+      if (!item) continue;
+      const dur = item.type === 'image' ? Math.max(1, (item.end-item.start)||3) : (item.end-item.start) || Math.max(1,item.duration);
+      const w = Math.max(60, (dur/Math.max(1,total)) * baseWidth);
+      const clip = document.createElement('div');
+      clip.className = 'clip bg-white border shadow-sm p-1 relative flex items-center gap-2';
+      clip.style.width = w + 'px';
+      clip.dataset.id = item.id;
+      clip.innerHTML = `
+        <div class='w-20 h-12 rounded overflow-hidden bg-slate-50'>${item.type==='image'?`<img src='${item.url}' class='thumb'/>`:item.type==='video'?`<video src='${item.url}' class='thumb' muted></video>`:`<div class='w-full h-full flex items-center justify-center text-xs'>Audio</div>`}</div>
+        <div class='flex-1 text-xs'>
+          <div class='font-medium truncate'>${escapeHtml(item.file.name)}</div>
+          <div class='text-[11px] text-slate-500'>${formatTime(item.start)} - ${formatTime(item.end)}</div>
+        </div>
+        <div class='absolute top-1 right-1 flex gap-1'>
+          <button data-act='select' title='Seleccionar' class='px-2 py-0.5 rounded bg-slate-100 text-xs'>Seleccionar</button>
+          <button data-act='remove' title='Eliminar' class='px-2 py-0.5 rounded bg-red-100 text-xs'>X</button>
+        </div>
+      `;
+      timeline.appendChild(clip);
+
+      // clickable
+      clip.querySelectorAll('[data-act]').forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+          const act = e.currentTarget.dataset.act;
+          if (act === 'select') selectClip(item.id);
+          if (act === 'remove') { removeClip(item.id); }
+        });
+      });
+
+    }
+
+    // allow simple drag-reorder (native draggable)
+    [...timeline.children].forEach(node=>{
+      node.draggable = true;
+      node.ondragstart = (e)=>{ e.dataTransfer.setData('text/plain', node.dataset.id); };
+      node.ondragover = (e)=> e.preventDefault();
+      node.ondrop = (e)=>{
+        e.preventDefault();
+        const from = e.dataTransfer.getData('text/plain');
+        const to = node.dataset.id;
+        reorderTimeline(from, to);
+      };
+    });
+  }
+
+  function reorderTimeline(fromId, toId){
+    const fi = timelineOrder.indexOf(fromId);
+    const ti = timelineOrder.indexOf(toId);
+    if (fi<0||ti<0) return;
+    timelineOrder.splice(fi,1);
+    timelineOrder.splice(ti,0,fromId);
+    renderTimeline();
+  }
+
+  function selectClip(id){
+    selectedId = id;
+    const item = mediaItems.find(m=>m.id===id);
+    if (!item) return;
+    props.innerHTML = '';
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+      <div class='text-sm font-medium'>${escapeHtml(item.file.name)}</div>
+      <div class='text-xs text-slate-500'>Tipo: ${item.type}</div>
+      <label class='block mt-2 text-xs'>Inicio: <input id='startRange' type='range' min='0' max='${item.duration||10}' step='0.01' value='${item.start}' class='w-full range-input' /></label>
+      <label class='block text-xs mt-1'>Fin: <input id='endRange' type='range' min='0' max='${item.duration||10}' step='0.01' value='${item.end||item.duration||10}' class='w-full range-input' /></label>
+      <label class='block text-xs mt-2'>Volumen: <input id='volRange' type='range' min='0' max='1' step='0.01' value='${item.volume}' class='w-full' /></label>
+      <div class='flex gap-2 mt-2'>
+        <button id='applyBtn' class='px-2 py-1 rounded bg-indigo-600 text-white text-xs'>Aplicar</button>
+        <button id='muteBtn' class='px-2 py-1 rounded bg-slate-200 text-xs'>Silenciar</button>
+      </div>
+    `;
+    props.appendChild(wrapper);
+
+    document.getElementById('applyBtn').onclick = ()=>{
+      const s = parseFloat(document.getElementById('startRange').value) || 0;
+      const e = parseFloat(document.getElementById('endRange').value) || (item.duration || 0);
+      item.start = clamp(s, 0, item.duration || e);
+      item.end = clamp(e, 0, item.duration || e);
+      item.volume = parseFloat(document.getElementById('volRange').value) || 1;
+      renderTimeline(); calcTotalDuration();
+    };
+    document.getElementById('muteBtn').onclick = ()=>{
+      item.muted = !item.muted;
+      document.getElementById('muteBtn').textContent = item.muted ? 'Silenciado' : 'Silenciar';
+    };
+  }
+
+  function removeClip(id){
+    // remove first occurrence from timeline
+    const idx = timelineOrder.indexOf(id);
+    if (idx>=0) timelineOrder.splice(idx,1);
+    // optional: do not remove from mediaItems to preserve library
+    renderTimeline(); calcTotalDuration();
+  }
+
+  function calcTotalDuration(returnVal=false){
+    // sum durations in timeline
+    let total = 0;
+    for (const id of timelineOrder){
+      const it = mediaItems.find(x=>x.id===id);
+      if (!it) continue;
+      const dur = (it.end - it.start) || (it.duration || 0) || (it.type==='image'?3:0);
+      total += Math.max(0,dur);
+    }
+    totalDurationLabel.textContent = formatTime(total);
+    return returnVal ? total : null;
+  }
+
+  // Preview / playback engine: render frames to canvas based on timeline and current playTime
+  function startPlayback(){
+    if (isPlaying) return;
+    isPlaying = true;
+    playStart = playTime;
+    lastTick = performance.now();
+    rafId = requestAnimationFrame(tick);
+  }
+  function pausePlayback(){
+    if (!isPlaying) return;
+    isPlaying = false;
+    if (rafId) cancelAnimationFrame(rafId);
+  }
+
+  function tick(now){
+    const dt = (now - lastTick)/1000;
+    lastTick = now;
+    playTime += dt * parseFloat(playRate.value);
+    renderAtTime(playTime);
+    if (isPlaying) rafId = requestAnimationFrame(tick);
+  }
+
+  function renderAtTime(t){
+    // Walk timeline to find which clip and local time
+    let cursor = 0;
+    let drawn = false;
+    const canvasW = previewCanvas.width = previewWrap.clientWidth * devicePixelRatio;
+    const canvasH = previewCanvas.height = previewWrap.clientHeight * devicePixelRatio;
+    ctx.clearRect(0,0,canvasW,canvasH);
+
+    for (const id of timelineOrder){
+      const it = mediaItems.find(x=>x.id===id);
+      if (!it) continue;
+      const dur = Math.max(0.01, (it.end - it.start) || it.duration || (it.type==='image'?3:0));
+      if (t >= cursor && t < cursor + dur){
+        const local = (t - cursor) + it.start; // source time
+        drawItemToCanvas(it, local, canvasW, canvasH);
+        drawn = true;
+        break;
+      }
+      cursor += dur;
+    }
+    if (!drawn){
+      // draw black
+      ctx.fillStyle = '#000'; ctx.fillRect(0,0,canvasW,canvasH);
+    }
+  }
+
+  async function drawItemToCanvas(item, localTime, w, h){
+    if (item.type === 'image'){
+      const img = await ensureImage(item.url);
+      // cover
+      const iw = img.width, ih = img.height;
+      const scale = Math.max(w/iw, h/ih);
+      const nw = iw*scale, nh = ih*scale;
+      const ox = (w - nw)/2, oy = (h - nh)/2;
+      ctx.drawImage(img, ox, oy, nw, nh);
+    } else if (item.type === 'video'){
+      const vid = await ensureVideo(item.url);
+      try { vid.currentTime = Math.min(vid.duration || 0, Math.max(0, localTime)); } catch(e){}
+      // wait a frame
+      ctx.drawImage(vid, 0, 0, w, h);
+    } else if (item.type === 'audio'){
+      // audio-only: render a placeholder
+      ctx.fillStyle = '#111'; ctx.fillRect(0,0,w,h);
+      ctx.fillStyle = '#fff'; ctx.font = `${24*devicePixelRatio}px sans-serif`;
+      ctx.fillText('Audio', 20*devicePixelRatio, 40*devicePixelRatio);
+    }
+  }
+
+  // caching helpers
+  const imgCache = new Map();
+  const videoCache = new Map();
+  function ensureImage(url){
+    return new Promise((resolve)=>{
+      if (imgCache.has(url)) return resolve(imgCache.get(url));
+      const img = new Image(); img.crossOrigin='anonymous'; img.onload = ()=>{ imgCache.set(url,img); resolve(img); };
+      img.src = url;
+    });
+  }
+  function ensureVideo(url){
+    return new Promise((resolve)=>{
+      if (videoCache.has(url)) return resolve(videoCache.get(url));
+      const v = document.createElement('video'); v.muted = true; v.playsInline = true; v.src = url; v.crossOrigin='anonymous';
+      v.onloadeddata = ()=>{ videoCache.set(url, v); resolve(v); };
+      v.onerror = ()=>{ resolve(v); };
+    });
+  }
+
+  // Export: render timeline to offscreen canvas at desired resolution and record with MediaRecorder
+  async function exportVideo(){
+    const res = exportResolution.value.split('x').map(Number);
+    const w = res[0], h = res[1];
+    exportStatus.textContent = 'Preparando export...';
+
+    // create offscreen canvas
+    const off = document.createElement('canvas'); off.width = w; off.height = h;
+    const offCtx = off.getContext('2d');
+
+    // prepare audio mixing via WebAudio
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const dest = audioCtx.createMediaStreamDestination();
+
+    // load audio sources from timeline
+    let audioNodes = [];
+    for (const id of timelineOrder){
+      const it = mediaItems.find(x=>x.id===id);
+      if (!it) continue;
+      if (it.type === 'audio' || it.type === 'video'){
+        // create element
+        const media = document.createElement(it.type==='audio'?'audio':'video');
+        media.src = it.url; media.crossOrigin='anonymous'; media.muted = true; media.preload='auto';
+        await mediaLoaded(media);
+        const src = audioCtx.createMediaElementSource(media);
+        const gain = audioCtx.createGain(); gain.gain.value = it.muted?0:it.volume;
+        src.connect(gain).connect(dest);
+        audioNodes.push({media, start:it.start, duration: it.end - it.start});
+      }
+    }
+
+    // create a stream from the canvas + audio
+    const fps = 25;
+    const canvasStream = off.captureStream(fps);
+    // merge audio
+    const mixedStream = new MediaStream();
+    canvasStream.getVideoTracks().forEach(t=>mixedStream.addTrack(t));
+    dest.stream.getAudioTracks().forEach(t=>mixedStream.addTrack(t));
+
+    // start playing audio media elements at proper times
+    // we'll schedule playback using audioCtx.currentTime as base
+    const total = calcTotalDuration(true);
+
+    // MediaRecorder to capture
+    const options = {mimeType: 'video/webm;codecs=vp9,opus'};
+    let recordedChunks = [];
+    try{
+      const recorder = new MediaRecorder(stream, { mimeType: 'video/mp4' });
+      recorder.ondataavailable = (e)=>{ if (e.data.size) recordedChunks.push(e.data); };
+      recorder.onstop = ()=>{
+        const blob = new Blob(recordedChunks, {type: 'video/webm'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = 'export.webm'; a.click();
+        exportStatus.textContent = 'Export completado ✓';
+        // stop audio nodes
+        audioNodes.forEach(n=>{ try{ n.media.pause(); n.media.src=''; }catch(e){} });
+      };
+
+      // start recorder first
+      recorder.start(1000);
+      exportStatus.textContent = 'Exportando... grabando stream';
+
+      // start audio playback slightly in the future to ensure recorder captures both
+      const startTime = audioCtx.currentTime + 0.25;
+      for (const n of audioNodes){
+        n.media.currentTime = n.start || 0;
+        n.media.play();
+      }
+
+      // Render frames to offscreen canvas sequentially
+      let t = 0;
+      const frameTime = 1/fps;
+      for (let frame=0; frame < Math.ceil(total*fps); frame++){
+        // render timeline at time t
+        await renderToContextAtTime(offCtx, w, h, t);
+        // wait approximate
+        await sleep(frameTime*1000/1.0);
+        t += frameTime;
+      }
+
+      // stop recorder and audio
+      recorder.stop();
+      audioNodes.forEach(n=>{ try{ n.media.pause(); }catch(e){} });
+
+    }catch(e){
+      console.error(e);
+      exportStatus.textContent = 'Error en export: ' + e.message;
+    }
+  }
+
+  async function renderToContextAtTime(ctx2d, w, h, t){
+    ctx2d.fillStyle = '#000'; ctx2d.fillRect(0,0,w,h);
+    // find clip
+    let cursor = 0;
+    for (const id of timelineOrder){
+      const it = mediaItems.find(x=>x.id===id);
+      if (!it) continue;
+      const dur = Math.max(0.01, (it.end - it.start) || it.duration || (it.type==='image'?3:0));
+      if (t >= cursor && t < cursor + dur){
+        const local = (t - cursor) + it.start;
+        if (it.type === 'image'){
+          const img = await ensureImage(it.url);
+          const iw = img.width, ih = img.height;
+          const scale = Math.max(w/iw, h/ih);
+          const nw = iw*scale, nh = ih*scale;
+          const ox = (w - nw)/2, oy = (h - nh)/2;
+          ctx2d.drawImage(img, ox, oy, nw, nh);
+        } else if (it.type === 'video'){
+          const vid = await ensureVideo(it.url);
+          try { vid.currentTime = Math.min(vid.duration || 0, Math.max(0, local)); } catch(e){}
+          ctx2d.drawImage(vid, 0, 0, w, h);
+        } else if (it.type === 'audio'){
+          ctx2d.fillStyle = '#111'; ctx2d.fillRect(0,0,w,h);
+          ctx2d.fillStyle = '#fff'; ctx2d.font = `48px sans-serif`; ctx2d.fillText('Audio', 20, 60);
+        }
+        break;
+      }
+      cursor += dur;
+    }
+  }
+
+  // small util functions
+  function formatTime(s){
+    if (!s && s!==0) return '0.00s';
+    const m = Math.floor(s/60); const sec = (s%60).toFixed(2);
+    return (m?m+':':'') + sec + 's';
+  }
+  function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+  function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+  function mediaLoaded(el){ return new Promise(r=>{ if (el.readyState >= 2) return r(); el.oncanplay = ()=>r(); el.onerror = ()=>r(); }); }
+  function escapeHtml(str){ return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  // event bindings
+  fileInput.addEventListener('change', (e)=> addMediaFiles(e.target.files));
+  dropArea.addEventListener('dragover', (e)=>{ e.preventDefault(); dropArea.classList.add('ring-2','ring-indigo-300'); });
+  dropArea.addEventListener('dragleave', (e)=>{ dropArea.classList.remove('ring-2','ring-indigo-300'); });
+  dropArea.addEventListener('drop', (e)=>{ e.preventDefault(); dropArea.classList.remove('ring-2','ring-indigo-300'); addMediaFiles(e.dataTransfer.files);});
+
+  playBtn.addEventListener('click', ()=>{ startPlayback(); });
+  pauseBtn.addEventListener('click', ()=>{ pausePlayback(); });
+
+  exportBtn.addEventListener('click', ()=>{ exportVideo(); });
+
+  // initialize a tiny render loop to update canvas size and show placeholder
+  function initPreview(){
+    previewCanvas.width = previewWrap.clientWidth * devicePixelRatio;
+    previewCanvas.height = previewWrap.clientHeight * devicePixelRatio;
+    ctx.fillStyle='#000'; ctx.fillRect(0,0,previewCanvas.width, previewCanvas.height);
+    ctx.fillStyle='#fff'; ctx.font = `${20*devicePixelRatio}px sans-serif`;
+    ctx.fillText('Preview', 20*devicePixelRatio, 30*devicePixelRatio);
+  }
+  window.addEventListener('resize', ()=> initPreview());
+  initPreview();
+
+  // expose some debug helpers
+  window._editor = { mediaItems, timelineOrder };
+
+  </script>
 </body>
 </html>
-
-
-
-
-
-
