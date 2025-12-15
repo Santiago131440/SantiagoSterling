@@ -1,155 +1,609 @@
-<!DOCTYPE html>
-
-<html class="dark" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Proyectos - Portafolio</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        .liquid-glass-effect {
-            position: relative;
-            overflow: hidden;
-        }
-        .liquid-glass-effect::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(28, 28, 30, 0.1);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1;
-            transition: all 0.3s ease;
-        }
-        .group:hover .liquid-glass-effect::before {
-             backdrop-filter: blur(8px) saturate(120%);
-             -webkit-backdrop-filter: blur(8px) saturate(120%);
-             background: rgba(28, 28, 30, 0);
-        }
-        .parallax-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background-image: radial-gradient(circle at 10% 10%, #4A00E0 0%, transparent 40%),
-                              radial-gradient(circle at 80% 70%, #8E2DE2 0%, transparent 40%);
-            background-color: #101022;
-            opacity: 0.4;
-            transform: scale(1.2);
-        }
-    </style>
-<script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#2525f4",
-              "background-light": "#f5f5f8",
-              "background-dark": "#101022",
-            },
-            fontFamily: {
-              "display": ["Space Grotesk", "sans-serif"]
-            },
-            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
-          },
-        },
-      }
-    </script>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Mobile First App — Demo Profesional</title>  <!-- ==============================
+       RESET & VARIABLES
+       ============================== -->  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-  </style>
-  </head>
-<body class="bg-background-dark font-display">
-<div class="parallax-bg"></div>
-<div class="relative flex h-auto min-h-screen w-full flex-col bg-transparent dark group/design-root overflow-x-hidden">
-<!-- Top App Bar -->
-<div class="sticky top-0 z-20 backdrop-blur-lg bg-background-dark/50">
-<div class="flex flex-col gap-2 p-4 pb-2">
-<div class="flex items-center h-12 justify-between">
-<div class="flex size-12 shrink-0 items-center justify-center">
-<span class="material-symbols-outlined text-white/80" style="font-size: 28px;">arrow_back_ios_new</span>
-</div>
-</div>
-<p class="text-white tracking-light text-[28px] font-bold leading-tight px-2">Proyectos</p>
-</div>
-</div>
-<!-- Main Content: Projects Grid -->
-<main class="flex-1 px-4 py-6">
-<div class="grid grid-cols-1 gap-6">
-<!-- Project Card 1 -->
-<div class="flex flex-col gap-4 group cursor-pointer">
-<div class="relative rounded-xl overflow-hidden aspect-[4/3] liquid-glass-effect">
-<img class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" data-alt="Abstract screenshot of an e-commerce website with bold colors and product images" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA60yYKWUxID0ZoxE3XKKJRMwG83K0mO1AmXA9VCtDiRLOpdnjFg5WgXXY9FT06VxaiPfrTl3MLCRFSOpvi-DDwIBzkWIxmFWPwM3uYIeputWmpogzbm5x7q5Gex64BKSs_cEVi8-GlCMUguP_9h5ilJEo5pUqL6jQ43cpchYvwRmPWr5a_HlZ9kDPibFdfe4qY5_Q8OdX03OGVT8LUgVjSfQ_oHCUU1QvUDg2rESVzOz73zetcon6lJH72EVBwVteEEkxFm5kO8bU"/>
-</div>
-<div class="flex flex-col px-2">
-<h3 class="text-lg font-bold text-gray-100">E-commerce Redesign</h3>
-<p class="text-sm text-gray-400">Plataforma de compras con React y Next.js</p>
-<div class="flex flex-wrap gap-2 mt-3">
-<span class="text-xs font-medium text-blue-300 bg-blue-500/20 px-3 py-1 rounded-full">React</span>
-<span class="text-xs font-medium text-purple-300 bg-purple-500/20 px-3 py-1 rounded-full">Next.js</span>
-<span class="text-xs font-medium text-green-300 bg-green-500/20 px-3 py-1 rounded-full">Tailwind</span>
-</div>
-</div>
-</div>
-<!-- Project Card 2 -->
-<div class="flex flex-col gap-4 group cursor-pointer">
-<div class="relative rounded-xl overflow-hidden aspect-[4/3] liquid-glass-effect">
-<img class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" data-alt="Code editor showing lines of Swift code for an iOS app" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ4hWfJ1CErRwE-GrEn6cxBz4K00GfanVdeDgu_at6EeLn0_Gi7R_Pq_cyrwKFlErDg8Y18SrZAP6Ju8duCQZ_IKUmbRZNeG4dSJ4HrNjUyrMJtpKv92Jh_VblBUa8bHhQAeLnQb8jFgUEGX1eqmPve5SE4XM5pYS_XbVXQBwlnIHY-IOxe6RTi85DlNkbqASxUPSV2Eow2UERWdQzoZGe37l-c8d-_I5MnSLRRlRODqwcq9HlDfW6FDMo8r80X44Np7M3gZHyGrQ"/>
-</div>
-<div class="flex flex-col px-2">
-<h3 class="text-lg font-bold text-gray-100">App de Fitness para iOS</h3>
-<p class="text-sm text-gray-400">Seguimiento de entrenamientos con SwiftUI</p>
-<div class="flex flex-wrap gap-2 mt-3">
-<span class="text-xs font-medium text-orange-300 bg-orange-500/20 px-3 py-1 rounded-full">SwiftUI</span>
-<span class="text-xs font-medium text-red-300 bg-red-500/20 px-3 py-1 rounded-full">Firebase</span>
-<span class="text-xs font-medium text-indigo-300 bg-indigo-500/20 px-3 py-1 rounded-full">Combine</span>
-</div>
-</div>
-</div>
-<!-- Project Card 3 -->
-<div class="flex flex-col gap-4 group cursor-pointer">
-<div class="relative rounded-xl overflow-hidden aspect-[4/3] liquid-glass-effect">
-<img class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" data-alt="A web analytics dashboard with colorful charts and graphs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTOsPnVEWFU_QqfDqWidxDOHa6UiEWYukFfoFbmn7OMGFGAAOY2jk1Bi8MH_sAZAT3ehE04upJ5zS_geS9Tjz1Cl6DQUjcOaLvHNzlVkx_JO5yDuyBsCoWQGwG2e3_dbPi2WYOKijxDOGT6wQdO9sGdK94kb-Mf3TVZjHIrKGVDNnRKSXdu3TLAGy_6Tkkg1E-Semqf8i9Cxv0BZUQHDi0D8bp1c6MXvPw0Ar0BCZe94sNl_-SztPCV48PXqaCmz6jIXTrYu9RLnw"/>
-</div>
-<div class="flex flex-col px-2">
-<h3 class="text-lg font-bold text-gray-100">Dashboard Analítico</h3>
-<p class="text-sm text-gray-400">Visualización de datos con Vue.js y D3</p>
-<div class="flex flex-wrap gap-2 mt-3">
-<span class="text-xs font-medium text-teal-300 bg-teal-500/20 px-3 py-1 rounded-full">Vue.js</span>
-<span class="text-xs font-medium text-yellow-300 bg-yellow-500/20 px-3 py-1 rounded-full">TypeScript</span>
-<span class="text-xs font-medium text-pink-300 bg-pink-500/20 px-3 py-1 rounded-full">D3.js</span>
-</div>
-</div>
-</div>
-<!-- Project Card 4 -->
-<div class="flex flex-col gap-4 group cursor-pointer">
-<div class="relative rounded-xl overflow-hidden aspect-[4/3] liquid-glass-effect">
-<img class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" data-alt="Laptop displaying code for a backend server application" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA893ILKq6Aaf5tt4u73UkHIBE_e7r_3ypSGyd_ipUqwXrOoBHokL7NiA4jRlKSI4Tus4L1Nil5vdp-L0i3NfWSVbmDPahV9Yjzf7WXwfSt7TAowKYQKYJJ4TjDEc4UYwgv50YsYmuSid343k-0XM18tU0K69eICk7BfAmW5lF4lphRVQLvulIP6KXIyrgPbDIqYeWQBovGsInqhekaxs29PYtQQekm706hLHJFoYXuCCL1BN7-lMGD_r21BORB1eQ-geklgRJLBeI"/>
-</div>
-<div class="flex flex-col px-2">
-<h3 class="text-lg font-bold text-gray-100">API para Red Social</h3>
-<p class="text-sm text-gray-400">Backend escalable con Node.js y GraphQL</p>
-<div class="flex flex-wrap gap-2 mt-3">
-<span class="text-xs font-medium text-lime-300 bg-lime-500/20 px-3 py-1 rounded-full">Node.js</span>
-<span class="text-xs font-medium text-rose-300 bg-rose-500/20 px-3 py-1 rounded-full">GraphQL</span>
-<span class="text-xs font-medium text-cyan-300 bg-cyan-500/20 px-3 py-1 rounded-full">PostgreSQL</span>
-</div>
-</div>
-</div>
-</div>
-</main>
-</div>
-</body></html>
+
+    :root {
+      --bg: #0b0c10;
+      --surface: #111318;
+      --card: #181b22;
+      --primary: #4f8cff;
+      --secondary: #22c55e;
+      --danger: #ef4444;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --blur: 20px;
+      --shadow-soft: 0 10px 30px rgba(0,0,0,.35);
+      --shadow-strong: 0 20px 60px rgba(0,0,0,.55);
+      --transition-fast: .25s ease;
+      --transition-slow: .5s cubic-bezier(.4,0,.2,1);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(180deg, #05060a, #0b0c10 40%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    button {
+      border: none;
+      background: none;
+      color: inherit;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    /* ==============================
+       APP LAYOUT
+       ============================== */
+    .app {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ==============================
+       HEADER / NAVBAR
+       ============================== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(var(--blur));
+      background: rgba(10,12,18,.75);
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), #7aa2ff);
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .brand-logo span {
+      font-weight: 900;
+      color: white;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      display: grid;
+      place-items: center;
+      transition: transform var(--transition-fast), background var(--transition-fast);
+    }
+
+    .icon-btn:active {
+      transform: scale(.92);
+      background: rgba(255,255,255,.12);
+    }
+
+    /* ==============================
+       HERO SECTION
+       ============================== */
+    .hero {
+      padding: 28px 16px 40px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .hero-card {
+      background: linear-gradient(160deg, rgba(79,140,255,.15), rgba(24,27,34,.85));
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(255,255,255,.15), transparent 55%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: 1.9rem;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-weight: 600;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #7aa2ff);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.08);
+    }
+
+    .btn:active {
+      transform: scale(.95);
+      box-shadow: none;
+    }
+
+    /* ==============================
+       STATS
+       ============================== */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .stat {
+      background: var(--card);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat strong {
+      font-size: 1.4rem;
+      display: block;
+    }
+
+    .stat span {
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    /* ==============================
+       FEATURES
+       ============================== */
+    .features {
+      padding: 20px 16px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .feature {
+      background: var(--card);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .feature-icon {
+      min-width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: rgba(79,140,255,.15);
+      display: grid;
+      place-items: center;
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .feature h3 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .feature p {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ==============================
+       FEED / CARDS
+       ============================== */
+    .feed {
+      padding: 16px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .post {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: 12px;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #052e16;
+    }
+
+    .post-header small {
+      color: var(--muted);
+      font-size: .75rem;
+    }
+
+    .post-content {
+      font-size: .95rem;
+      line-height: 1.5;
+    }
+
+    .post-actions {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+
+    .action {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    /* ==============================
+       FORM
+       ============================== */
+    .form-section {
+      padding: 24px 16px 40px;
+    }
+
+    .form-card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: 16px;
+    }
+
+    .form-card h2 {
+      font-size: 1.2rem;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    .field input,
+    .field textarea {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--text);
+      font-size: .9rem;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* ==============================
+       BOTTOM NAV (MOBILE)
+       ============================== */
+    .bottom-nav {
+      position: sticky;
+      bottom: 0;
+      z-index: 1000;
+      backdrop-filter: blur(var(--blur));
+      background: rgba(10,12,18,.8);
+      border-top: 1px solid rgba(255,255,255,.05);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .bottom-nav button {
+      padding: 10px 0 14px;
+      display: grid;
+      gap: 4px;
+      place-items: center;
+      font-size: .7rem;
+      color: var(--muted);
+    }
+
+    .bottom-nav button.active {
+      color: var(--primary);
+    }
+
+    /* ==============================
+       FOOTER
+       ============================== */
+    footer {
+      padding: 24px 16px 80px;
+      text-align: center;
+      font-size: .75rem;
+      color: var(--muted);
+    }
+
+    /* ==============================
+       RESPONSIVE (TABLET+)
+       ============================== */
+    @media (min-width: 768px) {
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+
+      .stats {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .feed {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .bottom-nav {
+        display: none;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .features {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .feed {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style></head>
+<body>  <div class="app"><!-- HEADER -->
+<header>
+  <div class="navbar">
+    <div class="brand">
+      <div class="brand-logo"><span>S</span></div>
+      <span>Sterling Mobile</span>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-card">
+    <h1>Aplicación web
+      <br>Mobile First profesional</h1>
+    <p>Diseñada principalmente para celulares, con animaciones suaves, componentes modernos y estructura escalable.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary">Comenzar</button>
+      <button class="btn btn-secondary">Ver demo</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><strong>99%</strong><span>Performance</span></div>
+    <div class="stat"><strong>24/7</strong><span>Disponibilidad</span></div>
+    <div class="stat"><strong>+120</strong><span>Componentes</span></div>
+    <div class="stat"><strong>5★</strong><span>Experiencia</span></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="feature">
+    <div class="feature-icon">⚡</div>
+    <div>
+      <h3>Rendimiento alto</h3>
+      <p>Carga rápida, optimizada para dispositivos móviles de gama media y baja.</p>
+    </div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🎨</div>
+    <div>
+      <h3>Diseño moderno</h3>
+      <p>Inspirado en aplicaciones nativas, con sombras suaves y glassmorphism.</p>
+    </div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🔒</div>
+    <div>
+      <h3>Seguridad</h3>
+      <p>Estructura lista para integrar autenticación y backend real.</p>
+    </div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">📱</div>
+    <div>
+      <h3>Mobile First</h3>
+      <p>Diseñada desde el celular hacia pantallas más grandes.</p>
+    </div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🧩</div>
+    <div>
+      <h3>Escalable</h3>
+      <p>Arquitectura clara para agregar módulos y funcionalidades.</p>
+    </div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🌙</div>
+    <div>
+      <h3>Modo oscuro</h3>
+      <p>Optimizado para uso nocturno y ahorro de batería.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEED -->
+<section class="feed">
+  <article class="post">
+    <div class="post-header">
+      <div class="avatar">A</div>
+      <div>
+        <strong>Ana López</strong><br>
+        <small>Hace 5 min</small>
+      </div>
+    </div>
+    <div class="post-content">Este diseño se siente como una app nativa. Excelente experiencia en móvil.</div>
+    <div class="post-actions">
+      <div class="action">👍 24</div>
+      <div class="action">💬 6</div>
+      <div class="action">↗</div>
+    </div>
+  </article>
+
+  <article class="post">
+    <div class="post-header">
+      <div class="avatar">C</div>
+      <div>
+        <strong>Carlos Méndez</strong><br>
+        <small>Hace 20 min</small>
+      </div>
+    </div>
+    <div class="post-content">Ideal para proyectos SaaS o aplicaciones internas modernas.</div>
+    <div class="post-actions">
+      <div class="action">👍 12</div>
+      <div class="action">💬 3</div>
+      <div class="action">↗</div>
+    </div>
+  </article>
+
+  <article class="post">
+    <div class="post-header">
+      <div class="avatar">S</div>
+      <div>
+        <strong>Sofía Ruiz</strong><br>
+        <small>Hace 1 h</small>
+      </div>
+    </div>
+    <div class="post-content">La navegación inferior es muy cómoda en celulares grandes.</div>
+    <div class="post-actions">
+      <div class="action">👍 31</div>
+      <div class="action">💬 9</div>
+      <div class="action">↗</div>
+    </div>
+  </article>
+</section>
+
+<!-- FORM -->
+<section class="form-section">
+  <div class="form-card">
+    <h2>Contacto</h2>
+    <div class="field">
+      <label>Nombre</label>
+      <input type="text" placeholder="Tu nombre">
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" placeholder="correo@ejemplo.com">
+    </div>
+    <div class="field">
+      <label>Mensaje</label>
+      <textarea placeholder="Escribe tu mensaje"></textarea>
+    </div>
+    <button class="btn btn-primary">Enviar</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  © 2025 Sterling Mobile UI · Mobile First Responsive Demo
+</footer>
+
+  </div>  <!-- BOTTOM NAV -->  <nav class="bottom-nav">
+    <button class="active">🏠<span>Inicio</span></button>
+    <button>🔍<span>Buscar</span></button>
+    <button>➕<span>Nuevo</span></button>
+    <button>👤<span>Perfil</span></button>
+  </nav></body>
+</html>
