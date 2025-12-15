@@ -1,609 +1,218 @@
 <!DOCTYPE html><html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Mobile First App — Demo Profesional</title>  <!-- ==============================
-       RESET & VARIABLES
-       ============================== -->  <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Mobile First Mega UI — Aplicación Web Completa</title>  <!-- ==========================================================
+       MOBILE FIRST – SINGLE FILE HTML
+       Diseño profesional, escalable y extensible
+       ========================================================== -->  <style>
+/* ==============================================================
+   RESET GLOBAL
+   ============================================================== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
-    :root {
-      --bg: #0b0c10;
-      --surface: #111318;
-      --card: #181b22;
-      --primary: #4f8cff;
-      --secondary: #22c55e;
-      --danger: #ef4444;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --radius-sm: 10px;
-      --radius-md: 16px;
-      --radius-lg: 22px;
-      --blur: 20px;
-      --shadow-soft: 0 10px 30px rgba(0,0,0,.35);
-      --shadow-strong: 0 20px 60px rgba(0,0,0,.55);
-      --transition-fast: .25s ease;
-      --transition-slow: .5s cubic-bezier(.4,0,.2,1);
-    }
+/* ==============================================================
+   VARIABLES DE DISEÑO
+   ============================================================== */
+:root{
+  --bg:#0b0d12;
+  --surface:#121621;
+  --panel:#171c2b;
+  --card:#1e2438;
+  --primary:#4f8cff;
+  --secondary:#22c55e;
+  --accent:#a855f7;
+  --warning:#f59e0b;
+  --danger:#ef4444;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --radius-xs:8px;
+  --radius-sm:12px;
+  --radius-md:18px;
+  --radius-lg:26px;
+  --blur:22px;
+  --shadow-soft:0 10px 30px rgba(0,0,0,.35);
+  --shadow-strong:0 30px 70px rgba(0,0,0,.6);
+  --fast:.2s ease;
+  --slow:.5s cubic-bezier(.4,0,.2,1);
+}
 
-    html, body {
-      height: 100%;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
-      background: linear-gradient(180deg, #05060a, #0b0c10 40%);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      scroll-behavior: smooth;
-    }
+html,body{height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu;color:var(--text);background:linear-gradient(180deg,#06070b,#0b0d12)}
+body{display:flex;flex-direction:column;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{background:none;border:none;color:inherit;font-family:inherit}
 
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+/* ==============================================================
+   HEADER SUPERIOR
+   ============================================================== */
+header{position:sticky;top:0;z-index:1000;background:rgba(10,12,18,.78);backdrop-filter:blur(var(--blur));border-bottom:1px solid rgba(255,255,255,.05)}
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}
+.brand-logo{width:38px;height:38px;border-radius:14px;background:linear-gradient(135deg,var(--primary),#7aa2ff);display:grid;place-items:center;box-shadow:var(--shadow-soft)}
+.nav-actions{display:flex;gap:10px}
+.icon-btn{width:42px;height:42px;border-radius:14px;background:rgba(255,255,255,.06);display:grid;place-items:center;transition:transform var(--fast)}
+.icon-btn:active{transform:scale(.9)}
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+/* ==============================================================
+   HERO PRINCIPAL
+   ============================================================== */
+.hero{padding:28px 16px 36px;display:grid;gap:22px}
+.hero-panel{background:linear-gradient(160deg,rgba(79,140,255,.18),rgba(23,28,43,.9));border-radius:var(--radius-lg);padding:26px;box-shadow:var(--shadow-strong);position:relative;overflow:hidden}
+.hero-panel::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at top right,rgba(255,255,255,.18),transparent 55%)}
+.hero h1{font-size:2rem;line-height:1.15;margin-bottom:12px}
+.hero p{color:var(--muted);line-height:1.55;margin-bottom:20px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{padding:12px 20px;border-radius:14px;font-weight:700;box-shadow:var(--shadow-soft);transition:transform var(--fast)}
+.btn-primary{background:linear-gradient(135deg,var(--primary),#7aa2ff);color:#fff}
+.btn-secondary{background:rgba(255,255,255,.08)}
+.btn:active{transform:scale(.94)}
 
-    img {
-      max-width: 100%;
-      display: block;
-    }
+/* ==============================================================
+   PANEL DE MÉTRICAS
+   ============================================================== */
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.metric{background:var(--panel);border-radius:var(--radius-md);padding:18px;text-align:center}
+.metric strong{font-size:1.5rem;display:block}
+.metric span{font-size:.8rem;color:var(--muted)}
 
-    button {
-      border: none;
-      background: none;
-      color: inherit;
-      font-family: inherit;
-      cursor: pointer;
-    }
+/* ==============================================================
+   SECCIÓN DE SERVICIOS
+   ============================================================== */
+.services{padding:18px 16px;display:grid;gap:16px}
+.service{background:var(--card);border-radius:var(--radius-md);padding:18px;display:flex;gap:14px}
+.service-icon{min-width:44px;height:44px;border-radius:14px;background:rgba(168,85,247,.18);display:grid;place-items:center;font-weight:900;color:var(--accent)}
+.service h3{font-size:1rem;margin-bottom:4px}
+.service p{font-size:.88rem;color:var(--muted);line-height:1.45}
 
-    /* ==============================
-       APP LAYOUT
-       ============================== */
-    .app {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
+/* ==============================================================
+   PANEL DASHBOARD
+   ============================================================== */
+.dashboard{padding:18px 16px;display:grid;gap:16px}
+.panel{background:var(--surface);border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow-soft)}
+.panel h2{font-size:1.1rem;margin-bottom:12px}
 
-    /* ==============================
-       HEADER / NAVBAR
-       ============================== */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      backdrop-filter: blur(var(--blur));
-      background: rgba(10,12,18,.75);
-      border-bottom: 1px solid rgba(255,255,255,.05);
-    }
+.progress{height:10px;border-radius:10px;background:rgba(255,255,255,.08);overflow:hidden}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--secondary),#4ade80)}
 
-    .navbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 16px;
-    }
+/* ==============================================================
+   FEED EXTENDIDO DE ARTÍCULOS
+   ============================================================== */
+.feed{padding:16px;display:grid;gap:16px}
+.article{background:var(--panel);border-radius:var(--radius-lg);padding:16px;display:grid;gap:12px}
+.article-header{display:flex;align-items:center;gap:10px}
+.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);display:grid;place-items:center;font-weight:800;color:#052e16}
+.article small{color:var(--muted);font-size:.75rem}
+.article-content{font-size:.95rem;line-height:1.55}
+.article-actions{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted)}
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      font-size: 1.05rem;
-    }
+/* ==============================================================
+   GALERÍA / MEDIA PANEL
+   ============================================================== */
+.gallery{padding:18px 16px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.media{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:var(--radius-md);height:120px;display:grid;place-items:center;font-weight:700;color:var(--muted)}
 
-    .brand-logo {
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--primary), #7aa2ff);
-      display: grid;
-      place-items: center;
-      box-shadow: var(--shadow-soft);
-    }
+/* ==============================================================
+   SECCIÓN FAQ
+   ============================================================== */
+.faq{padding:18px 16px;display:grid;gap:12px}
+.faq-item{background:var(--card);border-radius:var(--radius-md);padding:16px}
+.faq-item h4{font-size:.95rem;margin-bottom:6px}
+.faq-item p{font-size:.85rem;color:var(--muted);line-height:1.45}
 
-    .brand-logo span {
-      font-weight: 900;
-      color: white;
-    }
+/* ==============================================================
+   FORMULARIO AVANZADO
+   ============================================================== */
+.form-section{padding:24px 16px 40px}
+.form-card{background:var(--panel);border-radius:var(--radius-lg);padding:20px;display:grid;gap:14px}
+.form-card h2{font-size:1.2rem}
+.field{display:grid;gap:6px}
+.field label{font-size:.75rem;color:var(--muted)}
+.field input,.field textarea,.field select{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;color:var(--text)}
 
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+/* ==============================================================
+   FOOTER
+   ============================================================== */
+footer{padding:24px 16px 90px;text-align:center;font-size:.75rem;color:var(--muted)}
 
-    .icon-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.06);
-      display: grid;
-      place-items: center;
-      transition: transform var(--transition-fast), background var(--transition-fast);
-    }
+/* ==============================================================
+   BOTTOM NAV MOBILE
+   ============================================================== */
+.bottom-nav{position:sticky;bottom:0;z-index:1000;background:rgba(10,12,18,.85);backdrop-filter:blur(var(--blur));border-top:1px solid rgba(255,255,255,.05);display:grid;grid-template-columns:repeat(5,1fr)}
+.bottom-nav button{padding:10px 0 14px;display:grid;place-items:center;gap:4px;font-size:.7rem;color:var(--muted)}
+.bottom-nav button.active{color:var(--primary)}
 
-    .icon-btn:active {
-      transform: scale(.92);
-      background: rgba(255,255,255,.12);
-    }
-
-    /* ==============================
-       HERO SECTION
-       ============================== */
-    .hero {
-      padding: 28px 16px 40px;
-      display: grid;
-      gap: 24px;
-    }
-
-    .hero-card {
-      background: linear-gradient(160deg, rgba(79,140,255,.15), rgba(24,27,34,.85));
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top right, rgba(255,255,255,.15), transparent 55%);
-      pointer-events: none;
-    }
-
-    .hero h1 {
-      font-size: 1.9rem;
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-
-    .hero p {
-      color: var(--muted);
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 12px 18px;
-      border-radius: 14px;
-      font-weight: 600;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary), #7aa2ff);
-      color: white;
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,.08);
-    }
-
-    .btn:active {
-      transform: scale(.95);
-      box-shadow: none;
-    }
-
-    /* ==============================
-       STATS
-       ============================== */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-
-    .stat {
-      background: var(--card);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      text-align: center;
-    }
-
-    .stat strong {
-      font-size: 1.4rem;
-      display: block;
-    }
-
-    .stat span {
-      font-size: .8rem;
-      color: var(--muted);
-    }
-
-    /* ==============================
-       FEATURES
-       ============================== */
-    .features {
-      padding: 20px 16px;
-      display: grid;
-      gap: 16px;
-    }
-
-    .feature {
-      background: var(--card);
-      border-radius: var(--radius-md);
-      padding: 18px;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-    }
-
-    .feature-icon {
-      min-width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: rgba(79,140,255,.15);
-      display: grid;
-      place-items: center;
-      color: var(--primary);
-      font-weight: 800;
-    }
-
-    .feature h3 {
-      font-size: 1rem;
-      margin-bottom: 4px;
-    }
-
-    .feature p {
-      font-size: .9rem;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-
-    /* ==============================
-       FEED / CARDS
-       ============================== */
-    .feed {
-      padding: 16px;
-      display: grid;
-      gap: 16px;
-    }
-
-    .post {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      padding: 16px;
-      box-shadow: var(--shadow-soft);
-      display: grid;
-      gap: 12px;
-    }
-
-    .post-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      color: #052e16;
-    }
-
-    .post-header small {
-      color: var(--muted);
-      font-size: .75rem;
-    }
-
-    .post-content {
-      font-size: .95rem;
-      line-height: 1.5;
-    }
-
-    .post-actions {
-      display: flex;
-      justify-content: space-between;
-      padding-top: 6px;
-      border-top: 1px solid rgba(255,255,255,.05);
-    }
-
-    .action {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: .85rem;
-      color: var(--muted);
-    }
-
-    /* ==============================
-       FORM
-       ============================== */
-    .form-section {
-      padding: 24px 16px 40px;
-    }
-
-    .form-card {
-      background: var(--card);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      box-shadow: var(--shadow-soft);
-      display: grid;
-      gap: 16px;
-    }
-
-    .form-card h2 {
-      font-size: 1.2rem;
-    }
-
-    .field {
-      display: grid;
-      gap: 6px;
-    }
-
-    .field label {
-      font-size: .8rem;
-      color: var(--muted);
-    }
-
-    .field input,
-    .field textarea {
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 12px;
-      padding: 12px;
-      color: var(--text);
-      font-size: .9rem;
-    }
-
-    .field textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    /* ==============================
-       BOTTOM NAV (MOBILE)
-       ============================== */
-    .bottom-nav {
-      position: sticky;
-      bottom: 0;
-      z-index: 1000;
-      backdrop-filter: blur(var(--blur));
-      background: rgba(10,12,18,.8);
-      border-top: 1px solid rgba(255,255,255,.05);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .bottom-nav button {
-      padding: 10px 0 14px;
-      display: grid;
-      gap: 4px;
-      place-items: center;
-      font-size: .7rem;
-      color: var(--muted);
-    }
-
-    .bottom-nav button.active {
-      color: var(--primary);
-    }
-
-    /* ==============================
-       FOOTER
-       ============================== */
-    footer {
-      padding: 24px 16px 80px;
-      text-align: center;
-      font-size: .75rem;
-      color: var(--muted);
-    }
-
-    /* ==============================
-       RESPONSIVE (TABLET+)
-       ============================== */
-    @media (min-width: 768px) {
-      .hero h1 {
-        font-size: 2.4rem;
-      }
-
-      .stats {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .features {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .feed {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .bottom-nav {
-        display: none;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .features {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .feed {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
+/* ==============================================================
+   RESPONSIVE TABLET / DESKTOP
+   ============================================================== */
+@media(min-width:768px){
+  .metrics{grid-template-columns:repeat(4,1fr)}
+  .services{grid-template-columns:repeat(2,1fr)}
+  .feed{grid-template-columns:repeat(2,1fr)}
+  .gallery{grid-template-columns:repeat(4,1fr)}
+  .bottom-nav{display:none}
+}
+@media(min-width:1024px){
+  .services{grid-template-columns:repeat(3,1fr)}
+  .feed{grid-template-columns:repeat(3,1fr)}
+}
   </style></head>
-<body>  <div class="app"><!-- HEADER -->
-<header>
+<body><header>
   <div class="navbar">
-    <div class="brand">
-      <div class="brand-logo"><span>S</span></div>
-      <span>Sterling Mobile</span>
-    </div>
-    <div class="nav-actions">
-      <button class="icon-btn">☰</button>
-    </div>
+    <div class="brand"><div class="brand-logo">S</div>Sterling App</div>
+    <div class="nav-actions"><button class="icon-btn">☰</button></div>
   </div>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-card">
-    <h1>Aplicación web
-      <br>Mobile First profesional</h1>
-    <p>Diseñada principalmente para celulares, con animaciones suaves, componentes modernos y estructura escalable.</p>
+</header><section class="hero">
+  <div class="hero-panel">
+    <h1>Aplicación Web Mobile First<br>de Alta Complejidad</h1>
+    <p>Estructura completa con múltiples paneles, secciones y artículos, diseñada para escalar como SaaS o app empresarial.</p>
     <div class="hero-actions">
-      <button class="btn btn-primary">Comenzar</button>
-      <button class="btn btn-secondary">Ver demo</button>
+      <button class="btn btn-primary">Empezar</button>
+      <button class="btn btn-secondary">Documentación</button>
     </div>
+  </div>  <div class="metrics">
+    <div class="metric"><strong>128</strong><span>Módulos</span></div>
+    <div class="metric"><strong>99.9%</strong><span>Uptime</span></div>
+    <div class="metric"><strong>24k</strong><span>Usuarios</span></div>
+    <div class="metric"><strong>5★</strong><span>Rating</span></div>
   </div>
-
-  <div class="stats">
-    <div class="stat"><strong>99%</strong><span>Performance</span></div>
-    <div class="stat"><strong>24/7</strong><span>Disponibilidad</span></div>
-    <div class="stat"><strong>+120</strong><span>Componentes</span></div>
-    <div class="stat"><strong>5★</strong><span>Experiencia</span></div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features">
-  <div class="feature">
-    <div class="feature-icon">⚡</div>
-    <div>
-      <h3>Rendimiento alto</h3>
-      <p>Carga rápida, optimizada para dispositivos móviles de gama media y baja.</p>
-    </div>
-  </div>
-  <div class="feature">
-    <div class="feature-icon">🎨</div>
-    <div>
-      <h3>Diseño moderno</h3>
-      <p>Inspirado en aplicaciones nativas, con sombras suaves y glassmorphism.</p>
-    </div>
-  </div>
-  <div class="feature">
-    <div class="feature-icon">🔒</div>
-    <div>
-      <h3>Seguridad</h3>
-      <p>Estructura lista para integrar autenticación y backend real.</p>
-    </div>
-  </div>
-  <div class="feature">
-    <div class="feature-icon">📱</div>
-    <div>
-      <h3>Mobile First</h3>
-      <p>Diseñada desde el celular hacia pantallas más grandes.</p>
-    </div>
-  </div>
-  <div class="feature">
-    <div class="feature-icon">🧩</div>
-    <div>
-      <h3>Escalable</h3>
-      <p>Arquitectura clara para agregar módulos y funcionalidades.</p>
-    </div>
-  </div>
-  <div class="feature">
-    <div class="feature-icon">🌙</div>
-    <div>
-      <h3>Modo oscuro</h3>
-      <p>Optimizado para uso nocturno y ahorro de batería.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FEED -->
-<section class="feed">
-  <article class="post">
-    <div class="post-header">
-      <div class="avatar">A</div>
-      <div>
-        <strong>Ana López</strong><br>
-        <small>Hace 5 min</small>
-      </div>
-    </div>
-    <div class="post-content">Este diseño se siente como una app nativa. Excelente experiencia en móvil.</div>
-    <div class="post-actions">
-      <div class="action">👍 24</div>
-      <div class="action">💬 6</div>
-      <div class="action">↗</div>
-    </div>
-  </article>
-
-  <article class="post">
-    <div class="post-header">
-      <div class="avatar">C</div>
-      <div>
-        <strong>Carlos Méndez</strong><br>
-        <small>Hace 20 min</small>
-      </div>
-    </div>
-    <div class="post-content">Ideal para proyectos SaaS o aplicaciones internas modernas.</div>
-    <div class="post-actions">
-      <div class="action">👍 12</div>
-      <div class="action">💬 3</div>
-      <div class="action">↗</div>
-    </div>
-  </article>
-
-  <article class="post">
-    <div class="post-header">
-      <div class="avatar">S</div>
-      <div>
-        <strong>Sofía Ruiz</strong><br>
-        <small>Hace 1 h</small>
-      </div>
-    </div>
-    <div class="post-content">La navegación inferior es muy cómoda en celulares grandes.</div>
-    <div class="post-actions">
-      <div class="action">👍 31</div>
-      <div class="action">💬 9</div>
-      <div class="action">↗</div>
-    </div>
-  </article>
-</section>
-
-<!-- FORM -->
-<section class="form-section">
+</section><section class="services">
+  <div class="service"><div class="service-icon">⚙</div><div><h3>Configuración</h3><p>Panel administrativo modular y extensible.</p></div></div>
+  <div class="service"><div class="service-icon">📊</div><div><h3>Analítica</h3><p>Dashboards en tiempo real y métricas clave.</p></div></div>
+  <div class="service"><div class="service-icon">🔐</div><div><h3>Seguridad</h3><p>Preparado para autenticación y roles.</p></div></div>
+  <div class="service"><div class="service-icon">📱</div><div><h3>Mobile UX</h3><p>Navegación optimizada para pulgar.</p></div></div>
+  <div class="service"><div class="service-icon">☁</div><div><h3>Cloud</h3><p>Integración con backend moderno.</p></div></div>
+  <div class="service"><div class="service-icon">🧩</div><div><h3>Escalabilidad</h3><p>Arquitectura preparada para crecer.</p></div></div>
+</section><section class="dashboard">
+  <div class="panel"><h2>Progreso del Sistema</h2><div class="progress"><span style="width:78%"></span></div></div>
+  <div class="panel"><h2>Estado General</h2><p class="article-content">Todos los servicios operativos sin incidencias.</p></div>
+</section><section class="feed">
+  <article class="article"><div class="article-header"><div class="avatar">A</div><div><strong>Ana</strong><br><small>Hace 5 min</small></div></div><div class="article-content">Nueva funcionalidad desplegada correctamente.</div><div class="article-actions"><span>👍 18</span><span>💬 4</span><span>↗</span></div></article>
+  <article class="article"><div class="article-header"><div class="avatar">C</div><div><strong>Carlos</strong><br><small>Hace 20 min</small></div></div><div class="article-content">El rendimiento móvil mejoró un 30%.</div><div class="article-actions"><span>👍 22</span><span>💬 6</span><span>↗</span></div></article>
+  <article class="article"><div class="article-header"><div class="avatar">S</div><div><strong>Sofía</strong><br><small>Hace 1 h</small></div></div><div class="article-content">Excelente UX en dispositivos Android.</div><div class="article-actions"><span>👍 35</span><span>💬 11</span><span>↗</span></div></article>
+  <article class="article"><div class="article-header"><div class="avatar">M</div><div><strong>Mario</strong><br><small>Hace 2 h</small></div></div><div class="article-content">Paneles claros y navegación fluida.</div><div class="article-actions"><span>👍 15</span><span>💬 2</span><span>↗</span></div></article>
+</section><section class="gallery">
+  <div class="media">Media 1</div>
+  <div class="media">Media 2</div>
+  <div class="media">Media 3</div>
+  <div class="media">Media 4</div>
+</section><section class="faq">
+  <div class="faq-item"><h4>¿Es escalable?</h4><p>Sí, la estructura está pensada para proyectos grandes.</p></div>
+  <div class="faq-item"><h4>¿Incluye backend?</h4><p>Frontend listo para integración con APIs reales.</p></div>
+  <div class="faq-item"><h4>¿Mobile First real?</h4><p>Diseñada desde móvil hacia desktop.</p></div>
+</section><section class="form-section">
   <div class="form-card">
     <h2>Contacto</h2>
-    <div class="field">
-      <label>Nombre</label>
-      <input type="text" placeholder="Tu nombre">
-    </div>
-    <div class="field">
-      <label>Email</label>
-      <input type="email" placeholder="correo@ejemplo.com">
-    </div>
-    <div class="field">
-      <label>Mensaje</label>
-      <textarea placeholder="Escribe tu mensaje"></textarea>
-    </div>
+    <div class="field"><label>Nombre</label><input></div>
+    <div class="field"><label>Email</label><input type="email"></div>
+    <div class="field"><label>Tipo de proyecto</label><select><option>SaaS</option><option>App interna</option><option>Landing</option></select></div>
+    <div class="field"><label>Mensaje</label><textarea></textarea></div>
     <button class="btn btn-primary">Enviar</button>
   </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  © 2025 Sterling Mobile UI · Mobile First Responsive Demo
-</footer>
-
-  </div>  <!-- BOTTOM NAV -->  <nav class="bottom-nav">
-    <button class="active">🏠<span>Inicio</span></button>
-    <button>🔍<span>Buscar</span></button>
-    <button>➕<span>Nuevo</span></button>
-    <button>👤<span>Perfil</span></button>
-  </nav></body>
+</section><footer>© 2025 Sterling Mobile First UI · Aplicación Web Completa</footer><nav class="bottom-nav">
+  <button class="active">🏠<span>Inicio</span></button>
+  <button>📊<span>Stats</span></button>
+  <button>➕<span>Nuevo</span></button>
+  <button>🔔<span>Alertas</span></button>
+  <button>👤<span>Perfil</span></button>
+</nav></body>
 </html>
