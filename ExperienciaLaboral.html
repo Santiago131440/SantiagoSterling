@@ -303,27 +303,6 @@ save.onclick=()=>{
   a.download="paint-pro.png";
   a.click();
 };
-
-/* ===============================
-   LAYERS UI
-================================ */
-function renderLayers(){
-  layerList.innerHTML="";
-  layers.forEach((l,i)=>{
-    const d=document.createElement("div");
-    d.className="layer"+(i===activeLayer?" active":"");
-    d.textContent="Capa "+(i+1);
-    d.onclick=()=>activeLayer=i;
-    layerList.appendChild(d);
-  });
-}
-addLayer.onclick=()=>{
-  layers.push({id:Date.now(),img:null});
-  activeLayer=layers.length-1;
-  renderLayers();
-};
-renderLayers();
-snapshot();
 </script>
 
 </body>
