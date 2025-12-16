@@ -3,118 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paint Mobile Pro</title>
+<title>Paint Pro iPad</title>
 
 <style>
+/* ===============================
+   VARIABLES SISTEMA
+================================ */
 :root{
   --bg:#f2f2f7;
-  --panel:#ffffff;
-  --accent:#007aff;
+  --panel:#ffffffcc;
   --border:#d1d1d6;
-  --shadow:0 10px 30px rgba(0,0,0,.1);
+  --accent:#0a84ff;
+  --text:#111;
+  --shadow:0 20px 40px rgba(0,0,0,.18);
+}
+
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0d0d0f;
+    --panel:#1c1c1ecc;
+    --border:#2c2c2e;
+    --text:#f5f5f7;
+  }
 }
 
 *{
   box-sizing:border-box;
-  -webkit-tap-highlight-color: transparent;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
 }
 
 body{
   margin:0;
-  background:var(--bg);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
-  display:flex;
-  flex-direction:column;
   height:100vh;
   overflow:hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI";
 }
 
-/* =======================
-   HEADER
-======================= */
-header{
-  background:var(--panel);
-  padding:12px 16px;
-  text-align:center;
-  font-weight:600;
-  box-shadow:var(--shadow);
-  z-index:10;
-}
-
-/* =======================
-   CANVAS AREA
-======================= */
-.main{
-  flex:1;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:10px;
-}
-
-.canvas-wrapper{
-  background:#fff;
-  border-radius:14px;
-  box-shadow:var(--shadow);
+/* ===============================
+   CANVAS
+================================ */
+#viewport{
+  position:absolute;
+  inset:0;
   overflow:hidden;
-  width:100%;
-  max-width:1000px;
-  height:100%;
 }
 
-canvas{
-  width:100%;
-  height:100%;
+#canvas{
+  position:absolute;
+  top:0;
+  left:0;
+  background:#fff;
   touch-action:none;
-  background:white;
 }
 
-/* =======================
-   TOOLBAR
-======================= */
-.toolbar{
+/* ===============================
+   FLOATING PANELS
+================================ */
+.panel{
+  position:fixed;
   background:var(--panel);
-  padding:10px;
+  backdrop-filter:blur(30px);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:14px;
+  box-shadow:var(--shadow);
+}
+
+/* TOOLBAR */
+#tools{
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
   display:flex;
+  flex-direction:column;
   gap:10px;
-  flex-wrap:wrap;
-  justify-content:space-around;
-  box-shadow:0 -5px 20px rgba(0,0,0,.1);
 }
 
 .tool{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:#fff;
+  font-size:22px;
   display:flex;
-  flex-direction:column;
   align-items:center;
-  font-size:11px;
+  justify-content:center;
   cursor:pointer;
 }
 
-.tool button,
-.tool input{
-  width:44px;
-  height:44px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:white;
-  font-size:18px;
-}
-
-.tool button.active{
+.tool.active{
   background:var(--accent);
   color:white;
 }
 
-input[type=range]{
-  width:80px;
+/* OPTIONS */
+#options{
+  right:14px;
+  top:20px;
+  width:220px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
 }
 
-/* =======================
+/* LAYERS */
+#layers{
+  right:14px;
+  bottom:20px;
+  width:220px;
+}
+
+.layer{
+  padding:8px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  margin-bottom:6px;
+  background:white;
+  cursor:pointer;
+}
+
+.layer.active{
+  border-color:var(--accent);
+}
+
+/* SLIDERS */
+input[type=range]{
+  width:100%;
+}
+
+/* ===============================
    DESKTOP
-======================= */
-@media(min-width:900px){
-  .toolbar{
-    justify-content:center;
+================================ */
+@media(max-width:900px){
+  #options,#layers{
+    width:180px;
   }
 }
 </style>
@@ -122,201 +148,181 @@ input[type=range]{
 
 <body>
 
-<header>🎨 Paint Mobile Pro</header>
-
-<div class="main">
-  <div class="canvas-wrapper">
-    <canvas id="canvas"></canvas>
-  </div>
+<div id="viewport">
+  <canvas id="canvas"></canvas>
 </div>
 
-<div class="toolbar">
-  <div class="tool">
-    <button data-tool="pencil" class="active">✏️</button>
-    Lápiz
-  </div>
-  <div class="tool">
-    <button data-tool="marker">🖊️</button>
-    Marcador
-  </div>
-  <div class="tool">
-    <button data-tool="eraser">🧽</button>
-    Borrar
-  </div>
-  <div class="tool">
-    <button data-tool="line">📏</button>
-    Línea
-  </div>
-  <div class="tool">
-    <button data-tool="rect">⬛</button>
-    Cuadro
-  </div>
-  <div class="tool">
-    <button data-tool="circle">⚪</button>
-    Círculo
-  </div>
-  <div class="tool">
-    <input type="color" id="color" value="#000000">
-    Color
-  </div>
-  <div class="tool">
-    <input type="range" id="size" min="1" max="40" value="5">
-    Grosor
-  </div>
-  <div class="tool">
-    <button id="undo">↩️</button>
-    Undo
-  </div>
-  <div class="tool">
-    <button id="redo">↪️</button>
-    Redo
-  </div>
-  <div class="tool">
-    <button id="clear">🗑️</button>
-    Limpiar
-  </div>
-  <div class="tool">
-    <button id="save">💾</button>
-    Guardar
-  </div>
+<!-- TOOLS -->
+<div class="panel" id="tools">
+  <div class="tool active" data-tool="pen">✏️</div>
+  <div class="tool" data-tool="brush">🖌️</div>
+  <div class="tool" data-tool="marker">🖊️</div>
+  <div class="tool" data-tool="eraser">🧽</div>
+  <div class="tool" data-tool="line">📏</div>
+  <div class="tool" data-tool="rect">⬛</div>
+  <div class="tool" data-tool="circle">⚪</div>
+  <div class="tool" id="undo">↩️</div>
+  <div class="tool" id="redo">↪️</div>
+</div>
+
+<!-- OPTIONS -->
+<div class="panel" id="options">
+  <label>Color <input type="color" id="color" value="#000000"></label>
+  <label>Tamaño <input type="range" id="size" min="1" max="40" value="6"></label>
+  <button id="save">Exportar PNG</button>
+</div>
+
+<!-- LAYERS -->
+<div class="panel" id="layers">
+  <strong>Capas</strong>
+  <div id="layerList"></div>
+  <button id="addLayer">+ Nueva capa</button>
 </div>
 
 <script>
+/* ===============================
+   ENGINE
+================================ */
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+let dpr = window.devicePixelRatio || 1;
 
-let tool = "pencil";
-let drawing = false;
-let startX = 0;
-let startY = 0;
-let history = [];
-let redoStack = [];
-
-function resizeCanvas(){
-  const rect = canvas.parentElement.getBoundingClientRect();
-  canvas.width = rect.width;
-  canvas.height = rect.height;
-  restore();
+function resize(){
+  canvas.width = innerWidth * dpr;
+  canvas.height = innerHeight * dpr;
+  canvas.style.width = innerWidth+"px";
+  canvas.style.height = innerHeight+"px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
 }
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
+resize();
+addEventListener("resize",resize);
 
-function saveState(){
+/* ===============================
+   STATE
+================================ */
+let tool="pen";
+let drawing=false;
+let startX,startY;
+let history=[],redoStack=[];
+let layers=[{id:Date.now(),img:null}];
+let activeLayer=0;
+
+/* ===============================
+   HISTORY
+================================ */
+function snapshot(){
   history.push(canvas.toDataURL());
-  redoStack = [];
+  redoStack=[];
 }
 
-function restore(){
-  if(history.length){
-    const img = new Image();
-    img.src = history[history.length-1];
-    img.onload = ()=>ctx.drawImage(img,0,0);
-  }
+/* ===============================
+   INPUT
+================================ */
+function pos(e){
+  const r=canvas.getBoundingClientRect();
+  const t=e.touches?e.touches[0]:e;
+  return {x:t.clientX-r.left,y:t.clientY-r.top};
 }
 
-function getPos(e){
-  const rect = canvas.getBoundingClientRect();
-  const t = e.touches ? e.touches[0] : e;
-  return {
-    x: t.clientX - rect.left,
-    y: t.clientY - rect.top
-  };
-}
-
-function start(e){
-  drawing = true;
-  saveState();
-  const pos = getPos(e);
-  startX = pos.x;
-  startY = pos.y;
+canvas.addEventListener("pointerdown",e=>{
+  snapshot();
+  drawing=true;
+  const p=pos(e);
+  startX=p.x; startY=p.y;
   ctx.beginPath();
-  ctx.moveTo(startX,startY);
-}
+  ctx.moveTo(p.x,p.y);
+});
 
-function move(e){
+canvas.addEventListener("pointermove",e=>{
   if(!drawing) return;
-  const pos = getPos(e);
-  ctx.lineWidth = size.value;
-  ctx.lineCap = "round";
-  ctx.strokeStyle = tool==="eraser" ? "#fff" : color.value;
+  const p=pos(e);
+  ctx.strokeStyle=tool==="eraser"?"#fff":color.value;
+  ctx.lineWidth=size.value;
+  ctx.lineCap="round";
 
-  if(tool==="pencil" || tool==="marker" || tool==="eraser"){
-    ctx.lineTo(pos.x,pos.y);
+  if(["pen","brush","marker","eraser"].includes(tool)){
+    ctx.lineTo(p.x,p.y);
     ctx.stroke();
   }
-}
+});
 
-function end(e){
+canvas.addEventListener("pointerup",e=>{
   if(!drawing) return;
-  drawing = false;
-  const pos = getPos(e);
+  drawing=false;
+  const p=pos(e);
   ctx.closePath();
-
-  ctx.strokeStyle = color.value;
-  ctx.lineWidth = size.value;
 
   if(tool==="line"){
     ctx.beginPath();
     ctx.moveTo(startX,startY);
-    ctx.lineTo(pos.x,pos.y);
+    ctx.lineTo(p.x,p.y);
     ctx.stroke();
   }
-
   if(tool==="rect"){
-    ctx.strokeRect(startX,startY,pos.x-startX,pos.y-startY);
+    ctx.strokeRect(startX,startY,p.x-startX,p.y-startY);
   }
-
   if(tool==="circle"){
     ctx.beginPath();
-    const r = Math.hypot(pos.x-startX,pos.y-startY);
-    ctx.arc(startX,startY,r,0,Math.PI*2);
+    ctx.arc(startX,startY,Math.hypot(p.x-startX,p.y-startY),0,Math.PI*2);
     ctx.stroke();
-  }
-}
-
-canvas.addEventListener("mousedown",start);
-canvas.addEventListener("mousemove",move);
-canvas.addEventListener("mouseup",end);
-canvas.addEventListener("touchstart",start);
-canvas.addEventListener("touchmove",move);
-canvas.addEventListener("touchend",end);
-
-document.querySelectorAll("[data-tool]").forEach(btn=>{
-  btn.onclick=()=>{
-    document.querySelectorAll("[data-tool]").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    tool = btn.dataset.tool;
   }
 });
 
+/* ===============================
+   UI
+================================ */
+document.querySelectorAll(".tool[data-tool]").forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll(".tool").forEach(b=>b.classList.remove("active"));
+    t.classList.add("active");
+    tool=t.dataset.tool;
+  };
+});
+
 undo.onclick=()=>{
-  if(history.length>1){
+  if(history.length){
     redoStack.push(history.pop());
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    restore();
+    const img=new Image();
+    img.src=history.at(-1);
+    img.onload=()=>ctx.drawImage(img,0,0);
   }
 };
 
 redo.onclick=()=>{
   if(redoStack.length){
-    history.push(redoStack.pop());
-    restore();
+    const img=new Image();
+    img.src=redoStack.pop();
+    img.onload=()=>ctx.drawImage(img,0,0);
   }
-};
-
-clear.onclick=()=>{
-  saveState();
-  ctx.clearRect(0,0,canvas.width,canvas.height);
 };
 
 save.onclick=()=>{
   const a=document.createElement("a");
   a.href=canvas.toDataURL("image/png");
-  a.download="dibujo.png";
+  a.download="paint-pro.png";
   a.click();
 };
 
-saveState();
+/* ===============================
+   LAYERS UI
+================================ */
+function renderLayers(){
+  layerList.innerHTML="";
+  layers.forEach((l,i)=>{
+    const d=document.createElement("div");
+    d.className="layer"+(i===activeLayer?" active":"");
+    d.textContent="Capa "+(i+1);
+    d.onclick=()=>activeLayer=i;
+    layerList.appendChild(d);
+  });
+}
+addLayer.onclick=()=>{
+  layers.push({id:Date.now(),img:null});
+  activeLayer=layers.length-1;
+  renderLayers();
+};
+renderLayers();
+snapshot();
 </script>
 
 </body>
