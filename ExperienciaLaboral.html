@@ -2,416 +2,321 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Sterling App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paint Mobile Pro</title>
 
 <style>
-/* =========================================================
-   RESET + VARIABLES iOS
-   ========================================================= */
+:root{
+  --bg:#f2f2f7;
+  --panel:#ffffff;
+  --accent:#007aff;
+  --border:#d1d1d6;
+  --shadow:0 10px 30px rgba(0,0,0,.1);
+}
+
 *{
-  margin:0;
-  padding:0;
   box-sizing:border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
-:root{
-  --bg:#ffffff;
-  --panel:rgba(255,255,255,.08);
-  --glass:rgba(255,255,255,.14);
-  --border:rgba(255,255,255,.18);
-  --primary:#0a84ff;
-  --secondary:#64d2ff;
-  --accent:#5e5ce6;
-  --text:#000000;
-  --muted:#696969;
-  --radius:15px;
-  --blur:22px;
-  --shadow:0 25px 60px rgba(0,0,0,.45);
+body{
+  margin:0;
+  background:var(--bg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  overflow:hidden;
 }
 
-/* =========================================================
-   BASE
-   ========================================================= */
-html,body{
+/* =======================
+   HEADER
+======================= */
+header{
+  background:var(--panel);
+  padding:12px 16px;
+  text-align:center;
+  font-weight:600;
+  box-shadow:var(--shadow);
+  z-index:10;
+}
+
+/* =======================
+   CANVAS AREA
+======================= */
+.main{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:10px;
+}
+
+.canvas-wrapper{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  width:100%;
+  max-width:1000px;
+  height:100%;
+}
+
+canvas{
   width:100%;
   height:100%;
-  background:
-    radial-gradient(900px 500px at 15% -10%, #1b2a4a, transparent),
-    radial-gradient(800px 400px at 110% 20%, #2a1a4a, transparent),
-    var(--bg);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Helvetica,Arial,sans-serif;
-  color:var(--text);
-  overflow-x:hidden;
+  touch-action:none;
+  background:white;
 }
 
-/* =========================================================
-   APP WRAPPER
-   ========================================================= */
-.app{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-}
-
-/* =========================================================
-   NAV BAR iOS
-   ========================================================= */
-.navbar{
-  position:sticky;
-  top:0;
-  z-index:100;
-  backdrop-filter: blur(var(--blur));
-  background:linear-gradient(
-    to bottom,
-    rgba(15,17,22,.85),
-    rgba(15,17,22,.55)
-  );
-  border-bottom:1px solid var(--border);
-}
-
-.nav-inner{
-  max-width:1200px;
-  margin:auto;
-  padding:14px 18px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.nav-title{
-  font-weight:700;
-  font-size:1.05rem;
-  letter-spacing:.4px;
-}
-
-.nav-btn{
-  width:38px;
-  height:38px;
-  border-radius:6px;
-  background:var(--glass);
-  border:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-/* =========================================================
-   HERO iOS CARD
-   ========================================================= */
-.hero{
-  padding:44px 18px 32px;
-}
-
-.hero-card{
-  background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,.04));
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:30px;
-  box-shadow:var(--shadow);
-  transform:translateY(20px);
-  opacity:0;
-  animation:fadeUp .9s ease forwards;
-}
-
-.hero h1{
-  font-size:2.1rem;
-  line-height:1.15;
-  margin-bottom:14px;
-}
-
-.hero p{
-  color:var(--muted);
-  font-size:.95rem;
-  margin-bottom:22px;
-}
-
-.hero-actions{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-/* =========================================================
-   BOTONES iOS
-   ========================================================= */
-.btn{
-  padding:8px 40px;
-  border-radius:60px;
-  border:1px solid var(--border);
-  background:var(--glass);
-  backdrop-filter: blur(12px);
-  font-weight:600;
-  font-size:.9rem;
-  cursor:pointer;
-  transition:transform .15s ease, box-shadow .15s ease;
-}
-
-.btn.primary{
-  background:linear-gradient(135deg,var(--primary),var(--secondary));
-  color:#fff;
-  border:none;
-}
-
-.btn:active{
-  transform:scale(.96);
-}
-
-/* =========================================================
-   SECCIONES
-   ========================================================= */
-section{
-  padding:34px 18px;
-}
-
-.section-title{
-  font-size:1.4rem;
-  margin-bottom:8px;
-}
-
-.section-sub{
-  color:var(--muted);
-  font-size:.9rem;
-  margin-bottom:22px;
-}
-
-/* =========================================================
-   GRID CARDS iOS
-   ========================================================= */
-.grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:18px;
-}
-
-.card{
-  background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.03));
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:24px;
-  box-shadow:var(--shadow);
-  opacity:0;
-  transform:translateY(24px);
-}
-
-.card.visible{
-  animation:fadeUp .8s ease forwards;
-}
-
-.card h3{
-  margin-bottom:8px;
-  font-size:1.15rem;
-}
-
-.card p{
-  color:var(--muted);
-  font-size:.9rem;
-}
-
-/* =========================================================
-   LISTA ESTILO iOS
-   ========================================================= */
-.list{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
-
-.list-item{
-  display:flex;
-  gap:14px;
-  align-items:center;
+/* =======================
+   TOOLBAR
+======================= */
+.toolbar{
   background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:22px;
-  padding:18px;
-}
-
-.icon{
-  width:42px;
-  height:42px;
-  border-radius:16px;
-  background:linear-gradient(135deg,var(--accent),var(--primary));
+  padding:10px;
   display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:space-around;
+  box-shadow:0 -5px 20px rgba(0,0,0,.1);
+}
+
+.tool{
+  display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:center;
-  font-weight:800;
+  font-size:11px;
+  cursor:pointer;
 }
 
-/* =========================================================
-   CTA
-   ========================================================= */
-.cta{
-  background:
-    radial-gradient(500px 200px at 30% -20%,rgba(10,132,255,.35),transparent),
-    linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,.04));
+.tool button,
+.tool input{
+  width:44px;
+  height:44px;
+  border-radius:12px;
   border:1px solid var(--border);
-  border-radius:15px;
-  padding:34px;
-  text-align:center;
-  box-shadow:var(--shadow);
+  background:white;
+  font-size:18px;
 }
 
-.cta h2{
-  font-size:1.7rem;
-  margin-bottom:10px;
+.tool button.active{
+  background:var(--accent);
+  color:white;
 }
 
-.cta p{
-  color:var(--muted);
-  margin-bottom:20px;
+input[type=range]{
+  width:80px;
 }
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
-footer{
-  margin-top:auto;
-  padding:22px 18px;
-  border-top:1px solid var(--border);
-  text-align:center;
-  font-size:.8rem;
-  color:var(--muted);
-}
-
-/* =========================================================
-   ANIMACIONES TIPO APPLE
-   ========================================================= */
-@keyframes fadeUp{
-  to{
-    opacity:1;
-    transform:translateY(0);
+/* =======================
+   DESKTOP
+======================= */
+@media(min-width:900px){
+  .toolbar{
+    justify-content:center;
   }
-}
-
-/* =========================================================
-   RESPONSIVE PC
-   ========================================================= */
-@media(min-width:768px){
-  .hero h1{ font-size:2.7rem }
-  .grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-}
-
-@media(min-width:1024px){
-  .nav-inner,
-  section,
-  .hero{
-    max-width:1200px;
-    margin:auto;
-  }
-  section{ padding:60px 18px }
 }
 </style>
 </head>
 
 <body>
-<div class="app">
 
-<header class="navbar">
-  <div class="nav-inner">
-    <div class="nav-title">Sterling App</div>
-    <div class="nav-btn">☰</div>
+<header>🎨 Paint Mobile Pro</header>
+
+<div class="main">
+  <div class="canvas-wrapper">
+    <canvas id="canvas"></canvas>
   </div>
-</header>
+</div>
 
-<main>
-
-<section class="hero">
-  <div class="hero-card">
-    <h1>Estilo App<br>de Sterling</h1>
-    <p>
-      Animaciones suaves y experiencia tipo app nativa,
-      diseñada mobile-first y perfecta en PC.
-    </p>
-    <div class="hero-actions">
-      <button class="btn primary">Iniciar</button>
-      <button class="btn">Ver más</button>
-    </div>
+<div class="toolbar">
+  <div class="tool">
+    <button data-tool="pencil" class="active">✏️</button>
+    Lápiz
   </div>
-</section>
-
-<section>
-  <h2 class="section-title">Características</h2>
-  <p class="section-sub">Inspirado en aplicaciones web</p>
-
-  <div class="grid">
-    <div class="card">
-      <h3>Animaciones Apple</h3>
-      <p>Transiciones naturales y micro-interacciones.</p>
-    </div>
-    <div class="card">
-      <h3>Glass UI</h3>
-      <p>Blur dinámico y profundidad visual.</p>
-    </div>
-    <div class="card">
-      <h3>Mobile-First</h3>
-      <p>Pensado como app, escalado a escritorio.</p>
-    </div>
+  <div class="tool">
+    <button data-tool="marker">🖊️</button>
+    Marcador
   </div>
-</section>
-
-<section>
-  <h2 class="section-title">Experiencia</h2>
-  <p class="section-sub">Sensación nativa</p>
-
-  <div class="list">
-    <div class="list-item">
-      <div class="icon">UX</div>
-      <div>
-        <strong>Gestos Naturales</strong>
-        <p class="muted">Feedback visual inmediato.</p>
-      </div>
-    </div>
-    <div class="list-item">
-      <div class="icon">FX</div>
-      <div>
-        <strong>Motion Design</strong>
-        <p class="muted">Movimientos suaves y precisos.</p>
-      </div>
-    </div>
+  <div class="tool">
+    <button data-tool="eraser">🧽</button>
+    Borrar
   </div>
-</section>
-
-<section>
-  <div class="cta">
-    <h2>Diseño Premium iOS</h2>
-    <p>Base ideal para apps web modernas.</p>
-    <button class="btn primary">Crear proyecto</button>
+  <div class="tool">
+    <button data-tool="line">📏</button>
+    Línea
   </div>
-</section>
-
-</main>
-
-<footer>
-  © 2025 - Santiago Sterling
-</footer>
-
+  <div class="tool">
+    <button data-tool="rect">⬛</button>
+    Cuadro
+  </div>
+  <div class="tool">
+    <button data-tool="circle">⚪</button>
+    Círculo
+  </div>
+  <div class="tool">
+    <input type="color" id="color" value="#000000">
+    Color
+  </div>
+  <div class="tool">
+    <input type="range" id="size" min="1" max="40" value="5">
+    Grosor
+  </div>
+  <div class="tool">
+    <button id="undo">↩️</button>
+    Undo
+  </div>
+  <div class="tool">
+    <button id="redo">↪️</button>
+    Redo
+  </div>
+  <div class="tool">
+    <button id="clear">🗑️</button>
+    Limpiar
+  </div>
+  <div class="tool">
+    <button id="save">💾</button>
+    Guardar
+  </div>
 </div>
 
 <script>
-/* =========================================================
-   ANIMACIONES DE SCROLL TIPO APPLE
-   ========================================================= */
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
-    }
-  });
-},{ threshold:.15 });
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-document.querySelectorAll('.card').forEach(c=>observer.observe(c));
+let tool = "pencil";
+let drawing = false;
+let startX = 0;
+let startY = 0;
+let history = [];
+let redoStack = [];
 
-/* PARALLAX SUAVE HERO */
-window.addEventListener('scroll',()=>{
-  const y = window.scrollY * 0.15;
-  document.querySelector('.hero-card').style.transform =
-    `translateY(${y}px)`;
+function resizeCanvas(){
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  restore();
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+function saveState(){
+  history.push(canvas.toDataURL());
+  redoStack = [];
+}
+
+function restore(){
+  if(history.length){
+    const img = new Image();
+    img.src = history[history.length-1];
+    img.onload = ()=>ctx.drawImage(img,0,0);
+  }
+}
+
+function getPos(e){
+  const rect = canvas.getBoundingClientRect();
+  const t = e.touches ? e.touches[0] : e;
+  return {
+    x: t.clientX - rect.left,
+    y: t.clientY - rect.top
+  };
+}
+
+function start(e){
+  drawing = true;
+  saveState();
+  const pos = getPos(e);
+  startX = pos.x;
+  startY = pos.y;
+  ctx.beginPath();
+  ctx.moveTo(startX,startY);
+}
+
+function move(e){
+  if(!drawing) return;
+  const pos = getPos(e);
+  ctx.lineWidth = size.value;
+  ctx.lineCap = "round";
+  ctx.strokeStyle = tool==="eraser" ? "#fff" : color.value;
+
+  if(tool==="pencil" || tool==="marker" || tool==="eraser"){
+    ctx.lineTo(pos.x,pos.y);
+    ctx.stroke();
+  }
+}
+
+function end(e){
+  if(!drawing) return;
+  drawing = false;
+  const pos = getPos(e);
+  ctx.closePath();
+
+  ctx.strokeStyle = color.value;
+  ctx.lineWidth = size.value;
+
+  if(tool==="line"){
+    ctx.beginPath();
+    ctx.moveTo(startX,startY);
+    ctx.lineTo(pos.x,pos.y);
+    ctx.stroke();
+  }
+
+  if(tool==="rect"){
+    ctx.strokeRect(startX,startY,pos.x-startX,pos.y-startY);
+  }
+
+  if(tool==="circle"){
+    ctx.beginPath();
+    const r = Math.hypot(pos.x-startX,pos.y-startY);
+    ctx.arc(startX,startY,r,0,Math.PI*2);
+    ctx.stroke();
+  }
+}
+
+canvas.addEventListener("mousedown",start);
+canvas.addEventListener("mousemove",move);
+canvas.addEventListener("mouseup",end);
+canvas.addEventListener("touchstart",start);
+canvas.addEventListener("touchmove",move);
+canvas.addEventListener("touchend",end);
+
+document.querySelectorAll("[data-tool]").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll("[data-tool]").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    tool = btn.dataset.tool;
+  }
 });
+
+undo.onclick=()=>{
+  if(history.length>1){
+    redoStack.push(history.pop());
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    restore();
+  }
+};
+
+redo.onclick=()=>{
+  if(redoStack.length){
+    history.push(redoStack.pop());
+    restore();
+  }
+};
+
+clear.onclick=()=>{
+  saveState();
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+};
+
+save.onclick=()=>{
+  const a=document.createElement("a");
+  a.href=canvas.toDataURL("image/png");
+  a.download="dibujo.png";
+  a.click();
+};
+
+saveState();
 </script>
 
 </body>
