@@ -558,13 +558,3 @@ document.addEventListener("click", (e) => {
     }
   });
 });
-
-/* Modal de politica de privacidad */
-function mostrarModal(){
-  document.getElementById('macos-overlay').classList.add('active');
-}
-
-function cerrarModal(e){
-  if(e && e.target !== e.currentTarget) return;
-  document.getElementById('macos-overlay').classList.remove('active');
-}
