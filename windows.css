@@ -61,11 +61,16 @@ body {
     position: absolute;
     cursor: default;
     transition: background 0.15s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
 }
 
 .desktop-icon img {
     width: 48px;
     height: 48px;
+    display: block;
 }
 
 .desktop-icon span {
@@ -438,4 +443,5 @@ body {
 .task-icon:hover {
     color: #ddd;
 }
+
 
