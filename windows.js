@@ -77,6 +77,26 @@ const apps = {
         `
     },
 
+       paint: {
+        title: "Sterl-ink Sketching",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bing_Fluent_Logo.svg/960px-Bing_Fluent_Logo.svg.png",
+        content: `
+        <div style="
+            width:100%;
+            height:80vh;
+            border-radius: 12px;
+            overflow:hidden;
+            border: 2px solid transparent;
+
+        ">
+            <iframe 
+                src="https://santiago131440.github.io/SantiagoSterling/ExperienciaLaboral.html"
+                style="width:100%; height:100%; border:none;"
+            ></iframe>
+        </div>
+    `
+    },
+
 
     "recycle-bin": {
         title: "Papelera",
@@ -688,7 +708,8 @@ window.addEventListener("load", () => {
         browser: { left: 30, top: 120 },
         notes: { left: 30, top: 220 },
         player: { left: 30, top: 320 },
-        "recycle-bin": { left: 30, top: 420 }
+        paint: { left: 30, top: 420 },
+        "recycle-bin": { left: 30, top: 520 }
     };
 
     document.querySelectorAll(".desktop-icon").forEach(icon => {
@@ -706,6 +727,7 @@ window.addEventListener("load", () => {
         // Cambia "index20.html" por la ruta real de tu archivo
         window.location.href = "index20.html";
     });
+
 
 
 
