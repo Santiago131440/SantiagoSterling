@@ -155,15 +155,15 @@ input[type=range]{
 
 <!-- TOOLS -->
 <div class="panel" id="tools">
-  <div class="tool active" data-tool="pen">✏️</div>
-  <div class="tool" data-tool="brush">🖌️</div>
-  <div class="tool" data-tool="marker">🖊️</div>
-  <div class="tool" data-tool="eraser">🧽</div>
-  <div class="tool" data-tool="line">📏</div>
-  <div class="tool" data-tool="rect">⬛</div>
-  <div class="tool" data-tool="circle">⚪</div>
-  <div class="tool" id="undo">↩️</div>
-  <div class="tool" id="redo">↪️</div>
+  <div class="tool active" data-tool="pen" name="Lápiz">✏️</div>
+  <div class="tool" data-tool="brush" name="Pincel">🖌️</div>
+  <div class="tool" data-tool="marker name="Marcador">🖊️</div>
+  <div class="tool" data-tool="eraser" name="Borrador">🧽</div>
+  <div class="tool" data-tool="line" name="Línea">📏</div>
+  <div class="tool" data-tool="rect" name="Cuadro">⬛</div>
+  <div class="tool" data-tool="circle" name="Circulo">⚪</div>
+  <div class="tool" id="undo" name="Retroceder">↩️</div>
+  <div class="tool" id="redo" name="Rehacer">↪️</div>
 </div>
 
 <!-- OPTIONS -->
@@ -172,20 +172,6 @@ input[type=range]{
   <label>Color <input type="color" id="color" value="#000000"></label>
   <label>Tamaño <input type="range" id="size" min="1" max="40" value="6"></label>
   <button class="rounded rounded-full" id="save">Exportar PNG</button>
-</div>
-
-<!-- LAYERS -->
-<div class="relative rounded-3xl border border-white/30 bg-white/10 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] px-2 py-2">
-  <strong>Santiago Sterling</strong>
-  <div class="mb-30 flex flex-wrap gap-3 items-center">
-     <div class="flex justify-center mb-20">
-        <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
-           <a href="index20.html" class="filter-btn active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Portafolio</a>
-           <a href="proyectos20.html" class="filter-btn active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Proyectos</a>
-           <a href="windows.html" class="filter-btn active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Repositorio</a>
-         </div>
-      </div>
-   </div>
 </div>
 
 
