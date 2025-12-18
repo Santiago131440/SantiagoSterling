@@ -285,6 +285,8 @@ body {
     border-radius: 12px;
     cursor: pointer;
     background: rgba(255,255,255,0.06);
+    align-items: center;      /* centra verticalmente icono y texto */
+    gap: 10px;
 }
 
 .start-app:hover {
@@ -294,6 +296,7 @@ body {
 .start-app img {
     width: 36px;
     margin-bottom: 8px;
+    display: block;
 }
 
 .start-app span {
@@ -443,5 +446,6 @@ body {
 .task-icon:hover {
     color: #ddd;
 }
+
 
 
