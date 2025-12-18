@@ -79,7 +79,7 @@ const apps = {
 
        paint: {
         title: "Sterl-ink Sketching",
-        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bing_Fluent_Logo.svg/960px-Bing_Fluent_Logo.svg.png",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Microsoft_Paint.svg/500px-Microsoft_Paint.svg.png",
         content: `
         <div style="
             width:100%;
@@ -727,6 +727,7 @@ window.addEventListener("load", () => {
         // Cambia "index20.html" por la ruta real de tu archivo
         window.location.href = "index20.html";
     });
+
 
 
 
