@@ -54,6 +54,7 @@ body {
 .desktop-icon {
     width: 85px;
     text-align: center;
+    align-items: center;   /* centra imagen y texto horizontalmente */
     padding: 6px;
     margin: 8px;
     border-radius: 8px;
@@ -437,3 +438,4 @@ body {
 .task-icon:hover {
     color: #ddd;
 }
+
