@@ -1,4 +1,3 @@
-
 let activeWindows = {};
 let zCounter = 50;
 
@@ -30,7 +29,7 @@ const apps = {
 
     browser: {
         title: "Navegador",
-        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%28February_2022%29.svg/48px-Google_Chrome_icon_%28February_2022%29.svg.png",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bing_Fluent_Logo.svg/960px-Bing_Fluent_Logo.svg.png",
         content: `
         <div style="
             width:100%;
@@ -707,5 +706,6 @@ window.addEventListener("load", () => {
         // Cambia "index20.html" por la ruta real de tu archivo
         window.location.href = "index20.html";
     });
+
 
 
