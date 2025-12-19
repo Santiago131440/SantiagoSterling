@@ -23,13 +23,13 @@ let recycleBin = []; // Archivos eliminados
 const apps = {
     explorer: {
         title: "Explorador de Archivos",
-        icon: "https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/folder-icon.png",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-En0WuV9h3Cjev3oISjtJqXetnfA18d.png&w=1000&q=75",
         type: "system"
     },
 
     browser: {
         title: "Navegador",
-        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bing_Fluent_Logo.svg/960px-Bing_Fluent_Logo.svg.png",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-KBUXl6AhDj2IsoZnozHL39yX1acqa5.png&w=1000&q=75",
         content: `
         <div style="
             width:100%;
@@ -50,7 +50,7 @@ const apps = {
 
     notes: {
         title: "Bloc de Notas",
-        icon: "https://icons.iconarchive.com/icons/papirus-team/papirus-mimetypes/512/text-x-generic-icon.png",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75",
         content: `
             <textarea style="width:90vw; height:70vh; background:rgba(255, 255, 255, 0); border:0; color:white; padding:10px;">
         Escribe tus notas aquí...
@@ -60,7 +60,7 @@ const apps = {
 
     player: {
         title: "Sterling Music Player",
-        icon: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Musica%20OS.png?raw=true",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hYb7C5vkHO9CJDCDmnVhWYl6v3ECyg.png&w=1000&q=75",
         content: `
             <div style="
                 width:100%;
@@ -79,7 +79,7 @@ const apps = {
 
        paint: {
         title: "Sterl-ink Sketching",
-        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Microsoft_Paint.svg/500px-Microsoft_Paint.svg.png",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75",
         content: `
         <div style="
             width:100%;
@@ -100,7 +100,7 @@ const apps = {
 
     "recycle-bin": {
         title: "Papelera",
-        icon: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Papelera%20OS.png?raw=true"
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-lSpzRMqmwGWoV08dHuh6wchQDokHkw.png&w=1000&q=75"
     }
 };
 
@@ -727,6 +727,7 @@ window.addEventListener("load", () => {
         // Cambia "index20.html" por la ruta real de tu archivo
         window.location.href = "index20.html";
     });
+
 
 
 
