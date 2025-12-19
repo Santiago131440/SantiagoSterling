@@ -23,7 +23,7 @@ let recycleBin = []; // Archivos eliminados
 const apps = {
     explorer: {
         title: "Explorador de Archivos",
-        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hLl8Fs7hjOzYJhRk8rXdjohZHd5hoV.png&w=1000&q=75",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75",
         type: "system"
     },
 
@@ -727,6 +727,7 @@ window.addEventListener("load", () => {
         // Cambia "index20.html" por la ruta real de tu archivo
         window.location.href = "index20.html";
     });
+
 
 
 
