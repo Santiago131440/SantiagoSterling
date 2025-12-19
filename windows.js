@@ -732,3 +732,20 @@ window.addEventListener("load", () => {
 
 
 
+
+
+const searchInput = document.getElementById('searchInput');
+const items = document.querySelectorAll('#repoList li');
+
+searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase().trim();
+
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(query)) {
+            item.classList.remove('hidden');
+        } else {
+            item.classList.add('hidden');
+        }
+    });
+});
