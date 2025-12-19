@@ -603,13 +603,13 @@ function loadFolder(main, folder) {
         if (item.type === "folder") {
             main.innerHTML += `
                 <div class="folder-item" onclick="loadFolder(this.parentNode, fileSystem.root.contents['${name}'])">
-                    <img src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/folder-icon.png">
+                    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-nZB6MgGWlOXQ6MmPDO0qFAbW0dEl4d.png&w=1000&q=75">
                     <span>${name}</span>
                 </div>`;
         } else if (item.type === "file") {
             main.innerHTML += `
                 <div class="file-item" onclick="openTextFile(\`${item.content || ""}\`)">
-                    <img src="https://cdn.pixabay.com/photo/2016/01/23/16/02/book-1157658_1280.png">
+                    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-a3SkroygtTE6lQGs0XbfDco9M3lV7H.png&w=1000&q=75">
                     <span>${name}</span>
                 </div>`
         }
@@ -727,6 +727,7 @@ window.addEventListener("load", () => {
         // Cambia "index20.html" por la ruta real de tu archivo
         window.location.href = "index20.html";
     });
+
 
 
 
