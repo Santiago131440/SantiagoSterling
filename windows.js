@@ -23,7 +23,7 @@ let recycleBin = []; // Archivos eliminados
 const apps = {
     explorer: {
         title: "Explorador de Archivos",
-        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-En0WuV9h3Cjev3oISjtJqXetnfA18d.png&w=1000&q=75",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hLl8Fs7hjOzYJhRk8rXdjohZHd5hoV.png&w=1000&q=75",
         type: "system"
     },
 
@@ -603,7 +603,7 @@ function loadFolder(main, folder) {
         if (item.type === "folder") {
             main.innerHTML += `
                 <div class="folder-item" onclick="loadFolder(this.parentNode, fileSystem.root.contents['${name}'])">
-                    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hLl8Fs7hjOzYJhRk8rXdjohZHd5hoV.png&w=1000&q=75">
+                    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-En0WuV9h3Cjev3oISjtJqXetnfA18d.png&w=1000&q=75">
                     <span>${name}</span>
                 </div>`;
         } else if (item.type === "file") {
@@ -727,6 +727,7 @@ window.addEventListener("load", () => {
         // Cambia "index20.html" por la ruta real de tu archivo
         window.location.href = "index20.html";
     });
+
 
 
 
