@@ -179,7 +179,7 @@ body {
     }
 }
 
-/* Snap Assist highlight */
+/* Resaltado de Asistencia de Ajuste */
 .snap-highlight {
     position: fixed;
     top: 0;
@@ -373,7 +373,7 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 48px;
+    height: 42px;
     background: rgba(25,25,25,0.65);
     backdrop-filter: blur(20px);
     border-top: 1px solid rgba(255,255,255,0.12);
@@ -443,3 +443,4 @@ body {
 .task-icon:hover {
     color: #ddd;
 }
+
