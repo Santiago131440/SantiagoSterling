@@ -64,11 +64,26 @@
     <h2>Repositorio</h2>
 
     <div class="search-bar">
-        <input 
-            type="search" 
-            placeholder="Buscar…" 
-            aria-label="Buscar en el repositorio"
+        <input
+            type="search"
+            id="searchInput"
+            placeholder="Buscar en el repositorio…"
+            aria-label="Buscar"
         >
+        <span class="search-icon">⌕</span>
+    </div>
+</div>
+
+<!-- Ejemplo de elementos a filtrar -->
+<ul class="repo-list" id="repoList">
+    <li>Documentación</li>
+    <li>Proyectos</li>
+    <li>Imágenes</li>
+    <li>Componentes UI</li>
+    <li>Scripts JavaScript</li>
+    <li>Estilos CSS</li>
+</ul>
+
     </div>
 </div>
 
@@ -288,6 +303,7 @@
 
 </body>
 </html>
+
 
 
 
