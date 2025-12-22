@@ -730,7 +730,9 @@ window.addEventListener("load", () => {
 
 
 
-<script>
+/* ============================================================
+   CALENDARIO
+============================================================ */
 let currentDate = new Date();
 
 function updateClock() {
@@ -791,7 +793,7 @@ function changeMonth(direction) {
 }
 
 renderCalendar();
-</script>
+
 
 
 
