@@ -730,6 +730,48 @@ window.addEventListener("load", () => {
 
 
 
+function renderCalendar() {
+    const calendar = document.getElementById("calendar");
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const lastDate = new Date(year, month + 1, 0).getDate();
+
+    const monthNames = [
+        "Enero","Febrero","Marzo","Abril","Mayo","Junio",
+        "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
+    ];
+
+    let html = `<h4>${monthNames[month]} ${year}</h4>`;
+    html += `<table style="width:100%; text-align:center;">
+        <tr>
+            <th>D</th><th>L</th><th>M</th><th>M</th>
+            <th>J</th><th>V</th><th>S</th>
+        </tr><tr>`;
+
+    for (let i = 0; i < firstDay; i++) {
+        html += "<td></td>";
+    }
+
+    for (let day = 1; day <= lastDate; day++) {
+        const isToday = day === today.getDate();
+        html += `<td style="
+            padding:6px;
+            ${isToday ? "background:#00bcd4;color:#000;border-radius:50%;" : ""}
+        ">${day}</td>`;
+
+        if ((day + firstDay) % 7 === 0) {
+            html += "</tr><tr>";
+        }
+    }
+
+    html += "</tr></table>";
+    calendar.innerHTML = html;
+}
+
+renderCalendar();
 
 
 
