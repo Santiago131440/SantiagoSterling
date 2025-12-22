@@ -730,67 +730,91 @@ window.addEventListener("load", () => {
 
 
 
+
 let currentDate = new Date();
+let selectedDate = "";
+let events = JSON.parse(localStorage.getItem("events")) || {};
 
 function updateClock() {
-    const now = new Date();
-    document.getElementById("clockFull").innerText =
-        now.toLocaleDateString() + " " + now.toLocaleTimeString();
+  document.getElementById("clockFull").innerText =
+    new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
 }
-
 setInterval(updateClock, 1000);
 updateClock();
 
 function renderCalendar() {
-    const calendar = document.getElementById("calendar");
-    const monthYear = document.getElementById("monthYear");
+  const calendar = document.getElementById("calendar");
+  const monthYear = document.getElementById("monthYear");
 
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  const today = new Date();
 
-    const firstDay = new Date(year, month, 1).getDay();
-    const lastDate = new Date(year, month + 1, 0).getDate();
-    const today = new Date();
+  monthYear.innerText = currentDate.toLocaleDateString("es-ES", {
+    month: "long",
+    year: "numeric"
+  });
 
-    const monthNames = [
-        "Enero","Febrero","Marzo","Abril","Mayo","Junio",
-        "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
-    ];
+  const firstDay = new Date(year, month, 1).getDay();
+  const lastDate = new Date(year, month + 1, 0).getDate();
 
-    monthYear.innerText = `${monthNames[month]} ${year}`;
+  let html = `
+    <table class="table table-dark table-bordered text-center">
+      <thead>
+        <tr>
+          <th>D</th><th>L</th><th>M</th><th>M</th>
+          <th>J</th><th>V</th><th>S</th>
+        </tr>
+      </thead><tbody><tr>
+  `;
 
-    let html = `
-        <table>
-            <tr>
-                <th>D</th><th>L</th><th>M</th><th>M</th>
-                <th>J</th><th>V</th><th>S</th>
-            </tr><tr>
+  for (let i = 0; i < firstDay; i++) html += "<td></td>";
+
+  for (let day = 1; day <= lastDate; day++) {
+    const dateKey = `${year}-${month}-${day}`;
+    const isToday =
+      day === today.getDate() &&
+      month === today.getMonth() &&
+      year === today.getFullYear();
+
+    html += `
+      <td class="position-relative ${isToday ? "table-info text-dark" : ""}"
+          style="cursor:pointer"
+          onclick="openEvent('${dateKey}')">
+        ${day}
+        ${events[dateKey] ? '<span class="badge bg-warning text-dark position-absolute top-0 end-0">•</span>' : ''}
+      </td>
     `;
 
-    for (let i = 0; i < firstDay; i++) html += "<td></td>";
+    if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
+  }
 
-    for (let day = 1; day <= lastDate; day++) {
-        const isToday =
-            day === today.getDate() &&
-            month === today.getMonth() &&
-            year === today.getFullYear();
-
-        html += `<td class="${isToday ? "today" : ""}">${day}</td>`;
-
-        if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
-    }
-
-    html += "</tr></table>";
-    calendar.innerHTML = html;
+  html += "</tr></tbody></table>";
+  calendar.innerHTML = html;
 }
 
-function changeMonth(direction) {
-    currentDate.setMonth(currentDate.getMonth() + direction);
-    renderCalendar();
+function changeMonth(dir) {
+  currentDate.setMonth(currentDate.getMonth() + dir);
+  renderCalendar();
+}
+
+function openEvent(dateKey) {
+  selectedDate = dateKey;
+  document.getElementById("eventText").value = events[dateKey] || "";
+  new bootstrap.Modal(document.getElementById("eventModal")).show();
+}
+
+function saveEvent() {
+  const text = document.getElementById("eventText").value;
+  if (text) events[selectedDate] = text;
+  else delete events[selectedDate];
+
+  localStorage.setItem("events", JSON.stringify(events));
+  renderCalendar();
+  bootstrap.Modal.getInstance(document.getElementById("eventModal")).hide();
 }
 
 renderCalendar();
-
 
 
 
