@@ -452,16 +452,57 @@ body {
    INICIO DE CSS DE BOOSTRAP EN CALENDARIO
 ============================================================ */
 
-.calendar td {
-    height: 40px;
-    vertical-align: middle;
+.panel {
+    background: #1e1e2f;
+    color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 320px;
+    font-family: Arial, sans-serif;
+}
+
+.clock {
+    text-align: center;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendar-header button {
+    background: #00bcd4;
+    border: none;
+    color: #000;
+    font-size: 1.1em;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+th {
+    color: #00bcd4;
+    font-weight: normal;
+}
+
+td {
+    padding: 6px;
+    border-radius: 50%;
 }
 
 .today {
-    background-color: #0dcaf0 !important;
+    background: #00bcd4;
     color: #000;
-    font-weight: bold;
-    border-radius: 50%;
 }
 
 
