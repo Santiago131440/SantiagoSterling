@@ -130,7 +130,7 @@ Mi propósito es integrar la eficiencia industrial con la inteligencia tecnológ
                     },
 
 
-                    "lista.md": { 
+                    "lista.txt": { 
                         type: "file", 
                         app: "notes",
                         content: "- Comprar pan\n- Revisar proyecto Quantix\n- Enviar reporte"
@@ -142,13 +142,13 @@ Mi propósito es integrar la eficiencia industrial con la inteligencia tecnológ
                         content: "Tareas pendientes:\n1. Completar interfaz\n2. Revisar errores\n3. Enviar versión final"
                     },
 
-                    "recordatorio.txt": { 
+                    "record.txt": { 
                         type: "file", 
                         app: "notes",
                         content: "Recordatorio:\nNo olvidar hacer backup de todo."
                     },
 
-                    "proyecto.md": { 
+                    "proyect.txt": { 
                         type: "file", 
                         app: "notes",
                         content: "# Proyecto IA\nEste es el archivo principal del proyecto."
