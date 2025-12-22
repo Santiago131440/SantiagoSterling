@@ -448,6 +448,23 @@ body {
 
 
 
+/* ============================================================
+   INICIO DE CSS DE BOOSTRAP EN CALENDARIO
+============================================================ */
+
+.calendar td {
+    height: 40px;
+    vertical-align: middle;
+}
+
+.today {
+    background-color: #0dcaf0 !important;
+    color: #000;
+    font-weight: bold;
+    border-radius: 50%;
+}
+
+
 
 
 
