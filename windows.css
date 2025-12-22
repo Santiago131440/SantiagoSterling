@@ -452,15 +452,6 @@ body {
    INICIO DE CSS DE BOOSTRAP EN CALENDARIO
 ============================================================ */
 
-.panel {
-    background: #1e1e2f;
-    color: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    max-width: 320px;
-    font-family: Arial, sans-serif;
-}
-
 .clock {
     text-align: center;
     font-size: 1.2em;
@@ -504,6 +495,7 @@ td {
     background: #00bcd4;
     color: #000;
 }
+
 
 
 
