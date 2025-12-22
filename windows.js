@@ -161,14 +161,14 @@ Mi propósito es integrar la eficiencia industrial con la inteligencia tecnológ
             Música: {
                 type: "folder",
                 contents: {
-                    "cancion.mp3": { type: "file", app: "player" }
+                    "cancion.txt": { type: "file", app: "player" }
                 }
             },
 
             Videos: {
                 type: "folder",
                 contents: {
-                    "demo.mp4": { type: "file", app: "player" }
+                    "demo.txt": { type: "file", app: "player" }
                 }
             }
         }
