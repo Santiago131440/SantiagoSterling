@@ -730,49 +730,68 @@ window.addEventListener("load", () => {
 
 
 
+<script>
+let currentDate = new Date();
+
+function updateClock() {
+    const now = new Date();
+    document.getElementById("clockFull").innerText =
+        now.toLocaleDateString() + " " + now.toLocaleTimeString();
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
 function renderCalendar() {
     const calendar = document.getElementById("calendar");
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
+    const monthYear = document.getElementById("monthYear");
+
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
 
     const firstDay = new Date(year, month, 1).getDay();
     const lastDate = new Date(year, month + 1, 0).getDate();
+    const today = new Date();
 
     const monthNames = [
         "Enero","Febrero","Marzo","Abril","Mayo","Junio",
         "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
     ];
 
-    let html = `<h4>${monthNames[month]} ${year}</h4>`;
-    html += `<table style="width:100%; text-align:center;">
-        <tr>
-            <th>D</th><th>L</th><th>M</th><th>M</th>
-            <th>J</th><th>V</th><th>S</th>
-        </tr><tr>`;
+    monthYear.innerText = `${monthNames[month]} ${year}`;
 
-    for (let i = 0; i < firstDay; i++) {
-        html += "<td></td>";
-    }
+    let html = `
+        <table>
+            <tr>
+                <th>D</th><th>L</th><th>M</th><th>M</th>
+                <th>J</th><th>V</th><th>S</th>
+            </tr><tr>
+    `;
+
+    for (let i = 0; i < firstDay; i++) html += "<td></td>";
 
     for (let day = 1; day <= lastDate; day++) {
-        const isToday = day === today.getDate();
-        html += `<td style="
-            padding:6px;
-            ${isToday ? "background:#00bcd4;color:#000;border-radius:50%;" : ""}
-        ">${day}</td>`;
+        const isToday =
+            day === today.getDate() &&
+            month === today.getMonth() &&
+            year === today.getFullYear();
 
-        if ((day + firstDay) % 7 === 0) {
-            html += "</tr><tr>";
-        }
+        html += `<td class="${isToday ? "today" : ""}">${day}</td>`;
+
+        if ((day + firstDay) % 7 === 0) html += "</tr><tr>";
     }
 
     html += "</tr></table>";
     calendar.innerHTML = html;
 }
 
-renderCalendar();
+function changeMonth(direction) {
+    currentDate.setMonth(currentDate.getMonth() + direction);
+    renderCalendar();
+}
 
+renderCalendar();
+</script>
 
 
 
