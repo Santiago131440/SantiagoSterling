@@ -98,7 +98,7 @@ const apps = {
     },
 
     buscaminas: {
-        title: "Sterling mine",
+        title: "Sterling Bombs!",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-OKfQqecvB9mY0RcKgGlLsHJ1iqi0Ik.png&w=500&q=75",
         content: `
         <div style="
