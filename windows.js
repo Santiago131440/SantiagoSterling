@@ -97,7 +97,7 @@ const apps = {
     `
     },
 
-   buscaminas: {
+    buscaminas: {
         title: "Sterling mine",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-OKfQqecvB9mY0RcKgGlLsHJ1iqi0Ik.png&w=500&q=75",
         content: `
@@ -116,6 +116,7 @@ const apps = {
         </div>
     `
     },
+
 
 
     "recycle-bin": {
@@ -677,16 +678,30 @@ setInterval(() => {
    MENÚ INICIO
 ============================================================ */
 
-document.getElementById("startButton").onclick = () => {
-    document.getElementById("startMenu").classList.toggle("hidden");
+const startButton = document.getElementById("startButton");
+const startMenu = document.getElementById("startMenu");
+
+/* Abrir / cerrar menú inicio */
+startButton.onclick = (e) => {
+    e.stopPropagation();
+    startMenu.classList.toggle("hidden");
 };
 
+/* Click en apps del menú */
 document.querySelectorAll(".start-app").forEach(app => {
     app.onclick = () => {
         openApp(app.dataset.app);
-        document.getElementById("startMenu").classList.add("hidden");
+        startMenu.classList.add("hidden");
     };
 });
+
+/* Cerrar al hacer clic fuera */
+document.addEventListener("click", (e) => {
+    if (!startMenu.contains(e.target) && !startButton.contains(e.target)) {
+        startMenu.classList.add("hidden");
+    }
+});
+
 
 
 /* ============================================================
@@ -748,3 +763,112 @@ window.addEventListener("load", () => {
         window.location.href = "index20.html";
     });
 
+
+
+
+
+/* ============================================================
+   CALENDARIO
+============================================================ */
+let currentDate = new Date();
+let selectedDay = null;
+
+const calendarEl = document.getElementById("calendar");
+const monthYearEl = document.getElementById("monthYear");
+const clockEl = document.getElementById("clockFull");
+
+const days = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+
+function updateClock() {
+  const now = new Date();
+  clockEl.innerHTML = now.toLocaleString("es-CO", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  });
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+function renderCalendar() {
+  calendarEl.innerHTML = "";
+
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+
+  monthYearEl.textContent = currentDate.toLocaleDateString("es-CO", {
+    month: "long",
+    year: "numeric"
+  });
+
+  days.forEach(day => {
+    const div = document.createElement("div");
+    div.textContent = day;
+    div.className = "calendar-header";
+    calendarEl.appendChild(div);
+  });
+
+  let firstDay = new Date(year, month, 1).getDay();
+  firstDay = firstDay === 0 ? 6 : firstDay - 1;
+
+  const totalDays = new Date(year, month + 1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++) {
+    const empty = document.createElement("div");
+    empty.className = "calendar-empty";
+    calendarEl.appendChild(empty);
+  }
+
+  for (let day = 1; day <= totalDays; day++) {
+    const div = document.createElement("div");
+    div.textContent = day;
+    div.className = "calendar-day";
+
+    const today = new Date();
+    if (
+      day === today.getDate() &&
+      month === today.getMonth() &&
+      year === today.getFullYear()
+    ) {
+      div.classList.add("calendar-today");
+    }
+
+    div.onclick = () => {
+      document
+        .querySelectorAll(".calendar-day")
+        .forEach(d => d.classList.remove("calendar-selected"));
+
+      div.classList.add("calendar-selected");
+      selectedDay = day;
+    };
+
+    calendarEl.appendChild(div);
+  }
+}
+
+function changeMonth(direction) {
+  currentDate.setMonth(currentDate.getMonth() + direction);
+  renderCalendar();
+}
+
+renderCalendar();
+
+const clockTaskbar = document.getElementById("clock");
+const calendarPanel = document.getElementById("calendarPanel");
+
+clockTaskbar.addEventListener("click", (e) => {
+  e.stopPropagation();
+  calendarPanel.classList.toggle("hidden");
+});
+
+/* Cerrar al hacer clic fuera (comportamiento Windows real) */
+document.addEventListener("click", (e) => {
+  if (!calendarPanel.contains(e.target) && !clockTaskbar.contains(e.target)) {
+    calendarPanel.classList.add("hidden");
+  }
+});
