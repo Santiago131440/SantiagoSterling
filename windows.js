@@ -97,6 +97,26 @@ const apps = {
     `
     },
 
+   buscaminas: {
+        title: "Sterling mine",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-OKfQqecvB9mY0RcKgGlLsHJ1iqi0Ik.png&w=500&q=75",
+        content: `
+        <div style="
+            width:100%;
+            height:80vh;
+            border-radius: 12px;
+            overflow:hidden;
+            border: 2px solid transparent;
+
+        ">
+            <iframe 
+                src="https://santiago131440.github.io/SantiagoSterling/Buscaminas.html"
+                style="width:100%; height:100%; border:none;"
+            ></iframe>
+        </div>
+    `
+    },
+
 
     "recycle-bin": {
         title: "Papelera",
@@ -727,3 +747,4 @@ window.addEventListener("load", () => {
         // Cambia "index20.html" por la ruta real de tu archivo
         window.location.href = "index20.html";
     });
+
