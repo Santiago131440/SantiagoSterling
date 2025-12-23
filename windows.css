@@ -451,58 +451,157 @@ body {
 /* ============================================================
    INICIO DE CSS DE BOOSTRAP EN CALENDARIO
 ============================================================ */
+/* =====================================================
+   PANEL CALENDARIO (WINDOWS 11)
+===================================================== */
+.calendar-panel {
+  position: fixed;
+  right: 14px;
+  bottom: 64px;
+  z-index: 9999;
 
-.clock {
-    text-align: center;
-    font-size: 1.2em;
-    margin-bottom: 10px;
+  width: 340px;
+  max-width: 92vw;
+
+  animation: fadeUp 0.25s ease;
 }
 
+/* =====================================================
+   TARJETA – LIQUID GLASS (iOS 26)
+===================================================== */
+.card {
+  position: relative;
+  overflow: hidden;
+
+  /* Forma más orgánica */
+  border-radius: 72px;
+
+  /* Vidrio ultra translúcido */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.38),
+      rgba(255,255,255,0.12)
+    ),
+    radial-gradient(
+      140% 100% at 20% 0%,
+      rgba(255,255,255,0.45),
+      transparent 65%
+    );
+
+  /* Blur real + saturación (liquid glass) */
+  backdrop-filter: blur(42px) saturate(185%);
+  -webkit-backdrop-filter: blur(42px) saturate(185%);
+
+  /* Borde de cristal más marcado */
+  border: 2px solid rgba(255,255,255,0.45);
+
+  /* Profundidad estilo sistema */
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.7),
+    inset 0 -2px 4px rgba(255,255,255,0.15),
+    0 28px 70px rgba(0,0,0,0.38);
+
+  color: #111;
+}
+
+
+
+
+/* =====================================================
+   RELOJ SUPERIOR
+===================================================== */
+#clockFull {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+/* =====================================================
+   GRID CALENDARIO
+===================================================== */
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  font-size: 0.82rem;
+  text-align: center;
+  user-select: none;
+}
+
+/* =====================================================
+   ENCABEZADOS
+===================================================== */
 .calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #6b7280;
+  padding-bottom: 6px;
 }
 
-.calendar-header button {
-    background: #00bcd4;
-    border: none;
-    color: #000;
-    font-size: 1.1em;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
+/* =====================================================
+   DÍAS
+===================================================== */
+.calendar-day {
+  height: 34px;
+  width: 34px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
-table {
-    width: 100%;
-    margin-top: 10px;
-    border-collapse: collapse;
-    text-align: center;
+/* Hover */
+.calendar-day:hover {
+  background: rgba(0,0,0,0.06);
 }
 
-th {
-    color: #00bcd4;
-    font-weight: normal;
+/* =====================================================
+   DÍA ACTUAL
+===================================================== */
+.calendar-today {
+  background: rgba(0,0,0,0.06);
+  font-weight: 600;
 }
 
-td {
-    padding: 6px;
-    border-radius: 50%;
+/* =====================================================
+   DÍA SELECCIONADO
+===================================================== */
+.calendar-selected {
+  background: #0b5ed7;
+  color: #fff;
+  font-weight: 600;
 }
 
-.today {
-    background: #00bcd4;
-    color: #000;
+/* =====================================================
+   DÍAS FUERA DEL MES
+===================================================== */
+.calendar-muted {
+  color: #9ca3af;
 }
 
+/* =====================================================
+   OCULTO
+===================================================== */
+.hidden {
+  display: none !important;
+}
 
-
-
-
-
-
-
-
-
+/* =====================================================
+   ANIMACIÓN
+===================================================== */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
