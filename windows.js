@@ -98,7 +98,7 @@ const apps = {
     },
 
     buscaminas: {
-        title: "Sterling Bombs!",
+        title: "8-Bit Danger!",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-OKfQqecvB9mY0RcKgGlLsHJ1iqi0Ik.png&w=500&q=75",
         content: `
         <div style="
@@ -872,3 +872,4 @@ document.addEventListener("click", (e) => {
     calendarPanel.classList.add("hidden");
   }
 });
+
