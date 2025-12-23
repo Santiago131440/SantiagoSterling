@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Sterling Mines</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+  --glass-bg: rgba(255, 238, 0, 0.973);
+  --glass-border: rgba(112, 146, 116, 0.35);
+  --text-dark: #000000;
+}
+
+* {
+  box-sizing: border-box;
+
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffffff, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dark);
+}
+
+/* PANEL PRINCIPAL */
+.game-panel {
+  display: flex;
+  gap: 24px;
+  padding: 16px;
+  border-radius: 22px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 40px rgba(0,0,0,.35);
+}
+
+/* TABLERO */
+.board {
+  display: grid;
+  grid-template-columns: repeat(16, 32px);
+  grid-template-rows: repeat(16, 32px);
+  gap: 1px;
+}
+
+/* CELDAS */
+.cell {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: rgba(161, 145, 1, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  transition: all .15s ease;
+  border: solid 1px #946000fa;
+}
+
+.cell:hover {
+  transform: scale(1.25);
+  background:rgba(0, 195, 221, 0.65);
+}
+
+.cell.open {
+  background: rgba(255,255,255,0.9);
+  cursor: default;
+}
+
+.cell.mine {
+  background: #111;
+  color: white;
+}
+
+.cell.flag {
+  background: rgba(255,0,0,0.15);
+}
+
+/* PANEL DERECHO */
+.side-panel {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info span {
+  font-weight: 600;
+}
+
+button {
+  padding: 10px;
+  border-radius: 60px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  background: rgba(134, 134, 134, 0.75);
+  transition: all .2s ease;
+}
+
+button:hover {
+  background: white;
+  transform: translateY(-2px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .game-panel {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .board {
+    transform: scale(.9);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game-panel">
+  <div id="board" class="board"></div>
+
+  <div class="side-panel">
+    <div class="title"> Sterling Mines</div>
+    <p>Arma tu estrategía para decifrar en que cajas no hay minas.</p>
+
+    <h4>Estádisticas de juego</h4>
+    <div class="info">
+      <span>💣</span>
+      <span id="mines">40</span>
+    </div>
+
+    <div class="info">
+      <span>⏱</span>
+      <span id="time">0</span>
+    </div>
+
+    <button onclick="restart()">Jugar otra vez</button>
+    <button onclick="changeDifficulty()">Cambiar dificultad</button>
+  </div>
+</div>
+
+<script>
+const boardEl = document.getElementById("board");
+const timeEl = document.getElementById("time");
+const minesEl = document.getElementById("mines");
+
+let rows = 16, cols = 16, mines = 40;
+let board = [];
+let timer = null;
+let time = 0;
+
+function startTimer() {
+  if (timer) return;
+  timer = setInterval(() => {
+    time++;
+    timeEl.textContent = time;
+  }, 1000);
+}
+
+function createBoard() {
+  boardEl.innerHTML = "";
+  board = [];
+  time = 0;
+  timeEl.textContent = "0";
+  clearInterval(timer);
+  timer = null;
+
+  for (let i = 0; i < rows * cols; i++) {
+    board.push({
+      mine: false,
+      open: false,
+      flag: false,
+      count: 0
+    });
+  }
+
+  let placed = 0;
+  while (placed < mines) {
+    let i = Math.floor(Math.random() * board.length);
+    if (!board[i].mine) {
+      board[i].mine = true;
+      placed++;
+    }
+  }
+
+  board.forEach((cell, i) => {
+    if (!cell.mine) {
+      cell.count = getNeighbors(i).filter(n => board[n].mine).length;
+    }
+  });
+
+  board.forEach((cell, i) => {
+    const div = document.createElement("div");
+    div.className = "cell";
+    div.oncontextmenu = e => {
+      e.preventDefault();
+      toggleFlag(i, div);
+    };
+    div.onclick = () => openCell(i, div);
+    boardEl.appendChild(div);
+  });
+
+  minesEl.textContent = mines;
+}
+
+function getNeighbors(i) {
+  const x = i % cols;
+  const y = Math.floor(i / cols);
+  const neighbors = [];
+
+  for (let dx = -1; dx <= 1; dx++) {
+    for (let dy = -1; dy <= 1; dy++) {
+      if (dx === 0 && dy === 0) continue;
+      const nx = x + dx;
+      const ny = y + dy;
+      if (nx >= 0 && ny >= 0 && nx < cols && ny < rows) {
+        neighbors.push(ny * cols + nx);
+      }
+    }
+  }
+  return neighbors;
+}
+
+function openCell(i, el) {
+  const cell = board[i];
+  if (cell.open || cell.flag) return;
+
+  startTimer();
+  cell.open = true;
+  el.classList.add("open");
+
+  if (cell.mine) {
+    el.classList.add("mine");
+    el.textContent = "💣";
+    revealMines();
+    clearInterval(timer);
+    return;
+  }
+
+  if (cell.count > 0) {
+    el.textContent = cell.count;
+  } else {
+    getNeighbors(i).forEach(n => {
+      const nEl = boardEl.children[n];
+      if (!board[n].open) openCell(n, nEl);
+    });
+  }
+}
+
+function toggleFlag(i, el) {
+  const cell = board[i];
+  if (cell.open) return;
+  cell.flag = !cell.flag;
+  el.classList.toggle("flag");
+  el.textContent = cell.flag ? "🚩" : "";
+}
+
+function revealMines() {
+  board.forEach((cell, i) => {
+    if (cell.mine) {
+      const el = boardEl.children[i];
+      el.classList.add("mine");
+      el.textContent = "💣";
+    }
+  });
+}
+
+function restart() {
+  createBoard();
+}
+
+function changeDifficulty() {
+  if (mines === 40) {
+    rows = cols = 12;
+    mines = 20;
+  } else {
+    rows = cols = 16;
+    mines = 40;
+  }
+  boardEl.style.gridTemplateColumns = `repeat(${cols}, 32px)`;
+  createBoard();
+}
+
+createBoard();
+</script>
+
+</body>
+</html>
