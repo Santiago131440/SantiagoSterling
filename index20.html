@@ -15,107 +15,75 @@
 </head>
 
 
-<body class="text-slate-100 antialiased leading-relaxed overflow-x-hidden">
-  <!-- VIDEO DE FONDO GLOBAL -->
-  <div class="fixed inset-0 w-screen h-screen -z-10">
-    <video
-      class="w-full h-full object-cover"
-      src="https://cdn.pixabay.com/video/2024/05/25/213648_large.mp4"
-      autoplay
-      muted
-      loop
-      playsinline
-    ></video>
-    <!-- Overlay para legibilidad -->
-    <div class="absolute inset-0 bg-black/30"></div>
-  </div>
 
-  <!-- CONTENIDO -->
-  <div class="relative z-10 min-h-screen">
-    <header class="relative z-50 container mx-auto px-6 py-4">
-      <nav class="backdrop-blur-sm bg-black/60 border border-white/20 rounded-2xl p-3 shadow-xl flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="avatar-liquid">
-            <img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar">
-          </div>
-          <div>
+<body class="text-slate-100 antialiased leading-relaxed overflow-x-hidden">
+  <!-- HEADER CON VIDEO DE FONDO -->
+  <div class="relative min-h-screen">
+    <!-- VIDEO DE FONDO -->
+    <div class="absolute inset-0 w-full h-full">
+      <video 
+        class="w-full h-full object-cover" 
+        src="https://cdn.pixabay.com/video/2024/05/25/213648_large.mp4" 
+        autoplay 
+        muted 
+        loop 
+        playsinline>
+      </video>
+      <!-- Overlay oscuro para legibilidad -->
+      <div class="absolute inset-0 bg-black/30"></div>
+    </div>
+
+    <!-- CONTENIDO -->
+    <div class="relative z-10">
+      <header class="container mx-auto px-6 py-4">
+        <nav class="backdrop-blur-sm bg-black/60 border border-white/20 rounded-2xl p-3 shadow-xl flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="avatar-liquid">
+              <img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar">
+            </div>
             <a class="text-sm font-extrabold text-white" href="#main">Santiago Sterling</a>
           </div>
-        </div>
 
-        <div class="hidden lg:flex items-center gap-4">
-          <a href="#about" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Sobre mi</a>
-          <a href="#skills" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Estudios Realizados</a>
-          <a href="#projects" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Experiencia Laboral</a>
-          <a href="#cases" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Proyectos</a>
-          <a href="#testimonials" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Habilidades</a>
-          <a href="#contact" class="btn-liquid text-xs">Contacto</a>
-        </div>
-
-        <div class="lg:hidden">
-          <button id="menuBtn" aria-expanded="false" aria-label="Abrir menú" class="p-2 rounded-md bg-white/5 text-white">
-            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path id="iconHamburger" d="M4 6h16M4 12h16M4 18h16"></path>
-              <path id="iconClose" d="M6 18L18 6M6 6l12 12" class="hidden"></path>
-            </svg>
-          </button>
-        </div>
-      </nav>
-
-      <div id="mobileMenu" class="mt-2 hidden bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 shadow-lg">
-        <a class="block py-2 text-white hover:text-gold transition" href="#about">Sobre mi</a>
-        <a class="block py-2 text-white hover:text-gold transition" href="#skills">Estudios Realizados</a>
-        <a class="block py-2 text-white hover:text-gold transition" href="#projects">Experiencia Laboral</a>
-        <a class="block py-2 text-white hover:text-gold transition" href="#contact">Contacto</a>
-      </div>
-    </header>
-
-    <main id="main" class="container mx-auto px-6 mt-10">
-      <!-- HERO -->
-      <section id="hero" class="grid lg:grid-cols-1 gap-8 items-center pb-20 min-h-[70vh]">
-        <div class="space-y-6">
-          <p class="inline-flex items-center gap-3 text-sm text-gold font-semibold">
-            <span class="px-2 py-1 text-white bg-clip-text rounded-full">Portafolio > Santiago Sterling</span>
-            <span class="text-emerald-500">| En línea</span>
-          </p>
-          <!-- ... tu contenido del hero ... -->
-        </div>
-      </section>
-      <!-- ... resto de secciones ... -->
-    </main>
-  </div>
-</body>
-    <br>
-          <br>
-          <br>
-          <br>
-          <h1 class="px-10 py-10 text-2xl md:text-4xl font-extrabold leading-tight tracking-tight text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]">
-            ¡Hola!, soy <span class="bg-gradient-to-r from-yellow-300 via-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">Santiago Sterling</span> e <span class="decoration-gold/60">impulso el crecimiento digital</span>.
-          </h1>
-          <br>
-          <br>
-          <br>
-          <br>
-          <div class="mb-30 flex flex-wrap gap-3 items-center">
-              <div class="flex justify-center mb-20">
-              <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
-
-                  <a href="proyectos20.html" class="filter-btn active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
-                    Proyectos
-                  </a>
-
-                  <a href="windows.html" class="filter-btn active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
-                    Repositorio
-                  </a>
-                  <a id="downloadCV" href="#" class="px-5 py-1 rounded-full text-sm text-center text-white bg-black/30 hover:bg-white/10 backdrop-blur-sm transition">CV en txt</a>
-              </div>
-              </div>
+          <div class="hidden lg:flex items-center gap-4">
+            <a href="#about" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide">Sobre mi</a>
+            <a href="#skills" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide">Estudios Realizados</a>
+            <a href="#projects" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide">Experiencia Laboral</a>
+            <a href="#cases" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide">Proyectos</a>
+            <a href="#testimonials" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide">Habilidades</a>
+            <a href="#contact" class="btn-liquid text-xs">Contacto</a>
           </div>
+
+          <div class="lg:hidden">
+            <button id="menuBtn" aria-expanded="false" aria-label="Abrir menú" class="p-2 rounded-md bg-white/5 text-white">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path id="iconHamburger" d="M4 6h16M4 12h16M4 18h16"/>
+                <path id="iconClose" d="M6 18L18 6M6 6l12 12" class="hidden"/>
+              </svg>
+            </button>
+          </div>
+        </nav>
+
+        <div id="mobileMenu" class="mt-2 hidden bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 shadow-lg">
+          <a class="block py-2 text-white hover:text-gold transition" href="#about">Sobre mi</a>
+          <a class="block py-2 text-white hover:text-gold transition" href="#skills">Estudios Realizados</a>
+          <a class="block py-2 text-white hover:text-gold transition" href="#projects">Experiencia Laboral</a>
+          <a class="block py-2 text-white hover:text-gold transition" href="#contact">Contacto</a>
         </div>
-      </section>
-    </main>
+      </header>
+
+      <main id="main" class="container mx-auto px-6 mt-12">
+        <!-- HERO -->
+        <section id="hero" class="grid lg:grid-cols-1 gap-8 items-center pb-20 min-h-[70vh]">
+          <div class="space-y-6">
+            <p class="inline-flex items-center gap-3 text-sm text-gold font-semibold">
+              <span class="px-2 py-1 text-white bg-clip-text rounded-full">Portafolio > Santiago Sterling</span>
+              <span class="text-emerald-500">| En línea</span>
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
   </div>
-</div>
 
 
     <!-- ABOUT -->
@@ -1033,6 +1001,7 @@
   <script src="script20.js" defer></script>
 </body>
 </html>
+
 
 
 
