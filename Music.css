@@ -197,10 +197,10 @@ header h1 {
   /* Estilo glassmorphism */
   background: linear-gradient(
     145deg,
-    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.7),
     rgba(245, 247, 251, 0.4)
   );
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(8px);
 
   display: flex;
   align-items: center;
