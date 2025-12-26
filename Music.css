@@ -1,6 +1,6 @@
 /* 🎨 VARIABLES BASE */
 :root {
-  --bg: linear-gradient(145deg, #C4C4C4 0%, #C1C1C1 100%);
+  --bg: linear-gradient(145deg, #FFFFFF 0%, #C4C4C4 100%);
   --card: rgba(255, 255, 255, 0.35);
   --muted: #6b7280;
   --accent: #FF4200;
