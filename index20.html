@@ -14,25 +14,24 @@
 
 </head>
 
-<body class="text-slate-100 antialiased leading-relaxed">
-<!-- HEADER CON VIDEO DE FONDO -->
-<div class="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] min-h-screen">
-  <!-- VIDEO DE FONDO: SOLO HEADER Y HERO -->
-  <div class="absolute inset-0 w-full h-full overflow-hidden">
-    <video 
-      class="w-full h-full object-cover" 
-      src="https://cdn.pixabay.com/video/2024/05/25/213648_large.mp4" 
-      autoplay 
-      muted 
+
+<body class="text-slate-100 antialiased leading-relaxed overflow-x-hidden">
+  <!-- VIDEO DE FONDO GLOBAL -->
+  <div class="fixed inset-0 w-screen h-screen -z-10">
+    <video
+      class="w-full h-full object-cover"
+      src="https://cdn.pixabay.com/video/2024/05/25/213648_large.mp4"
+      autoplay
+      muted
       loop
       playsinline
     ></video>
-    <!-- Overlay oscuro opcional para mejor legibilidad -->
+    <!-- Overlay para legibilidad -->
     <div class="absolute inset-0 bg-black/30"></div>
   </div>
 
-  <!-- CONTENIDO CON Z-INDEX -->
-  <div class="relative z-10">
+  <!-- CONTENIDO -->
+  <div class="relative z-10 min-h-screen">
     <header class="relative z-50 container mx-auto px-6 py-4">
       <nav class="backdrop-blur-sm bg-black/60 border border-white/20 rounded-2xl p-3 shadow-xl flex items-center justify-between">
         <div class="flex items-center gap-3">
@@ -56,8 +55,8 @@
         <div class="lg:hidden">
           <button id="menuBtn" aria-expanded="false" aria-label="Abrir menú" class="p-2 rounded-md bg-white/5 text-white">
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path id="iconHamburger" d="M4 6h16M4 12h16M4 18h16"/>
-              <path id="iconClose" d="M6 18L18 6M6 6l12 12" class="hidden"/>
+              <path id="iconHamburger" d="M4 6h16M4 12h16M4 18h16"></path>
+              <path id="iconClose" d="M6 18L18 6M6 6l12 12" class="hidden"></path>
             </svg>
           </button>
         </div>
@@ -71,15 +70,22 @@
       </div>
     </header>
 
-    <main id="main" class="container mx-auto px-6 mt-12">
+    <main id="main" class="container mx-auto px-6 mt-10">
       <!-- HERO -->
-      <section id="hero" class="grid lg:grid-cols-1 gap-8 items-center pb-20">
+      <section id="hero" class="grid lg:grid-cols-1 gap-8 items-center pb-20 min-h-[70vh]">
         <div class="space-y-6">
           <p class="inline-flex items-center gap-3 text-sm text-gold font-semibold">
             <span class="px-2 py-1 text-white bg-clip-text rounded-full">Portafolio > Santiago Sterling</span>
             <span class="text-emerald-500">| En línea</span>
           </p>
-          <br>
+          <!-- ... tu contenido del hero ... -->
+        </div>
+      </section>
+      <!-- ... resto de secciones ... -->
+    </main>
+  </div>
+</body>
+    <br>
           <br>
           <br>
           <br>
@@ -1027,6 +1033,7 @@
   <script src="script20.js" defer></script>
 </body>
 </html>
+
 
 
 
