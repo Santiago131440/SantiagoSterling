@@ -558,3 +558,17 @@ document.addEventListener("click", (e) => {
     }
   });
 });
+
+
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+  const videos = document.querySelectorAll('.hero-video');
+  let current = 0;
+
+  setInterval(() => {
+    videos[current].classList.replace('opacity-100','opacity-0');
+    current = (current + 1) % videos.length;
+    videos[current].classList.replace('opacity-0','opacity-100');
+  }, 8000);
