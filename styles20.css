@@ -583,3 +583,35 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
 
 /* Cerrar clickeando afuera */
 .modal-mac.hidden { display: none; }
+
+
+    .subtle-glass{
+      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-bg{
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gold-line{
+      height: 3px;
+      width: 160px;
+      background: linear-gradient(90deg, transparent, #caa34a, transparent);
+      border-radius: 8px;
+    }
+
+    .gold-shine{
+      background: linear-gradient(110deg,#8a6a1f,#d4af37,#fff,#d4af37,#8a6a1f);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 12s linear infinite;
+    }
+
+    @keyframes shine{
+      from{background-position:200%}
+      to{background-position:-200%}
+    }
