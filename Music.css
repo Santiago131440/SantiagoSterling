@@ -190,14 +190,34 @@ header h1 {
 .cover {
   height: 240px;
   border-radius: 16px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(245, 247, 251, 0.4));
+
+  /* Imagen de fondo */
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.25),
+      rgba(245, 247, 251, 0.4)
+    ),
+    url("ruta/de/tu-imagen.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   font-weight: 700;
   color: var(--muted);
-  box-shadow: inset 0 0 20px rgba(111, 66, 193, 0.1), 0 4px 20px rgba(0, 0, 0, 0.05);
+
+  box-shadow:
+    inset 0 0 20px rgba(111, 66, 193, 0.1),
+    0 4px 20px rgba(0, 0, 0, 0.05);
+
   text-shadow: 0 0 6px rgba(111, 66, 193, 0.3);
 }
 
