@@ -1,3 +1,4 @@
+
 (() => {
   "use strict";
 
@@ -115,59 +116,7 @@
     return content;
   }
 
-  /* CONTACT FORM interaction (simulate backend / EmailJS integration) */
-  const contactForm = $("#contactForm");
-  const sendBtn = $("#sendBtn");
-  const formStatus = $("#formStatus");
-
-  if (contactForm) {
-    contactForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      formStatus.textContent = "";
-      const formData = new FormData(contactForm);
-      const payload = Object.fromEntries(formData.entries());
-      // basic validation
-      if (!payload.name || !payload.email || !payload.message) {
-        formStatus.textContent = "Por favor completa los campos requeridos.";
-        formStatus.style.color = "tomato";
-        return;
-      }
-
-      // show loader
-      const loader = document.createElement("span");
-      loader.className = "loader";
-      sendBtn.disabled = true;
-      sendBtn.appendChild(loader);
-      formStatus.textContent = "Enviando mensaje...";
-      formStatus.style.color = "#cbd5e1";
-
-      try {
-        // Simulación de envío (aquí conectarías EmailJS o API)
-        await fakeNetworkRequest(1100 + Math.random() * 1200);
-        formStatus.textContent = "Mensaje enviado. Responderé en 24-48 horas.";
-        formStatus.style.color = "limegreen";
-        contactForm.reset();
-      } catch (err) {
-        console.error(err);
-        formStatus.textContent = "Error al enviar. Intenta de nuevo más tarde.";
-        formStatus.style.color = "tomato";
-      } finally {
-        sendBtn.disabled = false;
-        loader.remove();
-      }
-    });
-  }
-
-  function fakeNetworkRequest(ms = 1000) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // simulate occasional failures
-        if (Math.random() < 0.96) resolve(true);
-        else reject(new Error("network"));
-      }, ms);
-    });
-  }
-
+  
   /* Download CV (simulate) */
   const downloadCV = $("#downloadCV");
   const downloadCV2 = $("#downloadCV2");
