@@ -73,49 +73,6 @@
     modal.setAttribute("aria-hidden", "true");
   }
 
-  function generateProjectContentCosmoagro {
-    // dynamic rich content (example)
-    const content = `
-      <div class="grid lg:grid-cols-2 gap-4">
-        <div>
-          <img src="https://cosmoagro.com/wp-content/uploads/2021/02/Cosmoagro.jpg" alt="Cosmoagro S.A." class="w-full h-44 object-cover rounded" />
-        </div>
-        <div>
-          <h4 class="font-semibold">Cosmoagro S.A.</h4>
-          <p class="text-slate-300 mt-2">Resumen ejecutivo: Descripción breve de mis actividades, objetivos y rol desempeñado.</p>
-          <div class="mt-3">
-            <h5 class="text-sm font-medium">Impacto</h5>
-            <ul class="list-disc list-inside text-slate-200 mt-2">
-              <li>Aumento de indicadores</li>
-              <li>Optimización de flujo</li>
-              <li>Mejoras de accesibilidad</li>
-            </ul>
-          </div>
-          <div class="mt-3">
-            <h5 class="text-sm font-medium">Tecnologías</h5>
-            <div class="flex gap-2 mt-2">
-              <span class="px-2 py-1 rounded bg-white/5">Excel</span>
-              <span class="px-2 py-1 rounded bg-white/5">Power BI</span>
-              <span class="px-2 py-1 rounded bg-white/5">Power Apps</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-4 reveal">
-        <details class="bg-white/5 p-3 rounded">
-          <summary class="font-medium">Ver procedimiento detallado</summary>
-          <div class="mt-3 code-style">
-            // pasos (ejemplo)
-            1) Toma de datos
-            2) Medición de indicadores
-          </div>
-        </details>
-      </div>
-    `;
-    return content;
-  }
-
     function generateProjectContent(title) {
     // dynamic rich content (example)
     const content = `
@@ -563,4 +520,5 @@ document.addEventListener("click", (e) => {
     current = (current + 1) % videos.length;
     videos[current].classList.replace('opacity-0','opacity-100');
   }, 8000);
+
 
