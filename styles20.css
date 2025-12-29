@@ -370,105 +370,6 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
         }
 
 
-
-    /* Tarjetas estilo Apple Glass */
-        .courses-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .course-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .course-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #b4b4b4 0%, #d6d6d6 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            flex-shrink: 0;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        .course-icon:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-            background: linear-gradient(90deg, #e6e6e6 0%, #f8f8f8 100%);
-            color: rgb(0, 0, 0);
-        }
-
-        .course-badge {
-            flex: 1;
-            background: linear-gradient(90deg, #b4b4b4 0%, #d6d6d6 100%);
-            color: rgb(231, 231, 231);
-            padding: 4px 8px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-        }
-
-        .course-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-            background: linear-gradient(90deg, #e6e6e6 0%, #f8f8f8 100%);
-            color: rgb(0, 0, 0);
-        }
-
-        .course-title {
-            font-size: 16px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .course-year {
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        @media (max-width: 768px) {
-            .course-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 26px;
-            }
-
-            .course-badge {
-                padding: 8px 10px;
-            }
-
-            .course-title,
-            .course-year {
-                font-size: 12px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 40px 20px;
-            }
-
-            .course-title,
-            .course-year {
-                font-size: 10px;
-            }
-        }
-
-
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
@@ -683,3 +584,139 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
 }
 
 
+/* SECCION DE ESTUDIOS REALIZADOS - PARTE DE LOS CURSOS */
+.mac-section {
+  background: linear-gradient(180deg, #ffffff, #ffffff);
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Finder Window */
+.finder-window {
+  width: 100%;
+  max-width: 860px;
+  background: rgba(255,255,255,.75);
+  backdrop-filter: blur(24px);
+  border-radius: 18px;
+  box-shadow: 0 40px 90px rgba(0,0,0,.25);
+  overflow: hidden;
+}
+
+/* Titlebar */
+.finder-titlebar,
+.modal-titlebar {
+  height: 44px;
+  background: rgba(245,245,247,.9);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+}
+
+.c {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.red { background:#ff5f57; }
+.yellow { background:#febc2e; }
+.green { background:#28c840; }
+
+.title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+/* Content */
+.finder-content {
+  padding: 8px 0;
+}
+
+/* File List */
+.file-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color:#000000;
+}
+
+.file-list li {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  padding: 12px 18px;
+  cursor: pointer;
+  transition: background .25s ease;
+}
+
+.file-list li:hover {
+  background: rgba(10,100,255,.08);
+}
+
+.icon {
+  font-size: 20px;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.date {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Modal */
+.mac-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  z-index: 999;
+}
+
+.modal-window {
+  width: 90%;
+  max-width: 520px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(28px);
+  border-radius: 18px;
+  box-shadow: 0 40px 100px rgba(0,0,0,.4);
+  animation: scaleIn .35s ease;
+}
+
+.modal-body {
+  padding: 26px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Animation */
+@keyframes scaleIn {
+  from { transform: scale(.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* iOS Responsive */
+@media (max-width: 600px) {
+  .finder-window {
+    border-radius: 26px;
+  }
+
+  .file-list li {
+    padding: 14px 16px;
+  }
+}
