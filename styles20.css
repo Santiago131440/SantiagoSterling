@@ -94,7 +94,7 @@ body{
 .projectCard{
   transition: transform .25s ease, box-shadow .25s ease;
 }
-.projectCard:hover{ transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
+.projectCard:hover{ transform: translateY(-4px); box-shadow: 0 5px 10px rgba(0,0,0,0.6); }
 
 /* Modal styles */
 #projectModal .modal-body{
@@ -681,3 +681,4 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
 .ios-title {
   letter-spacing: -0.04em;
 }
+
