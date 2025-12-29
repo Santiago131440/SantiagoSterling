@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="es">
 <head>
@@ -214,106 +213,69 @@
     </h1>
   </div>
   <br>
-  <!-- FILTROS -->
-<div class="flex justify-center mb-20">
-  <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
 
-    <button class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900" data-category="all">
-      Todos
-    </button>
+<section class="mac-section">
 
-    <button class="filter-btn px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900" data-category="tecnologias">
-      Tecnologías
-    </button>
-
-    <button class="filter-btn px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900" data-category="sena">
-      Sena
-    </button>
-
-    <button class="filter-btn px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900" data-category="platzi">
-      Platzi
-    </button>
-
-  </div>
-</div>
-
-  <!-- TARJETAS (Estilo iOS 26 / Apple Glass) -->
-  <div class="container">
-
-            <div class="courses-list" data-category="sena">
-            <div class="course-item">
-                <div class="course-icon">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-md">
-                </div>
-                <div class="course-badge">
-                    <span class="course-title">Tecnología en análisis y desarrollo de software.</span>
-                    <span class="course-year">2025</span>
-                </div>
-            </div>
-
-                    <div class="courses-list" data-category="sena">
-            <div class="course-item">
-                <div class="course-icon">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-md">
-                </div>
-                <div class="course-badge">
-                    <span class="course-title">Tecnología en gestión de la producción industrial.</span>
-                    <span class="course-year">2025</span>
-                </div>
-            </div>
-        
-        <div class="courses-list" data-category="sena">
-            <div class="course-item">
-                <div class="course-icon">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-md">
-                </div>
-                <div class="course-badge">
-                    <span class="course-title">Uso de Excel y Access para el desarrollo de aplicaciones administrativas empresariales.</span>
-                    <span class="course-year">2025</span>
-                </div>
-            </div>
-
-            <div class="course-item" data-category="sena">
-                <div class="course-icon">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-md">
-                </div>
-                <div class="course-badge">
-                    <span class="course-title">Análisis exploratorio de datos en Python.</span>
-                    <span class="course-year">2025</span>
-                </div>
-            </div>
-            
-            <div class="course-item" data-category="sena">
-                <div class="course-icon">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-md">
-                </div>
-                <div class="course-badge">
-                    <span class="course-title">Variables y estructuras de control en Python.</span>
-                    <span class="course-year">2025</span>
-                </div>
-            </div>
-            
-            <div class="course-item" data-category="sena">
-                <div class="course-icon">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/1200px-Sena_Colombia_logo.svg.png" alt="Icono del curso" class="w-10 h-10 object-cover rounded-md">
-                </div>
-                <div class="course-badge">
-                    <span class="course-title">Construcción de bases de datos con MySQL.</span>
-                    <span class="course-year">2025</span>
-                </div>
-            </div>
-
-            <div class="course-item" data-category="sena">
-                <div class="course-icon">
-                  <img src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/platzi.webp" alt="Icono del curso" class="w-10 h-10 object-cover rounded-md">
-                </div>
-                <div class="course-badge">
-                    <span class="course-title">Desarrollo de applets/aplicaciones con uso de base de datos, redes, servlets y multimedia.</span>
-                    <span class="course-year">2025</span>
-                </div>
-            </div>
-        </div>
+  <!-- Finder Panel -->
+  <div class="finder-window">
+    <div class="finder-titlebar">
+      <div class="controls">
+        <span class="c red"></span>
+        <span class="c yellow"></span>
+        <span class="c green"></span>
+      </div>
+      <span class="title">Tecnologías</span>
     </div>
+
+    <div class="finder-content">
+      <ul class="file-list">
+        <li onclick="openModal('Proyecto Alpha','Sistema de gestión industrial optimizado para entornos productivos. Incluye métricas, control y reportes en tiempo real.')">
+          <span class="icon"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/120px-Sena_Colombia_logo.svg.png" alt="Folder"/></span>
+          <span class="name">Tecnología en analisis y desarrollo de software</span>
+          <span class="date">En proceso</span>
+        </li>
+
+        <li onclick="openModal('Informe Producción','Análisis mensual de producción con KPIs, eficiencia operativa y mejoras continuas.')">
+          <span class="icon"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/120px-Sena_Colombia_logo.svg.png" alt="Folder"/></span>
+          <span class="name">Informe Producción</span>
+          <span class="date">Ayer</span>
+        </li>
+
+        <li onclick="openModal('Diseño UX','Sistema de diseño inspirado en iOS y macOS para aplicaciones premium.')">
+          <span class="icon"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/120px-Sena_Colombia_logo.svg.png" alt="Folder"/></span>
+          <span class="name">Diseño UX</span>
+          <span class="date">Hace 3 días</span>
+        </li>
+
+        <li onclick="openModal('Plan Estratégico','Documento estratégico con visión, objetivos y roadmap empresarial.')">
+          <span class="icon"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/120px-Sena_Colombia_logo.svg.png" alt="Folder"/></span>
+          <span class="name">Plan Estratégico</span>
+          <span class="date">1 semana</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Modal macOS -->
+  <div class="mac-modal" id="macModal">
+    <div class="modal-window">
+      <div class="modal-titlebar">
+        <div class="controls">
+          <span class="c red" onclick="closeModal()"></span>
+          <span class="c yellow"></span>
+          <span class="c green"></span>
+        </div>
+        <span class="title" id="modalTitle"></span>
+      </div>
+
+      <div class="modal-body">
+        <p id="modalContent"></p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
 
 </section>
 
@@ -358,7 +320,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2024/12/10</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">Actualidad</span>
-      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Cosmoagro S.A.">Ver</button>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Cosmoagro S.A.">Ver</button>
     </div>
   </div>
 </article>
@@ -391,7 +353,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2023/07/07</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2024/06/07</span>
-           <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Coca Cola Femsa">Ver</button>
+           <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Coca Cola Femsa">Ver</button>
     </div>
   </div>
 </article>
@@ -423,7 +385,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2020/01/20</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2023/02/17</span>
-      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Cadena S.A.">Ver</button>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Cadena S.A.">Ver</button>
     </div>
   </div>
 </article>
@@ -455,7 +417,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/03/08</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/08/06</span>
-      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Postobón S.A.">Ver</button>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Postobón S.A.">Ver</button>
     </div>
   </div>
 </article>
@@ -488,7 +450,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2018/06/16</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/03/06</span>
-      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Laboratorios OSA S.A.">Ver</button>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Laboratorios OSA S.A.">Ver</button>
     </div>
   </div>
 </article>
@@ -520,7 +482,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2017/03/24</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2018/03/24</span>
-      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Smurfit Westrock S.A.">Ver</button>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Smurfit Westrock S.A.">Ver</button>
     </div>
   </div>
 </article>
@@ -900,7 +862,6 @@
     </div>
   </div>
 </div>
-
   </div>
 </section>
 
@@ -1112,7 +1073,6 @@
   </div>
 </section>
 
-
 <!-- FOOTER -->
 <footer class="mt-24 bg-white border-t border-rose">
   <div class="max-w-6xl mx-auto px-6 py-10 text-center">
@@ -1159,8 +1119,6 @@
   </div>
 </footer>
 
-
-
   <!-- PROJECT MODAL -->
   <div id="projectModal" aria-hidden="true" class="fixed inset-0 hidden items-center justify-center z-50 bg-black/60">
     <div class="bg-slate-900 rounded-2xl w-11/12 max-w-4xl p-6">
@@ -1175,4 +1133,3 @@
   <script src="script20.js" defer></script>
 </body>
 </html>
-
