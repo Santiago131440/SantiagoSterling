@@ -1,4 +1,170 @@
- 
+/*Ventana de experiencia laboral */
+/* ===============================
+   MODAL ESTILO macOS - PROJECTS
+================================ */
+
+const projectData = {
+  project1: {
+    title: "Cosmoagro S.A.",
+    role: "Analista de Producción",
+    cover: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_cover.jpg?raw=true",
+    logo: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_logo.jpg?raw=true",
+    description: `
+      Optimización de procesos productivos mediante análisis de indicadores,
+      control de calidad y mejora continua en planta industrial.
+    `,
+    responsibilities: [
+      "Análisis de KPIs de producción",
+      "Optimización de flujos operativos",
+      "Control de inventarios",
+      "Automatización de reportes",
+      "Mejoras Lean Manufacturing"
+    ],
+    tech: ["Excel Avanzado", "Power BI", "Python", "Lean", "Indicadores KPI"],
+    impact: [
+      "Reducción de reprocesos",
+      "Mejora en eficiencia operativa",
+      "Mayor visibilidad de datos",
+      "Optimización de tiempos"
+    ]
+  }
+};
+
+/* Abrir modal */
+document.querySelectorAll(".viewProject").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const id = btn.dataset.projectId || "project1";
+    openMacModal(projectData[id]);
+  });
+});
+
+/* Crear modal */
+function openMacModal(data) {
+  if (!data) return;
+
+  // Eliminar modal previo
+  const old = document.getElementById("macProjectModal");
+  if (old) old.remove();
+
+  const modal = document.createElement("div");
+  modal.id = "macProjectModal";
+  modal.className = `
+    fixed inset-0 z-50 flex items-center justify-center
+    bg-black/50 backdrop-blur-sm
+    opacity-0 transition-opacity duration-300
+  `;
+
+  modal.innerHTML = `
+    <div
+      class="
+        relative w-[95%] max-w-5xl max-h-[90vh]
+        bg-gradient-to-br from-stone-100 to-stone-200
+        rounded-2xl shadow-2xl
+        scale-90 opacity-0
+        transition-all duration-300 ease-out
+        flex flex-col
+      "
+      id="macWindow"
+    >
+      <!-- Barra superior macOS -->
+      <div class="flex items-center px-4 py-2 bg-stone-200 rounded-t-2xl border-b border-black/10">
+        <div class="flex gap-2">
+          <button id="closeMacModal" class="w-3 h-3 bg-red-500 rounded-full"></button>
+          <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
+          <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+        </div>
+        <h3 class="mx-auto font-semibold text-slate-700 text-sm">
+          ${data.title}
+        </h3>
+      </div>
+
+      <!-- Contenido -->
+      <div class="overflow-y-auto p-6 space-y-6">
+        <!-- Imagen principal -->
+        <div class="relative">
+          <img src="${data.cover}" class="w-full h-64 object-cover rounded-xl shadow-md">
+          <img src="${data.logo}"
+               class="w-24 h-24 rounded-full border-4 border-white shadow-xl
+                      absolute -bottom-8 left-6 bg-white">
+        </div>
+
+        <!-- Info -->
+        <div class="mt-10">
+          <h4 class="text-xl font-bold text-emerald-600">${data.role}</h4>
+          <p class="text-slate-700 mt-2 leading-relaxed">
+            ${data.description}
+          </p>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h5 class="font-semibold text-slate-800 mb-2">Responsabilidades</h5>
+            <ul class="list-disc list-inside text-slate-700 space-y-1">
+              ${data.responsibilities.map(i => `<li>${i}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div>
+            <h5 class="font-semibold text-slate-800 mb-2">Impacto</h5>
+            <ul class="list-disc list-inside text-slate-700 space-y-1">
+              ${data.impact.map(i => `<li>${i}</li>`).join("")}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Tech -->
+        <div>
+          <h5 class="font-semibold text-slate-800 mb-2">Tecnologías</h5>
+          <div class="flex flex-wrap gap-2">
+            ${data.tech.map(t => `
+              <span class="px-3 py-1 rounded-full bg-white shadow text-sm text-slate-700">
+                ${t}
+              </span>
+            `).join("")}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  // Animación entrada
+  requestAnimationFrame(() => {
+    modal.classList.remove("opacity-0");
+    modal.querySelector("#macWindow").classList.remove("scale-90", "opacity-0");
+  });
+
+  // Cerrar
+  modal.addEventListener("click", e => {
+    if (e.target === modal) closeMacModal();
+  });
+
+  document.getElementById("closeMacModal").addEventListener("click", closeMacModal);
+  document.addEventListener("keydown", escClose);
+}
+
+/* Cerrar modal */
+function closeMacModal() {
+  const modal = document.getElementById("macProjectModal");
+  if (!modal) return;
+
+  const win = modal.querySelector("#macWindow");
+  win.classList.add("scale-90", "opacity-0");
+  modal.classList.add("opacity-0");
+
+  setTimeout(() => modal.remove(), 300);
+  document.removeEventListener("keydown", escClose);
+}
+
+function escClose(e) {
+  if (e.key === "Escape") closeMacModal();
+}
+
+
+
+
   /* Download CV (simulate) */
   const downloadCV = $("#downloadCV");
   const downloadCV2 = $("#downloadCV2");
@@ -403,6 +569,7 @@ document.addEventListener("click", (e) => {
     current = (current + 1) % videos.length;
     videos[current].classList.replace('opacity-0','opacity-100');
   }, 8000);
+
 
 
 
