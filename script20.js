@@ -560,3 +560,13 @@ document.addEventListener("click", (e) => {
 
 
 
+/* FUNCIÓN DE ESTUDIOS REALIZADOS - CURSOS REALIZADOS */
+function openModal(title, content) {
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalContent').innerText = content;
+  document.getElementById('macModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('macModal').style.display = 'none';
+}
