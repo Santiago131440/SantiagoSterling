@@ -6,59 +6,25 @@
   const $ = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
 
-  // Year update
-  const yearEl = $("#year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-  /* Mobile menu */
-  const menuBtn = $("#menuBtn");
-  const mobileMenu = $("#mobileMenu");
-  if (menuBtn && mobileMenu) {
-    menuBtn.addEventListener("click", () => {
-      const expanded = menuBtn.getAttribute("aria-expanded") === "true";
-      menuBtn.setAttribute("aria-expanded", String(!expanded));
-      mobileMenu.classList.toggle("hidden");
-      mobileMenu.classList.toggle("block");
-    });
-  }
-
-  /* Reveal on scroll */
-  const reveals = $$(".reveal, section, .projectCard, .card-3d, .testimonial");
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  reveals.forEach(el => observer.observe(el));
-
-  /* Fancy programmatic reveal for project cards */
-  $$(".projectCard").forEach((c, idx) => {
-    c.style.transitionDelay = `${idx * 60}ms`;
-    c.classList.add("reveal");
-  });
-
-  /* Project modal (dynamic content) */
+  // Project modal (dynamic content)
   const modal = $("#projectModal");
   const modalTitle = $("#modalTitle");
   const modalBody = $("#modalBody");
   $$(".viewProject").forEach(btn => {
     btn.addEventListener("click", (e) => {
       const title = btn.dataset.title || "Proyecto";
-      openProjectModal(title);
+      const projectId = btn.dataset.projectId; // Asignamos un ID único para cada proyecto
+      openProjectModal(title, projectId);  // Pasamos el ID al abrir el modal
     });
   });
 
   $("#closeModal")?.addEventListener("click", closeProjectModal);
   modal?.addEventListener("click", (e) => { if (e.target === modal) closeProjectModal(); });
 
-  function openProjectModal(title) {
+  function openProjectModal(title, projectId) {
     if (!modal) return;
     modalTitle.textContent = title;
-    modalBody.innerHTML = generateProjectContent(title);
+    modalBody.innerHTML = generateProjectContent(projectId); // Generamos el contenido según el ID
     modal.classList.remove("hidden");
     modal.classList.add("flex");
     modal.setAttribute("aria-hidden", "false");
@@ -66,6 +32,7 @@
     $$(".reveal").forEach(x => x.classList.remove("visible"));
     setTimeout(() => { $$(".reveal").forEach(x => x.classList.add("visible")); }, 50);
   }
+
   function closeProjectModal() {
     if (!modal) return;
     modal.classList.add("hidden");
@@ -73,48 +40,97 @@
     modal.setAttribute("aria-hidden", "true");
   }
 
-    function generateProjectContent(title) {
-    // dynamic rich content (example)
-    const content = `
-      <div class="grid lg:grid-cols-2 gap-4">
-        <div>
-          <img src="https://cdn.pixabay.com/photo/2025/11/10/21/55/sunset-9949027_1280.jpg" alt="${title}" class="w-full h-44 object-cover rounded" />
-        </div>
-        <div>
-          <h4 class="font-semibold">${title}</h4>
-          <p class="text-slate-300 mt-2">Resumen ejecutivo: Descripción breve del proyecto, objetivos y rol desempeñado.</p>
-          <div class="mt-3">
-            <h5 class="text-sm font-medium">Impacto</h5>
-            <ul class="list-disc list-inside text-slate-200 mt-2">
-              <li>Aumento de conversión</li>
-              <li>Optimización de flujo</li>
-              <li>Mejoras de accesibilidad</li>
-            </ul>
-          </div>
-          <div class="mt-3">
-            <h5 class="text-sm font-medium">Tecnologías</h5>
-            <div class="flex gap-2 mt-2">
-              <span class="px-2 py-1 rounded bg-white/5">React</span>
-              <span class="px-2 py-1 rounded bg-white/5">Tailwind</span>
-              <span class="px-2 py-1 rounded bg-white/5">Figma</span>
+  // Generar contenido dinámico para cada proyecto basado en el ID
+  function generateProjectContent(projectId) {
+    let content = '';
+    switch(projectId) {
+      case 'project1':
+        content = `
+          <div class="grid lg:grid-cols-2 gap-4">
+            <div>
+              <img src="https://cdn.pixabay.com/photo/2025/11/10/21/55/sunset-9949027_1280.jpg" alt="Proyecto 1" class="w-full h-44 object-cover rounded" />
+            </div>
+            <div>
+              <h4 class="font-semibold">Proyecto 1</h4>
+              <p class="text-slate-300 mt-2">Descripción breve del proyecto 1.</p>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="mt-4 reveal">
-        <details class="bg-white/5 p-3 rounded">
-          <summary class="font-medium">Ver procedimiento detallado</summary>
-          <div class="mt-3 code-style">
-            // pasos (ejemplo)
-            1) Santiago Sterling
-            2) Hola mundo
+        `;
+        break;
+      case 'project2':
+        content = `
+          <div class="grid lg:grid-cols-2 gap-4">
+            <div>
+              <img src="https://cdn.pixabay.com/photo/2025/11/10/21/55/sunset-9949027_1280.jpg" alt="Proyecto 2" class="w-full h-44 object-cover rounded" />
+            </div>
+            <div>
+              <h4 class="font-semibold">Proyecto 2</h4>
+              <p class="text-slate-300 mt-2">Descripción breve del proyecto 2.</p>
+            </div>
           </div>
-        </details>
-      </div>
-    `;
+        `;
+        break;
+      case 'project3':
+        content = `
+          <div class="grid lg:grid-cols-2 gap-4">
+            <div>
+              <img src="https://cdn.pixabay.com/photo/2025/11/10/21/55/sunset-9949027_1280.jpg" alt="Proyecto 3" class="w-full h-44 object-cover rounded" />
+            </div>
+            <div>
+              <h4 class="font-semibold">Proyecto 3</h4>
+              <p class="text-slate-300 mt-2">Descripción breve del proyecto 3.</p>
+            </div>
+          </div>
+        `;
+        break;
+      case 'project4':
+        content = `
+          <div class="grid lg:grid-cols-2 gap-4">
+            <div>
+              <img src="https://cdn.pixabay.com/photo/2025/11/10/21/55/sunset-9949027_1280.jpg" alt="Proyecto 4" class="w-full h-44 object-cover rounded" />
+            </div>
+            <div>
+              <h4 class="font-semibold">Proyecto 4</h4>
+              <p class="text-slate-300 mt-2">Descripción breve del proyecto 4.</p>
+            </div>
+          </div>
+        `;
+        break;
+      case 'project5':
+        content = `
+          <div class="grid lg:grid-cols-2 gap-4">
+            <div>
+              <img src="https://cdn.pixabay.com/photo/2025/11/10/21/55/sunset-9949027_1280.jpg" alt="Proyecto 5" class="w-full h-44 object-cover rounded" />
+            </div>
+            <div>
+              <h4 class="font-semibold">Proyecto 5</h4>
+              <p class="text-slate-300 mt-2">Descripción breve del proyecto 5.</p>
+            </div>
+          </div>
+        `;
+        break;
+      case 'project6':
+        content = `
+          <div class="grid lg:grid-cols-2 gap-4">
+            <div>
+              <img src="https://cdn.pixabay.com/photo/2025/11/10/21/55/sunset-9949027_1280.jpg" alt="Proyecto 6" class="w-full h-44 object-cover rounded" />
+            </div>
+            <div>
+              <h4 class="font-semibold">Proyecto 6</h4>
+              <p class="text-slate-300 mt-2">Descripción breve del proyecto 6.</p>
+            </div>
+          </div>
+        `;
+        break;
+      default:
+        content = `
+          <p>No se encontró información para este proyecto.</p>
+        `;
+        break;
+    }
     return content;
   }
+})();
   
   /* Download CV (simulate) */
   const downloadCV = $("#downloadCV");
@@ -520,5 +536,6 @@ document.addEventListener("click", (e) => {
     current = (current + 1) % videos.length;
     videos[current].classList.replace('opacity-0','opacity-100');
   }, 8000);
+
 
 
