@@ -20,89 +20,105 @@
 </head>
 
 
+<body class="text-slate-100 antialiased leading-relaxed">
+<!-- HEADER CON VIDEO DE FONDO -->
+<div class="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] min-h-screen">
+  <!-- VIDEO DE FONDO: SOLO HEADER Y HERO -->
+  <div class="absolute inset-0 w-full h-full overflow-hidden">
+    <video 
+      class="w-full h-full object-cover" 
+      src="https://cdn.pixabay.com/video/2024/05/25/213648_large.mp4" 
+      autoplay 
+      muted 
+      loop
+      playsinline
+    ></video>
+    <!-- Overlay oscuro opcional para mejor legibilidad -->
+    <div class="absolute inset-0 bg-black/30"></div>
+  </div>
 
-<body class="bg-ink text-cream font-body">
-
-<!-- ================= HEADER ================= -->
-<header class="fixed top-0 left-0 w-full z-50">
-  <div class="bg-black/50 backdrop-blur-md border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-
-      <div class="flex items-center gap-4">
-        <img src="https://avatars.githubusercontent.com/u/98182135?v=4"
-             class="w-10 h-10 rounded-full object-cover">
-        <div>
-          <div class="font-display tracking-widest text-white font-bold">Santiago Sterling</div>
+  <!-- CONTENIDO CON Z-INDEX -->
+  <div class="relative z-10">
+    <header class="relative z-50 container mx-auto px-6 py-4">
+      <nav class="backdrop-blur-sm bg-black/60 border border-white/20 rounded-2xl p-3 shadow-xl flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="avatar-liquid">
+            <img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar">
+          </div>
+          <div>
+            <a class="text-sm font-extrabold text-white" href="#main">Santiago Sterling</a>
+          </div>
         </div>
+
+        <div class="hidden lg:flex items-center gap-4">
+          <a href="#about" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Sobre mi</a>
+          <a href="#skills" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Estudios Realizados</a>
+          <a href="#projects" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Experiencia Laboral</a>
+          <a href="#cases" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Proyectos</a>
+          <a href="#testimonials" class="text-white hover:text-gold text-xs transition-all duration-300 hover:scale-110 hover:tracking-wide transform inline-block">Habilidades</a>
+          <a href="#contact" class="btn-liquid text-xs">Contacto</a>
+        </div>
+
+        <div class="lg:hidden">
+          <button id="menuBtn" aria-expanded="false" aria-label="Abrir menú" class="p-2 rounded-md bg-white/5 text-white">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path id="iconHamburger" d="M4 6h16M4 12h16M4 18h16"/>
+              <path id="iconClose" d="M6 18L18 6M6 6l12 12" class="hidden"/>
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      <div id="mobileMenu" class="mt-2 hidden bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 shadow-lg">
+        <a class="block py-2 text-white hover:text-gold transition" href="#about">Sobre mi</a>
+        <a class="block py-2 text-white hover:text-gold transition" href="#skills">Estudios Realizados</a>
+        <a class="block py-2 text-white hover:text-gold transition" href="#projects">Experiencia Laboral</a>
+        <a class="block py-2 text-white hover:text-gold transition" href="#contact">Contacto</a>
       </div>
+    </header>
 
-      <nav class="hidden md:flex gap-8 text-sm text-white">
-        <a href="#" class="hover:text-gold">Sobre mi</a>
-        <a href="#" class="hover:text-gold">Estudios</a>
-        <a href="#" class="hover:text-gold">Experiencia</a>
-        <a href="#" class="hover:text-gold">Contacto</a>
-      </nav>
+    <main id="main" class="container mx-auto px-6 mt-12">
+      <!-- HERO -->
+      <section id="hero" class="grid lg:grid-cols-1 gap-8 items-center pb-20">
+        <div class="space-y-6">
+          <p class="inline-flex items-center gap-3 text-sm text-gold font-semibold">
+            <span class="px-2 py-1 text-white bg-clip-text rounded-full">Portafolio > Santiago Sterling</span>
+            <span class="text-emerald-500">| En línea</span>
+          </p>
+          <br>
+          <br>
+          <br>
+          <br>
+          <h1 class="px-10 py-10 text-2xl md:text-4xl font-extrabold leading-tight tracking-tight text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]">
+            ¡Hola!, soy <span class="bg-gradient-to-r from-yellow-300 via-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">Santiago Sterling</span> e <span class="decoration-gold/60">impulso el crecimiento digital</span>.
+          </h1>
+          <br>
+          <br>
+          <br>
+          <br>
+          <div class="mb-30 flex flex-wrap gap-3 items-center">
+              <div class="flex justify-center mb-20">
+              <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
 
-      <button id="menuBtn" class="md:hidden p-2 subtle-glass rounded-md">
-        ☰
-      </button>
-    </div>
+                  <a href="proyectos20.html" class="filter-btn active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
+                    Proyectos
+                  </a>
 
-    <div id="mobileMenu" class="hidden px-6 pb-6 md:hidden">
-      <nav class="flex flex-col gap-3 text-sm text-white">
-        <a href="#">Sobre mi</a>
-        <a href="#">Estudios</a>
-        <a href="#">Experiencia</a>
-        <a href="#">Contacto</a>
-      </nav>
-    </div>
-  </div>
-</header>
-
-<!-- ================= HERO ================= -->
-<main class="mt-20">
-<section class="hero-bg min-h-[78vh] flex items-center">
-
-  <!-- VIDEOS -->
-  <div class="absolute inset-0 -z-10">
-    <video class="hero-video absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-1000"
-      autoplay muted loop playsinline>
-      <source src="https://cdn.pixabay.com/video/2024/05/25/213648_large.mp4">
-    </video>
-
-    <video class="hero-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
-      autoplay muted loop playsinline>
-      <source src="https://cdn.pixabay.com/video/2020/10/22/53109-472531846_large.mp4">
-    </video>
-
-    <video class="hero-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
-      autoplay muted loop playsinline>
-      <source src="https://cdn.pixabay.com/video/2021/05/07/73425-548173432_large.mp4">
-    </video>
-  </div>
-
-  <!-- OVERLAY -->
-  <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/70"></div>
-
-  <!-- CONTENIDO -->
-  <div class="max-w-7xl mx-auto px-6 py-32 relative z-10">
-    <div class="max-w-3xl">
-      <div class="gold-line mb-8"></div>
-      <h1 class="font-display text-5xl md:text-6xl gold-shine">
-        Santiago Sterling
-      </h1>
-      <p class="mt-6 text-lg text-white/80">
-        Confianza, liderazgo y visión en asesoría pericial especializada.
-      </p>
-    </div>
-  </div>
-
+                  <a href="windows.html" class="filter-btn active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
+                    Repositorio
+                  </a>
+                  <a id="downloadCV" href="#" class="px-5 py-1 rounded-full text-sm text-center text-white bg-black/30 hover:bg-white/10 backdrop-blur-sm transition">CV en txt</a>
+              </div>
+              </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    
   <!-- DEGRADADO DE TRANSICIÓN -->
   <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-
-</section>
-</main>
-
+  </div>
+</div>
 
     <!-- ABOUT -->
         <section id="about"
@@ -1117,6 +1133,7 @@
   <script src="script20.js" defer></script>
 </body>
 </html>
+
 
 
 
