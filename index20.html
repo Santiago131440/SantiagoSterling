@@ -358,7 +358,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2024/12/10</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">Actualidad</span>
-      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 hover:text-white inline-block text-center cursor-pointer viewProject" data-title="project1" data-project-id="project1">Ver</button>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Cosmoagro S.A.">Ver</button>
     </div>
   </div>
 </article>
@@ -391,7 +391,7 @@
     <div class="mt-3 flex items-center gap-3">
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2023/07/07</span>
       <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2024/06/07</span>
-           <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 hover:text-white inline-block text-center cursor-pointer viewProject" data-title="project2" data-project-id="project2">Ver</button>
+           <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Coca Cola Femsa">Ver</button>
     </div>
   </div>
 </article>
@@ -558,7 +558,9 @@
           <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
 
             <a class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer" onclick="mostrarModal()"> Ver protección de datos </a>
-        </div>
+            
+  
+          </div>
         
       </div>
     <div class="mt-6 grid lg:grid-cols-2 gap-6">
@@ -971,105 +973,147 @@
     <!-- CONTACT -->
 <section
   id="contact"
-  class="mt-20 p-10 rounded-[28px] glass-panel"
+  class="relative mt-24 max-w-5xl mx-auto px-6 sm:px-10 py-14 sm:py-16
+         rounded-[32px]
+         bg-white/70 backdrop-blur-xl
+         border border-black/30
+         shadow-[0_20px_60px_-20px_rgba(0,0,0,0.15)]
+         overflow-hidden"
 >
-  <h2 class="text-6xl font-extrabold ios-title text-gray-900">
-    Contacto
-  </h2>
 
-  <p class="text-gray-700 mt-6 max-w-2xl">
-    Si estás buscando un profesional comprometido y orientado a resultados,
-    estaré atento a la oportunidad de postular para la vacante que se ajuste a mi perfil.
-    Quedo a tu disposición para coordinar una llamada cuando lo estimes conveniente.
-  </p>
+  <!-- Imagen de fondo -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src="https://cdn.pixabay.com/photo/2017/07/30/10/42/spring-2553958_1280.jpg"
+      alt="Fondo contacto"
+      class="w-full h-full object-cover"
+    />
+    <!-- Overlay para contraste -->
+    <div class="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
+  </div>
 
-  <div class="mt-12 grid md:grid-cols-2 gap-10">
-    <!-- FORM -->
-    <form id="contactForm" class="space-y-6">
-      <div>
-        <label class="text-sm font-medium text-gray-800">Nombre</label>
+  <!-- Contenido -->
+  <div class="relative z-10">
+
+    <!-- Título -->
+    <h2
+      class="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight
+             text-gray-900"
+    >
+      Contacto
+    </h2>
+
+    <!-- Descripción -->
+    <p
+      class="mt-6 text-base sm:text-lg leading-relaxed
+             text-gray-600 max-w-2xl"
+    >
+      Si estás buscando un profesional comprometido y orientado a resultados,
+      estaré atento a la oportunidad de postular para la vacante que se ajuste a mi perfil.
+      Quedo a tu disposición para coordinar una llamada cuando lo estimes conveniente.
+    </p>
+
+    <!-- Formulario -->
+    <form
+      id="contactForm"
+      class="mt-14 space-y-8 max-w-xl"
+    >
+
+      <!-- Nombre -->
+      <div class="space-y-2">
+        <label class="block text-[13px] font-medium tracking-wide text-gray-600">
+          Nombre
+        </label>
+
         <input
           required
           name="name"
-          class="w-full mt-2 px-5 py-3 rounded-full glass-input"
           placeholder="Tu nombre"
+          class="w-full h-14 px-6
+                 rounded-full
+                 bg-white/60 backdrop-blur-xl
+                 border border-black/40
+                 text-[15px] text-gray-900 placeholder:text-gray-400
+                 shadow-[0_8px_24px_rgba(0,0,0,0.06)]
+                 focus:outline-none
+                 focus:bg-white/80
+                 focus:border-black/10
+                 focus:shadow-[0_10px_30px_rgba(0,0,0,0.10)]
+                 transition-all duration-300 ease-out"
         />
       </div>
 
-      <div>
-        <label class="text-sm font-medium text-gray-800">Correo</label>
+      <!-- Correo -->
+      <div class="space-y-2">
+        <label class="text-sm font-medium text-gray-700">
+          Correo
+        </label>
         <input
           required
           type="email"
           name="email"
-          class="w-full mt-2 px-5 py-3 rounded-full glass-input"
           placeholder="tu@correo.com"
+          class="w-full h-14 px-6
+                 rounded-full
+                 bg-white/60 backdrop-blur-xl
+                 border border-black/40
+                 text-[15px] text-gray-900 placeholder:text-gray-400
+                 shadow-[0_8px_24px_rgba(0,0,0,0.06)]
+                 focus:outline-none
+                 focus:bg-white/80
+                 focus:border-black/10
+                 focus:shadow-[0_10px_30px_rgba(0,0,0,0.10)]
+                 transition-all duration-300 ease-out"
         />
       </div>
 
-      <div>
-        <label class="text-sm font-medium text-gray-800">Mensaje</label>
+      <!-- Mensaje -->
+      <div class="space-y-2">
+        <label class="text-sm font-medium text-gray-700">
+          Mensaje
+        </label>
         <textarea
           required
           name="message"
-          rows="6"
-          class="w-full mt-2 px-5 py-4 rounded-2xl glass-input resize-none"
-          placeholder="Cuéntame tu idea..."
+          rows="5"
+          placeholder="Redacta tu mensaje…"
+          class="w-full px-6 py-4 rounded-3xl
+                 bg-white/80
+                 border border-black/10
+                 text-gray-900 placeholder:text-gray-400
+                 resize-none
+                 focus:outline-none focus:ring-2 focus:ring-black/10
+                 transition"
         ></textarea>
       </div>
 
-      <div class="flex items-center gap-4 mt-4">
+      <!-- Acción -->
+      <div class="flex items-center gap-5 pt-2">
         <button
           id="sendBtn"
-          class="liquid-btn px-6 py-1 rounded-full font-medium"
+          class="relative inline-flex items-center justify-center
+                 px-8 py-3 rounded-full
+                 text-sm font-medium
+                 text-white
+                 bg-black
+                 shadow-lg shadow-black/20
+                 hover:bg-gray-900
+                 active:scale-[0.97]
+                 transition-all duration-200"
         >
           Enviar mensaje
         </button>
-        <div id="formStatus" class="text-sm text-gray-500"></div>
+
+        <span
+          id="formStatus"
+          class="text-sm text-gray-500"
+        ></span>
       </div>
+
     </form>
-
-    <!-- ASIDE -->
-    <aside class="p-8 rounded-[24px] glass-panel">
-      <h4 class="text-xl font-semibold text-gray-900">
-        Más formas de contacto
-      </h4>
-
-      <p class="text-gray-700 mt-4">
-        <strong>Email:</strong> hola@[tudominio].com
-      </p>
-      <p class="text-gray-700">
-        <strong>Teléfono:</strong> +57 300 000 0000
-      </p>
-
-      <p class="text-gray-600 mt-4">
-        O descarga mi CV y escríbeme por LinkedIn.
-      </p>
-
-      <div class="flex gap-4 mt-6">
-        <a
-          id="downloadCV2"
-          href="#"
-          class="liquid-btn px-6 py-1 rounded-full text-sm font-medium"
-        >
-          CV en txt
-        </a>
-        <a
-          href="#"
-          class="liquid-btn px-6 py-1 rounded-full text-sm font-medium"
-        >
-          LinkedIn
-        </a>
-        <a
-          href="#"
-          class="liquid-btn px-6 py-1 rounded-full text-sm font-medium"
-        >
-          Github
-        </a>
-      </div>
-    </aside>
   </div>
 </section>
+
 
 <!-- FOOTER -->
 <footer class="mt-24 bg-white border-t border-rose">
@@ -1133,19 +1177,3 @@
   <script src="script20.js" defer></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
