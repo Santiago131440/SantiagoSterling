@@ -1,21 +1,15 @@
 (() => {
   "use strict";
 
-  // =========================
   // Simple helpers
-  // =========================
   const $ = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
 
-  // =========================
   // Year update
-  // =========================
   const yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // =========================
-  // Mobile menu
-  // =========================
+  /* Mobile menu */
   const menuBtn = $("#menuBtn");
   const mobileMenu = $("#mobileMenu");
 
@@ -28,15 +22,11 @@
     });
   }
 
-  // =========================
-  // Reveal on scroll
-  // =========================
-  const reveals = $$(
-    ".reveal, section, .projectCard, .card-3d, .testimonial"
-  );
+  /* Reveal on scroll */
+  const reveals = $$(".reveal, section, .projectCard, .card-3d, .testimonial");
 
   const observer = new IntersectionObserver(
-    entries => {
+    (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add("visible");
@@ -49,23 +39,19 @@
 
   reveals.forEach(el => observer.observe(el));
 
-  // =========================
-  // Fancy programmatic reveal
-  // =========================
+  /* Fancy programmatic reveal for project cards */
   $$(".projectCard").forEach((c, idx) => {
-    c.style.transitionDelay = `${idx * 60}ms`;
+    c.style.transitionDelay = ${idx * 60}ms;
     c.classList.add("reveal");
   });
 
-  // =========================
-  // Project modal
-  // =========================
+  /* Project modal (dynamic content) */
   const modal = $("#projectModal");
   const modalTitle = $("#modalTitle");
   const modalBody = $("#modalBody");
 
   $$(".viewProject").forEach(btn => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
       const title = btn.dataset.title || "Proyecto";
       openProjectModal(title);
     });
@@ -73,7 +59,7 @@
 
   $("#closeModal")?.addEventListener("click", closeProjectModal);
 
-  modal?.addEventListener("click", e => {
+  modal?.addEventListener("click", (e) => {
     if (e.target === modal) closeProjectModal();
   });
 
@@ -82,12 +68,13 @@
 
     modalTitle.textContent = title;
     modalBody.innerHTML = generateProjectContent(title);
-
     modal.classList.remove("hidden");
     modal.classList.add("flex");
     modal.setAttribute("aria-hidden", "false");
 
+    // attach reveal observer for inside content
     $$(".reveal").forEach(x => x.classList.remove("visible"));
+
     setTimeout(() => {
       $$(".reveal").forEach(x => x.classList.add("visible"));
     }, 50);
@@ -102,10 +89,214 @@
   }
 
   function generateProjectContent(title) {
-    const content = `
+    // dynamic rich content (example)
+    const content =
       <div class="grid lg:grid-cols-2 gap-4">
         <div>
           <img
             src="https://cdn.pixabay.com/photo/2025/11/10/21/55/sunset-9949027_1280.jpg"
             alt="${title}"
-            class=
+            class="w-full h-44 object-cover rounded"
+          />
+        </div>
+
+        <div>
+          <h4 class="font-semibold">${title}</h4>
+          <p class="text-slate-300 mt-2">
+            Resumen ejecutivo: Descripción breve del proyecto, objetivos y rol desempeñado.
+          </p>
+
+          <div class="mt-3">
+            <h5 class="text-sm font-medium">Impacto</h5>
+            <ul class="list-disc list-inside text-slate-200 mt-2">
+              <li>Aumento de conversión</li>
+              <li>Optimización de flujo</li>
+              <li>Mejoras de accesibilidad</li>
+            </ul>
+          </div>
+
+          <div class="mt-3">
+            <h5 class="text-sm font-medium">Tecnologías</h5>
+            <div class="flex gap-2 mt-2">
+              <span class="px-2 py-1 rounded bg-white/5">React</span>
+              <span class="px-2 py-1 rounded bg-white/5">Tailwind</span>
+              <span class="px-2 py-1 rounded bg-white/5">Figma</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 reveal">
+        <details class="bg-white/5 p-3 rounded">
+          <summary class="font-medium">Ver procedimiento detallado</summary>
+          <div class="mt-3 code-style">
+            // pasos (ejemplo)
+            1) Santiago Sterling
+            2) Hola mundo
+          </div>
+        </details>
+      </div>
+    ;
+
+    return content;
+  }
+
+  /* Download CV (simulate) */
+  const downloadCV = $("#downloadCV");
+  const downloadCV2 = $("#downloadCV2");
+
+  [downloadCV, downloadCV2].forEach(btn => {
+    if (!btn) return;
+
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // generate a simple text CV and download
+      const cvText = generateSimpleCV();
+      const blob = new Blob([cvText], { type: "application/pdf" });
+
+      // Fallback to text file to avoid PDF generation complexity
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(
+        new Blob([cvText], { type: "text/plain" })
+      );
+      link.download = "CV-Santiago Sterling.txt";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    });
+  });
+
+  function generateSimpleCV() {
+    return CV - Santiago Sterling
+Rol: Desarrollador de software
+Ubicación: Cali, Colombia
+Contacto: santisterling@gmail.com
+
+Resumen:
+Tecnólogo en Análisis y Desarrollo de Software y en Gestión de Producción Industrial, con más de ocho años de experiencia en plantas de manufactura. Mi perfil combina la eficiencia industrial con la innovación tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y crear soluciones escalables. Cuento con formación en frontend y backend (HTML, CSS, JavaScript, React, Node.js, Python, Django, entre otros) y en metodologías industriales como Lean Manufacturing, Kaizen y control de inventarios. Me interesa especializarme en inteligencia artificial aplicada a la industria y en el desarrollo de soluciones que integren la Industria 4.0 con tecnologías digitales inteligentes.
+
+Habilidades:
+- React, Next.js, Tailwind
+- Figma, Prototipado
+- Accessibilidad
+
+Proyectos destacados:
+- Dashboards
+- Reproductor Musical
+- Test de preguntas
+;
+  }
+
+  /* Small canvas animation in hero (if needed) */
+  function initMiniCanvas() {
+    // create a small floating canvas background if canvas available
+    const hero = $("#hero");
+    if (!hero) return;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = 300;
+    canvas.height = 160;
+    canvas.style.position = "absolute";
+    canvas.style.right = "2rem";
+    canvas.style.top = "2rem";
+    canvas.style.opacity = "0.07";
+    hero.appendChild(canvas);
+
+    const ctx = canvas.getContext("2d");
+    let t = 0;
+
+    function loop() {
+      t += 0.01;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < 5; i++) {
+        ctx.beginPath();
+        ctx.strokeStyle = rgba(255,223,132,${0.08 + 0.02 * Math.sin(t + i)});
+        ctx.lineWidth = 2;
+
+        const y = 80 + Math.sin(t * 2 + i) * 28;
+        ctx.moveTo(0, y);
+        ctx.bezierCurveTo(70, y - 30, 230, y + 30, 300, y);
+        ctx.stroke();
+      }
+
+      requestAnimationFrame(loop);
+    }
+
+    loop();
+  }
+
+  // init canvas after small delay to avoid layout blocking
+  setTimeout(initMiniCanvas, 600);
+
+  /* Keyboard accessibility for project cards: Enter opens modal */
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeProjectModal();
+  });
+
+  $$(".projectCard").forEach((c) => {
+    c.setAttribute("tabindex", "0");
+
+    c.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const title = c.querySelector("h3")?.textContent || "Proyecto";
+        openProjectModal(title);
+      }
+    });
+  });
+
+  /* Small analytics-like logger for recruiter impression (local) */
+  try {
+    const impressKey = "visited_portfolio";
+
+    if (!localStorage.getItem(impressKey)) {
+      localStorage.setItem(
+        impressKey,
+        JSON.stringify({ ts: Date.now() })
+      );
+      console.info("First visit - welcome recruiter!");
+    }
+  } catch (err) {
+    /* ignore */
+  }
+
+  /* Initialize default filter 'all' */
+  (function initDefaultFilter() {
+    const defaultBtn = document.querySelector(
+      ".filterBtn[data-filter='all']"
+    );
+    defaultBtn?.click();
+  })();
+
+  // Expose small API for tests
+  window._portfolio = {
+    openProjectModal,
+    closeProjectModal,
+    generateSimpleCV,
+  };
+
+})();
+
+const text = "Transformo problemas en software funcional.";
+const typingElement = document.getElementById("typingText");
+let index = 0;
+let isDeleting = false;
+
+function typeEffect() {
+  if (!isDeleting && index < text.length) {
+    typingElement.textContent += text.charAt(index);
+    index++;
+    setTimeout(typeEffect, 100);
+  } else if (isDeleting && index > 0) {
+    typingElement.textContent = text.substring(0, index - 1);
+    index--;
+    setTimeout(typeEffect, 60);
+  } else {
+    isDeleting = !isDeleting;
+    setTimeout(typeEffect, 1500);
+  }
+}
+
+// Espera unos segundos antes de iniciar
+setTimeout(typeEffect, 2000);
