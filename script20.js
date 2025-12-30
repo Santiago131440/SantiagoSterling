@@ -565,6 +565,13 @@ function openModal(title, content) {
   document.getElementById('modalTitle').innerText = title;
   document.getElementById('modalContent').innerText = content;
   document.getElementById('macModal').style.display = 'flex';
+
+  // Cerrar modal al hacer click fuera del contenido
+  document.getElementById('macModal').onclick = function (e) {
+    if (e.target === this) {
+      closeModal();
+    }
+  };
 }
 
 function closeModal() {
