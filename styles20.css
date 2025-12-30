@@ -613,6 +613,7 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
   gap: 12px;
   padding: 0 14px;
   border-bottom: 1px solid rgba(0,0,0,.08);
+  border-radius: 20px;
 }
 
 .controls {
