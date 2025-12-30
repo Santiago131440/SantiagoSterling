@@ -743,17 +743,18 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
 @media (max-width: 768px) {
 
   .finder-content {
-    padding: 6px;
+    padding: 3px;
   }
 
   .file-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
+    gap: 8px;
   }
 
   .file-list li {
-    flex-direction: column;
+    display: flex;              /* 🔹 CLAVE */
+    flex-direction: column;     /* 🔹 Ícono arriba, nombre abajo */
     align-items: center;
     justify-content: center;
     padding: 0;
@@ -766,14 +767,9 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
   .file-list li .icon {
     width: 64px;
     height: 64px;
-    border-radius: 16px;
-    background: linear-gradient(180deg, #f5f5f7, #e5e5ea);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow:
-      0 4px 8px rgba(0,0,0,0.12),
-      inset 0 1px 0 rgba(255,255,255,0.6);
   }
 
   .file-list li .icon img {
@@ -784,6 +780,7 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
 
   /* App name */
   .file-list li .name {
+    display: block;             /* 🔹 Asegura salto de línea */
     margin-top: 6px;
     font-size: 12px;
     text-align: center;
@@ -800,7 +797,7 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
   /* Finder window adjustments */
   .finder-window {
     width: 100%;
-    border-radius: 30;
+    border-radius: 30px;
   }
 
   .finder-titlebar {
@@ -809,4 +806,3 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
     z-index: 10;
   }
 }
-
