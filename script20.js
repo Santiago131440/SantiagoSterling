@@ -578,4 +578,3 @@ function closeModal() {
   document.getElementById('macModal').style.display = 'none';
 }
 
-
