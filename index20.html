@@ -634,7 +634,13 @@
       <div class="flex justify-center mb-20">
           <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
 
-            <a class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer" onclick="mostrarModal()"> Ver protección de datos </a>
+            <a class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer" onclick="openModal('Aviso de Confidencialidad y Protección de Datos',
+                `
+                La información presentada, referida únicamente a los datos recogidos en el marco de los proyectos, es de carácter ficticio y se utiliza exclusivamente con fines académicos, demostrativos o técnicos, sin emplear ni divulgar datos reales o confidenciales. El proyecto respeta la privacidad, la confidencialidad y los derechos de autor, y cumple con la Ley 1581 de 2012 y el Decreto 1377 de 2013 en Colombia sobre protección de datos personales, así como con el Reglamento General de Protección de Datos (GDPR – Reglamento (UE) 2016/679). Asimismo, se acoge a la Ley 23 de 1982 y a la Decisión Andina 351 de 1993 en materia de derechos de autor y propiedad intelectual, garantizando un manejo ético y responsable de la información.               
+  
+                Santiago Sterling - Desarrollador de software.
+                `
+              )"> Ver protección de datos </a>
             
   
           </div>
@@ -1059,23 +1065,19 @@
        <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
     Contacto
   </h2>
-<section
-  id="contact"
-  class="relative mt-24 max-w-5xl mx-auto px-6 sm:px-10 py-14 sm:py-16
-         rounded-[32px]
-         bg-white/70 backdrop-blur-xl
-         border border-black/30
-         shadow-[0_20px_60px_-20px_rgba(0,0,0,0.15)]
-         overflow-hidden"
->
-
-
-
-
+      <section
+        id="contact"
+        class="relative mt-12 max-w-5xl mx-auto px-3 sm:px-10 py-7 sm:py-8
+              rounded-[32px]
+              bg-white/70 backdrop-blur-xl
+              border border-black/30
+              shadow-[0_20px_60px_-20px_rgba(0,0,0,0.15)]
+              overflow-hidden"
+      >
   <!-- Imagen de fondo -->
   <div class="absolute inset-0 z-0">
     <img
-      src="https://cdn.pixabay.com/photo/2017/07/30/10/42/spring-2553958_1280.jpg"
+      src="https://cdn.pixabay.com/photo/2015/11/11/19/17/apple-1039117_1280.jpg"
       alt="Fondo contacto"
       class="w-full h-full object-cover"
     />
@@ -1088,8 +1090,8 @@
 
     <!-- Descripción -->
     <p
-      class="mt-6 text-base sm:text-lg leading-relaxed
-             text-gray-600 max-w-2xl"
+      class="mt-1 text-base sm:text-lg leading-relaxed
+             text-gray-600 max-w-xl"
     >
       Quedo atento a oportunidades acordes a mi perfil y disponible para coordinar una llamada.
     </p>
@@ -1110,7 +1112,7 @@
           required
           name="name"
           placeholder="Tu nombre"
-          class="w-full h-14 px-6
+          class="w-full h-10 px-6 py-o
                  rounded-full
                  bg-white/60 backdrop-blur-xl
                  border border-black/40
@@ -1125,7 +1127,7 @@
       </div>
 
       <!-- Correo -->
-      <div class="space-y-2">
+      <div class="space-y-1">
         <label class="text-sm font-medium text-gray-700">
           Correo
         </label>
@@ -1134,7 +1136,7 @@
           type="email"
           name="email"
           placeholder="tu@correo.com"
-          class="w-full h-14 px-6
+          class="w-full h-10 px-6 py-0
                  rounded-full
                  bg-white/60 backdrop-blur-xl
                  border border-black/40
@@ -1200,7 +1202,7 @@
   <div class="max-w-6xl mx-auto px-6 py-10 text-center">
     
     <!-- Nombre -->
-    <p class="text-base font-medium text-xl font-bold text-gray-900 tracking-tight">
+    <p class="text-xl font-extrabold text-gray-900 tracking-wide leading-tight">
       Santiago Sterling
     </p>
 
@@ -1213,14 +1215,14 @@
     <div class="mt-6 flex justify-center space-x-6">
       
       <!-- GitHub -->
-      <a href="#" aria-label="GitHub" class="text-gray-400 hover:text-gray-900 transition">
+      <a href="https://github.com/Santiago131440" aria-label="GitHub" class="text-gray-400 hover:text-gray-900 transition">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.54 2.87 8.39 6.84 9.75.5.09.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0112 6.84c.85 0 1.71.12 2.51.35 1.9-1.32 2.74-1.05 2.74-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9 0 1.38-.01 2.49-.01 2.83 0 .27.18.59.69.49A10.02 10.02 0 0022 12.26C22 6.58 17.52 2 12 2z"/>
         </svg>
       </a>
 
       <!-- LinkedIn -->
-      <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-gray-900 transition">
+      <a href="https://www.linkedin.com/in/santiago-sterling-0a02a116a/" aria-label="LinkedIn" class="text-gray-400 hover:text-gray-900 transition">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.8v2.1h.05c.53-1 1.83-2.1 3.77-2.1 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7.8c0-1.86-.03-4.26-2.6-4.26-2.6 0-3 2.03-3 4.12V24h-4V8.5z"/>
         </svg>
@@ -1228,15 +1230,16 @@
 
       <!-- Reddit -->
       <a href="#" aria-label="Reddit" class="text-gray-400 hover:text-gray-900 transition">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-label="Reddit">
-          <path d="M24 12c0-6.63-5.37-12-12-12S0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.38-.11-.97-.21-2.46.04-3.52.23-.98 1.48-6.26 1.48-6.26s-.38-.77-.38-1.91c0-1.79 1.04-3.13 2.34-3.13 1.1 0 1.63.83 1.63 1.82 0 1.11-.71 2.77-1.08 4.31-.31 1.3.66 2.36 1.96 2.36 2.35 0 3.93-3.02 3.93-6.59 0-2.72-1.83-4.76-5.17-4.76-3.77 0-6.12 2.82-6.12 5.97 0 1.09.42 1.86.86 2.39.24.29.27.41.19.74-.06.25-.21.84-.27 1.08-.09.35-.36.47-.66.34-1.84-.75-2.7-2.76-2.7-5.02 0-3.74 3.15-8.22 9.41-8.22 5.03 0 8.34 3.64 8.34 7.55 0 5.17-2.88 9.03-7.12 9.03-1.42 0-2.76-.77-3.22-1.63l-.87 3.3c-.31 1.12-.93 2.25-1.39 3.01A12.01 12.01 0 0 0 24 12z"/>
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-label="Discord">
+          <path d="M20.3 4.1A19.8 19.8 0 0 0 15.8 3c-.2.4-.4.9-.5 1.3a18.3 18.3 0 0 0-6.6 0c-.1-.4-.3-.9-.5-1.3-1.6.3-3.1.8-4.5 1.6C.8 9.1-.2 13.6.3 18c1.7 1.3 3.7 2.2 5.8 2.8.5-.7.9-1.4 1.3-2.2-.7-.3-1.4-.6-2-1 .2-.1.4-.3.6-.4 3.8 1.8 7.9 1.8 11.7 0 .2.2.4.3.6.4-.6.4-1.3.7-2 1 .4.8.8 1.5 1.3 2.2 2.1-.6 4.1-1.5 5.8-2.8.6-4.9-.9-9.4-3.7-13.9zM8.5 14.6c-.8 0-1.5-.7-1.5-1.6 0-.9.7-1.6 1.5-1.6.8 0 1.5.7 1.5 1.6 0 .9-.7 1.6-1.5 1.6zm7 0c-.8 0-1.5-.7-1.5-1.6 0-.9.7-1.6 1.5-1.6.8 0 1.5.7 1.5 1.6 0 .9-.7 1.6-1.5 1.6z"/>
         </svg>
+
       </a>
     </div>
 
     <!-- Copyright -->
     <p class="mt-8 text-xs text-gray-400">
-      © <span id="year"></span> Santiago Sterling - 2026.
+      © <span id="year"></span> Santiago Sterling.
     </p>
   </div>
 </footer>
