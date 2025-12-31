@@ -1091,7 +1091,7 @@
 
     <!-- Descripción -->
     <p
-      class="mt-1 text-base sm:text-lg leading-relaxed
+      class="mt-1 text-sm sm:text-sm leading-relaxed
              text-gray-600 max-w-xl"
     >
       Quedo atento a oportunidades acordes a mi perfil y disponible para coordinar una llamada.
@@ -1105,7 +1105,7 @@
 
       <!-- Nombre -->
       <div class="space-y-2">
-        <label class="block text-[13px] font-medium tracking-wide text-gray-600">
+        <label class="block text-sm font-medium tracking-wide text-gray-600">
           Nombre
         </label>
 
@@ -1117,7 +1117,7 @@
                  rounded-full
                  bg-white/60 backdrop-blur-xl
                  border border-black/40
-                 text-[15px] text-gray-900 placeholder:text-gray-400
+                 text-sm text-gray-900 placeholder:text-gray-400
                  shadow-[0_8px_24px_rgba(0,0,0,0.06)]
                  focus:outline-none
                  focus:bg-white/80
@@ -1141,7 +1141,7 @@
                  rounded-full
                  bg-white/60 backdrop-blur-xl
                  border border-black/40
-                 text-[15px] text-gray-900 placeholder:text-gray-400
+                 text-sm text-gray-900 placeholder:text-gray-400
                  shadow-[0_8px_24px_rgba(0,0,0,0.06)]
                  focus:outline-none
                  focus:bg-white/80
@@ -1164,7 +1164,7 @@
           class="w-full px-6 py-4 rounded-3xl
                  bg-white/80
                  border border-black/10
-                 text-gray-900 placeholder:text-gray-400
+                 text-sm text-gray-900 placeholder:text-gray-400
                  resize-none
                  focus:outline-none focus:ring-2 focus:ring-black/10
                  transition"
@@ -1175,15 +1175,12 @@
       <div class="flex items-center gap-5 pt-2">
         <button
           id="sendBtn"
-          class="relative inline-flex items-center justify-center
-                 px-8 py-3 rounded-full
-                 text-sm font-medium
-                 text-white
-                 bg-black
-                 shadow-lg shadow-black/20
-                 hover:bg-gray-900
-                 active:scale-[0.97]
-                 transition-all duration-200"
+          class="
+          filter-btn active px-5 py-1 rounded-full
+          text-sm font-medium transition-all
+          text-black/70 hover:bg-white/70 hover:text-gray-900
+          inline-block text-center cursor-pointer
+          border border-black/50 hover:border-none"
         >
           Enviar mensaje
         </button>
