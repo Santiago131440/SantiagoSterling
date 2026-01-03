@@ -1,579 +1,1241 @@
-(() => {
-  "use strict";
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Santiago Sterling</title>
+  <meta name="description" content="Portafolio profesional enfocado en UX, frontend y diseño de productos digitales.">
+  <meta name="keywords" content="portafolio, frontend, backend, API, software, server, servidores, linux, UI, UX, diseñador, desarrollador">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+            <circle cx='50' cy='50' r='50' fill='black'/>
+            <text x='50' y='62' text-anchor='middle' font-size='50' fill='white' font-family='Arial'>S</text>
+          </svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles20.css">
+  <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/98182135?v=4">
 
-  // Simple helpers
-  const $ = sel => document.querySelector(sel);
-  const $$ = sel => Array.from(document.querySelectorAll(sel));
+</head>
 
-  // Year update
-  const yearEl = $("#year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* Mobile menu */
-  const menuBtn = $("#menuBtn");
-  const mobileMenu = $("#mobileMenu");
-  if (menuBtn && mobileMenu) {
-    menuBtn.addEventListener("click", () => {
-      const expanded = menuBtn.getAttribute("aria-expanded") === "true";
-      menuBtn.setAttribute("aria-expanded", String(!expanded));
-      mobileMenu.classList.toggle("hidden");
-      mobileMenu.classList.toggle("block");
-    });
-  }
+<body class="text-slate-100 antialiased leading-relaxed">
+<!-- NAVBAR -->
+<nav class="apple-nav">
+  <div class="apple-nav-inner">
 
-  /* Reveal on scroll */
-  const reveals = $$(".reveal, section, .projectCard, .card-3d, .testimonial");
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
+    <!-- Nombre + Avatar -->
+    <a href="#" class="flex items-center gap-3">
+      <span class="w-8 h-8 rounded-full overflow-hidden border border-black/10">
+        <img
+          src="https://avatars.githubusercontent.com/u/98182135?v=4"
+          alt="Avatar"
+          class="w-full h-full object-cover"
+        />
+      </span>
+      <span class="font-medium text-gray">
+        Santiago Sterling
+      </span>
+    </a>
 
-  reveals.forEach(el => observer.observe(el));
+    <div class="flex items-center gap-6 text-gray">
+      <a href="#">Proyectos</a>
+      <a href="#">Repositorio</a>
+      <a href="#">Contacto</a>
+    </div>
 
-  /* Fancy programmatic reveal for project cards */
-  $$(".projectCard").forEach((c, idx) => {
-    c.style.transitionDelay = `${idx * 60}ms`;
-    c.classList.add("reveal");
-  });
+  </div>
+</nav>
 
-  /* Project modal (dynamic content) */
-  const modal = $("#projectModal");
-  const modalTitle = $("#modalTitle");
-  const modalBody = $("#modalBody");
-  $$(".viewProject").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const title = btn.dataset.title || "Proyecto";
-      openProjectModal(title);
-    });
-  });
 
-  $("#closeModal")?.addEventListener("click", closeProjectModal);
-  modal?.addEventListener("click", (e) => { if (e.target === modal) closeProjectModal(); });
+<!-- HERO -->
+<section class="hero">
+  <h1 class="px-10 py-10 text-2xl md:text-4xl font-extrabold leading-tight
+  
+  tracking-tight text-black gap-3">
+            ¡Hola!, soy <span class="bg-gradient-to-r from-yellow-300 via-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">Santiago Sterling</span> e <span class="decoration-gold/60">impulso el crecimiento digital</span>.
+          </h1>
+  <div class="creative">Desarrollador de Software</div>
 
-  function openProjectModal(title) {
-    if (!modal) return;
-    modalTitle.textContent = title;
-    modalBody.innerHTML = generateProjectContent(title);
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
-    modal.setAttribute("aria-hidden", "false");
-    // attach reveal observer for inside content
-    $$(".reveal").forEach(x => x.classList.remove("visible"));
-    setTimeout(() => { $$(".reveal").forEach(x => x.classList.add("visible")); }, 50);
-  }
-  function closeProjectModal() {
-    if (!modal) return;
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-    modal.setAttribute("aria-hidden", "true");
-  }
+  <div class="mockups">
+    <div class="phone left">
+      <div class="screen">
+        <video src="https://cdn.pixabay.com/video/2024/05/06/210886_large.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </div>
 
-  function generateProjectContent(title) {
-    // dynamic rich content (example)
-    const content = `
-      <div class="grid lg:grid-cols-2 gap-4">
-        <div>
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/fc1e5970-f268-455b-8649-b1468a2109c5.png?raw=true" alt="${title}" class="w-full h-44 object-cover rounded text-white" />
-        </div>
-        <div>
-          <h4 class="font-semibold">${title}</h4>
-          <p class="text-slate-300 mt-2">Resumen ejecutivo: Descripción breve del proyecto, objetivos y rol desempeñado.</p>
-          <div class="mt-3">
-            <h5 class="text-sm font-medium">Impacto:</h5>
-            <ul class="list-disc list-inside text-slate-200 mt-2">
-              <li>Aumento de conversión</li>
-              <li>Optimización de flujo</li>
-              <li>Mejoras de accesibilidad</li>
-            </ul>
+    <div class="phone center">
+      <div class="screen">
+        <video src="https://cdn.pixabay.com/video/2020/10/19/52823-471089056_large.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </div>
+
+    <div class="phone right">
+      <div class="screen">
+        <video src="https://cdn.pixabay.com/video/2024/05/25/213648_large.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </div>
+  </div>
+</section>
+      
+          <br>
+
+           <div class="flex justify-center w-full mb-20">
+            <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1 mx-auto text-center">
+              <a href="proyectos20.html" class="filter-btn active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
+                    Proyectos
+                  </a>
+              <a href="windows.html" class="filter-btn active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
+                    Repositorio
+                  </a>
+              <a id="downloadCV" href="#" class="px-5 py-1 rounded-full text-sm text-center text-white bg-black/30 hover:bg-white/10 backdrop-blur-sm transition">CV en txt</a>
+             </div>
           </div>
-          <div class="mt-3">
-            <h5 class="text-sm font-medium">Tecnologías</h5>
-            <div class="flex gap-2 mt-2">
-              <span class="px-6 py-0 rounded rounded-full bg-white/5">React</span>
-              <span class="px-6 py-0 rounded rounded-full bg-white/5">Tailwind</span>
-              <span class="px-6 py-0 rounded rounded-full bg-white/5">Figma</span>
+        </div>
+        <br>
+        <br>
+      </section>
+    </main>
+
+  </div>
+</div>
+
+    <!-- ABOUT -->
+        <section id="about"
+          class="mt-4 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20"
+          style="
+            --bg-color: linear-gradient(
+             
+              #0c0c0c,
+              #000000,
+              #000000
+            );
+            background: var(--bg-color);
+          "
+        >
+
+  <div class="flex justify-center items-center min-h-screen px-4 md:px-6">
+    <div class="w-full max-w-6xl mx-auto">
+        <div class="rounded-3xl shadow-7xl border border-white py-12 px-6 md:px-10">
+
+
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="md:col-span-2 space-y-4">
+
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 titulosSterling-text">
+                  <br>
+                  Sobre mi
+                </h1>
+                <br>
+                <br>
+
+                <p class="text-sm mb-4 text-white">
+                  Tecnólogo en Análisis y desarrollo de software <span class="text-gray-400">y Tecnólogo en Gestión de la Producción Industrial con más de 8 años de experiencia en manufactura, </span>enfocado en optimización de procesos mediante tecnología, automatización y análisis de datos, con interés en inteligencia artificial e Industria 4.0.
+                </p>
+
+                <div class="grid sm:grid-cols-2 gap-4 mt-4">
+
+                  <div class="p-4 rounded-xl bg-white/10 backdrop-blur-md">
+                    <div class="text-sm text-white">Proceso</div>
+                    <ul class="mt-2 text-white text-sm list-disc list-inside">
+                      <h4>Experiencia en gestión de producción, control de inventarios y mejora continua.</h4>
+                    </ul>
+                  </div>
+
+                  <div class="p-4 rounded-xl bg-white/10 backdrop-blur-md">
+                    <div class="text-sm text-white">Objetivo</div>
+                    <div class="flex gap-2 flex-wrap mt-2 text-white text-sm">
+                      <span>Colaborar en proyectos que combinen automatización, analítica y desarrollo web.</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+          <aside 
+            class="p-6 rounded-2xl relative border overflow-hidden backdrop-blur-lg text-white"
+            style="
+              background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Dec%202,%202025,%2009_49_54%20AM.png?raw=true');
+              background-size: cover;
+              background-position: center;
+            "
+          >
+            <!-- Capa oscura para mejorar legibilidad -->
+            <div class="absolute inset-0 bg-black/60"></div>
+
+            <!-- Contenido -->
+            <div class="relative z-10">
+              <div class="text-xl text-stone-400 font-bold">Información clave</div>
+              <div class="mt-3 space-y-1 text-sm">
+                <p><strong>Ubicación:</strong> Cali, Colombia.</p>
+                <p><strong>Rol:</strong> Desarrollador de software.</p>
+                <p><strong>Disponibilidad:</strong> Contrato inmediato.</p>
+                <p><strong>LinkedIn:</strong> in/santiago-sterling-0a02a116a/</p>
+              </div>
             </div>
+          </aside>
+
+            </div>
+
           </div>
+        </section>
+        <br>
+        <br>
+        <br>
+
+    <!-- SKILLS / METRICS -->
+ <section id="skills" class="mt-12">
+
+  <!-- TÍTULO -->
+  <div class="text-center mb-6 fade-in">
+    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+      Formación académica
+    </h1>
+  </div>
+  <br>
+
+<section class="mac-section">
+
+  <!-- Finder Panel -->
+  <div class="finder-window">
+    <div class="finder-titlebar">
+      <div class="controls">
+        <span class="c red"></span>
+        <span class="c yellow"></span>
+        <span class="c green"></span>
+      </div>
+      <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Categorías académicas
+    </h3>
+    </div>
+
+    <div class="finder-content">
+      <ul class="file-list">
+        <li onclick="openModal(
+                'Formación tecnológica',
+                `
+                      - 📄 Tecnología en análisis y desarrollo de software.
+                          Institución: Servicio Nacional de Aprendizaje (SENA)
+                          Estado: En curso.
+
+                      - 📄 Tecnología en gestión de la producción industrial.
+                          Institución: Servicio Nacional de Aprendizaje (SENA)
+                          Estado: Culminado.
+                          Certificación: 25 Noviembre 2016
+                `
+              )">
+
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Formación tecnológica</span>
+          <span class="date text-sm">2 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Backend/Lógica de programación',
+                `
+                      - 📄 Curso de Programación Orientada a Objetos (POO)
+                      - 📄 Curso Básico de Programación
+                      - 📄 Curso Básico de Algoritmos y Pensamiento Lógico
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Backend</span>
+          <span class="date text-sm">3 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - DevOps / Cloud',
+                `
+                      - 📄 Curso de Introducción al Despliegue de Aplicaciones
+                      - 📄 Curso de Introducción a AWS: Cómputo, Almacenamiento y Bases de Datos
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - DevOps / Cloud</span>
+          <span class="date text-sm">2 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Frontend',
+                `
+                      - 📄 Curso de Frontend Developer
+                      - 📄 Curso Práctico de Frontend Developer
+                      - 📄 Curso Definitivo de HTML y CSS
+                      - 📄 Curso Práctico de HTML y CSS
+                      - 📄 Curso Práctico de Maquetación en CSS
+                      - 📄 Curso Profesional de CSS Grid Layout
+                      - 📄 Curso de Responsive Design: Maquetación Mobile First
+                      - 📄 Curso Básico de Tailwind 2 y 3
+                      - 📄 Curso de Diseño para Developers
+                      - 📄 Curso de Manipulación del DOM
+                      - 📄 Curso de Next.js
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Frontend</span>
+          <span class="date text-sm">11 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Herramientas de Desarrollo',
+                `
+                      - 📄 Curso Profesional de Git y GitHub
+                      - 📄 Curso de Introducción a la Terminal y Línea de Comandos
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Herramientas de Desarrollo</span>
+          <span class="date text-sm">2 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Javascript',
+                `
+                      - 📄 Curso Básico de JavaScript
+                      - 📄 Curso Práctico de JavaScript
+                      - 📄 Curso de Asincronismo con JavaScript
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75 " alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Javascript</span>
+          <span class="date text-sm">3 archivos</span>
+        </li>
+
+        <li onclick="openModal('Cursos cortos del SENA',
+                `
+                      - 📄 Calidad en el desarrollo de software - Abril, 2022
+                      - 📄 Metodología de la programación de sistemas informáticos - Mayo, 2022
+                      - 📄 Modelos de calidad de software - Septiembre, 2023
+                      - 📄 Procesos para software de calidad - Diciembre, 2024
+                      - 📄 Aplicación del marco de trabajo Scrum para proyectos de desarrollo de software - Marzo, 2025
+                      - 📄 Manejo de pruebas de software - Marzo, 2025
+                      - 📄 Variables y estructuras de control en Python - Julio, 2025
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">SENA - Cursos cortos</span>
+          <span class="date text-sm"> 7 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Bases de datos',
+                `
+                      - 📄 Curso de Fundamentos de Bases de Datos
+                `
+              )">
+          <span class="icon"><img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284038_1280.png" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Bases de datos</span>
+          <span class="date text-sm">1 archivo</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Ingeniería de Software',
+                `
+                      - 📄 Fundamentos de Ingeniería de Software
+                `
+              )">
+          <span class="icon"><img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284038_1280.png" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Ingeniería de Software</span>
+          <span class="date text-sm">1 archivo</span>
+        </li>
+
+        <li onclick="openModal(
+                'Educación media',
+                `
+                      - 📄 Bachiller técnico en informatica.
+                          Institución: Institución Educativa Ana Josefa Morales Duque.
+                          Estado: Culminado.
+                          Certificación: 25 Noviembre 2011
+                `
+              )">
+          <span class="icon"><img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284038_1280.png" alt="Folder"/></span>
+          <span class="name text-sm">Educación media</span>
+          <span class="date text-sm">1 archivo</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Modal macOS -->
+  <div class="mac-modal" id="macModal">
+    <div class="modal-window">
+      <div class="modal-titlebar">
+        <div class="controls">
+          <span class="c red" onclick="closeModal()"></span>
+          <span class="c yellow"></span>
+          <span class="c green"></span>
         </div>
+        <span class="title" id="modalTitle"></span>
       </div>
 
-      <div class="mt-4 reveal">
-        <details class="bg-white/5 p-3 rounded">
-          <summary class="font-medium">Ver procedimiento detallado</summary>
-          <div class="mt-3 code-style">
-            // pasos (ejemplo)
-            1) Santiago Sterling
-            2) Hola mundo
+      <div class="modal-body">
+        <p id="modalContent"></p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+</section>
+
+<br>
+<br>
+<br>
+<br>
+
+<hr>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="mt-16">
+      <div class="flex items-center justify-center text-center">
+        <h2 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">Experiencia Profesional</h2>
+      </div>
+      <br>
+      <br>
+      <div id="projectsGrid" class="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- project cards (repetitive rich markup for length + SEO) -->
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Cosmoagro S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Cosmoagro S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Cosmoagro S.A."></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Cosmoagro S.A.
+    </h3>
+  </div>
+  <!-- Contenedor de imagen principal con avatar -->
+  <div class="relative p-4">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_cover.jpg?raw=true" 
+         alt="Proyecto 4" 
+         class="w-full h-full object-cover rounded-md shadow-sm">
+    <!-- Avatar flotante -->
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  <!-- Contenido de la ventana -->
+  <div class="mt-8 p-4"> <!-- mt-8 deja espacio para el avatar -->
+    <h4 class="font-semibold text-lg text-emerald-500">Analista de producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Optimizar procesos, analizar indicadores y mejorar eficiencia operativa, garantizando calidad, continuidad y control en la planta.</p>
+
+    <div class="mt-3 flex items-center gap-3">
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2024/12/10</span>
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">Actualidad</span>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Cosmoagro S.A.">Ver</button>
+    </div>
+  </div>
+</article>
+
+
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Coca Cola Femsa"></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Coca Cola Femsa"></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Coca Cola Femsa"></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Coca Cola Femsa
+    </h3>
+  </div>
+  <!-- Contenedor de imagen principal con avatar -->
+  <div class="relative p-4">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_cover.jpg?raw=true" 
+         alt="Proyecto 4" 
+         class="w-full h-full object-cover rounded-md shadow-sm">
+    <!-- Avatar flotante -->
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  <!-- Contenido de la ventana -->
+  <div class="mt-8 p-4"> <!-- mt-8 deja espacio para el avatar -->
+    <h4 class="font-semibold text-lg text-rose-500">Técnico Analista</h4>
+    <p class="text-sm text-slate-700 mt-1">Enfocado en el control de procesos, mejora continua y gestión eficiente de datos para impulsar la productividad del proceso y así mismo el cumplimiento de la calidad del producto.</p>
+
+    <div class="mt-3 flex items-center gap-3">
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2023/07/07</span>
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2024/06/07</span>
+           <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Coca Cola Femsa">Ver</button>
+    </div>
+  </div>
+</article>
+
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+  
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Cadena S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Cadena S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Cadena S.A."></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Cadena S.A.
+    </h3>
+  </div>
+
+  <div class="relative p-4">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_cover.jpg?raw=true" 
+         alt="Proyecto 4" 
+         class="w-full h-full object-cover rounded-md shadow-sm">
+    
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  
+  <div class="mt-8 p-4">
+    <h4 class="font-semibold text-lg text-amber-500">Supervisor de Producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Experiencia liderando equipos, asegurando el cumplimiento del plan, optimizando procesos y garantizando calidad, seguridad y eficiencia operativa.</p>
+
+    <div class="mt-3 flex items-center gap-3">
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2020/01/20</span>
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2023/02/17</span>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Cadena S.A.">Ver</button>
+    </div>
+  </div>
+</article>
+
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Postobón S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Postobón S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Postobón S.A."></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Postobón S.A.
+    </h3>
+  </div>
+  
+  <div class="relative p-4">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_cover.jpg?raw=true" 
+         alt="Proyecto 4" 
+         class="w-full h-full object-cover rounded-md shadow-sm">
+    
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+ 
+  <div class="mt-8 p-4">
+    <h4 class="font-semibold text-lg text-cyan-500">Analista de producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Orientado a optimizar flujos, reducir desperdicios y asegurar operaciones eficientes mediante análisis de datos y mejora continua.</p>
+
+    <div class="mt-3 flex items-center gap-3">
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/03/08</span>
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/08/06</span>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Postobón S.A.">Ver</button>
+    </div>
+  </div>
+</article>
+
+        
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Laboratorios OSA S.A.S"></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Laboratorios OSA S.A.S"></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Laboratorios OSA S.A.S"></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Laboratorios OSA S.A.S
+    </h3>
+  </div>
+  <!-- Contenedor de imagen principal con avatar -->
+  <div class="relative p-4">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_cover.jpg?raw=true" 
+         alt="Proyecto 4" 
+         class="w-full h-full object-cover rounded-md shadow-sm">
+    <!-- Avatar flotante -->
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  <!-- Contenido de la ventana -->
+  <div class="mt-8 p-4"> <!-- mt-8 deja espacio para el avatar -->
+    <h4 class="font-semibold text-lg text-rose-500">Analista de producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Gestión de indicadores y optimización de procesos para mantener operaciones estables, eficientes y de alta calidad.</p>
+
+    <div class="mt-3 flex items-center gap-3">
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2018/06/16</span>
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/03/06</span>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Laboratorios OSA S.A.">Ver</button>
+    </div>
+  </div>
+</article>
+
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Smurfit Westrock S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Smurfit Westrock S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Smurfit Westrock S.A."></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Smurfit Westrock S.A.
+    </h3>
+  </div>
+  <!-- Contenedor de imagen principal con avatar -->
+  <div class="relative p-4">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_cover.jpg?raw=true" 
+         alt="Proyecto 4" 
+         class="w-full h-full object-cover rounded-md shadow-sm">
+    <!-- Avatar flotante -->
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  <!-- Contenido de la ventana -->
+  <div class="mt-8 p-4"> <!-- mt-8 deja espacio para el avatar -->
+    <h4 class="font-semibold text-lg text-rose-500">Incremento de producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Impulsar el aumento de producción mediante seguimiento en planta, control de tiempos, apoyo a los operarios y mejora de la eficiencia en cada etapa del proceso.</p>
+
+    <div class="mt-3 flex items-center gap-3">
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2017/03/24</span>
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2018/03/24</span>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Smurfit Westrock S.A.">Ver</button>
+    </div>
+  </div>
+</article>
+        <br>
+        <br>
+        <br>
+
+      </div>
+    </section>
+
+    <!-- CASE STUDIES -->
+     <section id="cases"
+  class="mt-4 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20 bg-cover bg-center bg-no-repeat"
+  style="background-image: linear-gradient(to bottom,
+        rgba(12, 12, 12, 0.062),
+        rgba(0, 0, 0, 0.062),
+        rgba(0, 0, 0, 0.062)
+        ), url('https://cdn.pixabay.com/photo/2020/05/31/17/10/fence-5243343_1280.jpg');">
+  
+  <!-- Overlay para mejorar la lectura -->
+  <div class="absolute inset-0 bg-black/50 rounded-5xl"></div>
+  <div class="w-full max-w-4xl mx-auto py-16">
+  <br>
+  <div class="relative z-10">
+    <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterling-text">Desarrollos e innovaciones</h2>
+  <br>
+    <br>
+      <div class="flex justify-center mb-20">
+          <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
+
+            <a class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer" onclick="openModal('Aviso de Confidencialidad y Protección de Datos',
+                `
+                La información presentada, referida únicamente a los datos recogidos en el marco de los proyectos, es de carácter ficticio y se utiliza exclusivamente con fines académicos, demostrativos o técnicos, sin emplear ni divulgar datos reales o confidenciales. El proyecto respeta la privacidad, la confidencialidad y los derechos de autor, y cumple con la Ley 1581 de 2012 y el Decreto 1377 de 2013 en Colombia sobre protección de datos personales, así como con el Reglamento General de Protección de Datos (GDPR – Reglamento (UE) 2016/679). Asimismo, se acoge a la Ley 23 de 1982 y a la Decisión Andina 351 de 1993 en materia de derechos de autor y propiedad intelectual, garantizando un manejo ético y responsable de la información.               
+  
+                Santiago Sterling - Desarrollador de software.
+                `
+              )"> Ver protección de datos </a>
+            
+  
           </div>
-        </details>
+        
       </div>
-    `;
-    return content;
-  }
+    <div class="mt-6 grid lg:grid-cols-2 gap-6">
+<article class="p-6 bg-white/10 backdrop-blur-md rounded-xl">
+  <h3 class="font-semibold text-white text-lg">Control de inventario</h3>
+  <p class="text-slate-200 mt-2 text-sm"><strong>Contexto:</strong> Sistema integral en Excel con macros y VBA para gestionar inventarios, que permite registrar productos, controlar ingresos y salidas, consultar stock en tiempo real, generar reportes y elaborar pedidos al almacén, asegurando trazabilidad y eficiencia.</p>
+  
+  <!-- CARRUSEL DE IMÁGENES -->
+  <div class="relative mt-4 group">
+    <div class="carousel flex overflow-x-auto gap-2 snap-x snap-mandatory scrollbar-hide">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen1.png?raw=true" alt="Santiago Sterling | Control de Inventario 1"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen2.png?raw=true" alt="Santiago Sterling | Control de Inventario 2"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen3.png?raw=true" alt="Santiago Sterling | Control de Inventario 3"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen4.png?raw=true" alt="Santiago Sterling | Control de Inventario 4"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen5.png?raw=true" alt="Santiago Sterling | Control de Inventario 5"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen6.png?raw=true" alt="Santiago Sterling | Control de Inventario 6"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen7.png?raw=true" alt="Santiago Sterling | Control de Inventario 7"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen8.png?raw=true" alt="Santiago Sterling | Control de Inventario 8"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen9.png?raw=true" alt="Santiago Sterling | Control de Inventario 9"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen10.png?raw=true" alt="Santiago Sterling | Control de Inventario 10"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen11.png?raw=true" alt="Santiago Sterling | Control de Inventario 11"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen12.png?raw=true" alt="Santiago Sterling | Control de Inventario 12"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen13.png?raw=true" alt="Santiago Sterling | Control de Inventario 13"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen14.png?raw=true" alt="Santiago Sterling | Control de Inventario 14"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen15.png?raw=true" alt="Santiago Sterling | Control de Inventario 15"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen16.png?raw=true" alt="Santiago Sterling | Control de Inventario 16"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen17.png?raw=true" alt="Santiago Sterling | Control de Inventario 17"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen18.png?raw=true" alt="Santiago Sterling | Control de Inventario 18"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen19.png?raw=true" alt="Santiago Sterling | Control de Inventario 19"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen20.png?raw=true" alt="Santiago Sterling | Control de Inventario 20"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModal(this.src)">
+    </div>
+    <p class="text-xs text-orange-500 mt-2">Desliza las imágenes →</p>
+    <p class="text-sm text-slate-200 mt-2">Fecha de ejecución: Mayo de 2025</p>
+  </div>
+  
+  <div class="mt-4 grid grid-cols-2 gap-4">
+    <div class="bg-white/10 p-4 rounded-2xl">
+      <div class="text-sm text-slate-300">Oportunidad de mejora:</div>
+      <div class="mt-2 text-slate-100 text-sm">No existia una forma de control de inventario.</div>
+    </div>
+    <div class="bg-white/10 p-4 rounded-2xl">
+      <div class="text-sm text-slate-300">Plan de acción:</div>
+      <div class="mt-2 text-slate-100 text-sm">Desarrollé un sistema ERP desde Excel con macros.</div>
+    </div>
+  </div>
 
-  /* CONTACT FORM interaction (simulate backend / EmailJS integration) */
-  const contactForm = $("#contactForm");
-  const sendBtn = $("#sendBtn");
-  const formStatus = $("#formStatus");
+  <div class="mt-4">
+    <details class="bg-white/10 p-3 rounded-2xl">
+      <summary class="font-medium text-white cursor-pointer text-sm">Resultados obtenidos</summary>
+      <ol class="mt-3 list-decimal list-inside text-slate-200 text-sm">
+        <li>Visibilidad en tiempo real del inventario.</li>
+        <li>Reducción de quiebres de stock.</li>
+        <li>Disminución del sobreinventario.</li>
+        <li>Mejora en la trazabilidad de productos.</li>
+        <li>Optimización de procesos operativos.</li>
+        <li>Mejor planificación de compras y producción.</li>
+        <li>Reducción de pérdidas y mermas.</li>
+        <li>Toma de decisiones basada en datos.</li>
+        <li>Cumplimiento normativo y auditorías más simples.</li>
+      </ol>
+    </details>
+  </div>
+</article>
 
-  if (contactForm) {
-    contactForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      formStatus.textContent = "";
-      const formData = new FormData(contactForm);
-      const payload = Object.fromEntries(formData.entries());
-      // basic validation
-      if (!payload.name || !payload.email || !payload.message) {
-        formStatus.textContent = "Por favor completa los campos requeridos.";
-        formStatus.style.color = "tomato";
-        return;
-      }
+<article class="p-6 bg-white/10 backdrop-blur-md rounded-xl">
+  <h3 class="font-semibold text-white text-lg">Comparación de OP</h3>
+  <p class="text-slate-200 mt-2 text-sm"><strong>Contexto:</strong> El sistema permite cargar archivos de Excel sin restricciones y compararlos para detectar coincidencias, diferencias e inconsistencias. Optimiza el análisis de datos al mejorar la trazabilidad, reducir errores manuales y agilizar la gestión de información.</p>
+  
+  <!-- CARRUSEL DE IMÁGENES -->
+  <div class="relative mt-4 group">
+    <div class="carousel flex overflow-x-auto gap-2 snap-x snap-mandatory scrollbar-hide">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%201.jpg?raw=true" alt="Santiago Sterling | Análisis de información 1"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%202.jpg?raw=true" alt="Santiago Sterling | Análisis de información 2"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%203.jpg?raw=true" alt="Santiago Sterling | Análisis de información 3"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%204.jpg?raw=true" alt="Santiago Sterling | Análisis de información 4"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%205.jpg?raw=true" alt="Santiago Sterling | Análisis de información 5"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%206.jpg?raw=true" alt="Santiago Sterling | Análisis de información 6"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%207.jpg?raw=true" alt="Santiago Sterling | Análisis de información 7"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModal(this.src)">
+    </div>
+    <p class="text-xs text-orange-500 mt-2">Desliza las imágenes →</p>
+    <p class="text-sm text-slate-200 mt-2">Fecha de ejecución: Junio de 2025</p>
+  </div>
+  
+  <div class="mt-4 grid grid-cols-2 gap-4">
+    <div class="bg-white/10 p-4 rounded-2xl">
+      <div class="text-sm text-slate-300">Oportunidad de mejora:</div>
+      <div class="mt-2 text-slate-100 text-sm">Dificultad para hacer trazabilidad de los datos.</div>
+    </div>
+    <div class="bg-white/10 p-4 rounded-2xl">
+      <div class="text-sm text-slate-300">Plan de acción:</div>
+      <div class="mt-2 text-slate-100 text-sm">Programé un sistema que carga y compara Excel.</div>
+    </div>
+  </div>
 
-      // show loader
-      const loader = document.createElement("span");
-      loader.className = "loader";
-      sendBtn.disabled = true;
-      sendBtn.appendChild(loader);
-      formStatus.textContent = "Enviando mensaje...";
-      formStatus.style.color = "#cbd5e1";
+  <div class="mt-4">
+    <details class="bg-white/10 p-3 rounded-2xl">
+      <summary class="font-medium text-white cursor-pointer text-sm">Resultados obtenidos</summary>
+      <ol class="mt-3 list-decimal list-inside text-slate-200 text-sm">
+        <li>Automatización del análisis de archivos Excel.</li>
+        <li>Comparación estructurada de múltiples fuentes de datos.</li>
+        <li>Detección temprana de inconsistencias.</li>
+        <li>Mejora en la trazabilidad de la información.</li>
+        <li>Reducción de errores humanos.</li>
+        <li>Mayor confiabilidad de los datos.</li>
+        <li>Agilización en la gestión de información.</li>
+        <li>Escalabilidad en el análisis de datos.</li>
+        <li>Mejor control y gobernanza de datos.</li>
+      </ol>
+    </details>
+  </div>
+</article>
 
-      try {
-        // Simulación de envío (aquí conectarías EmailJS o API)
-        await fakeNetworkRequest(1100 + Math.random() * 1200);
-        formStatus.textContent = "Mensaje enviado. Responderé en 24-48 horas.";
-        formStatus.style.color = "limegreen";
-        contactForm.reset();
-      } catch (err) {
-        console.error(err);
-        formStatus.textContent = "Error al enviar. Intenta de nuevo más tarde.";
-        formStatus.style.color = "tomato";
-      } finally {
-        sendBtn.disabled = false;
-        loader.remove();
-      }
-    });
-  }
+      
+    </div>
+  </div>
+  </div>
+  <div class="flex justify-center mb-20">
+  <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
 
-  function fakeNetworkRequest(ms = 1000) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // simulate occasional failures
-        if (Math.random() < 0.96) resolve(true);
-        else reject(new Error("network"));
-      }, ms);
-    });
-  }
+      <a href="proyectos20.html" class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
+        Ver proyectos de software
+      </a>
 
-  /* Download CV (simulate) */
-  const downloadCV = $("#downloadCV");
-  const downloadCV2 = $("#downloadCV2");
-  [downloadCV, downloadCV2].forEach(btn => {
-    if (!btn) return;
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      // generate a simple text CV and download
-      const cvText = generateSimpleCV();
-      const blob = new Blob([cvText], { type: "application/pdf" });
-      // Fallback to text file to avoid PDF generation complexity
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(new Blob([cvText], { type: "text/plain" }));
-      link.download = "CV-Santiago Sterling.txt";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    });
-  });
-
-  function generateSimpleCV() {
-    return `CV - Santiago Sterling\nRol: Desarrollador de software\nUbicación: Cali, Colombia\nContacto: santisterling@gmail.com\n\nResumen:\nTecnólogo en Análisis y Desarrollo de Software y en Gestión de Producción Industrial, con más de ocho años de experiencia en plantas de manufactura. Mi perfil combina la eficiencia industrial con la innovación tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y crear soluciones escalables. Cuento con formación en frontend y backend (HTML, CSS, JavaScript, React, Node.js, Python, Django, entre otros) y en metodologías industriales como Lean Manufacturing, Kaizen y control de inventarios. Me interesa especializarme en inteligencia artificial aplicada a la industria y en el desarrollo de soluciones que integren la Industria 4.0 con tecnologías digitales inteligentes.\n\nHabilidades:\n- React, Next.js, Tailwind\n- Figma, Prototipado\n- Accessibilidad\n\nProyectos destacados:\n- Dashboards\n- Reproductor Musical\n- Test de preguntas\n`;
-  }
-
-  /* Small canvas animation in hero (if needed) */
-  function initMiniCanvas() {
-    // create a small floating canvas background if canvas available
-    const hero = $("#hero");
-    if (!hero) return;
-    const canvas = document.createElement("canvas");
-    canvas.width = 300; canvas.height = 160;
-    canvas.style.position = "absolute";
-    canvas.style.right = "2rem";
-    canvas.style.top = "2rem";
-    canvas.style.opacity = "0.07";
-    hero.appendChild(canvas);
-    const ctx = canvas.getContext("2d");
-    let t = 0;
-
-    function loop() {
-      t += 0.01;
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      for (let i=0;i<5;i++){
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(255,223,132,${0.08 + 0.02*Math.sin(t+i)})`;
-        ctx.lineWidth = 2;
-        const y = 80 + Math.sin(t*2 + i) * 28;
-        ctx.moveTo(0, y); ctx.bezierCurveTo(70, y-30, 230, y+30, 300, y);
-        ctx.stroke();
-      }
-      requestAnimationFrame(loop);
-    }
-    loop();
-  }
-  // init canvas after small delay to avoid layout blocking
-  setTimeout(initMiniCanvas, 600);
-
-  /* Keyboard accessibility for project cards: Enter opens modal */
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeProjectModal();
-  });
-  $$(".projectCard").forEach((c) => {
-    c.setAttribute("tabindex", "0");
-    c.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        const title = c.querySelector("h3")?.textContent || "Proyecto";
-        openProjectModal(title);
-      }
-    });
-  });
-
-  /* Small analytics-like logger for recruiter impression (local) */
-  try {
-    const impressKey = "visited_portfolio";
-    if (!localStorage.getItem(impressKey)) {
-      localStorage.setItem(impressKey, JSON.stringify({ ts: Date.now() }));
-      console.info("First visit - welcome recruiter!");
-    }
-  } catch (err) { /* ignore */ }
-
-  /* Initialize default filter 'all' */
-  (function initDefaultFilter() {
-    const defaultBtn = document.querySelector(".filterBtn[data-filter='all']");
-    defaultBtn?.click();
-  })();
-
-  // Expose small API for tests
-  window._portfolio = {
-    openProjectModal,
-    closeProjectModal,
-    generateSimpleCV,
-  };
-
-})();
-
-const text = "Transformo problemas en software funcional.";
-const typingElement = document.getElementById("typingText");
-let index = 0;
-let isDeleting = false;
-
-function typeEffect() {
-  if (!isDeleting && index < text.length) {
-    typingElement.textContent += text.charAt(index);
-    index++;
-    setTimeout(typeEffect, 100);
-  } 
-  else if (isDeleting && index > 0) {
-    typingElement.textContent = text.substring(0, index - 1);
-    index--;
-    setTimeout(typeEffect, 60);
-  } 
-  else {
-    isDeleting = !isDeleting;
-    setTimeout(typeEffect, 1500);
-  }
-}
-
-// Espera unos segundos antes de iniciar
-setTimeout(typeEffect, 2000);
+      <a href="windows.html" class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
+        Ver repositorio
+      </a>
+  </div>
+  </div>
+</section>
+<br>
+<br>
+<br>
 
 
-  const buttons = document.querySelectorAll(".filter-btn");
-  const cards = document.querySelectorAll(".card-item");
+    <!-- HABILIDADES -->
+<section id="testimonials" class="mt-16 w-full flex flex-col justify-center items-center mx-auto">
+  <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+    Competencias metodológicas
+  </h2>
+  <br>
+  <br>
 
-  // Activar por defecto "Todos"
-  document.querySelector('.filter-btn[data-category="all"]')
-          .classList.add("active");
+  <!-- BOTONES DE CATEGORÍAS -->
+  <div class="flex justify-center w-full mb-20">
+    <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1 mx-auto text-center">
+      <button class="tab-btn filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block cursor-pointer" data-target="lenguajes">Código</button>
+      <button class="tab-btn filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block cursor-pointer" data-target="frameworks">Frameworks</button>
+      <button class="tab-btn filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block cursor-pointer" data-target="complementarias">Extras</button>
+      <button class="tab-btn filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block cursor-pointer" data-target="soft">Social</button>
+    </div>
+  </div>
 
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
+  <!-- TARJETAS -->
+ <div class="relative w-full max-w-[750px] h-auto flex flex-col mx-auto">
 
-      // Cambiar estado visual del botón
-      buttons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
+  <!-- Ventana estilo macOS -->
+  <div class="mac-window w-full rounded-2xl shadow-2xl overflow-hidden border border-slate-300 bg-gradient-to-br from-slate-100 to-slate-200">
 
-      const category = btn.dataset.category;
+    <!-- Barra superior Mac -->
+    <div class="h-10 flex items-center px-4 bg-gradient-to-b from-slate-200 to-slate-300 border-b border-slate-300">
+      <div class="flex space-x-2">
+        <span class="w-3 h-3 bg-red-500 rounded-full shadow-sm"></span>
+        <span class="w-3 h-3 bg-yellow-500 rounded-full shadow-sm"></span>
+        <span class="w-3 h-3 bg-green-500 rounded-full shadow-sm"></span>
+      </div>
+        <p id="mac-window-title" class="flex-1 text-center text-sm text-slate-700 font-medium select-none -ml-10">
+          Lenguajes de Programación
+        </p>
+    </div>
 
-      cards.forEach(card => {
-        // Ocultar con transición
-        card.classList.add("card-hide");
+    <!-- CONTENEDOR INTERNO QUE MUESTRA LAS TABS -->
+    <div class="p-6 sm:p-8 backdrop-blur-xl relative">
 
-        setTimeout(() => {
-          if (category === "all" || card.dataset.category === category) {
-            card.style.display = "block";
-          } else {
-            card.style.display = "none";
-          }
+      <!-- LENGUAJES -->
+      <div id="lenguajes" class="tab-content hidden relative rounded-xl p-6 shadow-inner overflow-hidden w-full text-center backdrop-blur-lg">
+  <div class="absolute inset-0 bg-slate-800 bg-opacity-5"></div>
+  <div class="relative z-10">
 
-          // Mostrar con animación suave
-          setTimeout(() => {
-            if (card.style.display === "block") {
-              card.classList.remove("card-hide");
-            }
-          }, 20);
+    <!-- GRID de aplicaciones -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 justify-center items-center">
 
-        }, 300);
-      });
+      <!-- Python -->
+      <div class="app-mac" data-app="python">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="app-icon-img">
+        <p class="app-label">Python</p>
+      </div>
 
-    });
-  });
+      <!-- JavaScript / NodeJS -->
+      <div class="app-mac" data-app="js">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="app-icon-img">
+        <p class="app-label">JavaScript - NodeJS</p>
+      </div>
 
-//CODIGO PARA EL CARRUSEL DE IMAGENES//
-  function openModal(src) {
-    const modal = document.createElement('div');
-    modal.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4';
-    modal.onclick = () => modal.remove();
-    
-    const img = document.createElement('img');
-    img.src = src;
-    img.className = 'max-w-full max-h-full rounded-lg';
-    
-    modal.appendChild(img);
-    document.body.appendChild(modal);
-  }
+      <!-- C# -->
+      <div class="app-mac" data-app="csharp">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" class="app-icon-img">
+        <p class="app-label">C#</p>
+      </div>
 
-//TECLAS DE NAVEGACIÓN Y TITULOS DE IMAGENES
-  let currentImageIndex = 0;
-  let images = [];
+      <!-- SQL / MySQL -->
+      <div class="app-mac" data-app="sql">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="app-icon-img">
+        <p class="app-label">SQL - MySQL</p>
+      </div>
 
-  function openModal(src) {
-    // Obtener todas las imágenes del carrusel
-    images = Array.from(document.querySelectorAll('.carousel img')).map(img => ({
-      src: img.src,
-      alt: img.alt
-    }));
-    
-    // Encontrar el índice de la imagen clickeada
-    currentImageIndex = images.findIndex(img => img.src === src);
-    
-    showModalImage();
-  }
+    </div>
 
-  function showModalImage() {
-    // Eliminar modal anterior si existe
-    const existingModal = document.getElementById('imageModal');
-    if (existingModal) existingModal.remove();
-    
-    const modal = document.createElement('div');
-    modal.id = 'imageModal';
-    modal.className = 'fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4';
-    
-    modal.innerHTML = `
-      <div class="relative max-w-6xl w-full h-full flex flex-col items-center justify-center">
-        <!-- Botón cerrar -->
-        <button 
-          onclick="closeModal()" 
-          class="absolute top-4 right-4 text-white hover:text-red-500 transition-colors z-10 bg-black/50 rounded-full p-2 backdrop-blur-sm"
-          aria-label="Cerrar"
+    <!-- Ventanas flotantes tipo macOS -->
+    <div id="modal-python" class="modal-mac hidden">
+      <div class="modal-bar">
+        <span class="mac-btn red"></span>
+        <span class="mac-btn yellow"></span>
+        <span class="mac-btn green"></span>
+      </div>
+      <h2 class="modal-title text-black">Python</h2>
+      <p class="modal-text text-black">Lenguaje versátil ideal para IA, backend, automatización y análisis de datos.</p>
+    </div>
+
+    <div id="modal-js" class="modal-mac hidden">
+      <div class="modal-bar">
+        <span class="mac-btn red"></span>
+        <span class="mac-btn yellow"></span>
+        <span class="mac-btn green"></span>
+      </div>
+      <h2 class="modal-title text-black">JavaScript / NodeJS</h2>
+      <p class="modal-text text-black">Perfecto para desarrollo web, APIs en Node y aplicaciones interactivas.</p>
+    </div>
+
+    <div id="modal-csharp" class="modal-mac hidden">
+      <div class="modal-bar">
+        <span class="mac-btn red"></span>
+        <span class="mac-btn yellow"></span>
+        <span class="mac-btn green"></span>
+      </div>
+      <h2 class="modal-title text-black">C#</h2>
+      <p class="modal-text text-black">Utilizado en aplicaciones de escritorio, backend y desarrollo en Unity.</p>
+    </div>
+
+    <div id="modal-sql" class="modal-mac hidden">
+      <div class="modal-bar">
+        <span class="mac-btn red"></span>
+        <span class="mac-btn yellow"></span>
+        <span class="mac-btn green"></span>
+      </div>
+      <h2 class="modal-title text-black">SQL / MySQL</h2>
+      <p class="modal-text text-black">Base fundamental para gestión de datos, consultas y sistemas transaccionales.</p>
+    </div>
+
+  </div>
+</div>
+
+      <!-- FRAMEWORKS -->
+      <div id="frameworks" class="tab-content hidden relative rounded-xl p-6 shadow-inner overflow-hidden w-full text-center bg-white/40 backdrop-blur-lg border border-white/40">
+        <div class="absolute inset-0 bg-slate-800 bg-opacity-5"></div>
+        <div class="relative z-10">
+          <ul class="text-sm sm:text-base text-black list-disc list-inside space-y-1 text-left mx-auto w-fit">
+            <li>Django / Flask</li>
+            <li>Tailwind / CSS</li>
+            <li>.NET</li>
+            <li>APIs y automatización</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- COMPLEMENTARIAS -->
+      <div id="complementarias" class="tab-content hidden relative rounded-xl p-6 shadow-inner overflow-hidden w-full text-center bg-white/40 backdrop-blur-lg border border-white/40">
+        <div class="absolute inset-0 bg-slate-800 bg-opacity-5"></div>
+        <div class="relative z-10">
+          <ul class="text-sm sm:text-base text-black list-disc list-inside space-y-1 text-left mx-auto w-fit">
+            <li>Git y GitHub</li>
+            <li>Cloud (AWS, GCP, Azure)</li>
+            <li>Spark / Hadoop</li>
+            <li>Seguridad y ética</li>
+            <li>Reportes ejecutivos</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SOFT SKILLS -->
+      <div id="soft" class="tab-content hidden relative rounded-xl p-6 shadow-inner overflow-hidden w-full text-center bg-white/40 backdrop-blur-lg border border-white/40">
+        <div class="absolute inset-0 bg-slate-800 bg-opacity-5"></div>
+        <div class="relative z-10">
+          <ul class="text-sm sm:text-base text-black list-disc list-inside space-y-1 text-left mx-auto w-fit">
+            <li>Comunicación efectiva</li>
+            <li>Trabajo en equipo</li>
+            <li>Pensamiento crítico</li>
+            <li>Documentación reproducible</li>
+            <li>Scrum / Kanban</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+  </div>
+</section>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <!-- BLOG PREVIEW -->
+  <section id="blog"
+          class="mt-4 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20"
+          style="
+            --bg-color: linear-gradient(
+             
+              #0c0c0c,
+              #000000,
+              #000000
+            );
+            background: var(--bg-color);
+          "
         >
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
+        <br>
+        <br>
+        <br>
+  <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterling-text">
+    Estrategias laborales
+  </h2>
+  <br>
+  <br>
+  <br>
+  <br>
 
-        <!-- Título -->
-        <div class="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg">
-          <h3 class="text-white font-semibold text-lg">${images[currentImageIndex].alt}</h3>
-          <p class="text-slate-300 text-sm">${currentImageIndex + 1} / ${images.length}</p>
+ <div class="container flex justify-center items-center min-h-screen px-5 md:px-10">
+    <div class="w-full max-w-4xl mx-auto py-16">
+
+        <div class="content-grid">
+            <div>
+                <h1 class="text-3xl titulosSterling-text font-bold">Estrategia de excelencia técnica con enfoque en negocio</h1>
+            </div>
+            <div>
+                <p class="description text-white/50">
+                    Soy un desarrollador que no solo escribe código, sino que resuelve problemas reales del negocio mediante soluciones técnicas sólidas y medibles.
+                </p>
+            </div>
         </div>
 
-        <!-- Botón anterior -->
-        <button 
-          onclick="previousImage()" 
-          class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all hover:scale-110 backdrop-blur-sm ${currentImageIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}"
-          ${currentImageIndex === 0 ? 'disabled' : ''}
-          aria-label="Imagen anterior"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-          </svg>
-        </button>
-
-        <!-- Imagen -->
-        <img 
-          src="${images[currentImageIndex].src}" 
-          alt="${images[currentImageIndex].alt}"
-          class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain"
-        >
-
-        <!-- Botón siguiente -->
-        <button 
-          onclick="nextImage()" 
-          class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all hover:scale-110 backdrop-blur-sm ${currentImageIndex === images.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}"
-          ${currentImageIndex === images.length - 1 ? 'disabled' : ''}
-          aria-label="Imagen siguiente"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </button>
-
-        <!-- Indicadores de navegación con teclado -->
-        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg">
-          <p class="text-slate-300 text-sm">Si estás en PC usa ← → para navegar | ESC para cerrar</p>
+        <div class="content-grid">
+            <div>
+                <h1 class="text-3xl titulosSterling-text font-bold">Estrategia de innovación continua y aprendizaje dirigido</h1>
+            </div>
+            <div>
+                <p class="description text-white/50">
+                    Me mantengo permanentemente relevante en un sector de rápida evolución, enfocando el aprendizaje en tecnologías con aplicación real.
+                </p>
+            </div>
         </div>
+
+        <div class="content-grid">
+            <div>
+                <h1 class="text-3xl titulosSterling-text font-bold">Estrategia de posicionamiento profesional y liderazgo técnico</h1>
+            </div>
+            <div>
+                <p class="description text-white/50">
+                   Construir una reputación sólida como referente técnico confiable dentro y fuera de la organización.
+                </p>
+            </div>
+        </div>
+    </div>
+
+  </div>
+</section>
+
+    <br>
+    <br>
+     <br>
+    <br>
+     <br>
+    <br>
+    <!-- CONTACT -->
+       <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+    Contacto
+  </h2>
+      <section
+        id="contact"
+        class="relative mt-12 max-w-5xl mx-auto px-3 sm:px-10 py-7 sm:py-8
+              rounded-[32px]
+              bg-white/70 backdrop-blur-xl
+              border border-black/30
+              shadow-[0_20px_60px_-20px_rgba(0,0,0,0.15)]
+              overflow-hidden"
+      >
+  <!-- Imagen de fondo -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src="https://plus.unsplash.com/premium_photo-1755843842269-b1c80e7e34ba?q=80&w=869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Fondo contacto"
+      class="w-full h-full object-cover"
+    />
+    <!-- Overlay para contraste -->
+    <div class="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
+  </div>
+
+  <!-- Contenido -->
+  <div class="relative z-10">
+
+    <!-- Descripción -->
+    <p
+      class="mt-1 text-sm sm:text-sm leading-relaxed
+             text-gray-600 max-w-xl"
+    >
+      Quedo atento a oportunidades acordes a mi perfil y disponible para coordinar una llamada.
+    </p>
+
+    <!-- Formulario -->
+    <form
+      id="contactForm"
+      class="mt-14 space-y-8 max-w-xl"
+    >
+
+      <!-- Nombre -->
+      <div class="space-y-2">
+        <label class="block text-sm font-medium tracking-wide text-gray-600">
+          Nombre
+        </label>
+
+        <input
+          required
+          name="name"
+          placeholder="Tu nombre"
+          class="w-full h-10 px-6 py-o
+                 rounded-full
+                 bg-white/60 backdrop-blur-xl
+                 border border-black/40
+                 text-sm text-gray-900 placeholder:text-gray-400
+                 shadow-[0_8px_24px_rgba(0,0,0,0.06)]
+                 focus:outline-none
+                 focus:bg-white/80
+                 focus:border-black/10
+                 focus:shadow-[0_10px_30px_rgba(0,0,0,0.10)]
+                 transition-all duration-300 ease-out"
+        />
       </div>
-    `;
+
+      <!-- Correo -->
+      <div class="space-y-1">
+        <label class="text-sm font-medium text-gray-700">
+          Correo
+        </label>
+        <input
+          required
+          type="email"
+          name="email"
+          placeholder="tu@correo.com"
+          class="w-full h-10 px-6 py-0
+                 rounded-full
+                 bg-white/60 backdrop-blur-xl
+                 border border-black/40
+                 text-sm text-gray-900 placeholder:text-gray-400
+                 shadow-[0_8px_24px_rgba(0,0,0,0.06)]
+                 focus:outline-none
+                 focus:bg-white/80
+                 focus:border-black/10
+                 focus:shadow-[0_10px_30px_rgba(0,0,0,0.10)]
+                 transition-all duration-300 ease-out"
+        />
+      </div>
+
+      <!-- Mensaje -->
+      <div class="space-y-2">
+        <label class="text-sm font-medium text-gray-700">
+          Mensaje
+        </label>
+        <textarea
+          required
+          name="message"
+          rows="5"
+          placeholder="Redacta tu mensaje…"
+          class="w-full px-6 py-4 rounded-3xl
+                 bg-white/80
+                 border border-black/10
+                 text-sm text-gray-900 placeholder:text-gray-400
+                 resize-none
+                 focus:outline-none focus:ring-2 focus:ring-black/10
+                 transition"
+        ></textarea>
+      </div>
+
+      <!-- Acción -->
+      <div class="flex items-center gap-5 pt-2">
+        <button
+          id="sendBtn"
+          class="
+          filter-btn active px-5 py-1 rounded-full
+          text-sm font-medium transition-all
+          text-black/70 hover:bg-white/70 hover:text-gray-900
+          inline-block text-center cursor-pointer
+          border border-black/50 hover:border-none"
+        >
+          Enviar mensaje
+        </button>
+
+        <span
+          id="formStatus"
+          class="text-sm text-gray-500"
+        ></span>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="mt-24 bg-white border-t border-gray">
+  <div class="max-w-6xl mx-auto px-6 py-10 text-center">
     
-    document.body.appendChild(modal);
-    
-    // Cerrar al hacer clic en el fondo
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-    
-    // Navegación con teclado
-    document.addEventListener('keydown', handleKeyPress);
-  }
+    <!-- Nombre -->
+    <p class="text-xl font-extrabold text-gray-900 tracking-wide leading-tight">
+      Santiago Sterling
+    </p>
 
-  function nextImage() {
-    if (currentImageIndex < images.length - 1) {
-      currentImageIndex++;
-      showModalImage();
-    }
-  }
+    <!-- Rol -->
+    <p class="mt-1 text-sm text-gray-500">
+      Desarrollador de software
+    </p>
 
-  function previousImage() {
-    if (currentImageIndex > 0) {
-      currentImageIndex--;
-      showModalImage();
-    }
-  }
+    <!-- Redes sociales -->
+    <div class="mt-6 flex justify-center space-x-6">
+      
+      <!-- GitHub -->
+      <a href="https://github.com/Santiago131440" aria-label="GitHub" class="text-gray-400 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.54 2.87 8.39 6.84 9.75.5.09.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0112 6.84c.85 0 1.71.12 2.51.35 1.9-1.32 2.74-1.05 2.74-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9 0 1.38-.01 2.49-.01 2.83 0 .27.18.59.69.49A10.02 10.02 0 0022 12.26C22 6.58 17.52 2 12 2z"/>
+        </svg>
+      </a>
 
-  function closeModal() {
-    const modal = document.getElementById('imageModal');
-    if (modal) modal.remove();
-    document.removeEventListener('keydown', handleKeyPress);
-  }
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/santiago-sterling-0a02a116a/" aria-label="LinkedIn" class="text-gray-400 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.8v2.1h.05c.53-1 1.83-2.1 3.77-2.1 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7.8c0-1.86-.03-4.26-2.6-4.26-2.6 0-3 2.03-3 4.12V24h-4V8.5z"/>
+        </svg>
+      </a>
 
-  function handleKeyPress(e) {
-    switch(e.key) {
-      case 'ArrowRight':
-        nextImage();
-        break;
-      case 'ArrowLeft':
-        previousImage();
-        break;
-      case 'Escape':
-        closeModal();
-        break;
-    }
-  }
+      <!-- Reddit -->
+      <a href="#" aria-label="Reddit" class="text-gray-400 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-label="Discord">
+          <path d="M20.3 4.1A19.8 19.8 0 0 0 15.8 3c-.2.4-.4.9-.5 1.3a18.3 18.3 0 0 0-6.6 0c-.1-.4-.3-.9-.5-1.3-1.6.3-3.1.8-4.5 1.6C.8 9.1-.2 13.6.3 18c1.7 1.3 3.7 2.2 5.8 2.8.5-.7.9-1.4 1.3-2.2-.7-.3-1.4-.6-2-1 .2-.1.4-.3.6-.4 3.8 1.8 7.9 1.8 11.7 0 .2.2.4.3.6.4-.6.4-1.3.7-2 1 .4.8.8 1.5 1.3 2.2 2.1-.6 4.1-1.5 5.8-2.8.6-4.9-.9-9.4-3.7-13.9zM8.5 14.6c-.8 0-1.5-.7-1.5-1.6 0-.9.7-1.6 1.5-1.6.8 0 1.5.7 1.5 1.6 0 .9-.7 1.6-1.5 1.6zm7 0c-.8 0-1.5-.7-1.5-1.6 0-.9.7-1.6 1.5-1.6.8 0 1.5.7 1.5 1.6 0 .9-.7 1.6-1.5 1.6z"/>
+        </svg>
 
-  // CÓDIGO DE HABILIDADES
+      </a>
+    </div>
 
-  // Obtener todos los botones de pestañas y contenidos
-const tabButtons = document.querySelectorAll('.tab-btn');
-const tabContents = document.querySelectorAll('.tab-content');
+    <!-- Copyright -->
+    <p class="mt-8 text-xs text-gray-400">
+      © <span id="year"></span> Santiago Sterling.
+    </p>
+  </div>
+</footer>
 
-// Función para mostrar una pestaña específica
-function showTab(targetId) {
-  // Ocultar todos los contenidos
-  tabContents.forEach(content => {
-    content.classList.add('hidden');
-  });
-  
-  // Remover estado activo de todos los botones
-  tabButtons.forEach(btn => {
-    btn.classList.remove;
-    btn.classList.add;
-  });
-  
-  // Mostrar el contenido seleccionado
-  const targetContent = document.getElementById(targetId);
-  if (targetContent) {
-    targetContent.classList.remove('hidden');
-  }
-  
-  // Activar el botón seleccionado
-  const activeButton = document.querySelector(`[data-target="${targetId}"]`);
-  if (activeButton) {
-    activeButton.classList.remove;
-    activeButton.classList.add;
-  }
-}
+  <!-- PROJECT MODAL -->
+  <div id="projectModal" aria-hidden="true" class="fixed inset-0 hidden items-center justify-center z-50 bg-black/60">
+    <div class="bg-slate-900 rounded-2xl w-11/12 max-w-4xl p-6">
+      <div class="flex items-start justify-between">
+        <h3 id="modalTitle" class="text-xl font-semibold text-black">Proyecto</h3>
+        <button id="closeModal" class="p-2 rounded bg-white/5">Cerrar</button>
+      </div>
+      <div id="modalBody" class="mt-4 text-slate-200">Detalles...</div>
+    </div>
+  </div>
 
-// Agregar event listeners a los botones
-tabButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const target = button.getAttribute('data-target');
-    showTab(target);
-  });
-});
-
-// Mostrar la primera pestaña por defecto al cargar
-if (tabButtons.length > 0) {
-  const firstTarget = tabButtons[0].getAttribute('data-target');
-  showTab(firstTarget);
-}
-
-
-//CODIGO SOBRE HABILIDADES
-
-  const tabs = document.querySelectorAll(".tab-btn");
-  const titleBar = document.getElementById("mac-window-title");
-
-  const titles = {
-    lenguajes: "Lenguajes de Programación",
-    frameworks: "Frameworks y Desarrollo",
-    complementarias: "Habilidades Complementarias",
-    soft: "Habilidades Sociales"
-  };
-
-  tabs.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const target = btn.getAttribute("data-target");
-
-      // Cambiar el título dinámicamente
-      titleBar.textContent = titles[target] || "Skills & Tech Stack";
-    });
-  });
-
-// CODGIDO SOBRE APPS DE ICONOS EN HABILIDADES
-
-document.querySelectorAll(".app-mac").forEach(app => {
-  app.addEventListener("click", () => {
-    const target = app.dataset.app;
-    document.querySelector("#modal-" + target).classList.remove("hidden");
-  });
-});
-
-/* Cerrar clic fuera */
-document.addEventListener("click", (e) => {
-  document.querySelectorAll(".modal-mac").forEach(modal => {
-    if (!modal.contains(e.target) && !e.target.closest(".app-mac")) {
-      modal.classList.add("hidden");
-    }
-  });
-});
-
-
-
-/* FUNCIÓN DE ESTUDIOS REALIZADOS - CURSOS REALIZADOS */
-function openModal(title, content) {
-  document.getElementById('modalTitle').innerText = title;
-  document.getElementById('modalContent').innerText = content;
-  document.getElementById('macModal').style.display = 'flex';
-
-  // Cerrar modal al hacer click fuera del contenido
-  document.getElementById('macModal').onclick = function (e) {
-    if (e.target === this) {
-      closeModal();
-    }
-  };
-}
-
-function closeModal() {
-  document.getElementById('macModal').style.display = 'none';
-}
+  <script src="script20.js" defer></script>
+</body>
+</html>
