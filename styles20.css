@@ -956,6 +956,11 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
       width: 30px;
       height: 4px;
       }
+
+      .avatar {
+       width: 5px;
+       height: 5px
+      }
     }
 
     
