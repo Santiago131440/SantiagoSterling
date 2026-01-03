@@ -931,7 +931,7 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
         transform: scale(0.8);
       }
       .phone {
-        width: 360px;
+        width: 120px;
         height: 240px;
         border-radius: 20px;
       }
@@ -947,7 +947,7 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
         transform: translateX(-20px) scale(1.05);
       }
       .center {
-        transform: translateX(0px) scale(1.05);
+        transform: translateX(0px) scale(1.15);
       }
 
       .phone::before {
@@ -958,3 +958,4 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
       }
     }
 
+    
