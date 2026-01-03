@@ -577,4 +577,3 @@ function openModal(title, content) {
 function closeModal() {
   document.getElementById('macModal').style.display = 'none';
 }
-
