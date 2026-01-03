@@ -813,3 +813,136 @@ article p{ line-height: 1.6; margin-top: 0.6rem; color: var(--muted); }
     z-index: 10;
   }
 }
+
+
+/* ANEXO AL HEADER Y NAVBAR DEL DISEÑO */
+
+/* NAVBAR APPLE STYLE */
+    .apple-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      backdrop-filter: saturate(180%) blur(20px);
+      background: rgba(255,255,255,0.75);
+      border-bottom: 1px solid rgba(172, 172, 172, 0.808);
+      z-index: 50;
+      border-radius: 60px;
+      color:#777;
+    }
+
+    .apple-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .apple-nav a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 9999px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.15);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 80px 20px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .creative {
+      margin-top: 10px;
+      color: var(--accent);
+      font-weight: 500;
+      color: #777;
+    }
+
+    /* MOCKUPS */
+    .mockups {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      margin-top: 70px;
+      gap: 0;
+    }
+
+    .phone {
+      width: 240px;
+      height: 480px;
+      border-radius: 36px;
+      background: #000;
+      border: 6px solid #1d1d1f;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.25);
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 8px;
+      border-radius: 4px;
+      background: #000;
+      z-index: 3;
+    }
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 30px;
+      overflow: hidden;
+    }
+
+    .screen video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .left {
+      transform: translateX(80px) scale(0.92);
+      z-index: 1;
+    }
+
+    .center {
+      z-index: 3;
+    }
+
+    .right {
+      transform: translateX(-80px) scale(0.92);
+      z-index: 1;
+    }
+
+    /* RESPONSIVE (mantener unidos) */
+    @media (max-width: 768px) {
+      .mockups {
+        transform: scale(0.8);
+      }
+    }
