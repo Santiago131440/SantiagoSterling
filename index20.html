@@ -21,8 +21,8 @@
 
 <body class="text-slate-100 antialiased leading-relaxed">
 <!-- NAVBAR -->
-<nav class="apple-nav">
-  <div class="apple-nav-inner">
+<nav class="apple-nav w-full border-b border-black/10">
+  <div class="apple-nav-inner max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
     <!-- Nombre + Avatar -->
     <a href="#" class="flex items-center gap-3">
@@ -33,19 +33,41 @@
           class="w-full h-full object-cover"
         />
       </span>
-      <span class="font-medium text-gray">
+      <span class="font-medium text-gray-800 whitespace-nowrap">
         Santiago Sterling
       </span>
     </a>
 
-    <div class="flex items-center gap-6 text-gray">
-      <a href="#">Proyectos</a>
-      <a href="#">Repositorio</a>
-      <a href="#">Contacto</a>
+    <!-- Menu desktop -->
+    <div class="hidden md:flex items-center gap-6 text-gray-700">
+      <a href="#" class="hover:text-black transition">Proyectos</a>
+      <a href="#" class="hover:text-black transition">Repositorio</a>
+      <a href="#" class="hover:text-black transition">Contacto</a>
     </div>
 
+    <!-- Botón hamburguesa (+) -->
+    <button
+      id="menu-toggle"
+      class="md:hidden w-8 h-8 flex items-center justify-center text-2xl font-light text-gray-400 border border-black/10 rounded-full transition hover:bg-black/30 hover:text-white"
+      aria-label="Abrir menú"
+    >
+      +
+    </button>
+
   </div>
+
+  <!-- Menu mobile -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden px-6 pb-6 text-gray-700 flex-col gap-4"
+  >
+    <a href="#" class="py-2 border-b border-black/5">Proyectos</a>
+    <a href="#" class="py-2 border-b border-black/5">Repositorio</a>
+    <a href="#" class="py-2">Contacto</a>
+  </div>
+
 </nav>
+
 
 
 <!-- HERO -->
