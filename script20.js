@@ -330,7 +330,7 @@ setTimeout(typeEffect, 2000);
   });
 
 //CODIGO PARA EL CARRUSEL DE IMAGENES//
-  function openModal(src) {
+  function openModalImagenes(src) {
     const modal = document.createElement('div');
     modal.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4';
     modal.onclick = () => modal.remove();
@@ -471,54 +471,7 @@ setTimeout(typeEffect, 2000);
     }
   }
 
-  // CÓDIGO DE HABILIDADES
-
-  // Obtener todos los botones de pestañas y contenidos
-const tabButtons = document.querySelectorAll('.tab-btn');
-const tabContents = document.querySelectorAll('.tab-content');
-
-// Función para mostrar una pestaña específica
-function showTab(targetId) {
-  // Ocultar todos los contenidos
-  tabContents.forEach(content => {
-    content.classList.add('hidden');
-  });
   
-  // Remover estado activo de todos los botones
-  tabButtons.forEach(btn => {
-    btn.classList.remove;
-    btn.classList.add;
-  });
-  
-  // Mostrar el contenido seleccionado
-  const targetContent = document.getElementById(targetId);
-  if (targetContent) {
-    targetContent.classList.remove('hidden');
-  }
-  
-  // Activar el botón seleccionado
-  const activeButton = document.querySelector(`[data-target="${targetId}"]`);
-  if (activeButton) {
-    activeButton.classList.remove;
-    activeButton.classList.add;
-  }
-}
-
-// Agregar event listeners a los botones
-tabButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const target = button.getAttribute('data-target');
-    showTab(target);
-  });
-});
-
-// Mostrar la primera pestaña por defecto al cargar
-if (tabButtons.length > 0) {
-  const firstTarget = tabButtons[0].getAttribute('data-target');
-  showTab(firstTarget);
-}
-
-
 //CODIGO SOBRE HABILIDADES
 
   const tabs = document.querySelectorAll(".tab-btn");
@@ -540,7 +493,7 @@ if (tabButtons.length > 0) {
     });
   });
 
-// CODGIDO SOBRE APPS DE ICONOS EN HABILIDADES
+// CODIGO SOBRE APPS DE ICONOS EN HABILIDADES
 
 document.querySelectorAll(".app-mac").forEach(app => {
   app.addEventListener("click", () => {
