@@ -702,9 +702,10 @@ body{
     }
 
     .creative {
-      margin-top: 10px;
-      color: var(--accent);
-      font-weight: 500;
+      font-family: "Segoe Script", "Apple Chancery", "Brush Script MT", cursive;
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+      font-weight: 400;
       color: #777;
     }
 
