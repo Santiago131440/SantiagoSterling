@@ -1,579 +1,805 @@
-(() => {
-  "use strict";
+/* styles.css - CSS adicional y utilidades (complementa Tailwind) */
 
-  // Simple helpers
-  const $ = sel => document.querySelector(sel);
-  const $$ = sel => Array.from(document.querySelectorAll(sel));
-
-  // Year update
-  const yearEl = $("#year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-  /* Mobile menu */
-  const menuBtn = $("#menuBtn");
-  const mobileMenu = $("#mobileMenu");
-  if (menuBtn && mobileMenu) {
-    menuBtn.addEventListener("click", () => {
-      const expanded = menuBtn.getAttribute("aria-expanded") === "true";
-      menuBtn.setAttribute("aria-expanded", String(!expanded));
-      mobileMenu.classList.toggle("hidden");
-      mobileMenu.classList.toggle("block");
-    });
-  }
-
-  /* Reveal on scroll */
-  const reveals = $$(".reveal, section, .projectCard, .card-3d, .testimonial");
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  reveals.forEach(el => observer.observe(el));
-
-  /* Fancy programmatic reveal for project cards */
-  $$(".projectCard").forEach((c, idx) => {
-    c.style.transitionDelay = `${idx * 60}ms`;
-    c.classList.add("reveal");
-  });
-
-  /* Project modal (dynamic content) */
-  const modal = $("#projectModal");
-  const modalTitle = $("#modalTitle");
-  const modalBody = $("#modalBody");
-  $$(".viewProject").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const title = btn.dataset.title || "Proyecto";
-      openProjectModal(title);
-    });
-  });
-
-  $("#closeModal")?.addEventListener("click", closeProjectModal);
-  modal?.addEventListener("click", (e) => { if (e.target === modal) closeProjectModal(); });
-
-  function openProjectModal(title) {
-    if (!modal) return;
-    modalTitle.textContent = title;
-    modalBody.innerHTML = generateProjectContent(title);
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
-    modal.setAttribute("aria-hidden", "false");
-    // attach reveal observer for inside content
-    $$(".reveal").forEach(x => x.classList.remove("visible"));
-    setTimeout(() => { $$(".reveal").forEach(x => x.classList.add("visible")); }, 50);
-  }
-  function closeProjectModal() {
-    if (!modal) return;
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-    modal.setAttribute("aria-hidden", "true");
-  }
-
-  function generateProjectContent(title) {
-    // dynamic rich content (example)
-    const content = `
-      <div class="grid lg:grid-cols-2 gap-4">
-        <div>
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/fc1e5970-f268-455b-8649-b1468a2109c5.png?raw=true" alt="${title}" class="w-full h-44 object-cover rounded text-white" />
-        </div>
-        <div>
-          <h4 class="font-semibold">${title}</h4>
-          <p class="text-slate-300 mt-2">Resumen ejecutivo: Descripción breve del proyecto, objetivos y rol desempeñado.</p>
-          <div class="mt-3">
-            <h5 class="text-sm font-medium">Impacto:</h5>
-            <ul class="list-disc list-inside text-slate-200 mt-2">
-              <li>Aumento de conversión</li>
-              <li>Optimización de flujo</li>
-              <li>Mejoras de accesibilidad</li>
-            </ul>
-          </div>
-          <div class="mt-3">
-            <h5 class="text-sm font-medium">Tecnologías</h5>
-            <div class="flex gap-2 mt-2">
-              <span class="px-6 py-0 rounded rounded-full bg-white/5">React</span>
-              <span class="px-6 py-0 rounded rounded-full bg-white/5">Tailwind</span>
-              <span class="px-6 py-0 rounded rounded-full bg-white/5">Figma</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-4 reveal">
-        <details class="bg-white/5 p-3 rounded">
-          <summary class="font-medium">Ver procedimiento detallado</summary>
-          <div class="mt-3 code-style">
-            // pasos (ejemplo)
-            1) Santiago Sterling
-            2) Hola mundo
-          </div>
-        </details>
-      </div>
-    `;
-    return content;
-  }
-
-  /* CONTACT FORM interaction (simulate backend / EmailJS integration) */
-  const contactForm = $("#contactForm");
-  const sendBtn = $("#sendBtn");
-  const formStatus = $("#formStatus");
-
-  if (contactForm) {
-    contactForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      formStatus.textContent = "";
-      const formData = new FormData(contactForm);
-      const payload = Object.fromEntries(formData.entries());
-      // basic validation
-      if (!payload.name || !payload.email || !payload.message) {
-        formStatus.textContent = "Por favor completa los campos requeridos.";
-        formStatus.style.color = "tomato";
-        return;
-      }
-
-      // show loader
-      const loader = document.createElement("span");
-      loader.className = "loader";
-      sendBtn.disabled = true;
-      sendBtn.appendChild(loader);
-      formStatus.textContent = "Enviando mensaje...";
-      formStatus.style.color = "#cbd5e1";
-
-      try {
-        // Simulación de envío (aquí conectarías EmailJS o API)
-        await fakeNetworkRequest(1100 + Math.random() * 1200);
-        formStatus.textContent = "Mensaje enviado. Responderé en 24-48 horas.";
-        formStatus.style.color = "limegreen";
-        contactForm.reset();
-      } catch (err) {
-        console.error(err);
-        formStatus.textContent = "Error al enviar. Intenta de nuevo más tarde.";
-        formStatus.style.color = "tomato";
-      } finally {
-        sendBtn.disabled = false;
-        loader.remove();
-      }
-    });
-  }
-
-  function fakeNetworkRequest(ms = 1000) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // simulate occasional failures
-        if (Math.random() < 0.96) resolve(true);
-        else reject(new Error("network"));
-      }, ms);
-    });
-  }
-
-  /* Download CV (simulate) */
-  const downloadCV = $("#downloadCV");
-  const downloadCV2 = $("#downloadCV2");
-  [downloadCV, downloadCV2].forEach(btn => {
-    if (!btn) return;
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      // generate a simple text CV and download
-      const cvText = generateSimpleCV();
-      const blob = new Blob([cvText], { type: "application/pdf" });
-      // Fallback to text file to avoid PDF generation complexity
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(new Blob([cvText], { type: "text/plain" }));
-      link.download = "CV-Santiago Sterling.txt";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    });
-  });
-
-  function generateSimpleCV() {
-    return `CV - Santiago Sterling\nRol: Desarrollador de software\nUbicación: Cali, Colombia\nContacto: santisterling@gmail.com\n\nResumen:\nTecnólogo en Análisis y Desarrollo de Software y en Gestión de Producción Industrial, con más de ocho años de experiencia en plantas de manufactura. Mi perfil combina la eficiencia industrial con la innovación tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y crear soluciones escalables. Cuento con formación en frontend y backend (HTML, CSS, JavaScript, React, Node.js, Python, Django, entre otros) y en metodologías industriales como Lean Manufacturing, Kaizen y control de inventarios. Me interesa especializarme en inteligencia artificial aplicada a la industria y en el desarrollo de soluciones que integren la Industria 4.0 con tecnologías digitales inteligentes.\n\nHabilidades:\n- React, Next.js, Tailwind\n- Figma, Prototipado\n- Accessibilidad\n\nProyectos destacados:\n- Dashboards\n- Reproductor Musical\n- Test de preguntas\n`;
-  }
-
-  /* Small canvas animation in hero (if needed) */
-  function initMiniCanvas() {
-    // create a small floating canvas background if canvas available
-    const hero = $("#hero");
-    if (!hero) return;
-    const canvas = document.createElement("canvas");
-    canvas.width = 300; canvas.height = 160;
-    canvas.style.position = "absolute";
-    canvas.style.right = "2rem";
-    canvas.style.top = "2rem";
-    canvas.style.opacity = "0.07";
-    hero.appendChild(canvas);
-    const ctx = canvas.getContext("2d");
-    let t = 0;
-
-    function loop() {
-      t += 0.01;
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      for (let i=0;i<5;i++){
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(255,223,132,${0.08 + 0.02*Math.sin(t+i)})`;
-        ctx.lineWidth = 2;
-        const y = 80 + Math.sin(t*2 + i) * 28;
-        ctx.moveTo(0, y); ctx.bezierCurveTo(70, y-30, 230, y+30, 300, y);
-        ctx.stroke();
-      }
-      requestAnimationFrame(loop);
-    }
-    loop();
-  }
-  // init canvas after small delay to avoid layout blocking
-  setTimeout(initMiniCanvas, 600);
-
-  /* Keyboard accessibility for project cards: Enter opens modal */
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeProjectModal();
-  });
-  $$(".projectCard").forEach((c) => {
-    c.setAttribute("tabindex", "0");
-    c.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        const title = c.querySelector("h3")?.textContent || "Proyecto";
-        openProjectModal(title);
-      }
-    });
-  });
-
-  /* Small analytics-like logger for recruiter impression (local) */
-  try {
-    const impressKey = "visited_portfolio";
-    if (!localStorage.getItem(impressKey)) {
-      localStorage.setItem(impressKey, JSON.stringify({ ts: Date.now() }));
-      console.info("First visit - welcome recruiter!");
-    }
-  } catch (err) { /* ignore */ }
-
-  /* Initialize default filter 'all' */
-  (function initDefaultFilter() {
-    const defaultBtn = document.querySelector(".filterBtn[data-filter='all']");
-    defaultBtn?.click();
-  })();
-
-  // Expose small API for tests
-  window._portfolio = {
-    openProjectModal,
-    closeProjectModal,
-    generateSimpleCV,
-  };
-
-})();
-
-const text = "Transformo problemas en software funcional.";
-const typingElement = document.getElementById("typingText");
-let index = 0;
-let isDeleting = false;
-
-function typeEffect() {
-  if (!isDeleting && index < text.length) {
-    typingElement.textContent += text.charAt(index);
-    index++;
-    setTimeout(typeEffect, 100);
-  } 
-  else if (isDeleting && index > 0) {
-    typingElement.textContent = text.substring(0, index - 1);
-    index--;
-    setTimeout(typeEffect, 60);
-  } 
-  else {
-    isDeleting = !isDeleting;
-    setTimeout(typeEffect, 1500);
-  }
+/* Base overrides and custom tokens */
+:root{
+  --gold: #d4af37;
+  --glass: rgba(255,255,255,0.04);
+  --muted: rgba(255,255,255,0.6);
+  --accent: linear-gradient(90deg,#ffd27a,#ffb84d);
+  --radius-lg: 18px;
+  --shadow-strong: 0 18px 60px rgba(2,6,23,0.6);
+  --glass-2: rgba(255,255,255,0.02);
 }
 
-// Espera unos segundos antes de iniciar
-setTimeout(typeEffect, 2000);
+body{
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  color: #000000;
+  padding: 32px;
+}
+
+/* Reset element focus for accessibility */
+:focus{
+  outline: 3px solid rgba(212,175,55,0.18);
+  outline-offset: 2px;
+}
+
+/* Utility classes used in the markup but not provided by Tailwind CDN */
+.bg-gold{ background: linear-gradient(90deg,#ffd27a,#ffb84d); }
+.text-gold{ color: var(--gold); }
+.blur-xl{ filter: blur(14px); }
 
 
-  const buttons = document.querySelectorAll(".filter-btn");
-  const cards = document.querySelectorAll(".card-item");
+/* Buttons */
+.button-primary{
+  background: var(--accent);
+  color: #0b0b0b;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform .18s ease, box-shadow .18s ease;
+  box-shadow: 0 8px 30px rgba(212,175,55,0.12);
+}
+.button-primary:hover{ transform: translateY(-4px); box-shadow: 0 12px 40px rgba(212,175,55,0.18); }
 
-  // Activar por defecto "Todos"
-  document.querySelector('.filter-btn[data-category="all"]')
-          .classList.add("active");
+/* Fancy underline for headings */
+.fancy-underline{
+  position: relative;
+  display: inline-block;
+}
+.fancy-underline::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(90deg,#ffd27a,#ffb84d);
+  opacity: 0.18;
+  border-radius: 8px;
+}
 
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
+/* Animated badges */
+.badge-animate{
+  display:inline-block;
+  padding:0.4rem 0.6rem;
+  border-radius:999px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  transition: transform .25s cubic-bezier(.2,.9,.2,1), box-shadow .25s;
+}
+.badge-animate:hover{ transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,0.6); }
 
-      // Cambiar estado visual del botón
-      buttons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
+/* Reveal animations used by JS */
+.reveal{
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .8s ease, transform .8s cubic-bezier(.2,.9,.2,1);
+}
+.reveal.visible{
+  opacity: 1;
+  transform: translateY(0);
+}
 
-      const category = btn.dataset.category;
+/* Project card specific */
+.projectCard{
+  transition: transform .25s ease;
+  background-color: #ffffff;
 
-      cards.forEach(card => {
-        // Ocultar con transición
-        card.classList.add("card-hide");
+}
+.projectCard:hover{ transform: translateY(-4px); box-shadow: 0 5px 10px rgba(121, 119, 119, 0.6); }
 
-        setTimeout(() => {
-          if (category === "all" || card.dataset.category === category) {
-            card.style.display = "block";
-          } else {
-            card.style.display = "none";
-          }
+/* Modal styles */
+#projectModal .modal-body{
+  max-height: 60vh;
+  overflow: auto;
+}
 
-          // Mostrar con animación suave
-          setTimeout(() => {
-            if (card.style.display === "block") {
-              card.classList.remove("card-hide");
+/* Custom scrollbar for modal */
+#projectModal::-webkit-scrollbar, #projectModal .modal-body::-webkit-scrollbar{ height: 8px; width: 8px; }
+#projectModal::-webkit-scrollbar-thumb, #projectModal .modal-body::-webkit-scrollbar-thumb{ background: rgb(255, 255, 255); border-radius: 8px; }
+
+/* Fancy code block for case details */
+.code-style{
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.699), rgb(255, 255, 255));
+  padding: 1rem;
+  border-radius: 12px;
+  color: #000000;
+  font-size: 0.875rem;
+  overflow:auto;
+}
+
+/* Responsive tweak */
+@media (max-width: 900px){
+  .container{ padding-left: 1rem; padding-right: 1rem; }
+}
+
+/* Additional decorative shapes (for rich visual) */
+.decor-shape-1{
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  right: -40px;
+  top: -40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 20% 20%, rgba(255,223,132,0.12), rgba(255,223,132,0.02));
+  transform: rotate(12deg);
+  pointer-events:none;
+}
+
+/* Helper for inaccessible content (screen readers) */
+.sr-only{
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px,1px,1px,1px);
+  white-space: nowrap;
+}
+
+
+        .titulosSterling-text {
+            background: linear-gradient(135deg, #fff 0%, #2c2c2c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .titulosSterlingNegro-text {
+            background: linear-gradient(135deg, #000000 0%, #383838 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+
+
+
+    /* APORTES CLAVE */
+            .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            margin-bottom: 100px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #333;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .description {
+            font-size: 1.25rem;
+            line-height: 1.7;
+            color: #e0e0e0;
+        }
+
+        .footnote {
+            font-size: 0.75rem;
+            vertical-align: super;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
-          }, 20);
 
-        }, 300);
-      });
+            h1 {
+                font-size: 2rem;
+            }
 
-    });
-  });
+            h2 {
+                font-size: 1.75rem;
+            }
 
-//CODIGO PARA EL CARRUSEL DE IMAGENES//
-  function openModal(src) {
-    const modal = document.createElement('div');
-    modal.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4';
-    modal.onclick = () => modal.remove();
-    
-    const img = document.createElement('img');
-    img.src = src;
-    img.className = 'max-w-full max-h-full rounded-lg';
-    
-    modal.appendChild(img);
-    document.body.appendChild(modal);
+            .description {
+                font-size: 1.1rem;
+            }
+        }
+
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
-//TECLAS DE NAVEGACIÓN Y TITULOS DE IMAGENES
-  let currentImageIndex = 0;
-  let images = [];
 
-  function openModal(src) {
-    // Obtener todas las imágenes del carrusel
-    images = Array.from(document.querySelectorAll('.carousel img')).map(img => ({
-      src: img.src,
-      alt: img.alt
-    }));
-    
-    // Encontrar el índice de la imagen clickeada
-    currentImageIndex = images.findIndex(img => img.src === src);
-    
-    showModalImage();
-  }
-
-  function showModalImage() {
-    // Eliminar modal anterior si existe
-    const existingModal = document.getElementById('imageModal');
-    if (existingModal) existingModal.remove();
-    
-    const modal = document.createElement('div');
-    modal.id = 'imageModal';
-    modal.className = 'fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4';
-    
-    modal.innerHTML = `
-      <div class="relative max-w-6xl w-full h-full flex flex-col items-center justify-center">
-        <!-- Botón cerrar -->
-        <button 
-          onclick="closeModal()" 
-          class="absolute top-4 right-4 text-white hover:text-red-500 transition-colors z-10 bg-black/50 rounded-full p-2 backdrop-blur-sm"
-          aria-label="Cerrar"
-        >
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-
-        <!-- Título -->
-        <div class="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg">
-          <h3 class="text-white font-semibold text-lg">${images[currentImageIndex].alt}</h3>
-          <p class="text-slate-300 text-sm">${currentImageIndex + 1} / ${images.length}</p>
-        </div>
-
-        <!-- Botón anterior -->
-        <button 
-          onclick="previousImage()" 
-          class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all hover:scale-110 backdrop-blur-sm ${currentImageIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}"
-          ${currentImageIndex === 0 ? 'disabled' : ''}
-          aria-label="Imagen anterior"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-          </svg>
-        </button>
-
-        <!-- Imagen -->
-        <img 
-          src="${images[currentImageIndex].src}" 
-          alt="${images[currentImageIndex].alt}"
-          class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain"
-        >
-
-        <!-- Botón siguiente -->
-        <button 
-          onclick="nextImage()" 
-          class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all hover:scale-110 backdrop-blur-sm ${currentImageIndex === images.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}"
-          ${currentImageIndex === images.length - 1 ? 'disabled' : ''}
-          aria-label="Imagen siguiente"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </button>
-
-        <!-- Indicadores de navegación con teclado -->
-        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg">
-          <p class="text-slate-300 text-sm">Si estás en PC usa ← → para navegar | ESC para cerrar</p>
-        </div>
-      </div>
-    `;
-    
-    document.body.appendChild(modal);
-    
-    // Cerrar al hacer clic en el fondo
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-    
-    // Navegación con teclado
-    document.addEventListener('keydown', handleKeyPress);
-  }
-
-  function nextImage() {
-    if (currentImageIndex < images.length - 1) {
-      currentImageIndex++;
-      showModalImage();
-    }
-  }
-
-  function previousImage() {
-    if (currentImageIndex > 0) {
-      currentImageIndex--;
-      showModalImage();
-    }
-  }
-
-  function closeModal() {
-    const modal = document.getElementById('imageModal');
-    if (modal) modal.remove();
-    document.removeEventListener('keydown', handleKeyPress);
-  }
-
-  function handleKeyPress(e) {
-    switch(e.key) {
-      case 'ArrowRight':
-        nextImage();
-        break;
-      case 'ArrowLeft':
-        previousImage();
-        break;
-      case 'Escape':
-        closeModal();
-        break;
-    }
-  }
-
-  // CÓDIGO DE HABILIDADES
-
-  // Obtener todos los botones de pestañas y contenidos
-const tabButtons = document.querySelectorAll('.tab-btn');
-const tabContents = document.querySelectorAll('.tab-content');
-
-// Función para mostrar una pestaña específica
-function showTab(targetId) {
-  // Ocultar todos los contenidos
-  tabContents.forEach(content => {
-    content.classList.add('hidden');
-  });
-  
-  // Remover estado activo de todos los botones
-  tabButtons.forEach(btn => {
-    btn.classList.remove;
-    btn.classList.add;
-  });
-  
-  // Mostrar el contenido seleccionado
-  const targetContent = document.getElementById(targetId);
-  if (targetContent) {
-    targetContent.classList.remove('hidden');
-  }
-  
-  // Activar el botón seleccionado
-  const activeButton = document.querySelector(`[data-target="${targetId}"]`);
-  if (activeButton) {
-    activeButton.classList.remove;
-    activeButton.classList.add;
-  }
+  /* --- CODIGO SOBRE HABILIDADES --- */
+.animate-fade {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.45s cubic-bezier(.25,.1,.25,1);
 }
 
-// Agregar event listeners a los botones
-tabButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const target = button.getAttribute('data-target');
-    showTab(target);
-  });
-});
+.tab-content.active-ios {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
 
-// Mostrar la primera pestaña por defecto al cargar
-if (tabButtons.length > 0) {
-  const firstTarget = tabButtons[0].getAttribute('data-target');
-  showTab(firstTarget);
+/* --- Hover flotante estilo iOS --- */
+.tab-content:hover {
+  transform: translateY(-6px) scale(1.015);
+  transition: 0.35s cubic-bezier(.25,.1,.25,1);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
 }
 
 
-//CODIGO SOBRE HABILIDADES
-
-  const tabs = document.querySelectorAll(".tab-btn");
-  const titleBar = document.getElementById("mac-window-title");
-
-  const titles = {
-    lenguajes: "Lenguajes de Programación",
-    frameworks: "Frameworks y Desarrollo",
-    complementarias: "Habilidades Complementarias",
-    soft: "Habilidades Sociales"
-  };
-
-  tabs.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const target = btn.getAttribute("data-target");
-
-      // Cambiar el título dinámicamente
-      titleBar.textContent = titles[target] || "Skills & Tech Stack";
-    });
-  });
-
-// CODGIDO SOBRE APPS DE ICONOS EN HABILIDADES
-
-document.querySelectorAll(".app-mac").forEach(app => {
-  app.addEventListener("click", () => {
-    const target = app.dataset.app;
-    document.querySelector("#modal-" + target).classList.remove("hidden");
-  });
-});
-
-/* Cerrar clic fuera */
-document.addEventListener("click", (e) => {
-  document.querySelectorAll(".modal-mac").forEach(modal => {
-    if (!modal.contains(e.target) && !e.target.closest(".app-mac")) {
-      modal.classList.add("hidden");
-    }
-  });
-});
-
-
-
-/* FUNCIÓN DE ESTUDIOS REALIZADOS - CURSOS REALIZADOS */
-function openModal(title, content) {
-  document.getElementById('modalTitle').innerText = title;
-  document.getElementById('modalContent').innerText = content;
-  document.getElementById('macModal').style.display = 'flex';
-
-  // Cerrar modal al hacer click fuera del contenido
-  document.getElementById('macModal').onclick = function (e) {
-    if (e.target === this) {
-      closeModal();
-    }
-  };
+/* --- Suavizado general (Apple feel) --- */
+* {
+  scroll-behavior: smooth;
+  transition: all 0.25s ease;
 }
 
-/*FUNCIÓN DE TOGGLE PARA EL BÓTON DEL NAVBAR EN DISPOSITIVOS MOVILES */
+/* ICONOS */
+.app-icon-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  padding: 10px;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.5);
+  transition: transform 0.25s ease, filter 0.25s ease;
+  box-shadow: 
+    inset 0 0 10px rgba(255,255,255,0.8),
+    0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* Hover estilo dock */
+.app-mac:hover .app-icon-img {
+  transform: scale(1.15);
+  filter: brightness(1.2);
+}
+
+/* LABEL */
+.app-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #111;
+}
+
+/* Ventana macOS */
+.modal-mac {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  padding: 18px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  z-index: 9999;
+  animation: pop 0.35s ease;
+}
+@keyframes pop {
+  0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* Barra superior macOS */
+.modal-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.mac-btn {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.red { background: #ff5f57; }
+.yellow { background: #ffbd2e; }
+.green { background: #28c840; }
+
+/* Texto */
+.modal-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color:black;
+}
+.modal-text {
+  font-size: 0.85rem;
+  color: black;
+}
+
+/* Cerrar clickeando afuera */
+.modal-mac.hidden { display: none; }
 
 
+    .subtle-glass{
+      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-bg{
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gold-line{
+      height: 3px;
+      width: 160px;
+      background: linear-gradient(90deg, transparent, #caa34a, transparent);
+      border-radius: 8px;
+    }
+
+    .gold-shine{
+      background: linear-gradient(110deg,#8a6a1f,#d4af37,#fff,#d4af37,#8a6a1f);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 12s linear infinite;
+    }
+
+    @keyframes shine{
+      from{background-position:200%}
+      to{background-position:-200%}
+    }
+
+/* ===== Liquid Glass iOS 26 ===== */
+.glass-panel {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.55),
+      rgba(255,255,255,0.18)
+    ),
+    radial-gradient(
+      120% 120% at 10% 10%,
+      rgba(255,255,255,0.45),
+      transparent 60%
+    );
+  backdrop-filter: blur(26px) saturate(160%);
+  -webkit-backdrop-filter: blur(26px) saturate(160%);
+  border: 1px solid rgba(0,0,0,0.35);
+}
+
+/* Inputs estilo iOS */
+.glass-input {
+  background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(0,0,0,0.45);
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: rgba(0,122,255,0.65);
+  box-shadow:
+    0 0 0 3px rgba(0,122,255,0.25),
+    inset 0 1px 2px rgba(255,255,255,0.9);
+}
+
+/* Botones Liquid */
+.liquid-btn {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.9),
+      rgba(240,240,240,0.6)
+    );
+  color: #111;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.8),
+    0 1px 4px rgba(0,0,0,0.18);
+  transition: all .25s ease;
+}
+
+.liquid-btn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.9),
+    0 18px 45px rgba(0,0,0,0.25);
+}
+
+.liquid-btn:active {
+  transform: scale(0.97);
+}
+
+/* Texto */
+.ios-title {
+  letter-spacing: -0.04em;
+}
+
+
+/* SECCION DE ESTUDIOS REALIZADOS - PARTE DE LOS CURSOS */
+.mac-section {
+  background: #ffffff;
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Finder Window */
+.finder-window {
+  width: 100%;
+  max-width: 860px;
+  background: rgba(255,255,255,.75);
+  backdrop-filter: blur(24px);
+  border-radius: 18px;
+  box-shadow: 0 5px 10px rgba(0,0,0,.25);
+  overflow: hidden;
+}
+
+/* Titlebar */
+.finder-titlebar,
+.modal-titlebar {
+  height: 44px;
+  background: #e7e5e4;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+}
+
+.c {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.red { background:#ff5f57; }
+.yellow { background:#febc2e; }
+.green { background:#28c840; }
+
+.title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+/* Content */
+.finder-content {
+  padding: 8px 0;
+}
+
+/* File List */
+.file-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color:#000000;
+}
+
+.file-list li {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  padding: 12px 18px;
+  cursor: pointer;
+  transition: background .25s ease;
+}
+
+.file-list li:hover {
+  background: #e7e5e4;
+  color: #ff9100;
+}
+
+.icon {
+  font-size: 20px;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.date {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Modal */
+.mac-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  z-index: 999;
+}
+
+.modal-window {
+  width: 90%;
+  max-width: 520px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(28px);
+  border-radius: 18px;
+  box-shadow: 0 40px 100px rgba(0,0,0,.4);
+  animation: scaleIn .35s ease;
+}
+
+.modal-body {
+  padding: 26px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Animation */
+@keyframes scaleIn {
+  from { transform: scale(.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+.file-explorer {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+}
+
+.folder {
+  margin-bottom: 14px;
+}
+
+.folder-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+
+.files {
+  list-style: none;
+  padding-left: 20px;
+}
+
+.file {
+  padding: 4px 0;
+  color: #333;
+}
+
+/* =========================
+   iOS-style App Grid (Mobile)
+   ========================= */
+@media (max-width: 768px) {
+
+  .finder-content {
+    padding: 10px;
+  }
+
+  .file-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .file-list li {
+    display: flex;              /* 🔹 CLAVE */
+    flex-direction: column;     /* 🔹 Ícono arriba, nombre abajo */
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* Icon container */
+  .file-list li .icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .file-list li .icon img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+  }
+
+  /* App name */
+  .file-list li .name {
+    display: block;             /* 🔹 Asegura salto de línea */
+    margin-top: 6px;
+    font-size: 12px;
+    text-align: center;
+    color: #1c1c1e;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  /* Hide file count (iOS-style) */
+  .file-list li .date {
+    display: none;
+  }
+
+  /* Finder window adjustments */
+  .finder-window {
+    width: 100%;
+    max-width: 100%;
+    min-width: 300px;
+    min-height: 200px;
+    max-height: 90vh;
+
+    border-radius: 15px;
+    resize: both;
+    overflow: auto;
+  }
+
+  .finder-titlebar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+}
+
+
+/* ANEXO AL HEADER Y NAVBAR DEL DISEÑO */
+
+/* NAVBAR APPLE STYLE */
+    .apple-nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      backdrop-filter: saturate(180%) blur(15px);
+      background: rgba(255,255,255,0.75);
+      border-bottom: 1px solid rgba(172, 172, 172, 0.808);
+      z-index: 50;
+      border-radius: 60px;
+      color:#777;
+    }
+
+    .apple-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .apple-nav a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 40px 10px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      font-size: 1.25rem; 
+    }
+
+    .hero h1 {
+      font-size: clamp(1rem, 6vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .creative {
+      font-family: "Segoe Script", "Apple Chancery", "Brush Script MT", cursive;
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+      font-weight: 400;
+      color: #777;
+    }
+
+    /* MOCKUPS */
+    .mockups {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      margin-top: 70px;
+      gap: 0;
+    }
+
+    .phone {
+      width: 240px;
+      height: 480px;
+      border-radius: 36px;
+      background: #000;
+      border: 6px solid #1d1d1f;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 8px;
+      border-radius: 4px;
+      background: #000;
+      z-index: 3;
+    }
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 30px;
+      overflow: hidden;
+    }
+
+    .screen video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .left {
+      transform: translateX(80px) scale(0.92);
+      z-index: 1;
+    }
+
+    .center {
+      z-index: 3;
+    }
+
+    .right {
+      transform: translateX(-80px) scale(0.92);
+      z-index: 1;
+    }
+
+    /* RESPONSIVE (mantener unidos) */
+    @media (max-width: 768px) {
+      .mockups {
+        transform: scale(0.8);
+      }
+      .phone {
+        width: 120px;
+        height: 240px;
+        border-radius: 20px;
+      }
+      .screen {
+        border-radius: 15px;
+      }
+
+      .left {
+        transform: translateX(20px) scale(1.05);
+      }
+
+      .right {
+        transform: translateX(-20px) scale(1.05);
+      }
+      .center {
+        transform: translateX(0px) scale(1.15);
+      }
+
+      .phone::before {
+      top: 8px;
+      left: 50%;
+      width: 30px;
+      height: 4px;
+      }
+    }
+
+    
