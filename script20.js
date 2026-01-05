@@ -574,6 +574,6 @@ function openModal(title, content) {
   };
 }
 
-function closeModal() {
-  document.getElementById('macModal').style.display = 'none';
-}
+/*FUNCIÓN DE TOGGLE PARA EL BÓTON DEL NAVBAR EN DISPOSITIVOS MOVILES */
+
+
