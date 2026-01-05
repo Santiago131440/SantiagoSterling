@@ -803,3 +803,111 @@ body{
     }
 
     
+
+    /* SECCIÓN DE ASTRONAUTA EN EL CENTRO */
+
+/* -------------------------
+   TITLE
+------------------------- */
+.card h1 {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 1rem;
+}
+
+/* -------------------------
+   HERO IMAGE
+------------------------- */
+.visual {
+  position: relative;
+  max-width: 520px;
+  margin: auto;
+}
+
+.visual img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* -------------------------
+   FLOATING UX TAGS
+------------------------- */
+.tag {
+  position: absolute;
+  background: rgba(255,255,255,.9);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: .6rem .9rem;
+  font-size: .8rem;
+  font-weight: 500;
+  box-shadow: 0 10px 25px rgba(0,0,0,.12);
+  white-space: nowrap;
+}
+
+.tag span {
+  display: block;
+  font-size: .7rem;
+  color: #6e6e73;
+  font-weight: 400;
+}
+
+.tag.left-top { top: 18%; left: -10%; }
+.tag.left-mid { top: 42%; left: -18%; }
+.tag.right-top { top: 26%; right: -16%; }
+.tag.right-mid { top: 50%; right: -12%; }
+
+/* -------------------------
+   ACTIONS
+------------------------- */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.button {
+  padding: .75rem 1.4rem;
+  border-radius: 999px;
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.primary {
+  background: #000;
+  color: #fff;
+}
+
+.secondary {
+  background: #f5f5f7;
+  color: #1d1d1f;
+}
+
+/* -------------------------
+   RESPONSIVE MOBILE
+------------------------- */
+@media (max-width: 768px) {
+  .tag {
+    position: static;
+    margin: .4rem auto;
+    display: inline-block;
+  }
+
+  .visual {
+    margin-bottom: 1.5rem;
+  }
+
+  .actions {
+    justify-content: center;
+  }
+  .tag.left-top { top: 8%; left: -10%; }
+  .tag.left-mid { top: 42%; left: -18%; }
+  .tag.right-top { top: 26%; right: -16%; }
+  .tag.right-mid { top: 50%; right: -12%; }
+
+}
