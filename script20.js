@@ -471,47 +471,6 @@ setTimeout(typeEffect, 2000);
     }
   }
 
-  
-//CODIGO SOBRE HABILIDADES
-
-  const tabs = document.querySelectorAll(".tab-btn");
-  const titleBar = document.getElementById("mac-window-title");
-
-  const titles = {
-    lenguajes: "Lenguajes de Programación",
-    frameworks: "Frameworks y Desarrollo",
-    complementarias: "Habilidades Complementarias",
-    soft: "Habilidades Sociales"
-  };
-
-  tabs.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const target = btn.getAttribute("data-target");
-
-      // Cambiar el título dinámicamente
-      titleBar.textContent = titles[target] || "Skills & Tech Stack";
-    });
-  });
-
-// CODIGO SOBRE APPS DE ICONOS EN HABILIDADES
-
-document.querySelectorAll(".app-mac").forEach(app => {
-  app.addEventListener("click", () => {
-    const target = app.dataset.app;
-    document.querySelector("#modal-" + target).classList.remove("hidden");
-  });
-});
-
-/* Cerrar clic fuera */
-document.addEventListener("click", (e) => {
-  document.querySelectorAll(".modal-mac").forEach(modal => {
-    if (!modal.contains(e.target) && !e.target.closest(".app-mac")) {
-      modal.classList.add("hidden");
-    }
-  });
-});
-
-
 
 /* FUNCIÓN DE ESTUDIOS REALIZADOS - CURSOS REALIZADOS */
 function openModal(title, content) {
