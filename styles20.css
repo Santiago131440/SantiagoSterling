@@ -221,212 +221,9 @@ body{
   }
 
 
-  /* --- CODIGO SOBRE HABILIDADES --- */
-.animate-fade {
-  opacity: 0;
-  transform: translateY(15px);
-  transition: all 0.45s cubic-bezier(.25,.1,.25,1);
-}
-
-.tab-content.active-ios {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-
-/* --- Hover flotante estilo iOS --- */
-.tab-content:hover {
-  transform: translateY(-6px) scale(1.015);
-  transition: 0.35s cubic-bezier(.25,.1,.25,1);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
-}
 
 
-/* --- Suavizado general (Apple feel) --- */
-* {
-  scroll-behavior: smooth;
-  transition: all 0.25s ease;
-}
-
-/* ICONOS */
-.app-icon-img {
-  width: 60px;
-  height: 60px;
-  border-radius: 18px;
-  padding: 10px;
-  background: rgba(255,255,255,0.55);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.5);
-  transition: transform 0.25s ease, filter 0.25s ease;
-  box-shadow: 
-    inset 0 0 10px rgba(255,255,255,0.8),
-    0 5px 15px rgba(0,0,0,0.15);
-}
-
-/* Hover estilo dock */
-.app-mac:hover .app-icon-img {
-  transform: scale(1.15);
-  filter: brightness(1.2);
-}
-
-/* LABEL */
-.app-label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #111;
-}
-
-/* Ventana macOS */
-.modal-mac {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 280px;
-  padding: 18px;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255,255,255,0.6);
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-  z-index: 9999;
-  animation: pop 0.35s ease;
-}
-@keyframes pop {
-  0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0; }
-  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-}
-
-/* Barra superior macOS */
-.modal-bar {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-.mac-btn {
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  display: inline-block;
-}
-.red { background: #ff5f57; }
-.yellow { background: #ffbd2e; }
-.green { background: #28c840; }
-
-/* Texto */
-.modal-title {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: 6px;
-  color:black;
-}
-.modal-text {
-  font-size: 0.85rem;
-  color: black;
-}
-
-/* Cerrar clickeando afuera */
-.modal-mac.hidden { display: none; }
-
-
-    .subtle-glass{
-      backdrop-filter: blur(8px);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .hero-bg{
-      position: relative;
-      overflow: hidden;
-    }
-
-    .gold-line{
-      height: 3px;
-      width: 160px;
-      background: linear-gradient(90deg, transparent, #caa34a, transparent);
-      border-radius: 8px;
-    }
-
-    .gold-shine{
-      background: linear-gradient(110deg,#8a6a1f,#d4af37,#fff,#d4af37,#8a6a1f);
-      background-size: 200% 100%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shine 12s linear infinite;
-    }
-
-    @keyframes shine{
-      from{background-position:200%}
-      to{background-position:-200%}
-    }
-
-/* ===== Liquid Glass iOS 26 ===== */
-.glass-panel {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,0.55),
-      rgba(255,255,255,0.18)
-    ),
-    radial-gradient(
-      120% 120% at 10% 10%,
-      rgba(255,255,255,0.45),
-      transparent 60%
-    );
-  backdrop-filter: blur(26px) saturate(160%);
-  -webkit-backdrop-filter: blur(26px) saturate(160%);
-  border: 1px solid rgba(0,0,0,0.35);
-}
-
-/* Inputs estilo iOS */
-.glass-input {
-  background: rgba(255,255,255,0.45);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(0,0,0,0.45);
-}
-
-.glass-input:focus {
-  outline: none;
-  border-color: rgba(0,122,255,0.65);
-  box-shadow:
-    0 0 0 3px rgba(0,122,255,0.25),
-    inset 0 1px 2px rgba(255,255,255,0.9);
-}
-
-/* Botones Liquid */
-.liquid-btn {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,0.9),
-      rgba(240,240,240,0.6)
-    );
-  color: #111;
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.6);
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.8),
-    0 1px 4px rgba(0,0,0,0.18);
-  transition: all .25s ease;
-}
-
-.liquid-btn:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.9),
-    0 18px 45px rgba(0,0,0,0.25);
-}
-
-.liquid-btn:active {
-  transform: scale(0.97);
-}
-
-/* Texto */
-.ios-title {
-  letter-spacing: -0.04em;
-}
-
-
-/* SECCION DE ESTUDIOS REALIZADOS - PARTE DE LOS CURSOS */
+/* --------------------------- SECCION DE ESTUDIOS REALIZADOS - PARTE DE LOS CURSOS -------------------------------- */
 .mac-section {
   background: #ffffff;
   padding: 60px 20px;
@@ -657,7 +454,7 @@ body{
 }
 
 
-/* ANEXO AL HEADER Y NAVBAR DEL DISEÑO */
+/*  ------------------------- CODIGO DE LOS CELULARES DEL HEADER Y NAVBAR ------------------------------------- */
 
 /* NAVBAR APPLE STYLE */
     .apple-nav {
@@ -804,7 +601,7 @@ body{
 
     
 
-    /* SECCIÓN DE ASTRONAUTA EN EL CENTRO */
+    /* ------------------------------------- SECCIÓN DE ASTRONAUTA EN EL CENTRO ---------------------- */
 
 /* -------------------------
    TITLE
@@ -879,13 +676,15 @@ body{
 }
 
 .primary {
-  background: #000;
+  background: #0071E3;
   color: #fff;
 }
 
 .secondary {
-  background: #f5f5f7;
-  color: #1d1d1f;
+  background: #ffffff;
+  color: #0071E3;
+  border: 1px solid #0071E3;
+  border-radius: 999px; /* estilo pill de Apple */
 }
 
 /* -------------------------
@@ -921,7 +720,7 @@ body{
   overflow: hidden;
 }
 
-/* CODIGO DEL LANZAMIENTO DEL COHETE EN ORBITA */
+/* ----------------------- CODIGO DEL LANZAMIENTO DEL COHETE EN ORBITA ----------------------------- */
 
 #orbit-overlay.active {
   opacity: 1;
@@ -950,7 +749,7 @@ body{
   }
 }
 
-/* CÓDIGO EN ÓRBITA */
+/* ----------------------- CÓDIGO EN ÓRBITA ----------------------------------------------------- */
 .code-stream {
   position: absolute;
   opacity: 0;
