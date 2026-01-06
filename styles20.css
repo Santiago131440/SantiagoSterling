@@ -9,6 +9,14 @@
   --radius-lg: 18px;
   --shadow-strong: 0 18px 60px rgba(2,6,23,0.6);
   --glass-2: rgba(255,255,255,0.02);
+  --apple-blue: #0071e3;
+  --bg: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body{
@@ -793,5 +801,214 @@ img[alt="Astronaut UX"] {
   100% { transform: translateY(0); }
 }
 
-/* VIDEO DE FONDO */
+/* --------------------------------------- CODIGO DE CARTAS TIPO APPLE ------------------------------- */
 
+
+/* ===== FULLSCREEN CONTAINER ===== */
+.carousel-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* ===== SLIDER ===== */
+.carousel {
+  display: flex;
+  gap: 24px;
+  padding: 0 5vw;
+  will-change: transform;
+  transition: transform 0.9s cubic-bezier(.22,.61,.36,1);
+}
+
+/* ===== CARD ===== */
+.card {
+  min-width: 20vw;
+  height: 60vh;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,.5);
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.6), transparent 60%);
+}
+
+/* ===== CARD CONTENT ===== */
+.card-content {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  z-index: 2;
+}
+
+.card h1 {
+  font-size: 56px;
+  font-weight: 700;
+}
+
+.card p {
+  margin-top: 12px;
+  font-size: 18px;
+  opacity: .9;
+}
+
+.card button {
+  margin-top: 10px;
+  padding: 1px 20px;
+  border-radius: 999px;
+  border: none;
+  font-size: 16px;
+  background: #0071E3;
+  color: white;
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+
+.card button:active {
+  transform: scale(.95);
+}
+
+/* ===== DOTS ===== */
+.dots {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(255,255,255,.4);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform .3s, background .3s;
+}
+
+.dot.active {
+  background: white;
+  transform: scale(1.6);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .card {
+    min-width: 90vw;
+    height: 60vh;
+  }
+
+  .card h1 {
+    font-size: 36px;
+  }
+}
+
+/* --------------------------- CODIGO DE STATS DEBAJO DE COMPETENCIAS METODOLOGICAS -----------------*/
+        .container {
+            min-height: 3vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chip-stats {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #d2d2d7;
+        }
+
+        .chip-icon {
+            flex-shrink: 0;
+        }
+
+        .chip-box {
+            width: 90px;
+            height: 90px;
+            border: 3px solid #1d1d1f;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .apple-logo {
+            width: 20px;
+            height: 24px;
+            fill: #1d1d1f;
+        }
+
+        .chip-name {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color:#000;
+        }
+
+        .stats-grid {
+            display: flex;
+            gap: 60px;
+            flex: 1;
+        }
+
+        .stat {
+            flex: 1;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #6e6e73;
+            margin-bottom: 4px;
+            font-weight: 400;
+        }
+
+        .stat-value {
+            font-size: 56px;
+            font-weight: 600;
+            line-height: 1.05;
+            letter-spacing: -1px;
+            margin-bottom: 4px;
+        }
+
+        .stat-value.blue {
+            background: linear-gradient(90deg, #0071E3, #000000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stat-description {
+            font-size: 17px;
+            color: #6e6e73;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+        @media (max-width: 768px) {
+            .chip-stats {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .stats-grid {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .stat-value {
+                font-size: 48px;
+            }
+        }
