@@ -905,9 +905,94 @@ body{
   .actions {
     justify-content: center;
   }
-  .tag.left-top { top: 8%; left: -10%; }
-  .tag.left-mid { top: 42%; left: -18%; }
-  .tag.right-top { top: 26%; right: -16%; }
-  .tag.right-mid { top: 50%; right: -12%; }
-
 }
+
+#orbit-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at bottom, #0b0f1a, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  overflow: hidden;
+}
+
+/* CODIGO DEL LANZAMIENTO DEL COHETE EN ORBITA */
+
+#orbit-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* COHETE */
+.rocket {
+  font-size: 4rem;
+  position: absolute;
+  bottom: -10%;
+  animation: launch 2s ease-in forwards;
+}
+
+/* DESPEGUE */
+@keyframes launch {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  70% {
+    transform: translateY(-80vh) scale(1.1);
+  }
+  100% {
+    transform: translateY(-90vh) scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* CÓDIGO EN ÓRBITA */
+.code-stream {
+  position: absolute;
+  opacity: 0;
+  color: #00FF00;
+  font-family: "SF Mono", monospace;
+  font-size: 0.9rem;
+  animation: appear 1s ease forwards;
+  animation-delay: 2s;
+}
+
+.code-stream span {
+  display: block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes appear {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+/* DESVANECER TODO */
+#orbit-overlay.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+img[alt="Astronaut UX"] {
+  animation: floatAstronaut 6s ease-in-out infinite;
+}
+
+@keyframes floatAstronaut {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-200px); }
+  100% { transform: translateY(0); }
+}
+
+/* VIDEO DE FONDO */
+
