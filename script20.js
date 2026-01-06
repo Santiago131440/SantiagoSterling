@@ -507,3 +507,52 @@ function launchOrbit() {
     overlay.classList.remove("active", "fade-out");
   }, 5000);
 }
+
+
+/* FUNCIÓN CARRUSEL DE HABILIDADES - ESTILO APPLE TV */
+
+const carousel = document.getElementById("carousel");
+const cards = document.querySelectorAll(".card");
+const dotsContainer = document.getElementById("dots");
+
+let index = 0;
+const total = cards.length;
+
+/* create dots */
+cards.forEach((_, i) => {
+  const dot = document.createElement("div");
+  dot.className = "dot";
+  dot.onclick = () => moveTo(i);
+  dotsContainer.appendChild(dot);
+});
+
+const dots = document.querySelectorAll(".dot");
+
+function updateDots() {
+  dots.forEach(d => d.classList.remove("active"));
+  dots[index % total].classList.add("active");
+}
+
+function moveTo(i) {
+  index = i;
+  const offset = cards[0].offsetWidth + 24;
+  carousel.style.transform = `translateX(${-offset * index}px)`;
+  updateDots();
+}
+
+/* infinite loop */
+setInterval(() => {
+  index++;
+  carousel.style.transition = "transform 0.9s cubic-bezier(.22,.61,.36,1)";
+  moveTo(index);
+
+  if (index === total) {
+    setTimeout(() => {
+      carousel.style.transition = "none";
+      index = 0;
+      moveTo(index);
+    }, 900);
+  }
+}, 6000);
+
+updateDots();
