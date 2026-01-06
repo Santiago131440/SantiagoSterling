@@ -527,6 +527,24 @@ function openModal(title, content) {
   };
 }
 
-/*FUNCIÓN DE TOGGLE PARA EL BÓTON DEL NAVBAR EN DISPOSITIVOS MOVILES */
+/*FUNCIÓN DE NAVE ESPACIAL EN ORBITA, EN LA PARTA DE VISION ACADEMICA */
 
 
+function launchOrbit() {
+  const overlay = document.getElementById("orbit-overlay");
+
+  overlay.classList.add("active");
+
+  // Reiniciar animaciones
+  overlay.innerHTML = overlay.innerHTML;
+
+  // Desvanecer automáticamente
+  setTimeout(() => {
+    overlay.classList.add("fade-out");
+  }, 4000);
+
+  // Limpiar estado
+  setTimeout(() => {
+    overlay.classList.remove("active", "fade-out");
+  }, 5000);
+}
