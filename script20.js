@@ -512,10 +512,10 @@ function launchOrbit() {
 /* FUNCIÓN CARRUSEL DE HABILIDADES - ESTILO APPLE TV */
 
 const carousel = document.getElementById("carousel");
-const cards = document.querySelectorAll(".card");
+const card = document.querySelectorAll(".card");
 const dotsContainer = document.getElementById("dots");
 
-let index = 0;
+let indeex = 0;
 const total = cards.length;
 
 /* create dots */
