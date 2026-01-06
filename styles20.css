@@ -667,12 +667,13 @@ body{
 ------------------------- */
 .actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-top: 3rem;
-  gap: 1rem;
-  flex-wrap: wrap;
+  gap: 12px;              /* separación controlada entre botones */
+  width: 100%;
+  margin: 0 auto;
 }
+
 
 .button {
   padding: .75rem 1.4rem;
@@ -899,18 +900,6 @@ img[alt="Astronaut UX"] {
   transform: scale(1.6);
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .card {
-    min-width: 90vw;
-    height: 60vh;
-  }
-
-  .card h1 {
-    font-size: 36px;
-  }
-}
-
 /* --------------------------- CODIGO DE STATS DEBAJO DE COMPETENCIAS METODOLOGICAS -----------------*/
         .container {
             min-height: 3vh;
@@ -990,20 +979,46 @@ img[alt="Astronaut UX"] {
             font-weight: 400;
             line-height: 1.4;
         }
+          .carousel-wrapper {
+            width: 100%;
+            overflow: hidden;
+          }
+
+          .carousel {
+            display: flex;
+            gap: 0;
+            width: 100%;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+          }
+
+          .carousel::-webkit-scrollbar {
+            display: none;
+          }
+
+          .card {
+            min-width: 60%;
+            height: 70vh;
+            background-size: cover;
+            background-position: center;
+            scroll-snap-align: center;
+            display: flex;
+            align-items: flex-end;
+            margin-right: 16px;
+          }
+
+          .card-content h1 {
+            font-size: 1.5rem;
+            color: #fff;
+          }
+
+          .card-content button {
+            margin-top: 10px;
+            padding: 1px 18px;
+            font-size: 1rem;
+          }
         @media (max-width: 768px) {
-            .chip-stats {
-                flex-direction: column;
-                gap: 30px;
-            }
-
-            .stats-grid {
-                flex-direction: column;
-                gap: 30px;
-            }
-
-            .stat-value {
-                font-size: 48px;
-            }
 
           .carousel-wrapper {
             width: 100%;
@@ -1042,12 +1057,5 @@ img[alt="Astronaut UX"] {
             margin-top: 10px;
             padding: 1px 18px;
             font-size: 1rem;
-          }
-
-          .dots {
-            margin-top: 12px;
-            display: flex;
-            justify-content: center;
-            gap: 8px;
           }
         }
