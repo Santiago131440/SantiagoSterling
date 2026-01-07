@@ -694,3 +694,45 @@ setInterval(() => {
 }, 6000);
 
 updateDots();
+
+// CODIGO DE VENTANA AUXILIAR DE COMPETENCIAS METODOLOGICAS
+
+function openAppleUI() {
+  document.getElementById("appleUI").classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+
+function closeAppleUI() {
+  document.getElementById("appleUI").classList.add("hidden");
+  document.body.style.overflow = "auto";
+}
+
+function openAppleUI2() {
+  document.getElementById("appleUI2").classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+
+function closeAppleUI2() {
+  document.getElementById("appleUI2").classList.add("hidden");
+  document.body.style.overflow = "auto";
+}
+
+function openAppleUI3() {
+  document.getElementById("appleUI3").classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+
+function closeAppleUI3() {
+  document.getElementById("appleUI3").classList.add("hidden");
+  document.body.style.overflow = "auto";
+}
+
+function openAppleUI4() {
+  document.getElementById("appleUI4").classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+
+function closeAppleUI4() {
+  document.getElementById("appleUI4").classList.add("hidden");
+  document.body.style.overflow = "auto";
+}
