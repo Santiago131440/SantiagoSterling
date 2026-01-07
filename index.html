@@ -1,2186 +1,1443 @@
 <!doctype html>
 <html lang="es">
-<!-- Santiago Sterling -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-60EZ6V283K"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-60EZ6V283K');
-</script>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="https://github.com/Santiago131440/SantiagoSterling/blob/main/1000234043.jpg?raw=true">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Santiago Sterling</title>
+  <meta name="description" content="Portafolio profesional enfocado en UX, frontend y diseño de productos digitales.">
+  <meta name="keywords" content="portafolio, frontend, backend, API, software, server, servidores, linux, UI, UX, diseñador, desarrollador">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+            <circle cx='50' cy='50' r='50' fill='black'/>
+            <text x='50' y='62' text-anchor='middle' font-size='50' fill='white' font-family='Arial'>S</text>
+          </svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <style>
-    :root{
-      --glass-bg: rgba(255, 255, 255, 0.06);
-      --glass-border: rgba(189, 189, 189, 0.12);
-      --muted: #94a3b8;
-    }
-    html{
-      font-family: 'Poppins', sans-serif;
-    }
+  <link rel="stylesheet" href="styles20.css">
+  <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/98182135?v=4">
 
-    body {
-      background: linear-gradient(90deg,#ffffff,#f7f7fb);
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      min-height: 100vh;
-      font-family: 'Poppins', sans-serif;
-      color:#0f172a;
-    }
-
-    .liquid-card{
-      background: linear-gradient(135deg,var(--glass-bg), rgba(255, 0, 0, 0.02));
-      backdrop-filter: blur(10px) saturate(120%);
-      -webkit-backdrop-filter: blur(10px) saturate(120%);
-      border-radius: 14px;
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 10px 30px rgba(2,6,23,0.45);
-    }
-
-        @keyframes spin-wait {
-          0%   { transform: rotate(0deg); }
-          40%  { transform: rotate(360deg); } /* Gira una vuelta */
-          100% { transform: rotate(360deg); } /* Se queda quieto */
-        }
-
-        .animate-spin-delay {
-          animation: spin-wait 10s linear infinite; /* Duración 5s (2s giro + 3s pausa) */
-        }
-
-
-    .accent-glow{ position:relative; overflow:hidden; }
-    .accent-glow:after{
-      content:"";
-      position:absolute;
-      inset:-50% ;
-      background-image: url("https://github.com/Santiago131440/BackgroundSantiagoSterling/blob/main/ChatGPT%20Image%20Sep%206,%202025,%2003_33_00%20PM.png?raw=true");
-      background-size: cover;
-      background-position: center; 
-      background-attachment: fixed;
-      transform: rotate(100deg);
-      animation: glide 60s linear infinite;
-      pointer-events:none;
-      z-index:0;
-      mix-blend-mode:overlay;
-    }
-
-
-  .carousel::-webkit-scrollbar { display: none; }
-  .animate-fadeIn { animation: fadeIn 0.3s ease-in-out; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  } 
-    
-    @keyframes glide{0%{transform:translateX(-100%) rotate(15deg)}100%{transform:translateX(100%) rotate(15deg)}}
-
-
-    .floaty{ animation: floaty 6s ease-in-out infinite; }
-    @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-
-    /* File tile */
-    .file-tile{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; }
-
-    /* Small screens: tweak */
-    @media (max-width:640px){ .hide-sm{ display:none!important } }
-
-    /* Dark mode overrides */
-    .dark :root{ --glass-bg: rgba(7,9,23,0.36); --glass-border: rgba(255, 1, 1, 0.06); }
-
-    /* Recruiter friendly typography emphasis */
-    .headline{ font-weight:700; letter-spacing: -0.6px; }
-
-    /* Animación de lluvia */
-      .icon-rain {
-        position: absolute;
-        top: -100px;
-        width: 80px;
-        height: 80px;
-        animation-name: fall;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-      }
-
-      @keyframes fall {
-        0% {
-          transform: translateY(-100px) rotate(0deg);
-        }
-        100% {
-          transform: translateY(120vh) rotate(360deg);
-        }
-      }
-
-      <!-- Animación lenta para íconos -->
-  .animate-spin-slow {
-    animation: spin 18s linear infinite;
-  }
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
-
-  
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
-        }
-        
-        @keyframes slideUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(50px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-        
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(251, 146, 60, 0.3); }
-            50% { box-shadow: 0 0 25px rgba(251, 146, 60, 0.6); }
-        }
-        
-        @keyframes pulse-dot {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        
-        .animate-float { 
-            animation: float 6s ease-in-out infinite; 
-        }
-        
-        .animate-slide-up { 
-            animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
-        }
-        
-        .animate-glow { 
-            animation: glow 3s ease-in-out infinite; 
-        }
-        
-        .timeline-line {
-            background: linear-gradient(to bottom, 
-                rgba(251, 146, 60, 0.8) 0%, 
-                rgba(251, 146, 60, 0.4) 50%, 
-                rgba(251, 146, 60, 0.8) 100%);
-        }
-        
-        .timeline-dot {
-            background: linear-gradient(135deg, #fb923c, #f97316);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
-        
-        .timeline-dot::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            background: rgba(251, 146, 60, 0.3);
-            border-radius: 50%;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .timeline-dot:hover::before {
-            opacity: 1;
-            animation: pulse-dot 1s infinite;
-        }
-        
-        .timeline-dot:hover {
-            transform: scale(1.2);
-            box-shadow: 0 0 20px rgba(251, 146, 60, 0.6);
-        }
-        
-        .job-card {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .job-card.visible {
-            animation: slideUp 0.8s ease-out forwards;
-        }
-        
-        .skill-badge {
-            background: rgba(251, 146, 60, 0.1);
-            border: 1px solid rgba(251, 146, 60, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .skill-badge:hover {
-            background: rgba(251, 146, 60, 0.2);
-            border-color: rgba(251, 146, 60, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(251, 146, 60, 0.3);
-        }
-
-            /* Animación con scroll */
-    .hidden-card {
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 1s ease-in-out;
-    }
-    .show-card {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Animación para perfil */
-    .hidden-profile {
-      opacity: 0;
-      transform: translateY(100px);
-      transition: all 1.2s ease-in-out;
-    }
-    .show-profile {
-      opacity: 1;
-      transform: translateY(0);
-    }
-        
-        .floating-icon {
-            transition: all 0.5s ease;
-            cursor: pointer;
-        }
-        
-        .floating-icon:hover {
-            transform: scale(1.3) rotate(15deg);
-            filter: drop-shadow(0 0 15px rgba(251, 146, 60, 0.7));
-        }
-        
-        .card-expanded {
-            transform: scale(1.02);
-        }
-        
-        .card-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .card-expanded .card-content {
-            max-height: 600px;
-            opacity: 1;
-            padding-top: 1.5rem;
-        }
-        
-        .expand-icon {
-            transition: transform 0.3s ease;
-        }
-        
-        .card-expanded .expand-icon {
-            transform: rotate(180deg);
-        }
-
-            h3 {
-      color: #333;
-      margin-bottom: 30px;
-    }
-
-    h3 {
-      color: #333;
-      margin-bottom: 30px;
-    }
-
-    /* ======== OVERLAY (FONDO OSCURO) ======== */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(0, 0, 0, 0.6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      overflow-y: auto;
-      backdrop-filter: blur(5px);
-    }
-
-    /* ======== VENTANA MODAL ======== */
-    .modal {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 700px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-      text-align: justify;
-      line-height: 1.6;
-      color: #333;
-      position: relative;
-      animation: aparecer 0.35s ease;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    /* ======== BOTÓN DE CIERRE ======== */
-    .close-btn {
-      position: absolute;
-      top: 12px;
-      right: 18px;
-      width: 40px;
-      height: 40px;
-      background: none;
-      border: none;
-      border-radius: 60%;
-      font-size: 26px;
-      color: #888;
-      cursor: pointer;
-      transition: color 0.2s ease;
-    }
-
-    .close-btn:hover {
-      color: #000;
-    }
-
-    /* ======== ANIMACIÓN ======== */
-    @keyframes aparecer {
-      from {
-        transform: translateY(-15px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    /* ======== SCROLL PERSONALIZADO DENTRO DEL MODAL ======== */
-    .modal::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    .modal::-webkit-scrollbar-thumb {
-      background-color: #ccc;
-      border-radius: 8px;
-    }
-
-    .modal::-webkit-scrollbar-thumb:hover {
-      background-color: #999;
-    }
-
-    .portfolio-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 30px;
-    max-width: 1100px;
-    width: 100%;
-  }
-
-  .portfolio-card {
-    position: relative;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
-    padding: 2rem;
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 10px 40px rgba(255, 165, 0, 0.1);
-    transition: all 0.3s ease;
-    overflow: hidden;
-    text-align: center;
-  }
-
-  .portfolio-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at top left, rgba(255,165,0,0.15), transparent 70%);
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
-  }
-
-  .portfolio-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 12px 50px rgba(255, 165, 0, 0.3);
-  }
-
-  .portfolio-card:hover::before {
-    opacity: 1;
-  }
-
-  .portfolio-card h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    color: #ffa500;
-    font-weight: 600;
-  }
-
-  .portfolio-card p {
-    font-size: 0.95rem;
-    opacity: 0.85;
-    margin-bottom: 1.5rem;
-  }
-
-  /* Botón elegante */
-  .portfolio-btn {
-    display: inline-block;
-    padding: 10px 24px;
-    color: #fff;
-    background: linear-gradient(135deg, #ff8c00, #ffa500);
-    border-radius: 12px;
-    font-weight: 600;
-    text-decoration: none;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 20px rgba(255,165,0,0.3);
-    transition: all 0.3s ease;
-    backdrop-filter: blur(6px);
-  }
-
-  .portfolio-btn:hover {
-    background: linear-gradient(135deg, #ffa500, #ffb733);
-    box-shadow: 0 6px 25px rgba(255,165,0,0.5);
-    transform: translateY(-2px);
-  }
-
-  /* Animación de brillo líquido */
-  .portfolio-card::after {
-    content: "";
-    position: absolute;
-    top: -100%;
-    left: -100%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(120deg, rgba(255,255,255,0.2), transparent 60%);
-    transform: rotate(25deg);
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
-
-  .portfolio-card:hover::after {
-    opacity: 0.5;
-    animation: shimmer 1.5s forwards;
-  }
-
-  @keyframes shimmer {
-    from { transform: translate(-100%, -100%) rotate(25deg); }
-    to { transform: translate(100%, 100%) rotate(25deg); }
-  }
-
-  </style>
 </head>
-<body class="min-h-screen bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 text-slate-100 transition-colors duration-500" id="body">
-  <div class="max-w-7xl mx-auto p-6">
-    <!-- NAVBAR -->
-    <nav class="flex items-center justify-between mb-8">
-      <div class="flex items-center gap-4">
-<div class="w-14 h-14 rounded-2xl liquid-card p-1 flex items-center justify-center accent-glow overflow-hidden">
-  <img 
-    id="profile-image"
-    src="https://github.com/Santiago131440/SantiagoSterling/blob/main/1000234043.jpg?raw=true" 
-    alt="Foto de perfil de Santiago Sterling" 
-    class="w-full h-full object-cover rounded-2xl cursor-pointer transition-transform duration-300"
-  >
-</div>
 
-<!-- Modal oculto -->
-<div 
-  id="image-modal" 
-  class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
->
-  <img 
-    id="modal-image" 
-    src="" 
-    alt="Imagen expandida" 
-    class="max-w-[90%] max-h-[90%] rounded-2xl shadow-2xl transition-transform duration-300"
-  >
-</div>
 
-        <div>
-          <div class="headline text-2xl text-orange-500">Santiago Sterling</div>
-          <div class="text-sm text-slate-200">Desarrollador de software</div>
-        </div>
+<body class="w-full min-h-screen text-slate-100 antialiased leading-relaxed">
+<!-- NAVBAR -->
+<nav class="apple-nav w-full border-b border-black/10">
+  <div class="apple-nav-inner max-w-7xl mx-auto px-1 py-1 flex items-center justify-between">
+
+    <!-- Nombre + Avatar -->
+    <a href="#" class="flex items-center gap-3">
+      <span class="w-8 h-8 rounded-full overflow-hidden border border-black/10">
+        <img
+          src="https://avatars.githubusercontent.com/u/98182135?v=4"
+          alt="Avatar"
+          class="w-full h-full object-cover"
+        />
+      </span>
+      <span class="font-medium text-gray-800 whitespace-nowrap">
+        Santiago Sterling
+      </span>
+    </a>
+
+    <!-- Menu desktop -->
+    <div class="hidden md:flex items-center gap-3 text-gray-500 text-xs">
+      <a href="#sobremi" class="text-center px-3 py-1 rounded-full hover:text-sm font-medium hover:font-bold transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Sobre mi</a>
+      <a href="#estudio" class="text-center px-3 py-1 rounded-full hover:text-sm font-medium hover:font-bold transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Formación</a>
+      <a href="#experiencia" class="text-center px-3 py-1 rounded-full text-sm font-medium hover:font-bold transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Experiencia</a>
+      <a href="#desarrollo" class="text-center px-3 py-1 rounded-full text-sm font-medium hover:font-bold transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Desarrollos</a>
+      <a href="#competencia" class="text-center px-3 py-1 rounded-full text-sm font-medium hover:font-bold transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Competencias</a>
+      <a href="#estrategia" class="text-center px-3 py-1 rounded-full text-sm font-medium hover:font-bold transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Estrategias</a>
+      <a href="#contacto" class="border border-black/30 text-center px-3 py-1 rounded-full text-sm font-medium transition-all hover:bg-[#007AFF] hover:text-white hover:border-[#007AFF] inline-block text-center cursor-pointer">Contacto</a>
+    </div>
+
+    <!-- Botón hamburguesa (+) -->
+    <button
+      id="menu-toggle"
+      class="md:hidden w-8 h-8 flex items-center justify-center text-xl border border-black/30 text-center px-1 py-1 rounded-full font-medium transition-all hover:bg-[#007AFF] hover:text-white hover:border-[#007AFF] inline-block text-center cursor-pointer"
+      aria-label="Abrir menú"
+    >
+      +
+    </button>
+
+  </div>
+
+  <!-- Menu mobile -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden px-6 pt-6 pb-6 text-gray-700 flex-col gap-4"
+  >
+    <a href="#sobremi" class="py-2 border-b border-black/5">Sobre mi</a>
+    <a href="#estudio" class="py-2 border-b border-black/5">Formación</a>
+    <a href="#experiencia" class="py-2 border-b border-black/5">Experiencia</a>
+    <a href="#desarrollo" class="py-2 border-b border-black/5">Desarrollos</a>
+    <a href="#competencia" class="py-2 border-b border-black/5">Competencias</a>
+    <a href="#estrategia" class="py-2 border-b border-black/5">Estrategias</a>
+    <a href="#contacto" class="py-2">Contacto</a>
+  </div>
+
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 class="px-10 py-10 font-extrabold tracking-tight text-black">
+            ¡Hola!, soy <span class="bg-gradient-to-r from-yellow-300 via-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">Santiago Sterling</span> e <span class="decoration-gold/60">impulso el crecimiento digital</span>.
+          </h1>
+  <div class="creative">Desarrollador de Software</div>
+
+  <div class="mockups">
+    <div class="phone left">
+      <div class="screen">
+        <video src="https://cdn.pixabay.com/video/2025/12/22/323793_large.mp4" autoplay muted loop playsinline></video>
       </div>
+    </div>
 
-      <div class="flex items-center gap-4">
-              <ul class="hidden md:flex gap-4 text-sm">
-                <li>
-                  <a href="#cursos" 
-                    class="px-4 py-2 rounded-full bg-white/10 text-orange-500 
-                            backdrop-blur-md border border-white/20 
-                            shadow-lg transition-all duration-300
-                            hover:scale-105 hover:bg-white/20 active:scale-95">
-                    Cursos
-                  </a>
-                </li>
-                <li>
-                  <a href="#skills" 
-                    class="px-4 py-2 rounded-full bg-white/10 text-orange-500 
-                            backdrop-blur-md border border-white/20 
-                            shadow-lg transition-all duration-300
-                            hover:scale-105 hover:bg-white/20 active:scale-95">
-                    Habilidades
-                  </a>
-                </li>
-                <li>
-                  <a href="#projects" 
-                    class="px-4 py-2 rounded-full bg-white/10 text-orange-500 
-                            backdrop-blur-md border border-white/20 
-                            shadow-lg transition-all duration-300
-                            hover:scale-105 hover:bg-white/20 active:scale-95">
+    <div class="phone center">
+      <div class="screen">
+        <video src="https://cdn.pixabay.com/video/2020/10/19/52823-471089056_large.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </div>
+
+    <div class="phone right">
+      <div class="screen">
+        <video src="https://cdn.pixabay.com/video/2024/05/25/213648_large.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </div>
+  </div>
+</section>
+      
+          <br>
+
+           <div class="flex justify-center w-full mb-20">
+            <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1 mx-auto text-center">
+              <a href="proyectos20.html" class="active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
                     Proyectos
                   </a>
-                </li>
-                <li>
-                  <a href="#contact" 
-                    class="px-4 py-2 rounded-full bg-white/10 text-orange-500 
-                            backdrop-blur-md border border-white/20 
-                            shadow-lg transition-all duration-300
-                            hover:scale-105 hover:bg-white/20 active:scale-95">
-                    Contacto
+              <a href="windows.html" class="active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
+                    Repositorio
                   </a>
-                </li>
-              </ul>
+              <a id="downloadCV" href="#" class="px-5 py-1 rounded-full text-sm text-center text-white bg-black/30 hover:bg-white/10 backdrop-blur-sm transition">CV en txt</a>
+             </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
-          <a href="https://www.linkedin.com/in/santisterling" target="_blank" rel="noopener noreferrer"
-            class="flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500 text-white font-semibold shadow hover:scale-105 transition">
-            
-            <!-- Logo de LinkedIn -->
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" 
-                alt="LinkedIn" class="w-5 h-5">
+  </div>
+</div>
+
+    <!------------------------------- SOBRE MI -------------------------------------->
+        <section id="sobremi"
+          class="mt-4 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20"
+          style="
+            --bg-color: linear-gradient(
              
-          </a>
-      </div>
-    </nav>
-  </section>
-  <br>
+              #f5f5f7,
+              #f5f5f7,
+              #f5f5f7
+            );
+            background: var(--bg-color);
+          "
+        >
 
-    <!-- CONTENT SECTIONS -->
-    <section id="about" class="mb-4">
-      <div class="p-2">
-        <h3 class="text-xl font-semibold text-orange-500">Sobre mí</h3>
-        <p class="text-sm text-slate-200 mt-1">Tecnólogo en Análisis y Desarrollo de Software y en Gestión de Producción Industrial, con más de ocho años de experiencia en plantas de manufactura. Mi perfil combina la eficiencia industrial con la innovación tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y crear soluciones escalables. Cuento con formación en frontend y backend (HTML, CSS, JavaScript, React, Node.js, Python, Django, entre otros) y en metodologías industriales como Lean Manufacturing, Kaizen y control de inventarios. Me interesa especializarme en inteligencia artificial aplicada a la industria y en el desarrollo de soluciones que integren la Industria 4.0 con tecnologías digitales inteligentes.</p>
+  <div class="flex justify-center items-center min-h-screen px-4 md:px-6">
+    <div class="w-full max-w-6xl mx-auto">
+        <div class="rounded-3xl shadow-7xl border border-[#E7E5E4] py-12 px-6 md:px-10">
 
-        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="p-4 rounded-md file-tile">
-            <div class="text-lg text-orange-500">Experiencia</div>
-            <div class="font-semibold text-sm text-slate-200">2 años desarrollando soluciones y aplicaciones tecnológicas</div>
-          </div>
-          <div class="p-4 rounded-md file-tile">
-            <div class="text-lg text-orange-500">Educación</div>
-            <div class="font-semibold text-sm text-slate-200 ">Tecnólogo en Análisis y Desarrollo de Software (SENA)</div>
-          </div>
-          <div class="p-4 rounded-md file-tile">
-            <div class="text-lg text-orange-500">Objetivo</div>
-            <div class="font-semibold text-sm text-slate-200">Especializarme en IA y automatización de procesos corporativos.</div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- CURSOS -->
-    <section id="cursos" class="mb-8">
-      <h3 class="text-xl font-semibold mb-4 text-orange-500">Cursos destacados</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
-              alt="Logo SENA"
-              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
-          <div class="flex items-start justify-between">
-            <div>
-              <h4 class="text-lg font-semibold  text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
-              <p class="text-sm text-slate-200">Uso de Excel y Access para el desarrollo de aplicaciones administrativas empresariales.</p>
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="md:col-span-2 space-y-4">
+
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+                  Sobre mi
+                </h1>
+
+                <p class="text-sm mb-4 text-[#78716C]">
+                  Tecnólogo en Análisis y desarrollo de software <span class="text-amber-500">y Tecnólogo en Gestión de la Producción Industrial con más de 8 años de experiencia en manufactura, </span>enfocado en optimización de procesos mediante tecnología, automatización y análisis de datos, con interés en inteligencia artificial e Industria 4.0.
+                </p>
+
+                <div class="grid sm:grid-cols-2 gap-4 mt-4">
+
+                  <div class="p-4 rounded-xl bg-white/90 backdrop-blur-md">
+                    <div class="text-sm text-[#78716C]"><strong>Proceso</strong></div>
+                    <ul class="mt-2 text-[#78716C] text-sm list-disc list-inside">
+                      <h4>Experiencia en gestión de producción, control de inventarios y mejora continua.</h4>
+                    </ul>
+                  </div>
+
+                  <div class="p-4 rounded-xl bg-white/90 backdrop-blur-md">
+                    <div class="text-sm text-[#78716C]"><strong>Objetivo</strong></div>
+                    <div class="flex gap-2 flex-wrap mt-2 text-[#78716C] text-sm">
+                      <span>Colaborar en proyectos que combinen automatización, analítica y desarrollo web.</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+          <aside 
+            class="p-6 rounded-2xl relative border overflow-hidden backdrop-blur-lg text-white"
+            style="
+              background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Dec%202,%202025,%2009_49_54%20AM.png?raw=true');
+              background-size: cover;
+              background-position: center;
+            "
+          >
+            <!-- Capa oscura para mejorar legibilidad -->
+            <div class="absolute inset-0 bg-[#E7E5E4]"></div>
+
+            <!-- Contenido -->
+            <div class="relative z-10">
+              <div class="text-xl text-stone-400 font-bold">Información clave</div>
+              <div class="mt-3 space-y-1 text-[#78716C] text-sm">
+                <p><strong>Ubicación:</strong> Cali, Colombia.</p>
+                <p><strong>Rol:</strong> Desarrollador de software.</p>
+                <p><strong>Disponibilidad:</strong> Contrato inmediato.</p>
+                <p><strong>LinkedIn:</strong> in/santiago-sterling-0a02a116a/</p>
+              </div>
             </div>
-            <div class="text-sm text-orange-500">2025</div>
-          </div>
-        </article>
+          </aside>
 
-        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
-              alt="Logo SENA"
-              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
-          <div class="flex items-start justify-between">
-            <div>
-              <h4 class="text-lg font-semibold  text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
-              <p class="text-sm text-slate-200">Análisis exploratorio de datos en Python.</p>
             </div>
-            <div class="text-sm text-orange-500">2025</div>
+
           </div>
-        </article>
-
-        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
-              alt="Logo SENA"
-              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
-          <div class="flex items-start justify-between">
-            <div>
-              <h4 class="text-lg font-semibold  text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
-              <p class="text-sm text-slate-200">Variables y estructuras de control en Python.</p>
-            </div>
-            <div class="text-sm text-orange-500">2025</div>
-          </div>
-        </article>
-
-        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
-              alt="Logo SENA"
-              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
-          <div class="flex items-start justify-between">
-            <div>
-              <h4 class="text-lg font-semibold  text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
-              <p class="text-sm text-slate-200">Construcción de bases de datos con MySQL.</p>
-            </div>
-            <div class="text-sm text-orange-500">2025</div>
-          </div>
-        </article>
-
-        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
-              alt="Logo SENA"
-              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
-          <div class="flex items-start justify-between">
-            <div>
-              <h4 class="text-lg font-semibold  text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
-              <p class="text-sm text-slate-200">Desarrollo de applets/aplicaciones con uso de base de datos, redes, servlets y multimedia.</p>
-            </div>
-            <div class="text-sm text-orange-500">2025</div>
-          </div>
-        </article>
-
-        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
-              alt="Logo SENA"
-              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
-          <div class="flex items-start justify-between relative z-10">
-            <div>
-              <h4 class="text-lg font-semibold text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
-              <p class="text-sm text-slate-200">Manejo de pruebas de software.</p>
-            </div>
-            <div class="text-sm text-orange-500">2025</div>
-          </div>
-        </article>
-
-        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
-              alt="Logo SENA"
-              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
-          <div class="flex items-start justify-between">
-            <div>
-              <h4 class="text-lg font-semibold  text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
-              <p class="text-sm text-slate-200">Aplicación del marco de trabajo scrum para proyectos de desarrollo de software.</p>
-            </div>
-            <div class="text-sm text-orange-500">2025</div>
-          </div>
-        </article>
-
-        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
-              alt="Logo SENA"
-              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
-          <div class="flex items-start justify-between relative z-10">
-            <div>
-              <h4 class="text-lg font-semibold text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
-              <p class="text-sm text-slate-200">Procesos para software de calidad.</p>
-            </div>
-            <div class="text-sm text-orange-500">2024</div>
-          </div>
-        </article>
-
-        <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sena_Colombia_logo.svg/2090px-Sena_Colombia_logo.svg.png" 
-              alt="Logo SENA"
-              class="absolute right-2 top-4 w-24 opacity-10 pointer-events-none select-none" />
-          <div class="flex items-start justify-between relative z-10">
-            <div>
-              <h4 class="text-lg font-semibold text-orange-500">Servicio Nacional de Aprendizaje SENA</h4>
-              <p class="text-sm text-slate-200">Modelos de calidad de software.</p>
-            </div>
-            <div class="text-sm text-orange-500">2023</div>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-<!-- CURSOS PLATZI -->
-<section id="cursos" class="mb-16 relative">
-  <h3 class="text-lg font-bold mb-12 text-orange-500">
-    Cursos complementarios
-  </h3>
-
-  <!-- Primeros 6 cursos visibles -->
-  <div id="cursos-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-    <!-- Curso 1 -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-lg font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">Platzi</h4>
-        <p class="text-sm text-slate-300 mt-2 flex-1">Curso de Frontend Developer</p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/2467-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-500 transition-colors duration-300">Ver certificado</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Curso 2 -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-lg font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">Platzi</h4>
-        <p class="text-sm text-slate-300 mt-2 flex-1">Curso de Programación orientada a objetos: POO</p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/1474-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-500 transition-colors duration-300">Ver certificado</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Curso 3 -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-lg font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">Platzi</h4>
-        <p class="text-sm text-slate-300 mt-2 flex-1">Curso de fundamentos de Bases de Datos</p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/1566-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-500 transition-colors duration-300">Ver certificado</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Curso 4 -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-lg font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">Platzi</h4>
-        <p class="text-sm text-slate-300 mt-2 flex-1">Curso de de introducción al despliegue de aplicaciones</p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/2011-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-500 transition-colors duration-300">Ver certificado</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Curso 5 -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-lg font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">Platzi</h4>
-        <p class="text-sm text-slate-300 mt-2 flex-1">Curso de introducción a AWS: Cómputo, Almacenamiento y Bases de Datos</p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/2732-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-500 transition-colors duration-300">Ver certificado</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Curso 6 -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-lg font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">Platzi</h4>
-        <p class="text-sm text-slate-300 mt-2 flex-1">Curso de Next.js</p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/1991-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-500 transition-colors duration-300">Ver certificado</a>
-        </div>
-      </div>
-    </article>
-
-  </div>
-
-  <!-- Contenedor de cursos ocultos -->
-  <div id="cursos-extra" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 hidden mt-8 rounded-xl">
-
-    <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <!-- Logo Platzi -->
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-
-      <!-- Contenido -->
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso Práctico de JavaScript
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <!-- Link al certificado -->
-          <a href="https://platzi.com/p/santisterling/curso/3271-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso de Asincronismo con JavaScript
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/3175-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                    <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso Básico de JavaScript
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/1814-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                                                <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso Básico de Algoritmos y Pensamiento Lógico
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2022</span>
-          <a href="https://platzi.com/p/santisterling/curso/2218-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                                                <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso Básico de Programación
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2022</span>
-          <a href="https://platzi.com/p/santisterling/curso/1050-basico-programacion/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                    <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso Básico de Tailwind 2 y 3
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/2702-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                                                <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso Definitivo de HTML y CSS
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2022</span>
-          <a href="https://platzi.com/p/santisterling/curso/2008-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                        <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso Profesional de CSS Grid Layout
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/2222-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                                                <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso de Responsive Design: Maquetación Mobile First
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/2030-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso de Manipulación del DOM
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/2193-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                                <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso Práctico de HTML y CSS
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/1758-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                                <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso Práctico de Maquetación en CSS
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/1744-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-    
-                    <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso Práctico de Frontend Developer
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/curso/2477-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                                                <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso Profesional de Git y GitHub
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2022</span>
-          <a href="https://platzi.com/p/santisterling/curso/1557-git-github/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                                                <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso de Introducción a la Terminal y Línea de Comandos
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2023</span>
-          <a href="https://platzi.com/p/santisterling/course/2292-terminal/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                                            <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Fundamentos de Ingeniería de Software
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2022</span>
-          <a href="https://platzi.com/p/santisterling/curso/1098-ingenieria/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                                            <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso de Diseño para Developers
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2022</span>
-          <a href="https://platzi.com/p/santisterling/curso/1906-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-
-                                            <!-- Curso -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile overflow-hidden">
-      <img src="https://static.platzi.com/media/platzi-isotipo@2x.png" 
-           alt="Logo Platzi"
-           class="absolute right-3 top-3 w-14 opacity-10 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none select-none" />
-      <div class="flex flex-col h-full z-10 relative">
-        <h4 class="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
-          Platzi
-        </h4>
-        <p class="text-s text-slate-300 mt-2 flex-1">
-          Curso de Excel Básico
-        </p>
-        <div class="mt-4 flex items-center justify-between">
-          <span class="text-sm font-semibold text-orange-500">2022</span>
-          <a href="https://platzi.com/p/santisterling/curso/1925-course/diploma/detalle/" target="_blank"
-             class="text-sm text-orange-400 underline hover:text-orange-300 transition-colors duration-300">
-            Ver certificado
-          </a>
-        </div>
-      </div>
-    </article>
-      </div>
-
-  <!-- Botón Ver más / Ocultar -->
-  <div class="flex justify-center mt-10">
-    <button id="toggleCursos" 
-            class="px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-semibold shadow-lg transition">
-      Ver más
-    </button>
-  </div>
-</section>
-
-<!-- HABILIDADES -->
-<section id="skills" class="mb-10 relative flex justify-center items-center py-12">
-
-  <!-- CONTENEDOR PRINCIPAL -->
-  <div class="w-[100%] max-w-7xl bg-slate-720 rounded-3xl shadow-xl relative overflow-hidden p-6 sm:p-10">
-
-    <!-- ENCABEZADO -->
-    <h3 class="text-2xl sm:text-3xl font-bold text-orange-500 text-left mb-6">Habilidades</h3>
-
-    <!-- BOTONES DE CATEGORÍAS -->
-    <div class="flex overflow-x-auto gap-3 mb-8 pb-2 scrollbar-hide">
-      <button class="tab-btn flex-shrink-0 px-4 py-2 bg-slate-600 text-slate-200 rounded-xl hover:bg-orange-500 hover:text-white transition text-sm sm:text-base" data-target="estadistica">Estadística</button>
-      <button class="tab-btn flex-shrink-0 px-4 py-2 bg-slate-600 text-slate-200 rounded-xl hover:bg-orange-500 hover:text-white transition text-sm sm:text-base" data-target="lenguajes">Lenguajes</button>
-      <button class="tab-btn flex-shrink-0 px-4 py-2 bg-slate-600 text-slate-200 rounded-xl hover:bg-orange-500 hover:text-white transition text-sm sm:text-base" data-target="frameworks">Frameworks</button>
-      <button class="tab-btn flex-shrink-0 px-4 py-2 bg-slate-600 text-slate-200 rounded-xl hover:bg-orange-500 hover:text-white transition text-sm sm:text-base" data-target="complementarias">Complementarias</button>
-      <button class="tab-btn flex-shrink-0 px-4 py-2 bg-slate-600 text-slate-200 rounded-xl hover:bg-orange-500 hover:text-white transition text-sm sm:text-base" data-target="visualizacion">Visualización</button>
-      <button class="tab-btn flex-shrink-0 px-4 py-2 bg-slate-600 text-slate-200 rounded-xl hover:bg-orange-500 hover:text-white transition text-sm sm:text-base" data-target="soft">Soft Skills</button>
-    </div>
-
-    <!-- TARJETAS -->
-    <div class="relative">
-
-      <!-- Ejemplo de tarjeta -->
-<div id="estadistica" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
-  <!-- Imagen de fondo -->
-  <div class="absolute inset-0 bg-cover bg-center opacity-20"
-       style="background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_13_26%20PM.png?raw=true');">
-  </div>
-  <!-- Capa de color semitransparente para contraste -->
-  <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
-  <!-- Contenido -->
-  <div class="relative z-10">
-    <h4 class="text-lg sm:text-xl font-semibold text-orange-500 mb-3">Estadística</h4>
-    <ul class="text-sm sm:text-base text-slate-200 list-disc list-inside space-y-1">
-      <li>Modelado probabilístico</li>
-      <li>Pruebas de hipótesis</li>
-      <li>Análisis multivariante</li>
-      <li>Series temporales</li>
-      <li>Regresión lineal y logística</li>
-    </ul>
-  </div>
-</div>
-
-
-<div id="lenguajes" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
-  <!-- Imagen de fondo -->
-  <div class="absolute inset-0 bg-cover bg-center opacity-20"
-       style="background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_18_02%20PM.png?raw=true');">
-  </div>
-  <!-- Capa de color semitransparente para contraste -->
-  <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
-  <!-- Contenido -->
-  <div class="relative z-10">
-    <h4 class="text-lg sm:text-xl font-semibold text-orange-500 mb-3">Lenguajes</h4>
-    <ul class="text-sm sm:text-base text-slate-200 list-disc list-inside space-y-1">
-      <li>Python (pandas, scikit-learn)</li>
-      <li>JavaScript (dashboards interactivos)</li>
-      <li>C#</li>
-      <li>SQL / MySQL / PostgreSQL</li>
-      <li>DAX</li>
-    </ul>
-  </div>
-</div>
-
-
-<div id="frameworks" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
-  <!-- Imagen de fondo -->
-  <div class="absolute inset-0 bg-cover bg-center opacity-20"
-       style="background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2007_41_28%20PM.png?raw=true');">
-  </div>
-  <!-- Capa de color semitransparente para contraste -->
-  <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
-  <!-- Contenido -->
-  <div class="relative z-10">
-    <h4 class="text-lg sm:text-xl font-semibold text-orange-500 mb-3">Frameworks y Desarrollo</h4>
-    <ul class="text-sm sm:text-base text-slate-200 list-disc list-inside space-y-1">
-      <li>Django / Flask</li>
-      <li>Tailwind / CSS</li>
-      <li>.NET</li>
-      <li>APIs y automatización</li>
-    </ul>
-  </div>
-</div>
-
-
-<div id="complementarias" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
-  <!-- Imagen de fondo -->
-  <div class="absolute inset-0 bg-cover bg-center opacity-20"
-       style="background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Oct%2022,%202025,%2008_15_16%20PM.png?raw=true');">
-  </div>
-  <!-- Capa de color semitransparente para contraste -->
-  <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
-  <!-- Contenido -->
-  <div class="relative z-10">
-    <h4 class="text-lg sm:text-xl font-semibold text-orange-500 mb-3">Habilidades Complementarias</h4>
-    <ul class="text-sm sm:text-base text-slate-200 list-disc list-inside space-y-1">
-      <li>Git y GitHub</li>
-      <li>Cloud (AWS, GCP, Azure)</li>
-      <li>Spark / Hadoop</li>
-      <li>Seguridad y ética</li>
-      <li>Reportes ejecutivos</li>
-    </ul>
-  </div>
-</div>
-
-
-<div id="visualizacion" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
-  <!-- Imagen de fondo -->
-  <div class="absolute inset-0 bg-cover bg-center opacity-20"
-       style="background-image: url('https://cdn.pixabay.com/photo/2017/03/08/20/12/viewing-machine-2127704_1280.jpg');">
-  </div>
-  <!-- Capa de color semitransparente para contraste -->
-  <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
-  <!-- Contenido -->
-  <div class="relative z-10">
-    <h4 class="text-lg sm:text-xl font-semibold text-orange-500 mb-3">Herramientas de Análisis y Visualización</h4>
-    <ul class="text-sm sm:text-base text-slate-200 list-disc list-inside space-y-1">
-      <li>Excel avanzado</li>
-      <li>Power BI / Tableau</li>
-      <li>Power Pivot / Query</li>
-      <li>Google Data Studio</li>
-      <li>Matplotlib / Seaborn</li>
-    </ul>
-  </div>
-</div>
-
-
-<div id="soft" class="tab-content hidden relative rounded-2xl p-4 sm:p-6 shadow-md animate-fade overflow-hidden">
-  <!-- Imagen de fondo -->
-  <div class="absolute inset-0 bg-cover bg-center opacity-20" 
-       style="background-image: url('https://media.istockphoto.com/id/1490859962/photo/power-soft-skills-multi-skills-responsibility-hr-human-resources-concept-personal-attribute.jpg?s=1024x1024&w=is&k=20&c=X8mzWwih8MU12GO-m4zLQV_OqQrTDzbUTbpnFYp7kHs=');">
-  </div>
-  <!-- Capa de color sutil encima (opcional, para mejorar contraste) -->
-  <div class="absolute inset-0 bg-slate-800 bg-opacity-60"></div>
-  <!-- Contenido -->
-  <div class="relative z-10">
-    <h4 class="text-lg sm:text-xl font-semibold text-orange-500 mb-3">Soft Skills</h4>
-    <ul class="text-sm sm:text-base text-slate-200 list-disc list-inside space-y-1">
-      <li>Comunicación efectiva</li>
-      <li>Trabajo en equipo</li>
-      <li>Pensamiento crítico</li>
-      <li>Documentación reproducible</li>
-      <li>Scrum / Kanban</li>
-    </ul>
-  </div>
-</div>
-
-
-    </div>
-  </div>
-</section>
-
-
-<section id="portfolio" class="mb-12 relative overflow-hidden">
-  <!-- FONDO DE ICONOS -->
-  <div class="rain-icons absolute inset-0 pointer-events-none">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20barras.png?raw=true" class="icon-rain" style="left: 5%; animation-duration: 6s;">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20barras.png?raw=true" class="icon-rain" style="left: 85%; animation-duration: 8s;">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20barras.png?raw=true" class="icon-rain" style="left: 45%; animation-duration: 5s;">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20tortas.png?raw=true" class="icon-rain" style="left: 65%; animation-duration: 7s;">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20tortas.png?raw=true" class="icon-rain" style="left: 25%; animation-duration: 9s;">
-  </div>
-
-  <!-- CONTENIDO -->
-  <div class="p-6 relative z-10">
-    <h3 class="text-3xl font-semibold text-orange-500 mb-6">Aportes Clave</h3>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Proyecto 1 -->
-      <div class="p-4 rounded-xl shadow-lg bg-white/10 backdrop-blur-md border border-orange-400/50 hover:scale-105 transition-transform">
-        <img src="https://github.com/Santiago131440/Imagenes-Excel/blob/main/Imagen7.png?raw=true" alt="Proyecto" class="w-16 h-16 mx-auto mb-3">
-        <h4 class="text-lg font-bold text-orange-500 text-center">Habilidad para programar y resolver problemas</h4>
-        <p class="text-sm text-slate-300 mt-2 text-center">
-          Tengo facilidad para escribir código limpio y estructurado, implementando algoritmos que resuelven problemas de manera eficiente.
-        </p>
-        <div class="flex justify-center mt-4">
-        </div>
-      </div>
-
-      <!-- Proyecto 2 -->
-      <div class="p-4 rounded-xl shadow-lg bg-white/10 backdrop-blur-md border border-orange-400/50 hover:scale-105 transition-transform">
-        <img src="https://github.com/Santiago131440/Imagenes-Excel/blob/main/Imagen9.png?raw=true" alt="Python" class="w-16 h-16 mx-auto mb-3">
-        <h4 class="text-lg font-bold text-orange-500 text-center">Compromiso con la calidad y pruebas rigurosas</h4>
-        <p class="text-sm text-slate-300 mt-2 text-center">
-          Me aseguro de que el software funcione correctamente mediante pruebas, depuración y atención a la estabilidad y el rendimiento.
-        </p>
-        <div class="flex justify-center mt-4">
-         </div>
-      </div>
-
-      <!-- Proyecto 3 -->
-      <div class="p-4 rounded-xl shadow-lg bg-white/10 backdrop-blur-md border border-orange-400/50 hover:scale-105 transition-transform">
-        <img src="https://github.com/Santiago131440/Imagenes-Excel/blob/main/Imagen8.png?raw=true" alt="SQL" class="w-16 h-16 mx-auto mb-3">
-        <h4 class="text-lg font-bold text-orange-500 text-center">Orientación al diseño y experiencia del usuario</h4>
-        <p class="text-sm text-slate-300 mt-2 text-center">
-          Creo soluciones intuitivas y funcionales, enfocadas en una interfaz clara y en la mejor experiencia posible para el usuario.
-        </p>
-        <div class="flex justify-center mt-4">
-          </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="experiencia" class="mb-12 relative overflow-hidden">
-    <!-- Container Principal -->
-    <div class="liquid-card rounded-3xl p-8 md:p-12 relative">
-        <h3 class="text-3xl font-semibold text-orange-500">Experiencia laboral</h3>
+        </section>
         <br>
-        <p class="text-xl text-slate-400">
-            Mi trayectoria profesional en análisis de datos y optimización de procesos
-        </p>
-        <br>    
+        <br>
+        <br>
 
-        <!-- Iconos flotantes de fondo -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute top-8 left-8 text-6xl text-orange-500/20 animate-float floating-icon pointer-events-auto">💼</div>
-            <div class="absolute bottom-8 right-8 text-6xl text-orange-500/20 floating-icon pointer-events-auto" style="animation: float 4s ease-in-out infinite reverse;">📊</div>
-            <div class="absolute top-1/2 right-12 text-5xl text-orange-500/15 animate-float floating-icon pointer-events-auto">⚙️</div>
-        </div>
+    <!------------------------------------------ FORMACIÓN ACADÉMICA ------------------------------------------------------>
+ <section id="estudio" class="mt-12">
 
-        <!-- Timeline Container -->
-        <div class="relative">
-            <!-- Línea del Timeline -->
-            <div class="absolute left-8 top-0 bottom-0 w-1 timeline-line rounded-full"></div>
-
-            <!-- Trabajo 1 -->
-            <article class="job-card mb-12 relative" data-delay="200">
-                <!-- Punto del Timeline -->
-                <div class="absolute left-4 w-8 h-8 rounded-full timeline-dot flex items-center justify-center cursor-pointer z-10"
-                     onclick="toggleJobCard(this)">
-                    <span class="text-white font-bold text-sm">1</span>
-                </div>
-
-                <!-- Tarjeta del Trabajo -->
-                <div class="ml-20 liquid-card rounded-2xl p-6 hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
-                     style="background: url('https://github.com/Santiago131440/Imagenes-Excel/blob/main/ChatGPT%20Image%20Sep%2016,%202025,%2008_25_52%20PM.png?raw=true') center/cover no-repeat;">
-                    
-                    <!-- Logo -->
-                    <img src="https://cosmoagro.com/wp-content/uploads/2025/01/LOGO-COSMOAGROSA1.svg" 
-                         alt="Logo Cosmoagro" 
-                         class="absolute top-4 right-4 w-16 h-16 object-contain bg-white/80 p-2 rounded-lg shadow-md">
-
-                    <!-- Header -->
-                    <div class="flex items-center justify-between cursor-pointer relative z-10" onclick="toggleJobCard(this)">
-                        <div>
-                            <h3 class="text-2xl font-bold text-orange-500 mb-1">Analista de Producción</h3>
-                            <p class="text-slate-200 mb-2">Cosmoagro S.A. • Palmira, Valle del Cauca</p>
-                            <div class="flex items-center gap-2">
-                                <span class="px-3 py-1 bg-orange-500/20 text-orange-200 rounded-full text-sm font-medium">Diciembre 2024 - Actualidad</span>
-                                <div class="flex items-center gap-1">
-                                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                                    <span class="text-green-300 text-sm">Activo</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="expand-icon text-orange-500 text-2xl">▼</div>
-                    </div>
-
-                    <!-- Contenido -->
-                    <div class="card-content relative z-10">
-                        <div class="border-t border-slate-700 pt-6">
-                            <div class="mb-6">
-                                <h4 class="text-lg font-semibold text-orange-500 mb-3">Descripción del Rol</h4>
-                                <p class="text-slate-100 leading-relaxed">
-                                    Diseño y desarrollo de dashboards interactivos orientados al seguimiento de indicadores clave 
-                                    de planta y toma de decisiones estratégicas. Implementación de procesos ETL y automatización 
-                                    de reportes, logrando optimización significativa en tiempos de análisis.
-                                </p>
-                            </div>
-                            <div class="mb-6">
-                                <h4 class="text-lg font-semibold text-orange-500 mb-3">Logros Clave</h4>
-                                <div class="bg-slate-800/70 rounded-xl p-4">
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-slate-200">Reducción tiempo de reportes</span>
-                                        <span class="text-2xl font-bold text-orange-400">40%</span>
-                                    </div>
-                                    <div class="mt-2 w-full bg-slate-700 rounded-full h-2">
-                                        <div class="bg-gradient-to-r from-orange-500 to-red-500 h-2 rounded-full transition-all duration-1000" style="width: 40%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-semibold text-orange-500 mb-3">Tecnologías</h4>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">Power BI</span>
-                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">Tableau</span>
-                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">Python</span>
-                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">SQL</span>
-                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">ETL</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Trabajo 2 -->
-            <article class="job-card mb-12 relative" data-delay="400">
-                <div class="absolute left-4 w-8 h-8 rounded-full timeline-dot flex items-center justify-center cursor-pointer z-10"
-                     onclick="toggleJobCard(this)">
-                    <span class="text-white font-bold text-sm">2</span>
-                </div>
-
-                <div class="ml-20 liquid-card rounded-2xl p-6 hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
-                     style="background: url('https://github.com/Santiago131440/Imagenes-Excel/blob/main/ChatGPT%20Image%20Sep%2016,%202025,%2008_25_52%20PM.png?raw=true') center/cover no-repeat;">
-
-                    <img src="https://coca-colafemsa.com/assets/img/globales/kof-logo.png" 
-                         alt="Logo Coca Cola" 
-                         class="absolute top-4 right-4 w-16 h-16 object-contain bg-white/80 p-2 rounded-lg shadow-md">
-
-                    <div class="flex items-center justify-between cursor-pointer relative z-10" onclick="toggleJobCard(this)">
-                        <div>
-                            <h3 class="text-2xl font-bold text-orange-500 mb-1">Técnico Analista</h3>
-                            <p class="text-slate-200 mb-2">Coca Cola Femsa • Cali, Colombia</p>
-                            <div class="flex items-center gap-2">
-                                <span class="px-3 py-1 bg-slate-600/50 text-slate-200 rounded-full text-sm font-medium">Jul 2023 - Jun 2024</span>
-                                <div class="flex items-center gap-1">
-                                    <div class="w-2 h-2 bg-slate-500 rounded-full"></div>
-                                    <span class="text-slate-300 text-sm">Completado</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="expand-icon text-orange-500 text-2xl">▼</div>
-                    </div>
-
-                    <div class="card-content relative z-10">
-                        <div class="border-t border-slate-700 pt-6">
-                            <div class="mb-6">
-                                <h4 class="text-lg font-semibold text-orange-500 mb-3">Descripción del Rol</h4>
-                                <p class="text-slate-100 leading-relaxed">
-                                    Gestión integral de indicadores de eficiencia y control de inventarios mediante 
-                                    desarrollo de macros avanzadas y tableros dinámicos. Optimización de procesos 
-                                    con trazabilidad completa y reducción significativa de errores operativos.
-                                </p>
-                            </div>
-                            <div class="mb-6">
-                                <h4 class="text-lg font-semibold text-orange-500 mb-3">Logros Clave</h4>
-                                <div class="bg-slate-800/70 rounded-xl p-4">
-                                    <div class="text-center">
-                                        <div class="text-3xl font-bold text-orange-500 mb-1">100%</div>
-                                        <div class="text-sm text-slate-200">Trazabilidad Completa</div>
-                                        <div class="text-xs text-slate-300 mt-1">Insumos y materias primas</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-semibold text-orange-500 mb-3">Tecnologías</h4>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">Excel Avanzado</span>
-                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">VBA</span>
-                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">Power BI</span>
-                                    <span class="skill-badge px-3 py-1 rounded-full text-sm text-orange-200">SQL</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-            <div class="flex justify-center mt-10">
-  <button 
-    onclick="window.location.href='ExperienciaLaboral.html'" 
-    class="px-6 py-3 bg-orange-500 text-white font-semibold rounded-full shadow-md hover:bg-orange-600 transition-all duration-300">
-    Ver más sobre mi experiencia
-  </button>
-</div>
-        </div>
-    </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects" class="mb-8">
-  <div class="p-6 relative z-10">
-        <!-- FONDO DE ICONOS -->
-  <div class="rain-icons absolute inset-0 pointer-events-none">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20barras.png?raw=true" class="icon-rain" style="left: 5%; animation-duration: 6s;">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20barras.png?raw=true" class="icon-rain" style="left: 85%; animation-duration: 8s;">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20barras.png?raw=true" class="icon-rain" style="left: 45%; animation-duration: 5s;">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20tortas.png?raw=true" class="icon-rain" style="left: 65%; animation-duration: 7s;">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Icono%20de%20tortas.png?raw=true" class="icon-rain" style="left: 25%; animation-duration: 9s;">
+  <!-- TÍTULO -->
+  <div class="text-center mb-6 fade-in">
+    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+      Formación académica
+    </h1>
   </div>
-  <h3 class="text-3xl font-semibold mb-4 text-orange-500">Proyectos destacados</h3>
   <br>
 
- <h3 class="text-s font-semibold mb-4 text-orange-500">Aviso sobre la confidencialidad y uso responsable de la información</h3>
-  <button class="px-6 py-3 bg-orange-500 text-white font-semibold rounded-full shadow-md hover:bg-orange-600 transition-all duration-300" onclick="mostrarModal()">Ver aviso de confidencialidad</button>
+<section class="mac-section">
 
-  <!-- ======== MODAL ======== -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal" id="modalBox">
-      <button class="close-btn" onclick="cerrarModal()">&times;</button>
-      <h4 class="text-xl font-semibold mb-4 text-white-500"><strong>Aviso de Confidencialidad y Protección de Datos</strong></h4>
-      <br>
-      <p>
-        La información presentada en los proyectos, informes o material relacionado no corresponde a datos reales de ninguna empresa, entidad o persona natural. Todo el contenido ha sido elaborado únicamente con fines académicos, demostrativos o de desarrollo técnico, empleando valores, nombres y cifras de carácter ficticio o referencial.
-      </p>
-      <p>
-        Se respeta estrictamente la confidencialidad, privacidad y protección de la información de todas las empresas, colaboradores y terceros que puedan tener o haber tenido algún vínculo con los temas tratados. En ningún caso se divulga, utiliza ni replica información sensible, reservada o protegida por derechos de autor.
-      </p>
-      <p>
-        Este proyecto cumple con los lineamientos de la <strong>Ley 1581 de 2012</strong> y el <strong>Decreto 1377 de 2013</strong> sobre la protección de datos personales en Colombia, así como con los principios establecidos en el <strong>Reglamento General de Protección de Datos (GDPR – Reglamento (UE) 2016/679)</strong> en el ámbito internacional.
-      </p>
-      <p>
-        Adicionalmente, se observa lo dispuesto en la <strong>Ley 23 de 1982</strong> y la <strong>Decisión Andina 351 de 1993</strong> respecto a los derechos de autor y propiedad intelectual, garantizando que todo material, código o contenido utilizado en los proyectos es de creación propia, de dominio público o cuenta con las respectivas licencias.
-      </p>
-      <p>
-        En consecuencia, ninguna cifra, gráfico o referencia contenida en los documentos representa información verídica, oficial ni confidencial de persona o empresa alguna. El manejo ético y responsable de los datos es un principio esencial en el desarrollo de cada proyecto.
-      </p>
-      <br>
-      <p>
-        <strong>Santiago Sterling - 2025.</strong>
-      </p>
+  <!-- Finder Panel -->
+  <div class="finder-window">
+    <div class="finder-titlebar">
+      <div class="controls">
+        <span class="c red"></span>
+        <span class="c yellow"></span>
+        <span class="c green"></span>
+      </div>
+      <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Categorías académicas
+    </h3>
+    </div>
+
+    <div class="finder-content">
+      <ul class="file-list">
+        <li onclick="openModal(
+                'Formación tecnológica',
+                `
+                      - 📄 Tecnología en análisis y desarrollo de software.
+                          Institución: Servicio Nacional de Aprendizaje (SENA)
+                          Estado: En curso.
+
+                      - 📄 Tecnología en gestión de la producción industrial.
+                          Institución: Servicio Nacional de Aprendizaje (SENA)
+                          Estado: Culminado.
+                          Certificación: 25 Noviembre 2016
+                `
+              )">
+
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Formación tecnológica</span>
+          <span class="date text-sm">2 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Backend/Lógica de programación',
+                `
+                      - 📄 Curso de Programación Orientada a Objetos (POO)
+                      - 📄 Curso Básico de Programación
+                      - 📄 Curso Básico de Algoritmos y Pensamiento Lógico
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Backend</span>
+          <span class="date text-sm">3 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - DevOps / Cloud',
+                `
+                      - 📄 Curso de Introducción al Despliegue de Aplicaciones
+                      - 📄 Curso de Introducción a AWS: Cómputo, Almacenamiento y Bases de Datos
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - DevOps / Cloud</span>
+          <span class="date text-sm">2 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Frontend',
+                `
+                      - 📄 Curso de Frontend Developer
+                      - 📄 Curso Práctico de Frontend Developer
+                      - 📄 Curso Definitivo de HTML y CSS
+                      - 📄 Curso Práctico de HTML y CSS
+                      - 📄 Curso Práctico de Maquetación en CSS
+                      - 📄 Curso Profesional de CSS Grid Layout
+                      - 📄 Curso de Responsive Design: Maquetación Mobile First
+                      - 📄 Curso Básico de Tailwind 2 y 3
+                      - 📄 Curso de Diseño para Developers
+                      - 📄 Curso de Manipulación del DOM
+                      - 📄 Curso de Next.js
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Frontend</span>
+          <span class="date text-sm">11 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Herramientas de Desarrollo',
+                `
+                      - 📄 Curso Profesional de Git y GitHub
+                      - 📄 Curso de Introducción a la Terminal y Línea de Comandos
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Herramientas de Desarrollo</span>
+          <span class="date text-sm">2 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Javascript',
+                `
+                      - 📄 Curso Básico de JavaScript
+                      - 📄 Curso Práctico de JavaScript
+                      - 📄 Curso de Asincronismo con JavaScript
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75 " alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Javascript</span>
+          <span class="date text-sm">3 archivos</span>
+        </li>
+
+        <li onclick="openModal('Cursos cortos del SENA',
+                `
+                      - 📄 Calidad en el desarrollo de software - Abril, 2022
+                      - 📄 Metodología de la programación de sistemas informáticos - Mayo, 2022
+                      - 📄 Modelos de calidad de software - Septiembre, 2023
+                      - 📄 Procesos para software de calidad - Diciembre, 2024
+                      - 📄 Aplicación del marco de trabajo Scrum para proyectos de desarrollo de software - Marzo, 2025
+                      - 📄 Manejo de pruebas de software - Marzo, 2025
+                      - 📄 Variables y estructuras de control en Python - Julio, 2025
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">SENA - Cursos cortos</span>
+          <span class="date text-sm"> 7 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Bases de datos',
+                `
+                      - 📄 Curso de Fundamentos de Bases de Datos
+                `
+              )">
+          <span class="icon"><img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284038_1280.png" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Bases de datos</span>
+          <span class="date text-sm">1 archivo</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Ingeniería de Software',
+                `
+                      - 📄 Fundamentos de Ingeniería de Software
+                `
+              )">
+          <span class="icon"><img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284038_1280.png" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Ingeniería de Software</span>
+          <span class="date text-sm">1 archivo</span>
+        </li>
+
+        <li onclick="openModal(
+                'Educación media',
+                `
+                      - 📄 Bachiller técnico en informatica.
+                          Institución: Institución Educativa Ana Josefa Morales Duque.
+                          Estado: Culminado.
+                          Certificación: 25 Noviembre 2011
+                `
+              )">
+          <span class="icon"><img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284038_1280.png" alt="Folder"/></span>
+          <span class="name text-sm">Educación media</span>
+          <span class="date text-sm">1 archivo</span>
+        </li>
+      </ul>
     </div>
   </div>
+
+  <!-- Modal macOS -->
+  <div class="mac-modal" id="macModal">
+    <div class="modal-window">
+      <div class="modal-titlebar">
+        <div class="controls">
+          <span class="c red" onclick="closeModal()"></span>
+          <span class="c yellow"></span>
+          <span class="c green"></span>
+        </div>
+        <span class="title" id="modalTitle"></span>
+      </div>
+
+      <div class="modal-body">
+        <p id="modalContent"></p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+</section>
+
 <br>
 <br>
-  <!-- BOTONES A DASHBOARDS -->
-<section class="portfolio-container">
+<br>
+<br>
 
-  <div class="portfolio-card">
-    <h3>Análisis estadístico Luis Díaz</h3>
-    <p>Los datos mas relevantes de la carrera de Luis Díaz, Jugador de fútbol nacido en Colombia.</p>
-    <a href="Dashboard2.html" class="portfolio-btn">Ver Proyecto</a>
+<hr>
+
+    <!-------------------------------------------- EXPERIENCIA PROFESIONAL ---------------------------------------------->
+    <section id="experiencia" class="mt-16">
+      <div class="flex items-center justify-center text-center">
+        <h2 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">Experiencia Profesional</h2>
+      </div>
+      <br>
+      <br>
+      <div id="projectsGrid" class="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- project cards (repetitive rich markup for length + SEO) -->
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Cosmoagro S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Cosmoagro S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Cosmoagro S.A."></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Cosmoagro S.A.
+    </h3>
+  </div>
+  <!-- Contenedor de imagen principal con avatar -->
+  <div class="relative p-4">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_cover.jpg?raw=true" 
+         alt="Proyecto 4" 
+         class="w-full h-full object-cover rounded-md shadow-sm">
+    <!-- Avatar flotante -->
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  <!-- Contenido de la ventana -->
+  <div class="mt-8 p-4"> <!-- mt-8 deja espacio para el avatar -->
+    <h4 class="font-semibold text-lg text-emerald-500">Analista de producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Optimizar procesos, analizar indicadores y mejorar eficiencia operativa, garantizando calidad, continuidad y control en la planta.</p>
+
+    <div class="mt-3 flex items-center gap-3">
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2024/12/10</span>
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">Actualidad</span>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Cosmoagro S.A.">Ver</button>
+    </div>
+  </div>
+</article>
+
+
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Coca Cola Femsa"></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Coca Cola Femsa"></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Coca Cola Femsa"></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Coca Cola Femsa
+    </h3>
+  </div>
+  <!-- Contenedor de imagen principal con avatar -->
+  <div class="relative p-4">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_cover.jpg?raw=true" 
+         alt="Proyecto 4" 
+         class="w-full h-full object-cover rounded-md shadow-sm">
+    <!-- Avatar flotante -->
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  <!-- Contenido de la ventana -->
+  <div class="mt-8 p-4"> <!-- mt-8 deja espacio para el avatar -->
+    <h4 class="font-semibold text-lg text-rose-500">Técnico Analista</h4>
+    <p class="text-sm text-slate-700 mt-1">Enfocado en el control de procesos, mejora continua y gestión eficiente de datos para impulsar la productividad del proceso y así mismo el cumplimiento de la calidad del producto.</p>
+
+    <div class="mt-3 flex items-center gap-3">
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2023/07/07</span>
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2024/06/07</span>
+           <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Coca Cola Femsa">Ver</button>
+    </div>
+  </div>
+</article>
+
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+  
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Cadena S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Cadena S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Cadena S.A."></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Cadena S.A.
+    </h3>
   </div>
 
-  <div class="portfolio-card">
-    <h3>Dashboard Colombia</h3>
-    <p>Datos macroeconómicos e indicadores nacionales.</p>
-    <a href="Dashboard3.html" class="portfolio-btn">Ver Proyecto</a>
+  <div class="relative p-4">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_cover.jpg?raw=true" 
+         alt="Proyecto 4" 
+         class="w-full h-full object-cover rounded-md shadow-sm">
+    
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  
+  <div class="mt-8 p-4">
+    <h4 class="font-semibold text-lg text-amber-500">Supervisor de Producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Experiencia liderando equipos, asegurando el cumplimiento del plan, optimizando procesos y garantizando calidad, seguridad y eficiencia operativa.</p>
+
+    <div class="mt-3 flex items-center gap-3">
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2020/01/20</span>
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2023/02/17</span>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Cadena S.A.">Ver</button>
+    </div>
+  </div>
+</article>
+
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Postobón S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Postobón S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Postobón S.A."></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Postobón S.A.
+    </h3>
+  </div>
+  
+  <div class="relative p-4">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_cover.jpg?raw=true" 
+         alt="Proyecto 4" 
+         class="w-full h-full object-cover rounded-md shadow-sm">
+    
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+ 
+  <div class="mt-8 p-4">
+    <h4 class="font-semibold text-lg text-cyan-500">Analista de producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Orientado a optimizar flujos, reducir desperdicios y asegurar operaciones eficientes mediante análisis de datos y mejora continua.</p>
+
+    <div class="mt-3 flex items-center gap-3">
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/03/08</span>
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/08/06</span>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Postobón S.A.">Ver</button>
+    </div>
+  </div>
+</article>
+
+        
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Laboratorios OSA S.A.S"></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Laboratorios OSA S.A.S"></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Laboratorios OSA S.A.S"></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Laboratorios OSA S.A.S
+    </h3>
+  </div>
+  <!-- Contenedor de imagen principal con avatar -->
+  <div class="relative p-4">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_cover.jpg?raw=true" 
+         alt="Proyecto 4" 
+         class="w-full h-full object-cover rounded-md shadow-sm">
+    <!-- Avatar flotante -->
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  <!-- Contenido de la ventana -->
+  <div class="mt-8 p-4"> <!-- mt-8 deja espacio para el avatar -->
+    <h4 class="font-semibold text-lg text-rose-500">Analista de producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Gestión de indicadores y optimización de procesos para mantener operaciones estables, eficientes y de alta calidad.</p>
+
+    <div class="mt-3 flex items-center gap-3">
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2018/06/16</span>
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/03/06</span>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Laboratorios OSA S.A.">Ver</button>
+    </div>
+  </div>
+</article>
+
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Smurfit Westrock S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Smurfit Westrock S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Smurfit Westrock S.A."></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Smurfit Westrock S.A.
+    </h3>
+  </div>
+  <!-- Contenedor de imagen principal con avatar -->
+  <div class="relative p-4">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_cover.jpg?raw=true" 
+         alt="Proyecto 4" 
+         class="w-full h-full object-cover rounded-md shadow-sm">
+    <!-- Avatar flotante -->
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  <!-- Contenido de la ventana -->
+  <div class="mt-8 p-4"> <!-- mt-8 deja espacio para el avatar -->
+    <h4 class="font-semibold text-lg text-rose-500">Incremento de producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Impulsar el aumento de producción mediante seguimiento en planta, control de tiempos, apoyo a los operarios y mejora de la eficiencia en cada etapa del proceso.</p>
+
+    <div class="mt-3 flex items-center gap-3">
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2017/03/24</span>
+      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2018/03/24</span>
+      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Smurfit Westrock S.A.">Ver</button>
+    </div>
+  </div>
+</article>
+        <br>
+        <br>
+        <br>
+
+      </div>
+    </section>
+
+    <!---------------------------------------- DESARROLLOS E INNOVACIONES ---------------------------------------------------------------->
+     <section id="desarrollo"
+  class="mt-4 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20 bg-cover bg-center bg-no-repeat"
+  style="background-image: linear-gradient(to bottom,
+        rgba(12, 12, 12, 0.062),
+        rgba(0, 0, 0, 0.062),
+        rgba(0, 0, 0, 0.062)
+        ), url('https://cdn.pixabay.com/photo/2020/05/31/17/10/fence-5243343_1280.jpg');">
+  
+  <!-- Overlay para mejorar la lectura -->
+  <div class="absolute inset-0 bg-black/50 rounded-5xl"></div>
+  <div class="w-full max-w-4xl mx-auto py-16">
+  <br>
+  <div class="relative z-10">
+    <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterling-text">Desarrollos e innovaciones</h2>
+  <br>
+    <br>
+      <div class="flex justify-center mb-20">
+          <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
+
+            <a class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer" onclick="openModal('Aviso de Confidencialidad y Protección de Datos',
+                `
+                La información presentada, referida únicamente a los datos recogidos en el marco de los proyectos, es de carácter ficticio y se utiliza exclusivamente con fines académicos, demostrativos o técnicos, sin emplear ni divulgar datos reales o confidenciales. El proyecto respeta la privacidad, la confidencialidad y los derechos de autor, y cumple con la Ley 1581 de 2012 y el Decreto 1377 de 2013 en Colombia sobre protección de datos personales, así como con el Reglamento General de Protección de Datos (GDPR – Reglamento (UE) 2016/679). Asimismo, se acoge a la Ley 23 de 1982 y a la Decisión Andina 351 de 1993 en materia de derechos de autor y propiedad intelectual, garantizando un manejo ético y responsable de la información.               
+  
+                Santiago Sterling - Desarrollador de software.
+                `
+              )"> Ver protección de datos </a>
+            
+  
+          </div>
+        
+      </div>
+    <div class="mt-6 grid lg:grid-cols-2 gap-6">
+<article class="p-6 bg-white/10 backdrop-blur-md rounded-xl">
+  <h3 class="font-semibold text-white text-lg">Control de inventario</h3>
+  <p class="text-slate-200 mt-2 text-sm"><strong>Contexto:</strong> Sistema integral en Excel con macros y VBA para gestionar inventarios, que permite registrar productos, controlar ingresos y salidas, consultar stock en tiempo real, generar reportes y elaborar pedidos al almacén, asegurando trazabilidad y eficiencia.</p>
+  
+  <!-- CARRUSEL DE IMÁGENES -->
+  <div class="relative mt-4 group">
+    <div class="carousel flex overflow-x-auto gap-2 snap-x snap-mandatory scrollbar-hide">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen1.png?raw=true" alt="Santiago Sterling | Control de Inventario 1"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen2.png?raw=true" alt="Santiago Sterling | Control de Inventario 2"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen3.png?raw=true" alt="Santiago Sterling | Control de Inventario 3"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen4.png?raw=true" alt="Santiago Sterling | Control de Inventario 4"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen5.png?raw=true" alt="Santiago Sterling | Control de Inventario 5"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen6.png?raw=true" alt="Santiago Sterling | Control de Inventario 6"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen7.png?raw=true" alt="Santiago Sterling | Control de Inventario 7"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen8.png?raw=true" alt="Santiago Sterling | Control de Inventario 8"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen9.png?raw=true" alt="Santiago Sterling | Control de Inventario 9"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen10.png?raw=true" alt="Santiago Sterling | Control de Inventario 10"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen11.png?raw=true" alt="Santiago Sterling | Control de Inventario 11"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen12.png?raw=true" alt="Santiago Sterling | Control de Inventario 12"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen13.png?raw=true" alt="Santiago Sterling | Control de Inventario 13"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen14.png?raw=true" alt="Santiago Sterling | Control de Inventario 14"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen15.png?raw=true" alt="Santiago Sterling | Control de Inventario 15"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen16.png?raw=true" alt="Santiago Sterling | Control de Inventario 16"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen17.png?raw=true" alt="Santiago Sterling | Control de Inventario 17"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen18.png?raw=true" alt="Santiago Sterling | Control de Inventario 18"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen19.png?raw=true" alt="Santiago Sterling | Control de Inventario 19"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+      <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen20.png?raw=true" alt="Santiago Sterling | Control de Inventario 20"
+           class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+           onclick="openModalImagenes(this.src)">
+    </div>
+    <p class="text-xs text-orange-500 mt-2">Desliza las imágenes →</p>
+    <p class="text-sm text-slate-200 mt-2">Fecha de ejecución: Mayo de 2025</p>
+  </div>
+  
+  <div class="mt-4 grid grid-cols-2 gap-4">
+    <div class="bg-white/10 p-4 rounded-2xl">
+      <div class="text-sm text-slate-300">Oportunidad de mejora:</div>
+      <div class="mt-2 text-slate-100 text-sm">No existia una forma de control de inventario.</div>
+    </div>
+    <div class="bg-white/10 p-4 rounded-2xl">
+      <div class="text-sm text-slate-300">Plan de acción:</div>
+      <div class="mt-2 text-slate-100 text-sm">Desarrollé un sistema ERP desde Excel con macros.</div>
+    </div>
   </div>
 
-  <div class="portfolio-card">
-    <h3>PAGINA PRUEBA</h3>
-    <p>PRUEBA</p>
-    <a href="Dashboard1.html" class="portfolio-btn">Ver Proyecto</a>
+  <div class="mt-4">
+    <details class="bg-white/10 p-3 rounded-2xl">
+      <summary class="font-medium text-white cursor-pointer text-sm">Resultados obtenidos</summary>
+      <ol class="mt-3 list-decimal list-inside text-slate-200 text-sm">
+        <li>Visibilidad en tiempo real del inventario.</li>
+        <li>Reducción de quiebres de stock.</li>
+        <li>Disminución del sobreinventario.</li>
+        <li>Mejora en la trazabilidad de productos.</li>
+        <li>Optimización de procesos operativos.</li>
+        <li>Mejor planificación de compras y producción.</li>
+        <li>Reducción de pérdidas y mermas.</li>
+        <li>Toma de decisiones basada en datos.</li>
+        <li>Cumplimiento normativo y auditorías más simples.</li>
+      </ol>
+    </details>
+  </div>
+</article>
+
+<article class="p-6 bg-white/10 backdrop-blur-md rounded-xl">
+  <h3 class="font-semibold text-white text-lg">Comparación de OP</h3>
+  <p class="text-slate-200 mt-2 text-sm"><strong>Contexto:</strong> El sistema permite cargar archivos de Excel sin restricciones y compararlos para detectar coincidencias, diferencias e inconsistencias. Optimiza el análisis de datos al mejorar la trazabilidad, reducir errores manuales y agilizar la gestión de información.</p>
+  
+  <!-- CARRUSEL DE IMÁGENES -->
+  <div class="relative mt-4 group">
+    <div class="carousel flex overflow-x-auto gap-2 snap-x snap-mandatory scrollbar-hide">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%201.jpg?raw=true" alt="Santiago Sterling | Análisis de información 1"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModalImagenes(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%202.jpg?raw=true" alt="Santiago Sterling | Análisis de información 2"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModalImagenes(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%203.jpg?raw=true" alt="Santiago Sterling | Análisis de información 3"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModalImagenes(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%204.jpg?raw=true" alt="Santiago Sterling | Análisis de información 4"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModalImagenes(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%205.jpg?raw=true" alt="Santiago Sterling | Análisis de información 5"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModalImagenes(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%206.jpg?raw=true" alt="Santiago Sterling | Análisis de información 6"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModalImagenes(this.src)">
+          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%207.jpg?raw=true" alt="Santiago Sterling | Análisis de información 7"
+               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
+               onclick="openModalImagenes(this.src)">
+    </div>
+    <p class="text-xs text-orange-500 mt-2">Desliza las imágenes →</p>
+    <p class="text-sm text-slate-200 mt-2">Fecha de ejecución: Junio de 2025</p>
+  </div>
+  
+  <div class="mt-4 grid grid-cols-2 gap-4">
+    <div class="bg-white/10 p-4 rounded-2xl">
+      <div class="text-sm text-slate-300">Oportunidad de mejora:</div>
+      <div class="mt-2 text-slate-100 text-sm">Dificultad para hacer trazabilidad de los datos.</div>
+    </div>
+    <div class="bg-white/10 p-4 rounded-2xl">
+      <div class="text-sm text-slate-300">Plan de acción:</div>
+      <div class="mt-2 text-slate-100 text-sm">Programé un sistema que carga y compara Excel.</div>
+    </div>
   </div>
 
-  <div class="portfolio-card">
-    <h3>Red Pericial</h3>
-    <p>Presentación de los servicios de la Red Pericial, asesorias judiciales para instituciones medicas.</p>
-    <a href="producto.html" class="portfolio-btn">Ver Proyecto</a>
+  <div class="mt-4">
+    <details class="bg-white/10 p-3 rounded-2xl">
+      <summary class="font-medium text-white cursor-pointer text-sm">Resultados obtenidos</summary>
+      <ol class="mt-3 list-decimal list-inside text-slate-200 text-sm">
+        <li>Automatización del análisis de archivos Excel.</li>
+        <li>Comparación estructurada de múltiples fuentes de datos.</li>
+        <li>Detección temprana de inconsistencias.</li>
+        <li>Mejora en la trazabilidad de la información.</li>
+        <li>Reducción de errores humanos.</li>
+        <li>Mayor confiabilidad de los datos.</li>
+        <li>Agilización en la gestión de información.</li>
+        <li>Escalabilidad en el análisis de datos.</li>
+        <li>Mejor control y gobernanza de datos.</li>
+      </ol>
+    </details>
+  </div>
+</article>
+
+      
+    </div>
+  </div>
+  </div>
+  <div class="flex justify-center mb-20">
+  <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
+
+      <a href="proyectos20.html" class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
+        Ver proyectos de software
+      </a>
+
+      <a href="windows.html" class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
+        Ver repositorio
+      </a>
+  </div>
+  </div>
+</section>
+<br>
+<br>
+<br>
+
+
+    <!-- COMPETENCIAS METODOLOGICAS -->
+<section id="competencia" class="mt-16 w-full flex flex-col justify-center items-center mx-auto">
+  <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+    Competencias metodológicas
+  </h2>
+  
+<div class="carousel-wrapper">
+  <div class="carousel" id="carousel">
+
+    <div class="card" style="background-image:url('https://cdn.pixabay.com/photo/2023/07/30/09/12/red-hair-girl-8158373_1280.jpg');">
+      <div class="card-content">
+        <h1 class="text-lg">Lenguajes de programación</h1>
+        <p class="text-sm">Explora los idiomas que me permiten innovar.</p>
+        <button onclick="openAppleUI()">Ver</button>
+      </div>
+    </div>
+
+    <div class="card" style="background-image:url('https://cdn.pixabay.com/photo/2022/10/14/08/03/earbuds-7520738_1280.jpg');">
+      <div class="card-content">
+        <h1 class="text-2xl">Frameworks</h1>
+        <p class="text-sm">Conoce como cada diseño tiene su origen.</p>
+        <button onclick="openAppleUI2()">Ver</button>
+      </div>
+    </div>
+
+    <div class="card" style="background-image:url('https://cdn.pixabay.com/photo/2020/05/03/07/43/green-5124174_1280.jpg');">
+      <div class="card-content">
+        <h1 class="text-lg">Habilidades extra</h1>
+        <p class="text-sm">Visualiza las herramientas adicionales que manejo.</p>
+        <button onclick="openAppleUI3()">Ver</button>
+      </div>
+    </div>
+
+    <div class="card" style="background-image:url('https://cdn.pixabay.com/photo/2021/10/01/16/21/eris-6672934_960_720.jpg');">
+      <div class="card-content">
+        <h1 class="text-lg">Inteligencia Interpersonal</h1>
+        <p class="text-sm">Habilidades que me destacan en entornos de trabajo en equipo.</p>
+        <button onclick="openAppleUI4()">Ver</button>
+      </div>
+    </div>
+
   </div>
 
-  <div class="portfolio-card">
-    <h3>Reproductor de Música</h3>
-    <p>Puedes escuchar música de muestra, o cargar archivos de música desde tu dispositivo</p>
-    <a href="Music.html" class="portfolio-btn">Ver Proyecto</a>
-  </div>
+  <div id="appleUI" class="apple-ui hidden">
+  <div class="apple-blur" onclick="closeAppleUI()"></div>
 
-  <div class="portfolio-card">
-    <h3>Restaurante</h3>
-    <p>Página de promoción del menú de un restaurante.</p>
-    <a href="Restaurante.html" class="portfolio-btn">Ver Proyecto</a>
-  </div>
+  <div class="apple-window" onclick="event.stopPropagation()">
+    <div class="apple-header">
+      <span class="dot red" onclick="closeAppleUI()"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <p>Lenguajes de programación</p>
+    </div>
 
-  <div class="portfolio-card">
-    <h3>Santiago Sterling</h3>
-    <p>Página de promoción de mi portafolio.</p>
-    <a href="index20.html" class="portfolio-btn">Ver Proyecto</a>
-  </div>
+    <div class="apple-apps">
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png">
+        <span class="text-white">Javascript</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/120px-Python-logo-notext.svg.png">
+        <span class="text-white">Python</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Csharp_Logo.png/330px-Csharp_Logo.png">
+        <span class="text-white">C#</span>
+      </div>
 
-  <div class="portfolio-card">
-    <h3>Test Análisis de Datos</h3>
-    <p>Evaluación de conocimientos en análisis y visualización.</p>
-    <a href="registro.html" class="portfolio-btn">Ver Proyecto</a>
+      <div class="app-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png">
+        <span class="text-white">SQL</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png">
+        <span class="text-white">NodeJS</span>
+      </div>
+    </div>
   </div>
+</div>
+
+</div>
+
+
+  <div id="appleUI2" class="apple-ui hidden">
+  <div class="apple-blur" onclick="closeAppleUI2()"></div>
+
+  <div class="apple-window" onclick="event.stopPropagation()">
+    <div class="apple-header">
+      <span class="dot red" onclick="closeAppleUI2()"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <p>Frameworks</p>
+    </div>
+
+    <div class="apple-apps">
+      <div class="app-icon">
+        <img src="https://e7.pngegg.com/pngimages/273/754/png-clipart-html-logo-world-wide-web-consortium-coding-angle-text-thumbnail.png">
+        <span class="text-white">HTML</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://images.seeklogo.com/logo-png/18/2/css3-logo-png_seeklogo-186678.png">
+        <span class="text-white">CSS</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/2560px-Tailwind_CSS_Logo.svg.png">
+        <span class="text-white">Tailwind</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png">
+        <span class="text-white">React</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://images.icon-icons.com/2699/PNG/512/angular_logo_icon_169595.png">
+        <span class="text-white">Angular</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://icon-icons.com/download-file?file=https%3A%2F%2Fimages.icon-icons.com%2F2415%2FPNG%2F256%2Fdjango_original_logo_icon_146559.png&id=146559&pack_or_individual=pack">
+        <span class="text-white">Django</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/.NET_Core_Logo.svg/1200px-.NET_Core_Logo.svg.png">
+        <span class="text-white">.Net</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+  <div id="appleUI3" class="apple-ui hidden">
+  <div class="apple-blur" onclick="closeAppleUI3()"></div>
+
+  <div class="apple-window" onclick="event.stopPropagation()">
+    <div class="apple-header">
+      <span class="dot red" onclick="closeAppleUI3()"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <p>Habilidades Extra</p>
+    </div>
+
+    <div class="apple-apps">
+      <div class="app-icon">
+        <img src="https://icon-icons.com/download-file?file=https%3A%2F%2Fimages.icon-icons.com%2F2415%2FPNG%2F512%2Fgit_original_wordmark_logo_icon_146510.png&id=146510&pack_or_individual=pack">
+        <span class="text-white">Git</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png">
+        <span class="text-white">GitHub</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://cdn.pixabay.com/photo/2022/01/16/17/24/wordpress-6942722_640.png">
+        <span class="text-white">WordPress</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://icon-icons.com/download-file?file=https%3A%2F%2Fimages.icon-icons.com%2F2397%2FPNG%2F512%2Fmicrosoft_office_excel_logo_icon_145720.png&id=145720&pack_or_individual=pack">
+        <span class="text-white">Excel Avanzado</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/1051px-Adobe_Photoshop_CC_icon.svg.png">
+        <span class="text-white">Photoshop</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Adobe_Illustrator_CC_icon.svg/2048px-Adobe_Illustrator_CC_icon.svg.png">
+        <span class="text-white">Illustrator</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/New_Power_BI_Logo.svg/1200px-New_Power_BI_Logo.svg.png">
+        <span class="text-white">Power BI</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk_Jv-DarP4Iru8KzYEqY6hm1JiowLfN8Mig&s">
+        <span class="text-white">DAX</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div id="appleUI4" class="apple-ui hidden">
+  <div class="apple-blur" onclick="closeAppleUI4()"></div>
+
+  <div class="apple-window" onclick="event.stopPropagation()">
+    <div class="apple-header">
+      <span class="dot red" onclick="closeAppleUI4()"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <p>Inteligencia Interpersonal</p>
+    </div>
+
+    <div class="apple-apps">
+      <div class="app-icon">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXrPUwJ6tW0KozNRbo0cRYNbdoiH5wln83Dg&s">
+        <span class="text-white">Trabajo en equipo</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://images.seeklogo.com/logo-png/42/2/scrum-logo-png_seeklogo-428358.png">
+        <span class="text-white">Scrum</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://w7.pngwing.com/pngs/921/147/png-transparent-public-relations-communication-organization-marketing-logo-las-service-industry-marketing-plan.png">
+        <span class="text-white">Comunicación</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/860/860430.png">
+        <span class="text-white">Liderazgo</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.freepik.com/512/17772/17772810.png">
+        <span class="text-white">Responsabilidad</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/5526/5526196.png">
+        <span class="text-white">Pensamiento critico</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.freepik.com/512/1838/1838332.png">
+        <span class="text-white">Resolución de problemas</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.freepik.com/256/12316/12316790.png?semt=ais_white_label">
+        <span class="text-white">Adaptabilidad</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.freepik.com/512/18290/18290950.png">
+        <span class="text-white">Atención al detalle</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="container">
+        <!-- Chip Stats Section -->
+        <div class="chip-stats">
+            <div class="chip-icon">
+                <div class="chip-box">
+                    <div class="chip-name">Datos</div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-label">Aprendizaje</div>
+                    <div class="stat-value blue">10x</div>
+                    <div class="stat-description">
+                        estoy en<br>
+                        en constante<br>
+                        aprendizaje
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">Adaptación</div>
+                    <div class="stat-value blue">Alto</div>
+                    <div class="stat-description">
+                        me adapto<br>
+                        fácil a<br>
+                        tecnologías
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+  
+
 </section>
     <br>
+    <br>
+    <br>
+    <br>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+   <section class="hero">
 
-    <!-- Proyecto con carrusel -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile hover:shadow-2xl hover:scale-[1.02] transition-transform duration-300">
-      <div class="flex items-start justify-between mb-2">
-        <div>
-          <h4 class="text-xl font-semibold text-orange-500">Control de inventario</h4>
-        </div>
-        <div class="text-s text-orange-500">2025</div>
+    <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+    Visión Académica
+  </h2>
+  <p class="titulosSterlingNegro-text text-2xl">Mi visión es explorar nuevos horizontes digitales.</p>
+    <div class="visual">
+      <!-- Imagen principal -->
+      <img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284041_1280.png"
+           alt="Astronaut UX">
+
+      <!-- Floating labels -->
+      <div class="tag left-top text-black">
+        Fundamentos Científicos y Algorítmicos
+        <span>Sustentos técnicos sólidos.</span>
       </div>
 
-      <!-- Carrusel -->
-      <div class="relative mt-4 group">
-        <div class="carousel flex overflow-x-auto gap-2 snap-x snap-mandatory scrollbar-hide">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen1.png?raw=true" alt="Inventario 1"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen2.png?raw=true" alt="Inventario 2"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen3.png?raw=true" alt="Inventario 3"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen4.png?raw=true" alt="Inventario 4"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen5.png?raw=true" alt="Inventario 5"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen6.png?raw=true" alt="Inventario 6"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen7.png?raw=true" alt="Inventario 7"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen8.png?raw=true" alt="Inventario 8"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen9.png?raw=true" alt="Inventario 9"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen10.png?raw=true" alt="Inventario 10"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen11.png?raw=true" alt="Inventario 11"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen12.png?raw=true" alt="Inventario 12"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen13.png?raw=true" alt="Inventario 13"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen14.png?raw=true" alt="Inventario 14"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen15.png?raw=true" alt="Inventario 15"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen16.png?raw=true" alt="Inventario 16"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen17.png?raw=true" alt="Inventario 17"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen18.png?raw=true" alt="Inventario 18"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen19.png?raw=true" alt="Inventario 19"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen20.png?raw=true" alt="Inventario 20"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-        </div>
+      <div class="tag left-mid text-black">
+        Ingeniería de Software y Arquitectura
+        <span>Comprensión profunda de metodologías.</span>
+      </div>
+
+      <div class="tag right-top text-black">
+        Aprendizaje Continuo e Investigación Tecnológica
+        <span>Capacidad académica para innovar.</span>
+      </div>
+
+      <div class="tag right-mid text-black">
+        Ética, Impacto y Pensamiento Sistémico
+        <span>Impacto social del software.</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a class="button primary px-5 py-2" onclick="launchOrbit()">En órbita</a>
+      <a class="button secondary px-5 py-2">Lanzamiento en curso</a>
+    </div>
+
+    <!-- OVERLAY FULLSCREEN -->
+    <div id="orbit-overlay">
+      <div class="rocket">🚀</div>
+      <div class="code-stream">
+        <span>Hola mundo</span>
+        <span>f(x)=x²+2x+1</span>
+        <span>∫₀∞ e⁻ˣ dx</span>
+        <span>for i in range(10):</span>
+        <span>print("Orbit")</span>
+        <span>λ = np.linalg.eig(A)</span>
+        <span>Desarrollando competencias para crear software robusto y escalable.</span>
+        <span>Internauta cósmico</span>
+      </div>
+    </div>
+
+</section>
+
+
+    <!-- BLOG PREVIEW -->
+  <section id="estrategia"
+          class="mt-4 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20"
+          style="
+            --bg-color: linear-gradient(
+             
+              #0c0c0c,
+              #000000,
+              #000000
+            );
+            background: var(--bg-color);
+          "
+        >
         <br>
-        <p class="text-s text-orange-500">Desliza las imagenes -> </p>
-                  <p class="text-s text-slate-200">Sistema integral en Excel con macros y VBA para gestionar inventarios, que permite registrar productos, controlar ingresos y salidas, consultar stock en tiempo real, generar reportes y elaborar pedidos semanales al almacén, asegurando trazabilidad y eficiencia.</p>
-      </div>
-    </article>
-
-    <!-- Otro proyecto -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile hover:shadow-2xl hover:scale-[1.02] transition-transform duration-300">
-      <div class="flex items-start justify-between mb-2">
-        <div>
-          <h4 class="text-xl font-semibold text-orange-500">Búsqueda de datos</h4>
-          
-        </div>
-        <div class="text-s text-orange-500">2025</div>
-      </div>
-
-      <!-- Carrusel -->
-      <div class="relative mt-4 group">
-        <div class="carousel flex overflow-x-auto gap-2 snap-x snap-mandatory scrollbar-hide">
-          <img src="https://github.com/Santiago131440/Imagenes-Excel/blob/main/Captura%20de%20pantalla%202025-09-06%20191801.jpg?raw=true" alt="Busqueda de datos 1"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Imagenes-Excel/blob/main/Captura%20de%20pantalla%202025-09-06%20191906.jpg?raw=true" alt="Busqueda de datos 2"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Imagenes-Excel/blob/main/Captura%20de%20pantalla%202025-09-06%20191928.jpg?raw=true" alt="Busqueda de datos 2"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-        </div>
         <br>
-        <p class="text-s text-orange-500">Desliza las imagenes -> </p>
-                  <p class="text-s text-slate-200">Proceso de consulta de información en el sistema: inicialmente, se debe seleccionar el botón correspondiente al área de fabricación del producto. Posteriormente, se ingresa el nombre de la máquina o del tanque y, al confirmar la acción con el botón Aceptar, el sistema despliega automáticamente toda la información relacionada con la búsqueda realizada.</p>
-      </div>
-    </article>
-
-    <!-- Otro proyecto -->
-    <article class="relative p-4 rounded-2xl liquid-card file-tile hover:shadow-2xl hover:scale-[1.02] transition-transform duration-300">
-      <div class="flex items-start justify-between mb-2">
-        <div>
-          <h4 class="text-xl font-semibold text-orange-500">Comparación de OP</h4>
-        </div>
-        <div class="text-s text-orange-500">2025 </div>
-      </div>
-
-      <!-- Carrusel -->
-      <div class="relative mt-4 group">
-        <div class="carousel flex overflow-x-auto gap-2 snap-x snap-mandatory scrollbar-hide">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%201.jpg?raw=true" alt="Modelo de datos 1"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%202.jpg?raw=true" alt="Modelo de datos 2"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%203.jpg?raw=true" alt="Modelo de datos 3"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%204.jpg?raw=true" alt="Modelo de datos 4"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%205.jpg?raw=true" alt="Modelo de datos 5"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%206.jpg?raw=true" alt="Modelo de datos 6"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%207.jpg?raw=true" alt="Modelo de datos 7"
-               class="w-full h-40 object-cover rounded-lg cursor-pointer snap-center hover:opacity-80 transition"
-               onclick="openModal(this.src)">
-        </div>
         <br>
-         <p class="text-s text-orange-500">Desliza las imagenes -> </p>
-                  <p class="text-s text-slate-200">El sistema permite cargar archivos de Excel sin restricciones y compararlos para detectar coincidencias, diferencias e inconsistencias. Optimiza el análisis de datos al mejorar la trazabilidad, reducir errores manuales y agilizar la gestión de información en entornos administrativos e industriales.</p>
-         
-      </div>
-    </article>
-  </div>
+  <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterling-text">
+    Estrategias laborales
+  </h2>
+  <br>
+  <br>
+  <br>
+  <br>
+
+ <div class="container flex justify-center items-center min-h-screen px-5 md:px-10">
+    <div class="w-full max-w-4xl mx-auto py-16">
+
+        <div class="content-grid">
+            <div>
+                <h1 class="text-3xl titulosSterling-text font-bold">Estrategia de excelencia técnica con enfoque en negocio</h1>
+            </div>
+            <div>
+                <p class="description text-white/50">
+                    Soy un desarrollador que no solo escribe código, sino que resuelve problemas reales del negocio mediante soluciones técnicas sólidas y medibles.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div>
+                <h1 class="text-3xl titulosSterling-text font-bold">Estrategia de innovación continua y aprendizaje dirigido</h1>
+            </div>
+            <div>
+                <p class="description text-white/50">
+                    Me mantengo permanentemente relevante en un sector de rápida evolución, enfocando el aprendizaje en tecnologías con aplicación real.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div>
+                <h1 class="text-3xl titulosSterling-text font-bold">Estrategia de posicionamiento profesional y liderazgo técnico</h1>
+            </div>
+            <div>
+                <p class="description text-white/50">
+                   Construir una reputación sólida como referente técnico confiable dentro y fuera de la organización.
+                </p>
+            </div>
+        </div>
+    </div>
+
   </div>
 </section>
 
-<!-- Modal de imágenes -->
-<div id="imageModal" class="fixed inset-0 hidden bg-black bg-opacity-90 flex flex-col items-center justify-center z-50 p-6 text-center">
-  <!-- Botón cerrar -->
-  <button onclick="closeModal()" class="absolute top-4 right-6 text-white text-4xl font-bold hover:text-orange-600 transition">&times;</button>
-  
-  <!-- Flecha izquierda -->
-  <button onclick="prevImage()" class="absolute left-4 text-white text-5xl font-bold hover:text-orange-600 transition">&#10094;</button>
-  
-  <!-- Imagen mostrada -->
-  <img id="modalImage" src="" class="max-h-[80%] max-w-[90%] rounded-lg shadow-2xl transition mb-4">
-  
-  <!-- Título del proyecto -->
-  <h3 id="modalTitle" class="text-2xl font-semibold text-orange-400 drop-shadow-lg"></h3>
-  
-  <!-- Flecha derecha -->
-  <button onclick="nextImage()" class="absolute right-4 text-white text-5xl font-bold hover:text-orange-500 transition">&#10095;</button>
-</div>
-
-    <footer class="text-center text-slate-400 py-6">© <span id="year"></span> Desarrollado por Santiago Sterling — Analista de datos</footer>
+    <br>
+    <br>
+     <br>
+    <br>
+     <br>
+    <br>
+    <!-- CONTACT -->
+       <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+        Contacto
+      </h2>
+      <section
+        id="contacto"
+        class="relative mt-12 max-w-5xl mx-auto px-3 sm:px-10 py-7 sm:py-8
+              rounded-[20px]
+              bg-white/70 backdrop-blur-xl
+              border border-black/30
+              shadow-[0_20px_30px_-20px_rgba(0,0,0,0.15)]
+              overflow-hidden"
+      >
+  <!-- Imagen de fondo -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src="https://plus.unsplash.com/premium_photo-1755843842269-b1c80e7e34ba?q=80&w=869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Fondo contacto"
+      class="w-full h-full object-cover"
+    />
+    <!-- Overlay para contraste -->
+    <div class="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
   </div>
 
-  <script>
+  <!-- Contenido -->
+  <div class="relative z-10">
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  const ctx = document.getElementById('miniChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Santiago Sterling - 2020', 'Santiago Sterling - 2021', 'Santiago Sterling - 2022', 'Santiago Sterling - 2023', 'Santiago Sterling - 2024', 'Santiago Sterling - 2025'],
-      datasets: [{
-        label: 'Curva de aprendizaje',
-        data: [10, 15, 8, 20, 18, 25],
-        borderColor: 'orange',
-        backgroundColor: 'rgba(255,165,0,0.2)',
-        tension: 0.5,
-        fill: true
-      }]
-    },
-    options: {
-      plugins: { legend: { display: false } },
-      scales: { x: { display: false }, y: { display: false } }
-    }
-  });
-</script>
+    <!-- Descripción -->
+    <p
+      class="mt-1 text-sm sm:text-sm leading-relaxed
+             text-gray-600 max-w-xl"
+    >
+      Quedo atento a oportunidades acordes a mi perfil y disponible para coordinar una llamada.
+    </p>
 
-<script>
-  function openModal(src) {
-    document.getElementById("modalImage").src = src;
-    document.getElementById("imageModal").classList.remove("hidden");
-  }
-  function closeModal() {
-    document.getElementById("imageModal").classList.add("hidden");
-  }
-</script>
+    <!-- Formulario -->
+    <form
+      id="contactForm"
+      class="mt-14 space-y-8 max-w-xl"
+    >
 
+      <!-- Nombre -->
+      <div class="space-y-2">
+        <label class="block text-sm font-medium tracking-wide text-gray-600">
+          Nombre
+        </label>
 
+        <input
+          required
+          name="name"
+          placeholder="Tu nombre"
+          class="w-full h-10 px-6 py-o
+                 rounded-full
+                 bg-white/60 backdrop-blur-xl
+                 border border-black/40
+                 text-sm text-gray-900 placeholder:text-gray-400
+                 shadow-[0_8px_24px_rgba(0,0,0,0.06)]
+                 focus:outline-none
+                 focus:bg-white/80
+                 focus:border-black/10
+                 focus:shadow-[0_10px_30px_rgba(0,0,0,0.10)]
+                 transition-all duration-300 ease-out"
+        />
+      </div>
 
+      <!-- Correo -->
+      <div class="space-y-1">
+        <label class="text-sm font-medium text-gray-700">
+          Correo
+        </label>
+        <input
+          required
+          type="email"
+          name="email"
+          placeholder="tu@correo.com"
+          class="w-full h-10 px-6 py-0
+                 rounded-full
+                 bg-white/60 backdrop-blur-xl
+                 border border-black/40
+                 text-sm text-gray-900 placeholder:text-gray-400
+                 shadow-[0_8px_24px_rgba(0,0,0,0.06)]
+                 focus:outline-none
+                 focus:bg-white/80
+                 focus:border-black/10
+                 focus:shadow-[0_10px_30px_rgba(0,0,0,0.10)]
+                 transition-all duration-300 ease-out"
+        />
+      </div>
 
-    <script>
-        // Inicialización cuando la página carga
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeTimeline();
-        });
+      <!-- Mensaje -->
+      <div class="space-y-2">
+        <label class="text-sm font-medium text-gray-700">
+          Mensaje
+        </label>
+        <textarea
+          required
+          name="message"
+          rows="5"
+          placeholder="Redacta tu mensaje…"
+          class="w-full px-6 py-4 rounded-3xl
+                 bg-white/80
+                 border border-black/10
+                 text-sm text-gray-900 placeholder:text-gray-400
+                 resize-none
+                 focus:outline-none focus:ring-2 focus:ring-black/10
+                 transition"
+        ></textarea>
+      </div>
 
-        // Función para inicializar el timeline con animaciones secuenciales
-        function initializeTimeline() {
-            const jobCards = document.querySelectorAll('.job-card');
-            
-            jobCards.forEach((card, index) => {
-                const delay = parseInt(card.dataset.delay) || (index * 200);
-                
-                setTimeout(() => {
-                    card.classList.add('visible');
-                }, delay);
-            });
-        }
+      <!-- Acción -->
+      <div class="flex items-center gap-5 pt-2">
+        <button
+          id="sendBtn"
+          class="
+          filter-btn active px-5 py-1 rounded-full
+          text-sm font-medium transition-all
+          text-black/70 hover:bg-white/70 hover:text-gray-900
+          inline-block text-center cursor-pointer
+          border border-black/50 hover:border-none"
+        >
+          Enviar mensaje
+        </button>
 
-        // Función para expandir/contraer tarjetas de trabajo
-        function toggleJobCard(element) {
-            // Encontrar la tarjeta padre
-            const jobCard = element.closest('article');
-            const card = jobCard.querySelector('.liquid-card');
-            
-            // Toggle de la clase expanded
-            card.classList.toggle('card-expanded');
-            
-            // Efecto en el punto del timeline
-            const timelineDot = jobCard.querySelector('.timeline-dot');
-            if (card.classList.contains('card-expanded')) {
-                timelineDot.style.transform = 'scale(1.3)';
-                timelineDot.style.boxShadow = '0 0 25px rgba(251, 146, 60, 0.8)';
-            } else {
-                timelineDot.style.transform = 'scale(1)';
-                timelineDot.style.boxShadow = 'none';
-            }
-        }
-        
+        <span
+          id="formStatus"
+          class="text-sm text-gray-500"
+        ></span>
+      </div>
 
-        // Efectos interactivos para iconos flotantes
-        document.querySelectorAll('.floating-icon').forEach(icon => {
-            icon.addEventListener('click', function(e) {
-                e.stopPropagation();
-                
-                // Efecto de explosión temporal
-                this.style.transform = 'scale(1.8) rotate(360deg)';
-                this.style.filter = 'drop-shadow(0 0 30px rgba(251, 146, 60, 1))';
-                
-                // Resetear después de la animación
-                setTimeout(() => {
-                    this.style.transform = '';
-                    this.style.filter = '';
-                }, 800);
-            });
-        });
+    </form>
+  </div>
+</section>
 
-        // Efecto de paralaje sutil en el mouse
-        document.addEventListener('mousemove', function(e) {
-            const mouseX = (e.clientX / window.innerWidth) - 0.5;
-            const mouseY = (e.clientY / window.innerHeight) - 0.5;
-            
-            document.querySelectorAll('.floating-icon').forEach((icon, index) => {
-                const multiplier = (index + 1) * 0.5;
-                const translateX = mouseX * 20 * multiplier;
-                const translateY = mouseY * 20 * multiplier;
-                
-                icon.style.transform = `translate(${translateX}px, ${translateY}px)`;
-            });
-        });
+<!-- FOOTER -->
+<footer class="mt-24 bg-white border-t border-gray">
+  <div class="max-w-6xl mx-auto px-6 py-10 text-center">
+    
+    <!-- Nombre -->
+    <p class="text-xl font-extrabold text-gray-900 tracking-wide leading-tight">
+      Santiago Sterling
+    </p>
 
-        // Auto-expansión al scroll (Intersection Observer)
-        const observerOptions = {
-            threshold: 0.6,
-            rootMargin: '0px 0px -50px 0px'
-        };
+    <!-- Rol -->
+    <p class="mt-1 text-sm text-gray-500">
+      Desarrollador de software
+    </p>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const card = entry.target.querySelector('.liquid-card');
-                    setTimeout(() => {
-                        if (!card.classList.contains('card-expanded')) {
-                            toggleJobCard(entry.target.querySelector('.timeline-dot'));
-                        }
-                    }, 800);
-                }
-            });
-        }, observerOptions);
+    <!-- Redes sociales -->
+    <div class="mt-6 flex justify-center space-x-6">
+      
+      <!-- GitHub -->
+      <a href="https://github.com/Santiago131440" aria-label="GitHub" class="text-gray-400 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.54 2.87 8.39 6.84 9.75.5.09.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0112 6.84c.85 0 1.71.12 2.51.35 1.9-1.32 2.74-1.05 2.74-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9 0 1.38-.01 2.49-.01 2.83 0 .27.18.59.69.49A10.02 10.02 0 0022 12.26C22 6.58 17.52 2 12 2z"/>
+        </svg>
+      </a>
 
-        // Observar todas las tarjetas de trabajo
-        document.querySelectorAll('.job-card').forEach(card => {
-            observer.observe(card);
-        });
-    </script>
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/santiago-sterling-0a02a116a/" aria-label="LinkedIn" class="text-gray-400 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.8v2.1h.05c.53-1 1.83-2.1 3.77-2.1 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7.8c0-1.86-.03-4.26-2.6-4.26-2.6 0-3 2.03-3 4.12V24h-4V8.5z"/>
+        </svg>
+      </a>
 
-    <script>
-  // Guardamos todas las imágenes y asociamos el título del proyecto
-  const allImages = [];
-  document.querySelectorAll("#projects article").forEach(article => {
-    const projectTitle = article.querySelector("h4").innerText; // título del proyecto
-    article.querySelectorAll(".carousel img").forEach(img => {
-      allImages.push({
-        src: img.src,
-        title: projectTitle
-      });
-      // Redefinimos el onclick para que sepa el título
-      img.setAttribute("onclick", `openModal('${img.src}')`);
-    });
-  });
+      <!-- Reddit -->
+      <a href="#" aria-label="Reddit" class="text-gray-400 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-label="Discord">
+          <path d="M20.3 4.1A19.8 19.8 0 0 0 15.8 3c-.2.4-.4.9-.5 1.3a18.3 18.3 0 0 0-6.6 0c-.1-.4-.3-.9-.5-1.3-1.6.3-3.1.8-4.5 1.6C.8 9.1-.2 13.6.3 18c1.7 1.3 3.7 2.2 5.8 2.8.5-.7.9-1.4 1.3-2.2-.7-.3-1.4-.6-2-1 .2-.1.4-.3.6-.4 3.8 1.8 7.9 1.8 11.7 0 .2.2.4.3.6.4-.6.4-1.3.7-2 1 .4.8.8 1.5 1.3 2.2 2.1-.6 4.1-1.5 5.8-2.8.6-4.9-.9-9.4-3.7-13.9zM8.5 14.6c-.8 0-1.5-.7-1.5-1.6 0-.9.7-1.6 1.5-1.6.8 0 1.5.7 1.5 1.6 0 .9-.7 1.6-1.5 1.6zm7 0c-.8 0-1.5-.7-1.5-1.6 0-.9.7-1.6 1.5-1.6.8 0 1.5.7 1.5 1.6 0 .9-.7 1.6-1.5 1.6z"/>
+        </svg>
 
-  let currentIndex = 0;
+      </a>
+    </div>
 
-  // Abrir modal
-  function openModal(src) {
-    currentIndex = allImages.findIndex(item => item.src === src);
-    const modal = document.getElementById("imageModal");
-    document.getElementById("modalImage").src = allImages[currentIndex].src;
-    document.getElementById("modalTitle").innerText = allImages[currentIndex].title;
-    modal.classList.remove("hidden");
-  }
+    <!-- Copyright -->
+    <p class="mt-8 text-xs text-gray-400">
+      © <span id="year"></span> Santiago Sterling.
+    </p>
+  </div>
+</footer>
 
-  // Cerrar modal
-  function closeModal() {
-    document.getElementById("imageModal").classList.add("hidden");
-  }
+  <!-- PROJECT MODAL -->
+  <div id="projectModal" aria-hidden="true" class="fixed inset-0 hidden items-center justify-center z-50 bg-black/60">
+    <div class="bg-slate-900 rounded-2xl w-11/12 max-w-4xl p-6">
+      <div class="flex items-start justify-between">
+        <h3 id="modalTitle" class="text-xl font-semibold text-black">Proyecto</h3>
+        <button id="closeModal" class="p-2 rounded bg-white/5">Cerrar</button>
+      </div>
+      <div id="modalBody" class="mt-4 text-slate-200">Detalles...</div>
+    </div>
+  </div>
 
-  // Imagen anterior
-  function prevImage() {
-    currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
-    document.getElementById("modalImage").src = allImages[currentIndex].src;
-    document.getElementById("modalTitle").innerText = allImages[currentIndex].title;
-  }
-
-  // Imagen siguiente
-  function nextImage() {
-    currentIndex = (currentIndex + 1) % allImages.length;
-    document.getElementById("modalImage").src = allImages[currentIndex].src;
-    document.getElementById("modalTitle").innerText = allImages[currentIndex].title;
-  }
-
-  // Navegación con teclado
-  document.addEventListener("keydown", function(e) {
-    if (!document.getElementById("imageModal").classList.contains("hidden")) {
-      if (e.key === "ArrowLeft") prevImage();
-      if (e.key === "ArrowRight") nextImage();
-      if (e.key === "Escape") closeModal();
-    }
-  });
-</script>
-
-<script>
-  const toggleBtn = document.getElementById("toggleCursos");
-  const extraCursos = document.getElementById("cursos-extra");
-
-  toggleBtn.addEventListener("click", () => {
-    if (extraCursos.classList.contains("hidden")) {
-      extraCursos.classList.remove("hidden");
-      toggleBtn.textContent = "Ocultar";
-    } else {
-      extraCursos.classList.add("hidden");
-      toggleBtn.textContent = "Ver más";
-      document.getElementById("cursos").scrollIntoView({ behavior: "smooth" });
-    }
-  });
-</script>
-
-
-<!-- JS PARA CAMBIO DE TABS -->
-<script>
-  const buttons = document.querySelectorAll('.tab-btn');
-  const contents = document.querySelectorAll('.tab-content');
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.getAttribute('data-target');
-
-      contents.forEach(c => c.classList.add('hidden'));
-      buttons.forEach(b => b.classList.remove('bg-orange-500', 'text-white'));
-
-      document.getElementById(target).classList.remove('hidden');
-      btn.classList.add('bg-orange-500', 'text-white');
-    });
-  });
-
-  if (buttons.length > 0) {
-    buttons[0].click();
-  }
-</script>
-
-<!-- Estilos extra para móviles -->
-<style>
-  .animate-fade {
-    animation: fadeIn 0.5s ease-in-out;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  /* Ocultar scroll bar en móviles */
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-</style>
-
-<script>
-    function mostrarModal() {
-      const overlay = document.getElementById('modalOverlay');
-      overlay.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // Evita desplazamiento del fondo
-    }
-
-    function cerrarModal() {
-      const overlay = document.getElementById('modalOverlay');
-      overlay.style.display = 'none';
-      document.body.style.overflow = 'auto'; // Restaura desplazamiento
-    }
-
-    // Cerrar al hacer clic fuera del cuadro
-    window.onclick = function(event) {
-      const overlay = document.getElementById('modalOverlay');
-      const modal = document.getElementById('modalBox');
-      if (event.target === overlay) {
-        overlay.style.display = 'none';
-        document.body.style.overflow = 'auto';
-      }
-    };
-
-    // Asegura que el modal siempre quede centrado si se redimensiona la ventana
-    window.addEventListener('resize', function() {
-      const overlay = document.getElementById('modalOverlay');
-      if (overlay.style.display === 'flex') {
-        overlay.style.alignItems = 'center';
-        overlay.style.justifyContent = 'center';
-      }
-    });
-  </script>
-
-<script>
-  const image = document.getElementById('profile-image');
-  const modal = document.getElementById('image-modal');
-  const modalImage = document.getElementById('modal-image');
-
-  // Al hacer clic sobre la imagen, se muestra el modal
-  image.addEventListener('click', () => {
-    modalImage.src = image.src;
-    modal.classList.remove('hidden');
-  });
-
-  // Al hacer clic fuera de la imagen expandida, se cierra el modal
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.classList.add('hidden');
-    }
-  });
-</script>
-
+  <script src="script20.js" defer></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
