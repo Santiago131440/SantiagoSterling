@@ -1,6 +1,152 @@
 (() => {
   "use strict";
 
+  // ------------------------------------------------------------------------------------ FUNCION DE NAVBAR
+
+(function() {
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const nav = document.querySelector('.apple-nav');
+  
+  if (!menuToggle || !mobileMenu) {
+    console.error('No se encontraron los elementos del menú');
+    return;
+  }
+
+  let isOpen = false;
+
+  // Toggle del menú
+  menuToggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    isOpen = !isOpen;
+    
+    if (isOpen) {
+      openMenu();
+    } else {
+      closeMenu();
+    }
+  });
+
+  function openMenu() {
+    // Guardar posición actual del scroll
+    const currentScroll = window.pageYOffset;
+    
+    // Mostrar menú
+    mobileMenu.classList.remove('hidden');
+    mobileMenu.classList.add('flex');
+    
+    // Aplicar estilos de transición
+    mobileMenu.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    mobileMenu.style.opacity = '0';
+    mobileMenu.style.transform = 'translateY(-10px)';
+    
+    // Animar entrada
+    setTimeout(() => {
+      mobileMenu.style.opacity = '1';
+      mobileMenu.style.transform = 'translateY(0)';
+    }, 10);
+    
+    // Cambiar icono a X
+    menuToggle.innerHTML = '×';
+    menuToggle.style.fontSize = '28px';
+    
+    // Agregar backdrop blur
+    nav.style.transition = 'all 0.3s ease';
+    nav.style.backdropFilter = 'blur(10px)';
+    nav.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+    
+    // Restaurar la posición del scroll
+    window.scrollTo(0, currentScroll);
+  }
+
+  function closeMenu() {
+    // Animar salida
+    mobileMenu.style.opacity = '0';
+    mobileMenu.style.transform = 'translateY(-10px)';
+    
+    setTimeout(() => {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex');
+    }, 300);
+    
+    // Cambiar icono a +
+    menuToggle.innerHTML = '+';
+    menuToggle.style.fontSize = '20px';
+    
+    // Restaurar backdrop
+    nav.style.backdropFilter = '';
+    nav.style.backgroundColor = '';
+  }
+
+  // Cerrar menú al hacer clic en un enlace móvil (CON PREVENCIÓN DE SCROLL)
+  const mobileLinks = mobileMenu.querySelectorAll('a');
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      // Prevenir el scroll automático
+      e.preventDefault();
+      
+      // Obtener el href del enlace
+      const targetId = this.getAttribute('href');
+      
+      // Cerrar el menú primero
+      closeMenu();
+      isOpen = false;
+      
+      // Después de cerrar el menú, hacer scroll suave a la sección
+      setTimeout(() => {
+        if (targetId && targetId !== '#') {
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            const navHeight = nav.offsetHeight;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = targetPosition - navHeight - 20;
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }
+      }, 350); // Esperar a que termine la animación de cierre
+    });
+  });
+
+  // Cerrar menú al hacer clic fuera
+  document.addEventListener('click', function(e) {
+    if (isOpen && !nav.contains(e.target)) {
+      closeMenu();
+      isOpen = false;
+    }
+  });
+
+  // Cerrar menú al redimensionar a desktop
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (window.innerWidth >= 768 && isOpen) {
+        closeMenu();
+        isOpen = false;
+      }
+    }, 250);
+  });
+
+  // Feedback táctil para móviles
+  menuToggle.addEventListener('touchstart', function() {
+    this.style.transform = 'scale(0.95)';
+    this.style.transition = 'transform 0.1s ease';
+  });
+
+  menuToggle.addEventListener('touchend', function() {
+    this.style.transform = 'scale(1)';
+  });
+
+})();
+
+
+  // -------------------------------------------------------------------------------------
   // Simple helpers
   const $ = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
@@ -9,17 +155,6 @@
   const yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* Mobile menu */
-  const menuBtn = $("#menuBtn");
-  const mobileMenu = $("#mobileMenu");
-  if (menuBtn && mobileMenu) {
-    menuBtn.addEventListener("click", () => {
-      const expanded = menuBtn.getAttribute("aria-expanded") === "true";
-      menuBtn.setAttribute("aria-expanded", String(!expanded));
-      mobileMenu.classList.toggle("hidden");
-      mobileMenu.classList.toggle("block");
-    });
-  }
 
   /* Reveal on scroll */
   const reveals = $$(".reveal, section, .projectCard, .card-3d, .testimonial");
@@ -40,7 +175,7 @@
     c.classList.add("reveal");
   });
 
-  /* Project modal (dynamic content) */
+  // ----------------------------------------- CODIGO PARA EL MODAL DE LA EXPERIENCIA LABORAL - INICIO
   const modal = $("#projectModal");
   const modalTitle = $("#modalTitle");
   const modalBody = $("#modalBody");
@@ -115,7 +250,8 @@
     return content;
   }
 
-  /* CONTACT FORM interaction (simulate backend / EmailJS integration) */
+  // --------------------------------------------------------- FORMULARIO DE CONTACTO (simulate backend / EmailJS integration) */
+
   const contactForm = $("#contactForm");
   const sendBtn = $("#sendBtn");
   const formStatus = $("#formStatus");
@@ -168,7 +304,7 @@
     });
   }
 
-  /* Download CV (simulate) */
+  // ---------------------------------------------------------------- DESCARGA DE CV EN TXT
   const downloadCV = $("#downloadCV");
   const downloadCV2 = $("#downloadCV2");
   [downloadCV, downloadCV2].forEach(btn => {
@@ -329,7 +465,8 @@ setTimeout(typeEffect, 2000);
     });
   });
 
-//CODIGO PARA EL CARRUSEL DE IMAGENES//
+// -------------------------------------------------------------- CODIGO PARA EL CARRUSEL DE IMAGENES
+
   function openModalImagenes(src) {
     const modal = document.createElement('div');
     modal.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4';
@@ -343,7 +480,8 @@ setTimeout(typeEffect, 2000);
     document.body.appendChild(modal);
   }
 
-//TECLAS DE NAVEGACIÓN Y TITULOS DE IMAGENES
+  // TECLAS DE NAVEGACIÓN Y TITULOS DE IMAGENES
+
   let currentImageIndex = 0;
   let images = [];
 
@@ -472,13 +610,13 @@ setTimeout(typeEffect, 2000);
   }
 
 
-/* FUNCIÓN DE ESTUDIOS REALIZADOS - CURSOS REALIZADOS */
+// -------------------------------------------- FUNCIÓN DE ESTUDIOS REALIZADOS - CURSOS REALIZADOS
+
 function openModal(title, content) {
   document.getElementById('modalTitle').innerText = title;
   document.getElementById('modalContent').innerText = content;
   document.getElementById('macModal').style.display = 'flex';
 
-  // Cerrar modal al hacer click fuera del contenido
   document.getElementById('macModal').onclick = function (e) {
     if (e.target === this) {
       closeModal();
@@ -486,7 +624,7 @@ function openModal(title, content) {
   };
 }
 
-/*FUNCIÓN DE NAVE ESPACIAL EN ORBITA, EN LA PARTA DE VISION ACADEMICA */
+// -------------------------------- FUNCIÓN DE NAVE ESPACIAL EN ORBITA, EN LA PARTE DE VISION ACADEMICA
 
 
 function launchOrbit() {
@@ -509,7 +647,7 @@ function launchOrbit() {
 }
 
 
-/* FUNCIÓN CARRUSEL DE HABILIDADES - ESTILO APPLE TV */
+// ----------------------------------------------- FUNCIÓN CARRUSEL DE HABILIDADES - ESTILO APPLE TV
 
 const carousel = document.getElementById("carousel");
 const card = document.querySelectorAll(".card");
