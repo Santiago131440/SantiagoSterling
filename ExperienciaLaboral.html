@@ -15,7 +15,7 @@
 ================================ */
 :root{
   --bg:#f2f2f7;
-  --panel:#C4C4C4cc;
+  --panel:#ffffffcc;
   --border:#C4C4C4;
   --accent:#0a84ff;
   --text:#111;
@@ -69,6 +69,15 @@ body{
 .panel{
   position:fixed;
   background:var(--panel);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--border);
+  border-radius:60px;
+  padding:4px;
+}
+
+.panel2{
+  position:fixed;
+  background:var(--panel);
   backdrop-filter:blur(30px);
   border:1px solid var(--border);
   border-radius:18px;
@@ -76,27 +85,42 @@ body{
   box-shadow:var(--shadow);
 }
 
+
 /* TOOLBAR */
 #tools{
-  left:14px;
-  top:50%;
-  transform:translateY(-50%);
+  left:50%;
+  bottom:14px;
+  top:auto;
+  transform: translateX(-50%) translateY(30%);
   display:flex;
-  flex-direction:column;
-  gap:10px;
+  flex-direction:row;
+  gap:6px;
+  padding:6px 10px;
+  
+  opacity: 0.15;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+#tools:hover{
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
 }
 
 .tool{
   width:48px;
   height:48px;
   border-radius:60px;
-  border:1px solid var(--border);
-  background:#C4C4C4;
+  background:#ffffff;
   font-size:22px;
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
+}
+
+.tool:hover {
+  border: 1px solid var(--border);
+  background: #C4C4C4;
 }
 
 .tool.active{
@@ -222,7 +246,7 @@ input[type=range]{
 </div>
 
 <!-- OPTIONS -->
-<div class="panel" id="options">
+<div class="panel2" id="options">
   <p>Crea tu mejor dibujo</p>
   <label>Color <input type="color" id="color" value="#000000"></label>
   <label>Tamaño del pincel <input type="range" id="size" min="1" max="40" value="6"></label>
