@@ -147,6 +147,58 @@ input[type=range]{
     width:180px;
   }
 }
+
+/* --------------------- CODIGO DE BOTON DE EXPORTAR EN PNG ----------------------------*/
+.win11-btn {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 3px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #ffffff;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 120, 212, 0.95),
+    rgba(0, 90, 180, 0.95)
+  );
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+/* Hover */
+.win11-btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgb(255, 255, 255),
+    rgb(238, 238, 238)
+  );
+  transform: translateY(-1px);
+  color: #0d0d0f;
+}
+
+/* Active */
+.win11-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow:
+    0 5px 14px rgba(0, 120, 212, 0.3),
+    inset 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* Focus (accesibilidad Windows 11) */
+.win11-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(0, 120, 212, 0.45),
+    0 8px 20px rgba(0, 120, 212, 0.35);
+}
+
 </style>
 </head>
 
@@ -174,7 +226,7 @@ input[type=range]{
   <p>Crea tu mejor dibujo</p>
   <label>Color <input type="color" id="color" value="#000000"></label>
   <label>Tamaño del pincel <input type="range" id="size" min="1" max="40" value="6"></label>
-  <button class="rounded rounded-full" id="save">Exportar PNG</button>
+  <button id="save" class="win11-btn">Exportar PNG</button>
 </div>
 
 
