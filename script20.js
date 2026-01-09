@@ -736,3 +736,5 @@ function closeAppleUI4() {
   document.getElementById("appleUI4").classList.add("hidden");
   document.body.style.overflow = "auto";
 }
+
+// JS DEL SCROLLTRIGGER DEL OBJETO
