@@ -583,6 +583,7 @@ body{
         width: 120px;
         height: 240px;
         border-radius: 20px;
+        border: 4px solid #1d1d1f;
       }
       .screen {
         border-radius: 15px;
@@ -1150,3 +1151,4 @@ img[alt="Astronaut UX"] {
   transform: translateY(-6px) scale(1.05);
 }
 
+/* ------------------- OBJETO CON SCROLL RECORRIENDO LA PANTALLA ----------------------------------------- */
