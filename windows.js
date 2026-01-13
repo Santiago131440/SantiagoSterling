@@ -760,7 +760,7 @@ window.addEventListener("load", () => {
 
     document.getElementById("openDesktopSwitcher").addEventListener("click", function () {
         // Cambia "index20.html" por la ruta real de tu archivo
-        window.location.href = "index20.html";
+        window.location.href = "index.html";
     });
 
 
@@ -872,4 +872,5 @@ document.addEventListener("click", (e) => {
     calendarPanel.classList.add("hidden");
   }
 });
+
 
