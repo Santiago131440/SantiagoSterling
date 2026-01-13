@@ -861,22 +861,6 @@ img[alt="Astronaut UX"] {
   opacity: .9;
 }
 
-.card button {
-  margin-top: 10px;
-  padding: 1px 20px;
-  border-radius: 999px;
-  border: none;
-  font-size: 16px;
-  background: #0071E3;
-  color: white;
-  cursor: pointer;
-  transition: transform .2s ease;
-}
-
-.card button:active {
-  transform: scale(.95);
-}
-
 /* ===== DOTS ===== */
 .dots {
   position: absolute;
@@ -999,26 +983,49 @@ img[alt="Astronaut UX"] {
           }
 
           .card {
-            min-width: 60%;
-            height: 70vh;
-            background-size: cover;
-            background-position: center;
-            scroll-snap-align: center;
-            display: flex;
-            align-items: flex-end;
-            margin-right: 16px;
-          }
+          min-width: 60%;
+          height: 70vh;
+          background-size: cover;
+          background-position: center;
+          scroll-snap-align: center;
+          display: flex;
+          align-items: center;
+          margin-right: 16px;
+          cursor: pointer;
+        }
 
-          .card-content h1 {
-            font-size: 1.5rem;
-            color: #fff;
-          }
+        /* CONTENEDOR DEL BOTÓN Y EL H1 */
+        .card-content{
+          display: flex;
+          align-items: center; /* misma línea y alineación vertical */
+          gap: 10px;           /* espacio entre botón y texto */
+        }
 
-          .card-content button {
-            margin-top: 10px;
-            padding: 1px 18px;
-            font-size: 1rem;
-          }
+        /* BOTÓN PRIMERO */
+        .card-btn{
+          order: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        /* TEXTO DESPUÉS */
+        .card-content h1{
+          order: 2;
+          font-size: 1.5rem;
+          color: #fff;
+          margin: 0;
+          cursor: pointer;
+        }
+
+        .card-btn i{
+          font-size: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+        }
+
         @media (max-width: 768px) {
 
           .carousel-wrapper {
@@ -1059,6 +1066,7 @@ img[alt="Astronaut UX"] {
             padding: 1px 18px;
             font-size: 1rem;
           }
+
         }
 
         /* ---------------------------- CODIGO DE GRID EN PANTALLA DE COMPETENCIAS METODOLOGICAS ----------------------*/
