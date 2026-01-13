@@ -15,6 +15,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles20.css">
   <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/98182135?v=4">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
 
 </head>
 
@@ -50,13 +51,7 @@
     </div>
 
     <!-- Botón hamburguesa (+) -->
-    <button
-      id="menu-toggle"
-      class="md:hidden w-8 h-8 flex items-center justify-center text-xl border border-black/30 text-center px-1 py-1 rounded-full font-medium transition-all hover:bg-[#007AFF] hover:text-white hover:border-[#007AFF] inline-block text-center cursor-pointer"
-      aria-label="Abrir menú"
-    >
-      +
-    </button>
+    <button id="menu-toggle" class="md:hidden card-btn" aria-label="Abrir menú"><i class="fi fi-sr-add"></i></button>
 
   </div>
 
@@ -836,31 +831,39 @@
 <div class="carousel-wrapper">
   <div class="carousel" id="carousel">
 
-    <div class="card" style="background-image:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Lenguajes%20de%20programaci%C3%B3n.jpg?raw=true');">
+    <div class="card" onclick="openAppleUI()" style="background-image:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Lenguajes%20de%20programaci%C3%B3n.jpg?raw=true');">
       <div class="card-content">
         <h1 class="text-lg">Lenguajes de programación</h1>
-        <button onclick="openAppleUI()">Ver</button>
+        <button onclick="openAppleUI()" class="card-btn">
+          <i class="fi fi-sr-add"></i>
+        </button>
       </div>
     </div>
 
-    <div class="card" style="background-image:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Frameworks.jpg?raw=true');">
+    <div class="card" onclick="openAppleUI2()" style="background-image:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Frameworks.jpg?raw=true');">
       <div class="card-content">
         <h1 class="text-2xl">Herramientas</h1>
-        <button onclick="openAppleUI2()">Ver</button>
+        <button onclick="openAppleUI2()" class="card-btn">
+          <i class="fi fi-sr-add"></i>
+        </button>
       </div>
     </div>
 
-    <div class="card" style="background-image:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Habilidades.jpg?raw=true');">
+    <div class="card" onclick="openAppleUI3()" style="background-image:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Habilidades.jpg?raw=true');">
       <div class="card-content">
         <h1 class="text-lg">Habilidades extra</h1>
-        <button onclick="openAppleUI3()">Ver</button>
+        <button onclick="openAppleUI3()" class="card-btn">
+          <i class="fi fi-sr-add"></i>
+        </button>
       </div>
     </div>
 
     <div class="card" style="background-image:url('https://cdn.pixabay.com/photo/2021/10/01/16/21/eris-6672934_960_720.jpg');">
       <div class="card-content">
         <h1 class="text-lg">Inteligencia Interpersonal</h1>
-        <button onclick="openAppleUI4()">Ver</button>
+        <button onclick="openAppleUI4()" class="card-btn">
+          <i class="fi fi-sr-add"></i>
+        </button>
       </div>
     </div>
 
