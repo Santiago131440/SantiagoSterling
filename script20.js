@@ -57,8 +57,6 @@
     nav.style.backdropFilter = 'blur(10px)';
     nav.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
     
-    // Restaurar la posición del scroll
-    window.scrollTo(0, currentScroll);
   }
 
   function closeMenu() {
@@ -72,8 +70,8 @@
     }, 300);
     
     // Cambiar icono a +
-    menuToggle.innerHTML = '+';
-    menuToggle.style.fontSize = '20px';
+    menuToggle.innerHTML = '<i class="fi fi-sr-add"></i>';
+    menuToggle.querySelector('i').style.fontSize = '32px';
     
     // Restaurar backdrop
     nav.style.backdropFilter = '';
