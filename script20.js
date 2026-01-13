@@ -30,9 +30,6 @@
   });
 
   function openMenu() {
-    // Guardar posición actual del scroll
-    const currentScroll = window.pageYOffset;
-    
     // Mostrar menú
     mobileMenu.classList.remove('hidden');
     mobileMenu.classList.add('flex');
