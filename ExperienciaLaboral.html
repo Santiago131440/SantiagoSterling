@@ -476,16 +476,29 @@ save.onclick=()=>{
 };
 
 // BUBBLE
-const bubble = document.getElementById('menuBubble');
-const panel = document.getElementById('options');
+const bubble   = document.getElementById('menuBubble');
+const panel    = document.getElementById('options');
 const closeBtn = document.getElementById('closeMenu');
 
-bubble.addEventListener('click', () => {
-  panel.classList.add('active');
+/* Abrir / cerrar desde la burbuja */
+bubble.addEventListener('click', (e) => {
+  e.stopPropagation();
+  panel.classList.toggle('active');
 });
 
+/* Cerrar con botón interno */
 closeBtn.addEventListener('click', (e) => {
   e.stopPropagation();
+  panel.classList.remove('active');
+});
+
+/* Evita que clicks dentro del panel lo cierren */
+panel.addEventListener('click', (e) => {
+  e.stopPropagation();
+});
+
+/* Click fuera del panel → cerrar */
+document.addEventListener('click', () => {
   panel.classList.remove('active');
 });
 </script>
