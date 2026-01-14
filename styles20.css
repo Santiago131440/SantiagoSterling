@@ -97,7 +97,7 @@ body{
   background-color: #ffffff;
 
 }
-.projectCard:hover{ transform: translateY(-4px); box-shadow: 0 5px 10px rgba(121, 119, 119, 0.6); }
+
 
 /* Modal styles */
 #projectModal .modal-body{
@@ -106,7 +106,7 @@ body{
 }
 
 /* Custom scrollbar for modal */
-#projectModal::-webkit-scrollbar, #projectModal .modal-body::-webkit-scrollbar{ height: 8px; width: 8px; }
+#projectModal::-webkit-scrollbar, #projectModal .modal-body::-webkit-scrollbar{ height: 6px; width: 6px; }
 #projectModal::-webkit-scrollbar-thumb, #projectModal .modal-body::-webkit-scrollbar-thumb{ background: rgb(255, 255, 255); border-radius: 8px; }
 
 /* Fancy code block for case details */
