@@ -544,6 +544,16 @@ function openModal(title, content) {
   };
 }
 
+/* 🔥 CIERRE FORZADO GLOBAL */
+document.addEventListener('mousedown', (e) => {
+  if (
+    macModal.style.display === 'flex' &&
+    !modalWindow.contains(e.target)
+  ) {
+    closeModal();
+  }
+});
+
 // -------------------------------- FUNCIÓN DE NAVE ESPACIAL EN ORBITA, EN LA PARTE DE VISION ACADEMICA
 
 
@@ -656,5 +666,6 @@ function closeAppleUI4() {
   document.getElementById("appleUI4").classList.add("hidden");
   document.body.style.overflow = "auto";
 }
+
 
 // JS DEL SCROLLTRIGGER DEL OBJETO
