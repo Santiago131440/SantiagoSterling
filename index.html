@@ -433,7 +433,11 @@
           <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Inicio: 2024/12/10</span>
           <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Actualidad</span>
         </div>
-        <button class="card-btn" data-title="Cosmoagro S.A."><i class="fi fi-sr-add"></i>
+        <button class="card-btn"
+            data-title="Cosmoagro S.A."
+            data-image="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_cover.jpg?raw=true"
+            data-text="Analista de producción enfocado en optimización de procesos, indicadores KPI y mejora continua en planta.">
+          <i class="fi fi-sr-add"></i>
         </button>
       </div>
     </footer>
@@ -617,6 +621,7 @@
       <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Fin: 2018/03/24</span>
       </div>
       <button class="card-btn" data-title="Smurfit Westrock S.A."><i class="fi fi-sr-add"></i></button>
+
     </div>
     </footer>
   </div>
@@ -1188,7 +1193,7 @@
 
     <!-- OVERLAY FULLSCREEN -->
     <div id="orbit-overlay">
-      <div class="rocket">🚀</div>
+      <div class="rocket">🛸</div>
       <div class="code-stream">
         <span>Hola mundo</span>
         <span>f(x)=x²+2x+1</span>
@@ -1466,5 +1471,36 @@
   </div>
 
   <script src="script20.js" defer></script>
+
+  
+      <!-- MODAL MAC OS -->
+<div
+  id="macModal"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm"
+>
+  <div
+    class="w-[90%] max-w-3xl rounded-2xl bg-white shadow-2xl overflow-hidden animate-scaleIn"
+  >
+    <!-- Barra superior Mac -->
+    <div class="flex items-center gap-2 px-4 py-2 bg-stone-200">
+      <span id="closeModal" class="w-3 h-3 bg-red-500 rounded-full cursor-pointer"></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+      <h3 id="modalTitle" class="ml-4 font-semibold text-slate-700"></h3>
+    </div>
+
+    <!-- Contenido -->
+    <div class="p-5 space-y-4">
+      <img
+        id="modalImage"
+        src=""
+        alt=""
+        class="w-full h-64 object-cover rounded-xl shadow"
+      />
+      <p id="modalText" class="text-slate-600 text-sm leading-relaxed"></p>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
