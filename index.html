@@ -214,20 +214,20 @@
 
   <!-- Finder Panel -->
   <div class="finder-window">
-    <div class="finder-titlebar">
-      <div class="controls">
-        <span class="c red"></span>
-        <span class="c yellow"></span>
-        <span class="c green"></span>
-      </div>
-      <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Cosmoagro S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Cosmoagro S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Cosmoagro S.A."></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
       <span class="text-stone-200">--</span>Categorías académicas
     </h3>
-    </div>
+  </div>
 
     <div class="finder-content">
       <ul class="file-list">
-        <li onclick="openModal(
+        <li onclick="openAppleUI2(
                 'Formación tecnológica',
                 `
                       - 📄 Tecnología en análisis y desarrollo de software.
@@ -402,199 +402,223 @@
       </div>
       <br>
       <br>
-      <div id="projectsGrid" class="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div id="projectsGrid" class="mt-3 grid md:grid-cols-2 lg:grid-cols-3 gap-4 rounded-2xl backdrop-blur-md p-4">
         <!-- project cards (repetitive rich markup for length + SEO) -->
-<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
   <!-- Barra superior estilo MacOS -->
   <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
     <div class="flex gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Cosmoagro S.A."></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Cosmoagro S.A."></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Cosmoagro S.A."></span>
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Cosmoagro S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Cosmoagro S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Cosmoagro S.A."></span>
     </div>
     <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
       <span class="text-stone-200">--</span>Cosmoagro S.A.
     </h3>
   </div>
   <!-- Contenedor de imagen principal con avatar -->
-  <div class="relative p-4">
+  <div class="relative p-0">
     <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_cover.jpg?raw=true" 
          alt="Proyecto 4" 
-         class="w-full h-full object-cover rounded-md shadow-sm">
+         class="w-full h-full object-cover shadow-sm">
     <!-- Avatar flotante -->
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_logo.jpg?raw=true" alt="Avatar" class="mt-2 w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
   <!-- Contenido de la ventana -->
-  <div class="mt-8 p-4"> <!-- mt-8 deja espacio para el avatar -->
+  <div class="mt-8 p-2"> <!-- mt-8 deja espacio para el avatar -->
     <h4 class="font-semibold text-lg text-emerald-500">Analista de producción</h4>
     <p class="text-sm text-slate-700 mt-1">Optimizar procesos, analizar indicadores y mejorar eficiencia operativa, garantizando calidad, continuidad y control en la planta.</p>
-
-    <div class="mt-3 flex items-center gap-3">
-      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2024/12/10</span>
-      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">Actualidad</span>
-      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Cosmoagro S.A.">Ver</button>
-    </div>
+    <footer class="bg-black/20 rounded-full">
+      <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
+        <div class="flex justify-start items-center gap-2 text-left w-full">
+          <span class="text-xs px-4 py-2 rounded-full bg-stone-200 text-slate-500">Inicio: 2024/12/10</span>
+          <span class="text-xs px-4 py-2 rounded-full bg-stone-200 text-slate-500">Actualidad</span>
+        </div>
+        <button class="card-btn" data-title="Cosmoagro S.A."><i class="fi fi-sr-add"></i>
+        </button>
+      </div>
+    </footer>
   </div>
 </article>
 
 
-<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
   <!-- Barra superior estilo MacOS -->
   <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
     <div class="flex gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Coca Cola Femsa"></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Coca Cola Femsa"></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Coca Cola Femsa"></span>
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Coca Cola Femsa"></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Coca Cola Femsa"></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Coca Cola Femsa"></span>
     </div>
     <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
       <span class="text-stone-200">--</span>Coca Cola Femsa
     </h3>
   </div>
   <!-- Contenedor de imagen principal con avatar -->
-  <div class="relative p-4">
+  <div class="relative p-0">
     <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_cover.jpg?raw=true" 
          alt="Proyecto 4" 
-         class="w-full h-full object-cover rounded-md shadow-sm">
+         class="w-full h-full object-cover shadow-sm">
     <!-- Avatar flotante -->
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
   <!-- Contenido de la ventana -->
-  <div class="mt-8 p-4"> <!-- mt-8 deja espacio para el avatar -->
+  <div class="mt-8 p-2"> <!-- mt-8 deja espacio para el avatar -->
     <h4 class="font-semibold text-lg text-rose-500">Técnico Analista</h4>
-    <p class="text-sm text-slate-700 mt-1">Enfocado en el control de procesos, mejora continua y gestión eficiente de datos para impulsar la productividad del proceso y así mismo el cumplimiento de la calidad del producto.</p>
-
-    <div class="mt-3 flex items-center gap-3">
-      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2023/07/07</span>
-      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2024/06/07</span>
-           <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Coca Cola Femsa">Ver</button>
-    </div>
+    <p class="text-sm text-slate-700 mt-1">Enfocado en el control de procesos, mejora continua y gestión eficiente para impulsar la productividad, así mismo el cumplimiento de la calidad del producto.</p>
+    <footer class="bg-black/20 rounded-full">
+    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
+      <div class="flex justify-start items-center gap-2 text-left w-full">
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-200 text-slate-500">Inicio: 2023/07/07</span>
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-200 text-slate-500">Fin: 2024/06/07</span>
+      </div>
+           <button class="card-btn" data-title="Coca Cola Femsa">
+          <i class="fi fi-sr-add"></i>
+        </button>
+          </div>
+    </footer>
   </div>
 </article>
 
-<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
   
   <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
     <div class="flex gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Cadena S.A."></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Cadena S.A."></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Cadena S.A."></span>
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Cadena S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Cadena S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Cadena S.A."></span>
     </div>
     <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
       <span class="text-stone-200">--</span>Cadena S.A.
     </h3>
   </div>
 
-  <div class="relative p-4">
+  <div class="relative p-0">
     <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_cover.jpg?raw=true" 
          alt="Proyecto 4" 
-         class="w-full h-full object-cover rounded-md shadow-sm">
+         class="w-full h-full object-cover shadow-sm">
     
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
   
-  <div class="mt-8 p-4">
+  <div class="mt-8 p-2">
     <h4 class="font-semibold text-lg text-amber-500">Supervisor de Producción</h4>
     <p class="text-sm text-slate-700 mt-1">Experiencia liderando equipos, asegurando el cumplimiento del plan, optimizando procesos y garantizando calidad, seguridad y eficiencia operativa.</p>
-
-    <div class="mt-3 flex items-center gap-3">
-      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2020/01/20</span>
-      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2023/02/17</span>
-      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Cadena S.A.">Ver</button>
+    <footer class="bg-black/20 rounded-full">     
+    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
+      <div class="flex justify-start items-center gap-2 text-left w-full">
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-200 text-slate-500">Inicio: 2020/01/20</span>
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-200 text-slate-500">Fin: 2023/02/17</span>
+      </div>
+      <button class="card-btn" data-title="Cadena S.A."><i class="fi fi-sr-add"></i></button>
     </div>
+    </footer>
   </div>
 </article>
 
-<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
   <!-- Barra superior estilo MacOS -->
   <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
     <div class="flex gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Postobón S.A."></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Postobón S.A."></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Postobón S.A."></span>
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Postobón S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Postobón S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Postobón S.A."></span>
     </div>
     <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
       <span class="text-stone-200">--</span>Postobón S.A.
     </h3>
   </div>
   
-  <div class="relative p-4">
+  <div class="relative p-0">
     <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_cover.jpg?raw=true" 
          alt="Proyecto 4" 
-         class="w-full h-full object-cover rounded-md shadow-sm">
+         class="w-full h-full object-cover shadow-sm">
     
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
  
-  <div class="mt-8 p-4">
+  <div class="mt-8 p-2">
     <h4 class="font-semibold text-lg text-cyan-500">Analista de producción</h4>
-    <p class="text-sm text-slate-700 mt-1">Orientado a optimizar flujos, reducir desperdicios y asegurar operaciones eficientes mediante análisis de datos y mejora continua.</p>
+    <p class="text-sm text-slate-700 mt-1">Orientado a optimizar flujos de trabajo, reducir desperdicios y asegurar operaciones eficientes mediante análisis de datos y mejora continua.</p>
 
-    <div class="mt-3 flex items-center gap-3">
-      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/03/08</span>
-      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/08/06</span>
-      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Postobón S.A.">Ver</button>
+    <footer class="bg-black/20 rounded-full">     
+    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
+      <div class="flex justify-start items-center gap-2 text-left w-full">
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-200 text-slate-500">Inicio: 2019/03/08</span>
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-200 text-slate-500">Fin: 2019/08/06</span>
+      </div>
+      <button class="card-btn" data-title="Postobón S.A."><i class="fi fi-sr-add"></i></button>
     </div>
+    </footer>
   </div>
 </article>
 
         
-<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
   <!-- Barra superior estilo MacOS -->
   <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
     <div class="flex gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Laboratorios OSA S.A.S"></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Laboratorios OSA S.A.S"></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Laboratorios OSA S.A.S"></span>
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Laboratorios OSA S.A.S"></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Laboratorios OSA S.A.S"></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Laboratorios OSA S.A.S"></span>
     </div>
     <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
       <span class="text-stone-200">--</span>Laboratorios OSA S.A.S
     </h3>
   </div>
   <!-- Contenedor de imagen principal con avatar -->
-  <div class="relative p-4">
+  <div class="relative p-0">
     <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_cover.jpg?raw=true" 
          alt="Proyecto 4" 
-         class="w-full h-full object-cover rounded-md shadow-sm">
+         class="w-full h-full object-cover shadow-sm">
     <!-- Avatar flotante -->
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
   <!-- Contenido de la ventana -->
-  <div class="mt-8 p-4"> <!-- mt-8 deja espacio para el avatar -->
+  <div class="mt-8 p-2"> <!-- mt-8 deja espacio para el avatar -->
     <h4 class="font-semibold text-lg text-rose-500">Analista de producción</h4>
-    <p class="text-sm text-slate-700 mt-1">Gestión de indicadores y optimización de procesos para mantener operaciones estables, eficientes y de alta calidad.</p>
+    <p class="text-sm text-slate-700 mt-1">Gestión de indicadores y optimización de procesos productivos para mantener operaciones estables, eficientes y de alta calidad para los clientes.</p>
 
-    <div class="mt-3 flex items-center gap-3">
-      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2018/06/16</span>
-      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2019/03/06</span>
-      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Laboratorios OSA S.A.">Ver</button>
+    <footer class="bg-black/20 rounded-full">     
+    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
+      <div class="flex justify-start items-center gap-2 text-left w-full">
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-200 text-slate-500">Inicio: 2018/06/16</span>
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-200 text-slate-500">Fin: 2019/03/06</span>
+      </div>
+      <button class="card-btn" data-title="Laboratorios OSA S.A."><i class="fi fi-sr-add"></i></button>
     </div>
+    </footer>
   </div>
 </article>
 
-<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl hover:scale-105 transform transition" style="backdrop-filter: blur(12px);">
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
   <!-- Barra superior estilo MacOS -->
   <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
     <div class="flex gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full viewProject" data-title="Smurfit Westrock S.A."></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full viewProject" data-title="Smurfit Westrock S.A."></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full viewProject" data-title="Smurfit Westrock S.A."></span>
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Smurfit Westrock S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Smurfit Westrock S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Smurfit Westrock S.A."></span>
     </div>
     <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
       <span class="text-stone-200">--</span>Smurfit Westrock S.A.
     </h3>
   </div>
   <!-- Contenedor de imagen principal con avatar -->
-  <div class="relative p-4">
+  <div class="relative p-0">
     <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_cover.jpg?raw=true" 
          alt="Proyecto 4" 
-         class="w-full h-full object-cover rounded-md shadow-sm">
+         class="w-full h-full object-cover">
     <!-- Avatar flotante -->
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-6 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_logo.jpg?raw=true" alt="Avatar" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
   <!-- Contenido de la ventana -->
-  <div class="mt-8 p-4"> <!-- mt-8 deja espacio para el avatar -->
+  <div class="mt-8 p-2"> <!-- mt-8 deja espacio para el avatar -->
     <h4 class="font-semibold text-lg text-rose-500">Incremento de producción</h4>
     <p class="text-sm text-slate-700 mt-1">Impulsar el aumento de producción mediante seguimiento en planta, control de tiempos, apoyo a los operarios y mejora de la eficiencia en cada etapa del proceso.</p>
 
-    <div class="mt-3 flex items-center gap-3">
-      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2017/03/24</span>
-      <span class="text-xs px-2 py-1 rounded-full bg-stone-200 text-slate-500">2018/03/24</span>
-      <button class="filter-btn active px-8 py-0 rounded-full text-sm font-medium transition-all border border-black/30 hover:border-white hover:bg-black/30 text-black hover:text-white inline-block text-center cursor-pointer viewProject" data-title="Smurfit Westrock S.A.">Ver</button>
+    <footer class="bg-black/20 rounded-full">     
+    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
+      <div class="flex justify-start items-center gap-2 text-left w-full">
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-200 text-slate-500">Inicio: 2017/03/24</span>
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-200 text-slate-500">Fin: 2018/03/24</span>
+      </div>
+      <button class="card-btn" data-title="Smurfit Westrock S.A."><i class="fi fi-sr-add"></i></button>
     </div>
+    </footer>
   </div>
 </article>
         <br>
