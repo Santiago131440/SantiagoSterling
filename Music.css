@@ -491,4 +491,36 @@ footer {
   .cover {
     display: none !important;
   }
+  .now {
+    display: grid;
+    grid-template-columns: 1fr 110px;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .now .info {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .now .text-container {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .now .title,
+  .now .artist {
+    display: block;
+    max-width: 100%;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 }
