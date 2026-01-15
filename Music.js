@@ -116,7 +116,7 @@
       audio.pause();
     }
     isPlaying = false;
-    playBtn.textContent = '▶️';
+    playBtn.textContent = '▶';
   }
 
   playBtn.addEventListener('click', () => {
