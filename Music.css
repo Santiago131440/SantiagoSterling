@@ -8,6 +8,7 @@
   --radius: 20px;
   --glow: rgba(255, 66, 0, 0.15);
   --Linea:2px solid #bbbbbb5e;
+  --Lineac:2px solid #e0e0e09d;
   --progreso:  rgba(172, 37, 3, 0.35);
   font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   color: #3D3D3D;
@@ -108,6 +109,47 @@ header h1 {
   max-width: 100%;
 }
 
+.search-wrap {
+  margin-bottom: 0px;
+}
+
+.search-wrap input {
+  width: 100%;
+  padding: 1px 1px;
+  border-radius: 8px;
+  border: 1px solid #d0d0d0;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+}
+
+.search-wrap input:focus {
+  border-color: #999;
+}
+
+.search-input {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: #777;
+  pointer-events: none;
+}
+
+.search-input input {
+  width: 100%;
+  padding: 8px 10px 8px 36px;
+  border-radius: 8px;
+  border: 1px solid #d0d0d0;
+  font-size: 14px;
+  font-family: inherit;
+}
+
 
 .add-area {
   border-radius: 12px;
@@ -139,7 +181,7 @@ header h1 {
 .list {
   margin-top: 4px;
   max-height: 360px; /* De aquí se mueve el tamaño de la lista de música */
-  padding-right: 2px;
+  padding-right: 1px;
   scrollbar-width: thin;
   scrollbar-color: var(--accent) transparent;
   overflow-y: auto;
@@ -166,6 +208,7 @@ header h1 {
   backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
+  border-bottom: var(--Lineac);
 }
 
 .track:hover {
@@ -406,6 +449,11 @@ footer {
     animation: themeFade 1s ease forwards;
   }
 
+  .main {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+  }
+
   .player-wrap {
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
@@ -524,3 +572,4 @@ footer {
     overflow-wrap: anywhere;
   }
 }
+
