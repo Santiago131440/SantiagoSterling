@@ -1,13 +1,14 @@
-/* 🎨 VARIABLES BASE */
 :root {
-  --bg: linear-gradient(145deg, #ffffff 0%, #8E8E93 100%);
-  --card: rgb(233, 233, 233);
+  --bg: linear-gradient(145deg, #ffffff 0%, #ffffff 100%);
+  --card: #ffffff;
   --muted: #6b7280;
   --accent: #FF4200;
   --shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
   --blur: 22px;
   --radius: 20px;
   --glow: rgba(255, 66, 0, 0.15);
+  --Linea:2px solid #bbbbbb5e;
+  --progreso:  rgba(172, 37, 3, 0.35);
   font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   color: #3D3D3D;
   color-scheme: light dark;
@@ -41,7 +42,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2px;
+  padding: 0px;
   backdrop-filter: blur(var(--blur));
   animation: themeFade 1s ease forwards;
   font-family: 'Inter', Arial, system-ui;
@@ -53,17 +54,16 @@ body {
   max-width: 1200px;
   background: var(--card);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
   overflow: hidden;
   backdrop-filter: blur(var(--blur));
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid #7777774f;
   animation: fadeIn 1s ease forwards;
 }
 
 /* HEADER */
 header {
-  padding: 22px 28px;
-  border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 28px;
+  border-bottom: var(--Linea);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -84,6 +84,7 @@ header h1 {
   grid-template-columns: minmax(280px, 360px) 1fr;
   gap: 1px;
   padding: 2px;
+  background-color: #f2f2f7;
 }
 
 /* PLAYLIST */
@@ -117,6 +118,7 @@ header h1 {
   background: var(--accent);
   backdrop-filter: blur(16px);
   transition: all 0.3s ease;
+  border: none;
 }
 
 .add-area:hover {
@@ -167,15 +169,16 @@ header h1 {
 }
 
 .track:hover {
-  background: linear-gradient(90deg, #ff440079, rgba(110, 66, 193, 0.438));
+  background: linear-gradient(90deg, #ff440048, rgba(111, 66, 193, 0.05));
   color: white;
 }
 
 .track.active {
-  background: linear-gradient(90deg, rgba(111, 66, 193, 0.12), rgba(111, 66, 193, 0.05));
+  background: linear-gradient(90deg, #ff440079, rgba(110, 66, 193, 0.438));
   border-left: 4px solid var(--accent);
   padding-left: 8px;
   box-shadow: 0 4px 12px rgba(111, 66, 193, 0.15);
+  color: white;
 }
 
 .track .meta {
@@ -209,7 +212,7 @@ header h1 {
   height: auto;
   min-height: 240px;
   max-height: 400px;
-  width: 700px;
+  width: 800px;
   border-radius: 16px;
   background: linear-gradient(145deg, #fff, rgba(255, 255, 255, 0.4));
   backdrop-filter: blur(20px);
@@ -286,7 +289,7 @@ header h1 {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0 8px;
+  padding: 0 0px;
 }
 
 .time {
@@ -299,7 +302,7 @@ header h1 {
 .progress {
   flex: 1;
   height: 8px;
-  background: rgba(255, 255, 255, 0.35);
+  background: var(--progreso);
   border-radius: 8px;
   position: relative;
   cursor: pointer;
@@ -324,6 +327,18 @@ header h1 {
   gap: 8px;
   padding: 0 8px;
 }
+
+#volume {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 160px;
+  height: 6px;
+  background: var(--progreso);
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+}
+
 
 input[type=range] {
   -webkit-appearance: none;
@@ -350,7 +365,7 @@ input[type=range]::-webkit-slider-thumb {
 /* FOOTER */
 footer {
   padding: 12px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: var(--Linea);
   font-size: 13px;
   color: var(--muted);
   display: flex;
@@ -421,7 +436,7 @@ footer {
 
   header {
     flex-direction: column;
-    gap: 8px;
+    gap: 80px;
     text-align: center;
   }
 
@@ -432,6 +447,7 @@ footer {
   .player-wrap {
     padding: 0px;
     border-radius: 0px;
+    border: none;
   }
 
   .controls {
@@ -439,8 +455,20 @@ footer {
   }
 
   .btn.play {
-    width: 100%;
+    width: 60px;
+    height: 60px;              /* ← clave para centrar arriba/abajo */
+    display: flex;             /* ← activa centrado real */
+    align-items: center;       /* vertical */
+    justify-content: center;   /* horizontal */
+    font-size: 32px;
+    border-radius: 50%;
+    padding: 0;                /* evita desalineación */
+  }
+
+  .btn{
+    font-size: 32px;
     justify-content: center;
+    align-items: center;
   }
 
   footer {
@@ -461,8 +489,6 @@ footer {
   }
 
   .cover {
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+    display: none !important;
   }
 }
