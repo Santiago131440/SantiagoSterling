@@ -1,6 +1,6 @@
 /* 🎨 VARIABLES BASE */
 :root {
-  --bg: linear-gradient(145deg, #FFFFFF 0%, #C4C4C4 100%);
+  --bg: linear-gradient(145deg, #C4C4C4 0%, #C1C1C1 100%);
   --card: rgba(255, 255, 255, 0.35);
   --muted: #6b7280;
   --accent: #FF4200;
@@ -63,7 +63,7 @@ body {
 /* HEADER */
 header {
   padding: 22px 28px;
-  border-bottom: 3px solid rgba(255, 66, 0, 0.7);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -185,21 +185,20 @@ header h1 {
   flex-direction: column;
   gap: 12px;
   padding: 6px 10px;
-  background: url:"https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/file_00000000284471f58925bcd890f691f6.png?raw=true";
 }
-
 
 .cover {
-  /* Si quieres relación cuadrada para la carátula */
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: 12px;
-}
-.cover-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* recorta sin deformar */
-  display: block;
+  height: 240px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(245, 247, 251, 0.4));
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--muted);
+  box-shadow: inset 0 0 20px rgba(111, 66, 193, 0.1), 0 4px 20px rgba(0, 0, 0, 0.05);
+  text-shadow: 0 0 6px rgba(111, 66, 193, 0.3);
 }
 
 /* NOW PLAYING INFO */
