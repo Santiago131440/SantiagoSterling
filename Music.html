@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sterling Music Player</title>
+  <title>Reproductor de Música - Demo</title>
   <link rel="stylesheet" href="Music.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -12,7 +12,7 @@
   <div class="player-wrap" role="application" aria-label="Reproductor de música">
     <header>
       <h1>Sterling Music Player</h1>
-      <div style="color:var(--muted)">Crea tu lista personal</div>
+      <div style="color:var(--muted)">Lista personal</div>
         <label class="add-area" id="dropArea" for="fileInput" tabindex="0">
           Carga archivos (MP3, M4A).
           <input class="file-input" id="fileInput" type="file" accept="audio/*" multiple>
@@ -27,6 +27,10 @@
           <!-- tracks inserted por JS -->
         </div>
       </div>
+
+      <!-- RIGHT: player -->
+      <div class="player-col">
+        <div class="cover" id="cover">Carátula</div>
 
         <div class="now">
           <div class="info">
@@ -53,16 +57,6 @@
           <div class="time" id="duration">0:00</div>
         </div>
 
-       <!-- RIGHT: player -->
-      <div class="player-col">
-        <div class="cover" id="cover">
-          <img
-            src=""
-            alt="Imagen hero"
-            class="cover-image"
-          />
-        </div>
-
         <div class="volume-wrap">
           <div style="min-width:60px;color:var(--muted)">Volumen</div>
           <input id="volume" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volumen">
@@ -74,7 +68,7 @@
     </div>
 
     <footer>
-      <div>Las canciones de YouTube pueden tener anuncios debido a sus políticas.</div>
+      <div>Soporta archivos locales y pistas de ejemplo.</div>
       <div style="color:var(--muted)">Atajos para PC: Space = play/pause · ← → = anterior/siguiente</div>
     </footer>
   </div>
