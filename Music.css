@@ -1,3 +1,4 @@
+/* 🎨 VARIABLES BASE */
 :root {
   --bg: linear-gradient(145deg, #ffffff 0%, #8E8E93 100%);
   --card: rgb(233, 233, 233);
@@ -135,7 +136,7 @@ header h1 {
 
 .list {
   margin-top: 4px;
-  max-height: 320px; /* De aquí se mueve el tamaño de la lista de música */
+  max-height: 360px; /* De aquí se mueve el tamaño de la lista de música */
   padding-right: 2px;
   scrollbar-width: thin;
   scrollbar-color: var(--accent) transparent;
@@ -206,8 +207,9 @@ header h1 {
 /* COOOOOVVERRRRRR --------------- CARATULAA ------------ */
 .cover {
   height: auto;
-  min-height: 80px;
-  max-height: 100px;
+  min-height: 240px;
+  max-height: 400px;
+  width: 700px;
   border-radius: 16px;
   background: linear-gradient(145deg, #fff, rgba(255, 255, 255, 0.4));
   backdrop-filter: blur(20px);
