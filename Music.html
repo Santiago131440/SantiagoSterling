@@ -6,12 +6,25 @@
   <title>Reproductor de Música - Demo</title>
   <link rel="stylesheet" href="Music.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
 
   <div class="player-wrap" role="application" aria-label="Reproductor de música">
     <header>
       <h1>Sterling Music Player</h1>
+        <div class="search-wrap">
+                  <div class="search-input">
+                    <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+
+                    <input
+                      type="text"
+                      id="searchInput"
+                      placeholder="Buscar en tu biblioteca..."
+                      aria-label="Buscar canción"
+                    >
+                  </div>
+                </div>
         <label class="add-area" id="dropArea" for="fileInput" tabindex="0">
           Carga archivos (MP3, M4A).
           <input class="file-input" id="fileInput" type="file" accept="audio/*" multiple>
@@ -30,8 +43,10 @@
 
         <div class="now">
           <div class="info">
-            <div id="nowTitle" class="title">-</div>
-            <div id="nowArtist" class="artist">-</div>
+            <div class="text-container">
+              <div id="nowTitle" class="title">-</div>
+              <div id="nowArtist" class="artist">-</div>
+            </div>
           </div>
           <div style="min-width:110px;text-align:right">
             <div style="font-size:13px;color:var(--muted)">Reproduciendo</div>
