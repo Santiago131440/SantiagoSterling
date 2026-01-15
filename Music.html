@@ -19,15 +19,12 @@
     </header>
 
     <div class="main">
-      <!-- LEFT: playlist + add files -->
       <div class="playlist-col">
 
         <div class="list" id="playlist" aria-label="Lista de reproducción">
-          <!-- tracks inserted por JS -->
         </div>
       </div>
 
-      <!-- RIGHT: player -->
       <div class="player-col">
         <div class="cover" id="cover">Carátula</div>
 
@@ -44,7 +41,7 @@
 
         <div class="controls" aria-hidden="false">
           <button class="btn" id="prevBtn" title="Anterior">⏮</button>
-          <button class="btn play" id="playBtn" title="Reproducir/Pausar" aria-pressed="false">▶️</button>
+          <button class="btn play" id="playBtn" title="Reproducir/Pausar" aria-pressed="false">▶</button>
           <button class="btn" id="nextBtn" title="Siguiente">⏭</button>
         </div>
 
@@ -56,12 +53,12 @@
           <div class="time" id="duration">0:00</div>
         </div>
 
+        <br>
         <div class="volume-wrap">
           <div style="min-width:60px;color:var(--muted)">Volumen</div>
           <input id="volume" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volumen">
         </div>
 
-        <!-- element audio escondido -->
         <audio id="audio" preload="metadata"></audio>
       </div>
     </div>
