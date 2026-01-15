@@ -20,10 +20,15 @@
   let tracks = [
     { title:'SoundHelix Song 1', artist:'SoundHelix', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', type:'mp3' },
     { title:'SoundHelix Song 2', artist:'SoundHelix', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', type:'mp3' },
-    { title:'Happy Together', artist:'The Turtles', src:'https://www.youtube.com/watch?v=G_JVf84vfBQ&list=RDG_JVf84vfBQ&start_radio=1', type:'youtube' },
+    { title:'Lalala', artist:'Y2K, bbno$', src:'https://www.youtube.com/watch?v=N2Y2vQ-1m7M&list=RDN2Y2vQ-1m7M&start_radio=1', type:'youtube' },
     { title:'Music Sessions #0/66', artist:'Daddy Yankee & BZRP', src:'https://www.youtube.com/watch?v=qNw8ejrI0nM&list=RDqNw8ejrI0nM&start_radio=1', type:'youtube' },
     { title:'Bohemian Rhapsody (Official Video Remastered)', artist:'Queen', src:'https://www.youtube.com/watch?v=fJ9rUzIMcZQ&list=RDfJ9rUzIMcZQ&start_radio=1', type:'youtube' },
-    { title:'CLASICOS DEL REGGAETON - LOS MEJORES REGGAETON VIEJO', artist:'Fuego Latino Mix', src:'https://www.youtube.com/watch?v=_dwNUgEf38g&list=RD_dwNUgEf38g&start_radio=1', type:'youtube' },
+    { title:'Clasicos del reggaeton', artist:'Fuego Latino Mix', src:'https://www.youtube.com/watch?v=_dwNUgEf38g&list=RD_dwNUgEf38g&start_radio=1', type:'youtube' },
+    { title:'Nostalgia', artist:'Ángel Canales', src:'https://www.youtube.com/watch?v=nvdnJLtlCkM&list=RDnvdnJLtlCkM&start_radio=1', type:'youtube' },
+    { title:'Las Tumbas', artist:'Ismael Rivera', src:'https://www.youtube.com/watch?v=LbN2azLxRYE&list=RDLbN2azLxRYE&start_radio=1', type:'youtube' },
+    { title:'Tomorrowland 2012', artist:'Tomorrowland', src:'https://www.youtube.com/watch?v=UWb5Qc-fBvk', type:'youtube' },
+    { title:'MIX MERENGUE CLÁSICO BAILABLE | ÉXITOS DE SIEMPRE', artist:'Dj Bravo', src:'https://www.youtube.com/watch?v=8pWBmHM5ux4&list=RD8pWBmHM5ux4&start_radio=1', type:'youtube' },
+ 
   ];
 
   let current = 0;
@@ -236,3 +241,26 @@
   // Inicializar
   renderPlaylist();
   loadTrack(0);
+  
+  //BARRA DE BUSQUEDA
+
+  const searchInput = document.getElementById("searchInput");
+  const playlist = document.getElementById("playlist");
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase().trim();
+
+    const tracks = playlist.children;
+
+    Array.from(tracks).forEach(track => {
+      // Intenta obtener el título desde data-title o texto visible
+      const title =
+        track.dataset.title ||
+        track.textContent ||
+        "";
+
+      const match = title.toLowerCase().includes(query);
+
+      track.style.display = match ? "" : "none";
+    });
+  });
