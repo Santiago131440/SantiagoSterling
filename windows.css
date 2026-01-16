@@ -446,6 +446,12 @@ body {
     color: #ddd;
 }
 
+.taskbar-right p{
+color: #ffffff;
+font-size: 12px;
+padding: 2px 4px;
+}
+
 
 
 /* ============================================================
@@ -604,7 +610,3 @@ body {
     transform: translateY(0) scale(1);
   }
 }
-
-
-
-
