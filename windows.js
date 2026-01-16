@@ -110,7 +110,7 @@ const apps = {
 
         ">
             <iframe 
-                src="https://santiago131440.github.io/SantiagoSterling/Buscaminas.html"
+                src="https://github.com/Santiago131440/SantiagoSterling/blob/main/Buscaminas/Buscaminas.html"
                 style="width:100%; height:100%; border:none;"
             ></iframe>
         </div>
@@ -872,5 +872,6 @@ document.addEventListener("click", (e) => {
     calendarPanel.classList.add("hidden");
   }
 });
+
 
 
