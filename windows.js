@@ -872,6 +872,3 @@ document.addEventListener("click", (e) => {
     calendarPanel.classList.add("hidden");
   }
 });
-
-
-
