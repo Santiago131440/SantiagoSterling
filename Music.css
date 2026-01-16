@@ -571,5 +571,8 @@ footer {
     white-space: normal;
     overflow-wrap: anywhere;
   }
+  .header h1 {
+  font-size: 44px;
+  }
 }
 
