@@ -12,24 +12,31 @@
 
   <div class="player-wrap" role="application" aria-label="Reproductor de música">
     <header>
-      <h1>Sterling Music Player</h1>
-        <div class="search-wrap">
-                  <div class="search-input">
-                    <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+        <h1>Sterling Music Player</h1>
 
-                    <input
-                      type="text"
-                      id="searchInput"
-                      placeholder="Buscar en tu biblioteca..."
-                      aria-label="Buscar canción"
-                    >
-                  </div>
-                </div>
+        <div class="search-wrap">
+          <div class="search-input">
+            <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Buscar en tu biblioteca..."
+              aria-label="Buscar canción"
+              autocomplete="on"
+            >
+          </div>
+
+          <!-- Sugerencias -->
+          <ul id="searchSuggestions" class="search-suggestions"></ul>
+        </div>
+
         <label class="add-area" id="dropArea" for="fileInput" tabindex="0">
           Carga archivos (MP3, M4A).
           <input class="file-input" id="fileInput" type="file" accept="audio/*" multiple>
         </label>
-    </header>
+      </header>
+
 
     <div class="main">
       <div class="playlist-col">
