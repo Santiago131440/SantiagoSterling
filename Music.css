@@ -161,13 +161,14 @@ header h1 {
   top: calc(100% + 8px);
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(22px) saturate(180%);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  background: rgba(255, 248, 230, 0.808);
+  color: rgba(28, 28, 30, 0.85);
+  backdrop-filter: blur(12px) saturate(180%);
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.35);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  padding: 6px 0;
+  text-align: left;
+  padding: 6px 12px;
   margin: 0;
   list-style: none;
   isolation: isolate;
@@ -184,10 +185,13 @@ header h1 {
   font-size: 14px;
   border-radius: 10px;
   transition: background 0.25s ease;
+  text-align: left;
+  border-bottom: 1px solid rgba(60, 60, 67, 0.18);
 }
 
 .search-suggestions li:hover {
-  background: rgba(255, 255, 255, 0.35);
+  background: var(--accent);
+  color:white;
 }
 
 
@@ -485,7 +489,7 @@ footer {
   }
 
   .main {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgb(0, 0, 0);
     color: white;
   }
 
@@ -493,20 +497,25 @@ footer {
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .add-area,
   .track,
   .cover,
   .btn {
     background: rgba(255, 255, 255, 0.05);
   }
 
+  .btn,
   .btn.play {
-    background: var(--accent);
-    box-shadow: 0 6px 20px rgba(157, 122, 255, 0.4);
+    border: none;
+    background: rgba(0, 0, 0, 0);
   }
 
   .progress .bar {
     background: linear-gradient(90deg, var(--accent), #855CFF);
+  }
+
+  .search-suggestions {
+  background: rgba(34, 34, 34, 0.808);
+  color: white;
   }
 }
 
@@ -628,4 +637,5 @@ footer {
       margin-top: 0;
       padding: 8px; /* ligeramente más compacto en mobile */
     }
+
 }
