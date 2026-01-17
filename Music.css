@@ -55,7 +55,6 @@ body {
   max-width: 1200px;
   background: var(--card);
   border-radius: var(--radius);
-  overflow: hidden;
   backdrop-filter: blur(var(--blur));
   border: 1px solid #7777774f;
   animation: fadeIn 1s ease forwards;
@@ -63,6 +62,8 @@ body {
 
 /* HEADER */
 header {
+  position: relative;
+  z-index: 10;
   padding: 10px 28px;
   border-bottom: var(--Linea);
   display: flex;
@@ -86,6 +87,8 @@ header h1 {
   gap: 1px;
   padding: 2px;
   background-color: #f2f2f7;
+  position: relative;
+  z-index: 1;
 }
 
 /* PLAYLIST */
@@ -104,13 +107,14 @@ header h1 {
 .now .info .title,
 .now .info .artist {
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
 }
 
 .search-wrap {
   margin-bottom: 0px;
+  position: relative;
+  z-index: 1000;
 }
 
 .search-wrap input {
@@ -148,6 +152,42 @@ header h1 {
   border: 1px solid #d0d0d0;
   font-size: 14px;
   font-family: inherit;
+}
+
+.search-suggestions {
+  position: absolute;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  padding: 6px 0;
+  margin: 0;
+  list-style: none;
+  isolation: isolate;
+  z-index: 9999;
+  max-height: 260px;
+  overflow-y: auto;
+  display: none;
+}
+
+
+.search-suggestions li {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 10px;
+  transition: background 0.25s ease;
+}
+
+.search-suggestions li:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
 
 
@@ -484,8 +524,16 @@ footer {
 
   header {
     flex-direction: column;
-    gap: 80px;
+    gap: 16px;
     text-align: center;
+  }
+
+  header h1 {
+    padding-top: 60px;
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
   }
 
   .main {
@@ -539,6 +587,7 @@ footer {
   .cover {
     display: none !important;
   }
+
   .now {
     display: grid;
     grid-template-columns: 1fr 110px;
@@ -571,8 +620,13 @@ footer {
     white-space: normal;
     overflow-wrap: anywhere;
   }
-  .header h1 {
-  font-size: 60px;
-  }
-}
 
+    .search-wrap {
+      margin-bottom: 6px; /* reduce separación inferior */
+    }
+
+    .add-area {
+      margin-top: 0;
+      padding: 8px; /* ligeramente más compacto en mobile */
+    }
+}
