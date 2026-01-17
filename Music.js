@@ -243,24 +243,56 @@
   loadTrack(0);
   
   //BARRA DE BUSQUEDA
+  // BARRA DE BUSQUEDA (sugerencias flotantes)
+const searchInput = document.getElementById("searchInput");
+const suggestionsBox = document.getElementById("searchSuggestions");
 
-  const searchInput = document.getElementById("searchInput");
-  const playlist = document.getElementById("playlist");
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.toLowerCase().trim();
+  suggestionsBox.innerHTML = "";
 
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase().trim();
+  if (!query) {
+    suggestionsBox.style.display = "none";
+    return;
+  }
 
-    const tracks = playlist.children;
+  const matches = tracks.filter(t =>
+    t.title.toLowerCase().includes(query)
+  );
 
-    Array.from(tracks).forEach(track => {
-      // Intenta obtener el título desde data-title o texto visible
-      const title =
-        track.dataset.title ||
-        track.textContent ||
-        "";
+  matches.forEach(song => {
+    const li = document.createElement("li");
+    li.textContent = song.title;
 
-      const match = title.toLowerCase().includes(query);
+    li.addEventListener("click", () => {
+      searchInput.value = song.title;
+      suggestionsBox.style.display = "none";
 
-      track.style.display = match ? "" : "none";
+      const index = tracks.indexOf(song);
+      if (index !== -1) {
+        loadTrack(index);
+        play();
+      }
     });
+
+    suggestionsBox.appendChild(li);
   });
+
+  suggestionsBox.style.display = matches.length ? "block" : "none";
+});
+
+// Cerrar sugerencias al hacer click fuera
+document.addEventListener("click", e => {
+  if (!e.target.closest(".search-wrap")) {
+    suggestionsBox.style.display = "none";
+  }
+});
+
+
+  //Cerrar sugerencias si no encuentra nada
+
+  document.addEventListener("click", e => {
+  if (!e.target.closest(".search-wrap")) {
+    suggestionsBox.style.display = "none";
+  }
+});
