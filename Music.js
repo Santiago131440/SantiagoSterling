@@ -174,7 +174,6 @@
   // Archivos locales (igual que antes)
   const fileInput = document.getElementById('fileInput');
   const dropArea = document.getElementById('dropArea');
-  dropArea.addEventListener('click', () => fileInput.click());
   fileInput.addEventListener('change', (ev)=> {
     const files = Array.from(ev.target.files);
     addFiles(files);
