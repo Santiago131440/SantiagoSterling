@@ -101,28 +101,32 @@
     }
   }
 
-  function play(){
-    if (isYouTube){
+  const playIcon = playBtn.querySelector('i');
+
+  function play() {
+    if (isYouTube) {
       youtubePlayer && youtubePlayer.playVideo();
-      isPlaying = true;
-      playBtn.textContent = '⏸';
     } else {
-      audio.play().then(()=>{
-        isPlaying = true;
-        playBtn.textContent = '⏸';
-      }).catch(e=>console.warn(e));
+      audio.play().catch(e => console.warn(e));
     }
+
+    isPlaying = true;
+    playBtn.setAttribute('aria-pressed', 'true');
+    playIcon.className = 'fa-solid fa-pause';
   }
 
-  function pause(){
-    if (isYouTube){
+  function pause() {
+    if (isYouTube) {
       youtubePlayer && youtubePlayer.pauseVideo();
     } else {
       audio.pause();
     }
+
     isPlaying = false;
-    playBtn.textContent = '▶';
+    playBtn.setAttribute('aria-pressed', 'false');
+    playIcon.className = 'fa-solid fa-play';
   }
+
 
   playBtn.addEventListener('click', () => {
     if (!tracks.length) return;
