@@ -156,26 +156,54 @@ header h1 {
 
 .search-suggestions {
   position: absolute;
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent) transparent;
   top: calc(100% + 8px);
   left: 0;
   right: 0;
-  background: rgba(255, 248, 230, 0.808);
-  color: rgba(28, 28, 30, 0.85);
-  backdrop-filter: blur(12px) saturate(180%);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  text-align: left;
+  z-index: 9999;
+
+  color: rgba(28, 28, 30, 0.92);
+
+  /* Metal denso (menos transparencia) */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.92),
+      rgba(235,235,235,0.90) 35%,
+      rgba(245,245,245,0.88) 50%,
+      rgba(225,225,225,0.90) 65%,
+      rgba(255,255,255,0.92)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.06) 0px,
+      rgba(255,255,255,0.06) 1px,
+      rgba(0,0,0,0.05) 2px,
+      rgba(0,0,0,0.05) 3px
+    );
+
+  /* Blur reducido porque el metal ya es opaco */
+  backdrop-filter: blur(18px) saturate(140%) contrast(108%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%) contrast(108%);
+
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.75);
+
+  box-shadow:
+    0 28px 56px rgba(0,0,0,0.28),
+    inset 0 1px 1px rgba(255,255,255,0.95),
+    inset 0 -1px 1px rgba(0,0,0,0.18);
+
   padding: 6px 12px;
   margin: 0;
   list-style: none;
-  isolation: isolate;
-  z-index: 9999;
+  text-align: left;
   max-height: 260px;
   overflow-y: auto;
   display: none;
+  isolation: isolate;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
 }
 
 
@@ -637,5 +665,9 @@ footer {
       margin-top: 0;
       padding: 8px; /* ligeramente más compacto en mobile */
     }
+
+  .textopc {
+    display: none;
+  }
 
 }
