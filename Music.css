@@ -170,15 +170,15 @@ header h1 {
       rgba(255,255,255,0.92),
       rgba(235,235,235,0.90) 35%,
       rgba(245,245,245,0.88) 50%,
-      rgba(225,225,225,0.90) 65%,
+      rgba(248, 248, 248, 0.507) 65%,
       rgba(255,255,255,0.92)
     ),
     repeating-linear-gradient(
       90deg,
-      rgba(255,255,255,0.06) 0px,
-      rgba(255,255,255,0.06) 1px,
-      rgba(0,0,0,0.05) 2px,
-      rgba(0,0,0,0.05) 3px
+      rgba(255, 255, 255, 0.966) 0px,
+      rgb(255, 255, 255) 1px,
+      rgb(255, 255, 255) 2px,
+      rgb(255, 255, 255) 3px
     );
 
   /* Blur reducido porque el metal ya es opaco */
@@ -189,11 +189,11 @@ header h1 {
   border: 1px solid rgba(255,255,255,0.75);
 
   box-shadow:
-    0 28px 56px rgba(0,0,0,0.28),
+    0 28px 56px rgba(117, 117, 117, 0.18),
     inset 0 1px 1px rgba(255,255,255,0.95),
-    inset 0 -1px 1px rgba(0,0,0,0.18);
+    inset 0 -1px 1px rgba(117, 117, 117, 0.18);
 
-  padding: 6px 12px;
+  padding: 0px 0px;
   margin: 0;
   list-style: none;
   text-align: left;
