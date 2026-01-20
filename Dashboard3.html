@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shopping Chat</title>
+<title>Cuentas</title>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+
 
 <style>
 :root{
@@ -71,8 +73,8 @@ body{
   background:var(--accent);
   color:white;
   border:none;
-  padding:12px;
-  border-radius:14px;
+  padding:20px;
+  border-radius:64px;
   font-weight:600;
 }
 
@@ -99,7 +101,7 @@ body{
 .message{
   background:var(--card);
   backdrop-filter:blur(var(--blur));
-  border-radius:16px;
+  border-radius:60px;
   padding:12px 14px;
   margin-bottom:10px;
   position:relative;
@@ -141,9 +143,13 @@ body{
   font-size:15px;
 }
 
+.new-chat i {
+  font-size: 22px;;
+}
+
 .footer button{
   padding:14px 18px;
-  border-radius:16px;
+  border-radius:60px;
   border:none;
   background:var(--accent);
   color:white;
@@ -171,7 +177,7 @@ body{
   <div class="sidebar">
     <h2>Listas</h2>
     <div class="chat-list" id="chatList"></div>
-    <button class="new-chat" onclick="createChat()">＋ Nueva</button>
+    <button class="new-chat" onclick="createChat()"><i class="fi fi-sr-add-document"></i></button>
   </div>
 
   <div class="main">
@@ -180,8 +186,8 @@ body{
     <div class="total" id="total">Total: $0</div>
 
     <div class="footer">
-      <input id="input" placeholder="Ej: Pan 3500">
-      <button onclick="sendMessage()">Enviar</button>
+      <input id="input" placeholder="Ej: Carro 35000">
+      <button onclick="sendMessage()"><i class="fi fi-sr-paper-plane-top"></i></button>
     </div>
   </div>
 
