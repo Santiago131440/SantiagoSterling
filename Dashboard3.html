@@ -69,9 +69,7 @@ body{
   gap:8px;
 }
 
-.chat-item span{
-  flex:1;
-}
+.chat-item span{flex:1}
 
 .chat-item.active,
 .chat-item:hover{
@@ -87,15 +85,14 @@ body{
 }
 
 .new-chat{
-  background:var(--accent);
-  color:white;
+  color:var(--accent);
   border:none;
-  padding:20px;
+  padding:8px;
   border-radius:64px;
   font-weight:600;
 }
 
-.new-chat i{font-size:22px}
+.new-chat i{font-size:28px}
 
 /* Main */
 .main{
@@ -146,6 +143,7 @@ body{
   cursor:pointer;
   font-size:36px;
   opacity:.6;
+  color: var(--accent)
 }
 
 .messages{
@@ -192,11 +190,15 @@ body{
 }
 
 .footer button{
-  padding:14px 18px;
+  padding:1px 1px;
   border-radius:60px;
   border:none;
-  background:var(--accent);
-  color:white;
+  color:var(--accent);
+  background-color: transparent;
+}
+
+.footer i {
+  font-size: 26px;
 }
 
 .total{
@@ -261,14 +263,46 @@ body{
 <script>
 let data = JSON.parse(localStorage.getItem("shoppingChat")) || { chats:{} }
 let currentChat = null
+
 const sidebar = document.getElementById("sidebar")
 const main = document.getElementById("main")
 
 function isMobile(){ return innerWidth <= 720 }
 
+/* Toggle sidebar from header */
 document.getElementById("chatTitle").onclick = () => {
   if(isMobile()) sidebar.classList.toggle("show")
 }
+
+/* === SWIPE GESTURE === */
+let startX = 0
+let startY = 0
+
+main.addEventListener("touchstart", e=>{
+  startX = e.touches[0].clientX
+  startY = e.touches[0].clientY
+},{passive:true})
+
+main.addEventListener("touchend", e=>{
+  const endX = e.changedTouches[0].clientX
+  const endY = e.changedTouches[0].clientY
+
+  const diffX = endX - startX
+  const diffY = Math.abs(endY - startY)
+
+  if(!isMobile()) return
+
+  /* Evita interferir con scroll vertical */
+  if(diffY > 60) return
+
+  if(diffX > 80){
+    sidebar.classList.add("show")     // izquierda → derecha
+  }
+
+  if(diffX < -80){
+    sidebar.classList.remove("show")  // derecha → izquierda
+  }
+})
 
 function save(){
   localStorage.setItem("shoppingChat",JSON.stringify(data))
