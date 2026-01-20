@@ -1,238 +1,287 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Software Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Chat</title>
 
-  <style>
-    :root{
-      --bg:#0f0f0f;
-      --card:#1c1c1e;
-      --muted:#9ca3af;
-      --accent:#3b82f6;
-      --border:rgba(255,255,255,.08);
-    }
+<style>
+:root{
+  --bg:#f5f5f7;
+  --card:rgba(255,255,255,.85);
+  --border:rgba(0,0,0,.08);
+  --accent:#007aff;
+  --text:#1c1c1e;
+  --muted:#6e6e73;
+  --radius:18px;
+  --blur:22px;
+}
 
-    *{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto}
-    body{margin:0;background:var(--bg);color:#fff}
+*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",sans-serif}
 
-    /* Banner */
-    .banner{
-      height:180px;
-      background:linear-gradient(135deg,#1e3a8a,#020617);
-      display:flex;
-      align-items:center;
-      padding:0 24px;
-      position:relative;
-    }
+body{
+  margin:0;
+  background:linear-gradient(180deg,#fff,#eaeaee);
+  color:var(--text);
+  height:100vh;
+  display:flex;
+}
 
-    .banner h1{
-      font-size:28px;
-      font-weight:700;
-    }
+.app{
+  display:flex;
+  width:100%;
+}
 
-    /* Perfil */
-    .profile{
-      display:flex;
-      gap:16px;
-      padding:20px 24px;
-      align-items:center;
-    }
+/* Sidebar */
+.sidebar{
+  width:280px;
+  background:var(--card);
+  backdrop-filter:blur(var(--blur));
+  border-right:1px solid var(--border);
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+}
 
-    .avatar{
-      width:96px;
-      height:96px;
-      border-radius:50%;
-      background:linear-gradient(135deg,#60a5fa,#2563eb);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:34px;
-      font-weight:700;
-    }
+.sidebar h2{
+  font-size:18px;
+  margin:8px 0 12px;
+}
 
-    .profile-info h2{margin:0;font-size:22px}
-    .profile-info span{color:var(--muted);font-size:14px}
+.chat-list{
+  flex:1;
+  overflow:auto;
+}
 
-    .stats{
-      display:flex;
-      gap:20px;
-      margin-top:8px;
-      font-size:14px;
-      color:var(--muted);
-    }
+.chat-item{
+  padding:12px;
+  border-radius:14px;
+  margin-bottom:8px;
+  cursor:pointer;
+  transition:.2s;
+  background:transparent;
+}
 
-    /* Tabs */
-    .tabs{
-      display:flex;
-      gap:24px;
-      padding:0 24px;
-      border-bottom:1px solid var(--border);
-    }
+.chat-item.active,
+.chat-item:hover{
+  background:rgba(0,0,0,.05);
+}
 
-    .tab{
-      padding:14px 0;
-      font-size:14px;
-      color:var(--muted);
-      cursor:pointer;
-      position:relative;
-    }
+.new-chat{
+  background:var(--accent);
+  color:white;
+  border:none;
+  padding:12px;
+  border-radius:14px;
+  font-weight:600;
+}
 
-    .tab.active{
-      color:#fff;
-    }
+/* Main */
+.main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
 
-    .tab.active::after{
-      content:"";
-      position:absolute;
-      bottom:-1px;
-      left:0;
-      right:0;
-      height:2px;
-      background:var(--accent);
-    }
+.header{
+  padding:16px;
+  font-weight:600;
+  font-size:17px;
+  border-bottom:1px solid var(--border);
+}
 
-    /* Proyectos */
-    .content{
-      padding:24px;
-    }
+.messages{
+  flex:1;
+  padding:16px;
+  overflow:auto;
+}
 
-    .projects{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-      gap:20px;
-    }
+.message{
+  background:var(--card);
+  backdrop-filter:blur(var(--blur));
+  border-radius:16px;
+  padding:12px 14px;
+  margin-bottom:10px;
+  position:relative;
+}
 
-    .project-card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:16px;
-      overflow:hidden;
-      transition:.3s;
-    }
+.message small{
+  color:var(--muted);
+  display:block;
+  margin-top:4px;
+}
 
-    .project-card:hover{
-      transform:translateY(-4px);
-      box-shadow:0 10px 30px rgba(0,0,0,.4);
-    }
+.message .actions{
+  position:absolute;
+  right:10px;
+  top:8px;
+  display:flex;
+  gap:6px;
+}
 
-    .project-thumb{
-      height:140px;
-      background:linear-gradient(135deg,#334155,#020617);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:20px;
-      font-weight:600;
-      color:#93c5fd;
-    }
+.message button{
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:14px;
+}
 
-    .project-body{
-      padding:16px;
-    }
+.footer{
+  padding:14px;
+  display:flex;
+  gap:10px;
+  border-top:1px solid var(--border);
+}
 
-    .project-body h3{
-      margin:0 0 6px;
-      font-size:16px;
-    }
+.footer input{
+  flex:1;
+  padding:14px;
+  border-radius:16px;
+  border:1px solid var(--border);
+  font-size:15px;
+}
 
-    .project-body p{
-      margin:0;
-      font-size:14px;
-      color:var(--muted);
-    }
+.footer button{
+  padding:14px 18px;
+  border-radius:16px;
+  border:none;
+  background:var(--accent);
+  color:white;
+  font-weight:600;
+}
 
-    .tags{
-      display:flex;
-      gap:8px;
-      margin-top:10px;
-      flex-wrap:wrap;
-    }
+/* Total */
+.total{
+  padding:14px 18px;
+  background:rgba(0,0,0,.03);
+  font-weight:600;
+}
 
-    .tag{
-      font-size:12px;
-      padding:4px 10px;
-      border-radius:999px;
-      background:#111827;
-      border:1px solid var(--border);
-      color:#93c5fd;
-    }
-  </style>
+/* Mobile */
+@media(max-width:720px){
+  .sidebar{width:100px}
+  .chat-item{font-size:12px}
+}
+</style>
 </head>
 
 <body>
+<div class="app">
 
-  <!-- Banner -->
-  <div class="banner">
-    <h1>Software Projects & Dashboards</h1>
+  <div class="sidebar">
+    <h2>Listas</h2>
+    <div class="chat-list" id="chatList"></div>
+    <button class="new-chat" onclick="createChat()">＋ Nueva</button>
   </div>
 
-  <!-- Perfil -->
-  <div class="profile">
-    <div class="avatar">S</div>
-    <div class="profile-info">
-      <h2>Santiago · Software Developer</h2>
-      <span>Portafolio de proyectos en desarrollo de software</span>
-      <div class="stats">
-        <div>🧩 12 Proyectos</div>
-        <div>⚙️ JS · Python · Power BI</div>
-        <div>💼 Industrial & Software</div>
-      </div>
+  <div class="main">
+    <div class="header" id="chatTitle">Selecciona una lista</div>
+    <div class="messages" id="messages"></div>
+    <div class="total" id="total">Total: $0</div>
+
+    <div class="footer">
+      <input id="input" placeholder="Ej: Pan 3500">
+      <button onclick="sendMessage()">Enviar</button>
     </div>
   </div>
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <div class="tab active">Principal</div>
-    <div class="tab">Proyectos</div>
-    <div class="tab">Apps</div>
-    <div class="tab">Dashboards</div>
-  </div>
+</div>
 
-  <!-- Contenido -->
-  <div class="content">
-    <div class="projects">
+<script>
+let data = JSON.parse(localStorage.getItem("shoppingChat")) || { chats:{} }
+let currentChat = null
 
-      <div class="project-card">
-        <div class="project-thumb">Quantix</div>
-        <div class="project-body">
-          <h3>Sistema de Inventarios</h3>
-          <p>Gestión de inventarios con reportes dinámicos.</p>
-          <div class="tags">
-            <span class="tag">JavaScript</span>
-            <span class="tag">HTML</span>
-            <span class="tag">CSS</span>
-          </div>
-        </div>
-      </div>
+function save(){
+  localStorage.setItem("shoppingChat",JSON.stringify(data))
+}
 
-      <div class="project-card">
-        <div class="project-thumb">Music Player</div>
-        <div class="project-body">
-          <h3>Reproductor Multimedia</h3>
-          <p>Player avanzado con diseño tipo macOS.</p>
-          <div class="tags">
-            <span class="tag">JS</span>
-            <span class="tag">UI/UX</span>
-          </div>
-        </div>
-      </div>
+function createChat(){
+  const name = prompt("Nombre de la lista")
+  if(!name) return
+  const id = Date.now().toString()
+  data.chats[id] = { name, messages:[] }
+  currentChat = id
+  save()
+  renderChats()
+  renderChat()
+}
 
-      <div class="project-card">
-        <div class="project-thumb">Power BI</div>
-        <div class="project-body">
-          <h3>Dashboard Financiero</h3>
-          <p>Análisis PYG con visuales profesionales.</p>
-          <div class="tags">
-            <span class="tag">Power BI</span>
-            <span class="tag">Data</span>
-          </div>
-        </div>
-      </div>
+function renderChats(){
+  const list = document.getElementById("chatList")
+  list.innerHTML=""
+  Object.entries(data.chats).forEach(([id,chat])=>{
+    const div=document.createElement("div")
+    div.className="chat-item"+(id===currentChat?" active":"")
+    div.textContent=chat.name
+    div.onclick=()=>{currentChat=id;renderChats();renderChat()}
+    list.appendChild(div)
+  })
+}
 
-    </div>
-  </div>
+function renderChat(){
+  if(!currentChat) return
+  document.getElementById("chatTitle").textContent=data.chats[currentChat].name
+  const box=document.getElementById("messages")
+  box.innerHTML=""
+  let total=0
+
+  data.chats[currentChat].messages.forEach(m=>{
+    const div=document.createElement("div")
+    div.className="message"
+    div.innerHTML=`
+      ${m.text}
+      <small>${m.value?("$"+m.value.toLocaleString()):""}</small>
+      <div class="actions">
+        <button onclick="editMsg('${m.id}')">✏️</button>
+        <button onclick="delMsg('${m.id}')">🗑️</button>
+      </div>`
+    box.appendChild(div)
+    total+=m.value||0
+  })
+
+  document.getElementById("total").textContent="Total: $"+total.toLocaleString()
+}
+
+function sendMessage(){
+  if(!currentChat) return
+  const input=document.getElementById("input")
+  const text=input.value.trim()
+  if(!text) return
+
+  const match=text.match(/(\d+(\.\d+)?)/)
+  const value=match?Number(match[1]):0
+
+  data.chats[currentChat].messages.push({
+    id:Date.now().toString(),
+    text,
+    value
+  })
+
+  input.value=""
+  save()
+  renderChat()
+}
+
+function editMsg(id){
+  const msg=data.chats[currentChat].messages.find(m=>m.id===id)
+  const text=prompt("Editar",msg.text)
+  if(!text) return
+  const match=text.match(/(\d+(\.\d+)?)/)
+  msg.text=text
+  msg.value=match?Number(match[1]):0
+  save()
+  renderChat()
+}
+
+function delMsg(id){
+  data.chats[currentChat].messages=
+    data.chats[currentChat].messages.filter(m=>m.id!==id)
+  save()
+  renderChat()
+}
+
+renderChats()
+</script>
 
 </body>
 </html>
