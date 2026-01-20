@@ -6,7 +6,6 @@
 <title>Cuentas</title>
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
 
-
 <style>
 :root{
   --bg:#f5f5f7;
@@ -43,6 +42,7 @@ body{
   padding:14px;
   display:flex;
   flex-direction:column;
+  transition:transform .25s ease;
 }
 
 .sidebar h2{
@@ -90,6 +90,7 @@ body{
   font-weight:600;
   font-size:17px;
   border-bottom:1px solid var(--border);
+  cursor:pointer;
 }
 
 .messages{
@@ -144,7 +145,7 @@ body{
 }
 
 .new-chat i {
-  font-size: 22px;;
+  font-size: 22px;
 }
 
 .footer button{
@@ -163,10 +164,19 @@ body{
   font-weight:600;
 }
 
-/* Mobile */
+/* Mobile behavior */
 @media(max-width:720px){
-  .sidebar{width:100px}
-  .chat-item{font-size:12px}
+  .sidebar{
+    position:absolute;
+    height:100%;
+    left:0;
+    top:0;
+    transform:translateX(-100%);
+    z-index:10;
+  }
+  .sidebar.show{
+    transform:translateX(0);
+  }
 }
 </style>
 </head>
@@ -174,7 +184,7 @@ body{
 <body>
 <div class="app">
 
-  <div class="sidebar">
+  <div class="sidebar" id="sidebar">
     <h2>Listas</h2>
     <div class="chat-list" id="chatList"></div>
     <button class="new-chat" onclick="createChat()"><i class="fi fi-sr-add-document"></i></button>
@@ -196,6 +206,15 @@ body{
 <script>
 let data = JSON.parse(localStorage.getItem("shoppingChat")) || { chats:{} }
 let currentChat = null
+const sidebar = document.getElementById("sidebar")
+
+function isMobile(){
+  return window.innerWidth <= 720
+}
+
+document.getElementById("chatTitle").onclick = () => {
+  if(isMobile()) sidebar.classList.toggle("show")
+}
 
 function save(){
   localStorage.setItem("shoppingChat",JSON.stringify(data))
@@ -219,7 +238,12 @@ function renderChats(){
     const div=document.createElement("div")
     div.className="chat-item"+(id===currentChat?" active":"")
     div.textContent=chat.name
-    div.onclick=()=>{currentChat=id;renderChats();renderChat()}
+    div.onclick=()=>{
+      currentChat=id
+      renderChats()
+      renderChat()
+      if(isMobile()) sidebar.classList.remove("show")
+    }
     list.appendChild(div)
   })
 }
