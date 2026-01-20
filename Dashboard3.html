@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cuentas</title>
+
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
 :root{
@@ -26,6 +28,7 @@ body{
   color:var(--text);
   height:100vh;
   display:flex;
+  overflow:hidden;
 }
 
 .app{
@@ -61,7 +64,6 @@ body{
   margin-bottom:8px;
   cursor:pointer;
   transition:.2s;
-  background:transparent;
 }
 
 .chat-item.active,
@@ -78,6 +80,8 @@ body{
   font-weight:600;
 }
 
+.new-chat i{font-size:22px}
+
 /* Main */
 .main{
   flex:1;
@@ -91,6 +95,42 @@ body{
   font-size:17px;
   border-bottom:1px solid var(--border);
   cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* Hamburger invisible */
+.hamburger{
+  width:22px;
+  height:14px;
+  position:relative;
+  opacity:.45;
+  display:none;
+}
+.hamburger span{
+  position:absolute;
+  width:100%;
+  height:2px;
+  background:#000;
+  border-radius:2px;
+}
+.hamburger span:nth-child(1){top:0}
+.hamburger span:nth-child(2){top:6px}
+.hamburger span:nth-child(3){top:12px}
+
+.header-actions{
+  margin-left:auto;
+  display:flex;
+  gap:10px;
+}
+
+.header-actions button{
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:18px;
+  opacity:.6;
 }
 
 .messages{
@@ -122,13 +162,6 @@ body{
   gap:6px;
 }
 
-.message button{
-  background:none;
-  border:none;
-  cursor:pointer;
-  font-size:14px;
-}
-
 .footer{
   padding:14px;
   display:flex;
@@ -141,11 +174,6 @@ body{
   padding:14px;
   border-radius:16px;
   border:1px solid var(--border);
-  font-size:15px;
-}
-
-.new-chat i {
-  font-size: 22px;
 }
 
 .footer button{
@@ -154,17 +182,15 @@ body{
   border:none;
   background:var(--accent);
   color:white;
-  font-weight:600;
 }
 
-/* Total */
 .total{
   padding:14px 18px;
   background:rgba(0,0,0,.03);
   font-weight:600;
 }
 
-/* Mobile behavior */
+/* Mobile */
 @media(max-width:720px){
   .sidebar{
     position:absolute;
@@ -176,6 +202,9 @@ body{
   }
   .sidebar.show{
     transform:translateX(0);
+  }
+  .hamburger{
+    display:block;
   }
 }
 </style>
@@ -190,8 +219,19 @@ body{
     <button class="new-chat" onclick="createChat()"><i class="fi fi-sr-add-document"></i></button>
   </div>
 
-  <div class="main">
-    <div class="header" id="chatTitle">Selecciona una lista</div>
+  <div class="main" id="main">
+
+    <div class="header" id="chatTitle">
+      <div class="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+      <span id="titleText">Selecciona una lista</span>
+
+      <div class="header-actions">
+        <button onclick="downloadPDF()"><i class="fi fi-sr-file-pdf"></i></button>
+      </div>
+    </div>
+
     <div class="messages" id="messages"></div>
     <div class="total" id="total">Total: $0</div>
 
@@ -207,14 +247,35 @@ body{
 let data = JSON.parse(localStorage.getItem("shoppingChat")) || { chats:{} }
 let currentChat = null
 const sidebar = document.getElementById("sidebar")
+const main = document.getElementById("main")
 
-function isMobile(){
-  return window.innerWidth <= 720
-}
+function isMobile(){ return innerWidth <= 720 }
 
+/* Toggle sidebar from header */
 document.getElementById("chatTitle").onclick = () => {
   if(isMobile()) sidebar.classList.toggle("show")
 }
+
+/* Swipe gesture */
+let startX = null
+
+main.addEventListener("touchstart", e=>{
+  startX = e.touches[0].clientX
+})
+
+main.addEventListener("touchend", e=>{
+  if(startX === null) return
+  const endX = e.changedTouches[0].clientX
+  const diff = endX - startX
+
+  if(diff > 80 && isMobile()){
+    sidebar.classList.add("show")
+  }
+  if(diff < -80 && isMobile()){
+    sidebar.classList.remove("show")
+  }
+  startX = null
+})
 
 function save(){
   localStorage.setItem("shoppingChat",JSON.stringify(data))
@@ -250,7 +311,7 @@ function renderChats(){
 
 function renderChat(){
   if(!currentChat) return
-  document.getElementById("chatTitle").textContent=data.chats[currentChat].name
+  document.getElementById("titleText").textContent=data.chats[currentChat].name
   const box=document.getElementById("messages")
   box.innerHTML=""
   let total=0
@@ -304,10 +365,30 @@ function editMsg(id){
 }
 
 function delMsg(id){
-  data.chats[currentChat].messages=
+  data.chats[currentChat].messages =
     data.chats[currentChat].messages.filter(m=>m.id!==id)
   save()
   renderChat()
+}
+
+/* PDF export */
+function downloadPDF(){
+  if(!currentChat) return
+
+  const element = document.createElement("div")
+  element.innerHTML = `
+    <h2>${data.chats[currentChat].name}</h2>
+    ${data.chats[currentChat].messages.map(m=>`
+      <p>${m.text} ${m.value?("- $"+m.value.toLocaleString()):""}</p>
+    `).join("")}
+    <h3>${document.getElementById("total").textContent}</h3>
+  `
+
+  html2pdf().from(element).set({
+    margin:10,
+    filename:data.chats[currentChat].name+".pdf",
+    html2canvas:{scale:2}
+  }).save()
 }
 
 renderChats()
