@@ -64,11 +64,26 @@ body{
   margin-bottom:8px;
   cursor:pointer;
   transition:.2s;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.chat-item span{
+  flex:1;
 }
 
 .chat-item.active,
 .chat-item:hover{
   background:rgba(0,0,0,.05);
+}
+
+.chat-item button{
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:14px;
+  opacity:.6;
 }
 
 .new-chat{
@@ -129,7 +144,7 @@ body{
   background:none;
   border:none;
   cursor:pointer;
-  font-size:18px;
+  font-size:36px;
   opacity:.6;
 }
 
@@ -251,31 +266,9 @@ const main = document.getElementById("main")
 
 function isMobile(){ return innerWidth <= 720 }
 
-/* Toggle sidebar from header */
 document.getElementById("chatTitle").onclick = () => {
   if(isMobile()) sidebar.classList.toggle("show")
 }
-
-/* Swipe gesture */
-let startX = null
-
-main.addEventListener("touchstart", e=>{
-  startX = e.touches[0].clientX
-})
-
-main.addEventListener("touchend", e=>{
-  if(startX === null) return
-  const endX = e.changedTouches[0].clientX
-  const diff = endX - startX
-
-  if(diff > 80 && isMobile()){
-    sidebar.classList.add("show")
-  }
-  if(diff < -80 && isMobile()){
-    sidebar.classList.remove("show")
-  }
-  startX = null
-})
 
 function save(){
   localStorage.setItem("shoppingChat",JSON.stringify(data))
@@ -292,13 +285,37 @@ function createChat(){
   renderChat()
 }
 
+function editChat(id){
+  const name = prompt("Editar nombre", data.chats[id].name)
+  if(!name) return
+  data.chats[id].name = name
+  save()
+  renderChats()
+  renderChat()
+}
+
+function deleteChat(id){
+  if(!confirm("¿Eliminar esta lista?")) return
+  delete data.chats[id]
+  if(currentChat === id) currentChat = null
+  save()
+  renderChats()
+  document.getElementById("messages").innerHTML=""
+  document.getElementById("titleText").textContent="Selecciona una lista"
+  document.getElementById("total").textContent="Total: $0"
+}
+
 function renderChats(){
   const list = document.getElementById("chatList")
   list.innerHTML=""
   Object.entries(data.chats).forEach(([id,chat])=>{
     const div=document.createElement("div")
     div.className="chat-item"+(id===currentChat?" active":"")
-    div.textContent=chat.name
+    div.innerHTML=`
+      <span>${chat.name}</span>
+      <button onclick="event.stopPropagation();editChat('${id}')">✏️</button>
+      <button onclick="event.stopPropagation();deleteChat('${id}')">🗑️</button>
+    `
     div.onclick=()=>{
       currentChat=id
       renderChats()
@@ -371,7 +388,6 @@ function delMsg(id){
   renderChat()
 }
 
-/* PDF export */
 function downloadPDF(){
   if(!currentChat) return
 
