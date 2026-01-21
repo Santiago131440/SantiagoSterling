@@ -1,0 +1,2293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProfessionalNet - Red Social Profesional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0a66c2;
+            --primary-dark: #004182;
+            --background: #f3f2ef;
+            --card-bg: #ffffff;
+            --text-primary: #000000de;
+            --text-secondary: #00000099;
+            --border-color: #00000026;
+            --hover-bg: #0000000a;
+            --success-green: #057642;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        /* Header/Navbar */
+        .navbar {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .navbar-container {
+            max-width: 1128px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 52px;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .logo {
+            font-family: 'Crimson Pro', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 280px;
+            flex: 1;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 8px 12px 8px 38px;
+            border: none;
+            background: #eef3f8;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            background: #d3e4f5;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .navbar-center {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 12px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            color: var(--text-primary);
+            background: var(--hover-bg);
+        }
+
+        .nav-item.active {
+            color: var(--text-primary);
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--text-primary);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            background: #c37d16;
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1128px;
+            margin: 24px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 225px 1fr 320px;
+            gap: 24px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+        }
+
+        /* Sidebar Left */
+        .profile-card {
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-cover {
+            height: 56px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .profile-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 2px solid white;
+            margin: -36px auto 12px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .profile-info {
+            padding: 0 12px 12px;
+        }
+
+        .profile-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            cursor: pointer;
+        }
+
+        .profile-name:hover {
+            text-decoration: underline;
+            color: var(--primary-blue);
+        }
+
+        .profile-headline {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .profile-stats {
+            padding: 12px;
+            border-top: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 6px 0;
+            cursor: pointer;
+        }
+
+        .stat-item:hover {
+            color: var(--primary-blue);
+        }
+
+        .stat-number {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        /* Feed Section */
+        .create-post-card {
+            padding: 16px;
+        }
+
+        .create-post-input {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .create-post-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .create-post-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .create-post-input input:hover {
+            background: var(--hover-bg);
+        }
+
+        .create-post-actions {
+            display: flex;
+            gap: 8px;
+            padding-top: 8px;
+        }
+
+        .post-action-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .post-action-btn:hover {
+            background: var(--hover-bg);
+        }
+
+        .post-action-icon {
+            font-size: 18px;
+        }
+
+        /* Post Card */
+        .post-card {
+            animation: slideIn 0.3s ease-out;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+        }
+
+        .post-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .post-header {
+            display: flex;
+            gap: 12px;
+            padding: 16px 16px 0;
+        }
+
+        .post-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .post-info {
+            flex: 1;
+        }
+
+        .post-author {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .post-author:hover {
+            text-decoration: underline;
+            color: var(--primary-blue);
+        }
+
+        .post-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .post-menu-btn {
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px 8px;
+            color: var(--text-secondary);
+            border-radius: 4px;
+        }
+
+        .post-menu-btn:hover {
+            background: var(--hover-bg);
+        }
+
+        .post-content {
+            padding: 12px 16px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .post-content.truncated {
+            max-height: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .see-more {
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .see-more:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Photo Gallery */
+        .post-gallery {
+            display: grid;
+            gap: 2px;
+            margin-top: 8px;
+        }
+
+        .post-gallery.single {
+            grid-template-columns: 1fr;
+        }
+
+        .post-gallery.double {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .post-gallery.triple {
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        .post-gallery.triple .gallery-item:first-child {
+            grid-row: span 2;
+        }
+
+        .post-gallery.quad {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        .post-gallery.many {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            position: relative;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            background: #f0f0f0;
+            min-height: 200px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-more {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .post-stats {
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .post-reactions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .post-reactions:hover {
+            text-decoration: underline;
+        }
+
+        .reaction-icons {
+            display: flex;
+            margin-right: 4px;
+        }
+
+        .reaction-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            margin-left: -4px;
+            border: 1px solid white;
+        }
+
+        .reaction-icon:first-child {
+            margin-left: 0;
+        }
+
+        .like-icon {
+            background: #0a66c2;
+            color: white;
+        }
+
+        .love-icon {
+            background: #df704d;
+            color: white;
+        }
+
+        .celebrate-icon {
+            background: #6dae4f;
+            color: white;
+        }
+
+        .post-actions {
+            display: flex;
+            padding: 4px 8px;
+        }
+
+        .post-action {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .post-action:hover {
+            background: var(--hover-bg);
+        }
+
+        .post-action.liked {
+            color: var(--primary-blue);
+        }
+
+        .comments-section {
+            padding: 0 16px 12px;
+            display: none;
+        }
+
+        .comments-section.active {
+            display: block;
+        }
+
+        .comment {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .comment-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .comment-content {
+            background: var(--background);
+            padding: 8px 12px;
+            border-radius: 8px;
+            flex: 1;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+
+        .comment-text {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .comment-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .add-comment {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .add-comment input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        /* Post Detail View */
+        .post-detail-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .post-detail-overlay.active {
+            display: flex;
+        }
+
+        .post-detail-container {
+            background: var(--card-bg);
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            position: relative;
+        }
+
+        .post-detail-media {
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-detail-media img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .media-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s;
+        }
+
+        .media-nav-btn:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .media-nav-btn.prev {
+            left: 12px;
+        }
+
+        .media-nav-btn.next {
+            right: 12px;
+        }
+
+        .photo-counter {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .post-detail-sidebar {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .post-detail-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .post-detail-close:hover {
+            background: white;
+        }
+
+        /* Sidebar Right */
+        .news-card {
+            padding: 16px;
+        }
+
+        .news-header {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .news-item {
+            margin-bottom: 16px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .news-item:hover {
+            background: var(--hover-bg);
+        }
+
+        .news-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .news-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Profile Page */
+        .profile-page-header {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .profile-banner {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+        .profile-main-info {
+            padding: 0 24px 24px;
+            position: relative;
+        }
+
+        .profile-avatar-large {
+            width: 152px;
+            height: 152px;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin-top: -76px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .profile-name-large {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 16px 0 8px;
+        }
+
+        .profile-headline-large {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .profile-location {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn-primary {
+            padding: 10px 24px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            padding: 10px 24px;
+            background: transparent;
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+            border-radius: 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #d0e8ff;
+            border-color: var(--primary-dark);
+        }
+
+        /* Network Page */
+        .network-tabs {
+            display: flex;
+            gap: 24px;
+            padding: 16px 24px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .network-tab {
+            padding: 8px 0;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .network-tab.active {
+            color: var(--success-green);
+            border-bottom-color: var(--success-green);
+        }
+
+        .network-tab:hover {
+            color: var(--text-primary);
+        }
+
+        .connection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .connection-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            transition: box-shadow 0.2s;
+        }
+
+        .connection-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        .connection-cover {
+            height: 60px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .connection-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin: -40px auto 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .connection-info {
+            padding: 0 16px 16px;
+        }
+
+        .connection-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .connection-title {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .connection-mutual {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        /* Jobs Page */
+        .job-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .job-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        .job-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .job-logo {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .job-info {
+            flex: 1;
+        }
+
+        .job-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--primary-blue);
+        }
+
+        .job-company {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .job-location {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .job-details {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .job-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .job-tag {
+            padding: 4px 12px;
+            background: var(--background);
+            border-radius: 12px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 0;
+            right: 24px;
+            width: 320px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 999;
+            display: none;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .chat-widget.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .chat-header {
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .chat-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 14px;
+        }
+
+        .chat-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 16px;
+            background: var(--background);
+        }
+
+        .chat-message {
+            margin-bottom: 12px;
+            display: flex;
+            gap: 8px;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .chat-message.own {
+            flex-direction: row-reverse;
+        }
+
+        .chat-message-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .chat-message-content {
+            background: var(--card-bg);
+            padding: 8px 12px;
+            border-radius: 12px;
+            max-width: 70%;
+            font-size: 13px;
+        }
+
+        .chat-message.own .chat-message-content {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .chat-input-container {
+            padding: 12px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input-container input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .chat-send-btn {
+            padding: 8px 16px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .chat-send-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Modal for images */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-left,
+            .sidebar-right {
+                display: none;
+            }
+
+            .post-detail-container {
+                grid-template-columns: 1fr;
+                max-height: 95vh;
+            }
+
+            .post-detail-media {
+                max-height: 50vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-center {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--card-bg);
+                border-top: 1px solid var(--border-color);
+                padding: 8px 0;
+                justify-content: space-around;
+                box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+            }
+
+            .nav-item {
+                font-size: 11px;
+                padding: 4px 8px;
+            }
+
+            .nav-icon {
+                font-size: 22px;
+            }
+
+            .main-container {
+                padding: 0 8px;
+                margin-bottom: 70px;
+            }
+
+            .navbar-container {
+                padding: 0 16px;
+            }
+
+            .search-box {
+                max-width: 200px;
+            }
+
+            .connection-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-widget {
+                width: 100%;
+                right: 0;
+                left: 0;
+                border-radius: 0;
+            }
+
+            .post-detail-container {
+                max-height: 100vh;
+                border-radius: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 22px;
+            }
+
+            .search-box {
+                display: none;
+            }
+
+            .post-gallery.double,
+            .post-gallery.triple,
+            .post-gallery.quad,
+            .post-gallery.many {
+                grid-template-columns: 1fr;
+            }
+
+            .post-gallery.triple .gallery-item:first-child {
+                grid-row: span 1;
+            }
+        }
+
+        /* Utility classes */
+        .hidden {
+            display: none;
+        }
+
+        .emoji {
+            font-style: normal;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-left">
+                <a href="#" class="logo" onclick="navigateTo('home')">ProNet</a>
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Buscar">
+                </div>
+            </div>
+            <div class="navbar-center">
+                <a href="#" class="nav-item" data-page="home" onclick="navigateTo('home')">
+                    <span class="nav-icon">🏠</span>
+                    <span>Inicio</span>
+                </a>
+                <a href="#" class="nav-item" data-page="network" onclick="navigateTo('network')">
+                    <span class="nav-icon">👥</span>
+                    <span>Red</span>
+                    <span class="notification-badge">12</span>
+                </a>
+                <a href="#" class="nav-item" data-page="jobs" onclick="navigateTo('jobs')">
+                    <span class="nav-icon">💼</span>
+                    <span>Empleos</span>
+                </a>
+                <a href="#" class="nav-item" onclick="toggleChat()">
+                    <span class="nav-icon">💬</span>
+                    <span>Mensajes</span>
+                    <span class="notification-badge">3</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">🔔</span>
+                    <span>Notif.</span>
+                    <span class="notification-badge">8</span>
+                </a>
+                <a href="#" class="nav-item" data-page="profile" onclick="navigateTo('profile')">
+                    <span class="nav-icon">👤</span>
+                    <span>Yo</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div class="page active" id="home-page">
+        <div class="main-container">
+            <!-- Sidebar Left -->
+            <aside class="sidebar-left">
+                <div class="card profile-card">
+                    <div class="profile-cover"></div>
+                    <div class="profile-avatar">TU</div>
+                    <div class="profile-info">
+                        <div class="profile-name" onclick="navigateTo('profile')">Tu Nombre</div>
+                        <div class="profile-headline">Profesional | Desarrollador | Innovador</div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span>Conexiones</span>
+                            <span class="stat-number">847</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>Visitas del perfil</span>
+                            <span class="stat-number">152</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 12px;">
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+                        <strong>Accesos rápidos</strong>
+                    </div>
+                    <div class="stat-item">
+                        <span>Mis elementos guardados</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Mis grupos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Eventos</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Feed -->
+            <main class="feed">
+                <!-- Create Post -->
+                <div class="card create-post-card">
+                    <div class="create-post-input">
+                        <div class="create-post-avatar">TU</div>
+                        <input type="text" placeholder="Iniciar una publicación" onclick="createNewPost()">
+                    </div>
+                    <div class="create-post-actions">
+                        <button class="post-action-btn" onclick="createPostWithImages()">
+                            <span class="post-action-icon">📷</span>
+                            <span>Foto</span>
+                        </button>
+                        <button class="post-action-btn">
+                            <span class="post-action-icon">🎥</span>
+                            <span>Video</span>
+                        </button>
+                        <button class="post-action-btn">
+                            <span class="post-action-icon">📄</span>
+                            <span>Doc</span>
+                        </button>
+                        <button class="post-action-btn">
+                            <span class="post-action-icon">📊</span>
+                            <span>Encuesta</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Feed Posts -->
+                <div id="feed-posts">
+                    <!-- Posts will be dynamically added here -->
+                </div>
+            </main>
+
+            <!-- Sidebar Right -->
+            <aside class="sidebar-right">
+                <div class="card news-card">
+                    <div class="news-header">Noticias destacadas</div>
+                    <div class="news-item">
+                        <div class="news-title">Nuevas tendencias en tecnología</div>
+                        <div class="news-meta">1d • 12,453 lectores</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title">Cambios en el mercado laboral</div>
+                        <div class="news-meta">2d • 8,921 lectores</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title">IA y el futuro del trabajo</div>
+                        <div class="news-meta">3d • 15,234 lectores</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title">Startups que revolucionan</div>
+                        <div class="news-meta">4d • 6,782 lectores</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title">Consejos para networking</div>
+                        <div class="news-meta">5d • 9,445 lectores</div>
+                    </div>
+                </div>
+
+                <div style="font-size: 11px; color: var(--text-secondary); padding: 16px; text-align: center;">
+                    <div style="margin-bottom: 8px;">
+                        <a href="#" style="color: var(--text-secondary); margin: 0 8px;">Acerca de</a>
+                        <a href="#" style="color: var(--text-secondary); margin: 0 8px;">Accesibilidad</a>
+                        <a href="#" style="color: var(--text-secondary); margin: 0 8px;">Centro de ayuda</a>
+                    </div>
+                    <div>ProNet © 2026</div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div class="page" id="profile-page">
+        <div class="main-container">
+            <div style="grid-column: 1 / -1;">
+                <div class="profile-page-header">
+                    <div class="profile-banner"></div>
+                    <div class="profile-main-info">
+                        <div class="profile-avatar-large">TU</div>
+                        <div class="profile-name-large">Tu Nombre Completo</div>
+                        <div class="profile-headline-large">Profesional | Desarrollador Full Stack | Innovador Tecnológico</div>
+                        <div class="profile-location">📍 Ciudad, País • <a href="#" style="color: var(--primary-blue);">Información de contacto</a></div>
+                        <div style="color: var(--primary-blue); font-size: 14px; font-weight: 600;">847 conexiones</div>
+                        <div class="profile-actions">
+                            <button class="btn-primary">Disponible para</button>
+                            <button class="btn-secondary">Agregar sección del perfil</button>
+                            <button class="btn-secondary">Mejorar perfil</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 24px; margin-bottom: 16px;">
+                    <h2 style="font-size: 20px; margin-bottom: 16px;">Acerca de</h2>
+                    <p style="line-height: 1.6;">
+                        Profesional apasionado por la tecnología y la innovación. Con más de 5 años de experiencia en desarrollo de software, he trabajado en proyectos desafiantes que han impactado a miles de usuarios. Mi enfoque está en crear soluciones escalables y eficientes que resuelvan problemas reales.
+                    </p>
+                </div>
+
+                <div class="card" style="padding: 24px; margin-bottom: 16px;">
+                    <h2 style="font-size: 20px; margin-bottom: 16px;">Experiencia</h2>
+                    <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                        <div class="job-logo">TC</div>
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 16px; font-weight: 600;">Desarrollador Senior</h3>
+                            <div style="font-size: 14px; margin-bottom: 4px;">Tech Company</div>
+                            <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">Ene 2022 - Presente • 3 años</div>
+                            <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary);">
+                                Liderando el desarrollo de aplicaciones web modernas usando React, Node.js y tecnologías cloud. Implementación de arquitecturas escalables y mejores prácticas de desarrollo.
+                            </p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <div class="job-logo" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">ST</div>
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 16px; font-weight: 600;">Desarrollador Full Stack</h3>
+                            <div style="font-size: 14px; margin-bottom: 4px;">StartupTech</div>
+                            <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">Jun 2020 - Dic 2021 • 1 año 7 meses</div>
+                            <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary);">
+                                Desarrollo de features end-to-end para plataforma SaaS. Colaboración con equipos multidisciplinarios en ambiente ágil.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 24px;">
+                    <h2 style="font-size: 20px; margin-bottom: 16px;">Aptitudes</h2>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <div class="job-tag" style="background: var(--primary-blue); color: white;">JavaScript</div>
+                        <div class="job-tag" style="background: var(--primary-blue); color: white;">React</div>
+                        <div class="job-tag" style="background: var(--primary-blue); color: white;">Node.js</div>
+                        <div class="job-tag">Python</div>
+                        <div class="job-tag">TypeScript</div>
+                        <div class="job-tag">AWS</div>
+                        <div class="job-tag">MongoDB</div>
+                        <div class="job-tag">PostgreSQL</div>
+                        <div class="job-tag">Docker</div>
+                        <div class="job-tag">Git</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Network Page -->
+    <div class="page" id="network-page">
+        <div class="main-container">
+            <div style="grid-column: 1 / -1;">
+                <div class="network-tabs">
+                    <div class="network-tab active">Conexiones</div>
+                    <div class="network-tab">Invitaciones</div>
+                    <div class="network-tab">Seguir</div>
+                </div>
+
+                <div class="connection-grid" id="connections-grid">
+                    <!-- Connections will be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jobs Page -->
+    <div class="page" id="jobs-page">
+        <div class="main-container">
+            <div style="grid-column: 1 / -1;">
+                <div class="card" style="padding: 16px; margin-bottom: 16px;">
+                    <div style="font-size: 20px; font-weight: 600; margin-bottom: 16px;">Empleos recomendados para ti</div>
+                    <div style="font-size: 14px; color: var(--text-secondary);">Basados en tu perfil y búsquedas</div>
+                </div>
+
+                <div id="jobs-list">
+                    <!-- Jobs will be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post Detail Overlay -->
+    <div class="post-detail-overlay" id="postDetailOverlay">
+        <div class="post-detail-container">
+            <button class="post-detail-close" onclick="closePostDetail()">×</button>
+            <div class="post-detail-media">
+                <button class="media-nav-btn prev" onclick="navigateMedia(-1)" id="prevMediaBtn">‹</button>
+                <button class="media-nav-btn next" onclick="navigateMedia(1)" id="nextMediaBtn">›</button>
+                <div class="photo-counter" id="photoCounter">1 / 3</div>
+                <img src="" alt="Post media" id="detailMediaImage">
+            </div>
+            <div class="post-detail-sidebar">
+                <div class="post-header">
+                    <div class="post-avatar" id="detailAvatar">AG</div>
+                    <div class="post-info">
+                        <div class="post-author" id="detailAuthor">Ana García</div>
+                        <div class="post-meta" id="detailMeta">CEO en TechStart | 2h</div>
+                    </div>
+                </div>
+                <div class="post-content" id="detailContent" style="max-height: none;">
+                    Contenido del post...
+                </div>
+                <div class="post-stats">
+                    <div class="post-reactions">
+                        <div class="reaction-icons">
+                            <span class="reaction-icon like-icon">👍</span>
+                            <span class="reaction-icon love-icon">❤️</span>
+                            <span class="reaction-icon celebrate-icon">🎉</span>
+                        </div>
+                        <span id="detailLikes">234</span>
+                    </div>
+                    <div>
+                        <span id="detailComments">42 comentarios</span>
+                    </div>
+                </div>
+                <div class="post-actions">
+                    <button class="post-action" onclick="toggleDetailLike()">
+                        <span class="post-action-icon">👍</span>
+                        <span>Me gusta</span>
+                    </button>
+                    <button class="post-action">
+                        <span class="post-action-icon">💬</span>
+                        <span>Comentar</span>
+                    </button>
+                    <button class="post-action">
+                        <span class="post-action-icon">🔄</span>
+                        <span>Compartir</span>
+                    </button>
+                </div>
+                <div class="comments-section active" style="flex: 1; overflow-y: auto;">
+                    <div class="comment">
+                        <div class="comment-avatar">JP</div>
+                        <div>
+                            <div class="comment-content">
+                                <div class="comment-author">Juan Pérez</div>
+                                <div class="comment-text">¡Felicidades! Muy buen trabajo 👏</div>
+                            </div>
+                            <div class="comment-time">3h • Me gusta • Responder</div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <div class="comment-avatar">MC</div>
+                        <div>
+                            <div class="comment-content">
+                                <div class="comment-author">María Contreras</div>
+                                <div class="comment-text">Increíble logro! Sigue así 🚀</div>
+                            </div>
+                            <div class="comment-time">2h • Me gusta • Responder</div>
+                        </div>
+                    </div>
+                    <div class="add-comment">
+                        <div class="comment-avatar">TU</div>
+                        <input type="text" placeholder="Añade un comentario...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header" onclick="minimizeChat()">
+            <div class="chat-user-info">
+                <div class="chat-avatar">MC</div>
+                <div>
+                    <div class="chat-name">María Contreras</div>
+                    <div style="font-size: 11px; color: var(--success-green);">● En línea</div>
+                </div>
+            </div>
+            <button style="border: none; background: transparent; cursor: pointer; font-size: 20px;" onclick="event.stopPropagation(); toggleChat()">×</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message">
+                <div class="chat-message-avatar">MC</div>
+                <div class="chat-message-content">
+                    Hola! Vi tu publicación sobre desarrollo web. Muy interesante!
+                </div>
+            </div>
+            <div class="chat-message own">
+                <div class="chat-message-avatar">TU</div>
+                <div class="chat-message-content">
+                    Muchas gracias! Me alegra que te haya gustado
+                </div>
+            </div>
+            <div class="chat-message">
+                <div class="chat-message-avatar">MC</div>
+                <div class="chat-message-content">
+                    Deberíamos colaborar en algún proyecto 😊
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" placeholder="Escribe un mensaje..." id="chatInput" onkeypress="handleChatEnter(event)">
+            <button class="chat-send-btn" onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        const posts = [
+            {
+                id: 1,
+                author: "Ana García",
+                avatar: "AG",
+                headline: "CEO en TechStart | Emprendedora",
+                time: "2h",
+                content: "Emocionada de compartir que nuestra startup ha alcanzado los 10,000 usuarios activos! 🚀 Esto es solo el comienzo. Gracias a todo el equipo por su dedicación y esfuerzo. Ha sido un viaje increíble lleno de desafíos y aprendizajes. Cada día trabajamos para crear un producto que realmente marque la diferencia en la vida de las personas. #Startup #Emprendimiento #Tecnología #Innovación",
+                images: [
+                    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800",
+                    "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800",
+                    "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800"
+                ],
+                likes: 234,
+                comments: 42,
+                shares: 15,
+                hasLiked: false
+            },
+            {
+                id: 2,
+                author: "Carlos Rodríguez",
+                avatar: "CR",
+                headline: "Desarrollador Full Stack | JavaScript Enthusiast",
+                time: "5h",
+                content: "Después de 6 meses de trabajo, finalmente lancé mi primera aplicación móvil! 📱 Una experiencia de aprendizaje increíble. Si están interesados en desarrollo móvil, feliz de compartir mi experiencia. El proceso fue desafiante pero extremadamente gratificante.",
+                images: [
+                    "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800",
+                    "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800"
+                ],
+                likes: 156,
+                comments: 28,
+                shares: 8,
+                hasLiked: false
+            },
+            {
+                id: 3,
+                author: "Laura Martínez",
+                avatar: "LM",
+                headline: "Data Scientist | AI Researcher",
+                time: "1d",
+                content: "Interesante conferencia sobre IA hoy. Las posibilidades de machine learning en healthcare son infinitas. ¿Alguien más trabajando en proyectos similares? Me encantaría conectar! 💡 #IA #MachineLearning #Salud",
+                images: [
+                    "https://images.unsplash.com/photo-1591453089816-0fbb971b454c?w=800"
+                ],
+                likes: 389,
+                comments: 67,
+                shares: 23,
+                hasLiked: true
+            },
+            {
+                id: 4,
+                author: "Diego Fernández",
+                avatar: "DF",
+                headline: "Product Manager | Innovation Leader",
+                time: "2d",
+                content: "5 lecciones clave que aprendí liderando equipos remotos:\n\n1. La comunicación asíncrona es tu mejor aliada\n2. Documenta TODO\n3. Celebra las pequeñas victorias\n4. Invierte en la cultura del equipo\n5. La confianza es fundamental\n\n¿Qué agregarían a la lista?",
+                images: [],
+                likes: 512,
+                comments: 94,
+                shares: 45,
+                hasLiked: false
+            },
+            {
+                id: 5,
+                author: "Sofía Ramírez",
+                avatar: "SR",
+                headline: "UX Designer | Design Thinking Advocate",
+                time: "3d",
+                content: "Feliz de compartir los resultados de nuestro último proyecto de diseño! Trabajamos con un equipo increíble para crear una experiencia de usuario que realmente pone a las personas primero. El proceso de investigación y testing fue fundamental. 🎨✨",
+                images: [
+                    "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800",
+                    "https://images.unsplash.com/photo-1558655146-d09347e92766?w=800",
+                    "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=800",
+                    "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=800"
+                ],
+                likes: 678,
+                comments: 103,
+                shares: 56,
+                hasLiked: false
+            }
+        ];
+
+        const connections = [
+            { name: "María Contreras", title: "Frontend Developer en Google", avatar: "MC", mutual: 45 },
+            { name: "Juan Pérez", title: "Data Scientist en Microsoft", avatar: "JP", mutual: 32 },
+            { name: "Elena Torres", title: "Product Manager en Amazon", avatar: "ET", mutual: 28 },
+            { name: "Roberto Silva", title: "Backend Engineer en Meta", avatar: "RS", mutual: 51 },
+            { name: "Carmen López", title: "UX Designer en Apple", avatar: "CL", mutual: 39 },
+            { name: "Miguel Ángel", title: "DevOps Engineer en Netflix", avatar: "MA", mutual: 22 },
+            { name: "Isabel García", title: "Marketing Manager en Spotify", avatar: "IG", mutual: 47 },
+            { name: "Fernando Ruiz", title: "ML Engineer en Tesla", avatar: "FR", mutual: 19 }
+        ];
+
+        const jobs = [
+            {
+                title: "Senior Full Stack Developer",
+                company: "TechCorp Innovation",
+                location: "Remoto",
+                logo: "TC",
+                time: "Publicado hace 2 días",
+                applicants: "34 solicitantes",
+                tags: ["React", "Node.js", "AWS"]
+            },
+            {
+                title: "Data Scientist",
+                company: "AI Solutions Inc",
+                location: "Madrid, España",
+                logo: "AI",
+                time: "Publicado hace 1 semana",
+                applicants: "87 solicitantes",
+                tags: ["Python", "Machine Learning", "TensorFlow"]
+            },
+            {
+                title: "Product Manager",
+                company: "StartupX",
+                location: "Barcelona, España",
+                logo: "SX",
+                time: "Publicado hace 3 días",
+                applicants: "156 solicitantes",
+                tags: ["Agile", "Product Strategy", "Analytics"]
+            },
+            {
+                title: "UX/UI Designer",
+                company: "Design Studio Pro",
+                location: "Remoto",
+                logo: "DS",
+                time: "Publicado hace 5 días",
+                applicants: "92 solicitantes",
+                tags: ["Figma", "User Research", "Prototyping"]
+            },
+            {
+                title: "DevOps Engineer",
+                company: "Cloud Systems Ltd",
+                location: "Valencia, España",
+                logo: "CS",
+                time: "Publicado hace 1 día",
+                applicants: "43 solicitantes",
+                tags: ["Docker", "Kubernetes", "CI/CD"]
+            }
+        ];
+
+        let currentPostDetail = null;
+        let currentMediaIndex = 0;
+
+        // Initialize
+        function initializeApp() {
+            initializeFeed();
+            initializeConnections();
+            initializeJobs();
+            updateActiveNav();
+        }
+
+        // Navigation
+        function navigateTo(page) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(`${page}-page`).classList.add('active');
+            
+            // Update nav
+            updateActiveNav(page);
+        }
+
+        function updateActiveNav(activePage = 'home') {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.page === activePage) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        // Initialize feed
+        function initializeFeed() {
+            const feedContainer = document.getElementById('feed-posts');
+            posts.forEach(post => {
+                feedContainer.innerHTML += createPostHTML(post);
+            });
+        }
+
+        // Create post HTML
+        function createPostHTML(post) {
+            const gradient = getRandomGradient();
+            const galleryClass = getGalleryClass(post.images.length);
+            const truncated = post.content.length > 200 ? 'truncated' : '';
+            const displayContent = post.content.length > 200 ? post.content.substring(0, 200) + '...' : post.content;
+            
+            let galleryHTML = '';
+            if (post.images.length > 0) {
+                galleryHTML = `<div class="post-gallery ${galleryClass}">`;
+                post.images.slice(0, 4).forEach((img, idx) => {
+                    if (idx === 3 && post.images.length > 4) {
+                        galleryHTML += `
+                            <div class="gallery-item" onclick="openPostDetail(${post.id}, ${idx})">
+                                <img src="${img}" alt="Post image">
+                                <div class="gallery-more">+${post.images.length - 4}</div>
+                            </div>
+                        `;
+                    } else {
+                        galleryHTML += `
+                            <div class="gallery-item" onclick="openPostDetail(${post.id}, ${idx})">
+                                <img src="${img}" alt="Post image">
+                            </div>
+                        `;
+                    }
+                });
+                galleryHTML += '</div>';
+            }
+
+            return `
+                <div class="card post-card" data-post-id="${post.id}">
+                    <div class="post-header">
+                        <div class="post-avatar" style="background: ${gradient};">${post.avatar}</div>
+                        <div class="post-info">
+                            <div class="post-author">${post.author}</div>
+                            <div class="post-meta">${post.headline} • ${post.time}</div>
+                        </div>
+                        <button class="post-menu-btn">⋯</button>
+                    </div>
+                    <div class="post-content ${truncated}" onclick="${post.images.length === 0 ? `openPostDetail(${post.id}, 0)` : ''}">
+                        ${displayContent}
+                        ${post.content.length > 200 ? `<span class="see-more" onclick="openPostDetail(${post.id}, 0)">...ver más</span>` : ''}
+                    </div>
+                    ${galleryHTML}
+                    <div class="post-stats">
+                        <div class="post-reactions">
+                            <div class="reaction-icons">
+                                <span class="reaction-icon like-icon">👍</span>
+                                <span class="reaction-icon love-icon">❤️</span>
+                                <span class="reaction-icon celebrate-icon">🎉</span>
+                            </div>
+                            <span>${post.likes}</span>
+                        </div>
+                        <div>
+                            <span>${post.comments} comentarios • ${post.shares} veces compartido</span>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="post-action ${post.hasLiked ? 'liked' : ''}" onclick="toggleLike(${post.id})">
+                            <span class="post-action-icon">👍</span>
+                            <span>Me gusta</span>
+                        </button>
+                        <button class="post-action" onclick="toggleComments(${post.id})">
+                            <span class="post-action-icon">💬</span>
+                            <span>Comentar</span>
+                        </button>
+                        <button class="post-action">
+                            <span class="post-action-icon">🔄</span>
+                            <span>Compartir</span>
+                        </button>
+                        <button class="post-action">
+                            <span class="post-action-icon">📤</span>
+                            <span>Enviar</span>
+                        </button>
+                    </div>
+                    <div class="comments-section" id="comments-${post.id}">
+                        <div class="comment">
+                            <div class="comment-avatar">JP</div>
+                            <div>
+                                <div class="comment-content">
+                                    <div class="comment-author">Juan Pérez</div>
+                                    <div class="comment-text">¡Felicidades! Muy buen trabajo 👏</div>
+                                </div>
+                                <div class="comment-time">3h • Me gusta • Responder</div>
+                            </div>
+                        </div>
+                        <div class="add-comment">
+                            <div class="comment-avatar">TU</div>
+                            <input type="text" placeholder="Añade un comentario..." onkeypress="handleCommentEnter(event, ${post.id})">
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getGalleryClass(count) {
+            if (count === 1) return 'single';
+            if (count === 2) return 'double';
+            if (count === 3) return 'triple';
+            if (count === 4) return 'quad';
+            return 'many';
+        }
+
+        // Post detail
+        function openPostDetail(postId, mediaIndex = 0) {
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+
+            currentPostDetail = post;
+            currentMediaIndex = mediaIndex;
+
+            const overlay = document.getElementById('postDetailOverlay');
+            const gradient = getRandomGradient();
+
+            document.getElementById('detailAvatar').style.background = gradient;
+            document.getElementById('detailAvatar').textContent = post.avatar;
+            document.getElementById('detailAuthor').textContent = post.author;
+            document.getElementById('detailMeta').textContent = `${post.headline} • ${post.time}`;
+            document.getElementById('detailContent').textContent = post.content;
+            document.getElementById('detailLikes').textContent = post.likes;
+            document.getElementById('detailComments').textContent = `${post.comments} comentarios`;
+
+            if (post.images.length > 0) {
+                document.getElementById('detailMediaImage').src = post.images[mediaIndex];
+                document.getElementById('photoCounter').textContent = `${mediaIndex + 1} / ${post.images.length}`;
+                document.getElementById('prevMediaBtn').style.display = post.images.length > 1 ? 'block' : 'none';
+                document.getElementById('nextMediaBtn').style.display = post.images.length > 1 ? 'block' : 'none';
+            } else {
+                document.querySelector('.post-detail-media').style.display = 'none';
+            }
+
+            overlay.classList.add('active');
+        }
+
+        function closePostDetail() {
+            document.getElementById('postDetailOverlay').classList.remove('active');
+            currentPostDetail = null;
+        }
+
+        function navigateMedia(direction) {
+            if (!currentPostDetail || currentPostDetail.images.length === 0) return;
+
+            currentMediaIndex += direction;
+            if (currentMediaIndex < 0) currentMediaIndex = currentPostDetail.images.length - 1;
+            if (currentMediaIndex >= currentPostDetail.images.length) currentMediaIndex = 0;
+
+            document.getElementById('detailMediaImage').src = currentPostDetail.images[currentMediaIndex];
+            document.getElementById('photoCounter').textContent = `${currentMediaIndex + 1} / ${currentPostDetail.images.length}`;
+        }
+
+        // Initialize connections
+        function initializeConnections() {
+            const grid = document.getElementById('connections-grid');
+            connections.forEach(conn => {
+                const gradient = getRandomGradient();
+                grid.innerHTML += `
+                    <div class="connection-card">
+                        <div class="connection-cover" style="background: ${getRandomGradient()};"></div>
+                        <div class="connection-avatar" style="background: ${gradient};">${conn.avatar}</div>
+                        <div class="connection-info">
+                            <div class="connection-name">${conn.name}</div>
+                            <div class="connection-title">${conn.title}</div>
+                            <div class="connection-mutual">${conn.mutual} conexiones en común</div>
+                            <button class="btn-secondary" style="width: 100%;">Mensaje</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Initialize jobs
+        function initializeJobs() {
+            const list = document.getElementById('jobs-list');
+            jobs.forEach(job => {
+                const gradient = getRandomGradient();
+                list.innerHTML += `
+                    <div class="job-card">
+                        <div class="job-header">
+                            <div class="job-logo" style="background: ${gradient};">${job.logo}</div>
+                            <div class="job-info">
+                                <div class="job-title">${job.title}</div>
+                                <div class="job-company">${job.company}</div>
+                                <div class="job-location">📍 ${job.location}</div>
+                            </div>
+                        </div>
+                        <div class="job-details">${job.time} • ${job.applicants}</div>
+                        <div class="job-tags">
+                            ${job.tags.map(tag => `<span class="job-tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Random gradient generator
+        function getRandomGradient() {
+            const gradients = [
+                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+                'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
+                'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+                'linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%)'
+            ];
+            return gradients[Math.floor(Math.random() * gradients.length)];
+        }
+
+        // Toggle like
+        function toggleLike(postId) {
+            const post = posts.find(p => p.id === postId);
+            const postElement = document.querySelector(`[data-post-id="${postId}"]`);
+            const likeButton = postElement.querySelector('.post-action');
+            const likesCount = postElement.querySelector('.post-reactions span:last-child');
+            
+            if (post.hasLiked) {
+                post.likes--;
+                post.hasLiked = false;
+                likeButton.classList.remove('liked');
+            } else {
+                post.likes++;
+                post.hasLiked = true;
+                likeButton.classList.add('liked');
+            }
+            
+            likesCount.textContent = post.likes;
+        }
+
+        function toggleDetailLike() {
+            if (!currentPostDetail) return;
+            toggleLike(currentPostDetail.id);
+            document.getElementById('detailLikes').textContent = currentPostDetail.likes;
+        }
+
+        // Toggle comments section
+        function toggleComments(postId) {
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            commentsSection.classList.toggle('active');
+        }
+
+        // Handle comment enter
+        function handleCommentEnter(event, postId) {
+            if (event.key === 'Enter' && event.target.value.trim()) {
+                addComment(postId, event.target.value);
+                event.target.value = '';
+            }
+        }
+
+        // Add comment
+        function addComment(postId, text) {
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            const addCommentDiv = commentsSection.querySelector('.add-comment');
+            const newComment = document.createElement('div');
+            newComment.className = 'comment';
+            newComment.innerHTML = `
+                <div class="comment-avatar">TU</div>
+                <div>
+                    <div class="comment-content">
+                        <div class="comment-author">Tú</div>
+                        <div class="comment-text">${text}</div>
+                    </div>
+                    <div class="comment-time">Ahora • Me gusta • Responder</div>
+                </div>
+            `;
+            commentsSection.insertBefore(newComment, addCommentDiv);
+            
+            const post = posts.find(p => p.id === postId);
+            post.comments++;
+            const postElement = document.querySelector(`[data-post-id="${postId}"]`);
+            const commentsCount = postElement.querySelector('.post-stats > div:last-child span');
+            commentsCount.textContent = `${post.comments} comentarios • ${post.shares} veces compartido`;
+        }
+
+        // Create new post
+        function createNewPost() {
+            const text = prompt('¿Qué quieres compartir?');
+            if (text && text.trim()) {
+                const newPost = {
+                    id: posts.length + 1,
+                    author: 'Tú',
+                    avatar: 'TU',
+                    headline: 'Profesional',
+                    time: 'Ahora',
+                    content: text,
+                    images: [],
+                    likes: 0,
+                    comments: 0,
+                    shares: 0,
+                    hasLiked: false
+                };
+                posts.unshift(newPost);
+                const feedContainer = document.getElementById('feed-posts');
+                feedContainer.innerHTML = createPostHTML(newPost) + feedContainer.innerHTML;
+            }
+        }
+
+        // Create post with images
+        function createPostWithImages() {
+            const text = prompt('¿Qué quieres compartir?');
+            if (text && text.trim()) {
+                const numImages = parseInt(prompt('¿Cuántas imágenes? (1-5)', '1'));
+                const images = [];
+                
+                if (numImages > 0 && numImages <= 5) {
+                    for (let i = 0; i < numImages; i++) {
+                        const url = prompt(`URL de la imagen ${i + 1}:`, 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800');
+                        if (url) images.push(url);
+                    }
+                }
+                
+                const newPost = {
+                    id: posts.length + 1,
+                    author: 'Tú',
+                    avatar: 'TU',
+                    headline: 'Profesional',
+                    time: 'Ahora',
+                    content: text,
+                    images: images,
+                    likes: 0,
+                    comments: 0,
+                    shares: 0,
+                    hasLiked: false
+                };
+                posts.unshift(newPost);
+                const feedContainer = document.getElementById('feed-posts');
+                feedContainer.innerHTML = createPostHTML(newPost) + feedContainer.innerHTML;
+            }
+        }
+
+        // Chat functions
+        function toggleChat() {
+            const chatWidget = document.getElementById('chatWidget');
+            chatWidget.classList.toggle('active');
+        }
+
+        function minimizeChat() {
+            // In a real app, this would minimize the chat
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (message) {
+                const messagesContainer = document.getElementById('chatMessages');
+                const newMessage = document.createElement('div');
+                newMessage.className = 'chat-message own';
+                newMessage.innerHTML = `
+                    <div class="chat-message-avatar">TU</div>
+                    <div class="chat-message-content">${message}</div>
+                `;
+                messagesContainer.appendChild(newMessage);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                input.value = '';
+                
+                setTimeout(() => {
+                    const response = document.createElement('div');
+                    response.className = 'chat-message';
+                    response.innerHTML = `
+                        <div class="chat-message-avatar">MC</div>
+                        <div class="chat-message-content">¡Por supuesto! Suena genial 😊</div>
+                    `;
+                    messagesContainer.appendChild(response);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 1500);
+            }
+        }
+
+        function handleChatEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            initializeApp();
+        };
+
+        // Close post detail on escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePostDetail();
+            }
+        });
+    </script>
+</body>
+</html>
