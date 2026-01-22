@@ -286,6 +286,13 @@
             color: white;
             font-size: 20px;
             flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .create-post-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .create-post-input input {
@@ -373,6 +380,13 @@
             color: white;
             font-size: 20px;
             flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .post-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .post-info {
@@ -443,41 +457,58 @@
             grid-template-columns: 1fr;
         }
 
+        .post-gallery.single .gallery-item {
+            height: 400px;
+        }
+
         .post-gallery.double {
             grid-template-columns: 1fr 1fr;
         }
 
+        .post-gallery.double .gallery-item {
+            height: 300px;
+        }
+
         .post-gallery.triple {
-            grid-template-columns: 2fr 1fr;
-            grid-template-rows: 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 250px 250px;
         }
 
         .post-gallery.triple .gallery-item:first-child {
             grid-row: span 2;
+            height: 500px;
         }
 
         .post-gallery.quad {
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
+            grid-template-rows: 250px 250px;
+        }
+
+        .post-gallery.quad .gallery-item {
+            height: 250px;
         }
 
         .post-gallery.many {
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
+            grid-template-rows: 250px 250px;
             position: relative;
+        }
+
+        .post-gallery.many .gallery-item {
+            height: 250px;
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
             background: #f0f0f0;
-            min-height: 200px;
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
             transition: transform 0.3s;
         }
 
@@ -614,6 +645,13 @@
             color: white;
             font-size: 14px;
             flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .comment-content {
@@ -1447,9 +1485,74 @@
                     </div>
                 </div>
 
-                <!-- Feed Posts -->
+                <!-- Feed Posts - EDITABLE DESDE HTML -->
                 <div id="feed-posts">
-                    <!-- Posts will be dynamically added here -->
+                    <!-- Post 1 -->
+                    <div class="card post-card" 
+                         data-author="Ana García"
+                         data-avatar="https://i.pravatar.cc/150?img=5"
+                         data-headline="CEO en TechStart | Emprendedora"
+                         data-time="2h"
+                         data-content="Emocionada de compartir que nuestra startup ha alcanzado los 10,000 usuarios activos! 🚀 Esto es solo el comienzo. Gracias a todo el equipo por su dedicación y esfuerzo. Ha sido un viaje increíble lleno de desafíos y aprendizajes. Cada día trabajamos para crear un producto que realmente marque la diferencia en la vida de las personas. #Startup #Emprendimiento #Tecnología #Innovación"
+                         data-images="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800,https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800,https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800"
+                         data-likes="234"
+                         data-comments="42"
+                         data-shares="15">
+                    </div>
+
+                    <!-- Post 2 -->
+                    <div class="card post-card" 
+                         data-author="Carlos Rodríguez"
+                         data-avatar="https://i.pravatar.cc/150?img=12"
+                         data-headline="Desarrollador Full Stack | JavaScript Enthusiast"
+                         data-time="5h"
+                         data-content="Después de 6 meses de trabajo, finalmente lancé mi primera aplicación móvil! 📱 Una experiencia de aprendizaje increíble. Si están interesados en desarrollo móvil, feliz de compartir mi experiencia. El proceso fue desafiante pero extremadamente gratificante."
+                         data-images="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800,https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800"
+                         data-likes="156"
+                         data-comments="28"
+                         data-shares="8">
+                    </div>
+
+                    <!-- Post 3 -->
+                    <div class="card post-card" 
+                         data-author="Sterling Music Player"
+                         data-avatar="https://i.pravatar.cc/150?img=33"
+                         data-headline="Html | CSS | JS | Tailwind"
+                         data-time="2025"
+                         data-content="Reproductor de música online, que permite cargar archivos desde el dispositivo y reproducirlos en el navegador"
+                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicMovil1.jpeg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicMovil2.jpeg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicPC2.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicPC1.jpg?raw=true"
+                         data-likes="389"
+                         data-comments="67"
+                         data-shares="23"
+                         data-hasliked="true">
+                    </div>
+
+                    <!-- Post 4 -->
+                    <div class="card post-card" 
+                         data-author="Comparación de OP"
+                         data-avatar="https://i.pravatar.cc/150?img=47"
+                         data-headline="Excel | VBA"
+                         data-time="2025"
+                         data-content="El sistema permite cargar archivos de Excel sin restricciones y compararlos para detectar coincidencias, diferencias e inconsistencias. Optimiza el análisis de datos al mejorar la trazabilidad, reducir errores manuales y agilizar la gestión de información."
+                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%206.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%207.jpg?raw=true"
+                         data-likes="389"
+                         data-comments="67"
+                         data-shares="23"
+                         data-hasliked="true">
+                    </div>
+
+                    <!-- Post 5 -->
+                    <div class="card post-card" 
+                         data-author="Control de Inventario"
+                         data-avatar="https://i.pravatar.cc/150?img=68"
+                         data-headline="Excel | VBA"
+                         data-time="2025"
+                         data-content="Sistema integral en Excel con macros y VBA para gestionar inventarios, que permite registrar productos, controlar ingresos y salidas, consultar stock en tiempo real, generar reportes y elaborar pedidos al almacén, asegurando trazabilidad y eficiencia."
+                         data-images="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen1.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen2.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen3.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen4.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen5.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen6.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen7.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen8.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen9.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen10.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen11.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen12.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen13.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen14.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen15.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen16.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen17.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen18.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen19.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen20.png?raw=true"
+                         data-likes="68"
+                         data-comments="1"
+                         data-shares="5">
+                    </div>
                 </div>
             </main>
 
@@ -1646,7 +1749,7 @@
                 </div>
                 <div class="comments-section active" style="flex: 1; overflow-y: auto;">
                     <div class="comment">
-                        <div class="comment-avatar">JP</div>
+                        <div class="comment-avatar"><img src="https://i.pravatar.cc/150?img=8" alt="JP"></div>
                         <div>
                             <div class="comment-content">
                                 <div class="comment-author">Juan Pérez</div>
@@ -1656,7 +1759,7 @@
                         </div>
                     </div>
                     <div class="comment">
-                        <div class="comment-avatar">MC</div>
+                        <div class="comment-avatar"><img src="https://i.pravatar.cc/150?img=9" alt="MC"></div>
                         <div>
                             <div class="comment-content">
                                 <div class="comment-author">María Contreras</div>
@@ -1713,115 +1816,8 @@
     </div>
 
     <script>
-        // Sample data
-        const posts = [
-            {
-                id: 1,
-                author: "Ana García",
-                avatar: "AG",
-                headline: "CEO en TechStart | Emprendedora",
-                time: "2h",
-                content: "Emocionada de compartir que nuestra startup ha alcanzado los 10,000 usuarios activos! 🚀 Esto es solo el comienzo. Gracias a todo el equipo por su dedicación y esfuerzo. Ha sido un viaje increíble lleno de desafíos y aprendizajes. Cada día trabajamos para crear un producto que realmente marque la diferencia en la vida de las personas. #Startup #Emprendimiento #Tecnología #Innovación",
-                images: [
-                    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800",
-                    "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800",
-                    "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800"
-                ],
-                likes: 234,
-                comments: 42,
-                shares: 15,
-                hasLiked: false
-            },
-            {
-                id: 2,
-                author: "Carlos Rodríguez",
-                avatar: "CR",
-                headline: "Desarrollador Full Stack | JavaScript Enthusiast",
-                time: "5h",
-                content: "Después de 6 meses de trabajo, finalmente lancé mi primera aplicación móvil! 📱 Una experiencia de aprendizaje increíble. Si están interesados en desarrollo móvil, feliz de compartir mi experiencia. El proceso fue desafiante pero extremadamente gratificante.",
-                images: [
-                    "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800",
-                    "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800"
-                ],
-                likes: 156,
-                comments: 28,
-                shares: 8,
-                hasLiked: false
-            },
-            {
-                id: 3,
-                author: "Sterling Music Player",
-                avatar: "SM",
-                headline: "Html | CSS | JS | Tailwind",
-                time: "2025",
-                content: "Reproductor de música online, que permite cargar archivos desde el dispositivo y reproducirlos en el navegador",
-                images: [
-					"https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicMovil1.jpeg?raw=true",
-					"https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicMovil2.jpeg?raw=true",
-		    "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicPC2.jpg?raw=true",
-		    "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicPC1.jpg?raw=true",
-                ],
-                likes: 389,
-                comments: 67,
-                shares: 23,
-                hasLiked: true
-            },
-            {
-                id: 4,
-                author: "Comparación de OP",
-                avatar: "CP",
-                headline: "Excel | VBA",
-                time: "2025",
-                content: "El sistema permite cargar archivos de Excel sin restricciones y compararlos para detectar coincidencias, diferencias e inconsistencias. Optimiza el análisis de datos al mejorar la trazabilidad, reducir errores manuales y agilizar la gestión de información.",
-                images: [
-                    "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%201.jpg?raw=true",
-		    "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%202.jpg?raw=true",
-		    "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%203.jpg?raw=true",
-		    "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%204.jpg?raw=true",
-		    "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%205.jpg?raw=true",
-		    "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%206.jpg?raw=true",
-		    "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%207.jpg?raw=true",
-                ],
-                likes: 389,
-                comments: 67,
-                shares: 23,
-                hasLiked: true
-            },
-            {
-                id: 5,
-                author: "Control de Inventario",
-                avatar: "CI",
-                headline: "Excel | VBA",
-                time: "2025",
-                content: "Sistema integral en Excel con macros y VBA para gestionar inventarios, que permite registrar productos, controlar ingresos y salidas, consultar stock en tiempo real, generar reportes y elaborar pedidos al almacén, asegurando trazabilidad y eficiencia.",
-                images: [
-                    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen1.png?raw=true",
-                    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen2.png?raw=true",
-                    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen3.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen4.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen5.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen6.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen7.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen8.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen9.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen10.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen11.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen12.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen13.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen14.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen15.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen16.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen17.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen18.png?raw=true",
-		    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen19.png?raw=true",
-                    "https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen20.png?raw=true"
-                ],
-                likes: 68,
-                comments: 1,
-                shares: 5,
-                hasLiked: false
-            }
-        ];
+        // Posts array - will be populated from HTML data attributes
+        let posts = [];
 
         const connections = [
             { name: "María Contreras", title: "Frontend Developer en Google", avatar: "MC", mutual: 45 },
@@ -1887,21 +1883,47 @@
 
         // Initialize
         function initializeApp() {
-            initializeFeed();
+            loadPostsFromHTML();
+            renderPosts();
             initializeConnections();
             initializeJobs();
             updateActiveNav();
         }
 
+        // Load posts from HTML data attributes
+        function loadPostsFromHTML() {
+            const postElements = document.querySelectorAll('#feed-posts .post-card');
+            posts = Array.from(postElements).map((el, index) => {
+                const images = el.dataset.images ? el.dataset.images.split(',') : [];
+                return {
+                    id: index + 1,
+                    author: el.dataset.author,
+                    avatar: el.dataset.avatar,
+                    headline: el.dataset.headline,
+                    time: el.dataset.time,
+                    content: el.dataset.content,
+                    images: images,
+                    likes: parseInt(el.dataset.likes) || 0,
+                    comments: parseInt(el.dataset.comments) || 0,
+                    shares: parseInt(el.dataset.shares) || 0,
+                    hasLiked: el.dataset.hasliked === 'true'
+                };
+            });
+        }
+
+        // Render posts
+        function renderPosts() {
+            const feedContainer = document.getElementById('feed-posts');
+            feedContainer.innerHTML = '';
+            posts.forEach(post => {
+                feedContainer.innerHTML += createPostHTML(post);
+            });
+        }
+
         // Navigation
         function navigateTo(page) {
-            // Hide all pages
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            
-            // Show selected page
             document.getElementById(`${page}-page`).classList.add('active');
-            
-            // Update nav
             updateActiveNav(page);
         }
 
@@ -1914,17 +1936,8 @@
             });
         }
 
-        // Initialize feed
-        function initializeFeed() {
-            const feedContainer = document.getElementById('feed-posts');
-            posts.forEach(post => {
-                feedContainer.innerHTML += createPostHTML(post);
-            });
-        }
-
         // Create post HTML
         function createPostHTML(post) {
-            const gradient = getRandomGradient();
             const galleryClass = getGalleryClass(post.images.length);
             const truncated = post.content.length > 200 ? 'truncated' : '';
             const displayContent = post.content.length > 200 ? post.content.substring(0, 200) + '...' : post.content;
@@ -1951,10 +1964,14 @@
                 galleryHTML += '</div>';
             }
 
+            const avatarHTML = post.avatar.startsWith('http') 
+                ? `<img src="${post.avatar}" alt="${post.author}">`
+                : post.avatar;
+
             return `
                 <div class="card post-card" data-post-id="${post.id}">
                     <div class="post-header">
-                        <div class="post-avatar" style="background: ${gradient};">${post.avatar}</div>
+                        <div class="post-avatar">${avatarHTML}</div>
                         <div class="post-info">
                             <div class="post-author">${post.author}</div>
                             <div class="post-meta">${post.headline} • ${post.time}</div>
@@ -1999,7 +2016,7 @@
                     </div>
                     <div class="comments-section" id="comments-${post.id}">
                         <div class="comment">
-                            <div class="comment-avatar">JP</div>
+                            <div class="comment-avatar"><img src="https://i.pravatar.cc/150?img=8" alt="JP"></div>
                             <div>
                                 <div class="comment-content">
                                     <div class="comment-author">Juan Pérez</div>
@@ -2034,10 +2051,11 @@
             currentMediaIndex = mediaIndex;
 
             const overlay = document.getElementById('postDetailOverlay');
-            const gradient = getRandomGradient();
+            const avatarHTML = post.avatar.startsWith('http') 
+                ? `<img src="${post.avatar}" alt="${post.author}">`
+                : post.avatar;
 
-            document.getElementById('detailAvatar').style.background = gradient;
-            document.getElementById('detailAvatar').textContent = post.avatar;
+            document.getElementById('detailAvatar').innerHTML = avatarHTML;
             document.getElementById('detailAuthor').textContent = post.author;
             document.getElementById('detailMeta').textContent = `${post.headline} • ${post.time}`;
             document.getElementById('detailContent').textContent = post.content;
@@ -2214,8 +2232,7 @@
                     hasLiked: false
                 };
                 posts.unshift(newPost);
-                const feedContainer = document.getElementById('feed-posts');
-                feedContainer.innerHTML = createPostHTML(newPost) + feedContainer.innerHTML;
+                renderPosts();
             }
         }
 
@@ -2247,8 +2264,7 @@
                     hasLiked: false
                 };
                 posts.unshift(newPost);
-                const feedContainer = document.getElementById('feed-posts');
-                feedContainer.innerHTML = createPostHTML(newPost) + feedContainer.innerHTML;
+                renderPosts();
             }
         }
 
