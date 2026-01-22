@@ -1353,34 +1353,27 @@
         }
 
         @media (max-width: 480px) {
-            .logo {
-                font-size: 22px;
-            }
+    .logo {
+        font-size: 22px;
+    }
 
-            .search-box {
-                display: none;
-            }
+    .search-box {
+        display: none;
+    }
 
-            .post-gallery.double,
-            .post-gallery.triple,
-            .post-gallery.quad,
-            .post-gallery.many {
-                grid-template-columns: 4fr;
-            }
+    /* REMOVIDO - Las galerías ahora mantienen su diseño original en móviles
+    .post-gallery.double,
+    .post-gallery.triple,
+    .post-gallery.quad,
+    .post-gallery.many {
+        grid-template-columns: 1fr;
+    }
 
-            .post-gallery.triple .gallery-item:first-child {
-                grid-row: span 4;
-            }
-        }
-
-        /* Utility classes */
-        .hidden {
-            display: none;
-        }
-
-        .emoji {
-            font-style: normal;
-        }
+    .post-gallery.triple .gallery-item:first-child {
+        grid-row: span 1;
+    }
+    */
+}
     </style>
 </head>
 <body>
