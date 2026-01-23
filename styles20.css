@@ -1083,11 +1083,12 @@ img[alt="Astronaut UX"] {
   }
 
   .web-preview-card {
-    animation: slideInFromBottom 0.6s ease-out forwards;
+    animation: slideInFromBottom 1.6s ease-out forwards;
     opacity: 0;
   }
 
   .web-preview-card:nth-child(2) {
-    animation-delay: 0.2s;
+    animation-delay: 0.9s;
   }
+
 
