@@ -650,7 +650,7 @@ Proyectos destacados:
 })();
 
 
-// -------------------------------COMPETENCIAS METODOLOGICAS ------------------------
+// ------------------------------- DESARROLLOS E INNOVACIONES ------------------------
   function expandWebPreview(element) {
     const url = element.getAttribute('data-url');
 
@@ -662,3 +662,4 @@ Proyectos destacados:
     // Si prefieres abrir en nueva pestaña, usa esta línea en su lugar:
     // window.open(url, '_blank', 'noopener,noreferrer');
   }
+
