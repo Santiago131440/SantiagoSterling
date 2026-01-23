@@ -1,466 +1,2445 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="icon" type="image/png" href="https://github.com/Santiago131440/SantiagoSterling/blob/main/41984825-8dbf-4f36-ab7d-02b5c6e603f4.png?raw=true">
-  <title>Red Pericial</title>
-
-  <!-- Tailwind Play CDN (rápido para prototipos) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Tailwind config (colores y tipografías elegantes)
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: '#0b0b0b',
-            gold: '#caa34a',
-            cream: '#f7f2eb',
-            slateSoft: '#f4f6f8'
-          },
-          fontFamily: {
-            display: ['Cinzel', 'serif'],
-            body: ['Inter', 'system-ui', 'sans-serif']
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediLex — Elite Medical Defense Counsel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Crimson+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300;1,400&family=Italiana&family=Cinzel:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --noir: #0D0D0D;
+            --charcoal: #1A1A1A;
+            --midnight: #0F1419;
+            --gold: #D4AF37;
+            --gold-light: #F4E4B4;
+            --gold-dark: #B8941E;
+            --cream: #FAF8F3;
+            --pearl: #E8E6E1;
+            --smoke: #C4C4C4;
+            --shadow: rgba(13, 13, 13, 0.8);
         }
-      }
-    }
-  </script>
 
-  <!-- Fuentes -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+        }
 
-  <style>
-    /* Micro-accentos para darle ese look 'premium' */
-    .subtle-glass {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
-      backdrop-filter: blur(6px) saturate(120%);
-      -webkit-backdrop-filter: blur(6px) saturate(120%);
-      border: 1px solid rgba(255,255,255,0.04);
-    }
+        ::selection {
+            background: var(--gold);
+            color: var(--noir);
+        }
 
-    .gold-line {
-      background: linear-gradient(90deg, transparent, rgba(202,163,74,0.9), transparent);
-      height: 3px;
-      border-radius: 6px;
-    }
+        body {
+            font-family: 'Crimson Pro', serif;
+            color: var(--charcoal);
+            overflow-x: hidden;
+            background: var(--cream);
+            line-height: 1.7;
+            font-size: 18px;
+            font-weight: 300;
+        }
 
-    /* Hero background overlay para sensación premium */
-.hero-bg {
-  position: relative;
-  overflow: hidden;
-}
+        /* Cursor personalizado de lujo */
+        body {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2" fill="%23D4AF37"/><circle cx="12" cy="12" r="6" fill="none" stroke="%23D4AF37" stroke-width="0.5"/></svg>') 12 12, auto;
+        }
 
-.gold-shine{
-  background: linear-gradient(
-    110deg,
-    #8a6a1f 0%,
-    #d4af37 35%,
-    #ffffff 40%,
-    #d4af37 45%,
-    #8a6a1f 80%
-  );
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: goldShimmer 12s linear infinite;
-}
+        a, button {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="%23D4AF37"/></svg>') 12 12, pointer;
+        }
 
-@keyframes goldShimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
+        /* Header Supremo */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(180deg, rgba(13, 13, 13, 0.98) 0%, rgba(13, 13, 13, 0.85) 100%);
+            backdrop-filter: blur(30px) saturate(150%);
+            z-index: 1000;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
 
-.nav-glow {
-    position: relative;
-  }
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
 
-  .nav-glow::after {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    background: radial-gradient(circle, rgba(212,175,55,0.35) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    border-radius: 999px;
-    z-index: -1;
-  }
+        header.scrolled::after {
+            opacity: 1;
+        }
 
-  .nav-glow:hover::after {
-    opacity: 1;
-  }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2.5rem 10%;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
 
+        .logo {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
 
+        .logo-main {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            position: relative;
+        }
 
-    /* Pequeñas animaciones */
-    [data-reveal] {
-      opacity: 0;
-      transform: translateY(12px) scale(0.995);
-      transition: all 700ms cubic-bezier(.2,.9,.25,1);
-    }
-    [data-reveal].is-visible {
-      opacity: 1;
-      transform: none;
-    }
+        .logo-separator {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
 
-    /* Efecto sutil de contenedor central */
-    .container-wide { max-width: 1200px; }
-  </style>
+        .logo-subtitle {
+            font-family: 'Italiana', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.4em;
+            color: var(--pearl);
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 4rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--pearl);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            padding: 0.5rem 0;
+            font-family: 'Crimson Pro', serif;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 100%;
+            height: 1px;
+            background: var(--gold);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: center;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+            letter-spacing: 0.25em;
+        }
+
+        .nav-links a:hover::before {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* Hero Majestuoso */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--midnight) 0%, var(--noir) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(212, 175, 55, 0.02) 0%, transparent 50%);
+            background-size: 100% 100%;
+            animation: breathe 20s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(212, 175, 55, 0.03) 2px, rgba(212, 175, 55, 0.03) 4px);
+            pointer-events: none;
+        }
+
+        #canvas-3d {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.85;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 4rem;
+            max-width: 1400px;
+        }
+
+        .hero-ornament {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 0 auto 3rem;
+            position: relative;
+            opacity: 0;
+        }
+
+        .hero-ornament::before,
+        .hero-ornament::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.6rem;
+            color: var(--gold);
+        }
+
+        .hero-ornament::before {
+            left: -20px;
+        }
+
+        .hero-ornament::after {
+            right: -20px;
+        }
+
+        .hero-label {
+            font-family: 'Italiana', serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.5em;
+            color: var(--gold);
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 6.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            opacity: 0;
+            line-height: 1.1;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 .thin {
+            font-weight: 300;
+            display: block;
+            font-size: 0.85em;
+            margin-top: 1rem;
+        }
+
+        .hero h1 .accent {
+            color: var(--gold);
+            font-style: italic;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+        }
+
+        .hero .tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 300;
+            font-style: italic;
+            margin-bottom: 2rem;
+            color: var(--gold-light);
+            opacity: 0;
+            line-height: 1.5;
+        }
+
+        .hero .description {
+            font-size: 1.15rem;
+            font-weight: 300;
+            line-height: 1.9;
+            margin-bottom: 4rem;
+            opacity: 0;
+            color: var(--pearl);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 2.5rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            opacity: 0;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            padding: 1.5rem 4rem;
+            text-decoration: none;
+            font-family: 'Crimson Pro', serif;
+            font-weight: 400;
+            font-size: 0.95rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gold);
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--noir);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.8s;
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gold);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Línea decorativa */
+        .section-divider {
+            width: 150px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 5rem auto;
+            position: relative;
+        }
+
+        .section-divider::before {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.7rem;
+            color: var(--gold);
+            background: var(--cream);
+            padding: 0 1rem;
+        }
+
+        /* Secciones Premium */
+        section {
+            padding: 10rem 10%;
+            max-width: 1800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 8rem;
+            position: relative;
+        }
+
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-size: 8rem;
+            font-weight: 200;
+            color: var(--gold);
+            opacity: 0.08;
+            position: absolute;
+            top: -5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+            letter-spacing: 0.1em;
+        }
+
+        .section-label {
+            font-family: 'Italiana', serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            opacity: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 4.5rem;
+            font-weight: 500;
+            color: var(--charcoal);
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            line-height: 1.2;
+            letter-spacing: 0.03em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 300;
+            font-style: italic;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            line-height: 1.8;
+        }
+
+        /* Estadísticas Supremas */
+        .stats-section {
+            background: linear-gradient(135deg, var(--noir) 0%, var(--midnight) 50%, var(--charcoal) 100%);
+            color: white;
+            padding: 8rem 10%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.04) 0%, transparent 50%);
+            animation: float 30s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, 20px); }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 4rem 3rem;
+            border-right: 1px solid rgba(212, 175, 55, 0.15);
+            opacity: 0;
+            transform: translateY(50px);
+            position: relative;
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+
+        .stat-item:hover::before {
+            opacity: 1;
+        }
+
+        .stat-number {
+            font-family: 'Cinzel', serif;
+            font-size: 5.5rem;
+            font-weight: 300;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 1.5rem;
+            line-height: 1;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-label {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1rem;
+            color: var(--pearl);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        /* Especialidades de Lujo */
+        .especialidades {
+            background: var(--cream);
+        }
+
+        .especialidades-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+            margin-top: 6rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .especialidad-item {
+            padding: 5rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            border-right: 1px solid rgba(212, 175, 55, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            background: white;
+        }
+
+        .especialidad-item:nth-child(2n) {
+            border-right: none;
+        }
+
+        .especialidad-item:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
+
+        .especialidad-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.03), transparent);
+            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 0;
+        }
+
+        .especialidad-item:hover::before {
+            width: 100%;
+        }
+
+        .especialidad-item:hover {
+            transform: translateY(0);
+        }
+
+        .especialidad-number {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 200;
+            color: var(--gold);
+            opacity: 0.15;
+            position: absolute;
+            top: 3rem;
+            right: 3rem;
+            z-index: 0;
+        }
+
+        .especialidad-icon {
+            font-size: 3.5rem;
+            margin-bottom: 2.5rem;
+            color: var(--gold);
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .especialidad-item h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: var(--charcoal);
+            letter-spacing: 0.05em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .especialidad-item p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: #666;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .especialidad-list {
+            list-style: none;
+            padding-left: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .especialidad-list li {
+            padding: 1rem 0;
+            color: var(--charcoal);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .especialidad-list li:last-child {
+            border-bottom: none;
+        }
+
+        .especialidad-list li::before {
+            content: '—';
+            color: var(--gold);
+            font-weight: 300;
+        }
+
+        /* Filosofía */
+        .filosofia {
+            background: var(--charcoal);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filosofia::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(30deg, rgba(212, 175, 55, 0.02) 12%, transparent 12.5%, transparent 87%, rgba(212, 175, 55, 0.02) 87.5%);
+            background-size: 100px 170px;
+        }
+
+        .filosofia .section-title,
+        .filosofia .section-label {
+            color: var(--gold);
+        }
+
+        .filosofia .section-subtitle {
+            color: var(--pearl);
+        }
+
+        .filosofia-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5rem;
+            margin-top: 6rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .filosofia-card {
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .filosofia-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2.5rem;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--gold);
+            position: relative;
+        }
+
+        .filosofia-icon::before {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .filosofia-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+            letter-spacing: 0.05em;
+        }
+
+        .filosofia-card p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--pearl);
+            font-weight: 300;
+        }
+
+        /* Proceso Timeline Elegante */
+        .proceso {
+            background: white;
+        }
+
+        .proceso-container {
+            max-width: 1200px;
+            margin: 6rem auto 0;
+            position: relative;
+        }
+
+        .proceso-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(180deg, transparent, var(--gold), transparent);
+            transform: translateX(-50%);
+        }
+
+        .proceso-step {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 5rem;
+            margin-bottom: 8rem;
+            align-items: center;
+            opacity: 0;
+            position: relative;
+        }
+
+        .proceso-step:nth-child(even) .proceso-content {
+            grid-column: 1;
+            grid-row: 1;
+            text-align: right;
+        }
+
+        .proceso-step:nth-child(even) .proceso-empty {
+            grid-column: 3;
+        }
+
+        .proceso-content {
+            padding: 3rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: white;
+            position: relative;
+        }
+
+        .proceso-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--gold);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .proceso-step:hover .proceso-content::before {
+            transform: scaleY(1);
+        }
+
+        .proceso-number-container {
+            width: 100px;
+            height: 100px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .proceso-number-container::before {
+            content: '';
+            position: absolute;
+            inset: -15px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            opacity: 0.2;
+        }
+
+        .proceso-number {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--gold);
+        }
+
+        .proceso-content h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: var(--charcoal);
+            letter-spacing: 0.03em;
+        }
+
+        .proceso-content p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: #666;
+        }
+
+        .proceso-empty {
+            /* Espacio vacío para mantener la estructura */
+        }
+
+        /* Equipo Elite */
+        .equipo {
+            background: linear-gradient(135deg, var(--midnight) 0%, var(--noir) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .equipo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+        }
+
+        .equipo .section-title,
+        .equipo .section-label {
+            color: var(--gold);
+        }
+
+        .equipo .section-subtitle {
+            color: var(--pearl);
+        }
+
+        .equipo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5rem;
+            margin-top: 6rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .equipo-card {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 5rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .equipo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .equipo-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .equipo-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--gold);
+        }
+
+        .equipo-initials {
+            width: 120px;
+            height: 120px;
+            border: 2px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .equipo-initials::before,
+        .equipo-initials::after {
+            content: '';
+            position: absolute;
+            border: 1px solid var(--gold);
+        }
+
+        .equipo-initials::before {
+            inset: -10px;
+            opacity: 0.5;
+        }
+
+        .equipo-initials::after {
+            inset: -20px;
+            opacity: 0.2;
+        }
+
+        .equipo-initials span {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+        }
+
+        .equipo-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--gold);
+            letter-spacing: 0.05em;
+        }
+
+        .equipo-titles {
+            font-family: 'Italiana', serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.3em;
+            color: var(--pearl);
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .equipo-specialty {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--gold-light);
+            margin-bottom: 2rem;
+        }
+
+        .equipo-card p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--pearl);
+            font-weight: 300;
+        }
+
+        /* Testimonios de Lujo */
+        .testimonios {
+            background: var(--cream);
+        }
+
+        .testimonios-container {
+            max-width: 1200px;
+            margin: 6rem auto 0;
+        }
+
+        .testimonio {
+            background: white;
+            padding: 5rem;
+            margin-bottom: 4rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        .testimonio::before {
+            content: '"';
+            position: absolute;
+            top: 3rem;
+            left: 3rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 12rem;
+            color: rgba(212, 175, 55, 0.08);
+            line-height: 1;
+            z-index: 0;
+        }
+
+        .testimonio-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonio-stars {
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.5rem;
+        }
+
+        .testimonio-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-style: italic;
+            line-height: 1.9;
+            color: var(--charcoal);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .testimonio-author {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .author-initials {
+            width: 70px;
+            height: 70px;
+            border: 1px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+
+        .author-info h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+        }
+
+        .author-info p {
+            font-size: 0.95rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Contacto Premium */
+        .contacto {
+            background: white;
+        }
+
+        .contacto-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+            margin-top: 6rem;
+        }
+
+        .contacto-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .info-item {
+            border-left: 2px solid var(--gold);
+            padding-left: 2.5rem;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .info-item h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--charcoal);
+            letter-spacing: 0.05em;
+        }
+
+        .info-item p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: #666;
+        }
+
+        .info-item .highlight {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .contacto-form {
+            background: var(--cream);
+            padding: 5rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .form-group {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: 'Crimson Pro', serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: white;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1rem;
+            transition: all 0.4s ease;
+            color: var(--charcoal);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 180px;
+            line-height: 1.8;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.8rem;
+            background: var(--gold);
+            color: var(--noir);
+            border: 1px solid var(--gold);
+            font-family: 'Crimson Pro', serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.8s;
+        }
+
+        .submit-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(212, 175, 55, 0.3);
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Footer Elegante */
+        footer {
+            background: var(--noir);
+            color: var(--pearl);
+            padding: 8rem 10% 4rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 6rem;
+            max-width: 1800px;
+            margin: 0 auto 6rem;
+        }
+
+        .footer-brand {
+            max-width: 400px;
+        }
+
+        .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 0.3em;
+            margin-bottom: 2rem;
+        }
+
+        .footer-tagline {
+            font-family: 'Italiana', serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.3em;
+            color: var(--pearl);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .footer-description {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: var(--smoke);
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            letter-spacing: 0.1em;
+        }
+
+        .footer-section a,
+        .footer-section p {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--smoke);
+            text-decoration: none;
+            line-height: 2.5;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--gold);
+            padding-left: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 4rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            color: var(--smoke);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 1rem;
+        }
+
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            width: 60px;
+            height: 60px;
+            border: 1px solid var(--gold);
+            background: var(--noir);
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 999;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: var(--gold);
+            color: var(--noir);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 5rem;
+            }
+
+            .section-title {
+                font-size: 3.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid .stat-item:nth-child(2),
+            .stats-grid .stat-item:last-child {
+                border-right: none;
+            }
+
+            .especialidades-grid,
+            .equipo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .especialidad-item:nth-child(n) {
+                border-right: none;
+            }
+
+            .filosofia-grid {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 2rem 5%;
+            }
+
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 90px;
+                flex-direction: column;
+                background: rgba(13, 13, 13, 0.98);
+                width: 100%;
+                padding: 3rem 0;
+                gap: 2rem;
+                transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+                border-top: 1px solid var(--gold);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            section {
+                padding: 6rem 5%;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.6rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid .stat-item {
+                border-right: none;
+                border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            }
+
+            .stats-grid .stat-item:last-child {
+                border-bottom: none;
+            }
+
+            .proceso-step {
+                grid-template-columns: auto 1fr;
+                gap: 2rem;
+            }
+
+            .proceso-step .proceso-empty,
+            .proceso-step:nth-child(even) .proceso-empty {
+                display: none;
+            }
+
+            .proceso-step .proceso-content,
+            .proceso-step:nth-child(even) .proceso-content {
+                grid-column: 2;
+                text-align: left;
+            }
+
+            .proceso-line {
+                left: 50px;
+            }
+
+            .contacto-grid {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-<body class="bg-ink text-cream leading-relaxed antialiased">
+<body>
+    <!-- Scroll to top -->
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
 
-  <!-- NAVBAR -->
-  <header class="w-full fixed z-40 top-0 left-0">
-    <div class="backdrop-blur-md bg-black/40 border-b border-white/5">
-      <div class="mx-auto container-wide px-6 py-4 flex items-center justify-between">
-        <a href="#" class="flex items-center gap-4">
-          <div class="w-10 h-10 rounded-full overflow-hidden">
-            <img 
-              src="https://github.com/Santiago131440/SantiagoSterling/blob/main/Logo%20solo.jpg?raw=true" 
-              alt="Avatar de usuario"
-              class="w-full h-full object-cover"
-            >
-          </div>
-
-          <div>
-            <div class="font-display text-lg tracking-widest">RED PERICIAL</div>
-            <div class="text-xs text-white/60 -mt-1">Asesorías especializadas</div>
-          </div>
-        </a>
-
-<nav class="hidden md:flex items-center gap-8 text-sm text-white/85">
-  <a class="nav-glow hover:text-gold transition" href="#servicios">Nosotros</a>
-  <a class="nav-glow hover:text-gold transition" href="#maestria">Servicios</a>
-  <a class="nav-glow hover:text-gold transition" href="#servicios">Noticias de interés</a>
-  <a class="nav-glow hover:text-gold transition" href="#contacto">Blog</a>
-</nav>
-
-        <div class="hidden md:flex gap-4 items-center">
-          <button
-          onclick="document.querySelector('#coleccion').scrollIntoView({ behavior: 'smooth' });"
-          class="px-8 py-1 rounded-full border border-white/6 hover:bg-white/100 hover:text-black hover:font-semibold text-sm subtle-glass">Ver profesionales</button>
-          <button 
-            onclick="document.querySelector('#contacto').scrollIntoView({ behavior: 'smooth' });"
-            class="px-8 py-1 rounded-full font-medium text-ink bg-gold hover:bg-gold/80 hover:text-white">
-            Contáctanos
-          </button>
-
-        </div>
-
-        <!-- Mobile menu button -->
-        <button id="menuBtn" class="md:hidden p-2 rounded-md border border-white/6 subtle-glass">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Mobile menu -->
-      <div id="mobileMenu" class="md:hidden hidden px-6 pb-6">
-        <nav class="flex flex-col gap-3 text-sm">
-          <a href="#coleccion" class="py-2 border-b border-white/6">Nosotros</a>
-          <a href="#maestria" class="py-2 border-b border-white/6">Servicios</a>
-          <a href="#servicios" class="py-2 border-b border-white/6">Noticias de interés</a>
-          <a href="#contacto" class="py-2">Blog</a>
-        </nav>
-      </div>
-    </div>
-  </header>
-
-  <!-- HERO -->
- <main class="mt-20">
-  <section class="hero-bg relative min-h-[78vh] flex items-center overflow-hidden">
-
-    <!-- CONTENEDOR DE VIDEOS -->
-    <div class="absolute inset-0 -z-10">
-      <video class="hero-video absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-1000"
-        autoplay muted loop playsinline>
-        <source src="https://cdn.pixabay.com/video/2020/10/22/53110-472583423_large.mp4" type="video/mp4">
-      </video>
-
-      <video class="hero-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
-        autoplay muted loop playsinline>
-        <source src="https://cdn.pixabay.com/video/2020/10/22/53109-472531846_large.mp4" type="video/mp4">
-      </video>
-
-      <video class="hero-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
-        autoplay muted loop playsinline>
-        <source src="https://cdn.pixabay.com/video/2021/05/07/73425-548173432_large.mp4" type="video/mp4">
-      </video>
-    </div>
-
-    <!-- OVERLAY -->
-    <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50"></div>
-
-    <!-- CONTENIDO -->
-    <div class="mx-auto container-wide px-6 py-28 relative z-10">
-      <div class="max-w-3xl">
-        <div class="gold-line w-40 mb-8"></div>
-        <h1 class="font-display text-5xl md:text-6xl leading-tight tracking-tight gold-shine">
-          <strong>RED PERICIAL</strong>
-        </h1>
-        <h5 class="font-display text-lg md:text-lg leading-tight tracking-tight text-cream">
-          ¿Que nos representa?
-        </h5>
-
-        <p class="mt-6 text-lg text-white/80">
-          Red Pericial representa confianza, liderazgo y visión, siendo un espacio donde la ley no solo se interpreta, sino que se honra con vocación, precisión y respeto.
-        </p>
-
-        <div class="mt-8 flex gap-4">
-          <a href="#contacto" class="px-8 py-1 rounded-full bg-gold text-ink font-medium shadow-lg hover:bg-gold/80 hover:text-white">Contáctanos</a>
-          <a href="#coleccion" class="px-8 py-1 rounded-full border border-white/6 subtle-glass hover:font-semibold">Ver profesionales</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Degradado de transición -->
-    <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black via-black/70 to-transparent pointer-events-none"></div>
-  </section>
-
-
-    <!-- SOBRE LA MARCA -->
-    <section class="py-20 bg-black">
-      <div class="mx-auto container-wide px-6 grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 class="font-display text-7xl text-cream mb-4" data-reveal>¿Qué somos?</h2>
-          <p class="text-white/75 mb-6" data-reveal>
-            Servicio privado de apoyo médico-legal para instituciones, que ofrece asesoría técnica especializada en la defensa judicial frente a reclamaciones económicas por responsabilidad médica e institucional, integrado en un proyecto pericial exclusivo para clínicas y hospitales, con una oferta cerrada del servicio desde una casa pericial especializada.
-          </p>
-
-          <ul class="space-y-3 text-white/70">
-            <li class="flex items-start gap-3" data-reveal>
-              <span class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">✓</span>
-              <div>
-                <div class="font-medium">Apoyo Médico-Legal Privado</div>
-                <div class="text-sm">Un servicio privado para el apoyo médico-legal de las instituciones</div>
-              </div>
-            </li>
-            <li class="flex items-start gap-3" data-reveal>
-              <span class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">✓</span>
-              <div>
-                <div class="font-medium">Defensa Técnica Médica</div>
-                <div class="text-sm">Asesoría técnica en defensa por responsabilidad médica.</div>
-              </div>
-            </li>
-            <li class="flex items-start gap-3" data-reveal>
-              <span class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">✓</span>
-              <div>
-                <div class="font-medium">Proyecto Pericial Institucional</div>
-                <div class="text-sm">Proyecto pericial exclusivo para clínicas y hospitales.</div>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div class="rounded-2xl overflow-hidden subtle-glass p-4" data-reveal>
-          <img src="https://www.simposiofiscal.com/wp-content/uploads/2022/02/Paquete-blindaje-medico-1200x800.jpg" alt="Taller artesano" class="w-90 h-90 object-cover rounded-xl shadow-xl">
-        </div>
-      </div>
-    </section>
-
-    <!-- COLECCIÓN DESTACADA -->
-    <section id="coleccion" class="py-20 bg-cream text-ink">
-      <div class="mx-auto container-wide px-6">
-        <div class="text-center mb-12" data-reveal>
-          <h3 class="font-display text-7xl">Servicios</h3>
-          <p class="mt-2 text-xl text-ink/70 font-display">Servicios ofertados — Paquetes exclusivos</p>
-        </div>
-
-        <div class="grid md:grid-cols-4 gap-8">
-          <!-- Card 1 -->
-          <article class="rounded-3xl overflow-hidden shadow-lg bg-white">
-            <img class="w-full h-64 object-cover" src="https://media.istockphoto.com/id/1465316262/photo/businessman-inspecting-paperwork-document-of-business-data-analysis-working-management-report.jpg?s=1024x1024&w=is&k=20&c=4fE6KAnT4jBdMb1d1TVFOELKjKuEgkus0pJ6araaDVQ=" alt="Pieza 2">
-            <div class="p-6">
-              <h4 class="font-bold text-lg">Servicio 1</h4>
-              <p class="mt-2 text-sm text-ink/60">Junta Médica Pericial</p>
-              <div class="mt-6 flex items-center justify-between">
-                <div class="font-semibold"> Paquete de Servicios Anuales</div>
-                <a class="text-sm border text-center border-black rounded-xl hover:bg-gold hover:border-slate-200 hover:shadow-xl hover:text-white" href="#">Obtener más información</a>
-              </div>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-main">RED PERICIAL</div>
+                <div class="logo-separator"></div>
+                <div class="logo-subtitle">Asesorías especializadas</div>
             </div>
-          </article>
-          <!-- Card 2 -->
-          <article class="rounded-3xl overflow-hidden shadow-lg bg-white flex flex-col">
-            <img class="w-full h-64 object-cover" src="https://media.istockphoto.com/id/1319031310/photo/doctor-writing-a-medical-prescription.jpg?s=1024x1024&w=is&k=20&c=nChrkueWF_kh09Gsm_cjWYAY1BnyQ3XMt9ITykBiIYQ=" alt="Pieza 2">
-            <div class="p-6">
-              <h4 class="font-bold text-lg">Servicio 2</h4>
-              <p class="mt-2 text-sm text-ink/60">Dictamen médico especializado de opinión y contradicción con sustentación</p>
-              <div class="mt-auto flex items-center justify-between">
-                <div class="font-semibold"> Peritajes de comprobación</div>
-                <a class="text-sm border text-center border-black rounded-xl hover:bg-gold hover:border-slate-200 hover:shadow-xl hover:text-white" href="#">Obtener más información</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 3 -->
-           <article class="rounded-3xl overflow-hidden shadow-lg bg-white">
-            <img class="w-full h-64 object-cover" src="https://media.istockphoto.com/id/1719539154/photo/home-care-healthcare-professional-hugging-senior-patient.jpg?s=1024x1024&w=is&k=20&c=rwt38eO7Y6WUo-GqWKxV9m7VaSQy8BqIugoy2S_7WGI=" alt="Pieza 2">
-            <div class="p-6">
-              <h4 class="font-bold text-lg">Servicio 3</h4>
-              <p class="mt-2 text-sm text-ink/60">Asesoría Médico Legal: Estrategia Defensa</p>
-              <div class="mt-4 flex items-center justify-between">
-                <div class="font-semibold"> Calificación Del Riesgo Legal Procesal</div>
-                <a class="text-sm border text-center border-black rounded-xl hover:bg-gold hover:border-slate-200 hover:shadow-xl hover:text-white" href="#">Obtener más información</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 4 -->
-           <article class="rounded-3xl overflow-hidden shadow-lg bg-white">
-            <img class="w-full h-64 object-cover" src="https://media.istockphoto.com/id/1783743772/photo/female-speaker-giving-a-presentation-during-business-seminar-at-convention-center.jpg?s=1024x1024&w=is&k=20&c=_vG6anN_hY8YxPUBtwa8sXu0W7B6e6Qt7KxuDGNPlpE=" alt="Pieza 2">
-            <div class="p-6">
-              <h4 class="font-bold text-lg">Servicio 4</h4>
-              <p class="mt-2 text-sm text-ink/60">Programa de Capacitación Responsabilidad Médica para funcionarios</p>
-              <div class="mt-4 flex items-center justify-between">
-                <div class="font-semibold"> Contratistas</div>
-                <a class="text-sm border text-center border-black rounded-xl hover:bg-gold hover:border-slate-200 hover:shadow-xl hover:text-white" href="#">Obtener más información</a>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- SERVICIOS/EXPERIENCIAS -->
-    <section id="servicios" class="py-20 bg-ink text-cream">
-      <div class="mx-auto container-wide px-6">
-        <div class="grid md:grid-cols-2 gap-10 items-center">
-          <div data-reveal>
-            <h3 class="font-display text-7xl">Fundamentación legal</h3>
-            <p class="mt-4 text-white/70">Código de Procedimiento Administrativo y de lo Contencioso Administrativo Artículo 222. Reglas especiales para las entidades públicas.</p>
-
-            <ul class="mt-6 space-y-4 text-white/80">
-              <li>1. Para aportar el dictamen pericial o contradecirlo en los casos previstos en la ley, se faculta a las entidades públicas para que mediante contratación directa seleccionen los expertos que atenderán la prueba pericial requerida en un proceso judicial. Esta pericia también podrá ser contratada durante las restricciones establecidas en la Ley 996 de 2005. </li>
-              <br>
-              <li>Con el mismo fin se podrán contratar asesorías técnicas. </li>
-              <li>2. Cuando la experticia sea rendida por una entidad pública el juez deberá ordenar honorarios a favor de esta.</li>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#expertise">Expertise</a></li>
+                <li><a href="#proceso">Proceso</a></li>
+                <li><a href="#equipo">Equipo</a></li>
+                <li><a href="#testimonios">Testimonios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
             </ul>
+        </nav>
+    </header>
 
-            <div class="mt-8">
-              <a href="#contacto" class="px-8 py-2 rounded-full bg-gold text-ink font-medium">Obtener mas información</a>
+    <!-- Hero -->
+    <section class="hero" id="inicio">
+        <canvas id="canvas-3d"></canvas>
+        <div class="hero-content">
+            <div class="hero-ornament"></div>
+            <div class="hero-label">Since 2003 — Undefeated Excellence</div>
+            <h1>
+                DEFENDING<br>
+                <span class="accent">Medicine's</span><br>
+                <span class="thin">FINEST MINDS</span>
+            </h1>
+            <p class="tagline">Where Legal Mastery Meets Medical Expertise</p>
+            <p class="description">
+                For over two decades, MediLex has stood as the preeminent shield for the medical profession's 
+                most distinguished practitioners. Our attorneys don't just practice law—they understand medicine 
+                at the deepest level, bringing unparalleled strategic advantage to every case.
+            </p>
+            <div class="hero-cta">
+                <a href="#contacto" class="btn-primary">Request Counsel</a>
+                <a href="#expertise" class="btn-secondary">Our Practice</a>
             </div>
-          </div>
-
-          <div class="rounded-2xl overflow-hidden subtle-glass p-6" data-reveal>
-            <img src="https://images.unsplash.com/photo-1526045612212-70caf35c14df?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=8e5f4a3d2c1b0a9f8e7d6c5b4a3f2e1d" alt="Servicios" class="w-full h-80 object-cover rounded-xl shadow-xl">
-          </div>
         </div>
-      </div>
     </section>
 
-    <!-- TESTIMONIOS -->
-    <section class="py-20 bg-cream text-ink">
-      <div class="mx-auto container-wide px-6 text-center mb-10" data-reveal>
-        <h3 class="font-display text-7xl">Lo que dicen de nosotros</h3>
-      </div>
-
-      <div class="mx-auto container-wide px-6 grid md:grid-cols-3 gap-6">
-        <blockquote class="p-6 rounded-2xl subtle-glass">
-          <p class="italic">“La red pericial demuestra un nivel de profesionalismo excepcional. Su acompañamiento jurídico y técnico ha sido clave para fortalecer la defensa de nuestra institución, aportando conceptos claros, bien sustentados y oportunos que generan total confianza.”</p>
-          <cite class="block mt-4 font-medium">— Wendy Gutíerrez</cite>
-        </blockquote>
-        <blockquote class="p-6 rounded-2xl subtle-glass">
-          <p class="italic">“El servicio prestado por este equipo de abogados periciales ha superado nuestras expectativas. Su conocimiento en responsabilidad médica y su capacidad de análisis detallado nos brindan seguridad y respaldo en cada proceso judicial.”</p>
-          <cite class="block mt-4 font-medium">— Santiago Sterling</cite>
-        </blockquote>
-        <blockquote class="p-6 rounded-2xl subtle-glass">
-          <p class="italic">“Destacamos la eficiencia, ética y compromiso de esta red pericial. Su asesoría especializada ha optimizado nuestra gestión legal y ha protegido los intereses institucionales con rigor técnico y alto sentido de responsabilidad.”</p>
-          <cite class="block mt-4 font-medium">— Karym Bedoya</cite>
-        </blockquote>
-      </div>
-    </section>
-
-    <!-- CONTACTO / FOOTER -->
-    <section id="contacto" class="py-20 bg-ink text-white">
-      <div class="mx-auto container-wide px-6 grid md:grid-cols-2 gap-10 items-center">
-        <div data-reveal>
-          <h3 class="font-display text-7xl">Contacto</h3>
-          <p class="mt-4 text-2xl text-cream">Agende una asesoría privada para obtener mas detalles de como podemos solucionar tu caso.</p>
-
-          <div class="mt-6 text-white/80">
-            <p class="font-medium">Calle 50 # 50 - 50, Cali, Colombia</p>
-            <p class="mt-2">Tel: +57 312 123 4567</p>
-            <p class="mt-2">Email: atencionalusuario@redpericial.com</p>
-          </div>
-        </div>
-
-        <form class="p-6 bg-ink rounded-2xl text-ink shadow-lg border border-white/10" onsubmit="handleSubmit(event)" data-reveal>
-          <div class="grid gap-4">
-            <input required class="border border-white/10 rounded-full px-8 py-2 bg-ink/40 text-white" placeholder="Nombre" name="name" />
-            <input required type="email" class="border border-white/10 rounded-full px-8 py-2 bg-ink/40 text-white" placeholder="Correo" name="email" />
-            <textarea required class="border border-white/10 rounded-2xl px-4 py-3 bg-ink/40 text-white" rows="4" placeholder="¿En qué podemos ayudarle?" name="message"></textarea>
-            <div class="flex items-center justify-between">
-              <button class="px-8 py-0 rounded-full border border-white bg-ink text-cream hover:bg-white hover:text-black hover:font-bold shadow-sm shadow-white">Enviar</button>
-              <span class="text-sm text-white">Respuesta en 3 días hábiles</span>
+    <!-- Stats -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number" data-target="500">0</span>
+                <span class="stat-label">Physicians Defended</span>
             </div>
-          </div>
-        </form>
-      </div>
-
-      <footer class="mt-12 border-t border-white/6 pt-8 text-white/60 text-sm">
-        <div class="mx-auto container-wide px-6 flex flex-col md:flex-row items-center justify-between">
-          <div>© <span id="year"></span> Red Pericial | Cali, Colombia | Desarrollado por Santiago Sterling</div>
-          <div class="mt-4 md:mt-0">Política de privacidad · Términos</div>
+            <div class="stat-item">
+                <span class="stat-number"><span data-target="98">0</span>%</span>
+                <span class="stat-label">Success Rate</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="23">0</span>
+                <span class="stat-label">Years Excellence</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">$<span data-target="500">0</span>M+</span>
+                <span class="stat-label">Assets Protected</span>
+            </div>
         </div>
-      </footer>
     </section>
-  </main>
 
-  <script>
-    // Small UI interactivity
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    menuBtn?.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
+    <!-- Especialidades -->
+    <section class="especialidades" id="expertise">
+        <div class="section-header">
+            <div class="section-number">01</div>
+            <div class="section-label">Areas of Practice</div>
+            <h2 class="section-title">Specialized Expertise</h2>
+            <p class="section-subtitle">
+                Comprehensive legal defense across every dimension of medical practice
+            </p>
+        </div>
+        <div class="section-divider"></div>
+        <div class="especialidades-grid">
+            <div class="especialidad-item">
+                <span class="especialidad-number">01</span>
+                <div class="especialidad-icon">⚕️</div>
+                <h3>Medical Malpractice Defense</h3>
+                <p>Elite representation in high-stakes negligence claims. Our attorneys possess medical degrees, enabling defense strategies that opposing counsel cannot replicate.</p>
+                <ul class="especialidad-list">
+                    <li>Complex surgical outcomes</li>
+                    <li>Diagnostic dispute resolution</li>
+                    <li>Multi-million dollar litigation</li>
+                    <li>Expert witness coordination</li>
+                </ul>
+            </div>
+            <div class="especialidad-item">
+                <span class="especialidad-number">02</span>
+                <div class="especialidad-icon">⚖️</div>
+                <h3>Licensing & Board Defense</h3>
+                <p>Protecting medical licenses before state boards and specialty councils with unmatched institutional knowledge and political acumen.</p>
+                <ul class="especialidad-list">
+                    <li>Board complaint representation</li>
+                    <li>License preservation strategies</li>
+                    <li>Administrative appeals</li>
+                    <li>Credential protection</li>
+                </ul>
+            </div>
+            <div class="especialidad-item">
+                <span class="especialidad-number">03</span>
+                <div class="especialidad-icon">🏥</div>
+                <h3>Healthcare Transactions</h3>
+                <p>Strategic counsel for practice acquisitions, partnerships, and complex healthcare business formations valued in the millions.</p>
+                <ul class="especialidad-list">
+                    <li>Practice mergers & acquisitions</li>
+                    <li>Partnership agreements</li>
+                    <li>Contract negotiation</li>
+                    <li>Valuation advisory</li>
+                </ul>
+            </div>
+            <div class="especialidad-item">
+                <span class="especialidad-number">04</span>
+                <div class="especialidad-icon">👤</div>
+                <h3>Executive Employment</h3>
+                <p>Sophisticated representation in physician employment disputes involving executive compensation, non-competes, and wrongful termination.</p>
+                <ul class="especialidad-list">
+                    <li>Executive separations</li>
+                    <li>Restrictive covenant litigation</li>
+                    <li>Compensation disputes</li>
+                    <li>Hospital privileges</li>
+                </ul>
+            </div>
+            <div class="especialidad-item">
+                <span class="especialidad-number">05</span>
+                <div class="especialidad-icon">🔐</div>
+                <h3>Privacy & Compliance</h3>
+                <p>Proactive defense against federal investigations, HIPAA violations, and regulatory compliance matters with significant penalties.</p>
+                <ul class="especialidad-list">
+                    <li>Federal investigations</li>
+                    <li>HIPAA breach defense</li>
+                    <li>Compliance program design</li>
+                    <li>Government audits</li>
+                </ul>
+            </div>
+            <div class="especialidad-item">
+                <span class="especialidad-number">06</span>
+                <div class="especialidad-icon">⚡</div>
+                <h3>Crisis Management</h3>
+                <p>Immediate response team available around the clock for legal emergencies requiring instant strategic intervention and damage control.</p>
+                <ul class="especialidad-list">
+                    <li>24/7 emergency hotline</li>
+                    <li>Immediate injunctive relief</li>
+                    <li>Media crisis management</li>
+                    <li>Reputation protection</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-    // year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    <!-- Filosofía -->
+    <section class="filosofia">
+        <div class="section-header">
+            <div class="section-number">02</div>
+            <div class="section-label">Our Philosophy</div>
+            <h2 class="section-title">The MediLex Difference</h2>
+            <p class="section-subtitle">
+                Three pillars that define uncompromising excellence in medical defense
+            </p>
+        </div>
+        <div class="section-divider"></div>
+        <div class="filosofia-grid">
+            <div class="filosofia-card">
+                <div class="filosofia-icon">I</div>
+                <h3>Medical Fluency</h3>
+                <p>Our founding partners are both physicians and attorneys. We speak medicine as our native language, providing insights that traditional legal firms cannot access. This dual expertise transforms complex medical concepts into compelling legal arguments.</p>
+            </div>
+            <div class="filosofia-card">
+                <div class="filosofia-icon">II</div>
+                <h3>Strategic Discretion</h3>
+                <p>Your reputation is your legacy. Every engagement operates under absolute confidentiality protocols exceeding attorney-client privilege. We understand that discretion isn't optional—it's essential to preserving distinguished medical careers.</p>
+            </div>
+            <div class="filosofia-card">
+                <div class="filosofia-icon">III</div>
+                <h3>Relentless Excellence</h3>
+                <p>We accept only cases where we can deliver exceptional outcomes. Our 98% success rate isn't coincidence—it's the result of meticulous case selection, exhaustive preparation, and strategic brilliance refined over 5,000+ cases.</p>
+            </div>
+        </div>
+    </section>
 
-    // Form handling (demo)
-    function handleSubmit(e){
-      e.preventDefault();
-      const f = e.target;
-      const data = new FormData(f);
-      // Simulación: mostrar confirmación
-      alert('Gracias, ' + data.get('name') + '. Su mensaje fue enviado.');
-      f.reset();
-    }
+    <!-- Proceso -->
+    <section class="proceso" id="proceso">
+        <div class="section-header">
+            <div class="section-number">03</div>
+            <div class="section-label">Methodology</div>
+            <h2 class="section-title">Our Process</h2>
+            <p class="section-subtitle">
+                A systematized approach to defending medical excellence
+            </p>
+        </div>
+        <div class="section-divider"></div>
+        <div class="proceso-container">
+            <div class="proceso-line"></div>
+            <div class="proceso-step">
+                <div class="proceso-content">
+                    <h3>Confidential Consultation</h3>
+                    <p>Private consultation with a senior partner within 24 hours. Comprehensive case evaluation, risk assessment, and preliminary strategy development. All communications protected by attorney-client privilege from the first contact.</p>
+                </div>
+                <div class="proceso-number-container">
+                    <div class="proceso-number">I</div>
+                </div>
+                <div class="proceso-empty"></div>
+            </div>
+            <div class="proceso-step">
+                <div class="proceso-empty"></div>
+                <div class="proceso-number-container">
+                    <div class="proceso-number">II</div>
+                </div>
+                <div class="proceso-content">
+                    <h3>Medical-Legal Analysis</h3>
+                    <p>Exhaustive review by our physician-attorneys. Expert witness identification and coordination. Detailed timeline reconstruction and medical record analysis using proprietary forensic methodologies.</p>
+                </div>
+            </div>
+            <div class="proceso-step">
+                <div class="proceso-content">
+                    <h3>Strategic Design</h3>
+                    <p>Custom defense strategy crafted for your specific circumstances. Multi-dimensional approach considering legal, medical, reputational, and financial implications. War-gaming of all potential scenarios and contingencies.</p>
+                </div>
+                <div class="proceso-number-container">
+                    <div class="proceso-number">III</div>
+                </div>
+                <div class="proceso-empty"></div>
+            </div>
+            <div class="proceso-step">
+                <div class="proceso-empty"></div>
+                <div class="proceso-number-container">
+                    <div class="proceso-number">IV</div>
+                </div>
+                <div class="proceso-content">
+                    <h3>Elite Execution</h3>
+                    <p>Aggressive negotiation or masterful litigation as circumstances demand. Direct partner involvement throughout. Access to the nation's most respected medical expert witnesses and trial consultants.</p>
+                </div>
+            </div>
+            <div class="proceso-step">
+                <div class="proceso-content">
+                    <h3>Ongoing Protection</h3>
+                    <p>Post-resolution advisory to prevent future legal exposure. Reputation management and professional guidance. Proactive risk assessment and continuing legal partnership for your practice's evolution.</p>
+                </div>
+                <div class="proceso-number-container">
+                    <div class="proceso-number">V</div>
+                </div>
+                <div class="proceso-empty"></div>
+            </div>
+        </div>
+    </section>
 
-    // Reveal animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
+    <!-- Equipo -->
+    <section class="equipo" id="equipo">
+        <div class="section-header">
+            <div class="section-number">04</div>
+            <div class="section-label">Leadership</div>
+            <h2 class="section-title">Founding Partners</h2>
+            <p class="section-subtitle">
+                Physician-attorneys with unparalleled credentials and courtroom mastery
+            </p>
+        </div>
+        <div class="section-divider"></div>
+        <div class="equipo-grid">
+            <div class="equipo-card">
+                <div class="equipo-initials">
+                    <span>RM</span>
+                </div>
+                <h3>Ricardo Morales</h3>
+                <div class="equipo-titles">MD, JD • Founding Partner</div>
+                <p class="equipo-specialty">Harvard Medical School • Yale Law School</p>
+                <p>Former cardiovascular surgeon turned legal strategist. 28 years defending physicians in career-defining cases. Recognized as one of America's top 100 trial lawyers for healthcare litigation. Successfully defended $500M+ in malpractice claims.</p>
+            </div>
+            <div class="equipo-card">
+                <div class="equipo-initials">
+                    <span>PV</span>
+                </div>
+                <h3>Patricia Vega</h3>
+                <div class="equipo-titles">JD, LLM • Senior Partner</div>
+                <p class="equipo-specialty">Stanford Law • Former FDA General Counsel</p>
+                <p>National authority on healthcare regulation and licensing defense. Former General Counsel of the FDA with unmatched regulatory insights. Perfect track record in state medical board proceedings over 15 years. Advisor to three state governors on healthcare policy.</p>
+            </div>
+            <div class="equipo-card">
+                <div class="equipo-initials">
+                    <span>AT</span>
+                </div>
+                <h3>Alejandro Torres</h3>
+                <div class="equipo-titles">JD • Managing Partner, Litigation</div>
+                <p class="equipo-specialty">Columbia Law • Board Certified Trial Specialist</p>
+                <p>Legendary courtroom presence with 97% trial success rate. Specializes in high-exposure malpractice defense and complex medical litigation. Lead counsel in 12 cases featured in national legal journals. Frequent lecturer at major medical conferences on liability reduction.</p>
+            </div>
+            <div class="equipo-card">
+                <div class="equipo-initials">
+                    <span>CR</span>
+                </div>
+                <h3>Carmen Ruiz</h3>
+                <div class="equipo-titles">JD, MBA • Partner, Transactions</div>
+                <p class="equipo-specialty">Penn Law • Wharton MBA</p>
+                <p>Elite healthcare transactional attorney with $2B+ in successfully structured deals. Represents physician groups in complex mergers, acquisitions, and partnership formations. Strategic advisor to 50+ multi-specialty medical practices nationwide.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="testimonios" id="testimonios">
+        <div class="section-header">
+            <div class="section-number">05</div>
+            <div class="section-label">Client Voices</div>
+            <h2 class="section-title">Testimonials</h2>
+            <p class="section-subtitle">
+                In the words of those we've defended
+            </p>
+        </div>
+        <div class="section-divider"></div>
+        <div class="testimonios-container">
+            <div class="testimonio">
+                <div class="testimonio-content">
+                    <div class="testimonio-stars">★ ★ ★ ★ ★</div>
+                    <p class="testimonio-text">
+                        I faced a $22 million malpractice claim that could have ended my 30-year surgical career. Dr. Morales didn't just win—he achieved complete dismissal with prejudice. His medical knowledge combined with legal acumen created a defense strategy that opposing counsel couldn't penetrate. MediLex isn't just a law firm; they're guardian angels for physicians.
+                    </p>
+                    <div class="testimonio-author">
+                        <div class="author-initials">CM</div>
+                        <div class="author-info">
+                            <h4>Dr. Carlos Mendoza</h4>
+                            <p>Cardiovascular Surgeon, Chief of Surgery</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonio">
+                <div class="testimonio-content">
+                    <div class="testimonio-stars">★ ★ ★ ★ ★</div>
+                    <p class="testimonio-text">
+                        The state medical board investigation threatened everything I'd built. Patricia Vega's institutional knowledge and strategic brilliance were breathtaking. Not only did I retain my license—there were no restrictions, no probation, nothing on my record. She navigated political waters I didn't even know existed. Worth every penny and infinitely more.
+                    </p>
+                    <div class="testimonio-author">
+                        <div class="author-initials">MR</div>
+                        <div class="author-info">
+                            <h4>Dra. María Rodríguez</h4>
+                            <p>Maternal-Fetal Medicine Specialist</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonio">
+                <div class="testimonio-content">
+                    <div class="testimonio-stars">★ ★ ★ ★ ★</div>
+                    <p class="testimonio-text">
+                        Selling our multi-physician practice was the most important financial transaction of our careers. Carmen Ruiz structured a deal that exceeded our expectations by 40% and included protections we never would have conceived. Her business acumen is matched only by her integrity. She's now our permanent advisor—an investment that continues paying dividends.
+                    </p>
+                    <div class="testimonio-author">
+                        <div class="author-initials">JR</div>
+                        <div class="author-info">
+                            <h4>Dr. Jorge Ramírez</h4>
+                            <p>Anesthesiology Group, Managing Partner</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section class="contacto" id="contacto">
+        <div class="section-header">
+            <div class="section-number">06</div>
+            <div class="section-label">Begin Your Defense</div>
+            <h2 class="section-title">Contact</h2>
+            <p class="section-subtitle">
+                Confidential consultation with a senior partner within 24 hours
+            </p>
+        </div>
+        <div class="section-divider"></div>
+        <div class="contacto-grid">
+            <div class="contacto-info">
+                <div class="info-item">
+                    <h3>Principal Office</h3>
+                    <p>
+                        MediLex Executive Tower<br>
+                        Penthouse Level 45<br>
+                        1000 Corporate Plaza<br>
+                        Cali, Valle del Cauca<br>
+                        Colombia
+                    </p>
+                </div>
+                <div class="info-item">
+                    <h3>Direct Contact</h3>
+                    <p>
+                        Partner Line: <span class="highlight">+57 (2) 999-8888</span><br>
+                        24/7 Emergency: <span class="highlight">+57 (310) 500-0000</span><br>
+                        Secure WhatsApp: +57 (310) 500-0001
+                    </p>
+                </div>
+                <div class="info-item">
+                    <h3>Email</h3>
+                    <p>
+                        Partners: <span class="highlight">counsel@medilex.law</span><br>
+                        Urgent Matters: emergency@medilex.law<br>
+                        General: contact@medilex.law
+                    </p>
+                </div>
+                <div class="info-item">
+                    <h3>Availability</h3>
+                    <p>
+                        Monday – Friday: 7:00 AM – 9:00 PM<br>
+                        Saturday: 8:00 AM – 4:00 PM<br>
+                        <span class="highlight">Emergency Line: 24/7/365</span>
+                    </p>
+                </div>
+            </div>
+            <form class="contacto-form" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" name="nombre" required placeholder="Dr./Dra.">
+                </div>
+                <div class="form-group">
+                    <label>Professional Email *</label>
+                    <input type="email" name="email" required placeholder="your.email@hospital.com">
+                </div>
+                <div class="form-group">
+                    <label>Direct Phone *</label>
+                    <input type="tel" name="telefono" required placeholder="+57">
+                </div>
+                <div class="form-group">
+                    <label>Medical Specialty *</label>
+                    <select name="especialidad" required>
+                        <option value="">Select Specialty</option>
+                        <option value="surgery">Surgery</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="neurosurgery">Neurosurgery</option>
+                        <option value="internal">Internal Medicine</option>
+                        <option value="pediatrics">Pediatrics</option>
+                        <option value="obgyn">OB/GYN</option>
+                        <option value="anesthesiology">Anesthesiology</option>
+                        <option value="radiology">Radiology</option>
+                        <option value="oncology">Oncology</option>
+                        <option value="psychiatry">Psychiatry</option>
+                        <option value="other">Other Specialty</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Nature of Legal Matter *</label>
+                    <select name="tipo" required>
+                        <option value="">Select Type</option>
+                        <option value="malpractice">Malpractice Claim</option>
+                        <option value="board">Medical Board Issue</option>
+                        <option value="employment">Employment Dispute</option>
+                        <option value="transaction">Practice Transaction</option>
+                        <option value="compliance">Regulatory/Compliance</option>
+                        <option value="emergency">Emergency Situation</option>
+                        <option value="other">Other Matter</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Confidential Case Summary *</label>
+                    <textarea name="mensaje" required placeholder="All communications are protected by attorney-client privilege from the moment of first contact."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Request Confidential Consultation</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">MEDILEX</div>
+                <div class="footer-tagline">Elite Medical Defense Counsel</div>
+                <p class="footer-description">
+                    Established 2003. For over two decades, MediLex has represented the medical profession's most distinguished practitioners in their most consequential legal matters. Our physician-attorneys bring unparalleled medical fluency to legal defense.
+                </p>
+                <p style="color: var(--gold); margin-top: 2rem;">
+                    Best Medical Defense Firm — National Law Journal 2020-2026
+                </p>
+            </div>
+            <div class="footer-section">
+                <h4>Practice Areas</h4>
+                <a href="#expertise">Malpractice Defense</a>
+                <a href="#expertise">Medical Licensing</a>
+                <a href="#expertise">Healthcare Transactions</a>
+                <a href="#expertise">Employment Law</a>
+                <a href="#expertise">Regulatory Compliance</a>
+                <a href="#expertise">Crisis Management</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="#">Legal Publications</a>
+                <a href="#">Case Studies</a>
+                <a href="#">Physician Resources</a>
+                <a href="#">CME Programs</a>
+                <a href="#">Risk Management</a>
+                <a href="#">Legal Alerts</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Partners: +57 (2) 999-8888</p>
+                <p>Emergency: +57 (310) 500-0000</p>
+                <p>counsel@medilex.law</p>
+                <p style="margin-top: 1.5rem; color: var(--gold);">24/7 Emergency Hotline Available</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 MediLex Elite Medical Defense Counsel. All rights reserved.</p>
+            <p>Members: American Health Lawyers Association | Board Certified Medical Trial Specialists</p>
+        </div>
+    </footer>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script>
+        // Three.js Scene
+        let scene, camera, renderer, objects = [];
+
+        function initThree() {
+            const canvas = document.getElementById('canvas-3d');
+            scene = new THREE.Scene();
+            scene.fog = new THREE.Fog(0x0a1628, 8, 25);
+            
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 12;
+            
+            renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            
+            // Luces de galería
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+            scene.add(ambientLight);
+            
+            const spotLight1 = new THREE.SpotLight(0xD4AF37, 4);
+            spotLight1.position.set(10, 15, 10);
+            spotLight1.angle = Math.PI / 6;
+            spotLight1.penumbra = 0.3;
+            scene.add(spotLight1);
+            
+            const spotLight2 = new THREE.SpotLight(0xF4E4B4, 3);
+            spotLight2.position.set(-10, 10, 8);
+            spotLight2.angle = Math.PI / 7;
+            spotLight2.penumbra = 0.4;
+            scene.add(spotLight2);
+            
+            const pointLight = new THREE.PointLight(0xD4AF37, 2, 50);
+            pointLight.position.set(0, 5, 8);
+            scene.add(pointLight);
+            
+            // Crear elementos 3D de lujo
+            createDNA();
+            createBalanza();
+            createGoldRings();
+            createParticles();
+            
+            animate();
         }
-      });
-    }, {threshold: 0.12});
-
-    document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
-  </script>
-
-  <script>
-  const videos = document.querySelectorAll('.hero-video');
-  let current = 0;
-  const intervalTime = 8000; // tiempo entre videos (8 segundos)
-
-  setInterval(() => {
-    videos[current].classList.remove('opacity-100');
-    videos[current].classList.add('opacity-0');
-
-    current = (current + 1) % videos.length;
-
-    videos[current].classList.remove('opacity-0');
-    videos[current].classList.add('opacity-100');
-  }, intervalTime);
-</script>
-
+        
+        function createDNA() {
+            const group = new THREE.Group();
+            const material = new THREE.MeshPhongMaterial({ 
+                color: 0xD4AF37,
+                shininess: 200,
+                specular: 0xffffff,
+                emissive: 0x0D0D0D
+            });
+            
+            const sphere = new THREE.SphereGeometry(0.15, 32, 32);
+            const pairs = 30;
+            
+            for(let i = 0; i < pairs; i++) {
+                const t = i / pairs;
+                const angle1 = t * Math.PI * 6;
+                const angle2 = angle1 + Math.PI;
+                const y = t * 8 - 4;
+                const radius = 2.5;
+                
+                const s1 = new THREE.Mesh(sphere, material);
+                s1.position.set(Math.cos(angle1) * radius, y, Math.sin(angle1) * radius);
+                group.add(s1);
+                
+                const s2 = new THREE.Mesh(sphere, material);
+                s2.position.set(Math.cos(angle2) * radius, y, Math.sin(angle2) * radius);
+                group.add(s2);
+                
+                const distance = s1.position.distanceTo(s2.position);
+                const cylinder = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.05, 0.05, distance, 16),
+                    new THREE.MeshPhongMaterial({ 
+                        color: 0xF4E4B4, 
+                        transparent: true, 
+                        opacity: 0.6,
+                        shininess: 150
+                    })
+                );
+                
+                cylinder.position.copy(s1.position).lerp(s2.position, 0.5);
+                cylinder.lookAt(s2.position);
+                cylinder.rotateX(Math.PI / 2);
+                group.add(cylinder);
+            }
+            
+            group.position.set(-5, 0, -3);
+            scene.add(group);
+            objects.push({ obj: group, speed: 0.002, axis: 'y' });
+        }
+        
+        function createBalanza() {
+            const group = new THREE.Group();
+            const gold = new THREE.MeshPhongMaterial({ 
+                color: 0xD4AF37,
+                shininess: 250,
+                specular: 0xffffff,
+                emissive: 0x1A1A1A
+            });
+            
+            // Base ornamentada
+            const base = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.7, 0.9, 0.3, 64),
+                gold
+            );
+            base.position.y = -3;
+            group.add(base);
+            
+            // Detalles en la base
+            for(let i = 0; i < 8; i++) {
+                const angle = (i / 8) * Math.PI * 2;
+                const detail = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.08, 16, 16),
+                    gold
+                );
+                detail.position.set(
+                    Math.cos(angle) * 0.75,
+                    -2.85,
+                    Math.sin(angle) * 0.75
+                );
+                group.add(detail);
+            }
+            
+            // Columna principal
+            const column = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.13, 0.16, 4, 32),
+                gold
+            );
+            column.position.y = -1;
+            group.add(column);
+            
+            // Anillos decorativos
+            for(let i = 0; i < 6; i++) {
+                const ring = new THREE.Mesh(
+                    new THREE.TorusGeometry(0.2, 0.04, 16, 64),
+                    gold
+                );
+                ring.position.y = -2.8 + (i * 0.9);
+                ring.rotation.x = Math.PI / 2;
+                group.add(ring);
+            }
+            
+            // Barra superior
+            const bar = new THREE.Mesh(
+                new THREE.BoxGeometry(4, 0.15, 0.15),
+                gold
+            );
+            bar.position.y = 1.5;
+            group.add(bar);
+            
+            // Platillos con detalles
+            const silver = new THREE.MeshPhongMaterial({ 
+                color: 0xC4C4C4,
+                shininess: 150
+            });
+            
+            [-1.8, 1.8].forEach(x => {
+                const chain = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.03, 0.03, 1.2, 16),
+                    silver
+                );
+                chain.position.set(x, 0.85, 0);
+                group.add(chain);
+                
+                const plate = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.65, 0.6, 0.1, 64),
+                    gold
+                );
+                plate.position.set(x, 0.2, 0);
+                group.add(plate);
+                
+                const rim = new THREE.Mesh(
+                    new THREE.TorusGeometry(0.65, 0.05, 16, 64),
+                    gold
+                );
+                rim.position.set(x, 0.2, 0);
+                rim.rotation.x = Math.PI / 2;
+                group.add(rim);
+            });
+            
+            group.position.set(5, 0, -3);
+            scene.add(group);
+            objects.push({ obj: group, speed: 0.0015, axis: 'y' });
+        }
+        
+        function createGoldRings() {
+            for(let i = 0; i < 12; i++) {
+                const ring = new THREE.Mesh(
+                    new THREE.TorusGeometry(3 + i * 0.4, 0.015, 16, 64),
+                    new THREE.MeshPhongMaterial({
+                        color: 0xD4AF37,
+                        transparent: true,
+                        opacity: 0.1 + (i * 0.015),
+                        shininess: 200
+                    })
+                );
+                ring.rotation.x = Math.random() * Math.PI;
+                ring.rotation.y = Math.random() * Math.PI;
+                scene.add(ring);
+                objects.push({ 
+                    obj: ring, 
+                    speed: 0.0003 + (i * 0.0001), 
+                    axis: Math.random() > 0.5 ? 'x' : 'y' 
+                });
+            }
+        }
+        
+        function createParticles() {
+            const geometry = new THREE.BufferGeometry();
+            const count = 4000;
+            const positions = new Float32Array(count * 3);
+            const colors = new Float32Array(count * 3);
+            
+            for(let i = 0; i < count * 3; i += 3) {
+                positions[i] = (Math.random() - 0.5) * 35;
+                positions[i + 1] = (Math.random() - 0.5) * 35;
+                positions[i + 2] = (Math.random() - 0.5) * 35;
+                
+                const gold = 0.8 + Math.random() * 0.2;
+                colors[i] = gold;
+                colors[i + 1] = gold * 0.69;
+                colors[i + 2] = gold * 0.22;
+            }
+            
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            
+            const material = new THREE.PointsMaterial({
+                size: 0.05,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.7,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+            objects.push({ obj: particles, speed: 0.0002, axis: 'y' });
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const time = Date.now() * 0.0003;
+            
+            objects.forEach(({ obj, speed, axis }) => {
+                if(axis === 'y') {
+                    obj.rotation.y += speed;
+                } else if(axis === 'x') {
+                    obj.rotation.x += speed;
+                }
+                
+                if(obj.position) {
+                    obj.position.y += Math.sin(time + obj.position.x) * 0.0005;
+                }
+            });
+            
+            renderer.render(scene, camera);
+        }
+        
+        window.addEventListener('load', initThree);
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Hero
+        const heroTimeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        heroTimeline
+            .to('.hero-ornament', { opacity: 1, duration: 1, delay: 0.3 })
+            .to('.hero-label', { opacity: 1, duration: 1 }, '-=0.7')
+            .to('.hero h1', { opacity: 1, y: 0, duration: 1.2 }, '-=0.5')
+            .to('.hero .tagline', { opacity: 1, y: 0, duration: 1 }, '-=0.8')
+            .to('.hero .description', { opacity: 1, y: 0, duration: 1 }, '-=0.6')
+            .to('.hero-cta', { opacity: 1, y: 0, duration: 1 }, '-=0.4');
+        
+        // Stats con contadores
+        gsap.utils.toArray('.stat-item').forEach((stat, i) => {
+            gsap.to(stat, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                delay: i * 0.15,
+                scrollTrigger: {
+                    trigger: stat,
+                    start: 'top 85%',
+                    onEnter: () => {
+                        const num = stat.querySelector('[data-target]');
+                        if(num) {
+                            const target = parseInt(num.getAttribute('data-target'));
+                            gsap.to({ val: 0 }, {
+                                val: target,
+                                duration: 2.5,
+                                ease: 'power2.out',
+                                onUpdate: function() {
+                                    num.textContent = Math.floor(this.targets()[0].val);
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        });
+        
+        // Secciones
+        gsap.utils.toArray('.section-label').forEach(el => {
+            gsap.to(el, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                scrollTrigger: { trigger: el, start: 'top 90%' }
+            });
+        });
+        
+        gsap.utils.toArray('.section-title').forEach(el => {
+            gsap.to(el, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                scrollTrigger: { trigger: el, start: 'top 88%' }
+            });
+        });
+        
+        gsap.utils.toArray('.section-subtitle').forEach(el => {
+            gsap.to(el, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                scrollTrigger: { trigger: el, start: 'top 86%' }
+            });
+        });
+        
+        // Especialidades
+        gsap.utils.toArray('.especialidad-item').forEach((el, i) => {
+            gsap.to(el, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                delay: i * 0.1,
+                scrollTrigger: { trigger: el, start: 'top 85%' }
+            });
+        });
+        
+        // Filosofía
+        gsap.utils.toArray('.filosofia-card').forEach((el, i) => {
+            gsap.to(el, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.8,
+                delay: i * 0.15,
+                scrollTrigger: { trigger: el, start: 'top 85%' }
+            });
+        });
+        
+        // Proceso
+        gsap.utils.toArray('.proceso-step').forEach((el, i) => {
+            gsap.to(el, {
+                opacity: 1,
+                x: 0,
+                y: 0,
+                duration: 1,
+                scrollTrigger: { trigger: el, start: 'top 80%' }
+            });
+        });
+        
+        // Equipo
+        gsap.utils.toArray('.equipo-card').forEach((el, i) => {
+            gsap.to(el, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                delay: i * 0.15,
+                scrollTrigger: { trigger: el, start: 'top 85%' }
+            });
+        });
+        
+        // Testimonios
+        gsap.utils.toArray('.testimonio').forEach((el, i) => {
+            gsap.to(el, {
+                opacity: 1,
+                x: 0,
+                duration: 1,
+                delay: i * 0.2,
+                scrollTrigger: { trigger: el, start: 'top 85%' }
+            });
+        });
+        
+        // Contacto
+        gsap.utils.toArray('.info-item').forEach((el, i) => {
+            gsap.to(el, {
+                opacity: 1,
+                x: 0,
+                duration: 0.8,
+                delay: i * 0.1,
+                scrollTrigger: { trigger: el, start: 'top 88%' }
+            });
+        });
+        
+        gsap.to('.contacto-form', {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            scrollTrigger: { trigger: '.contacto-form', start: 'top 88%' }
+        });
+        
+        // Header scroll
+        ScrollTrigger.create({
+            start: 'top -80',
+            end: 99999,
+            toggleClass: { className: 'scrolled', targets: 'header' }
+        });
+        
+        // Parallax hero
+        gsap.to('.hero-content', {
+            y: 400,
+            opacity: 0.2,
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1.5
+            }
+        });
+        
+        // Scroll to top
+        const scrollTop = document.querySelector('.scroll-top');
+        window.addEventListener('scroll', () => {
+            scrollTop.classList.toggle('visible', window.pageYOffset > 600);
+        });
+        
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if(target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        
+        // Form
+        function handleSubmit(e) {
+            e.preventDefault();
+            const data = new FormData(e.target);
+            const nombre = data.get('nombre');
+            alert(`Dear ${nombre},\n\nYour confidential consultation request has been received.\n\nA senior partner will contact you within 24 hours via your provided phone number.\n\nFor immediate emergencies, please call our 24/7 hotline:\n+57 (310) 500-0000\n\n— MediLex Legal Team`);
+            e.target.reset();
+        }
+    </script>
 </body>
 </html>
-
-
-
