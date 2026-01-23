@@ -1069,4 +1069,25 @@ img[alt="Astronaut UX"] {
 
         }
 
-/* ---------------------------- CODIGO DE GRID EN PANTALLA DE COMPETENCIAS METODOLOGICAS ----------------------*/
+/* ---------------------------- CODIGO DE ANIMACIONES DE DESARROLLO E INNOVACIONES ----------------------*/
+
+@keyframes slideInFromBottom {
+    0% {
+      opacity: 0;
+      transform: translateY(50px) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .web-preview-card {
+    animation: slideInFromBottom 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  .web-preview-card:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
