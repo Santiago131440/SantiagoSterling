@@ -648,3 +648,17 @@ Proyectos destacados:
     }
   }
 })();
+
+
+// -------------------------------COMPETENCIAS METODOLOGICAS ------------------------
+  function expandWebPreview(element) {
+    const url = element.getAttribute('data-url');
+
+    if (!url) return;
+
+    // Abre en la misma pestaña
+    window.location.href = url;
+
+    // Si prefieres abrir en nueva pestaña, usa esta línea en su lugar:
+    // window.open(url, '_blank', 'noopener,noreferrer');
+  }
