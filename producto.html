@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Red Pericial</title>
+    <title>Red Pericial - Medical Legal Excellence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Crimson+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300;1,400&family=Italiana&family=Cinzel:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -19,11 +19,14 @@
             --pearl: #E8E6E1;
             --smoke: #C4C4C4;
             --shadow: rgba(13, 13, 13, 0.8);
+            --medical-blue: #1E90FF;
+            --medical-red: #DC143C;
         }
 
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         ::selection {
@@ -41,7 +44,6 @@
             font-weight: 300;
         }
 
-        /* Cursor personalizado de lujo */
         body {
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2" fill="%23D4AF37"/><circle cx="12" cy="12" r="6" fill="none" stroke="%23D4AF37" stroke-width="0.5"/></svg>') 12 12, auto;
         }
@@ -50,7 +52,103 @@
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="%23D4AF37"/></svg>') 12 12, pointer;
         }
 
-        /* Header Supremo */
+        /* Story Progress Bar */
+        .story-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--medical-blue));
+            z-index: 10000;
+            transition: width 0.1s ease;
+        }
+
+        /* Chapter Navigation */
+        .chapter-nav {
+            position: fixed;
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .chapter-dot {
+            width: 12px;
+            height: 12px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            background: transparent;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .chapter-dot.active {
+            background: var(--gold);
+            box-shadow: 0 0 20px var(--gold);
+        }
+
+        .chapter-dot:hover::after {
+            content: attr(data-chapter);
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--noir);
+            color: var(--gold);
+            padding: 8px 15px;
+            border-radius: 5px;
+            white-space: nowrap;
+            font-size: 12px;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.1em;
+        }
+
+        /* Story Transitions */
+        .story-transition {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--noir);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .transition-content {
+            text-align: center;
+            color: var(--gold);
+            padding: 4rem;
+        }
+
+        .transition-number {
+            font-family: 'Cinzel', serif;
+            font-size: 15rem;
+            font-weight: 200;
+            opacity: 0.1;
+            line-height: 1;
+            margin-bottom: 2rem;
+        }
+
+        .transition-title {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .transition-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            color: var(--pearl);
+        }
+
         header {
             position: fixed;
             top: 0;
@@ -160,7 +258,6 @@
             transform: translateX(-50%) scaleX(1);
         }
 
-        /* Hero Majestuoso */
         .hero {
             position: relative;
             height: 100vh;
@@ -180,7 +277,7 @@
             bottom: 0;
             background: 
                 radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 70% 50%, rgba(212, 175, 55, 0.02) 0%, transparent 50%);
+                radial-gradient(circle at 70% 50%, rgba(30, 144, 255, 0.02) 0%, transparent 50%);
             background-size: 100% 100%;
             animation: breathe 20s ease-in-out infinite;
         }
@@ -367,7 +464,6 @@
             transform: translateY(-3px);
         }
 
-        /* Línea decorativa */
         .section-divider {
             width: 150px;
             height: 1px;
@@ -388,7 +484,6 @@
             padding: 0 1rem;
         }
 
-        /* Secciones Premium */
         section {
             padding: 10rem 10%;
             max-width: 1800px;
@@ -453,7 +548,6 @@
             line-height: 1.8;
         }
 
-        /* Estadísticas Supremas */
         .stats-section {
             background: linear-gradient(135deg, var(--noir) 0%, var(--midnight) 50%, var(--charcoal) 100%);
             color: white;
@@ -471,7 +565,7 @@
             bottom: 0;
             background: 
                 radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.04) 0%, transparent 50%);
+                radial-gradient(circle at 80% 70%, rgba(30, 144, 255, 0.04) 0%, transparent 50%);
             animation: float 30s ease-in-out infinite;
         }
 
@@ -540,7 +634,6 @@
             font-weight: 300;
         }
 
-        /* Especialidades de Lujo */
         .especialidades {
             background: var(--cream);
         }
@@ -661,7 +754,6 @@
             font-weight: 300;
         }
 
-        /* Filosofía */
         .filosofia {
             background: var(--charcoal);
             color: white;
@@ -746,7 +838,6 @@
             font-weight: 300;
         }
 
-        /* Proceso Timeline Elegante */
         .proceso {
             background: white;
         }
@@ -859,7 +950,6 @@
             /* Espacio vacío para mantener la estructura */
         }
 
-        /* Equipo Elite */
         .equipo {
             background: linear-gradient(135deg, var(--midnight) 0%, var(--noir) 100%);
             color: white;
@@ -876,7 +966,7 @@
             bottom: 0;
             background: 
                 radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 70% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 70% 50%, rgba(30, 144, 255, 0.05) 0%, transparent 50%);
         }
 
         .equipo .section-title,
@@ -997,7 +1087,6 @@
             font-weight: 300;
         }
 
-        /* Testimonios de Lujo */
         .testimonios {
             background: var(--cream);
         }
@@ -1086,7 +1175,6 @@
             font-style: italic;
         }
 
-        /* Contacto Premium */
         .contacto {
             background: white;
         }
@@ -1218,7 +1306,6 @@
             left: 100%;
         }
 
-        /* Footer Elegante */
         footer {
             background: var(--noir);
             color: var(--pearl);
@@ -1309,7 +1396,6 @@
             margin-bottom: 1rem;
         }
 
-        /* Scroll to top */
         .scroll-top {
             position: fixed;
             bottom: 50px;
@@ -1340,7 +1426,6 @@
             transform: translateY(-5px);
         }
 
-        /* Responsive */
         @media (max-width: 1200px) {
             .hero h1 {
                 font-size: 5rem;
@@ -1381,6 +1466,18 @@
             .footer-brand {
                 grid-column: 1 / -1;
                 max-width: 100%;
+            }
+
+            .chapter-nav {
+                display: none;
+            }
+
+            .transition-number {
+                font-size: 8rem;
+            }
+
+            .transition-title {
+                font-size: 2.5rem;
             }
         }
 
@@ -1467,6 +1564,21 @@
     </style>
 </head>
 <body>
+    <!-- Story Progress Bar -->
+    <div class="story-progress"></div>
+
+    <!-- Chapter Navigation -->
+    <div class="chapter-nav">
+        <div class="chapter-dot" data-chapter="Inicio"></div>
+        <div class="chapter-dot" data-chapter="Logros"></div>
+        <div class="chapter-dot" data-chapter="Expertise"></div>
+        <div class="chapter-dot" data-chapter="Filosofía"></div>
+        <div class="chapter-dot" data-chapter="Proceso"></div>
+        <div class="chapter-dot" data-chapter="Equipo"></div>
+        <div class="chapter-dot" data-chapter="Testimonios"></div>
+        <div class="chapter-dot" data-chapter="Contacto"></div>
+    </div>
+
     <!-- Scroll to top -->
     <div class="scroll-top" onclick="scrollToTop()">↑</div>
 
@@ -1513,6 +1625,15 @@
         </div>
     </section>
 
+    <!-- Transition 1 -->
+    <div class="story-transition">
+        <div class="transition-content">
+            <div class="transition-number">01</div>
+            <div class="transition-title">TWO DECADES</div>
+            <div class="transition-subtitle">Of Unwavering Excellence</div>
+        </div>
+    </div>
+
     <!-- Stats -->
     <section class="stats-section">
         <div class="stats-grid">
@@ -1534,6 +1655,15 @@
             </div>
         </div>
     </section>
+
+    <!-- Transition 2 -->
+    <div class="story-transition">
+        <div class="transition-content">
+            <div class="transition-number">02</div>
+            <div class="transition-title">SPECIALIZED</div>
+            <div class="transition-subtitle">Comprehensive Legal Defense</div>
+        </div>
+    </div>
 
     <!-- Especialidades -->
     <section class="especialidades" id="expertise">
@@ -1622,6 +1752,15 @@
         </div>
     </section>
 
+    <!-- Transition 3 -->
+    <div class="story-transition">
+        <div class="transition-content">
+            <div class="transition-number">03</div>
+            <div class="transition-title">PHILOSOPHY</div>
+            <div class="transition-subtitle">Three Pillars of Excellence</div>
+        </div>
+    </div>
+
     <!-- Filosofía -->
     <section class="filosofia">
         <div class="section-header">
@@ -1651,6 +1790,15 @@
             </div>
         </div>
     </section>
+
+    <!-- Transition 4 -->
+    <div class="story-transition">
+        <div class="transition-content">
+            <div class="transition-number">04</div>
+            <div class="transition-title">METHODOLOGY</div>
+            <div class="transition-subtitle">Systematized Defense Process</div>
+        </div>
+    </div>
 
     <!-- Proceso -->
     <section class="proceso" id="proceso">
@@ -1718,6 +1866,15 @@
         </div>
     </section>
 
+    <!-- Transition 5 -->
+    <div class="story-transition">
+        <div class="transition-content">
+            <div class="transition-number">05</div>
+            <div class="transition-title">LEADERSHIP</div>
+            <div class="transition-subtitle">Physician-Attorney Excellence</div>
+        </div>
+    </div>
+
     <!-- Equipo -->
     <section class="equipo" id="equipo">
         <div class="section-header">
@@ -1768,6 +1925,15 @@
             </div>
         </div>
     </section>
+
+    <!-- Transition 6 -->
+    <div class="story-transition">
+        <div class="transition-content">
+            <div class="transition-number">06</div>
+            <div class="transition-title">TESTIMONIALS</div>
+            <div class="transition-subtitle">In Their Own Words</div>
+        </div>
+    </div>
 
     <!-- Testimonios -->
     <section class="testimonios" id="testimonios">
@@ -1979,266 +2145,407 @@
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     
     <script>
-        // Three.js Scene
+        // ============================================
+        // THREE.JS - MEDICAL 3D SCENE
+        // ============================================
         let scene, camera, renderer, objects = [];
 
         function initThree() {
             const canvas = document.getElementById('canvas-3d');
             scene = new THREE.Scene();
-            scene.fog = new THREE.Fog(0x0a1628, 8, 25);
+            scene.fog = new THREE.Fog(0x0a1628, 10, 30);
             
             camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 12;
+            camera.position.z = 15;
             
             renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setClearColor(0x000000, 0);
             
-            // Luces de galería
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+            // Iluminación médica profesional
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
             scene.add(ambientLight);
             
-            const spotLight1 = new THREE.SpotLight(0xD4AF37, 4);
-            spotLight1.position.set(10, 15, 10);
-            spotLight1.angle = Math.PI / 6;
-            spotLight1.penumbra = 0.3;
-            scene.add(spotLight1);
+            const mainSpot = new THREE.SpotLight(0xD4AF37, 5);
+            mainSpot.position.set(12, 18, 12);
+            mainSpot.angle = Math.PI / 5;
+            mainSpot.penumbra = 0.2;
+            scene.add(mainSpot);
             
-            const spotLight2 = new THREE.SpotLight(0xF4E4B4, 3);
-            spotLight2.position.set(-10, 10, 8);
-            spotLight2.angle = Math.PI / 7;
-            spotLight2.penumbra = 0.4;
-            scene.add(spotLight2);
+            const blueSpot = new THREE.SpotLight(0x1E90FF, 3);
+            blueSpot.position.set(-12, 12, 10);
+            blueSpot.angle = Math.PI / 6;
+            blueSpot.penumbra = 0.3;
+            scene.add(blueSpot);
             
-            const pointLight = new THREE.PointLight(0xD4AF37, 2, 50);
-            pointLight.position.set(0, 5, 8);
-            scene.add(pointLight);
+            const redPoint = new THREE.PointLight(0xDC143C, 1.5, 40);
+            redPoint.position.set(0, 8, 10);
+            scene.add(redPoint);
             
-            // Crear elementos 3D de lujo
-            createDNA();
-            createBalanza();
-            createGoldRings();
-            createParticles();
+            // Crear elementos médicos 3D
+            createDNAHelix();
+            createHeartbeat();
+            createMedicalCross();
+            createNeurons();
+            createMolecules();
+            createStethoscope();
+            createMedicalParticles();
             
             animate();
         }
         
-        function createDNA() {
+        // ADN Helix con colores médicos
+        function createDNAHelix() {
             const group = new THREE.Group();
-            const material = new THREE.MeshPhongMaterial({ 
-                color: 0xD4AF37,
-                shininess: 200,
-                specular: 0xffffff,
-                emissive: 0x0D0D0D
-            });
-            
-            const sphere = new THREE.SphereGeometry(0.15, 32, 32);
-            const pairs = 30;
-            
-            for(let i = 0; i < pairs; i++) {
-                const t = i / pairs;
-                const angle1 = t * Math.PI * 6;
-                const angle2 = angle1 + Math.PI;
-                const y = t * 8 - 4;
-                const radius = 2.5;
-                
-                const s1 = new THREE.Mesh(sphere, material);
-                s1.position.set(Math.cos(angle1) * radius, y, Math.sin(angle1) * radius);
-                group.add(s1);
-                
-                const s2 = new THREE.Mesh(sphere, material);
-                s2.position.set(Math.cos(angle2) * radius, y, Math.sin(angle2) * radius);
-                group.add(s2);
-                
-                const distance = s1.position.distanceTo(s2.position);
-                const cylinder = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.05, 0.05, distance, 16),
-                    new THREE.MeshPhongMaterial({ 
-                        color: 0xF4E4B4, 
-                        transparent: true, 
-                        opacity: 0.6,
-                        shininess: 150
-                    })
-                );
-                
-                cylinder.position.copy(s1.position).lerp(s2.position, 0.5);
-                cylinder.lookAt(s2.position);
-                cylinder.rotateX(Math.PI / 2);
-                group.add(cylinder);
-            }
-            
-            group.position.set(-5, 0, -3);
-            scene.add(group);
-            objects.push({ obj: group, speed: 0.002, axis: 'y' });
-        }
-        
-        function createBalanza() {
-            const group = new THREE.Group();
-            const gold = new THREE.MeshPhongMaterial({ 
+            const goldMat = new THREE.MeshPhongMaterial({ 
                 color: 0xD4AF37,
                 shininess: 250,
                 specular: 0xffffff,
                 emissive: 0x1A1A1A
             });
             
-            // Base ornamentada
-            const base = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.7, 0.9, 0.3, 64),
-                gold
-            );
-            base.position.y = -3;
-            group.add(base);
+            const blueMat = new THREE.MeshPhongMaterial({ 
+                color: 0x1E90FF,
+                shininess: 200,
+                specular: 0xffffff,
+                transparent: true,
+                opacity: 0.9
+            });
             
-            // Detalles en la base
-            for(let i = 0; i < 8; i++) {
-                const angle = (i / 8) * Math.PI * 2;
-                const detail = new THREE.Mesh(
-                    new THREE.SphereGeometry(0.08, 16, 16),
-                    gold
-                );
-                detail.position.set(
-                    Math.cos(angle) * 0.75,
-                    -2.85,
-                    Math.sin(angle) * 0.75
-                );
-                group.add(detail);
+            const sphere = new THREE.SphereGeometry(0.12, 24, 24);
+            const pairs = 40;
+            
+            for(let i = 0; i < pairs; i++) {
+                const t = i / pairs;
+                const angle1 = t * Math.PI * 8;
+                const angle2 = angle1 + Math.PI;
+                const y = t * 10 - 5;
+                const radius = 2.2;
+                
+                const s1 = new THREE.Mesh(sphere, goldMat);
+                s1.position.set(Math.cos(angle1) * radius, y, Math.sin(angle1) * radius);
+                group.add(s1);
+                
+                const s2 = new THREE.Mesh(sphere, blueMat);
+                s2.position.set(Math.cos(angle2) * radius, y, Math.sin(angle2) * radius);
+                group.add(s2);
+                
+                if(i % 3 === 0) {
+                    const distance = s1.position.distanceTo(s2.position);
+                    const cylinder = new THREE.Mesh(
+                        new THREE.CylinderGeometry(0.04, 0.04, distance, 12),
+                        new THREE.MeshPhongMaterial({ 
+                            color: 0xF4E4B4, 
+                            transparent: true, 
+                            opacity: 0.5
+                        })
+                    );
+                    
+                    cylinder.position.copy(s1.position).lerp(s2.position, 0.5);
+                    cylinder.lookAt(s2.position);
+                    cylinder.rotateX(Math.PI / 2);
+                    group.add(cylinder);
+                }
             }
             
-            // Columna principal
-            const column = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.13, 0.16, 4, 32),
-                gold
-            );
-            column.position.y = -1;
-            group.add(column);
+            group.position.set(-6, 0, -4);
+            scene.add(group);
+            objects.push({ obj: group, speed: 0.003, axis: 'y' });
+        }
+        
+        // Corazón pulsante
+        function createHeartbeat() {
+            const group = new THREE.Group();
+            const redMat = new THREE.MeshPhongMaterial({ 
+                color: 0xDC143C,
+                shininess: 200,
+                emissive: 0x330000,
+                transparent: true,
+                opacity: 0.85
+            });
             
-            // Anillos decorativos
-            for(let i = 0; i < 6; i++) {
-                const ring = new THREE.Mesh(
-                    new THREE.TorusGeometry(0.2, 0.04, 16, 64),
-                    gold
-                );
-                ring.position.y = -2.8 + (i * 0.9);
-                ring.rotation.x = Math.PI / 2;
-                group.add(ring);
+            const heartSphere = new THREE.SphereGeometry(0.8, 32, 32);
+            
+            const left = new THREE.Mesh(heartSphere, redMat);
+            left.position.set(-0.4, 0.3, 0);
+            left.scale.set(1, 1.1, 0.9);
+            group.add(left);
+            
+            const right = new THREE.Mesh(heartSphere, redMat);
+            right.position.set(0.4, 0.3, 0);
+            right.scale.set(1, 1.1, 0.9);
+            group.add(right);
+            
+            const bottom = new THREE.Mesh(
+                new THREE.SphereGeometry(1, 32, 32),
+                redMat
+            );
+            bottom.position.set(0, -0.5, 0);
+            bottom.scale.set(0.8, 1, 0.8);
+            group.add(bottom);
+            
+            // Línea ECG
+            const ecgPoints = [];
+            for(let i = 0; i < 100; i++) {
+                const angle = (i / 100) * Math.PI * 2;
+                const x = Math.cos(angle) * 2;
+                const y = Math.sin(angle) * 2;
+                const z = Math.sin(i * 0.5) * 0.3;
+                ecgPoints.push(new THREE.Vector3(x, y, z));
             }
             
-            // Barra superior
-            const bar = new THREE.Mesh(
-                new THREE.BoxGeometry(4, 0.15, 0.15),
-                gold
+            const ecgGeometry = new THREE.BufferGeometry().setFromPoints(ecgPoints);
+            const ecgLine = new THREE.Line(
+                ecgGeometry,
+                new THREE.LineBasicMaterial({ color: 0xD4AF37, linewidth: 2 })
             );
-            bar.position.y = 1.5;
-            group.add(bar);
+            group.add(ecgLine);
             
-            // Platillos con detalles
-            const silver = new THREE.MeshPhongMaterial({ 
-                color: 0xC4C4C4,
+            group.position.set(6, 0, -3);
+            group.scale.set(0.7, 0.7, 0.7);
+            scene.add(group);
+            objects.push({ obj: group, speed: 0.002, axis: 'y', pulse: true });
+        }
+        
+        // Cruz Médica 3D
+        function createMedicalCross() {
+            const group = new THREE.Group();
+            const goldMat = new THREE.MeshPhongMaterial({ 
+                color: 0xD4AF37,
+                shininess: 300,
+                specular: 0xffffff
+            });
+            
+            const vertical = new THREE.Mesh(
+                new THREE.BoxGeometry(0.5, 3, 0.5),
+                goldMat
+            );
+            group.add(vertical);
+            
+            const horizontal = new THREE.Mesh(
+                new THREE.BoxGeometry(3, 0.5, 0.5),
+                goldMat
+            );
+            group.add(horizontal);
+            
+            const ring = new THREE.Mesh(
+                new THREE.TorusGeometry(2.5, 0.08, 16, 64),
+                new THREE.MeshPhongMaterial({ 
+                    color: 0x1E90FF,
+                    transparent: true,
+                    opacity: 0.4
+                })
+            );
+            group.add(ring);
+            
+            group.position.set(0, 2, -6);
+            scene.add(group);
+            objects.push({ obj: group, speed: 0.001, axis: 'z' });
+        }
+        
+        // Red neuronal
+        function createNeurons() {
+            const group = new THREE.Group();
+            const neuronMat = new THREE.MeshPhongMaterial({ 
+                color: 0xF4E4B4,
                 shininess: 150
             });
             
-            [-1.8, 1.8].forEach(x => {
-                const chain = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.03, 0.03, 1.2, 16),
-                    silver
+            const neurons = [];
+            for(let i = 0; i < 25; i++) {
+                const neuron = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.15, 16, 16),
+                    neuronMat
                 );
-                chain.position.set(x, 0.85, 0);
-                group.add(chain);
                 
-                const plate = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.65, 0.6, 0.1, 64),
-                    gold
+                neuron.position.set(
+                    (Math.random() - 0.5) * 8,
+                    (Math.random() - 0.5) * 8,
+                    (Math.random() - 0.5) * 4
                 );
-                plate.position.set(x, 0.2, 0);
-                group.add(plate);
                 
-                const rim = new THREE.Mesh(
-                    new THREE.TorusGeometry(0.65, 0.05, 16, 64),
-                    gold
-                );
-                rim.position.set(x, 0.2, 0);
-                rim.rotation.x = Math.PI / 2;
-                group.add(rim);
+                group.add(neuron);
+                neurons.push(neuron);
+            }
+            
+            const connectionMat = new THREE.LineBasicMaterial({ 
+                color: 0x1E90FF,
+                transparent: true,
+                opacity: 0.3
             });
             
-            group.position.set(5, 0, -3);
+            for(let i = 0; i < neurons.length; i++) {
+                for(let j = i + 1; j < neurons.length; j++) {
+                    if(neurons[i].position.distanceTo(neurons[j].position) < 3) {
+                        const points = [neurons[i].position, neurons[j].position];
+                        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                        const line = new THREE.Line(geometry, connectionMat);
+                        group.add(line);
+                    }
+                }
+            }
+            
+            group.position.set(-4, -3, -5);
             scene.add(group);
-            objects.push({ obj: group, speed: 0.0015, axis: 'y' });
+            objects.push({ obj: group, speed: 0.0015, axis: 'x' });
         }
         
-        function createGoldRings() {
-            for(let i = 0; i < 12; i++) {
-                const ring = new THREE.Mesh(
-                    new THREE.TorusGeometry(3 + i * 0.4, 0.015, 16, 64),
-                    new THREE.MeshPhongMaterial({
+        // Moléculas flotantes
+        function createMolecules() {
+            const group = new THREE.Group();
+            
+            for(let i = 0; i < 15; i++) {
+                const moleculeGroup = new THREE.Group();
+                
+                const center = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.2, 16, 16),
+                    new THREE.MeshPhongMaterial({ 
                         color: 0xD4AF37,
-                        transparent: true,
-                        opacity: 0.1 + (i * 0.015),
                         shininess: 200
                     })
                 );
-                ring.rotation.x = Math.random() * Math.PI;
-                ring.rotation.y = Math.random() * Math.PI;
-                scene.add(ring);
-                objects.push({ 
-                    obj: ring, 
-                    speed: 0.0003 + (i * 0.0001), 
-                    axis: Math.random() > 0.5 ? 'x' : 'y' 
-                });
+                moleculeGroup.add(center);
+                
+                for(let j = 0; j < 3; j++) {
+                    const electron = new THREE.Mesh(
+                        new THREE.SphereGeometry(0.08, 12, 12),
+                        new THREE.MeshPhongMaterial({ 
+                            color: 0x1E90FF
+                        })
+                    );
+                    
+                    const angle = (j / 3) * Math.PI * 2;
+                    electron.position.set(
+                        Math.cos(angle) * 0.5,
+                        Math.sin(angle) * 0.5,
+                        0
+                    );
+                    moleculeGroup.add(electron);
+                }
+                
+                moleculeGroup.position.set(
+                    (Math.random() - 0.5) * 20,
+                    (Math.random() - 0.5) * 20,
+                    (Math.random() - 0.5) * 10
+                );
+                
+                group.add(moleculeGroup);
             }
+            
+            scene.add(group);
+            objects.push({ obj: group, speed: 0.001, axis: 'y' });
         }
         
-        function createParticles() {
+        // Estetoscopio abstracto
+        function createStethoscope() {
+            const group = new THREE.Group();
+            const metalMat = new THREE.MeshPhongMaterial({ 
+                color: 0xC4C4C4,
+                shininess: 250
+            });
+            
+            const curve = new THREE.CatmullRomCurve3([
+                new THREE.Vector3(-1, 1.5, 0),
+                new THREE.Vector3(-0.5, 0.5, 0),
+                new THREE.Vector3(0, 0, 0),
+                new THREE.Vector3(0.5, 0.5, 0),
+                new THREE.Vector3(1, 1.5, 0)
+            ]);
+            
+            const tubeGeometry = new THREE.TubeGeometry(curve, 64, 0.08, 12, false);
+            const tube = new THREE.Mesh(tubeGeometry, metalMat);
+            group.add(tube);
+            
+            const bell = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.4, 0.3, 0.3, 32),
+                new THREE.MeshPhongMaterial({ 
+                    color: 0xD4AF37,
+                    shininess: 300
+                })
+            );
+            bell.position.y = -0.5;
+            group.add(bell);
+            
+            group.position.set(4, -2, -4);
+            group.rotation.z = Math.PI / 6;
+            scene.add(group);
+            objects.push({ obj: group, speed: 0.0008, axis: 'y' });
+        }
+        
+        // Partículas médicas
+        function createMedicalParticles() {
             const geometry = new THREE.BufferGeometry();
-            const count = 4000;
+            const count = 5000;
             const positions = new Float32Array(count * 3);
             const colors = new Float32Array(count * 3);
             
             for(let i = 0; i < count * 3; i += 3) {
-                positions[i] = (Math.random() - 0.5) * 35;
-                positions[i + 1] = (Math.random() - 0.5) * 35;
-                positions[i + 2] = (Math.random() - 0.5) * 35;
+                positions[i] = (Math.random() - 0.5) * 40;
+                positions[i + 1] = (Math.random() - 0.5) * 40;
+                positions[i + 2] = (Math.random() - 0.5) * 40;
                 
-                const gold = 0.8 + Math.random() * 0.2;
-                colors[i] = gold;
-                colors[i + 1] = gold * 0.69;
-                colors[i + 2] = gold * 0.22;
+                const colorChoice = Math.random();
+                if(colorChoice < 0.5) {
+                    colors[i] = 0.83;
+                    colors[i + 1] = 0.69;
+                    colors[i + 2] = 0.22;
+                } else if(colorChoice < 0.8) {
+                    colors[i] = 0.12;
+                    colors[i + 1] = 0.56;
+                    colors[i + 2] = 1;
+                } else {
+                    colors[i] = 0.86;
+                    colors[i + 1] = 0.08;
+                    colors[i + 2] = 0.24;
+                }
             }
             
             geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
             geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
             
             const material = new THREE.PointsMaterial({
-                size: 0.05,
+                size: 0.06,
                 vertexColors: true,
                 transparent: true,
-                opacity: 0.7,
+                opacity: 0.8,
                 blending: THREE.AdditiveBlending
             });
             
             const particles = new THREE.Points(geometry, material);
             scene.add(particles);
-            objects.push({ obj: particles, speed: 0.0002, axis: 'y' });
+            objects.push({ obj: particles, speed: 0.0003, axis: 'y' });
         }
         
+        // Animación
         function animate() {
             requestAnimationFrame(animate);
             
-            const time = Date.now() * 0.0003;
+            const time = Date.now() * 0.0005;
             
-            objects.forEach(({ obj, speed, axis }) => {
+            objects.forEach(({ obj, speed, axis, pulse }) => {
                 if(axis === 'y') {
                     obj.rotation.y += speed;
                 } else if(axis === 'x') {
                     obj.rotation.x += speed;
+                } else if(axis === 'z') {
+                    obj.rotation.z += speed;
+                }
+                
+                if(pulse) {
+                    const scale = 1 + Math.sin(time * 3) * 0.1;
+                    obj.scale.set(scale * 0.7, scale * 0.7, scale * 0.7);
                 }
                 
                 if(obj.position) {
-                    obj.position.y += Math.sin(time + obj.position.x) * 0.0005;
+                    obj.position.y += Math.sin(time + obj.position.x) * 0.001;
                 }
             });
+            
+            camera.position.x = Math.sin(time * 0.1) * 2;
+            camera.lookAt(scene.position);
             
             renderer.render(scene, camera);
         }
@@ -2250,10 +2557,66 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
         
-        // GSAP Animations
-        gsap.registerPlugin(ScrollTrigger);
+        // ============================================
+        // GSAP STORYTELLING ANIMATIONS
+        // ============================================
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
         
-        // Hero
+        // Progress Bar
+        gsap.to('.story-progress', {
+            width: '100%',
+            ease: 'none',
+            scrollTrigger: {
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 0.3
+            }
+        });
+        
+        // Chapter Navigation
+        const chapters = [
+            { element: '.hero', index: 0 },
+            { element: '.stats-section', index: 1 },
+            { element: '.especialidades', index: 2 },
+            { element: '.filosofia', index: 3 },
+            { element: '.proceso', index: 4 },
+            { element: '.equipo', index: 5 },
+            { element: '.testimonios', index: 6 },
+            { element: '.contacto', index: 7 }
+        ];
+        
+        chapters.forEach(chapter => {
+            ScrollTrigger.create({
+                trigger: chapter.element,
+                start: 'top center',
+                end: 'bottom center',
+                onEnter: () => updateChapterNav(chapter.index),
+                onEnterBack: () => updateChapterNav(chapter.index)
+            });
+        });
+        
+        function updateChapterNav(index) {
+            document.querySelectorAll('.chapter-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+        
+        document.querySelectorAll('.chapter-dot').forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                const chapter = chapters[i];
+                const target = document.querySelector(chapter.element);
+                if(target) {
+                    gsap.to(window, {
+                        duration: 1.5,
+                        scrollTo: { y: target, offsetY: 100 },
+                        ease: 'power2.inOut'
+                    });
+                }
+            });
+        });
+        
+        // Hero Entrance
         const heroTimeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
         heroTimeline
             .to('.hero-ornament', { opacity: 1, duration: 1, delay: 0.3 })
@@ -2262,6 +2625,28 @@
             .to('.hero .tagline', { opacity: 1, y: 0, duration: 1 }, '-=0.8')
             .to('.hero .description', { opacity: 1, y: 0, duration: 1 }, '-=0.6')
             .to('.hero-cta', { opacity: 1, y: 0, duration: 1 }, '-=0.4');
+        
+        // Story Transitions
+        gsap.utils.toArray('.story-transition').forEach((transition) => {
+            const number = transition.querySelector('.transition-number');
+            const title = transition.querySelector('.transition-title');
+            const subtitle = transition.querySelector('.transition-subtitle');
+            
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: transition,
+                    start: 'top center',
+                    end: 'bottom center',
+                    scrub: 1
+                }
+            });
+            
+            tl.fromTo(transition, { opacity: 0 }, { opacity: 1, duration: 0.5 })
+              .fromTo(number, { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 0.1, duration: 1 }, 0.2)
+              .fromTo(title, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, 0.4)
+              .fromTo(subtitle, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, 0.6)
+              .to(transition, { opacity: 0, duration: 0.5 }, 1.5);
+        });
         
         // Stats con contadores
         gsap.utils.toArray('.stat-item').forEach((stat, i) => {
@@ -2319,6 +2704,20 @@
             });
         });
         
+        // Parallax en números
+        gsap.utils.toArray('.section-number').forEach(el => {
+            gsap.to(el, {
+                y: 100,
+                opacity: 0.03,
+                scrollTrigger: {
+                    trigger: el.parentElement,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 1
+                }
+            });
+        });
+        
         // Especialidades
         gsap.utils.toArray('.especialidad-item').forEach((el, i) => {
             gsap.to(el, {
@@ -2342,7 +2741,19 @@
         });
         
         // Proceso
-        gsap.utils.toArray('.proceso-step').forEach((el, i) => {
+        gsap.fromTo('.proceso-line',
+            { scaleY: 0, transformOrigin: 'top' },
+            {
+                scaleY: 1,
+                duration: 2,
+                scrollTrigger: {
+                    trigger: '.proceso-container',
+                    start: 'top 60%'
+                }
+            }
+        );
+        
+        gsap.utils.toArray('.proceso-step').forEach((el) => {
             gsap.to(el, {
                 opacity: 1,
                 x: 0,
@@ -2411,6 +2822,31 @@
             }
         });
         
+        gsap.to('#canvas-3d', {
+            y: 300,
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 2
+            }
+        });
+        
+        // Mouse parallax
+        const heroSection = document.querySelector('.hero');
+        if(heroSection) {
+            heroSection.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
+                gsap.to('.hero-content', {
+                    x: x,
+                    y: y,
+                    duration: 1,
+                    ease: 'power2.out'
+                });
+            });
+        }
+        
         // Scroll to top
         const scrollTop = document.querySelector('.scroll-top');
         window.addEventListener('scroll', () => {
@@ -2418,7 +2854,7 @@
         });
         
         function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            gsap.to(window, { duration: 1.5, scrollTo: 0, ease: 'power2.inOut' });
         }
         
         // Smooth scroll
@@ -2427,7 +2863,11 @@
                 e.preventDefault();
                 const target = document.querySelector(a.getAttribute('href'));
                 if(target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    gsap.to(window, {
+                        duration: 1.5,
+                        scrollTo: { y: target, offsetY: 100 },
+                        ease: 'power2.inOut'
+                    });
                 }
             });
         });
@@ -2437,10 +2877,20 @@
             e.preventDefault();
             const data = new FormData(e.target);
             const nombre = data.get('nombre');
-            alert(`Dear ${nombre},\n\nYour confidential consultation request has been received.\n\nA senior partner will contact you within 24 hours via your provided phone number.\n\nFor immediate emergencies, please call our 24/7 hotline:\n+57 (310) 500-0000\n\n— MediLex Legal Team`);
-            e.target.reset();
+            
+            gsap.timeline()
+                .to('.contacto-form', { scale: 0.97, duration: 0.15 })
+                .to('.contacto-form', { scale: 1.02, duration: 0.15 })
+                .to('.contacto-form', {
+                    scale: 1,
+                    duration: 0.2,
+                    onComplete: () => {
+                        alert(`Dear ${nombre},\n\nYour confidential consultation request has been received.\n\nA senior partner will contact you within 24 hours via your provided phone number.\n\nFor immediate emergencies, please call our 24/7 hotline:\n+57 (310) 500-0000\n\n— MediLex Legal Team`);
+                        e.target.reset();
+                    }
+                });
         }
+        
     </script>
 </body>
 </html>
-
