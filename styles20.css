@@ -1,3 +1,4 @@
+
 /* styles.css - CSS adicional y utilidades (complementa Tailwind) */
 
 /* Base overrides and custom tokens */
@@ -17,10 +18,15 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+               'Helvetica Neue', Arial, sans-serif;
 }
 
 body{
-  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+               'Helvetica Neue', Arial, sans-serif;
   color: #000000;
   padding: 0px;
 }
