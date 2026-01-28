@@ -2447,6 +2447,7 @@ function createLighthouse() {
     vane.rotation.z = Math.PI / 2;
     group.add(vane);
     
+    group.scale.set(0.5, 0.5, 0.5);  // Reduce el faro al 50%
     group.position.y = 0;
     scene.add(group);
     lighthouse = group;
