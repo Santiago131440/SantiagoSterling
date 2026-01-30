@@ -238,7 +238,7 @@
       const cvText = generateSimpleCV();
       const link = document.createElement("a");
       link.href = URL.createObjectURL(new Blob([cvText], { type: "text/plain" }));
-      link.download = "CV-Santiago-Sterling.txt";
+      link.download = "CV-Santiago-Sterling-2026.txt";
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -260,9 +260,9 @@ Habilidades:
 - Accessibilidad
 
 Proyectos destacados:
-- Dashboards
-- Reproductor Musical
-- Test de preguntas
+- Sterling Music Player
+- Red Pericial (Landing Page)
+- Restaurante la Kolina
 `;
   }
 
