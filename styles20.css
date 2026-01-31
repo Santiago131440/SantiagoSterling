@@ -1097,5 +1097,27 @@ img[alt="Astronaut UX"] {
     animation-delay: 0.2s;
   }
 
+/* ---------------------- Código de fondo en contacto ------------------ */
+
+.dot-pattern {
+  background-image: radial-gradient(
+    rgba(0, 0, 0, 0.12) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+  opacity: 0.95;
+  animation: moveDots 15s linear infinite;
+}
+
+/* Movimiento suave tipo Apple */
+@keyframes moveDots {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 240px 240px;
+  }
+}
+
 
 
