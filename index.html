@@ -1195,136 +1195,63 @@
     <br>
      <br>
     <br>
-    <!-- CONTACT -->
+<!-- CONTACT -->
        <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
         Contacto
       </h2>
       <section
-        id="contacto"
-        class="relative mt-12 max-w-5xl mx-auto px-3 sm:px-10 py-7 sm:py-8
-              rounded-[20px]
-              bg-white/70 backdrop-blur-xl
-              border border-black/30
-              shadow-[0_20px_30px_-20px_rgba(0,0,0,0.15)]
-              overflow-hidden"
-      >
-  <!-- Imagen de fondo -->
+  id="contacto"
+  class="relative mt-24 max-w-5xl mx-auto px-6 sm:px-14 py-14
+         rounded-[22px]
+         bg-white/85 backdrop-blur-2xl
+         border border-black/10
+         shadow-[0_6px_10px_-60px_rgba(0,0,0,0.35)]
+         overflow-hidden
+         group"
+>
+
+  <!-- Luz ambiental animada -->
+  <div class="absolute -top-32 -left-32 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+  <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-500/20 rounded-full blur-[120px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+  <!-- Fondo -->
   <div class="absolute inset-0 z-0">
     <img
-      src="https://plus.unsplash.com/premium_photo-1755843842269-b1c80e7e34ba?q=80&w=869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      src="https://plus.unsplash.com/premium_photo-1755843842269-b1c80e7e34ba?q=80&w=869&auto=format&fit=crop"
       alt="Fondo contacto"
-      class="w-full h-full object-cover"
+      class="w-full h-full object-cover scale-110"
     />
-    <!-- Overlay para contraste -->
-    <div class="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-white/90 via-white/75 to-white/95 backdrop-blur-md"></div>
   </div>
 
   <!-- Contenido -->
-  <div class="relative z-10">
+  <div class="relative z-10 max-w-xl animate-fade-in">
+    <!-- Título -->
+    <h2 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-gray-900">
+      Conectemos ideas
+    </h2>
 
-    <!-- Descripción -->
-    <p
-      class="mt-1 text-sm sm:text-sm leading-relaxed
-             text-gray-600 max-w-xl"
-    >
-      Quedo atento a oportunidades acordes a mi perfil y disponible para coordinar una llamada.
+    <!-- Texto -->
+    <p class="mt-5 text-base leading-relaxed text-gray-600">
+      Estoy abierto a nuevas oportunidades profesionales, colaboraciones y proyectos
+      donde la tecnología y el diseño aporten valor real.
     </p>
 
-    <!-- Formulario -->
-    <form
-      id="contactForm"
-      class="mt-14 space-y-8 max-w-xl"
-    >
+    <!-- CTA -->
+    <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
 
-      <!-- Nombre -->
-      <div class="space-y-2">
-        <label class="block text-sm font-medium tracking-wide text-gray-600">
-          Nombre
-        </label>
+      <a
+        href="mailto:santisterling@gmail.com"
+        class=" text-center px-3 py-1 rounded-full text-sm font-medium transition-all bg-[#007AFF] text-white hover:border-[#007AFF] inline-block text-center cursor-pointer">
+        <span>Contactar por email</span>
+        <span class="text-lg">→</span>
+      </a>
 
-        <input
-          required
-          name="name"
-          placeholder="Tu nombre"
-          class="w-full h-10 px-6 py-o
-                 rounded-full
-                 bg-white/60 backdrop-blur-xl
-                 border border-black/40
-                 text-sm text-gray-900 placeholder:text-gray-400
-                 shadow-[0_8px_24px_rgba(0,0,0,0.06)]
-                 focus:outline-none
-                 focus:bg-white/80
-                 focus:border-black/10
-                 focus:shadow-[0_10px_30px_rgba(0,0,0,0.10)]
-                 transition-all duration-300 ease-out"
-        />
-      </div>
+      <span class="text-sm text-gray-500">
+        Respuesta rápida.
+      </span>
+    </div>
 
-      <!-- Correo -->
-      <div class="space-y-1">
-        <label class="text-sm font-medium text-gray-700">
-          Correo
-        </label>
-        <input
-          required
-          type="email"
-          name="email"
-          placeholder="tu@correo.com"
-          class="w-full h-10 px-6 py-0
-                 rounded-full
-                 bg-white/60 backdrop-blur-xl
-                 border border-black/40
-                 text-sm text-gray-900 placeholder:text-gray-400
-                 shadow-[0_8px_24px_rgba(0,0,0,0.06)]
-                 focus:outline-none
-                 focus:bg-white/80
-                 focus:border-black/10
-                 focus:shadow-[0_10px_30px_rgba(0,0,0,0.10)]
-                 transition-all duration-300 ease-out"
-        />
-      </div>
-
-      <!-- Mensaje -->
-      <div class="space-y-2">
-        <label class="text-sm font-medium text-gray-700">
-          Mensaje
-        </label>
-        <textarea
-          required
-          name="message"
-          rows="5"
-          placeholder="Redacta tu mensaje…"
-          class="w-full px-6 py-4 rounded-3xl
-                 bg-white/80
-                 border border-black/10
-                 text-sm text-gray-900 placeholder:text-gray-400
-                 resize-none
-                 focus:outline-none focus:ring-2 focus:ring-black/10
-                 transition"
-        ></textarea>
-      </div>
-
-      <!-- Acción -->
-      <div class="flex items-center gap-5 pt-2">
-        <button
-          id="sendBtn"
-          class="
-          filter-btn active px-5 py-1 rounded-full
-          text-sm font-medium transition-all
-          text-black/70 hover:bg-white/70 hover:text-gray-900
-          inline-block text-center cursor-pointer
-          border border-black/50 hover:border-none"
-        >
-          Enviar mensaje
-        </button>
-
-        <span
-          id="formStatus"
-          class="text-sm text-gray-500"
-        ></span>
-      </div>
-
-    </form>
   </div>
 </section>
 
@@ -1420,4 +1347,5 @@
 
 </body>
 </html>
+
 
