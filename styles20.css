@@ -1101,7 +1101,7 @@ img[alt="Astronaut UX"] {
 
 .dot-pattern {
   background-image: radial-gradient(
-    rgba(0, 0, 0, 0.30) 1px,
+    rgba(0, 0, 0, 0.10) 1px,
     transparent 2px
   );
   background-size: 24px 24px;
