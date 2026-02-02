@@ -1445,13 +1445,32 @@
 
 .profile-banner {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 3 / 1;              /* proporción tipo Facebook */
+  max-height: 350px;
+  min-height: 180px;
+
   background-image: url("https://media.licdn.com/dms/image/v2/D4E16AQGk2IKpIE04yw/profile-displaybackgroundimage-shrink_350_1400/B4EZud338oHEAY-/0/1767880229837?e=1771459200&v=beta&t=p3wNO0jvqVxA07f6-JVYeUPYxk94h0QFzw0wpK11b-4");
-  background-size: cover;
+  background-size: cover;           /* clave del efecto cover */
   background-position: center;
   background-repeat: no-repeat;
 }
 
+.profile-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.profile-banner {
+  position: relative;
+}
+
+@media (max-width: 600px) {
+  .profile-banner {
+    aspect-ratio: 16 / 9;
+  }
+}
 
 
     </style>
