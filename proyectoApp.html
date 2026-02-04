@@ -23,7 +23,7 @@
         :root {
             --primary-blue: #0a66c2;
             --primary-dark: #004182;
-            --background: #f3f2ef;
+            --background: #F5F5F7;
             --card-bg: #ffffff;
             --text-primary: #000000de;
             --text-secondary: #00000099;
@@ -40,13 +40,16 @@
 
         /* Header/Navbar */
         .navbar {
-            background: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
+    		background: rgba(245, 245, 247, 0.75); /* Gris Apple translúcido */
+    		backdrop-filter: blur(14px) saturate(180%);
+    		-webkit-backdrop-filter: blur(14px) saturate(180%);
+   		 border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+   		 position: sticky;
+   		 top: 0;
+   		 z-index: 1000;
+   		 box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+		}
+
 
         .navbar-container {
             max-width: 1128px;
