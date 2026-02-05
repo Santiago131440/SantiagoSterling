@@ -1480,6 +1480,41 @@
   }
 }
 
+.apple-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border-radius: 60px;
+    background: linear-gradient(
+        180deg,
+        #0a84ff 0%,
+        #0066ff 100%
+    );
+    text-decoration: none;
+    transition: 
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.apple-btn span {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.2px;
+}
+
+/* Active (click) */
+.apple-btn:active {
+    transform: scale(0.96);
+    box-shadow:
+        0 4px 10px rgba(0, 102, 255, 0.35);
+}
+
+
 
     </style>
 </head>
@@ -1556,6 +1591,7 @@
                     <a href="https://santiago131440.github.io/SantiagoSterling/index.html" class="stat-item">
     <span>Portafolio</span>
 </a>
+
                     <a href="https://santiago131440.github.io/SantiagoSterling/windows.html" class="stat-item">
     <span>Repositorio</span>
 </a>
@@ -1740,13 +1776,9 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                         <div class="profile-location">📍 Cali, Valle del Cauca, Colombia</div>
                         <div style="color: var(--primary-blue); font-size: 14px; font-weight: 600;">8 proyectos</div>
                         <div class="profile-actions">
-                            <button class="btn-primary">LinkedIn</button>
-                            <a href="https://santiago131440.github.io/SantiagoSterling/index.html" class="stat-item">
-    <span>Portafolio</span>
-</a>
-                    <a href="https://santiago131440.github.io/SantiagoSterling/windows.html" class="stat-item">
-    <span>Repositorio</span>
-</a>
+                            <a href="https://santiago131440.github.io/SantiagoSterling/index.html" class="stat-item apple-btn"><span>LinkedIn</span></a>
+                            <a href="https://santiago131440.github.io/SantiagoSterling/index.html" class="stat-item apple-btn"><span>Portafolio</span></a>
+                            <a href="https://santiago131440.github.io/SantiagoSterling/windows.html" class="stat-item apple-btn"><span>Repositorio</span></a>
                         </div>
                     </div>
                 </div>
