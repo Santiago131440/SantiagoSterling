@@ -29,6 +29,7 @@ body{
                'Helvetica Neue', Arial, sans-serif;
   color: #000000;
   padding: 0px;
+  font-weight: 100;
 }
 
 /* Reset element focus for accessibility */
@@ -1118,6 +1119,7 @@ img[alt="Astronaut UX"] {
     background-position: 240px 240px;
   }
 }
+
 
 
 
