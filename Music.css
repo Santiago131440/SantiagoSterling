@@ -76,7 +76,7 @@ header {
 header h1 {
   margin: 0;
   font-size: 20px;
-  font-weight: 300;
+  font-weight: 400;
   background: linear-gradient(90deg, var(--accent), #855CFF, #d468bd);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -124,6 +124,7 @@ header h1 {
   border-radius: 8px;
   border: 1px solid #d0d0d0;
   font-size: 14px;
+  font-weight: 100;
   font-family: inherit;
   outline: none;
 }
@@ -142,6 +143,7 @@ header h1 {
   top: 50%;
   transform: translateY(-50%);
   font-size: 15px;
+  font-weight: 100;
   color: #777;
   pointer-events: none;
 }
@@ -212,6 +214,7 @@ header h1 {
   padding: 10px 14px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 100;
   border-radius: 10px;
   transition: background 0.25s ease;
   text-align: left;
@@ -234,6 +237,7 @@ header h1 {
   backdrop-filter: blur(16px);
   transition: all 0.3s ease;
   border: none;
+  font-weight: 100;
 }
 
 .add-area:hover {
@@ -259,6 +263,7 @@ header h1 {
   scrollbar-color: var(--accent) transparent;
   overflow-y: auto;
   overflow-x: hidden;
+  font-weight: 100;
 }
 
 .list::-webkit-scrollbar {
@@ -309,10 +314,12 @@ header h1 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 14px;
+  font-weight: 100;
 }
 
 .track .artist {
   font-size: 10px;
+  font-weight: 100;
   color: var(--muted);
 }
 
@@ -335,7 +342,7 @@ header h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 10;
+  font-weight: 100;
   color: var(--muted);
   text-shadow: 0 0 6px rgba(111, 66, 193, 0.3);
 }
@@ -356,7 +363,7 @@ header h1 {
 
 .now .info .title {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 300;
 }
 
 .now .info .artist {
@@ -405,6 +412,7 @@ header h1 {
 
 .time {
   font-size: 13px;
+  font-weight: 100;
   color: var(--muted);
   width: 48px;
   text-align: center;
@@ -478,6 +486,7 @@ footer {
   padding: 12px 20px;
   border-top: var(--Linea);
   font-size: 13px;
+  font-weight: 100;
   color: var(--muted);
   display: flex;
   justify-content: space-between;
@@ -564,7 +573,7 @@ footer {
   header h1 {
     padding-top: 60px;
     font-size: 48px;
-    font-weight: 700;
+    font-weight: 300;
     margin: 0;
     line-height: 1.2;
   }
@@ -596,6 +605,7 @@ footer {
 
   .btn{
     font-size: 32px;
+    font-weight: 100;
     justify-content: center;
     align-items: center;
   }
@@ -619,6 +629,7 @@ footer {
     scrollbar-color: var(--accent) transparent;
     overflow-y: auto;
     overflow-x: hidden;
+    font-weight: 100;
   }
 
   .cover {
@@ -652,7 +663,7 @@ footer {
     display: block;
     max-width: 100%;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 100;
     line-height: 1.4;
     white-space: normal;
     overflow-wrap: anywhere;
