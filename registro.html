@@ -75,10 +75,33 @@
       transform: translateX(0);
       width: 20px;
     }
+
+.dot-pattern {
+  background-image: radial-gradient(
+    rgba(0, 0, 0, 0.10) 1px,
+    transparent 2px
+  );
+  background-size: 24px 24px;
+  opacity: 0.95;
+  animation: moveDots 15s linear infinite;
+}
+
+/* Movimiento suave tipo Apple */
+@keyframes moveDots {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 240px 240px;
+  }
+}
+
   </style>
 </head>
 
 <body class="min-h-screen antialiased selection:bg-indigo-300/40 dark:selection:bg-indigo-500/30 transition-colors duration-300 bg-[var(--bg-light)] dark:bg-[var(--bg-dark)] text-slate-800 dark:text-slate-100">
+<!----------------------------- Patrón de puntos animado --------------------------------------->
+  <div class="absolute inset-0 z-[1] pointer-events-none dot-pattern"></div>
 
   <!-- Fondo decorativo -->
   <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
