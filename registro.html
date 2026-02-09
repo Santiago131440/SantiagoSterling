@@ -14,7 +14,7 @@
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: { sans: ['Poppins', 'Inter', 'system-ui', 'sans-serif'] },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
           boxShadow: { glass: '0 10px 40px rgba(0,0,0,0.15)' },
           colors: {
             glass: {
@@ -38,7 +38,7 @@
 
   <style>
     :root{ --bg-dark:#0b0f17; --bg-light:#eef2f7; }
-    html,body{height:100%; font-weight: 100;}
+    html,body{height:100%; font-weight: 100; font-family: 'inter',sans serif;}
 
     .bg-orb{ position: absolute; filter: blur(60px); opacity:.55; }
     .orb-1{ width: 540px; height: 540px; background: radial-gradient(circle at 30% 30%, #7dd3fc, transparent 60%); top:-120px; left:-80px; animation: orbfloat 16s ease-in-out infinite; }
@@ -78,7 +78,7 @@
   </style>
 </head>
 
-<body class="min-h-screen font-sans antialiased selection:bg-indigo-300/40 dark:selection:bg-indigo-500/30 transition-colors duration-300 bg-[var(--bg-light)] dark:bg-[var(--bg-dark)] text-slate-800 dark:text-slate-100">
+<body class="min-h-screen antialiased selection:bg-indigo-300/40 dark:selection:bg-indigo-500/30 transition-colors duration-300 bg-[var(--bg-light)] dark:bg-[var(--bg-dark)] text-slate-800 dark:text-slate-100">
 
   <!-- Fondo decorativo -->
   <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
@@ -90,12 +90,12 @@
   <!-- Contenedor principal -->
   <main class="flex flex-col items-center justify-center min-h-screen px-4">
     <div class="glass rounded-3xl p-8 md:p-12 text-center max-w-md w-full">
-      <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Registro de usuario</h1>
+      <h1 class="text-3xl md:text-4xl text-amber-500 mb-4">Registro de usuario</h1>
       <p class="text-slate-700 dark:text-slate-300 mb-6">Ingresa tu nombre para comenzar el test.</p>
 
       <form id="registroForm" class="flex flex-col gap-4">
         <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre o seudónimo." required
-          class="w-full rounded-full px-4 py-3 bg-white/70 dark:bg-slate-900/60 focus:ring-2 focus:ring-indigo-500 outline-none text-center">
+          class="w-full rounded-full px-4 py-2 bg-white/70 dark:bg-slate-700 focus:ring-2 focus:ring-rose-500 outline-none text-center">
 
         <button type="submit" class="startBtn mx-auto flex items-center gap-1 glass rounded-full px-6 py-2 hover:scale-[1.02] active:scale-95">
           <span>Iniciar</span>
