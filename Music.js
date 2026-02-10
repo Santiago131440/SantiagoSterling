@@ -299,3 +299,29 @@ document.addEventListener("click", e => {
     suggestionsBox.style.display = "none";
   }
 });
+
+const radioSelect = document.getElementById("radioSelect");
+const radioPlayBtn = document.getElementById("radioPlayBtn");
+
+let radioPlaying = false;
+
+radioPlayBtn.addEventListener("click", () => {
+  const streamUrl = radioSelect.value;
+  if (!streamUrl) return alert("Selecciona una radio");
+
+  if (!radioPlaying) {
+    audio.src = streamUrl;
+    audio.play();
+
+    nowTitle.textContent = "Radio en vivo";
+    nowArtist.textContent = radioSelect.options[radioSelect.selectedIndex].text;
+    nowIndex.textContent = "LIVE";
+
+    playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+    radioPlaying = true;
+  } else {
+    audio.pause();
+    audio.src = "";
+    radioPlaying = false;
+  }
+});
