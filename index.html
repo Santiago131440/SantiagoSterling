@@ -1,2576 +1,1354 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyectos Santiago Sterling</title>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Santiago Sterling</title>
+  <meta name="description" content="Portafolio profesional enfocado en UX, frontend y diseño de productos digitales.">
+  <meta name="keywords" content="portafolio, frontend, backend, API, software, server, servidores, linux, UI, UX, diseñador, desarrollador">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
             <circle cx='50' cy='50' r='50' fill='black'/>
             <text x='50' y='62' text-anchor='middle' font-size='50' fill='white' font-family='Arial'>S</text>
           </svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles20.css">
+  <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/98182135?v=4">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+  <meta name="description" content="Portafolio profesional de Santiago Sterling - Desarrollador Full Stack especializado en Excel VBA, JavaScript, React y soluciones web innovadoras.">
+    <meta name="keywords" content="desarrollo web, VBA, Excel, JavaScript, React, Node.js, Python, portafolio, Santiago Sterling, desarrollador full stack">
+    <meta name="author" content="Santiago Sterling">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://santiago-sterling.com/">
+    <meta property="og:title" content="Santiago Sterling - Portafolio de Proyectos">
+    <meta property="og:description" content="Desarrollador Full Stack apasionado por crear soluciones tecnológicas innovadoras">
+    <meta property="og:image" content="https://avatars.githubusercontent.com/u/98182135?v=4">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://santiago-sterling.com/">
+    <meta property="twitter:title" content="Santiago Sterling - Portafolio de Proyectos">
+    <meta property="twitter:description" content="Desarrollador Full Stack apasionado por crear soluciones tecnológicas innovadoras">
+    <meta property="twitter:image" content="https://avatars.githubusercontent.com/u/98182135?v=4">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
-               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
-               'Helvetica Neue', Arial, sans-serif;
-        }
-
-        :root {
-            --primary-blue: #007AFF;
-            --primary-dark: #004182;
-            --background: #F5F5F7;
-            --card-bg: #ffffff;
-            --text-primary: #000000de;
-            --text-secondary: #00000099;
-            --border-color: #9999992f;
-            --hover-bg: #0000000a;
-            --success-green: #057642;
-        }
-
-        body {
-            background-color: var(--background);
-            color: var(--text-primary);
-            line-height: 1.5;
-            font-weight: 100;
-        }
-
-        /* Header/Navbar */
-        .navbar {
-    		background: rgba(245, 245, 247, 0.75); /* Gris Apple translúcido */
-    		backdrop-filter: blur(14px) saturate(180%);
-    		-webkit-backdrop-filter: blur(14px) saturate(180%);
-   		 border-bottom: 1px solid rgba(255, 255, 255, 0.35);
-   		 position: sticky;
-   		 top: 0;
-   		 z-index: 1000;
-   		 box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
-		}
-
-
-        .navbar-container {
-            max-width: 1128px;
-            margin: 0 auto;
-            padding: 0 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 42px;
-        }
-
-        .navbar-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex: 1;
-        }
-
-        .logo {
-    		font-size: 28px;
-    		font-weight: 300;
-   	        text-decoration: none;
-    		letter-spacing: -0.6px;
-    		white-space: nowrap;
-    		background: linear-gradient(135deg, #F5CC27 0%, #FF4800 45%, #F527B0 100%);
-    		-webkit-background-clip: text;
-    		background-clip: text;
-    		color: transparent;
-		}
-
-
-        .search-box {
-            position: relative;
-            max-width: 280px;
-            flex: 1;
-        }
-
-        .search-box input {
-            width: 100%;
-            height: 30px;
-            padding: 8px 12px 8px 38px;
-            border: 1px solid #C8C1C1;
-            background: #ffffff;
-            border-radius: 40px;
-            font-size: 14px;
-            font-weight: 100;
-            transition: all 0.2s;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            background: #d3e4f5;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-        }
-
-        .navbar-center {
-            display: flex;
-            gap: 8px;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 8px 12px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 100;
-            border-radius: 4px;
-            transition: all 0.2s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .nav-item:hover {
-            color: var(--text-primary);
-            background: var(--hover-bg);
-        }
-
-        .nav-item.active {
-            color: var(--text-primary);
-        }
-
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--text-primary);
-        }
-
-        .nav-icon {
-            font-size: 20px;
-            font-weight: 100;
-            margin-bottom: 2px;
-        }
-
-        .notification-badge {
-            position: absolute;
-            top: 4px;
-            right: 8px;
-            background: rgb(255, 0, 0);
-            color: white;
-            font-size: 10px;
-            padding: 2px 5px;
-            border-radius: 10px;
-            font-weight: 100;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: transparent;
-            border: none;
-            font-size: 24px;
-            font-weight: 100;
-            cursor: pointer;
-            padding: 8px;
-        }
-
-        /* Main Container */
-        .main-container {
-            max-width: 1188px;
-            margin: 24px auto;
-            padding: 0 24px;
-            display: grid;
-            grid-template-columns: 225px 1fr 320px;
-            gap: 24px;
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        /* Card Styles */
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 6px;
-            font-weight: 100;
-        }
-
-        /* Sidebar Left */
-        .profile-card {
-            text-align: center;
-            position: relative;
-        }
-
-        .profile-cover {
-            height: 56px;
-            width: 140px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .profile-avatar {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            border: 2px solid white;
-            margin: -36px auto 12px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            font-weight: 100;
-            color: white;
-        }
-
-        .profile-info {
-            padding: 0 12px 12px;
-        }
-
-        .profile-name {
-            font-size: 8px;
-            font-weight: 100;
-            margin-bottom: 4px;
-            cursor: pointer;
-        }
-
-        .profile-name:hover {
-            color: var(--primary-blue);
-        }
-
-        .profile-headline {
-            font-size: 12px;
-            font-weight: 100;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-        }
-
-        .profile-stats {
-            padding: 12px;
-            border-top: 1px solid var(--border-color);
-            text-align: left;
-        }
-
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            font-weight: 100;
-            color: var(--text-secondary);
-            padding: 6px 0;
-            cursor: pointer;
-        }
-
-        .stat-item:hover {
-            color: var(--primary-blue);
-        }
-
-        .stat-number {
-            color: var(--primary-blue);
-            font-weight: 100;
-        }
-
-        /* Feed Section */
-        .create-post-card {
-            padding: 16px;
-        }
-
-        .create-post-input {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        /* -------- Avatar de TU ------- La persona que está viendo los proyectos ----------------*/
-        .create-post-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #a19704 0%, #fee140 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 100;
-            color: white;
-            font-size: 20px;
-            flex-shrink: 0;
-            overflow: hidden;
-        }
-
-        .create-post-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .create-post-input input {
-            flex: 1;
-            padding: 10px 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            font-size: 14px;
-            font-weight: 100;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .create-post-input input:hover {
-            background: var(--hover-bg);
-        }
-
-        .create-post-actions {
-            display: flex;
-            gap: 8px;
-            padding-top: 8px;
-        }
-
-        .post-action-btn {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 10px;
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 100;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .post-action-btn:hover {
-            background: var(--hover-bg);
-        }
-
-        .post-action-icon {
-            font-size: 18px;
-            font-weight: 100;
-        }
-
-        /* Post Card */
-        .post-card {
-            animation: slideIn 0.3s ease-out;
-            cursor: pointer;
-            transition: box-shadow 0.2s;
-        }
-
-        .post-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .post-header {
-            display: flex;
-            gap: 12px;
-            padding: 16px 16px 0;
-        }
-
-        .post-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 100;
-            color: white;
-            font-size: 20px;
-            flex-shrink: 0;
-            overflow: hidden;
-        }
-
-        .post-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .post-info {
-            flex: 1;
-        }
-
-        .post-author {
-            font-weight: 400;
-            font-size: 14px;
-        }
-
-        .post-author:hover {
-            text-decoration: underline;
-            color: var(--primary-blue);
-        }
-
-        .post-meta {
-            font-size: 12px;
-            font-weight: 100;
-            color: var(--text-secondary);
-        }
-
-        .post-menu-btn {
-            background: transparent;
-            border: none;
-            font-size: 20px;
-            font-weight: 100;
-            cursor: pointer;
-            padding: 4px 8px;
-            color: var(--text-secondary);
-            border-radius: 4px;
-        }
-
-        .post-menu-btn:hover {
-            background: var(--hover-bg);
-        }
-
-        .post-content {
-            padding: 12px 16px;
-            font-size: 14px;
-            font-weight: 100;
-            line-height: 1.6;
-        }
-
-        .post-content.truncated {
-            max-height: 100px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .see-more {
-            color: var(--primary-blue);
-            cursor: pointer;
-            font-weight: 100;
-            display: inline-block;
-            margin-top: 4px;
-        }
-
-        .see-more:hover {
-            color: var(--text-secondary);
-        }
-
-        /* Photo Gallery */
-        .post-gallery {
-            display: grid;
-            gap: 2px;
-            margin-top: 8px;
-        }
-
-        .post-gallery.single {
-            grid-template-columns: 1fr;
-        }
-
-        .post-gallery.single .gallery-item {
-            height: 400px;
-        }
-
-        .post-gallery.double {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .post-gallery.double .gallery-item {
-            height: 300px;
-        }
-
-        .post-gallery.triple {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 250px 250px;
-        }
-
-        .post-gallery.triple .gallery-item:first-child {
-            grid-row: span 2;
-            height: 500px;
-        }
-
-        .post-gallery.quad {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 250px 250px;
-        }
-
-        .post-gallery.quad .gallery-item {
-            height: 250px;
-        }
-
-        .post-gallery.many {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 250px 250px;
-            position: relative;
-        }
-
-        .post-gallery.many .gallery-item {
-            height: 250px;
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            background: #f0f0f0;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            transition: transform 0.3s;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-
-        .gallery-more {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 60px;
-            font-weight: 100;
-        }
-
-        .post-stats {
-            padding: 8px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            font-weight: 100;
-            color: var(--text-secondary);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .post-reactions {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-
-        .post-reactions:hover {
-            text-decoration: underline;
-        }
-
-        .reaction-icons {
-            display: flex;
-            margin-right: 4px;
-        }
-
-        .reaction-icon {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            margin-left: -4px;
-            border: 1px solid white;
-        }
-
-        .reaction-icon:first-child {
-            margin-left: 0;
-        }
-
-        .like-icon {
-            background: #0a66c2;
-            color: white;
-        }
-
-        .love-icon {
-            background: #df704d;
-            color: white;
-        }
-
-        .celebrate-icon {
-            background: #6dae4f;
-            color: white;
-        }
-
-        .post-actions {
-            display: flex;
-            padding: 4px 8px;
-        }
-
-        .post-action {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 4px;
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 100;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .post-action:hover {
-            background: #007AFF;
-	        color: #ffffff;
-        }
-
-        .post-action.liked {
-            color: red;
-        }
-
-        .comments-section {
-            padding: 0 16px 12px;
-            display: none;
-        }
-
-        .comments-section.active {
-            display: block;
-        }
-
-        .comment {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .comment-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 100;
-            color: white;
-            font-size: 14px;
-            font-weight: 100;
-            flex-shrink: 0;
-            overflow: hidden;
-        }
-
-        .comment-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .comment-content {
-            background: var(--background);
-            padding: 8px 12px;
-            border-radius: 8px;
-            flex: 1;
-            font-weight: 100;
-        }
-
-        .comment-author {
-            font-weight: 400;
-            font-size: 13px;
-            margin-bottom: 2px;
-        }
-
-        .comment-text {
-            font-size: 13px;
-            font-weight: 100;
-            line-height: 1.5;
-        }
-
-        .comment-time {
-            font-size: 12px;
-            font-weight: 100;
-            color: var(--text-secondary);
-            margin-top: 4px;
-        }
-
-        .add-comment {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .add-comment input {
-            flex: 1;
-            padding: 8px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            font-size: 13px;
-        }
-
-        /* Post Detail View */
-        .post-detail-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 10000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .post-detail-overlay.active {
-            display: flex;
-        }
-
-        .post-detail-container {
-            background: var(--card-bg);
-            max-width: 900px;
-            width: 100%;
-            max-height: 90vh;
-            border-radius: 8px;
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 420px;
-            position: relative;
-            font-weight: 100;
-        }
-
-        .post-detail-media {
-            background: #000000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .post-detail-media img {
-            max-width: 100%;
-            max-height: 90vh;
-            object-fit: contain;
-        }
-
-        .media-nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.2s;
-        }
-
-        .media-nav-btn:hover {
-            background:rgba(0, 0, 0, 0.295);
-            color:white;
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .media-nav-btn.prev {
-            left: 12px;
-        }
-
-        .media-nav-btn.next {
-            right: 12px;
-        }
-
-        .photo-counter {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 100;
-        }
-
-        .post-detail-sidebar {
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        .post-detail-close {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            font-size: 24px;
-            font-weight: 100;
-            cursor: pointer;
-            z-index: 100;
-        }
-
-        .post-detail-close:hover {
-            background: white;
-        }
-
-        /* Sidebar Right */
-        .news-card {
-            padding: 16px;
-        }
-
-        .news-header {
-            font-size: 16px;
-            font-weight: 200;
-            margin-bottom: 16px;
-        }
-
-        .news-item {
-            margin-bottom: 16px;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 4px;
-            transition: background 0.2s;
-        }
-
-        .news-item:hover {
-            background: var(--hover-bg);
-        }
-
-        .news-title {
-            font-size: 14px;
-            font-weight: 100;
-            margin-bottom: 4px;
-        }
-
-        .news-meta {
-            font-size: 12px;
-            font-weight: 100;
-            color: var(--text-secondary);
-        }
-
-        /* Profile Page */
-        .profile-page-header {
-            background: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 16px;
-            border: 1px solid var(--border-color);
-            font-weight: 100;
-        }
-
-        .profile-banner {
-            height: 200px;
-            width: 300px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-        }
-
-        .profile-main-info {
-            padding: 0 24px 24px;
-            position: relative;
-        }
-
-        .profile-avatar-large {
-            width: 152px;
-            height: 152px;
-            border-radius: 50%;
-            border: 4px solid white;
-            margin-top: -76px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 64px;
-            font-weight: 100;
-            color: white;
-        }
-
-        .profile-name-large {
-            font-size: 36px;
-            font-weight: 300;
-            margin: 16px 0 8px;
-        }
-
-        .profile-headline-large {
-            font-size: 16px;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-        }
-
-        .profile-location {
-            font-size: 14px;
-            font-weight: 100;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-        }
-
-        .profile-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .btn-primary {
-            padding: 10px 24px;
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            border-radius: 24px;
-            font-weight: 100;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-secondary {
-            padding: 10px 24px;
-            background: transparent;
-            color: var(--primary-blue);
-            border: 1px solid var(--primary-blue);
-            border-radius: 24px;
-            font-weight: 100;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-secondary:hover {
-            background: #d0e8ff;
-            border-color: var(--primary-dark);
-        }
-
-        /* Network Page */
-        .network-tabs {
-            display: flex;
-            gap: 24px;
-            padding: 16px 24px;
-            background: var(--card-bg);
-            border-radius: 8px;
-            margin-bottom: 16px;
-            border: 1px solid var(--border-color);
-        }
-
-        .network-tab {
-            padding: 8px 0;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text-secondary);
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .network-tab.active {
-            color: var(--primary-blue);
-            border-bottom-color: var(--primary-blue);
-        }
-
-        .network-tab:hover {
-            color: var(--primary-dark);
-        }
-
-        .connection-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-        }
-
-        .connection-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
-            text-align: center;
-            transition: box-shadow 0.2s;
-            font-weight: 100;
-        }
-
-        .connection-cover {
-            height: 60px;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        }
-
-        .connection-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid white;
-            margin: -40px auto 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            font-weight: 100;
-            color: white;
-        }
-
-        .connection-info {
-            padding: 0 16px 16px;
-        }
-
-        .connection-name {
-            font-weight: 100;
-            font-size: 16px;
-            margin-bottom: 4px;
-            
-        }
-
-        .connection-title {
-            font-size: 13px;
-            font-weight: 100;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-        }
-
-        .connection-mutual {
-            font-size: 12px;
-            font-weight: 100;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-        }
-
-        /* Jobs Page */
-        .job-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-
-        .job-header {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .job-logo {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 100;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        .job-info {
-            flex: 1;
-        }
-
-        .job-title {
-            font-size: 16px;
-            font-weight: 200;
-            margin-bottom: 4px;
-            color: var(--primary-blue);
-        }
-
-        .job-company {
-            font-size: 14px;
-            margin-bottom: 4px;
-            font-weight: 100;
-        }
-
-        .job-location {
-            font-size: 13px;
-            color: var(--text-secondary);
-            font-weight: 100;
-        }
-
-        .job-details {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-            font-weight: 100;
-        }
-
-        .job-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .job-tag {
-            padding: 4px 12px;
-            background: var(--background);
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 100;
-            color: var(--text-secondary);
-        }
-
-        /* Chat Widget */  
-    .chat-widget {  
-        position: fixed;  
-        bottom: 0;  
-        right: 24px;  
-        width: 320px;  
-        background: rgba(245, 245, 247, 0.75); /* Gris Apple translúcido */
-    	backdrop-filter: blur(14px) saturate(180%);
-    	-webkit-backdrop-filter: blur(14px) saturate(180%);
- 
-        border: 1px solid var(--border-color);  
-        border-bottom: none;  
-        border-radius: 14px 14px 14px 14px;  
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);  
-        z-index: 999;  
-        display: none;  
-        animation: slideUp 0.3s ease-out;  
-    }  
-
-    .chat-widget.active {  
-        display: block;  
-    }  
-
-    @keyframes slideUp {  
-        from {  
-            transform: translateY(100%);  
-        }  
-        to {  
-            transform: translateY(0);  
-        }  
-    }  
-
-    .chat-header {  
-        padding: 12px 16px;  
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-        border-bottom: 1px solid var(--border-color);  
-        display: flex;  
-        justify-content: space-between;  
-        align-items: center;  
-        cursor: pointer;  
-        border-radius: 14px 14px 0 0;
-    }  
-
-    .chat-user-info {  
-        display: flex;  
-        align-items: center;  
-        gap: 10px;  
-        font-weight: 100;
-    } 
-
-    .chat-avatar {  
-        width: 32px;  
-        height: 32px;  
-        border-radius: 50%;  
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);  
-        display: flex;  
-        align-items: center;  
-        justify-content: center;  
-        font-weight: 600;  
-        color: white;  
-        font-size: 14px;  
-    } 
-
-    .chat-name {  
-        font-weight: 200;  
-        font-size: 14px;  
-    }  
-
-    .chat-messages {  
-        height: 300px;  
-        overflow-y: auto;  
-        padding: 16px;  
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-
-    }  
-
-    .chat-message {  
-        margin-bottom: 12px;  
-        display: flex;  
-        gap: 8px;  
-        animation: fadeIn 0.3s;  
-    }  
-
-    @keyframes fadeIn {  
-        from { opacity: 0; }  
-        to { opacity: 1; }  
-    }  
-
-    .chat-message.own {  
-        flex-direction: row-reverse;  
-    }  
-
-    .chat-message-avatar {  
-        width: 28px;  
-        height: 28px;  
-        border-radius: 50%;  
-        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);  
-        display: flex;  
-        align-items: center;  
-        justify-content: center;  
-        font-weight: 600;  
-        color: white;  
-        font-size: 12px;  
-        flex-shrink: 0;  
-        font-weight: 100;
-    }  
-
-    .chat-message-content {  
-        background: rgb(224, 224, 224);  
-        padding: 8px 12px;  
-        border-radius: 12px;  
-        max-width: 70%;  
-        font-size: 13px;
-        font-weight: 100;
-    }  
-
-    .chat-message.own .chat-message-content {  
-        background: var(--primary-blue);  
-        color: white;  
-        font-weight: 100;
-    }  
-
-    .chat-input-container {  
-        padding: 12px;  
-        border-top: 1px solid var(--border-color);  
-        display: flex;  
-        gap: 8px;  
-    }  
-
-    .chat-input-container input {  
-        flex: 1;  
-        padding: 8px 12px;  
-        border: 1px solid var(--border-color);  
-        border-radius: 20px;  
-        font-size: 13px;  
-        font-weight: 100;
-    }  
-
-    .chat-send-btn {  
-        padding: 1px 12px;  
-        background: var(--primary-blue);  
-        color: white;  
-        border: none;  
-        border-radius: 20px;  
-        cursor: pointer;  
-        font-weight: 100;  
-        transition: all 0.2s;  
-    }  
-
-    .chat-send-btn:hover {  
-        background: var(--primary-dark);  
-    }
-
-        /* Modal for images */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 10000;
-            align-items: center;
-            font-weight: 100;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            max-width: 90%;
-            max-height: 90%;
-            position: relative;
-        }
-
-        .modal-image {
-            max-width: 100%;
-            max-height: 90vh;
-            object-fit: contain;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 32px;
-            cursor: pointer;
-            padding: 0;
-            width: 40px;
-            height: 40px;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .main-container {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar-left,
-            .sidebar-right {
-                display: none;
-            }
-
-            .post-detail-container {
-                grid-template-columns: 1fr;
-                max-height: 95vh;
-            }
-
-            .post-detail-media {
-                max-height: 50vh;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .navbar-center {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                border-top: 1px solid var(--border-color);
-                padding: 30px 0;
-                justify-content: space-around;
-                box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
-            }
-            
-
-            .nav-item {
-                font-size: 11px;
-                padding: 4px 8px;
-		top: 30px;
-		
-            }
-
-            .nav-icon {
-                font-size: 22px;
-            }
-
-            .main-container {
-                padding: 0 8px;
-                margin-bottom: 10px;
-            }
-
-            .navbar-container {
-                padding: 0 8px;
-		height: 100px;
-            }
-
-            .search-box {
-                max-width: 400px;
-		Bottom: 20px;
-            }
-
-	   .logo {
-    		font-size: 28px;
-		margin-bottom: 40px;
-		}
-
-
-            .connection-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .chat-widget {
-                width: 100%;
-                right: 0;
-                left: 0;
-                border-radius: 0;
-            }
-
-            .post-detail-container {
-                max-height: 100vh;
-                border-radius: 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-
-    .card {
-    border-radius: 0px;
-    border: none;
-    outline: none
-    }
-}
-
-/* Card base */
-.profile-card {
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  margin: 0px auto;
-  background: #ffffff;
-  border-radius: 10px;
-  overflow: hidden;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont;
-  font-weight: 100;
-}
-
-/* Cover image */
-.profile-card > img {
-  width: 240px;
-  height: 90px;
-  object-fit: cover;
-  display: block;
-  filter: saturate(1.05) contrast(1.05);
-}
-
-/* Avatar container */
-.profile-avatar {
-  position: absolute;
-  top: 70px;
-  left: 70px;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(145deg, #ffffff, #f0f0f0);
-  padding: 1px;
-}
-
-.profile-name {
- font-size:18px;
- font-weight: 100;
-}
-
-/* Avatar image */
-.profile-avatar img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Initials fallback */
-.initials {
-  position: absolute;
-  inset: 0;
-  display: none; /* mostrar solo si no hay imagen */
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  font-weight: 100;
-  color: #ffffff;
-  background: linear-gradient(135deg, #111827, #374151);
-  border-radius: 50%;
-  letter-spacing: 1px;
-}
-
-.profile-avatar-large {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.profile-avatar-large img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.profile-banner {
-  width: 100%;
-  aspect-ratio: 3 / 1;
-  max-height: 350px;
-  min-height: 180px;
-
-  background-image: url("https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Spaceman_Sterling_Whiteman.jpg?raw=true");
-  background-size: cover;           /* clave del efecto cover */
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.profile-banner::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.25);
-}
-
-.profile-banner {
-  position: relative;
-}
-
-@media (max-width: 600px) {
-  .profile-banner {
-    aspect-ratio: 16 / 9;
-  }
-}
-
-.apple-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px 16px;
-    border-radius: 60px;
-    background: linear-gradient(
-        180deg,
-        #0a84ff 0%,
-        #0066ff 100%
-    );
-    text-decoration: none;
-    transition: 
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        background 0.25s ease;
-}
-
-.apple-btn span {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-                 "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 15px;
-    font-weight: 100;
-    color: #ffffff;
-    letter-spacing: 0.2px;
-}
-
-/* Active (click) */
-.apple-btn:active {
-    transform: scale(0.96);
-    box-shadow:
-        0 4px 10px rgba(0, 102, 255, 0.35);
-}
-
-.profile-location{
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 14px;
-    color: var(--primary-blue);
-}
-
-.chat-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.chat-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.chat-message-avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.chat-message-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-    </style>
 </head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <div class="navbar-left">
-                <a href="#" class="logo" onclick="navigateTo('home')">Proyectos</a>
-                <div class="search-box">
-                    <span class="search-icon"><i class="fi fi-rr-search"></i></span>
-                    <input type="text" placeholder="Explorar proyectos...">
-                </div>
-            </div>
-            <div class="navbar-center">
-                <a href="#" class="nav-item" data-page="home" onclick="navigateTo('home')">
-                    <span class="nav-icon"><i class="fi fi-rr-home"></i></span>
-                    <span></span>
-                </a>
-                <a href="#" class="nav-item" data-page="network" onclick="navigateTo('network')">
-                    <span class="nav-icon"><i class="fi fi-rr-users"></i></span>
-                    <span></span>
-                    <span class="notification-badge">2</span>
-                </a>
-                <a href="#" class="nav-item" data-page="jobs" onclick="navigateTo('jobs')">
-                    <span class="nav-icon"><i class="fi fi-rr-briefcase"></i></span>
-                    <span></span>
-                </a>
-                <a href="#" class="nav-item" onclick="toggleChat()">
-                     <span class="nav-icon"><i class="fi fi-rr-comment"></i></span>
-                    <span></span>
-                    <span class="notification-badge">1</span>
-                </a>
-                <a href="#" class="nav-item" data-page="profile" onclick="navigateTo('profile')">
-                    <span class="nav-icon"><i class="fi fi-rr-user"></i></span>
-                    <span></span>
-                </a>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Home Page -->
-    <div class="page active" id="home-page">
-        <div class="main-container">
-            <!-- Sidebar Left -->
-            <aside class="sidebar-left">
-                <div class="card profile-card"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Spaceman_Sterling_Whiteman.jpg?raw=true" alt="Cover">
-                    <div class="profile-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar">
-                      <span class="initials">SS</span>
-                    </div>
-                    <br>
 
-                    <div class="profile-info">
-                        <div class="profile-name" onclick="navigateTo('profile')">Santiago Sterling</div>
-                        <div class="profile-headline">Tecnologo en análisis y desarrollo de software</div>
-                    </div>
-                    <div class="profile-stats">
-                        <div class="stat-item">
-                            <span>Conexiones</span>
-                            <span class="stat-number">84</span>
-                        </div>
-                        <div class="stat-item">
-                            <span>Visitas del perfil</span>
-                            <span class="stat-number">21</span>
-                        </div>
-                    </div>
-                </div>
-                <br>
+<body class="w-full min-h-screen text-slate-100 antialiased leading-relaxed">
+<!-- NAVBAR -->
+<nav class="apple-nav w-full border-b border-black/10">
+  <div class="apple-nav-inner max-w-7xl mx-auto px-1 py-1 flex items-center justify-between">
 
-                <div class="card" style="padding: 12px;">
-                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
-                        <strong>Accesos rápidos</strong>
-                    </div>
-                    <a href="https://santiago131440.github.io/SantiagoSterling/index.html" class="stat-item">
-    <span>Portafolio</span>
-</a>
+    <!-- Nombre + Avatar -->
+    <a href="#" class="flex items-center gap-3">
+      <span class="w-8 h-8 rounded-full overflow-hidden border border-black/10">
+        <img
+          src="https://avatars.githubusercontent.com/u/98182135?v=4"
+          alt="Avatar"
+          class="w-full h-full object-cover"
+        />
+      </span>
+      <span class="font-medium text-gray-800 whitespace-nowrap">
+        Santiago Sterling
+      </span>
+    </a>
 
-                    <a href="https://santiago131440.github.io/SantiagoSterling/windows.html" class="stat-item">
-    <span>Repositorio</span>
-</a>
-                    <div class="stat-item">
-                        <span>LinkedIn</span>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- Feed -->
-            <main class="feed">
-                <!-- Create Post -->
-                <div class="card create-post-card">
-                    <div class="create-post-input">
-                        <div class="create-post-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
-                        <input type="text" placeholder="¿En qué estás pensando?" onclick="createNewPost()">
-                    </div>
-                    <div class="create-post-actions">
-                        <button class="post-action-btn" onclick="createPostWithImages()">
-                            <span class="post-action-icon"><i class="fi fi-rr-camera"></i></span>
-                            <span>Foto</span>
-                        </button>
-                        <button class="post-action-btn">
-                            <span class="post-action-icon"><i class="fi fi-rr-video-camera"></i></span>
-                            <span>Video</span>
-                        </button>
-                        <button class="post-action-btn">
-                            <span class="post-action-icon"><i class="fi fi-rr-document"></i></span>
-                            <span>Doc</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Feed Posts -->
-                <div id="feed-posts">
-                    <!-- Post 1 -->
-                    <div class="card post-card" 
-                         data-author="Santiago Sterling"
-                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
-                         data-headline="Desarrollador de software"
-                         data-time="2026"
-                         data-content="Transformo ideas en soluciones digitales que generan impacto real. Este espacio reúne los proyectos que he desarrollado y las soluciones en las que he dejado mi huella profesional. Mi objetivo es que cada experiencia sea clara, útil y de alto valor."
-                         data-images="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800,https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800,https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800"
-                         data-likes="23"
-                         data-comments="3"
-                         data-shares="1">
-                    </div>
-
-                    <!-- Post 2 -->
-                    <div class="card post-card" 
-                         data-author="Dashboar control producción"
-                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
-                         data-headline="Excel | Power Query | Power BI | Dax"
-                         data-time="5h"
-                         data-content="Desarrollé un dashboard en Power BI para analizar y monitorear el desempeño productivo de la empresa, permitiendo visualizar el histórico por año, mes, semana y turno, con métricas clave como producción, órdenes de producción y componentes. Además, integré un indicador de límite inferior para detectar incumplimientos de la meta diaria, facilitando el control operativo, la identificación temprana de desviaciones y la toma de decisiones."
-                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Power%20BI%2000.jpg?raw=true"
-                         data-likes="15"
-                         data-comments="4"
-                         data-shares="8">
-                    </div>
-
-                    <!-- Post 3 -->
-                    <div class="card post-card" 
-                         data-author="Sterling Music Player"
-                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
-                         data-headline="HTML | CSS | JavaScript | Tailwind"
-                         data-time="2025"
-                         data-content="Reproductor de música online diseñado para la reproducción de archivos de audio locales, que permite al usuario cargar su música directamente desde el dispositivo y escucharla en el navegador sin necesidad de instalaciones externas. La aplicación ofrece una experiencia fluida, optimizada y accesible, con controles intuitivos de reproducción y compatibilidad con los principales formatos de audio, aprovechando las capacidades nativas de las tecnologías web modernas para garantizar un rendimiento estable y una interacción sencilla."
-                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicMovil1.jpeg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicMovil2.jpeg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicPC2.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicPC1.jpg?raw=true"
-                         data-likes="9"
-                         data-comments="1"
-                         data-shares="5"
-                         data-hasliked="true">
-                    </div>
-
-                    <!-- Post 4 -->
-                    <div class="card post-card" 
-                         data-author="Comparación de OP"
-                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
-                         data-headline="Excel | VBA | Macros"
-                         data-time="2025"
-                         data-content="El sistema permite cargar archivos de Excel sin restricciones y compararlos para detectar coincidencias, diferencias e inconsistencias. Optimiza el análisis de datos al mejorar la trazabilidad, reducir errores manuales y agilizar la gestión de información."
-                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%206.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%207.jpg?raw=true"
-                         data-likes="38"
-                         data-comments="2"
-                         data-shares="3"
-                         data-hasliked="true">
-                    </div>
-
-                    <!-- Post 5 -->
-                    <div class="card post-card" 
-                         data-author="Control de Inventario"
-                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
-                         data-headline="Excel | VBA | Macros"
-                         data-time="2025"
-                         data-content="Sistema integral en Excel con macros y VBA para gestionar inventarios, que permite registrar productos, controlar ingresos y salidas, consultar stock en tiempo real, generar reportes y elaborar pedidos al almacén, asegurando trazabilidad y eficiencia."
-                         data-images="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen1.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen2.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen3.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen4.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen5.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen6.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen7.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen8.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen9.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen10.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen11.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen12.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen13.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen14.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen15.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen16.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen17.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen18.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen19.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen20.png?raw=true"
-                         data-likes="68"
-                         data-comments="1"
-                         data-shares="5">
-                    </div>
-
-		    <!-- Post 6 -->
-                    <div class="card post-card" 
-                         data-author="Dashboard Indicadores de planta"
-                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
-                         data-headline="Excel | VBA | Macros"
-                         data-time="2023"
-                         data-content="Este proyecto de Dashboard de Indicadores de Producción nace con el objetivo de transformar datos operativos en información estratégica, permitiendo visualizar en tiempo real el desempeño de la planta a través de indicadores clave como productividad, eficiencia, calidad, tiempos de parada y cumplimiento de objetivos.
-
-Mediante una visualización clara, intuitiva y centralizada, el dashboard facilita la detección temprana de desviaciones, el análisis de tendencias y la identificación de oportunidades de mejora continua. De esta manera, se convierte en una herramienta fundamental para optimizar procesos, reducir costos y fortalecer la toma de decisiones en todos los niveles de la organización."
-                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%203.jpg?raw=true"
-                         data-likes="18"
-                         data-comments="2"
-                         data-shares="5">
-                    </div>
-		    <!-- Post 7 -->
-                    <div class="card post-card" 
-                         data-author="Gestión de inventario de tintas"
-                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
-                         data-headline="Excel | VBA | Macros"
-                         data-time="2023"
-                         data-content="Macro desarrollada en Microsoft Excel con VBA para la gestión integral del inventario de tintas, que incorpora un sistema de control de usuarios por roles para garantizar seguridad y confiabilidad de la información. La herramienta dispone de un usuario básico, enfocado en la consulta y visualización del inventario sin permisos de modificación, y un usuario administrador, protegido mediante clave de acceso, con privilegios avanzados para realizar operaciones CRUD (crear, leer, actualizar y eliminar) sobre todos los registros del inventario. El sistema permite administrar referencias, cantidades, movimientos y estados de las tintas, integrando validaciones, automatización de procesos y formularios VBA que facilitan una gestión eficiente, ordenada y segura, ideal para entornos operativos que requieren control y trazabilidad del inventario."
-                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%206.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%207.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%208.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%209.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%2010.jpg?raw=truehttps://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%2011.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%2012.jpg?raw=true"
-                         data-likes="18"
-                         data-comments="2"
-                         data-shares="5">
-                    </div>
-                </div>
-            </main>
-
-            <!-- Sidebar Right -->
-            <aside class="sidebar-right">
-                <div class="card news-card">
-                    <div class="news-header">Noticias destacadas</div>
-                    <div class="news-item">
-                        <div class="news-title">Nuevas tendencias</div>
-                        <div class="news-meta">1d • 12,453 lectores</div>
-                    </div>
-                    <div class="news-item">
-                        <div class="news-title">Cambios en el mercado laboral</div>
-                        <div class="news-meta">2d • 8,921 lectores</div>
-                    </div>
-                    <div class="news-item">
-                        <div class="news-title">IA y el futuro del trabajo</div>
-                        <div class="news-meta">3d • 15,234 lectores</div>
-                    </div>
-                    <div class="news-item">
-                        <div class="news-title">Startups que revolucionan</div>
-                        <div class="news-meta">4d • 6,782 lectores</div>
-                    </div>
-                    <div class="news-item">
-                        <div class="news-title">Consejos para networking</div>
-                        <div class="news-meta">5d • 9,445 lectores</div>
-                    </div>
-                </div>
-
-                <div style="font-size: 11px; color: var(--text-secondary); padding: 16px; text-align: center;">
-                    <div style="margin-bottom: 8px;">
-                        <a href="#" style="color: var(--text-secondary); margin: 0 8px;">Acerca de</a>
-                        <a href="#" style="color: var(--text-secondary); margin: 0 8px;">Accesibilidad</a>
-                        <a href="#" style="color: var(--text-secondary); margin: 0 8px;">Protección de datos</a>
-                    </div>
-                    <div>Santiago Sterling © 2026</div>
-                </div>
-            </aside>
-        </div>
+    <!-- Menu desktop -->
+    <div class="hidden md:flex items-center gap-3 text-gray-500 text-xs">
+      <a href="#sobremi" class="text-center px-3 py-1 rounded-full hover:text-sm font-medium hover:font-bold transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Sobre mi</a>
+      <a href="#estudio" class="text-center px-3 py-1 rounded-full hover:text-sm font-medium hover:font-bold transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Formación</a>
+      <a href="#experiencia" class="text-center px-3 py-1 rounded-full text-sm font-medium hover:font-bold transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Experiencia</a>
+      <a href="#desarrollo" class="text-center px-3 py-1 rounded-full text-sm font-medium hover:font-bold transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Desarrollos</a>
+      <a href="#competencia" class="text-center px-3 py-1 rounded-full text-sm font-medium hover:font-bold transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Competencias</a>
+      <a href="#estrategia" class="text-center px-3 py-1 rounded-full text-sm font-medium hover:font-bold transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">Estrategias</a>
+      <a href="#contacto" class="border border-black/30 text-center px-3 py-1 rounded-full text-sm font-medium transition-all hover:bg-[#007AFF] hover:text-white hover:border-[#007AFF] inline-block text-center cursor-pointer">Contacto</a>
     </div>
 
-    <!-- Profile Page -->
-    <div class="page" id="profile-page">
-        <div class="main-container">
-            <div style="grid-column: 1 / -1;">
-                <div class="profile-page-header">
-                    <div class="profile-banner"></div>
-                    <div class="profile-main-info">
-                        <div class="profile-avatar-large"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
-                        <div class="profile-name-large">Santiago Sterling</div>
-                        <div class="profile-headline-large">Tecnologo en análisis y desarrollo de software</div>
-                        <div class="profile-location">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-right:6px; vertical-align:middle;">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#EA4335"/>
-        <circle cx="12" cy="9" r="3" fill="white"/>
-    </svg>
-    Cali, Valle del Cauca, Colombia
+    <!-- Botón hamburguesa (+) -->
+    <button id="menu-toggle" class="md:hidden card-btn" aria-label="Abrir menú"><i class="fi fi-sr-add"></i></button>
+
+  </div>
+
+  <!-- Menu mobile -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden px-6 pt-6 pb-6 text-gray-700 flex-col gap-4"
+  >
+    <a href="#sobremi" class="py-2 border-b border-black/5">Sobre mi</a>
+    <a href="#estudio" class="py-2 border-b border-black/5">Formación</a>
+    <a href="#experiencia" class="py-2 border-b border-black/5">Experiencia</a>
+    <a href="#desarrollo" class="py-2 border-b border-black/5">Desarrollos</a>
+    <a href="#competencia" class="py-2 border-b border-black/5">Competencias</a>
+    <a href="#estrategia" class="py-2 border-b border-black/5">Estrategias</a>
+    <a href="#contacto" class="py-2">Contacto</a>
+  </div>
+
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 class="px-10 py-10 font-extrabold tracking-tight text-black">
+            ¡Hola!, soy <span class="bg-gradient-to-r from-yellow-300 via-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">Santiago Sterling</span> e <span class="decoration-gold/60">impulso el crecimiento digital</span>.
+          </h1>
+  <div class="creative">Desarrollador de Software</div>
+
+  <div class="mockups">
+    <div class="phone left">
+      <div class="screen">
+        <video src="https://cdn.pixabay.com/video/2025/12/22/323793_large.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </div>
+
+    <div class="phone center">
+      <div class="screen">
+        <video src="https://cdn.pixabay.com/video/2020/10/19/52823-471089056_large.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </div>
+
+    <div class="phone right">
+      <div class="screen">
+        <video src="https://cdn.pixabay.com/video/2024/05/25/213648_large.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </div>
+  </div>
+</section>
+      
+          <br>
+
+           <div class="flex justify-center w-full mb-20">
+            <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1 mx-auto text-center">
+              <a href="proyectoApp.html" class="active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
+                    Proyectos
+                  </a>
+              <a href="windows.html" class="active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
+                    Repositorio
+                  </a>
+              <a id="downloadCV" href="#" class="px-5 py-1 rounded-full text-sm text-center text-white bg-black/30 hover:bg-white/10 backdrop-blur-sm transition">CV en txt</a>
+             </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+  </div>
 </div>
-     
-                        <div class="profile-actions">
-                            <a href="https://santiago131440.github.io/SantiagoSterling/index.html" class="stat-item apple-btn"><span>LinkedIn</span></a>
-                            <a href="https://santiago131440.github.io/SantiagoSterling/index.html" class="stat-item apple-btn"><span>Portafolio</span></a>
-                            <a href="https://santiago131440.github.io/SantiagoSterling/windows.html" class="stat-item apple-btn"><span>Repositorio</span></a>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="card" style="padding: 24px; margin-bottom: 16px;">
-                </div>
+    <!------------------------------- SOBRE MI -------------------------------------->
+        <section id="sobremi"
+          class="mt-4 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-5"
+          style="
+            --bg-color: linear-gradient(
+             
+              #f5f5f7,
+              #f5f5f7,
+              #f5f5f7
+            );
+            background: var(--bg-color);
+          "
+        >
+  <!----------------------------- Patrón de puntos animado --------------------------------------->
+  <div class="absolute inset-0 z-[1] pointer-events-none dot-pattern"></div>
 
-                <div class="card" style="padding: 24px; margin-bottom: 16px;">
-                    <h2 style="font-size: 20px; margin-bottom: 16px;">Experiencia</h2>
-                    <div style="display: flex; gap: 12px; margin-bottom: 24px;">
-                        <div class="job-logo">TC</div>
-                        <div style="flex: 1;">
-                            <h3 style="font-size: 16px; font-weight: 600;">Desarrollador Senior</h3>
-                            <div style="font-size: 14px; margin-bottom: 4px;">Tech Company</div>
-                            <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">Ene 2022 - Presente • 3 años</div>
-                            <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary);">
-                                Liderando el desarrollo de aplicaciones web modernas usando React, Node.js y tecnologías cloud. Implementación de arquitecturas escalables y mejores prácticas de desarrollo.
-                            </p>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 12px;">
-                        <div class="job-logo" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">ST</div>
-                        <div style="flex: 1;">
-                            <h3 style="font-size: 16px; font-weight: 600;">Desarrollador Full Stack</h3>
-                            <div style="font-size: 14px; margin-bottom: 4px;">StartupTech</div>
-                            <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">Jun 2020 - Dic 2021 • 1 año 7 meses</div>
-                            <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary);">
-                                Desarrollo de features end-to-end para plataforma SaaS. Colaboración con equipos multidisciplinarios en ambiente ágil.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+  <div class="flex justify-center items-center min-h-screen px-1 md:px-2">
+    <div class="w-full max-w-6xl mx-auto">
+        <div class="rounded-3xl shadow-7xl border border-[#E7E5E4] py-12 px-6 md:px-10">
 
-                <div class="card" style="padding: 24px;">
-                    <h2 style="font-size: 20px; margin-bottom: 16px;">Aptitudes</h2>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <div class="job-tag" style="background: var(--primary-blue); color: white;">HTML5</div>
-                        <div class="job-tag" style="background: var(--primary-blue); color: white;">CSS3</div>
-                        <div class="job-tag" style="background: var(--primary-blue); color: white;">JavaScript</div>
-                        <div class="job-tag">Python</div>
-                        <div class="job-tag">Django</div>
-                        <div class="job-tag">AWS</div>
-                        <div class="job-tag">MongoDB</div>
-                        <div class="job-tag">SQL</div>
-                        <div class="job-tag">Docker</div>
-                        <div class="job-tag">Git</div>
-						<div class="job-tag">Excel</div>
-						<div class="job-tag">Power BI</div>
-						<div class="job-tag">Macros | VBA</div>
-      <div class="job-tag">Clean Code</div>
-      <div class="job-tag">Agile</div>
-      <div class="job-tag">API.REST</div>
-      <div class="job-tag">Software Development</div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="md:col-span-2 space-y-4">
+
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+                  Sobre mi
+                </h1>
+
+                <p class="text-sm mb-4 text-[#78716C]">
+                  Tecnólogo en Análisis y desarrollo de software <span class="text-amber-500">y Tecnólogo en Gestión de la Producción Industrial con más de 8 años de experiencia en manufactura, </span>enfocado en optimización de procesos mediante tecnología, automatización y análisis de datos, con interés en inteligencia artificial e Industria 4.0.
+                </p>
+
+                <div class="grid sm:grid-cols-2 gap-4 mt-4">
+
+                  <div class="p-4 rounded-xl bg-white/90 backdrop-blur-md">
+                    <div class="text-sm text-[#78716C]"><strong>Proceso</strong></div>
+                    <ul class="mt-2 text-[#78716C] text-sm list-disc list-inside">
+                      <h4>Experiencia en gestión de producción, control de inventarios y mejora continua.</h4>
+                    </ul>
+                  </div>
+
+                  <div class="p-4 rounded-xl bg-white/90 backdrop-blur-md">
+                    <div class="text-sm text-[#78716C]"><strong>Objetivo</strong></div>
+                    <div class="flex gap-2 flex-wrap mt-2 text-[#78716C] text-sm">
+                      <span>Colaborar en proyectos que combinen automatización, analítica y desarrollo web.</span>
                     </div>
+                  </div>
+
                 </div>
+              </div>
+
+          <aside 
+            class="p-6 rounded-2xl relative border overflow-hidden backdrop-blur-lg text-white"
+            style="
+              background-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Dec%202,%202025,%2009_49_54%20AM.png?raw=true');
+              background-size: cover;
+              background-position: center;
+            "
+          >
+            <!-- Capa oscura para mejorar legibilidad -->
+            <div class="absolute inset-0 bg-[#E7E5E4]"></div>
+
+            <!-- Contenido -->
+            <div class="relative z-10">
+              <div class="text-xl text-stone-400 font-bold">Información clave</div>
+              <div class="mt-3 space-y-1 text-[#78716C] text-sm">
+                <p><strong>Ubicación:</strong> Cali, Colombia.</p>
+                <p><strong>Rol:</strong> Desarrollador de software.</p>
+                <p><strong>Disponibilidad:</strong> Contrato inmediato.</p>
+                <p><strong>LinkedIn:</strong> in/santiago-sterling-0a02a116a/</p>
+              </div>
             </div>
-        </div>
+          </aside>
+
+            </div>
+
+          </div>
+        </section>
+        <br>
+        <br>
+        <br>
+
+    <!------------------------------------------ FORMACIÓN ACADÉMICA ------------------------------------------------------>
+ <section id="estudio" class="mt-1">
+
+  <!-- TÍTULO -->
+  <div class="text-center mb-2 fade-in">
+    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+      Formación académica
+    </h1>
+  </div>
+  <br>
+
+<section class="mac-section">
+
+  <!-- Finder Panel -->
+  <div class="finder-window">
+      <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Cosmoagro S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Cosmoagro S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Cosmoagro S.A."></span>
     </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Categorías académicas
+    </h3>
+  </div>
 
-    <!-- Network Page -->
-    <div class="page" id="network-page">
-        <div class="main-container">
-            <div style="grid-column: 1 / -1;">
-                <div class="network-tabs">
-                    <div class="network-tab active">Conexiones</div>
-                    <div class="network-tab">Invitaciones</div>
-                </div>
+    <div class="finder-content">
+      <ul class="file-list">
+        <li onclick="openModal(
+                'Formación tecnológica',
+                `
+                      - 📄 Tecnología en análisis y desarrollo de software.
+                          Institución: Servicio Nacional de Aprendizaje (SENA)
+                          Estado: En curso.
+                          
 
-                <div class="connection-grid" id="connections-grid">
-                    <!-- Connections will be added here -->
-                </div>
-            </div>
-        </div>
+                      - 📄 Tecnología en gestión de la producción industrial.
+                          Institución: Servicio Nacional de Aprendizaje (SENA)
+                          Estado: Culminado.
+                          Certificación: 25 Noviembre 2016
+                `
+              )">
+
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Formación tecnológica</span>
+          <span class="date text-sm">2 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Backend/Lógica de programación',
+                `
+                      - 📄 Curso de Programación Orientada a Objetos (POO)
+                      - 📄 Curso Básico de Programación
+                      - 📄 Curso Básico de Algoritmos y Pensamiento Lógico
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Backend</span>
+          <span class="date text-sm">3 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - DevOps / Cloud',
+                `
+                      - 📄 Curso de Introducción al Despliegue de Aplicaciones
+                      - 📄 Curso de Introducción a AWS: Cómputo, Almacenamiento y Bases de Datos
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - DevOps / Cloud</span>
+          <span class="date text-sm">2 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Frontend',
+                `
+                      - 📄 Curso de Frontend Developer
+                      - 📄 Curso Práctico de Frontend Developer
+                      - 📄 Curso Definitivo de HTML y CSS
+                      - 📄 Curso Práctico de HTML y CSS
+                      - 📄 Curso Práctico de Maquetación en CSS
+                      - 📄 Curso Profesional de CSS Grid Layout
+                      - 📄 Curso de Responsive Design: Maquetación Mobile First
+                      - 📄 Curso Básico de Tailwind 2 y 3
+                      - 📄 Curso de Diseño para Developers
+                      - 📄 Curso de Manipulación del DOM
+                      - 📄 Curso de Next.js
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Frontend</span>
+          <span class="date text-sm">11 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Herramientas de Desarrollo',
+                `
+                      - 📄 Curso Profesional de Git y GitHub
+                      - 📄 Curso de Introducción a la Terminal y Línea de Comandos
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Herramientas de Desarrollo</span>
+          <span class="date text-sm">2 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Javascript',
+                `
+                      - 📄 Curso Básico de JavaScript
+                      - 📄 Curso Práctico de JavaScript
+                      - 📄 Curso de Asincronismo con JavaScript
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75 " alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Javascript</span>
+          <span class="date text-sm">3 archivos</span>
+        </li>
+
+        <li onclick="openModal('Cursos cortos del SENA',
+                `
+                      - 📄 Calidad en el desarrollo de software - Abril, 2022
+                      - 📄 Metodología de la programación de sistemas informáticos - Mayo, 2022
+                      - 📄 Modelos de calidad de software - Septiembre, 2023
+                      - 📄 Procesos para software de calidad - Diciembre, 2024
+                      - 📄 Aplicación del marco de trabajo Scrum para proyectos de desarrollo de software - Marzo, 2025
+                      - 📄 Manejo de pruebas de software - Marzo, 2025
+                      - 📄 Variables y estructuras de control en Python - Julio, 2025
+                `
+              )">
+          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
+          <span class="name text-sm">SENA - Cursos cortos</span>
+          <span class="date text-sm"> 7 archivos</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Bases de datos',
+                `
+                      - 📄 Curso de Fundamentos de Bases de Datos
+                `
+              )">
+          <span class="icon"><img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284038_1280.png" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Bases de datos</span>
+          <span class="date text-sm">1 archivo</span>
+        </li>
+
+        <li onclick="openModal('Platzi - Ingeniería de Software',
+                `
+                      - 📄 Fundamentos de Ingeniería de Software
+                `
+              )">
+          <span class="icon"><img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284038_1280.png" alt="Folder"/></span>
+          <span class="name text-sm">Platzi - Ingeniería de Software</span>
+          <span class="date text-sm">1 archivo</span>
+        </li>
+
+        <li onclick="openModal(
+                'Educación media',
+                `
+                      - 📄 Bachiller técnico en informatica.
+                          Institución: Institución Educativa Ana Josefa Morales Duque.
+                          Estado: Culminado.
+                          Certificación: 25 Noviembre 2011
+                `
+              )">
+          <span class="icon"><img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284038_1280.png" alt="Folder"/></span>
+          <span class="name text-sm">Educación media</span>
+          <span class="date text-sm">1 archivo</span>
+        </li>
+      </ul>
     </div>
+  </div>
 
-    <!-- Jobs Page -->
-    <div class="page" id="jobs-page">
-        <div class="main-container">
-            <div style="grid-column: 1 / -1;">
-                <div class="card" style="padding: 16px; margin-bottom: 16px;">
-                    <div style="font-size: 20px; font-weight: 600; margin-bottom: 16px;">Conoce la gama de empleos del sector</div>
-                    <div style="font-size: 14px; color: var(--text-secondary);">Basados en tu perfil y búsquedas</div>
-                </div>
-
-                <div id="jobs-list">
-                    <!-- Jobs will be added here -->
-                </div>
-            </div>
+  <!-- Modal macOS -->
+  <div class="mac-modal" id="macModal">
+    <div class="modal-window">
+      <div class="modal-titlebar">
+        <div class="controls">
+          <span class="c red" onclick="closeModal()"></span>
+          <span class="c yellow"></span>
+          <span class="c green"></span>
         </div>
+        <span class="title" id="modalTitle"></span>
+      </div>
+
+      <div class="modal-body">
+        <p id="modalContent"></p>
+      </div>
     </div>
+  </div>
 
-    <!-- Post Detail Overlay -->
-    <div class="post-detail-overlay" id="postDetailOverlay">
-        <div class="post-detail-container">
-            <button class="post-detail-close" onclick="closePostDetail()">×</button>
-            <div class="post-detail-media">
-                <button class="media-nav-btn prev" onclick="navigateMedia(-1)" id="prevMediaBtn">‹</button>
-                <button class="media-nav-btn next" onclick="navigateMedia(1)" id="nextMediaBtn">›</button>
-                <div class="photo-counter" id="photoCounter">1 / 3</div>
-                <img src="" alt="Post media" id="detailMediaImage">
-            </div>
-            <div class="post-detail-sidebar">
-                <div class="post-header">
-                    <div class="post-avatar" id="detailAvatar">SS</div>
-                    <div class="post-info">
-                        <div class="post-author" id="detailAuthor">Santiago Sterling</div>
-                        <div class="post-meta" id="detailMeta">Tecnologo en análisis y desarrollo de software | 2h</div>
-                    </div>
-                </div>
-                <div class="post-content" id="detailContent" style="max-height: none;">
-                    Contenido del post...
-                </div>
-                <div class="post-stats">
-                    <div class="post-reactions">
-                        <div class="reaction-icons">
-                            <span class="reaction-icon like-icon"><i class="fi fi-rr-thumbs-up"></i></span>
-                            <span class="reaction-icon love-icon"><i class="fi fi-rr-heart"></i></span>
-                            <span class="reaction-icon celebrate-icon">🎉</span>
-                        </div>
-                        <span id="detailLikes">24</span>
-                    </div>
-                    <div>
-                        <span id="detailComments">2 comentarios</span>
-                    </div>
-                </div>
-                <div class="post-actions">
-                    <button class="post-action" onclick="toggleDetailLike()">
-                        <span class="post-action-icon"><i class="fi fi-rr-heart"></i></span>
-                        <span>Me gusta</span>
-                    </button>
-                    <button class="post-action">
-                        <span class="post-action-icon"><i class="fi fi-rr-comment"></i></span>
-                        <span>Comentar</span>
-                    </button>
-                    <button class="post-action">
-                            <span class="post-action-icon"><i class="fi fi-rr-magic-wand"></i></span>
-                            <span>Ver</span>
-                        </button>
-                </div>
-                <div class="comments-section active" style="flex: 1; overflow-y: auto;">
-                    <div class="comment">
-                        <div class="comment-avatar"><img src="https://i.pravatar.cc/150?img=8" alt="JP"></div>
-                        <div>
-                            <div class="comment-content">
-                                <div class="comment-author">Julián Rivas</div>
-                                <div class="comment-text">¡Felicidades! se nota tu esfuerzo 👏</div>
-                            </div>
-                            <div class="comment-time">3h • Me gusta • Responder</div>
-                        </div>
-                    </div>
-                    <div class="comment">
-                        <div class="comment-avatar"><img src="https://i.pravatar.cc/150?img=9" alt="MC"></div>
-                        <div>
-                            <div class="comment-content">
-                                <div class="comment-author">Ximena Sterling</div>
-                                <div class="comment-text">Increíble logro! Sigue así</div>
-                            </div>
-                            <div class="comment-time">2h • Me gusta • Responder</div>
-                        </div>
-                    </div>
-                    <div class="add-comment">
-                        <div class="comment-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
-                        <input type="text" placeholder="Añade un comentario...">
-                    </div>
-                </div>
-            </div>
-        </div>
+</section>
+
+
+</section>
+
+<br>
+<br>
+<br>
+<br>
+
+<hr>
+
+    <!-------------------------------------------- EXPERIENCIA PROFESIONAL ---------------------------------------------->
+    <section id="experiencia" class="mt-16">
+      <div class="flex items-center justify-center text-center">
+        <h2 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">Experiencia Profesional</h2>
+      </div>
+      <br>
+      <br>
+      <div id="projectsGrid" class="mt-3 grid md:grid-cols-2 lg:grid-cols-3 gap-4 rounded-2xl backdrop-blur-md p-4">
+        <!-- project cards (repetitive rich markup for length + SEO) -->
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Cosmoagro S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Cosmoagro S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Cosmoagro S.A."></span>
     </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Cosmoagro S.A.
+    </h3>
+  </div>
+  <!-- Contenedor de imagen principal con avatar -->
+  <div class="relative p-0">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_cover.jpg?raw=true" 
+         alt="Portada Cosmoagro" 
+         class="w-full h-full object-cover shadow-sm">
+    <!-- Avatar flotante -->
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_logo.jpg?raw=true" alt="Perfil Cosmoagro" class="mt-2 w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  <!-- Contenido de la ventana -->
+  <div class="mt-8 p-2"> <!-- mt-8 deja espacio para el avatar -->
+    <h4 class="font-semibold text-lg text-emerald-500">Analista de producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Optimizar procesos, analizar indicadores y mejorar eficiencia operativa, garantizando calidad, continuidad y control en la planta.</p>
+    <footer class="bg-black/10 rounded-full">
+      <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
+        <div class="flex justify-start items-center gap-2 text-left w-full">
+          <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Inicio: 2024/12/10</span>
+          <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Actualidad</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+</article>
 
-    <!-- Chat Widget -->
-    <div class="chat-widget" id="chatWidget">
-        <div class="chat-header" onclick="minimizeChat()">
-            <div class="chat-user-info">
-                <div class="chat-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
-                <div>
-                    <div class="chat-name">Santiago Sterling</div>
-                    <div style="font-size: 11px; color: var(--success-green);">● En línea</div>
-                </div>
-            </div>
-            <button style="border: none; background: transparent; cursor: pointer; font-size: 20px;" onclick="event.stopPropagation(); toggleChat()">×</button>
-        </div>
-        <div class="chat-messages" id="chatMessages">
-            <div class="chat-message">
-                <div class="chat-message-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
-                <div class="chat-message-content">
-                    Te doy la bienvenida a este espacio donde las ideas se convierten en acción y cada avance suma. Gracias por ser parte del camino.
-                </div>
-            </div>
-            <div class="chat-message own">
-                <div class="chat-message-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
-                <div class="chat-message-content">
-                    Muchas gracias!
-                </div>
-            </div>
-            <div class="chat-message">
-                <div class="chat-message-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
 
-                <div class="chat-message-content">
-                    Llego para aportar valor, transformar ideas en resultados y llevar cada proyecto más lejos. ¿Deseas contactar?
-                </div>
-            </div>
-        </div>
-        <div class="chat-input-container">
-            <input type="text" placeholder="Escribe un mensaje..." id="chatInput" onkeypress="handleChatEnter(event)">
-            <button class="chat-send-btn" onclick="sendMessage()">Enviar</button>
-        </div>
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Coca Cola Femsa"></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Coca Cola Femsa"></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Coca Cola Femsa"></span>
     </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Coca Cola Femsa
+    </h3>
+  </div>
+  <!-- Contenedor de imagen principal con avatar -->
+  <div class="relative p-0">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_cover.jpg?raw=true" 
+         alt="Portada Coca Cola" 
+         class="w-full h-full object-cover shadow-sm">
+    <!-- Avatar flotante -->
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_logo.jpg?raw=true" alt="Perfil Coca Cola" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  <!-- Contenido de la ventana -->
+  <div class="mt-8 p-2"> <!-- mt-8 deja espacio para el avatar -->
+    <h4 class="font-semibold text-lg text-rose-500">Técnico Analista</h4>
+    <p class="text-sm text-slate-700 mt-1">Enfocado en el control de procesos, mejora continua y gestión eficiente para impulsar la productividad, así mismo el cumplimiento de la calidad del producto.</p>
+    <footer class="bg-black/10 rounded-full">
+    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
+      <div class="flex justify-start items-center gap-2 text-left w-full">
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Inicio: 2023/07/07</span>
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Fin: 2024/06/07</span>
+      </div>
+          </div>
+    </footer>
+  </div>
+</article>
 
-    <script>
-        // Posts array - will be populated from HTML data attributes
-        let posts = [];
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
+  
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Cadena S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Cadena S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Cadena S.A."></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Cadena S.A.
+    </h3>
+  </div>
 
-        const connections = [
-            { name: "María Contreras", title: "Frontend Developer en Google", avatar: "MC", mutual: 45 },
-            { name: "Juan Pérez", title: "Data Scientist en Microsoft", avatar: "JP", mutual: 32 },
-            { name: "Elena Torres", title: "Product Manager en Amazon", avatar: "ET", mutual: 28 },
-            { name: "Roberto Silva", title: "Backend Engineer en Meta", avatar: "RS", mutual: 51 },
-            { name: "Carmen López", title: "UX Designer en Apple", avatar: "CL", mutual: 39 },
-            { name: "Miguel Ángel", title: "DevOps Engineer en Netflix", avatar: "MA", mutual: 22 },
-            { name: "Isabel García", title: "Marketing Manager en Spotify", avatar: "IG", mutual: 47 },
-            { name: "Fernando Ruiz", title: "ML Engineer en Tesla", avatar: "FR", mutual: 19 }
-        ];
+  <div class="relative p-0">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_cover.jpg?raw=true" 
+         alt="Portada Cadena" 
+         class="w-full h-full object-cover shadow-sm">
+    
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_logo.jpg?raw=true" alt="Perfil Cadena" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  
+  <div class="mt-8 p-2">
+    <h4 class="font-semibold text-lg text-amber-500">Supervisor de Producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Experiencia liderando equipos, asegurando el cumplimiento del plan, optimizando procesos y garantizando calidad, seguridad y eficiencia operativa.</p>
+    <footer class="bg-black/10 rounded-full">     
+    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
+      <div class="flex justify-start items-center gap-2 text-left w-full">
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Inicio: 2020/01/20</span>
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Fin: 2023/02/17</span>
+      </div>
+    </div>
+    </footer>
+  </div>
+</article>
 
-        const jobs = [
-            {
-                title: "Senior Full Stack Developer",
-                company: "TechCorp Innovation",
-                location: "Remoto",
-                logo: "TC",
-                time: "Publicado hace 2 días",
-                applicants: "34 solicitantes",
-                tags: ["React", "Node.js", "AWS"]
-            },
-            {
-                title: "UX/UI Designer",
-                company: "Design Studio Pro",
-                location: "Remoto",
-                logo: "DS",
-                time: "Publicado hace 5 días",
-                applicants: "92 solicitantes",
-                tags: ["Figma", "User Research", "Prototyping"]
-            },
-            {
-                title: "DevOps Engineer",
-                company: "Cloud Systems Ltd",
-                location: "Valencia, España",
-                logo: "CS",
-                time: "Publicado hace 1 día",
-                applicants: "43 solicitantes",
-                tags: ["Docker", "Kubernetes", "CI/CD"]
-            }
-        ];
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Postobón S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Postobón S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Postobón S.A."></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Postobón S.A.
+    </h3>
+  </div>
+  
+  <div class="relative p-0">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_cover.jpg?raw=true" 
+         alt="Portada Postobón" 
+         class="w-full h-full object-cover shadow-sm">
+    
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_logo.jpg?raw=true" alt="Perfil Postobón" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+ 
+  <div class="mt-8 p-2">
+    <h4 class="font-semibold text-lg text-cyan-500">Analista de producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Orientado a optimizar flujos de trabajo, reducir desperdicios y asegurar operaciones eficientes mediante análisis de datos y mejora continua.</p>
 
-        let currentPostDetail = null;
-        let currentMediaIndex = 0;
+    <footer class="bg-black/10 rounded-full">     
+    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
+      <div class="flex justify-start items-center gap-2 text-left w-full">
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Inicio: 2019/03/08</span>
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Fin: 2019/08/06</span>
+      </div>
+    </div>
+    </footer>
+  </div>
+</article>
 
-        // Initialize
-        function initializeApp() {
-            loadPostsFromHTML();
-            renderPosts();
-            initializeConnections();
-            initializeJobs();
-            updateActiveNav();
-        }
+        
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Laboratorios OSA S.A.S"></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Laboratorios OSA S.A.S"></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Laboratorios OSA S.A.S"></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Laboratorios OSA S.A.S
+    </h3>
+  </div>
+  <!-- Contenedor de imagen principal con avatar -->
+  <div class="relative p-0">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_cover.jpg?raw=true" 
+         alt="Portada Laboratorios OSA" 
+         class="w-full h-full object-cover shadow-sm">
+    <!-- Avatar flotante -->
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_logo.jpg?raw=true" alt="Perfil Laboratorios OSA" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  <!-- Contenido de la ventana -->
+  <div class="mt-8 p-2"> <!-- mt-8 deja espacio para el avatar -->
+    <h4 class="font-semibold text-lg text-rose-500">Analista de producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Gestión de indicadores y optimización de procesos productivos para mantener operaciones estables, eficientes y de alta calidad para los clientes.</p>
 
-        // Load posts from HTML data attributes
-        function loadPostsFromHTML() {
-            const postElements = document.querySelectorAll('#feed-posts .post-card');
-            posts = Array.from(postElements).map((el, index) => {
-                const images = el.dataset.images ? el.dataset.images.split(',') : [];
-                return {
-                    id: index + 1,
-                    author: el.dataset.author,
-                    avatar: el.dataset.avatar,
-                    headline: el.dataset.headline,
-                    time: el.dataset.time,
-                    content: el.dataset.content,
-                    images: images,
-                    likes: parseInt(el.dataset.likes) || 0,
-                    comments: parseInt(el.dataset.comments) || 0,
-                    shares: parseInt(el.dataset.shares) || 0,
-                    hasLiked: el.dataset.hasliked === 'true'
-                };
-            });
-        }
+    <footer class="bg-black/10 rounded-full">     
+    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
+      <div class="flex justify-start items-center gap-2 text-left w-full">
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Inicio: 2018/06/16</span>
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Fin: 2019/03/06</span>
+      </div>
+    </div>
+    </footer>
+  </div>
+</article>
 
-        // Render posts
-        function renderPosts() {
-            const feedContainer = document.getElementById('feed-posts');
-            feedContainer.innerHTML = '';
-            posts.forEach(post => {
-                feedContainer.innerHTML += createPostHTML(post);
-            });
-        }
+<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
+  <!-- Barra superior estilo MacOS -->
+  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Smurfit Westrock S.A."></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Smurfit Westrock S.A."></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Smurfit Westrock S.A."></span>
+    </div>
+    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
+      <span class="text-stone-200">--</span>Smurfit Westrock S.A.
+    </h3>
+  </div>
+  <!-- Contenedor de imagen principal con avatar -->
+  <div class="relative p-0">
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_cover.jpg?raw=true" 
+         alt="Portada Smurfit Westrock" 
+         class="w-full h-full object-cover">
+    <!-- Avatar flotante -->
+    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_logo.jpg?raw=true" alt="Perfil Smurfit Westrock" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+  <!-- Contenido de la ventana -->
+  <div class="mt-8 p-2"> <!-- mt-8 deja espacio para el avatar -->
+    <h4 class="font-semibold text-lg text-rose-500">Incremento de producción</h4>
+    <p class="text-sm text-slate-700 mt-1">Impulsar el aumento de producción mediante seguimiento en planta, control de tiempos, apoyo a los operarios y mejora de la eficiencia en cada etapa del proceso.</p>
 
-        // Navigation
-        function navigateTo(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(`${page}-page`).classList.add('active');
-            updateActiveNav(page);
-        }
+    <footer class="bg-black/10 rounded-full">     
+    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
+      <div class="flex justify-start items-center gap-2 text-left w-full">
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Inicio: 2017/03/24</span>
+      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Fin: 2018/03/24</span>
+      </div>
+    </div>
+    </footer>
+  </div>
+</article>
+        <br>
+        <br>
+        <br>
 
-        function updateActiveNav(activePage = 'home') {
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-                if (item.dataset.page === activePage) {
-                    item.classList.add('active');
-                }
-            });
-        }
+      </div>
+    </section>
 
-        // Create post HTML
-        function createPostHTML(post) {
-            const galleryClass = getGalleryClass(post.images.length);
-            const truncated = post.content.length > 200 ? 'truncated' : '';
-            const displayContent = post.content.length > 200 ? post.content.substring(0, 200) + '...' : post.content;
+    <!---------------------------------------- DESARROLLOS E INNOVACIONES ---------------------------------------------------------------->
+     <section id="desarrollo"
+  class="mt-4 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20 bg-cover bg-center bg-no-repeat"
+  style="background-image: linear-gradient(to bottom,
+        rgba(12, 12, 12, 0.062),
+        rgba(0, 0, 0, 0.062),
+        rgba(0, 0, 0, 0.062)
+        ), url('https://cdn.pixabay.com/photo/2020/05/31/17/10/fence-5243343_1280.jpg');">
+  
+  <!-- Overlay para mejorar la lectura -->
+  <div class="absolute inset-0 bg-black/50 rounded-5xl"></div>
+  <div class="w-full max-w-4xl mx-auto py-16">
+  <br>
+  <div class="relative z-10">
+    <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterling-text">Desarrollos e innovaciones</h2>
+  <br>
+    <br>
+      <div class="flex justify-center mb-20">
+          <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
+
+            <a class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer" onclick="openModal('Aviso de Confidencialidad y Protección de Datos',
+                `
+                La información presentada, referida únicamente a los datos recogidos en el marco de los proyectos, es de carácter ficticio y se utiliza exclusivamente con fines académicos, demostrativos o técnicos, sin emplear ni divulgar datos reales o confidenciales. El proyecto respeta la privacidad, la confidencialidad y los derechos de autor, y cumple con la Ley 1581 de 2012 y el Decreto 1377 de 2013 en Colombia sobre protección de datos personales, así como con el Reglamento General de Protección de Datos (GDPR – Reglamento (UE) 2016/679). Asimismo, se acoge a la Ley 23 de 1982 y a la Decisión Andina 351 de 1993 en materia de derechos de autor y propiedad intelectual, garantizando un manejo ético y responsable de la información.               
+  
+                Santiago Sterling - Desarrollador de software.
+                `
+              )"> Ver protección de datos </a>
             
-            let galleryHTML = '';
-            if (post.images.length > 0) {
-                galleryHTML = `<div class="post-gallery ${galleryClass}">`;
-                post.images.slice(0, 4).forEach((img, idx) => {
-                    if (idx === 3 && post.images.length > 4) {
-                        galleryHTML += `
-                            <div class="gallery-item" onclick="openPostDetail(${post.id}, ${idx})">
-                                <img src="${img}" alt="Post image">
-                                <div class="gallery-more">+${post.images.length - 4}</div>
-                            </div>
-                        `;
-                    } else {
-                        galleryHTML += `
-                            <div class="gallery-item" onclick="openPostDetail(${post.id}, ${idx})">
-                                <img src="${img}" alt="Post image">
-                            </div>
-                        `;
-                    }
-                });
-                galleryHTML += '</div>';
-            }
+  
+          </div>
+        
+      </div>
+    <article 
+  class="web-preview-card relative p-0 bg-white/10 backdrop-blur-xl rounded-2xl overflow-hidden cursor-pointer border border-white/20 transition-all duration-500 hover:shadow-2xl hover:scale-[1.02]"
+  onclick="expandWebPreview(this)"
+  data-url="https://santiago131440.github.io/SantiagoSterling/proyectoApp.html"
+>
+  <!-- Barra superior estilo macOS -->
+  <header class="flex items-center justify-between px-4 py-3 bg-white/20 border-b border-white/20">
+    <div class="flex items-center gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+    </div>
+    <div class="text-xs text-slate-200 truncate">
+      Proyectos destacados
+    </div>
+    <div class="w-12"></div>
+  </header>
+  <!-- Contenedor principal -->
+  <div class="relative h-[260px] lg:h-[300px] bg-black">
+    <!-- Overlay preview -->
+    <div class="absolute inset-0 z-10 flex items-center justify-center bg-black/40 backdrop-blur-sm opacity-0 hover:opacity-100 transition">
+      <span class="px-4 py-2 text-sm text-white bg-black/60 rounded-full border border-white/20">
+        Ver todos los proyectos de software
+      </span>
+    </div>
+    <!-- IFRAME vista previa -->
+    <iframe
+      src="https://santiago131440.github.io/SantiagoSterling/proyectoApp.html"
+      class="w-full h-full scale-[1.0] origin-top cursor-pointer"
+      loading="lazy"
+    ></iframe>
+  </div>
+</article>
 
-            const avatarHTML = post.avatar.startsWith('http') 
-                ? `<img src="${post.avatar}" alt="${post.author}">`
-                : post.avatar;
+<br>
+<br>
 
-            return `
-                <div class="card post-card" data-post-id="${post.id}">
-                    <div class="post-header">
-                        <div class="post-avatar">${avatarHTML}</div>
-                        <div class="post-info">
-                            <div class="post-author">${post.author}</div>
-                            <div class="post-meta">${post.headline} • ${post.time}</div>
-                        </div>
-                        <button class="post-menu-btn">⋯</button>
-                    </div>
-                    <div class="post-content ${truncated}" onclick="${post.images.length === 0 ? `openPostDetail(${post.id}, 0)` : ''}">
-                        ${displayContent}
-                        ${post.content.length > 200 ? `<span class="see-more" onclick="openPostDetail(${post.id}, 0)">ver más</span>` : ''}
-                    </div>
-                    ${galleryHTML}
-                    <div class="post-stats">
-                        <div class="post-reactions">
-                            <div class="reaction-icons">
-                                <span class="reaction-icon like-icon">👍</span>
-                                <span class="reaction-icon love-icon">❤️</span>
-                                <span class="reaction-icon celebrate-icon">🎉</span>
-                            </div>
-                            <span>${post.likes}</span>
-                        </div>
-                        <div>
-                            <span>${post.comments} comentarios • ${post.shares} veces compartido</span>
-                        </div>
-                    </div>
-                    <div class="post-actions">
-                        <button class="post-action ${post.hasLiked ? 'liked' : ''}" onclick="toggleLike(${post.id})">
-                            <span class="post-action-icon"><i class="fi fi-rr-heart"></i></i></span>
-                            <span>Me gusta</span>
-                        </button>
-                        <button class="post-action" onclick="toggleComments(${post.id})">
-                            <span class="post-action-icon"><i class="fi fi-rr-comment"></i></span>
-                            <span>Comentar</span>
-                        </button>
-                        <button class="post-action">
-                            <span class="post-action-icon"><i class="fi fi-rr-magic-wand"></i></span>
-                            <span>Ver</span>
-                        </button>
-                    </div>
-                    <div class="comments-section" id="comments-${post.id}">
-                        <div class="comment">
-                            <div class="comment-avatar"><img src="https://i.pravatar.cc/150?img=8" alt="JP"></div>
-                            <div>
-                                <div class="comment-content">
-                                    <div class="comment-author">Julián Rivas</div>
-                                    <div class="comment-text">¡Felicidades! se nota tu esfuerzo 👏</div>
-                                </div>
-                                <div class="comment-time">3h • Me gusta • Responder</div>
-                            </div>
-                        </div>
-                        <div class="add-comment">
-                            <div class="chat-message-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
-                            <input type="text" placeholder="Añade un comentario..." onkeypress="handleCommentEnter(event, ${post.id})">
-                        </div>
+<article 
+  class="web-preview-card relative p-0 bg-white/10 backdrop-blur-xl rounded-2xl cursor-pointer overflow-hidden border border-white/20 transition-all duration-500 hover:shadow-2xl hover:scale-[1.02]"
+  onclick="expandWebPreview(this)"
+  data-url="https://santiago131440.github.io/SantiagoSterling/windows.html"
+>
+  <!-- Barra superior estilo macOS -->
+  <header class="flex items-center justify-between px-4 py-3 bg-white/20 border-b border-white/20">
+    <div class="flex items-center gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+    </div>
+    <div class="text-xs text-slate-200 truncate">
+      Repositorio
+    </div>
+    <div class="w-12"></div>
+  </header>
+  <!-- Contenedor principal -->
+  <div class="relative h-[260px] lg:h-[300px] bg-black">
+    <!-- Overlay preview -->
+    <div class="absolute inset-0 z-10 flex items-center justify-center bg-black/40 backdrop-blur-sm opacity-0 hover:opacity-100 transition">
+      <span class="px-4 py-2 text-sm text-white bg-black/60 rounded-full border border-white/20">
+        Ver repositorio
+      </span>
+    </div>
+    <!-- IFRAME vista previa -->
+    <iframe
+      src="https://santiago131440.github.io/SantiagoSterling/windows.html"
+      class="w-full h-full scale-[1.0] origin-top cursor-pointer pointer-events-none"
+      loading="lazy"
+    ></iframe>
+  </div>
+</article>
+    <br>
+    <br>
+    <br>
+    <br>
+
+  <div class="flex justify-center mb-20">
+  <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
+
+      <a href="proyectos20.html" class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
+        Ver proyectos de software
+      </a>
+
+      <a href="windows.html" class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
+        Ver repositorio
+      </a>
+  </div>
+  </div>
+</section>
+<br>
+<br>
+<br>
+
+
+    <!-- COMPETENCIAS METODOLOGICAS -->
+<section id="competencia" class="mt-16 w-full flex flex-col justify-center items-center mx-auto">
+  <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+    Competencias metodológicas
+  </h2>
+  
+<div class="carousel-wrapper">
+  <div class="carousel" id="carousel">
+
+    <div class="card" onclick="openAppleUI()" style="background-image:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Lenguajes%20de%20programaci%C3%B3n.jpg?raw=true');">
+      <div class="card-content">
+        <h1 class="text-lg">Lenguajes de programación</h1>
+        <button onclick="openAppleUI()" class="card-btn">
+          <i class="fi fi-sr-add"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="card" onclick="openAppleUI2()" style="background-image:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Frameworks.jpg?raw=true');">
+      <div class="card-content">
+        <h1 class="text-2xl">Herramientas</h1>
+        <button onclick="openAppleUI2()" class="card-btn">
+          <i class="fi fi-sr-add"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="card" onclick="openAppleUI3()" style="background-image:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Habilidades.jpg?raw=true');">
+      <div class="card-content">
+        <h1 class="text-lg">Habilidades extra</h1>
+        <button onclick="openAppleUI3()" class="card-btn">
+          <i class="fi fi-sr-add"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="card" style="background-image:url('https://cdn.pixabay.com/photo/2021/10/01/16/21/eris-6672934_960_720.jpg');">
+      <div class="card-content">
+        <h1 class="text-lg">Inteligencia Interpersonal</h1>
+        <button onclick="openAppleUI4()" class="card-btn">
+          <i class="fi fi-sr-add"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="appleUI" class="apple-ui hidden">
+  <div class="apple-overlay" onclick="closeAppleUI()"></div>
+
+  <div class="apple-window" onclick="event.stopPropagation()">
+    <div class="apple-header">
+      <span class="dot red" onclick="closeAppleUI()"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <p>Lenguajes de programación</p>
+    </div>
+
+    <div class="apple-apps">
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png">
+        <span class="text-white">Javascript</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Python.jpg?raw=true">
+        <span class="text-white">Python</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Csharp.jpg?raw=true">
+        <span class="text-white">C#</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20SQL.jpg?raw=true">
+        <span class="text-white">SQL</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Visual%20Basic.jpg?raw=true">
+        <span class="text-white">Visual Basic</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="appleUI2" class="apple-ui hidden">
+  <div class="apple-blur" onclick="closeAppleUI2()"></div>
+
+  <div class="apple-window" onclick="event.stopPropagation()">
+    <div class="apple-header">
+      <span class="dot red" onclick="closeAppleUI2()"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <p>Herramientas</p>
+    </div>
+
+    <div class="apple-apps">
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20HTML5.jpg?raw=true">
+        <span class="text-white">HTML</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20CSS3.jpg?raw=true">
+        <span class="text-white">CSS</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20TailwindCSS.jpg?raw=true">
+        <span class="text-white">Tailwind</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20React.jpg?raw=true">
+        <span class="text-white">React</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Angular.jpg?raw=true">
+        <span class="text-white">Angular</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20NodeJS.jpg?raw=true">
+        <span class="text-white">NodeJS</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20django.jpg?raw=true">
+        <span class="text-white">Django</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20.Net%20Core.jpg?raw=true">
+        <span class="text-white">.Net</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+  <div id="appleUI3" class="apple-ui hidden">
+  <div class="apple-blur" onclick="closeAppleUI3()"></div>
+
+  <div class="apple-window" onclick="event.stopPropagation()">
+    <div class="apple-header">
+      <span class="dot red" onclick="closeAppleUI3()"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <p>Habilidades Extra</p>
+    </div>
+
+    <div class="apple-apps">
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20git.jpg?raw=true">
+        <span class="text-white">GitHub</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20gitbranch.jpg?raw=true">
+        <span class="text-white">Git</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20WordPress.jpg?raw=true">
+        <span class="text-white">WordPress</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Excel.jpg?raw=true">
+        <span class="text-white">Excel Avanzado</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/1051px-Adobe_Photoshop_CC_icon.svg.png">
+        <span class="text-white">Adobe Photoshop</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Adobe_Illustrator_CC_icon.svg/2048px-Adobe_Illustrator_CC_icon.svg.png">
+        <span class="text-white">Adobe Illustrator</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Power%20BI.jpg?raw=true">
+        <span class="text-white">Power BI</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20DAX.jpg?raw=true">
+        <span class="text-white">DAX</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div id="appleUI4" class="apple-ui hidden">
+  <div class="apple-blur" onclick="closeAppleUI4()"></div>
+
+  <div class="apple-window" onclick="event.stopPropagation()">
+    <div class="apple-header">
+      <span class="dot red" onclick="closeAppleUI4()"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <p>Inteligencia Interpersonal</p>
+    </div>
+
+    <div class="apple-apps">
+      <div class="app-icon">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXrPUwJ6tW0KozNRbo0cRYNbdoiH5wln83Dg&s">
+        <span class="text-white">Trabajo en equipo</span>
+      </div>
+      <div class="app-icon">
+        <img src="https://images.seeklogo.com/logo-png/42/2/scrum-logo-png_seeklogo-428358.png">
+        <span class="text-white">Scrum</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://w7.pngwing.com/pngs/921/147/png-transparent-public-relations-communication-organization-marketing-logo-las-service-industry-marketing-plan.png">
+        <span class="text-white">Comunicación</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/860/860430.png">
+        <span class="text-white">Liderazgo</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.freepik.com/512/17772/17772810.png">
+        <span class="text-white">Responsabilidad</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/5526/5526196.png">
+        <span class="text-white">Pensamiento critico</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.freepik.com/512/1838/1838332.png">
+        <span class="text-white">Resolución de problemas</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.freepik.com/256/12316/12316790.png?semt=ais_white_label">
+        <span class="text-white">Adaptabilidad</span>
+      </div>
+
+      <div class="app-icon">
+        <img src="https://cdn-icons-png.freepik.com/512/18290/18290950.png">
+        <span class="text-white">Atención al detalle</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="container">
+        <!-- Chip Stats Section -->
+        <div class="chip-stats">
+            <div class="chip-icon">
+                <div class="chip-box">
+                    <div class="chip-name">Datos</div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-label">Aprendizaje</div>
+                    <div class="stat-value blue">10x</div>
+                    <div class="stat-description">
+                        en constante<br>
+                        aprendizaje
                     </div>
                 </div>
-            `;
-        }
 
-        function getGalleryClass(count) {
-            if (count === 1) return 'single';
-            if (count === 2) return 'double';
-            if (count === 3) return 'triple';
-            if (count === 4) return 'quad';
-            return 'many';
-        }
-
-        // Post detail
-        function openPostDetail(postId, mediaIndex = 0) {
-            const post = posts.find(p => p.id === postId);
-            if (!post) return;
-
-            currentPostDetail = post;
-            currentMediaIndex = mediaIndex;
-
-            const overlay = document.getElementById('postDetailOverlay');
-            const avatarHTML = post.avatar.startsWith('http') 
-                ? `<img src="${post.avatar}" alt="${post.author}">`
-                : post.avatar;
-
-            document.getElementById('detailAvatar').innerHTML = avatarHTML;
-            document.getElementById('detailAuthor').textContent = post.author;
-            document.getElementById('detailMeta').textContent = `${post.headline} • ${post.time}`;
-            document.getElementById('detailContent').textContent = post.content;
-            document.getElementById('detailLikes').textContent = post.likes;
-            document.getElementById('detailComments').textContent = `${post.comments} comentarios`;
-
-            if (post.images.length > 0) {
-                document.getElementById('detailMediaImage').src = post.images[mediaIndex];
-                document.getElementById('photoCounter').textContent = `${mediaIndex + 1} / ${post.images.length}`;
-                document.getElementById('prevMediaBtn').style.display = post.images.length > 1 ? 'block' : 'none';
-                document.getElementById('nextMediaBtn').style.display = post.images.length > 1 ? 'block' : 'none';
-            } else {
-                document.querySelector('.post-detail-media').style.display = 'none';
-            }
-
-            overlay.classList.add('active');
-        }
-
-        function closePostDetail() {
-            document.getElementById('postDetailOverlay').classList.remove('active');
-            currentPostDetail = null;
-        }
-
-        function navigateMedia(direction) {
-            if (!currentPostDetail || currentPostDetail.images.length === 0) return;
-
-            currentMediaIndex += direction;
-            if (currentMediaIndex < 0) currentMediaIndex = currentPostDetail.images.length - 1;
-            if (currentMediaIndex >= currentPostDetail.images.length) currentMediaIndex = 0;
-
-            document.getElementById('detailMediaImage').src = currentPostDetail.images[currentMediaIndex];
-            document.getElementById('photoCounter').textContent = `${currentMediaIndex + 1} / ${currentPostDetail.images.length}`;
-        }
-
-        // Initialize connections
-        function initializeConnections() {
-            const grid = document.getElementById('connections-grid');
-            connections.forEach(conn => {
-                const gradient = getRandomGradient();
-                grid.innerHTML += `
-                    <div class="connection-card">
-                        <div class="connection-cover" style="background: ${getRandomGradient()};"></div>
-                        <div class="connection-avatar" style="background: ${gradient};">${conn.avatar}</div>
-                        <div class="connection-info">
-                            <div class="connection-name">${conn.name}</div>
-                            <div class="connection-title">${conn.title}</div>
-                            <div class="connection-mutual">${conn.mutual} conexiones en común</div>
-                            <button class="btn-secondary" style="width: 100%;">Mensaje</button>
-                        </div>
+                <div class="stat">
+                    <div class="stat-label">Adaptación</div>
+                    <div class="stat-value blue">Alto</div>
+                    <div class="stat-description">
+                        aprendo<br>
+                        fácil nuevas<br>
+                        tecnologías
                     </div>
-                `;
-            });
-        }
-
-        // Initialize jobs
-        function initializeJobs() {
-            const list = document.getElementById('jobs-list');
-            jobs.forEach(job => {
-                const gradient = getRandomGradient();
-                list.innerHTML += `
-                    <div class="job-card">
-                        <div class="job-header">
-                            <div class="job-logo" style="background: ${gradient};">${job.logo}</div>
-                            <div class="job-info">
-                                <div class="job-title">${job.title}</div>
-                                <div class="job-company">${job.company}</div>
-                                <div class="job-location">📍 ${job.location}</div>
-                            </div>
-                        </div>
-                        <div class="job-details">${job.time} • ${job.applicants}</div>
-                        <div class="job-tags">
-                            ${job.tags.map(tag => `<span class="job-tag">${tag}</span>`).join('')}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        // Random gradient generator
-        function getRandomGradient() {
-            const gradients = [
-                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-                'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
-                'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-                'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
-                'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
-                'linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%)'
-            ];
-            return gradients[Math.floor(Math.random() * gradients.length)];
-        }
-
-        // Toggle like
-        function toggleLike(postId) {
-            const post = posts.find(p => p.id === postId);
-            const postElement = document.querySelector(`[data-post-id="${postId}"]`);
-            const likeButton = postElement.querySelector('.post-action');
-            const likesCount = postElement.querySelector('.post-reactions span:last-child');
-            
-            if (post.hasLiked) {
-                post.likes--;
-                post.hasLiked = false;
-                likeButton.classList.remove('liked');
-            } else {
-                post.likes++;
-                post.hasLiked = true;
-                likeButton.classList.add('liked');
-            }
-            
-            likesCount.textContent = post.likes;
-        }
-
-        function toggleDetailLike() {
-            if (!currentPostDetail) return;
-            toggleLike(currentPostDetail.id);
-            document.getElementById('detailLikes').textContent = currentPostDetail.likes;
-        }
-
-        // Toggle comments section
-        function toggleComments(postId) {
-            const commentsSection = document.getElementById(`comments-${postId}`);
-            commentsSection.classList.toggle('active');
-        }
-
-        // Handle comment enter
-        function handleCommentEnter(event, postId) {
-            if (event.key === 'Enter' && event.target.value.trim()) {
-                addComment(postId, event.target.value);
-                event.target.value = '';
-            }
-        }
-
-        // Add comment
-        function addComment(postId, text) {
-            const commentsSection = document.getElementById(`comments-${postId}`);
-            const addCommentDiv = commentsSection.querySelector('.add-comment');
-            const newComment = document.createElement('div');
-            newComment.className = 'comment';
-            newComment.innerHTML = `
-                <div class="chat-message-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
-                <div>
-                    <div class="comment-content">
-                        <div class="comment-author">Tú</div>
-                        <div class="comment-text">${text}</div>
-                    </div>
-                    <div class="comment-time">Ahora • Me gusta • Responder</div>
                 </div>
-            `;
-            commentsSection.insertBefore(newComment, addCommentDiv);
-            
-            const post = posts.find(p => p.id === postId);
-            post.comments++;
-            const postElement = document.querySelector(`[data-post-id="${postId}"]`);
-            const commentsCount = postElement.querySelector('.post-stats > div:last-child span');
-            commentsCount.textContent = `${post.comments} comentarios • ${post.shares} veces compartido`;
-        }
+            </div>
+        </div>
+    </div>
 
-        // Create new post
-        function createNewPost() {
-            const text = prompt('¿Qué quieres compartir?');
-            if (text && text.trim()) {
-                const newPost = {
-                    id: posts.length + 1,
-                    author: 'Tú',
-                    avatar: 'TU',
-                    headline: 'Profesional',
-                    time: 'Ahora',
-                    content: text,
-                    images: [],
-                    likes: 0,
-                    comments: 0,
-                    shares: 0,
-                    hasLiked: false
-                };
-                posts.unshift(newPost);
-                renderPosts();
-            }
-        }
+  
+  
 
-        // Create post with images
-        function createPostWithImages() {
-            const text = prompt('¿Qué quieres compartir?');
-            if (text && text.trim()) {
-                const numImages = parseInt(prompt('¿Cuántas imágenes? (1-5)', '1'));
-                const images = [];
-                
-                if (numImages > 0 && numImages <= 5) {
-                    for (let i = 0; i < numImages; i++) {
-                        const url = prompt(`URL de la imagen ${i + 1}:`, 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800');
-                        if (url) images.push(url);
-                    }
-                }
-                
-                const newPost = {
-                    id: posts.length + 1,
-                    author: 'Tú',
-                    avatar: 'TU',
-                    headline: 'Profesional',
-                    time: 'Ahora',
-                    content: text,
-                    images: images,
-                    likes: 0,
-                    comments: 0,
-                    shares: 0,
-                    hasLiked: false
-                };
-                posts.unshift(newPost);
-                renderPosts();
-            }
-        }
+</section>
+    <br>
+    <br>
+    <br>
+    <br>
 
-        // Chat functions
-        function toggleChat() {
-            const chatWidget = document.getElementById('chatWidget');
-            chatWidget.classList.toggle('active');
-        }
+   <section class="hero">
 
-        function minimizeChat() {
-        }
+    <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+    Visión Académica
+  </h2>
+  <p class="titulosSterlingNegro-text text-2xl">Mi visión es explorar nuevos horizontes digitales.</p>
+    <div class="visual">
+      <!-- Imagen principal -->
+      <img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284041_1280.png"
+           alt="Astronaut UX">
 
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            if (message) {
-                const messagesContainer = document.getElementById('chatMessages');
-                const newMessage = document.createElement('div');
-                newMessage.className = 'chat-message own';
-                newMessage.innerHTML = `
-                    <div class="chat-message-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
-                    <div class="chat-message-content">${message}</div>
-                `;
-                messagesContainer.appendChild(newMessage);
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                input.value = '';
-                
-                setTimeout(() => {
-                    const response = document.createElement('div');
-                    response.className = 'chat-message';
-                    response.innerHTML = `
-                        <div class="chat-message-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
-                        <div class="chat-message-content">Mi usuario de LinkedIn es in/santisterling</div>
-                    `;
-                    messagesContainer.appendChild(response);
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                }, 1500);
-            }
-        }
+      <!-- Floating labels -->
+      <div class="tag left-top text-black">
+        Fundamentos Científicos y Algorítmicos
+        <span>Sustentos técnicos sólidos.</span>
+      </div>
 
-        function handleChatEnter(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        }
+      <div class="tag left-mid text-black">
+        Ingeniería de Software y Arquitectura
+        <span>Comprensión profunda de metodologías.</span>
+      </div>
 
-        // Initialize on load
-        window.onload = function() {
-            initializeApp();
-        };
+      <div class="tag right-top text-black">
+        Aprendizaje Continuo e Investigación Tecnológica
+        <span>Capacidad académica para innovar.</span>
+      </div>
 
-        // Close post detail on escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closePostDetail();
-            }
-        });
-    </script>
+      <div class="tag right-mid text-black">
+        Ética, Impacto y Pensamiento Sistémico
+        <span>Impacto social del software.</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a class="button primary px-5 py-2" onclick="launchOrbit()">En órbita</a>
+      <a class="button secondary px-5 py-2">Lanzamiento en curso</a>
+    </div>
+
+    <!-- OVERLAY FULLSCREEN -->
+    <div id="orbit-overlay">
+      <div class="rocket">🛸</div>
+      <div class="code-stream">
+        <span>Hola mundo</span>
+        <span>f(x)=x²+2x+1</span>
+        <span>∫₀∞ e⁻ˣ dx</span>
+        <span>for i in range(10):</span>
+        <span>print("Orbit")</span>
+        <span>λ = np.linalg.eig(A)</span>
+        <span>Desarrollando competencias para crear software robusto y escalable.</span>
+        <span>Internauta cósmico</span>
+      </div>
+    </div>
+
+</section>
+
+
+    <!-- BLOG PREVIEW -->
+  <section id="estrategia"
+          class="mt-4 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20"
+          style="
+            --bg-color: linear-gradient(
+             
+              #0c0c0c,
+              #000000,
+              #000000
+            );
+            background: var(--bg-color);
+          "
+        >
+        <br>
+        <br>
+        <br>
+  <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterling-text">
+    Estrategias de éxito
+  </h2>
+  <br>
+  <br>
+  <br>
+  <br>
+
+ <div class="container flex justify-center items-center min-h-screen px-5 md:px-10">
+    <div class="w-full max-w-4xl mx-auto py-16">
+
+        <div class="content-grid">
+            <div>
+                <h1 class="text-3xl titulosSterling-text font-bold">Estrategia de excelencia técnica con enfoque en negocio</h1>
+            </div>
+            <div>
+                <p class="description text-white/50">
+                    Soy un desarrollador que no solo escribe código, sino que resuelve problemas reales del negocio mediante soluciones técnicas sólidas y medibles.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div>
+                <h1 class="text-3xl titulosSterling-text font-bold">Estrategia de innovación continua y aprendizaje dirigido</h1>
+            </div>
+            <div>
+                <p class="description text-white/50">
+                    Me mantengo permanentemente relevante en un sector de rápida evolución, enfocando el aprendizaje en tecnologías con aplicación real.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div>
+                <h1 class="text-3xl titulosSterling-text font-bold">Estrategia de posicionamiento profesional y liderazgo técnico</h1>
+            </div>
+            <div>
+                <p class="description text-white/50">
+                   Construir una reputación sólida como referente técnico confiable dentro y fuera de la organización.
+                </p>
+            </div>
+        </div>
+    </div>
+
+  </div>
+</section>
+
+    <br>
+    <br>
+     <br>
+    <br>
+     <br>
+    <br>
+<!-- CONTACT -->
+       <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl font-bold mb-4 titulosSterlingNegro-text">
+        Contacto
+      </h2>
+      <section
+  id="contacto"
+  class="relative mt-24 max-w-5xl mx-auto px-6 sm:px-14 py-14
+         rounded-[22px]
+         bg-white/85 backdrop-blur-2xl
+         border border-black/10
+         shadow-[0_6px_10px_-60px_rgba(0,0,0,0.35)]
+         overflow-hidden
+         group"
+>
+
+  <!----------------------------- Patrón de puntos animado --------------------------------------->
+  <div class="absolute inset-0 z-[1] pointer-events-none dot-pattern"></div>
+
+<!-- Luz ambiental animada -->
+  <div class="absolute -top-32 -left-32 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+  <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-500/20 rounded-full blur-[120px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+  <!-- Fondo -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src="https://plus.unsplash.com/premium_photo-1755843842269-b1c80e7e34ba?q=80&w=869&auto=format&fit=crop"
+      alt="Fondo contacto"
+      class="w-full h-full object-cover scale-110"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-white/90 via-white/75 to-white/95 backdrop-blur-md"></div>
+  </div>
+
+
+  <!-- Contenido -->
+  <div class="relative z-10 max-w-xl animate-fade-in">
+    <!-- Título -->
+    <h2 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-gray-900">
+      Conectemos ideas
+    </h2>
+
+    <!-- Texto -->
+    <p class="mt-5 text-base leading-relaxed text-gray-600">
+      Estoy abierto a nuevas oportunidades profesionales, colaboraciones y proyectos
+      donde la tecnología y el diseño aporten valor real.
+    </p>
+
+    <!-- CTA -->
+    <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+
+      <a
+        href="mailto:santisterling@gmail.com"
+        class=" text-center px-3 py-1 rounded-full text-sm font-medium transition-all bg-[#007AFF] text-white hover:border-[#007AFF] inline-block text-center cursor-pointer">
+        <span>Contactar por email</span>
+        <span class="text-lg">→</span>
+      </a>
+
+      <span class="text-sm text-gray-500">
+        Respuesta rápida.
+      </span>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="mt-24 bg-white border-t border-gray">
+  <div class="max-w-6xl mx-auto px-6 py-10 text-center">
+    
+    <!-- Nombre -->
+    <p class="text-xl font-extrabold text-gray-900 tracking-wide leading-tight">
+      Santiago Sterling
+    </p>
+
+    <!-- Rol -->
+    <p class="mt-1 text-sm text-gray-500">
+      Desarrollador de software
+    </p>
+
+    <!-- Redes sociales -->
+    <div class="mt-6 flex justify-center space-x-6">
+      
+      <!-- GitHub -->
+      <a href="https://github.com/Santiago131440" aria-label="GitHub" class="text-gray-400 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.54 2.87 8.39 6.84 9.75.5.09.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0112 6.84c.85 0 1.71.12 2.51.35 1.9-1.32 2.74-1.05 2.74-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9 0 1.38-.01 2.49-.01 2.83 0 .27.18.59.69.49A10.02 10.02 0 0022 12.26C22 6.58 17.52 2 12 2z"/>
+        </svg>
+      </a>
+
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/santiago-sterling-0a02a116a/" aria-label="LinkedIn" class="text-gray-400 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.8v2.1h.05c.53-1 1.83-2.1 3.77-2.1 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7.8c0-1.86-.03-4.26-2.6-4.26-2.6 0-3 2.03-3 4.12V24h-4V8.5z"/>
+        </svg>
+      </a>
+
+      <!-- Reddit -->
+      <a href="#" aria-label="Reddit" class="text-gray-400 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-label="Discord">
+          <path d="M20.3 4.1A19.8 19.8 0 0 0 15.8 3c-.2.4-.4.9-.5 1.3a18.3 18.3 0 0 0-6.6 0c-.1-.4-.3-.9-.5-1.3-1.6.3-3.1.8-4.5 1.6C.8 9.1-.2 13.6.3 18c1.7 1.3 3.7 2.2 5.8 2.8.5-.7.9-1.4 1.3-2.2-.7-.3-1.4-.6-2-1 .2-.1.4-.3.6-.4 3.8 1.8 7.9 1.8 11.7 0 .2.2.4.3.6.4-.6.4-1.3.7-2 1 .4.8.8 1.5 1.3 2.2 2.1-.6 4.1-1.5 5.8-2.8.6-4.9-.9-9.4-3.7-13.9zM8.5 14.6c-.8 0-1.5-.7-1.5-1.6 0-.9.7-1.6 1.5-1.6.8 0 1.5.7 1.5 1.6 0 .9-.7 1.6-1.5 1.6zm7 0c-.8 0-1.5-.7-1.5-1.6 0-.9.7-1.6 1.5-1.6.8 0 1.5.7 1.5 1.6 0 .9-.7 1.6-1.5 1.6z"/>
+        </svg>
+
+      </a>
+    </div>
+
+    <!-- Copyright -->
+    <p class="mt-8 text-xs text-gray-400">
+      © <span id="year"></span> Santiago Sterling.
+    </p>
+  </div>
+</footer>
+
+  <!-- PROJECT MODAL -->
+  <div id="projectModal" aria-hidden="true" class="fixed inset-0 hidden items-center justify-center z-50 bg-black/60">
+    <div class="bg-slate-900 rounded-2xl w-11/12 max-w-4xl p-6">
+      <div class="flex items-start justify-between">
+        <h3 id="modalTitle" class="text-xl font-semibold text-black">Proyecto</h3>
+        <button id="closeModal" class="p-2 rounded bg-white/5">Cerrar</button>
+      </div>
+      <div id="modalBody" class="mt-4 text-slate-200">Detalles...</div>
+    </div>
+  </div>
+
+  <script src="script20.js" defer></script>
+
+  
+      <!-- MODAL MAC OS -->
+<div
+  id="macModal"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm"
+>
+  <div
+    class="w-[90%] max-w-3xl rounded-2xl bg-white shadow-2xl overflow-hidden animate-scaleIn"
+  >
+    <!-- Barra superior Mac -->
+    <div class="flex items-center gap-2 px-4 py-2 bg-stone-200">
+      <span id="closeModal" class="w-3 h-3 bg-red-500 rounded-full cursor-pointer"></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+      <h3 id="modalTitle" class="ml-4 font-semibold text-slate-700"></h3>
+    </div>
+
+    <!-- Contenido -->
+    <div class="p-5 space-y-4">
+      <img
+        id="modalImage"
+        src=""
+        alt=""
+        class="w-full h-64 object-cover rounded-xl shadow"
+      />
+      <p id="modalText" class="text-slate-600 text-sm leading-relaxed"></p>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
