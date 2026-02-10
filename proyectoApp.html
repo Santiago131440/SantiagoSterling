@@ -1598,6 +1598,22 @@
   object-fit: cover;
 }
 
+.chat-message-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-message-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
     </style>
 </head>
@@ -2262,7 +2278,7 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                             </div>
                         </div>
                         <div class="add-comment">
-                            <div class="comment-avatar">TU</div>
+                            <div class="chat-message-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
                             <input type="text" placeholder="Añade un comentario..." onkeypress="handleCommentEnter(event, ${post.id})">
                         </div>
                     </div>
@@ -2432,7 +2448,7 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             const newComment = document.createElement('div');
             newComment.className = 'comment';
             newComment.innerHTML = `
-                <div class="comment-avatar">TU</div>
+                <div class="chat-message-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
                 <div>
                     <div class="comment-content">
                         <div class="comment-author">Tú</div>
@@ -2521,7 +2537,7 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                 const newMessage = document.createElement('div');
                 newMessage.className = 'chat-message own';
                 newMessage.innerHTML = `
-                    <div class="chat-message-avatar">TU</div>
+                    <div class="chat-message-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
                     <div class="chat-message-content">${message}</div>
                 `;
                 messagesContainer.appendChild(newMessage);
@@ -2532,7 +2548,7 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                     const response = document.createElement('div');
                     response.className = 'chat-message';
                     response.innerHTML = `
-                        <div class="chat-message-avatar">SS</div>
+                        <div class="chat-message-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
                         <div class="chat-message-content">Mi usuario de LinkedIn es in/santisterling</div>
                     `;
                     messagesContainer.appendChild(response);
