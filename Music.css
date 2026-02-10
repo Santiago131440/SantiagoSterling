@@ -683,3 +683,14 @@ footer {
   }
 
 }
+
+.radio-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.radio-wrap select {
+  padding: 6px;
+  border-radius: 6px;
+}
