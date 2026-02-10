@@ -82,6 +82,26 @@
           <input id="volume" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volumen">
         </div>
 
+	<br>
+
+<div class="radio-wrap">
+  <div style="font-weight:600;margin-bottom:6px">
+    Radio en vivo
+  </div>
+
+  <select id="radioSelect" aria-label="Seleccionar radio">
+    <option value="">-- Selecciona una radio --</option>
+    <option value="https://stream-ssl.atlanticradio.net/atlantic">Atlantic Radio</option>
+    <option value="https://icecast.radiofrance.fr/fip-hifi.aac">FIP (France)</option>
+    <option value="https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one">BBC Radio 1</option>
+  </select>
+
+  <button class="btn" id="radioPlayBtn" style="margin-left:8px">
+    <i class="fa-solid fa-broadcast-tower"></i>
+  </button>
+</div>
+
+
         <audio id="audio" preload="metadata"></audio>
       </div>
     </div>
