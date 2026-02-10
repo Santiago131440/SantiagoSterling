@@ -466,7 +466,7 @@
         }
 
         .see-more {
-            color: var(--text-secondary);
+            color: var(--primary-blue);
             cursor: pointer;
             font-weight: 100;
             display: inline-block;
@@ -474,7 +474,7 @@
         }
 
         .see-more:hover {
-            color: var(--primary-blue);
+            color: var(--text-secondary);
         }
 
         /* Photo Gallery */
@@ -1013,10 +1013,6 @@
             text-align: center;
             transition: box-shadow 0.2s;
             font-weight: 100;
-        }
-
-        .connection-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
         }
 
         .connection-cover {
@@ -2027,7 +2023,7 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                         <div>
                             <div class="comment-content">
                                 <div class="comment-author">Julián Rivas</div>
-                                <div class="comment-text">¡Felicidades! Muy buen trabajo</div>
+                                <div class="comment-text">¡Felicidades! se nota tu esfuerzo 👏</div>
                             </div>
                             <div class="comment-time">3h • Me gusta • Responder</div>
                         </div>
@@ -2237,7 +2233,7 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                     </div>
                     <div class="post-content ${truncated}" onclick="${post.images.length === 0 ? `openPostDetail(${post.id}, 0)` : ''}">
                         ${displayContent}
-                        ${post.content.length > 200 ? `<span class="see-more" onclick="openPostDetail(${post.id}, 0)">...ver más</span>` : ''}
+                        ${post.content.length > 200 ? `<span class="see-more" onclick="openPostDetail(${post.id}, 0)">ver más</span>` : ''}
                     </div>
                     ${galleryHTML}
                     <div class="post-stats">
