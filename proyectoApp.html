@@ -1582,6 +1582,23 @@
     color: var(--primary-blue);
 }
 
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
     </style>
 </head>
 <body>
@@ -1819,7 +1836,7 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                     <div style="margin-bottom: 8px;">
                         <a href="#" style="color: var(--text-secondary); margin: 0 8px;">Acerca de</a>
                         <a href="#" style="color: var(--text-secondary); margin: 0 8px;">Accesibilidad</a>
-                        <a href="#" style="color: var(--text-secondary); margin: 0 8px;">Centro de ayuda</a>
+                        <a href="#" style="color: var(--text-secondary); margin: 0 8px;">Protección de datos</a>
                     </div>
                     <div>Santiago Sterling © 2026</div>
                 </div>
@@ -2022,7 +2039,7 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
     <div class="chat-widget" id="chatWidget">
         <div class="chat-header" onclick="minimizeChat()">
             <div class="chat-user-info">
-                <div class="chat-avatar">SS</div>
+                <div class="chat-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
                 <div>
                     <div class="chat-name">Santiago Sterling</div>
                     <div style="font-size: 11px; color: var(--success-green);">● En línea</div>
