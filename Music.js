@@ -326,3 +326,25 @@ radioPlayBtn.addEventListener("click", () => {
     radioPlaying = false;
   }
 });
+
+function formatTime(seconds) {
+  if (seconds === Infinity || isNaN(seconds)) {
+    return "En vivo";
+  }
+
+  const min = Math.floor(seconds / 60);
+  const sec = Math.floor(seconds % 60);
+  return `${min}:${sec.toString().padStart(2, "0")}`;
+}
+
+audio.addEventListener("timeupdate", () => {
+  currentTime.textContent = formatTime(audio.currentTime);
+
+  if (audio.duration === Infinity) {
+    duration.textContent = "En vivo";
+    progressBarFill.style.width = "100%";
+  } else {
+    duration.textContent = formatTime(audio.duration);
+    progressBarFill.style.width = (audio.currentTime / audio.duration) * 100 + "%";
+  }
+});
