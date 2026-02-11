@@ -39,6 +39,7 @@
 body {
   margin: 0;
   min-height: 100vh;
+  
   background: var(--bg);
   display: flex;
   align-items: center;
@@ -53,7 +54,7 @@ body {
 /* CONTENEDOR PRINCIPAL */
 .player-wrap {
   width: 100%;
-  max-width: 1200px;
+  max-width: 100%;
   background: var(--card);
   border-radius: var(--radius);
   backdrop-filter: blur(var(--blur));
@@ -85,7 +86,7 @@ header h1 {
 .main {
   display: grid;
   grid-template-columns: minmax(280px, 360px) 1fr;
-  gap: 1px;
+  gap: 10px;
   padding: 2px;
   background-color: #f2f2f7;
   position: relative;
@@ -149,7 +150,7 @@ header h1 {
 }
 
 .search-input input {
-  width: 100%;
+  width: 350px;
   padding: 8px 10px 8px 36px;
   border-radius: 8px;
   border: 1px solid #d0d0d0;
@@ -352,7 +353,7 @@ header h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 2px;
+  padding: 78px 2px;
 }
 
 .now .info {
@@ -571,7 +572,7 @@ footer {
   }
 
   header h1 {
-    padding-top: 60px;
+    padding-top: 30px;
     font-size: 48px;
     font-weight: 300;
     margin: 0;
@@ -616,7 +617,7 @@ footer {
 
   footer {
     flex-direction: column;
-    gap: 6px;
+    gap: 1px;
     text-align: center;
   }
 
@@ -644,6 +645,8 @@ footer {
     width: 100%;
     max-width: 100%;
     overflow: hidden;
+    justify-content: space-between;
+    padding: 0px 0px;
   }
 
   .now .info {
@@ -688,19 +691,34 @@ footer {
   display: flex;
   align-items: center;
   gap: 8px;
-  border-radius: 100px;
+  border-radius: 10px;
 }
 
 .radio-wrap select {
   padding: 10px;
   border-radius: 10px;
+  color:#999;
+  font-weight: 100;
 }
 
 .radioSelect { 
   width: 50%;
   padding: 8px 10px 8px 36px;
-  border-radius: 8px;
+  border-radius: 100px;
   border: 1px solid #d0d0d0;
   font-size: 14px;
   font-family: inherit;
 }
+
+.inputRadio {
+  font-weight: 700;
+  background-color: #855CFF;
+  color: #ffffff;
+}
+
+.inputEmisora{
+  font-weight: 100;
+  background-color: #ffffff;
+  color: #999;
+}
+
