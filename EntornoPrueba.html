@@ -600,6 +600,121 @@
     }
     footer nav.f-nav a:hover { color: var(--accent); }
 
+    /* ══════════════════════════════════════
+       LOADER
+    ══════════════════════════════════════ */
+    #loader {
+      position: fixed; inset: 0; z-index: 99999;
+      background: #030303;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .8s ease, visibility .8s ease;
+    }
+    #loader.hidden {
+      opacity: 0; visibility: hidden; pointer-events: none;
+    }
+    #loader-inner {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 20px;
+      text-align: center;
+    }
+    #loader-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-weight: 300;
+      font-size: 36px; letter-spacing: .08em;
+      color: var(--accent);
+      opacity: 0;
+      animation: loaderFadeIn .6s ease .2s forwards;
+    }
+    #loader-bar-wrap {
+      width: 200px; height: 1px;
+      background: rgba(200,169,110,0.15);
+      border-radius: 1px; overflow: hidden;
+      opacity: 0;
+      animation: loaderFadeIn .6s ease .4s forwards;
+    }
+    #loader-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent), rgba(200,169,110,0.5));
+      transition: width .15s ease;
+    }
+    #loader-pct {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px; font-weight: 300; color: rgba(200,169,110,0.9);
+      letter-spacing: -.02em; line-height: 1;
+      opacity: 0; animation: loaderFadeIn .6s ease .4s forwards;
+    }
+    #loader-label {
+      font-size: 10px; font-weight: 300; letter-spacing: .2em;
+      text-transform: uppercase; color: rgba(240,237,232,0.3);
+      opacity: 0; animation: loaderFadeIn .6s ease .6s forwards;
+    }
+    @keyframes loaderFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Main canvas (frame scrubbing) ── */
+    #main-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.82;
+    }
+
+    /* Bloquear scroll hasta que cargue */
+    body.loading {
+      overflow: hidden;
+    }
+
+    /* ── Scroll velocity indicator ── */
+    #scroll-velocity {
+      position: absolute;
+      bottom: 52px;
+      right: 52px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px 10px 14px;
+      border: 1px solid rgba(200,169,110,0.22);
+      border-radius: 980px;
+      backdrop-filter: blur(16px);
+      background: rgba(3,3,3,0.45);
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity .35s ease;
+      pointer-events: none;
+      user-select: none;
+    }
+    #scroll-velocity .sv-arrow {
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      flex-shrink: 0;
+    }
+    #scroll-velocity[data-dir="up"] .sv-arrow { transform: rotate(180deg); }
+    #scroll-velocity[data-dir="down"] .sv-arrow { transform: rotate(0deg); }
+    #scroll-velocity[data-dir="up"]   .sv-label::after { content: "retrocediendo"; }
+    #scroll-velocity[data-dir="down"] .sv-label::after { content: "avanzando"; }
+
+    /* ── Video progress bar ── */
+    #video-progress-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: rgba(200,169,110,0.08);
+      z-index: 20;
+      pointer-events: none;
+    }
+    #video-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(200,169,110,0.9), rgba(200,169,110,0.3));
+      will-change: width;
+    }
+
     /* ── Noise ── */
     body::after {
       content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9997;
@@ -645,15 +760,40 @@
 </div>
 
 <!-- ══════════════════════════════════════
-     ESCENA 1 — Video scrubbing (8 capítulos)
+     LOADER — pantalla de carga
+══════════════════════════════════════ -->
+<div id="loader">
+  <div id="loader-inner">
+    <div id="loader-logo">Horizon</div>
+    <div id="loader-bar-wrap">
+      <div id="loader-bar"></div>
+    </div>
+    <div id="loader-pct">0%</div>
+    <div id="loader-label">Cargando experiencia</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ESCENA 1 — Canvas frame scrubbing (8 capítulos)
 ══════════════════════════════════════ -->
 <div id="scene-1">
   <div id="sticky-1">
-    <canvas id="fallback-canvas"></canvas>
-    <video id="bg-video"
-      src="https://cdn.pixabay.com/video/2016/09/13/5189-183786475_large.mp4"
-      muted playsinline preload="auto"
-    ></video>
+
+    <!-- Canvas principal: renderiza los frames del video -->
+    <canvas id="main-canvas"></canvas>
+
+    <!-- Indicador de dirección de scroll -->
+    <div id="scroll-velocity" data-dir="down">
+      <svg class="sv-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <path d="M8 2v12M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="sv-label"></span>
+    </div>
+
+    <!-- Barra de progreso del video -->
+    <div id="video-progress-bar">
+      <div id="video-progress-fill"></div>
+    </div>
     <div class="top-fade"></div>
     <div class="bottom-fade"></div>
     <div class="vignette"></div>
@@ -1068,58 +1208,236 @@ document.querySelectorAll('a, button, .cta, .ch-dot, .fg-card, .test-card, .num-
 });
 
 /* ─────────────────────────────────────────
-   VIDEO + FALLBACK CANVAS
+   VARIABLES DE PROGRESO (declaradas aquí
+   para que estén disponibles en RAF y video)
 ───────────────────────────────────────── */
-const video  = document.getElementById('bg-video');
-const canvas = document.getElementById('fallback-canvas');
-const ctx    = canvas.getContext('2d');
-let videoReady = false, useFallback = false;
-video.addEventListener('loadeddata', () => { videoReady = true; });
-video.addEventListener('canplay',    () => { videoReady = true; });
-video.addEventListener('error', activateFallback);
-setTimeout(() => { if (!videoReady) activateFallback(); }, 4000);
+let scene1Progress = 0, scene2Progress = 0, scene3Progress = 0;
+let lastScrollY = window.scrollY;
+let scrollDelta = 0;
 
-function activateFallback() {
-  if (useFallback) return;
-  useFallback = true;
-  video.style.display = 'none';
-  canvas.style.display = 'block';
-  resizeCanvas(); animateCanvas();
+/* ═══════════════════════════════════════════════════════════
+   SISTEMA DE FRAME SCRUBBING — Técnica Apple
+   ─────────────────────────────────────────────────────────
+   1. Se crea un <video> oculto con el src original
+   2. Se buscan N frames extrayéndolos al canvas y guardándolos
+      como ImageBitmap en memoria (mucho más rápido que Image)
+   3. En el scroll se dibuja el frame exacto: 0 lag, instant
+   ═══════════════════════════════════════════════════════════ */
+
+const mainCanvas = document.getElementById('main-canvas');
+const mCtx       = mainCanvas.getContext('2d');
+
+// Configuración
+const TOTAL_FRAMES  = 120;   // cuántos frames extraer del video
+const VIDEO_SRC     = 'https://cdn.pixabay.com/video/2022/10/05/133699-757782422_tiny.mp4';
+
+// Estado
+let frames          = [];   // Array de ImageBitmap
+let framesLoaded    = 0;
+let systemReady     = false;
+
+// Elementos del loader
+const loader        = document.getElementById('loader');
+const loaderBar     = document.getElementById('loader-bar');
+const loaderPct     = document.getElementById('loader-pct');
+
+// Bloquear scroll durante carga
+document.body.classList.add('loading');
+
+// ── Redimensionar canvas al tamaño de ventana ──
+function resizeMainCanvas() {
+  mainCanvas.width  = window.innerWidth;
+  mainCanvas.height = window.innerHeight;
+  // Redibujar frame actual si ya está listo
+  if (systemReady && frames.length > 0) {
+    drawFrame(Math.floor(scene1Progress * (frames.length - 1)));
+  }
 }
-function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-window.addEventListener('resize', () => { if (useFallback) resizeCanvas(); });
+window.addEventListener('resize', resizeMainCanvas);
+resizeMainCanvas();
 
-let t = 0;
-function animateCanvas() {
-  if (!useFallback) return;
-  requestAnimationFrame(animateCanvas);
-  t += 0.003 * (1 + scene1Progress * 2);
-  const w = canvas.width, h = canvas.height;
-  ctx.clearRect(0, 0, w, h);
-  const bg = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w * 0.9);
-  const hue = (t * 25 + scene1Progress * 50) % 360;
+// ── Dibujar un frame en el canvas (cover) ──
+function drawFrame(idx) {
+  const bmp = frames[Math.max(0, Math.min(frames.length - 1, idx))];
+  if (!bmp) return;
+  const cw = mainCanvas.width, ch = mainCanvas.height;
+  const bw = bmp.width,        bh = bmp.height;
+  const scale  = Math.max(cw / bw, ch / bh);
+  const dw = bw * scale, dh = bh * scale;
+  const dx = (cw - dw) / 2,   dy = (ch - dh) / 2;
+  mCtx.clearRect(0, 0, cw, ch);
+  mCtx.drawImage(bmp, dx, dy, dw, dh);
+}
+
+// ── Extractor de frames via video oculto ──
+// Crea un video invisible, lo scruba al tiempo de cada frame,
+// captura el frame en un canvas temporal y lo convierte a ImageBitmap.
+function extractFrames() {
+  const vid = document.createElement('video');
+  vid.src          = VIDEO_SRC;
+  vid.muted        = true;
+  vid.playsInline  = true;
+  vid.preload      = 'auto';
+  vid.crossOrigin  = 'anonymous';
+  vid.style.display = 'none';
+  document.body.appendChild(vid);
+
+  // Canvas temporal para captura (tamaño pequeño para velocidad)
+  const capW = 1280, capH = 720;
+  const capCanvas = document.createElement('canvas');
+  capCanvas.width = capW; capCanvas.height = capH;
+  const capCtx = capCanvas.getContext('2d');
+
+  let duration = 0;
+  let currentFrameIdx = 0;
+
+  vid.addEventListener('loadedmetadata', () => {
+    duration = vid.duration;
+    seekNextFrame();
+  });
+
+  // Si el video falla, mostrar fondo generativo
+  vid.addEventListener('error', () => {
+    console.warn('Video no disponible, usando fondo generativo');
+    activateGenerativeBackground();
+    dismissLoader();
+  });
+
+  setTimeout(() => {
+    if (!systemReady && framesLoaded === 0) {
+      console.warn('Timeout — usando fondo generativo');
+      activateGenerativeBackground();
+      dismissLoader();
+    }
+  }, 8000);
+
+  function seekNextFrame() {
+    if (currentFrameIdx >= TOTAL_FRAMES) {
+      // Todos los frames capturados
+      finishLoading(vid);
+      return;
+    }
+    const t = (currentFrameIdx / (TOTAL_FRAMES - 1)) * duration;
+    vid.currentTime = t;
+  }
+
+  vid.addEventListener('seeked', () => {
+    // Capturar frame actual
+    capCtx.drawImage(vid, 0, 0, capW, capH);
+
+    // Convertir a ImageBitmap (más eficiente en memoria y GPU)
+    createImageBitmap(capCanvas).then(bmp => {
+      frames[currentFrameIdx] = bmp;
+      framesLoaded++;
+      currentFrameIdx++;
+
+      // Actualizar loader
+      const pct = Math.round((framesLoaded / TOTAL_FRAMES) * 100);
+      loaderBar.style.width  = pct + '%';
+      loaderPct.textContent  = pct + '%';
+
+      // Mostrar primer frame en el canvas principal tan pronto llegue
+      if (framesLoaded === 1) {
+        drawFrame(0);
+      }
+
+      seekNextFrame();
+    });
+  });
+
+  vid.load();
+}
+
+function finishLoading(vid) {
+  systemReady = true;
+
+  // Eliminar el video de extracción
+  vid.remove();
+
+  // Desbloquear scroll y ocultar loader
+  dismissLoader();
+
+  // Dibujar frame inicial
+  drawFrame(0);
+}
+
+function dismissLoader() {
+  document.body.classList.remove('loading');
+  loader.classList.add('hidden');
+}
+
+// ── RAF: dibujar frame exacto según scroll ──
+function frameScrubTick() {
+  requestAnimationFrame(frameScrubTick);
+  if (!systemReady || frames.length === 0) return;
+  const frameIdx = Math.floor(scene1Progress * (frames.length - 1));
+  drawFrame(frameIdx);
+}
+frameScrubTick();
+
+// ── Indicador de velocidad de scroll ──
+const scrollIndicator = document.getElementById('scroll-velocity');
+const videoPFill      = document.getElementById('video-progress-fill');
+
+function updateScrollIndicator(delta) {
+  if (!scrollIndicator) return;
+  if (Math.abs(delta) < 1) { scrollIndicator.style.opacity = '0'; return; }
+  scrollIndicator.style.opacity = '1';
+  scrollIndicator.dataset.dir = delta > 0 ? 'down' : 'up';
+  clearTimeout(scrollIndicator._t);
+  scrollIndicator._t = setTimeout(() => { scrollIndicator.style.opacity = '0'; }, 900);
+}
+
+// Actualizar barra de progreso del video en RAF
+function rafVideoBar() {
+  requestAnimationFrame(rafVideoBar);
+  if (videoPFill) videoPFill.style.width = (scene1Progress * 100) + '%';
+}
+rafVideoBar();
+
+// ── Fondo generativo (fallback si el video no carga) ──
+let useGenerative = false;
+let genT = 0;
+
+function activateGenerativeBackground() {
+  useGenerative = true;
+  systemReady = true;
+  animateGenerative();
+}
+
+function animateGenerative() {
+  if (!useGenerative) return;
+  requestAnimationFrame(animateGenerative);
+  genT += 0.003 * (1 + scene1Progress * 2);
+  const w = mainCanvas.width, h = mainCanvas.height;
+  mCtx.clearRect(0, 0, w, h);
+  const bg = mCtx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w * 0.9);
+  const hue = (genT * 25 + scene1Progress * 50) % 360;
   bg.addColorStop(0, `hsla(${hue},55%,8%,1)`);
   bg.addColorStop(0.5, `hsla(${(hue+50)%360},45%,4%,1)`);
   bg.addColorStop(1, 'hsl(0,0%,1%)');
-  ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h);
-  [{ x:.25,y:.35,r:.35,o:0},{ x:.75,y:.6,r:.28,o:120},{ x:.5,y:.2,r:.22,o:240}].forEach(b=>{
-    const cx=w*(b.x+Math.sin(t+b.o)*.06), cy=h*(b.y+Math.cos(t*.7+b.o)*.04);
-    const gr=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(w,h)*b.r);
-    const bh=(hue+b.o)%360;
-    gr.addColorStop(0, `hsla(${bh},70%,50%,0.16)`);
-    gr.addColorStop(.5, `hsla(${bh},60%,35%,0.05)`);
-    gr.addColorStop(1, 'transparent');
-    ctx.fillStyle=gr; ctx.fillRect(0,0,w,h);
+  mCtx.fillStyle = bg; mCtx.fillRect(0, 0, w, h);
+  [{x:.25,y:.35,r:.35,o:0},{x:.75,y:.6,r:.28,o:120},{x:.5,y:.2,r:.22,o:240}].forEach(b => {
+    const cx = w*(b.x+Math.sin(genT+b.o)*.06), cy = h*(b.y+Math.cos(genT*.7+b.o)*.04);
+    const gr = mCtx.createRadialGradient(cx,cy,0,cx,cy,Math.min(w,h)*b.r);
+    const bh = (hue+b.o)%360;
+    gr.addColorStop(0,  `hsla(${bh},70%,50%,0.18)`);
+    gr.addColorStop(.5, `hsla(${bh},60%,35%,0.06)`);
+    gr.addColorStop(1,  'transparent');
+    mCtx.fillStyle = gr; mCtx.fillRect(0,0,w,h);
   });
-  for(let i=0;i<160;i++){
-    const sx=((Math.sin(i*127.1)*0.5+0.5)*w+t*w*0.008*(i%3+0.5))%w;
-    const sy=(Math.sin(i*311.7)*0.5+0.5)*h;
-    const sr=0.4+Math.abs(Math.sin(i*91.3+t))*1.1;
-    const sa=0.35+Math.sin(i*53.1+t*2)*0.25;
-    ctx.beginPath(); ctx.arc(sx,sy,sr,0,Math.PI*2);
-    ctx.fillStyle=`rgba(255,255,255,${sa})`; ctx.fill();
+  for (let i = 0; i < 180; i++) {
+    const sx = ((Math.sin(i*127.1)*0.5+0.5)*w + genT*w*0.008*(i%3+0.5)) % w;
+    const sy = (Math.sin(i*311.7)*0.5+0.5)*h;
+    const sr = 0.4 + Math.abs(Math.sin(i*91.3+genT))*1.2;
+    const sa = 0.35 + Math.sin(i*53.1+genT*2)*0.28;
+    mCtx.beginPath(); mCtx.arc(sx,sy,sr,0,Math.PI*2);
+    mCtx.fillStyle = `rgba(255,255,255,${sa})`; mCtx.fill();
   }
 }
+
+// ── Iniciar extracción de frames ──
+extractFrames();
 
 /* ─────────────────────────────────────────
    COLOR SCENE ORBS
@@ -1251,9 +1569,6 @@ const scene3El = document.getElementById('scene-3');
 const progressBar = document.getElementById('progress-bar');
 const scrollHint  = document.getElementById('scroll-hint');
 
-let scene1Progress = 0, scene2Progress = 0, scene3Progress = 0;
-let videoTarget = 0, videoCurrentTime = 0;
-
 function getSceneProgress(el) {
   const rect = el.getBoundingClientRect();
   const total = el.offsetHeight - window.innerHeight;
@@ -1266,16 +1581,6 @@ function totalScrollProgress() {
   return Math.min(1, window.scrollY / totalH);
 }
 
-(function videoTick() {
-  if (videoReady && video.duration) {
-    const diff = videoTarget - videoCurrentTime;
-    videoCurrentTime += diff * 0.09;
-    if (Math.abs(diff) > 0.001)
-      video.currentTime = Math.max(0, Math.min(video.duration, videoCurrentTime));
-  }
-  requestAnimationFrame(videoTick);
-})();
-
 let globalChapterIdx = 0;
 window.addEventListener('scroll', () => {
   scene1Progress = getSceneProgress(scene1El);
@@ -1283,8 +1588,10 @@ window.addEventListener('scroll', () => {
   scene3Progress = getSceneProgress(scene3El);
   const totalP   = totalScrollProgress();
 
-  // Video scrub
-  if (videoReady && video.duration) videoTarget = scene1Progress * video.duration;
+  // Indicador de dirección de scroll
+  scrollDelta = window.scrollY - lastScrollY;
+  lastScrollY = window.scrollY;
+  updateScrollIndicator(scrollDelta);
 
   // Animate scene layers
   const s1idx = animateLayers(layers1, scene1Progress);
