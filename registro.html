@@ -1,529 +1,1862 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Test — Desarrollo de Software</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevQuiz — Evaluación de Desarrollo de Software</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-:root{
-  --black:#000;
-  --white:#fff;
-  --blue:#2563ff;
-  --blue-glow:rgba(37,99,255,.35);
-  --blue-soft:rgba(37,99,255,.08);
-  --silver:#a1a1aa;
-  --silver-dim:rgba(161,161,170,.15);
-  --text-main:#f4f4f5;
-  --text-dim:#71717a;
-}
+  :root {
+    --blue: #007AFF;
+    --blue-dark: #0056CC;
+    --blue-light: #5AC8FA;
+    --green: #34C759;
+    --red: #FF3B30;
+    --orange: #FF9500;
+    --purple: #AF52DE;
+    --gray1: #1C1C1E;
+    --gray2: #2C2C2E;
+    --gray3: #3A3A3C;
+    --gray4: #48484A;
+    --gray5: #636366;
+    --gray6: #8E8E93;
+    --gray-light: #AEAEB2;
+    --bg-primary: #000000;
+    --bg-secondary: #1C1C1E;
+    --bg-tertiary: #2C2C2E;
+    --bg-card: rgba(255,255,255,0.05);
+    --border: rgba(255,255,255,0.1);
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255,255,255,0.6);
+    --text-tertiary: rgba(255,255,255,0.3);
+    --window-chrome: #2D2D2F;
+    --window-border: rgba(255,255,255,0.12);
+    --blur: blur(20px);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 22px;
+    --shadow: 0 20px 60px rgba(0,0,0,0.6);
+    --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
 
-html,body{height:100%;background:var(--black);color:var(--text-main);
-  font-family:'Sora',sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ═══════════════════════════════
-   CANVAS PARTICLES
-═══════════════════════════════ */
-#cvs{position:fixed;inset:0;z-index:0;pointer-events:none}
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
 
-/* ═══════════════════════════════
-   GRADIENT MESH BG
-═══════════════════════════════ */
-.mesh{
-  position:fixed;inset:0;z-index:1;pointer-events:none;
-  background:
-    radial-gradient(ellipse 80% 60% at 10% 20%,rgba(37,99,255,.18) 0%,transparent 60%),
-    radial-gradient(ellipse 60% 50% at 90% 80%,rgba(139,92,246,.14) 0%,transparent 60%),
-    radial-gradient(ellipse 50% 40% at 50% 50%,rgba(20,184,166,.08) 0%,transparent 70%);
-  animation:meshShift 18s ease-in-out infinite alternate;
-}
-@keyframes meshShift{
-  from{filter:hue-rotate(0deg) brightness(1)}
-  to  {filter:hue-rotate(20deg) brightness(1.08)}
-}
+  /* ─── WALLPAPER BACKGROUND ─────────────────────────────────── */
+  .wallpaper {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(0, 122, 255, 0.25) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(175, 82, 222, 0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 1) 0%, #050508 100%);
+  }
+  .wallpaper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    pointer-events: none;
+  }
 
-/* Thin horizontal scan-line glare */
-.glare{
-  position:fixed;inset:0;z-index:2;pointer-events:none;
-  background:linear-gradient(180deg,
-    transparent 0%,
-    rgba(255,255,255,.012) 49%,
-    rgba(255,255,255,.025) 50%,
-    rgba(255,255,255,.012) 51%,
-    transparent 100%
-  );
-  background-size:100% 4px;
-}
+  /* ─── DOCK ─────────────────────────────────────────────── */
+  .dock {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 8px 16px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.05) inset;
+  }
+  .dock-item {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+  }
+  .dock-item:hover { transform: scale(1.4) translateY(-8px); }
+  .dock-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px; height: 4px;
+    background: var(--text-primary);
+    border-radius: 50%;
+  }
+  .dock-separator {
+    width: 1px; height: 36px;
+    background: rgba(255,255,255,0.15);
+  }
 
-/* ═══════════════════════════════
-   LAYOUT
-═══════════════════════════════ */
-.stage{
-  position:relative;z-index:10;
-  min-height:100dvh;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  align-items:stretch;
-}
+  /* ─── MENU BAR ──────────────────────────────────────────────── */
+  .menubar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    height: 28px;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 16px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .menubar-logo { font-size: 16px; }
+  .menubar-item { color: var(--text-primary); opacity: 0.9; cursor: default; white-space: nowrap; }
+  .menubar-item:first-of-type { font-weight: 700; }
+  .menubar-right { margin-left: auto; display: flex; gap: 12px; align-items: center; }
+  .menubar-time { font-size: 13px; font-weight: 500; }
+  .menubar-icon { font-size: 14px; }
 
-/* ── LEFT PANEL ── */
-.panel-left{
-  display:flex;flex-direction:column;
-  justify-content:center;
-  padding:80px 64px 80px 80px;
-  border-right:1px solid rgba(255,255,255,.05);
-  position:relative;overflow:hidden;
-}
+  /* ─── MAIN CONTAINER ─────────────────────────────────────── */
+  .container {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px 100px;
+  }
 
-/* Giant number watermark */
-.watermark{
-  position:absolute;
-  right:-20px;top:50%;
-  transform:translateY(-50%);
-  font-family:'Playfair Display',serif;
-  font-size:360px;font-weight:700;
-  line-height:1;
-  color:rgba(255,255,255,.02);
-  user-select:none;pointer-events:none;
-  animation:wmarkIn 1.8s 1s ease both;
-}
-@keyframes wmarkIn{from{opacity:0;transform:translateY(-50%) scale(.9)} to{opacity:1;transform:translateY(-50%) scale(1)}}
+  /* ─── MACOS WINDOW ──────────────────────────────────────────── */
+  .window {
+    width: 100%;
+    max-width: 780px;
+    background: rgba(30, 30, 32, 0.85);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid var(--window-border);
+    border-radius: var(--radius-xl);
+    box-shadow:
+      var(--shadow),
+      0 0 0 0.5px rgba(255,255,255,0.08) inset,
+      0 1px 0 rgba(255,255,255,0.1) inset;
+    overflow: hidden;
+    animation: windowOpen 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
 
-.tag{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:100px;padding:6px 16px;
-  font-size:11px;font-weight:600;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--silver);
-  margin-bottom:48px;width:fit-content;
-  opacity:0;animation:slideIn .7s .3s ease both;
-}
-.tag-pip{width:6px;height:6px;border-radius:50%;background:var(--blue);
-  box-shadow:0 0 8px var(--blue-glow);animation:pip 2s ease infinite}
-@keyframes pip{0%,100%{opacity:1;box-shadow:0 0 8px var(--blue-glow)}
-  50%{opacity:.4;box-shadow:0 0 20px var(--blue-glow)}}
+  @keyframes windowOpen {
+    from { opacity: 0; transform: scale(0.92) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
 
-.hero-label{
-  font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--text-dim);margin-bottom:16px;
-  opacity:0;animation:slideIn .7s .45s ease both;
-}
+  /* ─── TITLE BAR ─────────────────────────────────────────────── */
+  .titlebar {
+    height: 52px;
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 0;
+    position: relative;
+    user-select: none;
+  }
+  .traffic-lights {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .traffic-light {
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    transition: filter 0.15s;
+  }
+  .traffic-light:hover { filter: brightness(0.85); }
+  .traffic-light.close   { background: #FF5F57; border: 0.5px solid rgba(0,0,0,0.2); }
+  .traffic-light.minimize{ background: #FEBC2E; border: 0.5px solid rgba(0,0,0,0.2); }
+  .traffic-light.maximize{ background: #28C840; border: 0.5px solid rgba(0,0,0,0.2); }
+  .window-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: -0.1px;
+    white-space: nowrap;
+  }
+  .window-subtitle {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    font-weight: 400;
+    display: block;
+    text-align: center;
+  }
 
-.hero-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(52px,6vw,88px);
-  font-weight:400;line-height:.95;
-  letter-spacing:-.03em;
-  margin-bottom:36px;
-  opacity:0;animation:slideIn .8s .55s ease both;
-}
-.hero-title .line2{display:block;font-style:italic;color:var(--blue);
-  text-shadow:0 0 40px rgba(37,99,255,.4)}
-.hero-title .line3{display:block;color:rgba(244,244,245,.45)}
+  /* ─── PROGRESS BAR ──────────────────────────────────────────── */
+  .progress-bar-container {
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border-radius: 0 2px 2px 0;
+  }
+  .progress-bar-glow {
+    position: absolute;
+    top: 0; right: 0;
+    width: 60px; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4));
+    transform: translateX(60px);
+    animation: shimmer 2s infinite;
+  }
+  @keyframes shimmer {
+    0% { transform: translateX(-100px); }
+    100% { transform: translateX(200px); }
+  }
 
-.hero-desc{
-  font-size:15px;font-weight:300;line-height:1.7;
-  color:var(--silver);max-width:340px;
-  border-left:2px solid rgba(37,99,255,.4);
-  padding-left:20px;
-  opacity:0;animation:slideIn .7s .7s ease both;
-}
+  /* ─── WINDOW CONTENT ────────────────────────────────────────── */
+  .window-body {
+    padding: 36px 40px;
+  }
 
-/* Stats row */
-.stats{
-  display:flex;gap:40px;margin-top:56px;
-  opacity:0;animation:slideIn .7s .85s ease both;
-}
-.stat-val{
-  font-family:'Playfair Display',serif;
-  font-size:32px;font-weight:700;line-height:1;
-  color:var(--text-main);
-}
-.stat-lbl{font-size:11px;color:var(--text-dim);letter-spacing:.06em;margin-top:4px}
+  /* ─── SCREENS ─────────────────────────────────────────────── */
+  .screen { display: none; }
+  .screen.active {
+    display: block;
+    animation: fadeSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .screen.slide-out {
+    animation: fadeSlideOut 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+  @keyframes fadeSlideOut {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-20px); }
+  }
 
-/* ── RIGHT PANEL ── */
-.panel-right{
-  display:flex;flex-direction:column;
-  justify-content:center;align-items:stretch;
-  padding:80px 80px 80px 64px;
-  position:relative;
-}
+  /* ─── LOGO / HERO ────────────────────────────────────────── */
+  .hero {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .hero-icon {
+    width: 72px; height: 72px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    box-shadow: 0 8px 32px rgba(0, 122, 255, 0.4), 0 1px 0 rgba(255,255,255,0.2) inset;
+    animation: iconPulse 3s ease-in-out infinite;
+  }
+  @keyframes iconPulse {
+    0%, 100% { box-shadow: 0 8px 32px rgba(0, 122, 255, 0.4), 0 1px 0 rgba(255,255,255,0.2) inset; }
+    50% { box-shadow: 0 12px 48px rgba(0, 122, 255, 0.6), 0 1px 0 rgba(255,255,255,0.2) inset; }
+  }
+  .hero h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #fff 30%, rgba(255,255,255,0.6));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+  .hero p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 420px;
+    margin: 0 auto;
+  }
 
-/* Frosted card */
-.card{
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:32px;
-  padding:52px 48px;
-  position:relative;overflow:hidden;
-  backdrop-filter:blur(20px);
-  opacity:0;transform:translateY(32px) scale(.97);
-  animation:cardReveal .9s .5s cubic-bezier(.22,1,.36,1) both;
-}
-@keyframes cardReveal{to{opacity:1;transform:none}}
+  /* ─── FORM ELEMENTS ─────────────────────────────────────── */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .form-input {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 16px;
+    font-family: inherit;
+    outline: none;
+    transition: var(--transition);
+    -webkit-appearance: none;
+  }
+  .form-input::placeholder { color: var(--text-tertiary); }
+  .form-input:focus {
+    border-color: var(--blue);
+    background: rgba(0, 122, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+  }
+  .form-input.error {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.2);
+  }
+  .form-error {
+    font-size: 12px;
+    color: var(--red);
+    margin-top: 6px;
+    display: none;
+  }
+  .form-error.show { display: block; }
+  select.form-input {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23666' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+  select.form-input option { background: #2C2C2E; }
 
-/* Glow line top of card */
-.card::before{
-  content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(37,99,255,.6),transparent);
-}
-.card::after{
-  content:'';position:absolute;top:0;left:30%;width:40%;height:40px;
-  background:radial-gradient(ellipse, rgba(37,99,255,.15) 0%, transparent 70%);
-  pointer-events:none;
-}
+  /* ─── BUTTONS ─────────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: var(--transition);
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--blue);
+    color: white;
+    box-shadow: 0 4px 16px rgba(0, 122, 255, 0.35);
+  }
+  .btn-primary:hover {
+    background: var(--blue-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0, 122, 255, 0.45);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.08);
+    color: var(--text-primary);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.12);
+    transform: translateY(-1px);
+  }
+  .btn-success {
+    background: var(--green);
+    color: white;
+    box-shadow: 0 4px 16px rgba(52, 199, 89, 0.35);
+  }
+  .btn-success:hover {
+    filter: brightness(0.9);
+    transform: translateY(-1px);
+  }
+  .btn-danger {
+    background: rgba(255, 59, 48, 0.15);
+    color: var(--red);
+    border: 1px solid rgba(255, 59, 48, 0.3);
+  }
+  .btn-full { width: 100%; }
+  .btn-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .btn-group .btn { flex: 1; }
 
-.card-num{
-  font-family:'Playfair Display',serif;
-  font-size:13px;font-weight:400;font-style:italic;
-  color:rgba(37,99,255,.7);letter-spacing:.04em;
-  margin-bottom:32px;
-}
+  /* ─── TAGS / BADGES ──────────────────────────────────────── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+  .badge-blue { background: rgba(0,122,255,0.15); color: var(--blue-light); border: 1px solid rgba(0,122,255,0.3); }
+  .badge-purple { background: rgba(175,82,222,0.15); color: #d88df5; border: 1px solid rgba(175,82,222,0.3); }
+  .badge-green { background: rgba(52,199,89,0.15); color: #5ee57f; border: 1px solid rgba(52,199,89,0.3); }
+  .badge-orange { background: rgba(255,149,0,0.15); color: #ffba30; border: 1px solid rgba(255,149,0,0.3); }
 
-.card-title{
-  font-family:'Playfair Display',serif;
-  font-size:28px;font-weight:400;
-  line-height:1.2;letter-spacing:-.02em;
-  margin-bottom:8px;
-}
-.card-sub{font-size:13px;color:var(--text-dim);margin-bottom:40px;font-weight:300}
+  /* ─── QUIZ INFO CARDS ──────────────────────────────────────── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .info-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    text-align: center;
+  }
+  .info-card-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--blue-light);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .info-card-label {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 
-/* Input */
-.field{margin-bottom:24px}
-.field-lbl{
-  display:flex;align-items:center;justify-content:space-between;
-  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--text-dim);margin-bottom:10px;
-}
+  /* ─── QUESTION SCREEN ──────────────────────────────────── */
+  .question-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .question-counter {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .question-counter strong { color: var(--text-primary); }
+  .question-progress {
+    display: flex;
+    gap: 4px;
+  }
+  .q-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transition: background 0.3s;
+  }
+  .q-dot.done { background: var(--blue); }
+  .q-dot.current { background: var(--blue-light); }
 
-.input-shell{
-  position:relative;
-  border-radius:16px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-  transition:border-color .25s,box-shadow .25s,background .25s;
-}
-.input-shell:focus-within{
-  border-color:rgba(37,99,255,.7);
-  background:rgba(37,99,255,.04);
-  box-shadow:0 0 0 4px rgba(37,99,255,.12), 0 8px 32px rgba(37,99,255,.08);
-}
+  .question-category {
+    margin-bottom: 12px;
+  }
+  .question-text {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.2px;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+  .code-block {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #a8d2f0;
+    margin-bottom: 20px;
+    overflow-x: auto;
+  }
+  .code-block .kw { color: #ff7ab2; }
+  .code-block .fn { color: #dabaff; }
+  .code-block .str { color: #fc6; }
+  .code-block .cm { color: #636366; }
+  .code-block .num { color: #5be4ff; }
 
-.input-shell input{
-  width:100%;background:transparent;border:none;outline:none;
-  padding:16px 52px 16px 20px;
-  font-family:'Sora',sans-serif;font-size:15px;font-weight:400;
-  color:var(--text-main);
-}
-.input-shell input::placeholder{color:rgba(113,113,122,.6)}
+  /* ─── ANSWER OPTIONS ──────────────────────────────────────── */
+  .options-grid {
+    display: grid;
+    gap: 10px;
+  }
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  .option::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0,122,255,0) 0%, rgba(0,122,255,0.04) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .option:hover::before { opacity: 1; }
+  .option:hover {
+    border-color: rgba(0, 122, 255, 0.4);
+    background: rgba(0, 122, 255, 0.08);
+    transform: translateX(3px);
+  }
+  .option.selected {
+    border-color: var(--blue);
+    background: rgba(0, 122, 255, 0.12);
+  }
+  .option.correct {
+    border-color: var(--green);
+    background: rgba(52, 199, 89, 0.12);
+    animation: correctPulse 0.4s ease;
+  }
+  .option.incorrect {
+    border-color: var(--red);
+    background: rgba(255, 59, 48, 0.1);
+    animation: shake 0.4s ease;
+  }
+  .option.disabled { pointer-events: none; }
+  @keyframes correctPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.01); }
+    100% { transform: scale(1); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+  .option-letter {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: var(--transition);
+    font-variant: all-small-caps;
+    letter-spacing: 0.5px;
+  }
+  .option.selected .option-letter { background: var(--blue); border-color: var(--blue); }
+  .option.correct .option-letter { background: var(--green); border-color: var(--green); }
+  .option.incorrect .option-letter { background: var(--red); border-color: var(--red); }
+  .option-text {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text-primary);
+    flex: 1;
+  }
+  .option-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .option.correct .option-icon,
+  .option.incorrect .option-icon { opacity: 1; }
 
-/* Floating icon inside input */
-.input-icon{
-  position:absolute;right:18px;top:50%;transform:translateY(-50%);
-  color:var(--text-dim);pointer-events:none;
-  transition:color .25s;
-}
-.input-shell:focus-within .input-icon{color:var(--blue)}
+  /* ─── EXPLANATION ─────────────────────────────────────────── */
+  .explanation {
+    display: none;
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.04);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    animation: fadeIn 0.4s ease;
+  }
+  .explanation.show { display: block; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .explanation strong { color: var(--text-primary); }
 
-/* Character counter */
-.char-count{font-size:11px;color:var(--text-dim);font-variant-numeric:tabular-nums}
+  /* ─── TIMER ────────────────────────────────────────────── */
+  .timer-ring {
+    position: relative;
+    width: 48px; height: 48px;
+  }
+  .timer-ring svg { transform: rotate(-90deg); }
+  .timer-ring-track {
+    fill: none;
+    stroke: rgba(255,255,255,0.1);
+    stroke-width: 3;
+  }
+  .timer-ring-fill {
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 3;
+    stroke-dasharray: 126;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear, stroke 0.3s;
+    stroke-linecap: round;
+  }
+  .timer-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
 
-/* Error */
-.err{
-  font-size:12px;color:#f87171;margin-top:8px;
-  display:none;align-items:center;gap:6px;
-}
-.err.on{display:flex}
+  /* ─── RESULTS SCREEN ─────────────────────────────────────── */
+  .results-hero {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .score-ring {
+    position: relative;
+    width: 140px; height: 140px;
+    margin: 0 auto 20px;
+  }
+  .score-ring svg { transform: rotate(-90deg); }
+  .score-ring-track {
+    fill: none;
+    stroke: rgba(255,255,255,0.06);
+    stroke-width: 8;
+  }
+  .score-ring-fill {
+    fill: none;
+    stroke-width: 8;
+    stroke-dasharray: 380;
+    stroke-dashoffset: 380;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), stroke 0.5s;
+    stroke-linecap: round;
+  }
+  .score-ring-fill.animated { stroke-dashoffset: var(--target-offset); }
+  .score-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .score-number {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .score-label {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+  .results-title {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+  }
+  .results-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .stat-card.correct::before { background: var(--green); }
+  .stat-card.incorrect::before { background: var(--red); }
+  .stat-card.total::before { background: var(--blue); }
+  .stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    display: block;
+    letter-spacing: -0.5px;
+  }
+  .stat-card.correct .stat-value { color: var(--green); }
+  .stat-card.incorrect .stat-value { color: var(--red); }
+  .stat-card.total .stat-value { color: var(--blue-light); }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
 
-/* CTA button */
-.cta{
-  width:100%;position:relative;overflow:hidden;
-  background:var(--blue);color:#fff;border:none;border-radius:16px;
-  padding:18px 28px;cursor:pointer;
-  display:flex;align-items:center;justify-content:space-between;
-  font-family:'Sora',sans-serif;font-size:15px;font-weight:600;
-  letter-spacing:.01em;
-  transition:transform .2s, box-shadow .2s, background .2s;
-  box-shadow:0 4px 24px rgba(37,99,255,.5);
-}
-.cta::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,255,255,.18),transparent 55%);
-  border-radius:inherit;
-}
-.cta:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(37,99,255,.65)}
-.cta:active{transform:scale(.97);box-shadow:0 2px 12px rgba(37,99,255,.4)}
+  /* ─── RESULTS BREAKDOWN ─────────────────────────────────── */
+  .breakdown-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+  .breakdown-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .breakdown-item:last-child { border-bottom: none; }
+  .breakdown-icon {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .breakdown-icon.correct { background: rgba(52,199,89,0.2); }
+  .breakdown-icon.incorrect { background: rgba(255,59,48,0.2); }
+  .breakdown-q {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.4;
+    flex: 1;
+  }
+  .breakdown-a {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+  }
+  .breakdown-a span { color: var(--green); }
+  .breakdown-a span.wrong { color: var(--red); text-decoration: line-through; }
 
-.cta-label{position:relative}
-.cta-arrow{
-  position:relative;
-  width:36px;height:36px;border-radius:50%;
-  background:rgba(255,255,255,.15);
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .3s, background .3s;
-  flex-shrink:0;
-}
-.cta:hover .cta-arrow{transform:translateX(4px);background:rgba(255,255,255,.25)}
+  /* ─── GRADE BADGE ──────────────────────────────────────── */
+  .grade-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .grade-letter {
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: -2px;
+  }
 
-/* Progress dots */
-.progress{
-  display:flex;gap:8px;align-items:center;margin-top:32px;
-  padding-top:24px;border-top:1px solid rgba(255,255,255,.05);
-}
-.pdot{
-  width:6px;height:6px;border-radius:50%;
-  background:rgba(255,255,255,.12);transition:all .3s;
-}
-.pdot.active{width:20px;border-radius:4px;background:var(--blue)}
-.progress-txt{margin-left:auto;font-size:11px;color:var(--text-dim);letter-spacing:.06em}
+  /* ─── SCROLLABLE ─────────────────────────────────────────── */
+  .scrollable {
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 6px;
+  }
+  .scrollable::-webkit-scrollbar { width: 4px; }
+  .scrollable::-webkit-scrollbar-track { background: transparent; }
+  .scrollable::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
 
-/* Page footer */
-.page-footer{
-  position:fixed;bottom:0;left:0;right:0;z-index:20;
-  display:flex;align-items:center;justify-content:center;
-  padding:20px;
-  border-top:1px solid rgba(255,255,255,.04);
-  background:rgba(0,0,0,.6);backdrop-filter:blur(20px);
-}
-.page-footer span{font-size:12px;color:rgba(113,113,122,.6);letter-spacing:.04em}
+  /* ─── DIVIDER ─────────────────────────────────────────────── */
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+    margin: 24px 0;
+  }
 
-/* ── ANIMATIONS ── */
-@keyframes slideIn{
-  from{opacity:0;transform:translateY(20px)}
-  to  {opacity:1;transform:none}
-}
+  /* ─── WELCOME TIPS ──────────────────────────────────────── */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .tip-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .tip-icon { font-size: 20px; flex-shrink: 0; }
+  .tip-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .tip-text strong { color: var(--text-primary); display: block; margin-bottom: 2px; }
 
-/* ── RESPONSIVE ── */
-@media(max-width:860px){
-  html,body{overflow:auto}
-  .stage{grid-template-columns:1fr;grid-template-rows:auto auto}
-  .panel-left{padding:60px 32px 40px;border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}
-  .panel-right{padding:40px 32px 100px}
-  .watermark{display:none}
-  .stats{gap:28px}
-}
+  /* ─── NOTIFICATION TOAST ──────────────────────────────────── */
+  .toast {
+    position: fixed;
+    top: 48px;
+    right: 20px;
+    z-index: 9999;
+    background: rgba(40,40,42,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    transform: translateX(120%);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-width: 280px;
+  }
+  .toast.show { transform: translateX(0); }
+  .toast-icon { font-size: 18px; }
+
+  /* ─── RESPONSIVE ─────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .window-body { padding: 24px 20px; }
+    .info-grid, .stats-row { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 22px; }
+    .question-text { font-size: 16px; }
+    .btn-group { flex-direction: column; }
+    .menubar-item:not(.menubar-logo):not(:first-of-type):not(.menubar-time) { display: none; }
+    .dock { display: none; }
+    .traffic-lights { display: flex; }
+    .score-ring { width: 120px; height: 120px; }
+    .score-number { font-size: 28px; }
+    .grade-letter { font-size: 40px; }
+    .breakdown-a { display: none; }
+    .window { border-radius: var(--radius-lg); }
+  }
+
+  /* ─── CONFETTI ────────────────────────────────────────────── */
+  .confetti-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    overflow: hidden;
+  }
+  .confetti-piece {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
 </style>
 </head>
 <body>
 
-<canvas id="cvs"></canvas>
-<div class="mesh"></div>
-<div class="glare"></div>
+<!-- WALLPAPER -->
+<div class="wallpaper"></div>
 
-<div class="stage">
+<!-- MENU BAR -->
+<div class="menubar">
+  <span class="menubar-logo">🍎</span>
+  <span class="menubar-item">DevQuiz</span>
+  <span class="menubar-item" style="opacity:0.5">Archivo</span>
+  <span class="menubar-item" style="opacity:0.5">Editar</span>
+  <span class="menubar-item" style="opacity:0.5">Ver</span>
+  <span class="menubar-item" style="opacity:0.5">Ayuda</span>
+  <div class="menubar-right">
+    <span class="menubar-icon">📶</span>
+    <span class="menubar-icon">🔋</span>
+    <span class="menubar-time" id="menubar-clock">00:00</span>
+  </div>
+</div>
 
-  <!-- ════════ LEFT ════════ -->
-  <section class="panel-left">
-    <div class="watermark">01</div>
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon" id="toast-icon">ℹ️</span>
+  <span id="toast-text">Mensaje</span>
+</div>
 
-    <div class="tag"><span class="tag-pip"></span>Evaluación Técnica</div>
+<!-- CONFETTI -->
+<div class="confetti-container" id="confetti"></div>
 
-    <p class="hero-label">Santiago Sterling · 2026</p>
+<!-- MAIN -->
+<div class="container">
+  <div class="window">
 
-    <h1 class="hero-title">
-      Test de<br>
-      <span class="line2">Software</span>
-      <span class="line3">Development</span>
-    </h1>
-
-    <p class="hero-desc">
-      Una evaluación diseñada para medir tus conocimientos en desarrollo de software. Responde con confianza.
-    </p>
-
-    <div class="stats">
-      <div>
-        <div class="stat-val" data-count="15">0</div>
-        <div class="stat-lbl">Preguntas</div>
+    <!-- TITLE BAR -->
+    <div class="titlebar">
+      <div class="traffic-lights">
+        <div class="traffic-light close" onclick="closeWindow()"></div>
+        <div class="traffic-light minimize" onclick="minimizeWindow()"></div>
+        <div class="traffic-light maximize" onclick="maximizeWindow()"></div>
       </div>
-      <div>
-        <div class="stat-val" data-count="30">0</div>
-        <div class="stat-lbl">Minutos</div>
-      </div>
-      <div>
-        <div class="stat-val" data-count="100">0</div>
-        <div class="stat-lbl">Puntos</div>
+      <div class="window-title">
+        <span id="window-title-text">DevQuiz — Evaluación de Software</span>
+        <span class="window-subtitle" id="window-subtitle-text">Desarrollo de Software · 15 Preguntas</span>
       </div>
     </div>
-  </section>
 
-  <!-- ════════ RIGHT ════════ -->
-  <section class="panel-right">
-    <div class="card">
-      <p class="card-num">Paso 01 / 01 — Registro</p>
-      <h2 class="card-title">¿Cómo quieres<br>que te llamemos?</h2>
-      <p class="card-sub">Puedes usar tu nombre real o un seudónimo.</p>
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+    </div>
 
-      <form id="form" novalidate>
-        <div class="field">
-          <div class="field-lbl">
-            <span>Nombre</span>
-            <span class="char-count" id="charCount">0 / 30</span>
+    <!-- WINDOW BODY -->
+    <div class="window-body">
+
+      <!-- ══════════ SCREEN 1: REGISTRO ══════════ -->
+      <div class="screen active" id="screen-register">
+        <div class="hero">
+          <div class="hero-icon">💻</div>
+          <h1>DevQuiz</h1>
+          <p>Evalúa tus conocimientos en desarrollo de software con 15 preguntas cuidadosamente seleccionadas.</p>
+        </div>
+
+        <div class="tips-grid">
+          <div class="tip-card">
+            <span class="tip-icon">⏱️</span>
+            <div class="tip-text"><strong>20 seg/pregunta</strong>Cada pregunta tiene un tiempo límite para responder.</div>
           </div>
-          <div class="input-shell">
-            <input type="text" id="nombre" placeholder="Ej. Santiago, dev42, X…"
-              maxlength="30" autocomplete="name" autocapitalize="words" spellcheck="false"/>
-            <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
+          <div class="tip-card">
+            <span class="tip-icon">📚</span>
+            <div class="tip-text"><strong>15 Preguntas</strong>Temas: Git, OOP, DB, APIs, Algoritmos y más.</div>
           </div>
-          <div class="err" id="err">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/>
-              <line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-            </svg>
-            Ingresa al menos 2 caracteres.
+          <div class="tip-card">
+            <span class="tip-icon">✅</span>
+            <div class="tip-text"><strong>Una oportunidad</strong>No se puede cambiar la respuesta al confirmar.</div>
+          </div>
+          <div class="tip-card">
+            <span class="tip-icon">📄</span>
+            <div class="tip-text"><strong>Descarga tu resultado</strong>Al final recibirás un reporte PDF.</div>
           </div>
         </div>
 
-        <button type="submit" class="cta" id="cta">
-          <span class="cta-label">Comenzar evaluación</span>
-          <span class="cta-arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </span>
+        <div class="form-group">
+          <label class="form-label">👤 Nombre completo</label>
+          <input type="text" class="form-input" id="input-name" placeholder="Ej. Ana García Rodríguez" autocomplete="off">
+          <div class="form-error" id="error-name">Por favor ingresa tu nombre completo.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">📧 Correo electrónico</label>
+          <input type="email" class="form-input" id="input-email" placeholder="correo@ejemplo.com" autocomplete="off">
+          <div class="form-error" id="error-email">Por favor ingresa un correo válido.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">🎓 Nivel de experiencia</label>
+          <select class="form-input" id="input-level">
+            <option value="">Selecciona tu nivel</option>
+            <option value="junior">Junior (0–2 años)</option>
+            <option value="mid">Mid-Level (2–5 años)</option>
+            <option value="senior">Senior (5+ años)</option>
+            <option value="student">Estudiante</option>
+          </select>
+          <div class="form-error" id="error-level">Por favor selecciona tu nivel.</div>
+        </div>
+
+        <button class="btn btn-primary btn-full" onclick="startQuiz()">
+          Comenzar Evaluación &nbsp;→
         </button>
-      </form>
-
-      <div class="progress">
-        <div class="pdot active"></div>
-        <div class="pdot"></div>
-        <div class="pdot"></div>
-        <span class="progress-txt">Registro</span>
       </div>
-    </div>
-  </section>
 
+      <!-- ══════════ SCREEN 2: PREGUNTA ══════════ -->
+      <div class="screen" id="screen-question">
+        <div class="question-header">
+          <div>
+            <span class="question-counter">Pregunta <strong id="q-num">1</strong> de <strong id="q-total">15</strong></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div class="timer-ring" id="timer-ring">
+              <svg width="48" height="48" viewBox="0 0 48 48">
+                <circle class="timer-ring-track" cx="24" cy="24" r="20"/>
+                <circle class="timer-ring-fill" id="timer-fill" cx="24" cy="24" r="20"/>
+              </svg>
+              <div class="timer-text" id="timer-text">20</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-progress" id="q-progress"></div>
+        <div style="height:16px"></div>
+
+        <div class="question-category" id="q-category"></div>
+        <div class="question-text" id="q-text"></div>
+        <div class="code-block" id="q-code" style="display:none"></div>
+
+        <div class="options-grid" id="q-options"></div>
+
+        <div class="explanation" id="q-explanation"></div>
+
+        <div class="btn-group" style="margin-top:24px">
+          <button class="btn btn-secondary" id="btn-skip" onclick="skipQuestion()">Omitir</button>
+          <button class="btn btn-primary" id="btn-next" onclick="nextQuestion()" disabled style="opacity:0.5">
+            <span id="btn-next-text">Siguiente →</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ══════════ SCREEN 3: RESULTADOS ══════════ -->
+      <div class="screen" id="screen-results">
+        <div class="results-hero">
+          <div class="score-ring" id="score-ring-container">
+            <svg width="140" height="140" viewBox="0 0 140 140">
+              <circle class="score-ring-track" cx="70" cy="70" r="60.5"/>
+              <circle class="score-ring-fill" id="score-ring-fill" cx="70" cy="70" r="60.5"/>
+            </svg>
+            <div class="score-center">
+              <div class="score-number" id="score-number">0%</div>
+              <div class="score-label">Calificación</div>
+            </div>
+          </div>
+          <div class="grade-display">
+            <div class="grade-letter" id="grade-letter">-</div>
+            <div>
+              <div style="font-size:18px;font-weight:700" id="grade-label">-</div>
+              <div style="font-size:13px;color:var(--text-secondary)" id="grade-sublabel">-</div>
+            </div>
+          </div>
+          <div class="results-subtitle" id="results-name-display">-</div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card correct">
+            <span class="stat-value" id="stat-correct">0</span>
+            <span class="stat-label">✅ Correctas</span>
+          </div>
+          <div class="stat-card incorrect">
+            <span class="stat-value" id="stat-incorrect">0</span>
+            <span class="stat-label">❌ Incorrectas</span>
+          </div>
+          <div class="stat-card total">
+            <span class="stat-value" id="stat-total">0</span>
+            <span class="stat-label">📝 Total</span>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="breakdown-title">Detalle de respuestas</div>
+        <div class="scrollable" id="breakdown-list"></div>
+
+        <div class="divider"></div>
+
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="restartQuiz()">🔄 Reintentar</button>
+          <button class="btn btn-success" onclick="downloadResults()">📄 Descargar Reporte</button>
+        </div>
+      </div>
+
+    </div><!-- /window-body -->
+  </div><!-- /window -->
+</div><!-- /container -->
+
+<!-- DOCK -->
+<div class="dock">
+  <div class="dock-item active" title="DevQuiz" onclick="goToScreen('register')">💻</div>
+  <div class="dock-item" title="Preguntas" onclick="goToScreen('question')">📝</div>
+  <div class="dock-separator"></div>
+  <div class="dock-item" title="Resultados" onclick="goToScreen('results')">📊</div>
+  <div class="dock-separator"></div>
+  <div class="dock-item" title="Trash">🗑️</div>
 </div>
 
-<footer class="page-footer">
-  <span>Desarrollado por Santiago Sterling &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; Test de Desarrollo de Software</span>
-</footer>
-
 <script>
-/* ═══════════ CANVAS PARTICLES ═══════════ */
-(function(){
-  const cvs = document.getElementById('cvs');
-  const ctx = cvs.getContext('2d');
-  let W, H, particles = [], mouse = {x:-999,y:-999};
-
-  function resize(){
-    W = cvs.width  = window.innerWidth;
-    H = cvs.height = window.innerHeight;
+// ─── QUESTIONS DATABASE ────────────────────────────────────────
+const questions = [
+  {
+    id: 1, category: "Git & Control de Versiones", categoryColor: "badge-orange",
+    text: "¿Cuál es la diferencia entre `git merge` y `git rebase`?",
+    options: [
+      "Merge combina ramas creando un commit de fusión; rebase reescribe el historial de commits de forma lineal.",
+      "Son equivalentes y producen el mismo historial de commits.",
+      "Rebase combina ramas creando un commit de fusión; merge reescribe el historial.",
+      "Merge solo funciona con ramas remotas; rebase solo con ramas locales."
+    ],
+    correct: 0,
+    explanation: "<strong>Merge</strong> preserva el historial completo con un commit extra de fusión (merge commit). <strong>Rebase</strong> reescribe los commits sobre la rama base, creando un historial más limpio y lineal, pero modifica el SHA de los commits."
+  },
+  {
+    id: 2, category: "Algoritmos & Complejidad", categoryColor: "badge-blue",
+    text: "¿Cuál es la complejidad temporal del algoritmo QuickSort en el peor caso?",
+    options: [
+      "O(n log n)",
+      "O(n²)",
+      "O(n)",
+      "O(log n)"
+    ],
+    correct: 1,
+    explanation: "QuickSort tiene complejidad <strong>O(n²)</strong> en el peor caso (cuando el pivote siempre es el menor o mayor elemento). Sin embargo, en el caso promedio es O(n log n), que es la razón por la que es muy eficiente en la práctica."
+  },
+  {
+    id: 3, category: "Programación Orientada a Objetos", categoryColor: "badge-purple",
+    text: "¿Cuál de los siguientes principios SOLID indica que una clase debería tener una sola razón para cambiar?",
+    options: [
+      "Open/Closed Principle",
+      "Liskov Substitution Principle",
+      "Single Responsibility Principle",
+      "Interface Segregation Principle"
+    ],
+    correct: 2,
+    explanation: "<strong>Single Responsibility Principle (SRP)</strong> establece que cada clase debe tener una única responsabilidad. Si una clase tiene múltiples razones para cambiar, tiene múltiples responsabilidades y viola este principio."
+  },
+  {
+    id: 4, category: "Bases de Datos", categoryColor: "badge-green",
+    text: "¿Qué tipo de JOIN devuelve todos los registros de ambas tablas, con NULL donde no hay coincidencia?",
+    code: `-- ¿Qué tipo de JOIN completa correctamente esta consulta?\nSELECT u.nombre, p.monto\n<span class='kw'>FROM</span> usuarios u\n??? JOIN pagos p <span class='kw'>ON</span> u.id = p.usuario_id;`,
+    options: [
+      "INNER JOIN",
+      "LEFT JOIN",
+      "FULL OUTER JOIN",
+      "CROSS JOIN"
+    ],
+    correct: 2,
+    explanation: "<strong>FULL OUTER JOIN</strong> retorna todos los registros de ambas tablas. Cuando no hay coincidencia en una tabla, los campos de esa tabla aparecen como NULL. Es la combinación de LEFT y RIGHT JOIN."
+  },
+  {
+    id: 5, category: "APIs & REST", categoryColor: "badge-blue",
+    text: "Según las convenciones REST, ¿qué código HTTP debe retornar la creación exitosa de un recurso?",
+    options: [
+      "200 OK",
+      "201 Created",
+      "204 No Content",
+      "202 Accepted"
+    ],
+    correct: 1,
+    explanation: "<strong>201 Created</strong> indica que la solicitud fue exitosa y se creó un nuevo recurso. La respuesta debe incluir la URL del nuevo recurso en el header <code>Location</code>. El código 200 OK se usa para actualizaciones o lecturas exitosas."
+  },
+  {
+    id: 6, category: "Patrones de Diseño", categoryColor: "badge-purple",
+    text: "¿Cuál patrón de diseño asegura que una clase tenga solo UNA instancia en toda la aplicación?",
+    options: [
+      "Factory Method",
+      "Observer",
+      "Singleton",
+      "Prototype"
+    ],
+    correct: 2,
+    explanation: "El patrón <strong>Singleton</strong> restringe la instanciación de una clase a un único objeto. Se usa comúnmente para conexiones de base de datos, logging y configuraciones globales. Sin embargo, debe usarse con cuidado ya que puede dificultar las pruebas unitarias."
+  },
+  {
+    id: 7, category: "JavaScript & Async", categoryColor: "badge-orange",
+    text: "¿Cuál es el resultado de ejecutar el siguiente código?",
+    code: `<span class='kw'>console</span>.log(<span class='str'>'A'</span>);\nsetTimeout(() => <span class='kw'>console</span>.log(<span class='str'>'B'</span>), <span class='num'>0</span>);\n<span class='kw'>Promise</span>.resolve().<span class='fn'>then</span>(() => <span class='kw'>console</span>.log(<span class='str'>'C'</span>));\n<span class='kw'>console</span>.log(<span class='str'>'D'</span>);`,
+    options: [
+      "A, B, C, D",
+      "A, D, B, C",
+      "A, D, C, B",
+      "A, C, D, B"
+    ],
+    correct: 2,
+    explanation: "El orden es <strong>A → D → C → B</strong>. El código síncrono se ejecuta primero (A, D). Luego las microtasks como Promises (C), y finalmente las macrotasks como setTimeout (B). Este es el comportamiento del Event Loop de JavaScript."
+  },
+  {
+    id: 8, category: "Seguridad Web", categoryColor: "badge-orange",
+    text: "¿Qué técnica de ataque consiste en inyectar scripts maliciosos en páginas web vistas por otros usuarios?",
+    options: [
+      "SQL Injection",
+      "Cross-Site Scripting (XSS)",
+      "CSRF (Cross-Site Request Forgery)",
+      "Man-in-the-Middle"
+    ],
+    correct: 1,
+    explanation: "<strong>Cross-Site Scripting (XSS)</strong> permite a atacantes inyectar scripts del lado cliente en páginas web. Se previene sanitizando inputs, usando Content Security Policy (CSP) y codificando outputs. Diferente del CSRF, que fuerza acciones no deseadas en nombre del usuario autenticado."
+  },
+  {
+    id: 9, category: "Algoritmos & Estructuras", categoryColor: "badge-blue",
+    text: "En una estructura de datos Stack (Pila), ¿cuál es la política de acceso a elementos?",
+    options: [
+      "FIFO — First In, First Out",
+      "LIFO — Last In, First Out",
+      "LILO — Last In, Last Out",
+      "FILO — First In, Last Out (diferente al LIFO)"
+    ],
+    correct: 1,
+    explanation: "Un <strong>Stack</strong> sigue el principio <strong>LIFO (Last In, First Out)</strong>: el último elemento agregado es el primero en salir. Es como una pila de platos. Operaciones: <code>push()</code> para agregar y <code>pop()</code> para remover del tope."
+  },
+  {
+    id: 10, category: "DevOps & Contenedores", categoryColor: "badge-green",
+    text: "¿Cuál es la diferencia fundamental entre una imagen Docker y un contenedor Docker?",
+    options: [
+      "Son exactamente lo mismo, solo términos distintos.",
+      "Una imagen es una plantilla inmutable; un contenedor es una instancia en ejecución de esa imagen.",
+      "Un contenedor es la plantilla; la imagen es la instancia en ejecución.",
+      "Las imágenes se usan en producción; los contenedores solo en desarrollo."
+    ],
+    correct: 1,
+    explanation: "Una <strong>imagen Docker</strong> es un template de solo lectura (inmutable) que incluye el sistema de archivos y configuración. Un <strong>contenedor</strong> es una instancia en ejecución de esa imagen, con su propia capa de escritura. Múltiples contenedores pueden correr desde la misma imagen."
+  },
+  {
+    id: 11, category: "Programación Funcional", categoryColor: "badge-purple",
+    text: "¿Cuál de estas opciones describe correctamente una función pura?",
+    options: [
+      "Una función que modifica variables globales para mejorar performance.",
+      "Una función que siempre retorna el mismo output para el mismo input y no tiene efectos secundarios.",
+      "Una función asíncrona que usa async/await.",
+      "Una función que solo puede recibir tipos primitivos como parámetros."
+    ],
+    correct: 1,
+    explanation: "Una <strong>función pura</strong> tiene dos características: 1) Dado el mismo input, siempre retorna el mismo output (determinismo). 2) No tiene efectos secundarios (no modifica estado externo, no hace I/O). Son fundamentales en programación funcional y facilitan el testing."
+  },
+  {
+    id: 12, category: "Testing", categoryColor: "badge-green",
+    text: "En la pirámide de testing, ¿qué tipo de tests deberían ser MÁS numerosos?",
+    options: [
+      "Tests E2E (End-to-End)",
+      "Tests de Integración",
+      "Tests Unitarios",
+      "Tests de UI / Aceptación"
+    ],
+    correct: 2,
+    explanation: "Según la <strong>pirámide de testing</strong> de Mike Cohn, los <strong>tests unitarios</strong> deben ser la base y el más numeroso. Son rápidos, baratos y aíslan componentes. Los tests de integración van en el medio, y los E2E (lentos y costosos) en la cúspide, siendo los menos numerosos."
+  },
+  {
+    id: 13, category: "Bases de Datos", categoryColor: "badge-green",
+    text: "¿Qué significa la propiedad ACID en bases de datos relacionales?",
+    options: [
+      "Automatización, Consistencia, Integridad, Disponibilidad",
+      "Atomicidad, Consistencia, Aislamiento, Durabilidad",
+      "Acceso, Caché, Índices, Distribución",
+      "Autenticación, Cifrado, Integridad, Durabilidad"
+    ],
+    correct: 1,
+    explanation: "<strong>ACID</strong> son las 4 propiedades que garantizan la fiabilidad de transacciones: <strong>Atomicidad</strong> (todo o nada), <strong>Consistencia</strong> (estado válido), <strong>Aislamiento</strong> (transacciones independientes), <strong>Durabilidad</strong> (cambios persistentes aunque haya fallas)."
+  },
+  {
+    id: 14, category: "Arquitectura de Software", categoryColor: "badge-blue",
+    text: "¿Qué patrón arquitectónico describe aplicaciones como un conjunto de servicios pequeños e independientes que se comunican por APIs?",
+    options: [
+      "Arquitectura Monolítica",
+      "Arquitectura MVC",
+      "Microservicios",
+      "Arquitectura Hexagonal"
+    ],
+    correct: 2,
+    explanation: "<strong>Microservicios</strong> divide una aplicación en servicios pequeños, autónomos, cada uno con su propia base de datos y lógica de negocio. Se comunican por APIs (REST, gRPC, mensajes). Ventajas: escalabilidad independiente, despliegues separados. Desventajas: complejidad operacional mayor."
+  },
+  {
+    id: 15, category: "Paradigmas", categoryColor: "badge-purple",
+    text: "¿Cuál es el correcto concepto de 'polimorfismo' en Programación Orientada a Objetos?",
+    code: `<span class='cm'>// ¿Cuál es el principio que permite esto?</span>\n<span class='kw'>class</span> <span class='fn'>Animal</span> {\n  <span class='fn'>sonido</span>() { <span class='kw'>return</span> <span class='str'>'...'</span>; }\n}\n<span class='kw'>class</span> <span class='fn'>Perro</span> <span class='kw'>extends</span> <span class='fn'>Animal</span> {\n  <span class='fn'>sonido</span>() { <span class='kw'>return</span> <span class='str'>'Guau'</span>; }\n}\n<span class='kw'>class</span> <span class='fn'>Gato</span> <span class='kw'>extends</span> <span class='fn'>Animal</span> {\n  <span class='fn'>sonido</span>() { <span class='kw'>return</span> <span class='str'>'Miau'</span>; }\n}`,
+    options: [
+      "Herencia: las subclases heredan métodos del padre sin modificarlos.",
+      "Encapsulamiento: los datos están protegidos dentro de la clase.",
+      "Polimorfismo: objetos de distintas clases responden al mismo mensaje de formas diferentes.",
+      "Abstracción: se ocultan los detalles de implementación al usuario."
+    ],
+    correct: 2,
+    explanation: "El código muestra <strong>Polimorfismo</strong>: diferentes clases (Perro, Gato) implementan el mismo método (<code>sonido()</code>) con comportamientos distintos. Permite tratar objetos de diferentes tipos de manera uniforme a través de una interfaz común, siendo uno de los pilares de OOP."
   }
-  resize();
-  window.addEventListener('resize', resize);
-  window.addEventListener('mousemove', e=>{ mouse.x=e.clientX; mouse.y=e.clientY; });
+];
 
-  const N = 90;
-  for(let i=0;i<N;i++){
-    particles.push({
-      x: Math.random()*window.innerWidth,
-      y: Math.random()*window.innerHeight,
-      vx:(Math.random()-.5)*.25,
-      vy:(Math.random()-.5)*.25,
-      r: Math.random()*1.4+.4,
-      alpha: Math.random()*.5+.1,
-      hue: Math.random()>0.7 ? 230+Math.random()*30 : 260+Math.random()*30
-    });
-  }
+// ─── STATE ─────────────────────────────────────────────────────
+let state = {
+  name: '', email: '', level: '',
+  currentQ: 0, answers: [],
+  timerInterval: null, timeLeft: 20,
+  quizStarted: false
+};
 
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    for(let i=0;i<N;i++){
-      const p = particles[i];
-      p.x += p.vx; p.y += p.vy;
-      if(p.x<0) p.x=W; if(p.x>W) p.x=0;
-      if(p.y<0) p.y=H; if(p.y>H) p.y=0;
-
-      const dx=p.x-mouse.x, dy=p.y-mouse.y;
-      const dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<120){ const f=.5*(1-dist/120); p.vx+=dx/dist*f*.06; p.vy+=dy/dist*f*.06; }
-      p.vx*=.995; p.vy*=.995;
-
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`hsla(${p.hue},90%,75%,${p.alpha})`;
-      ctx.fill();
-
-      for(let j=i+1;j<N;j++){
-        const q=particles[j];
-        const d=Math.hypot(p.x-q.x,p.y-q.y);
-        if(d<120){
-          ctx.beginPath();
-          ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y);
-          ctx.strokeStyle=`hsla(220,90%,65%,${.12*(1-d/120)})`;
-          ctx.lineWidth=.6;
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(frame);
-  }
-  frame();
-})();
-
-/* ═══════════ COUNTER ANIMATION ═══════════ */
-function animateCount(el, target, duration){
-  const start = performance.now();
-  function tick(now){
-    const p = Math.min((now-start)/duration,1);
-    const ease = 1-Math.pow(1-p,3);
-    el.textContent = Math.round(ease*target);
-    if(p<1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+// ─── CLOCK ─────────────────────────────────────────────────────
+function updateClock() {
+  const now = new Date();
+  document.getElementById('menubar-clock').textContent =
+    now.toLocaleTimeString('es', {hour:'2-digit',minute:'2-digit'});
 }
-setTimeout(()=>{
-  document.querySelectorAll('[data-count]').forEach(el=>{
-    animateCount(el, +el.dataset.count, 1200);
-  });
-}, 900);
+setInterval(updateClock, 1000);
+updateClock();
 
-/* ═══════════ INPUT ═══════════ */
-const input  = document.getElementById('nombre');
-const count  = document.getElementById('charCount');
-const errEl  = document.getElementById('err');
+// ─── TOAST ─────────────────────────────────────────────────────
+function showToast(msg, icon='ℹ️', dur=2500) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-text').textContent = msg;
+  document.getElementById('toast-icon').textContent = icon;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), dur);
+}
 
-input.addEventListener('input', ()=>{
-  count.textContent = `${input.value.length} / 30`;
-  errEl.classList.remove('on');
-  input.parentElement.style.borderColor = '';
-});
+// ─── TRAFFIC LIGHTS ────────────────────────────────────────────
+function closeWindow() { showToast('¡No cierres la ventana! 😅', '⚠️'); }
+function minimizeWindow() { showToast('Ventana minimizada', '📌'); }
+function maximizeWindow() { showToast('Ventana maximizada', '⬛'); }
 
-/* ═══════════ FORM ═══════════ */
-document.getElementById('form').addEventListener('submit', function(e){
-  e.preventDefault();
-  const val = input.value.trim();
+// ─── PROGRESS ──────────────────────────────────────────────────
+function updateProgress(pct) {
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
 
-  if(val.length < 2){
-    errEl.classList.add('on');
-    input.closest('.input-shell').style.borderColor='rgba(248,113,113,.6)';
-    input.focus();
-    return;
+// ─── SCREEN NAVIGATION ─────────────────────────────────────────
+function goToScreen(name) {
+  const all = document.querySelectorAll('.screen');
+  all.forEach(s => { s.classList.remove('active'); });
+  const target = document.getElementById('screen-' + name);
+  if (target) {
+    target.classList.add('active');
+    const dockItems = document.querySelectorAll('.dock-item');
+    dockItems.forEach(d => d.classList.remove('active'));
+    const idx = {register:0, question:1, results:3};
+    if(idx[name] !== undefined) dockItems[idx[name]]?.classList.add('active');
+  }
+}
+
+// ─── START QUIZ ────────────────────────────────────────────────
+function startQuiz() {
+  const name = document.getElementById('input-name').value.trim();
+  const email = document.getElementById('input-email').value.trim();
+  const level = document.getElementById('input-level').value;
+
+  let valid = true;
+  document.querySelectorAll('.form-input').forEach(i => i.classList.remove('error'));
+  document.querySelectorAll('.form-error').forEach(e => e.classList.remove('show'));
+
+  if (!name || name.length < 3) {
+    document.getElementById('input-name').classList.add('error');
+    document.getElementById('error-name').classList.add('show');
+    valid = false;
+  }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    document.getElementById('input-email').classList.add('error');
+    document.getElementById('error-email').classList.add('show');
+    valid = false;
+  }
+  if (!level) {
+    document.getElementById('input-level').classList.add('error');
+    document.getElementById('error-level').classList.add('show');
+    valid = false;
+  }
+  if (!valid) { showToast('Completa todos los campos', '⚠️'); return; }
+
+  state.name = name; state.email = email; state.level = level;
+  state.answers = []; state.currentQ = 0; state.quizStarted = true;
+
+  document.getElementById('window-title-text').textContent = `DevQuiz — ${name}`;
+
+  goToScreen('question');
+  renderQuestion();
+  showToast(`¡Buena suerte, ${name.split(' ')[0]}! 🚀`, '🎯', 3000);
+}
+
+// ─── RENDER QUESTION ──────────────────────────────────────────
+function renderQuestion() {
+  const q = questions[state.currentQ];
+  const idx = state.currentQ;
+  const total = questions.length;
+
+  // Header
+  document.getElementById('q-num').textContent = idx + 1;
+  document.getElementById('q-total').textContent = total;
+  document.getElementById('window-subtitle-text').textContent =
+    `Pregunta ${idx+1}/${total} — ${q.category}`;
+  updateProgress(((idx) / total) * 100);
+
+  // Dots
+  const dots = document.getElementById('q-progress');
+  dots.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'q-dot' + (i < idx ? ' done' : i === idx ? ' current' : '');
+    dots.appendChild(d);
   }
 
-  const btn = document.getElementById('cta');
-  btn.style.background = '#22c55e';
-  btn.style.boxShadow  = '0 8px 32px rgba(34,197,94,.5)';
-  btn.style.transform  = 'scale(.98)';
-  btn.innerHTML = `
-    <span class="cta-label" style="position:relative">¡Vamos! Cargando…</span>
-    <span class="cta-arrow" style="background:rgba(255,255,255,.2)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
-        stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </span>`;
+  // Category
+  document.getElementById('q-category').innerHTML =
+    `<span class="badge ${q.categoryColor}">${q.category}</span>`;
 
-  localStorage.setItem('quizUserData', JSON.stringify({ name: val }));
-  setTimeout(()=>{ window.location.href = 'Test.html'; }, 900);
-});
+  // Text
+  document.getElementById('q-text').textContent = q.text;
+
+  // Code block
+  const codeEl = document.getElementById('q-code');
+  if (q.code) {
+    codeEl.style.display = 'block';
+    codeEl.innerHTML = q.code;
+  } else { codeEl.style.display = 'none'; }
+
+  // Options
+  const optsEl = document.getElementById('q-options');
+  optsEl.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.dataset.index = i;
+    div.innerHTML = `
+      <div class="option-letter">${letters[i]}</div>
+      <div class="option-text">${opt}</div>
+      <div class="option-icon" id="opt-icon-${i}"></div>`;
+    div.onclick = () => selectOption(i);
+    optsEl.appendChild(div);
+  });
+
+  // Explanation
+  const expEl = document.getElementById('q-explanation');
+  expEl.classList.remove('show');
+  expEl.innerHTML = '';
+
+  // Next button
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.disabled = true;
+  nextBtn.style.opacity = '0.5';
+  document.getElementById('btn-next-text').textContent =
+    idx === total - 1 ? 'Ver Resultados 🏆' : 'Siguiente →';
+
+  document.getElementById('btn-skip').style.display = 'inline-flex';
+
+  // Timer
+  startTimer();
+}
+
+// ─── TIMER ─────────────────────────────────────────────────────
+function startTimer() {
+  clearInterval(state.timerInterval);
+  state.timeLeft = 20;
+  updateTimerUI(20);
+  state.timerInterval = setInterval(() => {
+    state.timeLeft--;
+    updateTimerUI(state.timeLeft);
+    if (state.timeLeft <= 0) {
+      clearInterval(state.timerInterval);
+      timeUp();
+    }
+  }, 1000);
+}
+
+function updateTimerUI(t) {
+  const fill = document.getElementById('timer-fill');
+  const text = document.getElementById('timer-text');
+  const pct = t / 20;
+  const circum = 126;
+  fill.style.strokeDashoffset = circum - (circum * pct);
+  text.textContent = t;
+  if (t <= 5) {
+    fill.style.stroke = '#FF3B30';
+    text.style.color = '#FF3B30';
+  } else if (t <= 10) {
+    fill.style.stroke = '#FF9500';
+    text.style.color = '#FF9500';
+  } else {
+    fill.style.stroke = 'var(--blue)';
+    text.style.color = 'var(--text-primary)';
+  }
+}
+
+function timeUp() {
+  showToast('¡Tiempo agotado! ⏰', '⏱️');
+  // Mark as incorrect/skipped
+  const q = questions[state.currentQ];
+  state.answers[state.currentQ] = {
+    selected: -1, correct: q.correct,
+    isCorrect: false, skipped: true
+  };
+  revealAnswer(-1);
+}
+
+// ─── SELECT OPTION ─────────────────────────────────────────────
+function selectOption(i) {
+  const opts = document.querySelectorAll('.option');
+  const alreadyAnswered = state.answers[state.currentQ] !== undefined;
+  if (alreadyAnswered) return;
+
+  clearInterval(state.timerInterval);
+  const q = questions[state.currentQ];
+
+  state.answers[state.currentQ] = {
+    selected: i, correct: q.correct,
+    isCorrect: i === q.correct, skipped: false
+  };
+
+  revealAnswer(i);
+}
+
+function revealAnswer(selected) {
+  const q = questions[state.currentQ];
+  const opts = document.querySelectorAll('.option');
+  opts.forEach(o => o.classList.add('disabled'));
+
+  opts.forEach((o, i) => {
+    if (i === q.correct) {
+      o.classList.add('correct');
+      o.querySelector('.option-icon').textContent = '✅';
+    }
+    if (selected !== -1 && i === selected && selected !== q.correct) {
+      o.classList.add('incorrect');
+      o.querySelector('.option-icon').textContent = '❌';
+    }
+  });
+
+  // Explanation
+  const expEl = document.getElementById('q-explanation');
+  expEl.innerHTML = q.explanation;
+  expEl.classList.add('show');
+
+  // Next button
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.disabled = false;
+  nextBtn.style.opacity = '1';
+  document.getElementById('btn-skip').style.display = 'none';
+}
+
+// ─── SKIP ──────────────────────────────────────────────────────
+function skipQuestion() {
+  clearInterval(state.timerInterval);
+  const q = questions[state.currentQ];
+  state.answers[state.currentQ] = {
+    selected: -1, correct: q.correct,
+    isCorrect: false, skipped: true
+  };
+  revealAnswer(-1);
+}
+
+// ─── NEXT QUESTION ──────────────────────────────────────────────
+function nextQuestion() {
+  if (state.currentQ < questions.length - 1) {
+    state.currentQ++;
+    renderQuestion();
+  } else {
+    finishQuiz();
+  }
+}
+
+// ─── FINISH QUIZ ──────────────────────────────────────────────
+function finishQuiz() {
+  clearInterval(state.timerInterval);
+  updateProgress(100);
+  goToScreen('results');
+  renderResults();
+}
+
+// ─── RENDER RESULTS ────────────────────────────────────────────
+function renderResults() {
+  const answers = state.answers;
+  const total = questions.length;
+  let correct = 0;
+  answers.forEach(a => { if (a && a.isCorrect) correct++; });
+  const incorrect = total - correct;
+  const pct = Math.round((correct / total) * 100);
+
+  // Stat cards
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-incorrect').textContent = incorrect;
+  document.getElementById('stat-total').textContent = total;
+
+  // Score ring
+  const fill = document.getElementById('score-ring-fill');
+  const circum = 380;
+  const targetOffset = circum - (circum * pct / 100);
+  fill.style.cssText = `stroke-dasharray:${circum};stroke-dashoffset:${circum};`;
+
+  // Color
+  let color, grade, label, sublabel;
+  if (pct >= 90) { color='#34C759'; grade='A+'; label='¡Sobresaliente!'; sublabel='Conocimiento excepcional 🏆'; }
+  else if (pct >= 80) { color='#34C759'; grade='A'; label='¡Excelente!'; sublabel='Muy por encima del promedio 🎯'; }
+  else if (pct >= 70) { color='#5AC8FA'; grade='B'; label='¡Muy Bien!'; sublabel='Sólido conocimiento técnico 💪'; }
+  else if (pct >= 60) { color='#FF9500'; grade='C'; label='Bien'; sublabel='Hay áreas por fortalecer 📚'; }
+  else if (pct >= 50) { color='#FF9500'; grade='D'; label='Regular'; sublabel='Sigue practicando 🔧'; }
+  else { color='#FF3B30'; grade='F'; label='Insuficiente'; sublabel='Necesitas más estudio 📖'; }
+
+  fill.style.stroke = color;
+  const scoreNum = document.getElementById('score-number');
+  scoreNum.style.color = color;
+
+  // Animate score ring
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      fill.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      fill.style.strokeDashoffset = targetOffset;
+    }, 100);
+  });
+
+  // Animate number
+  let n = 0;
+  const interval = setInterval(() => {
+    n = Math.min(n + 2, pct);
+    scoreNum.textContent = n + '%';
+    if (n >= pct) clearInterval(interval);
+  }, 30);
+
+  // Grade
+  const gradeEl = document.getElementById('grade-letter');
+  gradeEl.textContent = grade;
+  gradeEl.style.color = color;
+  document.getElementById('grade-label').textContent = label;
+  document.getElementById('grade-sublabel').textContent = sublabel;
+  document.getElementById('results-name-display').textContent =
+    `${state.name} · ${state.level.charAt(0).toUpperCase() + state.level.slice(1)} · ${new Date().toLocaleDateString('es-MX', {day:'numeric',month:'long',year:'numeric'})}`;
+  document.getElementById('window-subtitle-text').textContent = `Resultado Final: ${pct}% — ${label}`;
+
+  // Breakdown
+  const breakdown = document.getElementById('breakdown-list');
+  breakdown.innerHTML = '';
+  questions.forEach((q, i) => {
+    const ans = answers[i] || {isCorrect:false, selected:-1, skipped:true};
+    const div = document.createElement('div');
+    div.className = 'breakdown-item';
+    const correctText = q.options[q.correct];
+    const selectedText = ans.selected >= 0 ? q.options[ans.selected] : '—';
+    div.innerHTML = `
+      <div class="breakdown-icon ${ans.isCorrect ? 'correct' : 'incorrect'}">
+        ${ans.isCorrect ? '✅' : '❌'}
+      </div>
+      <div>
+        <div class="breakdown-q">${i+1}. ${q.text.length > 70 ? q.text.substring(0,70)+'…' : q.text}</div>
+        <div class="breakdown-a">
+          ${ans.isCorrect
+            ? `<span>✓ ${correctText.length>60?correctText.substring(0,60)+'…':correctText}</span>`
+            : `<span class="wrong">${selectedText.length>40?selectedText.substring(0,40)+'…':selectedText}</span>
+               &nbsp;→&nbsp;<span>${correctText.length>40?correctText.substring(0,40)+'…':correctText}</span>`
+          }
+        </div>
+      </div>`;
+    breakdown.appendChild(div);
+  });
+
+  // Confetti if passing
+  if (pct >= 70) spawnConfetti();
+}
+
+// ─── CONFETTI ──────────────────────────────────────────────────
+function spawnConfetti() {
+  const container = document.getElementById('confetti');
+  const colors = ['#007AFF','#34C759','#FF9500','#AF52DE','#FF3B30','#5AC8FA','#FFD60A'];
+  for (let i = 0; i < 80; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.cssText = `
+      left:${Math.random()*100}%;
+      top:${Math.random()*-20}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      width:${4+Math.random()*8}px;
+      height:${4+Math.random()*8}px;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+      animation-duration:${2+Math.random()*3}s;
+      animation-delay:${Math.random()*1.5}s;
+    `;
+    container.appendChild(piece);
+    setTimeout(() => piece.remove(), 6000);
+  }
+}
+
+// ─── RESTART ───────────────────────────────────────────────────
+function restartQuiz() {
+  state.answers = []; state.currentQ = 0; state.quizStarted = false;
+  updateProgress(0);
+  document.getElementById('window-title-text').textContent = 'DevQuiz — Evaluación de Software';
+  document.getElementById('window-subtitle-text').textContent = 'Desarrollo de Software · 15 Preguntas';
+  goToScreen('register');
+  showToast('¡Evaluación reiniciada! 🔄', '✨');
+}
+
+// ─── DOWNLOAD RESULTS ──────────────────────────────────────────
+function downloadResults() {
+  const answers = state.answers;
+  const total = questions.length;
+  let correct = 0;
+  answers.forEach(a => { if (a && a.isCorrect) correct++; });
+  const incorrect = total - correct;
+  const pct = Math.round((correct / total) * 100);
+
+  let grade, color;
+  if (pct >= 90) { grade='A+ Sobresaliente'; color='#34C759'; }
+  else if (pct >= 80) { grade='A Excelente'; color='#34C759'; }
+  else if (pct >= 70) { grade='B Muy Bien'; color='#5AC8FA'; }
+  else if (pct >= 60) { grade='C Bien'; color='#FF9500'; }
+  else if (pct >= 50) { grade='D Regular'; color='#FF9500'; }
+  else { grade='F Insuficiente'; color='#FF3B30'; }
+
+  const levelMap = {junior:'Junior (0-2 años)', mid:'Mid-Level (2-5 años)', senior:'Senior (5+ años)', student:'Estudiante'};
+  const date = new Date().toLocaleDateString('es-MX', {weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const time = new Date().toLocaleTimeString('es-MX', {hour:'2-digit',minute:'2-digit'});
+
+  let breakdownRows = '';
+  questions.forEach((q, i) => {
+    const ans = answers[i] || {isCorrect:false,selected:-1,skipped:true};
+    const icon = ans.isCorrect ? '✅' : ans.skipped ? '⏭️' : '❌';
+    const status = ans.isCorrect ? 'Correcta' : ans.skipped ? 'Omitida' : 'Incorrecta';
+    const statusColor = ans.isCorrect ? '#34C759' : ans.skipped ? '#FF9500' : '#FF3B30';
+    breakdownRows += `
+      <tr style="border-bottom:1px solid #2a2a2e">
+        <td style="padding:10px 12px;font-size:13px;color:#999;text-align:center">${i+1}</td>
+        <td style="padding:10px 12px;font-size:13px;color:#e0e0e0;line-height:1.4">${q.text.length>80?q.text.substring(0,80)+'…':q.text}</td>
+        <td style="padding:10px 12px;font-size:12px;color:#b0b0b0;line-height:1.4">${q.options[q.correct].length>50?q.options[q.correct].substring(0,50)+'…':q.options[q.correct]}</td>
+        <td style="padding:10px 12px;text-align:center">
+          <span style="background:${statusColor}20;color:${statusColor};border:1px solid ${statusColor}40;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600">${icon} ${status}</span>
+        </td>
+      </tr>`;
+  });
+
+  const html = `<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8">
+<title>Reporte DevQuiz — ${state.name}</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#0a0a0c; color:#e0e0e0; min-height:100vh; }
+  @media print {
+    body { background:#fff; color:#000; }
+    .no-print { display:none; }
+  }
+</style></head>
+<body>
+<div style="max-width:800px;margin:0 auto;padding:40px 20px">
+
+  <!-- HEADER -->
+  <div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);border-radius:20px;padding:40px;text-align:center;margin-bottom:32px;border:1px solid rgba(255,255,255,0.08)">
+    <div style="width:72px;height:72px;background:linear-gradient(135deg,#007AFF,#AF52DE);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 20px;box-shadow:0 8px 32px rgba(0,122,255,0.4)">💻</div>
+    <div style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#007AFF;margin-bottom:8px">REPORTE DE EVALUACIÓN</div>
+    <h1 style="font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:4px">DevQuiz</h1>
+    <div style="font-size:14px;color:rgba(255,255,255,0.5)">Evaluación de Desarrollo de Software</div>
+  </div>
+
+  <!-- CANDIDATE INFO -->
+  <div style="background:#1c1c1e;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px;margin-bottom:24px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#636366;margin-bottom:16px">DATOS DEL CANDIDATO</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-size:12px;color:#636366;margin-bottom:4px">NOMBRE COMPLETO</div>
+        <div style="font-size:18px;font-weight:700">${state.name}</div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:#636366;margin-bottom:4px">CORREO ELECTRÓNICO</div>
+        <div style="font-size:15px;color:#5AC8FA">${state.email}</div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:#636366;margin-bottom:4px">NIVEL</div>
+        <div style="font-size:15px;font-weight:600">${levelMap[state.level]||state.level}</div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:#636366;margin-bottom:4px">FECHA Y HORA</div>
+        <div style="font-size:14px">${date}, ${time}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCORE CARD -->
+  <div style="background:#1c1c1e;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px;margin-bottom:24px;text-align:center">
+    <div style="font-size:72px;font-weight:900;color:${color};letter-spacing:-4px;line-height:1;margin-bottom:8px">${pct}<span style="font-size:40px">%</span></div>
+    <div style="font-size:22px;font-weight:700;color:${color};margin-bottom:20px">${grade}</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px">
+      <div style="background:#2c2c2e;border-radius:12px;padding:16px;border-top:2px solid #34C759">
+        <div style="font-size:32px;font-weight:800;color:#34C759">${correct}</div>
+        <div style="font-size:12px;color:#636366;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px">✅ Correctas</div>
+      </div>
+      <div style="background:#2c2c2e;border-radius:12px;padding:16px;border-top:2px solid #FF3B30">
+        <div style="font-size:32px;font-weight:800;color:#FF3B30">${incorrect}</div>
+        <div style="font-size:12px;color:#636366;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px">❌ Incorrectas</div>
+      </div>
+      <div style="background:#2c2c2e;border-radius:12px;padding:16px;border-top:2px solid #007AFF">
+        <div style="font-size:32px;font-weight:800;color:#5AC8FA">${total}</div>
+        <div style="font-size:12px;color:#636366;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px">📝 Total</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BREAKDOWN TABLE -->
+  <div style="background:#1c1c1e;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px;margin-bottom:24px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#636366;margin-bottom:20px">DETALLE DE RESPUESTAS</div>
+    <table style="width:100%;border-collapse:collapse">
+      <thead>
+        <tr style="border-bottom:1px solid #3a3a3c">
+          <th style="padding:8px 12px;font-size:11px;color:#636366;text-align:center;font-weight:600;letter-spacing:0.5px">#</th>
+          <th style="padding:8px 12px;font-size:11px;color:#636366;text-align:left;font-weight:600;letter-spacing:0.5px">PREGUNTA</th>
+          <th style="padding:8px 12px;font-size:11px;color:#636366;text-align:left;font-weight:600;letter-spacing:0.5px">RESPUESTA CORRECTA</th>
+          <th style="padding:8px 12px;font-size:11px;color:#636366;text-align:center;font-weight:600;letter-spacing:0.5px">RESULTADO</th>
+        </tr>
+      </thead>
+      <tbody>${breakdownRows}</tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="text-align:center;padding:20px;color:#3a3a3c;font-size:13px">
+    <div>🍎 DevQuiz — Evaluación de Desarrollo de Software</div>
+    <div style="margin-top:4px">Generado el ${date} · ${time}</div>
+  </div>
+
+  <div class="no-print" style="text-align:center;margin-top:24px">
+    <button onclick="window.print()" style="background:#007AFF;color:white;border:none;padding:14px 32px;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:inherit">🖨️ Imprimir / Guardar como PDF</button>
+  </div>
+
+</div>
+</body></html>`;
+
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const safeName = state.name.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_áéíóúÁÉÍÓÚñÑ]/g,'');
+  a.href = url;
+  a.download = `DevQuiz_Reporte_${safeName}.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('¡Reporte descargado! 📄', '✅', 3000);
+}
 </script>
 </body>
 </html>
+`;
