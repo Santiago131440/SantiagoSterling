@@ -1,160 +1,529 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth" data-theme="light">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="https://github.com/Santiago131440/SantiagoSterling/blob/main/1000234043.jpg?raw=true">
-  <title>Registro - Test desarrollo de software</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Test — Desarrollo de Software</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
-          boxShadow: { glass: '0 10px 40px rgba(0,0,0,0.15)' },
-          colors: {
-            glass: {
-              light: 'rgba(255,255,255,0.6)',
-              dark: 'rgba(13,16,23,0.55)'
-            }
-          },
-          backdropBlur: { '18': '18px' },
-          keyframes: {
-            float: { '0%,100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-14px)' } },
-            fadein: { '0%': { opacity: 0, transform: 'translateY(16px) scale(.98)' }, '100%': { opacity: 1, transform: 'translateY(0) scale(1)' } }
-          },
-          animation: { float: 'float 8s ease-in-out infinite', fadein: 'fadein .7s ease forwards' }
+:root{
+  --black:#000;
+  --white:#fff;
+  --blue:#2563ff;
+  --blue-glow:rgba(37,99,255,.35);
+  --blue-soft:rgba(37,99,255,.08);
+  --silver:#a1a1aa;
+  --silver-dim:rgba(161,161,170,.15);
+  --text-main:#f4f4f5;
+  --text-dim:#71717a;
+}
+
+html,body{height:100%;background:var(--black);color:var(--text-main);
+  font-family:'Sora',sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+
+/* ═══════════════════════════════
+   CANVAS PARTICLES
+═══════════════════════════════ */
+#cvs{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ═══════════════════════════════
+   GRADIENT MESH BG
+═══════════════════════════════ */
+.mesh{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 20%,rgba(37,99,255,.18) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 80%,rgba(139,92,246,.14) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 50%,rgba(20,184,166,.08) 0%,transparent 70%);
+  animation:meshShift 18s ease-in-out infinite alternate;
+}
+@keyframes meshShift{
+  from{filter:hue-rotate(0deg) brightness(1)}
+  to  {filter:hue-rotate(20deg) brightness(1.08)}
+}
+
+/* Thin horizontal scan-line glare */
+.glare{
+  position:fixed;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,
+    transparent 0%,
+    rgba(255,255,255,.012) 49%,
+    rgba(255,255,255,.025) 50%,
+    rgba(255,255,255,.012) 51%,
+    transparent 100%
+  );
+  background-size:100% 4px;
+}
+
+/* ═══════════════════════════════
+   LAYOUT
+═══════════════════════════════ */
+.stage{
+  position:relative;z-index:10;
+  min-height:100dvh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:stretch;
+}
+
+/* ── LEFT PANEL ── */
+.panel-left{
+  display:flex;flex-direction:column;
+  justify-content:center;
+  padding:80px 64px 80px 80px;
+  border-right:1px solid rgba(255,255,255,.05);
+  position:relative;overflow:hidden;
+}
+
+/* Giant number watermark */
+.watermark{
+  position:absolute;
+  right:-20px;top:50%;
+  transform:translateY(-50%);
+  font-family:'Playfair Display',serif;
+  font-size:360px;font-weight:700;
+  line-height:1;
+  color:rgba(255,255,255,.02);
+  user-select:none;pointer-events:none;
+  animation:wmarkIn 1.8s 1s ease both;
+}
+@keyframes wmarkIn{from{opacity:0;transform:translateY(-50%) scale(.9)} to{opacity:1;transform:translateY(-50%) scale(1)}}
+
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:100px;padding:6px 16px;
+  font-size:11px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--silver);
+  margin-bottom:48px;width:fit-content;
+  opacity:0;animation:slideIn .7s .3s ease both;
+}
+.tag-pip{width:6px;height:6px;border-radius:50%;background:var(--blue);
+  box-shadow:0 0 8px var(--blue-glow);animation:pip 2s ease infinite}
+@keyframes pip{0%,100%{opacity:1;box-shadow:0 0 8px var(--blue-glow)}
+  50%{opacity:.4;box-shadow:0 0 20px var(--blue-glow)}}
+
+.hero-label{
+  font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--text-dim);margin-bottom:16px;
+  opacity:0;animation:slideIn .7s .45s ease both;
+}
+
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(52px,6vw,88px);
+  font-weight:400;line-height:.95;
+  letter-spacing:-.03em;
+  margin-bottom:36px;
+  opacity:0;animation:slideIn .8s .55s ease both;
+}
+.hero-title .line2{display:block;font-style:italic;color:var(--blue);
+  text-shadow:0 0 40px rgba(37,99,255,.4)}
+.hero-title .line3{display:block;color:rgba(244,244,245,.45)}
+
+.hero-desc{
+  font-size:15px;font-weight:300;line-height:1.7;
+  color:var(--silver);max-width:340px;
+  border-left:2px solid rgba(37,99,255,.4);
+  padding-left:20px;
+  opacity:0;animation:slideIn .7s .7s ease both;
+}
+
+/* Stats row */
+.stats{
+  display:flex;gap:40px;margin-top:56px;
+  opacity:0;animation:slideIn .7s .85s ease both;
+}
+.stat-val{
+  font-family:'Playfair Display',serif;
+  font-size:32px;font-weight:700;line-height:1;
+  color:var(--text-main);
+}
+.stat-lbl{font-size:11px;color:var(--text-dim);letter-spacing:.06em;margin-top:4px}
+
+/* ── RIGHT PANEL ── */
+.panel-right{
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:stretch;
+  padding:80px 80px 80px 64px;
+  position:relative;
+}
+
+/* Frosted card */
+.card{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:32px;
+  padding:52px 48px;
+  position:relative;overflow:hidden;
+  backdrop-filter:blur(20px);
+  opacity:0;transform:translateY(32px) scale(.97);
+  animation:cardReveal .9s .5s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes cardReveal{to{opacity:1;transform:none}}
+
+/* Glow line top of card */
+.card::before{
+  content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(37,99,255,.6),transparent);
+}
+.card::after{
+  content:'';position:absolute;top:0;left:30%;width:40%;height:40px;
+  background:radial-gradient(ellipse, rgba(37,99,255,.15) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.card-num{
+  font-family:'Playfair Display',serif;
+  font-size:13px;font-weight:400;font-style:italic;
+  color:rgba(37,99,255,.7);letter-spacing:.04em;
+  margin-bottom:32px;
+}
+
+.card-title{
+  font-family:'Playfair Display',serif;
+  font-size:28px;font-weight:400;
+  line-height:1.2;letter-spacing:-.02em;
+  margin-bottom:8px;
+}
+.card-sub{font-size:13px;color:var(--text-dim);margin-bottom:40px;font-weight:300}
+
+/* Input */
+.field{margin-bottom:24px}
+.field-lbl{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-dim);margin-bottom:10px;
+}
+
+.input-shell{
+  position:relative;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  transition:border-color .25s,box-shadow .25s,background .25s;
+}
+.input-shell:focus-within{
+  border-color:rgba(37,99,255,.7);
+  background:rgba(37,99,255,.04);
+  box-shadow:0 0 0 4px rgba(37,99,255,.12), 0 8px 32px rgba(37,99,255,.08);
+}
+
+.input-shell input{
+  width:100%;background:transparent;border:none;outline:none;
+  padding:16px 52px 16px 20px;
+  font-family:'Sora',sans-serif;font-size:15px;font-weight:400;
+  color:var(--text-main);
+}
+.input-shell input::placeholder{color:rgba(113,113,122,.6)}
+
+/* Floating icon inside input */
+.input-icon{
+  position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  color:var(--text-dim);pointer-events:none;
+  transition:color .25s;
+}
+.input-shell:focus-within .input-icon{color:var(--blue)}
+
+/* Character counter */
+.char-count{font-size:11px;color:var(--text-dim);font-variant-numeric:tabular-nums}
+
+/* Error */
+.err{
+  font-size:12px;color:#f87171;margin-top:8px;
+  display:none;align-items:center;gap:6px;
+}
+.err.on{display:flex}
+
+/* CTA button */
+.cta{
+  width:100%;position:relative;overflow:hidden;
+  background:var(--blue);color:#fff;border:none;border-radius:16px;
+  padding:18px 28px;cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:'Sora',sans-serif;font-size:15px;font-weight:600;
+  letter-spacing:.01em;
+  transition:transform .2s, box-shadow .2s, background .2s;
+  box-shadow:0 4px 24px rgba(37,99,255,.5);
+}
+.cta::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.18),transparent 55%);
+  border-radius:inherit;
+}
+.cta:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(37,99,255,.65)}
+.cta:active{transform:scale(.97);box-shadow:0 2px 12px rgba(37,99,255,.4)}
+
+.cta-label{position:relative}
+.cta-arrow{
+  position:relative;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .3s, background .3s;
+  flex-shrink:0;
+}
+.cta:hover .cta-arrow{transform:translateX(4px);background:rgba(255,255,255,.25)}
+
+/* Progress dots */
+.progress{
+  display:flex;gap:8px;align-items:center;margin-top:32px;
+  padding-top:24px;border-top:1px solid rgba(255,255,255,.05);
+}
+.pdot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,.12);transition:all .3s;
+}
+.pdot.active{width:20px;border-radius:4px;background:var(--blue)}
+.progress-txt{margin-left:auto;font-size:11px;color:var(--text-dim);letter-spacing:.06em}
+
+/* Page footer */
+.page-footer{
+  position:fixed;bottom:0;left:0;right:0;z-index:20;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+  border-top:1px solid rgba(255,255,255,.04);
+  background:rgba(0,0,0,.6);backdrop-filter:blur(20px);
+}
+.page-footer span{font-size:12px;color:rgba(113,113,122,.6);letter-spacing:.04em}
+
+/* ── ANIMATIONS ── */
+@keyframes slideIn{
+  from{opacity:0;transform:translateY(20px)}
+  to  {opacity:1;transform:none}
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:860px){
+  html,body{overflow:auto}
+  .stage{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .panel-left{padding:60px 32px 40px;border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}
+  .panel-right{padding:40px 32px 100px}
+  .watermark{display:none}
+  .stats{gap:28px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="cvs"></canvas>
+<div class="mesh"></div>
+<div class="glare"></div>
+
+<div class="stage">
+
+  <!-- ════════ LEFT ════════ -->
+  <section class="panel-left">
+    <div class="watermark">01</div>
+
+    <div class="tag"><span class="tag-pip"></span>Evaluación Técnica</div>
+
+    <p class="hero-label">Santiago Sterling · 2026</p>
+
+    <h1 class="hero-title">
+      Test de<br>
+      <span class="line2">Software</span>
+      <span class="line3">Development</span>
+    </h1>
+
+    <p class="hero-desc">
+      Una evaluación diseñada para medir tus conocimientos en desarrollo de software. Responde con confianza.
+    </p>
+
+    <div class="stats">
+      <div>
+        <div class="stat-val" data-count="15">0</div>
+        <div class="stat-lbl">Preguntas</div>
+      </div>
+      <div>
+        <div class="stat-val" data-count="30">0</div>
+        <div class="stat-lbl">Minutos</div>
+      </div>
+      <div>
+        <div class="stat-val" data-count="100">0</div>
+        <div class="stat-lbl">Puntos</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ RIGHT ════════ -->
+  <section class="panel-right">
+    <div class="card">
+      <p class="card-num">Paso 01 / 01 — Registro</p>
+      <h2 class="card-title">¿Cómo quieres<br>que te llamemos?</h2>
+      <p class="card-sub">Puedes usar tu nombre real o un seudónimo.</p>
+
+      <form id="form" novalidate>
+        <div class="field">
+          <div class="field-lbl">
+            <span>Nombre</span>
+            <span class="char-count" id="charCount">0 / 30</span>
+          </div>
+          <div class="input-shell">
+            <input type="text" id="nombre" placeholder="Ej. Santiago, dev42, X…"
+              maxlength="30" autocomplete="name" autocapitalize="words" spellcheck="false"/>
+            <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div class="err" id="err">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            Ingresa al menos 2 caracteres.
+          </div>
+        </div>
+
+        <button type="submit" class="cta" id="cta">
+          <span class="cta-label">Comenzar evaluación</span>
+          <span class="cta-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </button>
+      </form>
+
+      <div class="progress">
+        <div class="pdot active"></div>
+        <div class="pdot"></div>
+        <div class="pdot"></div>
+        <span class="progress-txt">Registro</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="page-footer">
+  <span>Desarrollado por Santiago Sterling &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; Test de Desarrollo de Software</span>
+</footer>
+
+<script>
+/* ═══════════ CANVAS PARTICLES ═══════════ */
+(function(){
+  const cvs = document.getElementById('cvs');
+  const ctx = cvs.getContext('2d');
+  let W, H, particles = [], mouse = {x:-999,y:-999};
+
+  function resize(){
+    W = cvs.width  = window.innerWidth;
+    H = cvs.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  window.addEventListener('mousemove', e=>{ mouse.x=e.clientX; mouse.y=e.clientY; });
+
+  const N = 90;
+  for(let i=0;i<N;i++){
+    particles.push({
+      x: Math.random()*window.innerWidth,
+      y: Math.random()*window.innerHeight,
+      vx:(Math.random()-.5)*.25,
+      vy:(Math.random()-.5)*.25,
+      r: Math.random()*1.4+.4,
+      alpha: Math.random()*.5+.1,
+      hue: Math.random()>0.7 ? 230+Math.random()*30 : 260+Math.random()*30
+    });
+  }
+
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<N;i++){
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<0) p.x=W; if(p.x>W) p.x=0;
+      if(p.y<0) p.y=H; if(p.y>H) p.y=0;
+
+      const dx=p.x-mouse.x, dy=p.y-mouse.y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<120){ const f=.5*(1-dist/120); p.vx+=dx/dist*f*.06; p.vy+=dy/dist*f*.06; }
+      p.vx*=.995; p.vy*=.995;
+
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`hsla(${p.hue},90%,75%,${p.alpha})`;
+      ctx.fill();
+
+      for(let j=i+1;j<N;j++){
+        const q=particles[j];
+        const d=Math.hypot(p.x-q.x,p.y-q.y);
+        if(d<120){
+          ctx.beginPath();
+          ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y);
+          ctx.strokeStyle=`hsla(220,90%,65%,${.12*(1-d/120)})`;
+          ctx.lineWidth=.6;
+          ctx.stroke();
         }
       }
     }
-  </script>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root{ --bg-dark:#0b0f17; --bg-light:#eef2f7; }
-    html,body{height:100%; font-weight: 100; font-family: 'inter',sans serif;}
-
-    .bg-orb{ position: absolute; filter: blur(60px); opacity:.55; }
-    .orb-1{ width: 540px; height: 540px; background: radial-gradient(circle at 30% 30%, #7dd3fc, transparent 60%); top:-120px; left:-80px; animation: orbfloat 16s ease-in-out infinite; }
-    .orb-2{ width: 560px; height: 560px; background: radial-gradient(circle at 70% 70%, #a78bfa, transparent 60%); bottom:-140px; right:-80px; animation: orbfloat 19s ease-in-out infinite reverse; }
-    .orb-3{ width: 420px; height: 420px; background: radial-gradient(circle at 60% 40%, #34d399, transparent 60%); bottom:200px; left:40px; animation: orbfloat 22s ease-in-out infinite; }
-    @keyframes orbfloat{ 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-24px,0)} }
-
-    .glass{
-      border: 1px solid rgba(255,255,255,.95);
-      background: rgba(245, 245, 247, 0.75); /* Gris Apple translúcido */
-      backdrop-filter: blur(14px) saturate(180%);
-      -webkit-backdrop-filter: blur(14px) saturate(180%);
-    }
-    .dark .glass{
-      background: var(--glass-bg-dark, rgba(13,16,23,.55));
-      border: 1px solid rgba(255,255,255,.08);
-      box-shadow: 0 14px 50px rgba(0,0,0,.45);
-    }
-
-    .startBtn {
-      transition: all 0.3s ease;
-      width: fit-content;
-      background: #007AFF;
-      color: white;
-    }
-    .startBtn svg {
-      opacity: 0;
-      transform: translateX(-5px);
-      transition: all 0.3s ease;
-      width: 0;
-    }
-    .startBtn:hover svg {
-      opacity: 1;
-      transform: translateX(0);
-      width: 20px;
-    }
-
-.dot-pattern {
-  background-image: radial-gradient(
-    rgba(0, 0, 0, 0.10) 1px,
-    transparent 2px
-  );
-  background-size: 24px 24px;
-  opacity: 0.95;
-  animation: moveDots 15s linear infinite;
-}
-
-/* Movimiento suave tipo Apple */
-@keyframes moveDots {
-  from {
-    background-position: 0 0;
+    requestAnimationFrame(frame);
   }
-  to {
-    background-position: 240px 240px;
+  frame();
+})();
+
+/* ═══════════ COUNTER ANIMATION ═══════════ */
+function animateCount(el, target, duration){
+  const start = performance.now();
+  function tick(now){
+    const p = Math.min((now-start)/duration,1);
+    const ease = 1-Math.pow(1-p,3);
+    el.textContent = Math.round(ease*target);
+    if(p<1) requestAnimationFrame(tick);
   }
+  requestAnimationFrame(tick);
 }
+setTimeout(()=>{
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    animateCount(el, +el.dataset.count, 1200);
+  });
+}, 900);
 
-  </style>
-</head>
+/* ═══════════ INPUT ═══════════ */
+const input  = document.getElementById('nombre');
+const count  = document.getElementById('charCount');
+const errEl  = document.getElementById('err');
 
-<body class="min-h-screen antialiased selection:bg-indigo-300/40 dark:selection:bg-indigo-500/30 transition-colors duration-300 bg-[var(--bg-light)] dark:bg-[var(--bg-dark)] text-slate-800 dark:text-slate-100">
-<!----------------------------- Patrón de puntos animado --------------------------------------->
-  <div class="absolute inset-0 z-[1] pointer-events-none dot-pattern"></div>
+input.addEventListener('input', ()=>{
+  count.textContent = `${input.value.length} / 30`;
+  errEl.classList.remove('on');
+  input.parentElement.style.borderColor = '';
+});
 
-  <!-- Fondo decorativo -->
-  <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-    <div class="bg-orb orb-1"></div>
-    <div class="bg-orb orb-2"></div>
-    <div class="bg-orb orb-3"></div>
-  </div>
+/* ═══════════ FORM ═══════════ */
+document.getElementById('form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const val = input.value.trim();
 
-  <!-- Contenedor principal -->
-  <main class="flex flex-col items-center justify-center min-h-screen px-4">
-    <div class="glass rounded-3xl p-8 md:p-12 text-center max-w-md w-full">
-      <h1 class="text-3xl md:text-4xl text-black mb-4">Registro de usuario</h1>
-      <p class="text-slate-700 dark:text-slate-300 mb-6">Ingresa tu nombre para comenzar el test.</p>
+  if(val.length < 2){
+    errEl.classList.add('on');
+    input.closest('.input-shell').style.borderColor='rgba(248,113,113,.6)';
+    input.focus();
+    return;
+  }
 
-      <form id="registroForm" class="flex flex-col gap-4">
-        <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre o seudónimo." required
-          class="w-full rounded-full px-4 py-2 bg-white/70 dark:bg-slate-700 focus:ring-2 focus:ring-rose-500 outline-none text-center">
+  const btn = document.getElementById('cta');
+  btn.style.background = '#22c55e';
+  btn.style.boxShadow  = '0 8px 32px rgba(34,197,94,.5)';
+  btn.style.transform  = 'scale(.98)';
+  btn.innerHTML = `
+    <span class="cta-label" style="position:relative">¡Vamos! Cargando…</span>
+    <span class="cta-arrow" style="background:rgba(255,255,255,.2)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
+        stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </span>`;
 
-        <button type="submit" class="startBtn mx-auto flex items-center gap-1 glass rounded-full px-6 py-2 hover:scale-[1.02] active:scale-95">
-          <span>Iniciar</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-          </svg>
-        </button>
-      </form>
-    </div>
-
-    <footer class="mt-8 text-sm text-slate-600 dark:text-slate-400">
-      Desarrollado por Santiago Sterling | 2026
-    </footer>
-  </main>
-
-  <script>
-    // Guardar el nombre y redirigir al Test
-    document.getElementById('registroForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const nombre = document.getElementById('nombre').value.trim();
-
-      if (nombre.length < 2) {
-        alert('Por favor, ingresa un nombre válido.');
-        return;
-      }
-
-      const userData = { name: nombre };
-      localStorage.setItem('quizUserData', JSON.stringify(userData));
-
-      // Redirige al archivo Test.html
-      window.location.href = 'Test.html';
-    });
-
-    // Ajuste de modo oscuro automático según el sistema
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if(prefersDark) document.documentElement.classList.add('dark');
-  </script>
+  localStorage.setItem('quizUserData', JSON.stringify({ name: val }));
+  setTimeout(()=>{ window.location.href = 'Test.html'; }, 900);
+});
+</script>
 </body>
 </html>
