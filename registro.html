@@ -923,12 +923,30 @@
 
 <!-- MENU BAR -->
 <div class="menubar">
-  <span class="menubar-logo">🍎</span>
+  <div class="menubar-logo">
+  <svg viewBox="0 0 100 100" width="28" height="28">
+    <defs>
+      <linearGradient id="testGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#5AC8FA"/>
+        <stop offset="100%" stop-color="#0A84FF"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Marco -->
+    <rect x="10" y="10" width="80" height="80" rx="18" stroke="url(#testGrad)" stroke-width="5" fill="none"/>
+
+    <!-- Check -->
+    <path d="M30 52 L45 66 L70 36"
+          stroke="url(#testGrad)"
+          stroke-width="7"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+  </svg>
+</div>
+
   <span class="menubar-item">Prueba de software</span>
-  <span class="menubar-item" style="opacity:0.5">Archivo</span>
-  <span class="menubar-item" style="opacity:0.5">Editar</span>
-  <span class="menubar-item" style="opacity:0.5">Ver</span>
-  <span class="menubar-item" style="opacity:0.5">Ayuda</span>
+  <span class="menubar-item" style="opacity:0.5">¡Exitos!</span>
   <div class="menubar-right">
     <span class="menubar-icon">📶</span>
     <span class="menubar-icon">🔋</span>
