@@ -1408,7 +1408,7 @@ function startQuiz() {
     document.getElementById('error-level').classList.add('show');
     valid = false;
   }
-  if (!valid) { showToast('Completa todos los campos', '⚠️'); return; }
+  if (!valid) { showToast('Completa todos los campos'); return; }
 
   state.name = name; state.email = email; state.level = level;
   state.answers = []; state.currentQ = 0; state.quizStarted = true;
