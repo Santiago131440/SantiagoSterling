@@ -4,9 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Santiago Sterling — Evaluación de Desarrollo de Software</title>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  
 
   :root {
     --blue: #007AFF;
@@ -198,7 +200,7 @@
     transform: translateX(-50%);
     font-size: 13px;
     font-weight: 400;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     letter-spacing: -0.1px;
     white-space: nowrap;
   }
@@ -301,8 +303,8 @@
   .form-label {
     display: block;
     font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
+    font-weight: 100;
+    color: #777;
     margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -310,12 +312,12 @@
   .form-input {
     width: 100%;
     padding: 14px 16px;
-    background: rgba(255,255,255,0.06);
+    background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: var(--radius-md);
-    color: var(--text-primary);
+    color: #777;
     font-size: 16px;
-    font-family: inherit;
+    font-weight: 100;
     outline: none;
     transition: var(--transition);
     -webkit-appearance: none;
@@ -1011,19 +1013,19 @@
 
         <div class="tips-grid">
           <div class="tip-card">
-            <span class="tip-icon"></span>
+            <span class="tip-icon"><i class="fi fi-tr-time-forward-ten"></i></span>
             <div class="tip-text"><strong>20 seg/pregunta</strong>Cada pregunta tiene un tiempo límite para responder.</div>
           </div>
           <div class="tip-card">
-            <span class="tip-icon">📚</span>
+            <span class="tip-icon"><i class="fi fi-tr-block-question"></i></span>
             <div class="tip-text"><strong>15 Preguntas</strong>Temas: Git, OOP, DB, APIs, Algoritmos y más.</div>
           </div>
           <div class="tip-card">
-            <span class="tip-icon">✅</span>
+            <span class="tip-icon"><i class="fi fi-tr-lightbulb-exclamation"></i></span>
             <div class="tip-text"><strong>Una oportunidad</strong>No se puede cambiar la respuesta al confirmar.</div>
           </div>
           <div class="tip-card">
-            <span class="tip-icon"></span>
+            <span class="tip-icon"><i class="fi fi-tr-score-board"></i></span>
             <div class="tip-text"><strong>Descarga tu resultado</strong>Al final recibirás un reporte PDF.</div>
           </div>
         </div>
@@ -1035,7 +1037,7 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">📧 Correo electrónico</label>
+          <label class="form-label">Correo electrónico</label>
           <input type="email" class="form-input" id="input-email" placeholder="correo@ejemplo.com" autocomplete="off">
           <div class="form-error" id="error-email">Por favor ingresa un correo válido.</div>
         </div>
