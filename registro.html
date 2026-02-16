@@ -304,7 +304,7 @@
     display: block;
     font-size: 13px;
     font-weight: 100;
-    color: #777;
+    color: #000000;
     margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -313,7 +313,7 @@
     width: 100%;
     padding: 14px 16px;
     background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(175, 175, 175, 0.575);
     border-radius: var(--radius-md);
     color: #777;
     font-size: 16px;
@@ -322,7 +322,7 @@
     transition: var(--transition);
     -webkit-appearance: none;
   }
-  .form-input::placeholder { color: var(--text-tertiary); }
+  .form-input::placeholder { color: #777; font-weight: 100;}
   .form-input:focus {
     border-color: var(--blue);
     background: rgba(0, 122, 255, 0.08);
@@ -357,7 +357,7 @@
     padding: 14px 28px;
     border-radius: var(--radius-md);
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 100;
     font-family: inherit;
     cursor: pointer;
     border: none;
@@ -367,14 +367,12 @@
     white-space: nowrap;
   }
   .btn-primary {
-    background: var(--blue);
+    background: #0A84FF;
     color: white;
-    box-shadow: 0 4px 16px rgba(0, 122, 255, 0.35);
   }
   .btn-primary:hover {
     background: var(--blue-dark);
     transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(0, 122, 255, 0.45);
   }
   .btn-primary:active { transform: translateY(0); }
   .btn-secondary {
@@ -838,8 +836,9 @@
   .tip-icon { font-size: 20px; flex-shrink: 0; }
   .tip-text {
     font-size: 13px;
-    color: var(--text-secondary);
+    color: #777;
     line-height: 1.4;
+    font-weight: 100;
   }
   .tip-text strong { color: var(--text-primary); display: block; margin-bottom: 2px; }
 
@@ -1152,12 +1151,12 @@
 
 <!-- DOCK -->
 <div class="dock">
-  <div class="dock-item active" title="DevQuiz" onclick="goToScreen('register')">💻</div>
-  <div class="dock-item" title="Preguntas" onclick="goToScreen('question')">📝</div>
+  <div class="dock-item active" title="DevQuiz" onclick="goToScreen('register')"><i class="fi fi-tr-display-code"></i></div>
+  <div class="dock-item" title="Preguntas" onclick="goToScreen('question')"><i class="fi fi-tr-quiz"></i></div>
   <div class="dock-separator"></div>
-  <div class="dock-item" title="Resultados" onclick="goToScreen('results')">📊</div>
+  <div class="dock-item" title="Resultados" onclick="goToScreen('results')"><i class="fi fi-tr-score-board"></i></div>
   <div class="dock-separator"></div>
-  <div class="dock-item" title="Trash">🗑️</div>
+  <div class="dock-item" title="Trash"><i class="fi fi-tr-trash-xmark"></i></div>
 </div>
 
 <script>
