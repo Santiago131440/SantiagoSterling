@@ -1140,8 +1140,8 @@
         <div class="divider"></div>
 
         <div class="btn-group">
-          <button class="btn btn-secondary" onclick="restartQuiz()">🔄 Reintentar</button>
-          <button class="btn btn-success" onclick="downloadResults()">📄 Descargar Reporte</button>
+          <button class="btn btn-secondary" onclick="restartQuiz()">Reintentar</button>
+          <button class="btn btn-success" onclick="downloadResults()">Descargar Reporte</button>
         </div>
       </div>
 
@@ -1374,9 +1374,9 @@ function showToast(msg, icon='ℹ️', dur=2500) {
 }
 
 // ─── TRAFFIC LIGHTS ────────────────────────────────────────────
-function closeWindow() { showToast('¡No cierres la ventana! 😅', '⚠️'); }
-function minimizeWindow() { showToast('Ventana minimizada', '📌'); }
-function maximizeWindow() { showToast('Ventana maximizada', '⬛'); }
+function closeWindow() { showToast('¡No cierres la ventana! ', ''); }
+function minimizeWindow() { showToast('Ventana minimizada', ''); }
+function maximizeWindow() { showToast('Ventana maximizada', ''); }
 
 // ─── PROGRESS ──────────────────────────────────────────────────
 function updateProgress(pct) {
@@ -1422,7 +1422,7 @@ function startQuiz() {
     document.getElementById('error-level').classList.add('show');
     valid = false;
   }
-  if (!valid) { showToast('Completa todos los campos', '⚠️'); return; }
+  if (!valid) { showToast('Completa todos los campos'); return; }
 
   state.name = name; state.email = email; state.level = level;
   state.answers = []; state.currentQ = 0; state.quizStarted = true;
@@ -1431,7 +1431,7 @@ function startQuiz() {
 
   goToScreen('question');
   renderQuestion();
-  showToast(`¡Buena suerte, ${name.split(' ')[0]}! 🚀`, '🎯', 3000);
+  showToast(`¡Buena suerte, ${name.split(' ')[0]}!`, 3000);
 }
 
 // ─── RENDER QUESTION ──────────────────────────────────────────
@@ -1496,7 +1496,7 @@ function renderQuestion() {
   nextBtn.disabled = true;
   nextBtn.style.opacity = '0.5';
   document.getElementById('btn-next-text').textContent =
-    idx === total - 1 ? 'Ver Resultados 🏆' : 'Siguiente →';
+    idx === total - 1 ? 'Ver Resultados' : 'Siguiente →';
 
   document.getElementById('btn-skip').style.display = 'inline-flex';
 
@@ -1507,8 +1507,8 @@ function renderQuestion() {
 // ─── TIMER ─────────────────────────────────────────────────────
 function startTimer() {
   clearInterval(state.timerInterval);
-  state.timeLeft = 20;
-  updateTimerUI(20);
+  state.timeLeft = 60;
+  updateTimerUI(60);
   state.timerInterval = setInterval(() => {
     state.timeLeft--;
     updateTimerUI(state.timeLeft);
@@ -1522,7 +1522,7 @@ function startTimer() {
 function updateTimerUI(t) {
   const fill = document.getElementById('timer-fill');
   const text = document.getElementById('timer-text');
-  const pct = t / 20;
+  const pct = t / 60;
   const circum = 126;
   fill.style.strokeDashoffset = circum - (circum * pct);
   text.textContent = t;
