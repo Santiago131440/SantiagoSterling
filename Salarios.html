@@ -397,7 +397,7 @@ const GRADS=['linear-gradient(90deg,#ffd700,#ffaa00)','linear-gradient(90deg,#c0
 function renderTable(){
   const body=document.getElementById('tb');
   const mx=Math.max(...filt.map(c=>c.u));
-  if(!filt.length){body.innerHTML=`<tr><td colspan="8" class="nr">😕 Sin resultados</td></tr>`;return;}
+  if(!filt.length){body.innerHTML=`<tr><td colspan="8" class="nr">Sin resultados</td></tr>`;return;}
   body.innerHTML=filt.map((c,i)=>{
     const rk=i+1;
     let b=`<div class="rb rn">${rk}</div>`;
