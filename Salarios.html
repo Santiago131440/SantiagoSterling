@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salarios Mínimos Mundiales 2025–2026</title>
+  <style>
+    :root {
+      --bg:#0f0f1a;--surface:#1a1a2e;--surface2:#16213e;--surface3:#0f3460;
+      --accent:#e94560;--accent2:#0f7dff;--accent3:#00d4aa;
+      --text:#e8e8f0;--text2:#9999bb;--border:#2a2a4a;
+      --gold:#ffd700;--green:#00d4aa;--red:#e94560;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+    header{background:linear-gradient(135deg,var(--surface3) 0%,#1a0a2e 100%);padding:20px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:2px solid var(--accent);box-shadow:0 4px 30px rgba(233,69,96,0.2);}
+    .logo{display:flex;align-items:center;gap:12px;}
+    .logo-icon{width:46px;height:46px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;}
+    .logo h1{font-size:1.4rem;font-weight:800;}
+    .logo h1 span{color:var(--accent);}
+    .logo p{font-size:0.73rem;color:var(--text2);margin-top:2px;}
+    .header-stats{display:flex;gap:20px;flex-wrap:wrap;}
+    .stat-pill{background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-size:0.78rem;text-align:center;}
+    .stat-pill strong{display:block;font-size:1.05rem;color:var(--accent3);}
+    .tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;}
+    .tab{padding:13px 22px;cursor:pointer;font-size:0.88rem;font-weight:600;color:var(--text2);white-space:nowrap;border-bottom:3px solid transparent;transition:all 0.2s;}
+    .tab:hover{color:var(--text);background:rgba(255,255,255,0.04);}
+    .tab.active{color:var(--accent);border-color:var(--accent);}
+    .main{padding:22px 28px;max-width:1400px;margin:0 auto;}
+    .panel{display:none;}
+    .panel.active{display:block;}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px;}
+    .search-box{flex:1;min-width:180px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 14px;color:var(--text);font-size:0.88rem;outline:none;transition:border-color 0.2s;}
+    .search-box:focus{border-color:var(--accent2);}
+    .search-box::placeholder{color:var(--text2);}
+    select.fs{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 14px;color:var(--text);font-size:0.88rem;outline:none;cursor:pointer;}
+    .btn{background:linear-gradient(135deg,var(--accent),#c23152);border:none;border-radius:10px;padding:9px 18px;color:#fff;font-size:0.88rem;font-weight:600;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 4px 18px rgba(233,69,96,0.4);}
+    .btn-blue{background:linear-gradient(135deg,var(--accent2),#0054b8);}
+    .btn-blue:hover{box-shadow:0 4px 18px rgba(15,125,255,0.4);}
+    .btn-green{background:linear-gradient(135deg,var(--accent3),#007a61);}
+    .tw{background:var(--surface);border-radius:14px;border:1px solid var(--border);overflow:hidden;}
+    table{width:100%;border-collapse:collapse;}
+    thead{background:linear-gradient(90deg,var(--surface3),#1a0a2e);}
+    th{padding:12px 14px;text-align:left;font-size:0.77rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text2);cursor:pointer;user-select:none;white-space:nowrap;}
+    th:hover{color:var(--text);}
+    td{padding:11px 14px;border-top:1px solid rgba(255,255,255,0.04);font-size:0.86rem;}
+    tbody tr{transition:background 0.15s;}
+    tbody tr:hover{background:rgba(255,255,255,0.03);}
+    .rb{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:7px;font-weight:800;font-size:0.78rem;}
+    .r1{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#000;}
+    .r2{background:linear-gradient(135deg,#c0c0c0,#909090);color:#000;}
+    .r3{background:linear-gradient(135deg,#cd7f32,#9a5c1a);color:#fff;}
+    .rn{background:rgba(255,255,255,0.08);color:var(--text2);}
+    .fe{font-size:1.3rem;margin-right:7px;}
+    .cn{font-weight:600;}
+    .cr{font-size:0.73rem;color:var(--text2);}
+    .su{font-weight:700;font-size:0.93rem;}
+    .sl{font-size:0.76rem;color:var(--text2);margin-top:2px;}
+    .mb{height:5px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;margin-top:4px;min-width:100px;}
+    .mbf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent2),var(--accent3));}
+    .cc{cursor:pointer;width:17px;height:17px;accent-color:var(--accent);}
+    .nr{text-align:center;padding:50px;color:var(--text2);}
+    .cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-bottom:22px;}
+    .cc-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;position:relative;transition:transform 0.2s,box-shadow 0.2s;}
+    .cc-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,0.3);}
+    .cc-card .rb-btn{position:absolute;top:11px;right:11px;background:rgba(233,69,96,0.15);border:1px solid rgba(233,69,96,0.3);color:var(--accent);border-radius:6px;width:22px;height:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;}
+    .cc-card .cflag{font-size:2.3rem;margin-bottom:7px;}
+    .cc-card h3{font-size:1.05rem;margin-bottom:3px;}
+    .cc-card .cregion{font-size:0.73rem;color:var(--text2);margin-bottom:10px;}
+    .cc-card .ms{font-size:1.9rem;font-weight:800;color:var(--accent3);}
+    .cc-card .cl{font-size:0.73rem;color:var(--text2);}
+    .cc-card .dr{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid var(--border);font-size:0.8rem;}
+    .cc-card .dr span:last-child{font-weight:600;}
+    .cp{background:var(--surface);border:2px dashed var(--border);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:180px;color:var(--text2);font-size:0.88rem;gap:7px;}
+    .cp span{font-size:1.8rem;}
+    .ccw{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin-top:18px;}
+    .ccw h3{margin-bottom:14px;font-size:0.95rem;color:var(--text2);}
+    .cbr{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+    .cbl{width:120px;font-size:0.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .cbo{flex:1;height:26px;background:rgba(255,255,255,0.05);border-radius:6px;overflow:hidden;position:relative;}
+    .cbi{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:9px;font-size:0.76rem;font-weight:700;color:#fff;transition:width 0.6s ease;min-width:50px;}
+    .cv{width:88px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent3);}
+    /* CONVERTER */
+    .conv-wrap{max-width:680px;margin:0 auto;}
+    .conv-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;margin-bottom:22px;}
+    .conv-card h2{font-size:1.25rem;margin-bottom:7px;}
+    .conv-card p{font-size:0.82rem;color:var(--text2);margin-bottom:22px;}
+    .conv-row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:end;margin-bottom:16px;}
+    .cf label{display:block;font-size:0.78rem;color:var(--text2);margin-bottom:5px;}
+    .cf input,.cf select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:11px 13px;color:var(--text);font-size:0.97rem;outline:none;transition:border-color 0.2s;}
+    .cf input:focus,.cf select:focus{border-color:var(--accent2);}
+    .swap-btn{background:var(--surface3);border:1px solid var(--border);border-radius:10px;width:42px;height:42px;cursor:pointer;color:var(--text);font-size:1.15rem;display:flex;align-items:center;justify-content:center;transition:background 0.2s,transform 0.2s;}
+    .swap-btn:hover{background:var(--accent);transform:rotate(180deg);}
+    .conv-res{background:linear-gradient(135deg,rgba(0,212,170,0.1),rgba(15,125,255,0.1));border:1px solid rgba(0,212,170,0.3);border-radius:12px;padding:18px;text-align:center;}
+    .conv-res .abig{font-size:2.3rem;font-weight:800;color:var(--accent3);}
+    .conv-res .ri{font-size:0.78rem;color:var(--text2);margin-top:5px;}
+    .conv-res .lu{font-size:0.7rem;color:var(--text2);margin-top:4px;}
+    .rbadge{display:inline-block;background:rgba(0,212,170,0.15);border:1px solid rgba(0,212,170,0.3);color:var(--accent3);border-radius:8px;padding:3px 9px;font-size:0.73rem;font-weight:600;margin-top:7px;}
+    .qc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;}
+    .qc h3{margin-bottom:10px;font-size:0.85rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;}
+    .qg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px;}
+    .qi{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:11px;cursor:pointer;transition:background 0.15s,border-color 0.15s;}
+    .qi:hover{background:rgba(15,125,255,0.1);border-color:var(--accent2);}
+    .qi .pair{font-size:0.78rem;color:var(--text2);}
+    .qi .rate{font-size:0.97rem;font-weight:700;color:var(--text);}
+    /* REGIONS */
+    .rs{margin-bottom:30px;}
+    .rt{display:flex;align-items:center;gap:9px;margin-bottom:12px;}
+    .rt h3{font-size:1.05rem;}
+    .rt .cnt{background:rgba(255,255,255,0.08);border-radius:8px;padding:2px 7px;font-size:0.73rem;color:var(--text2);}
+    .rc{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:9px;}
+    .sp{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color 0.15s,transform 0.15s;}
+    .sp:hover{border-color:var(--accent2);transform:translateY(-2px);}
+    .sp.sel{border-color:var(--accent);background:rgba(233,69,96,0.08);}
+    .sp .pf{font-size:1.5rem;}
+    .sp .pi{flex:1;}
+    .sp .pn{font-size:0.83rem;font-weight:600;}
+    .sp .pa{font-size:0.92rem;font-weight:700;color:var(--accent3);}
+    /* STATS */
+    .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:22px;}
+    .sc{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:18px;}
+    .sc .ic{font-size:1.7rem;margin-bottom:7px;}
+    .sc .lb{font-size:0.76rem;color:var(--text2);margin-bottom:3px;}
+    .sc .vl{font-size:1.4rem;font-weight:800;}
+    .sc .sb{font-size:0.76rem;color:var(--text2);margin-top:2px;}
+    /* UTILS */
+    .live-dot{display:inline-block;width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 1.5s ease-in-out infinite;margin-right:5px;}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+    .toast{position:fixed;bottom:22px;right:22px;background:var(--surface3);border:1px solid var(--accent3);border-radius:10px;padding:11px 18px;font-size:0.83rem;color:var(--text);z-index:999;animation:slideIn 0.3s ease;box-shadow:0 8px 28px rgba(0,0,0,0.4);}
+    @keyframes slideIn{from{transform:translateY(18px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+    @media(max-width:768px){.main{padding:14px;} header{padding:14px;} .conv-row{grid-template-columns:1fr;} .swap-btn{width:100%;height:34px;}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <div class="logo-icon">💰</div>
+    <div>
+      <h1>Salarios <span>Mínimos</span> Mundial</h1>
+      <p><span class="live-dot"></span>Datos actualizados 2025–2026 · 80+ países</p>
+    </div>
+  </div>
+  <div class="header-stats">
+    <div class="stat-pill"><strong id="hc">—</strong>Países</div>
+    <div class="stat-pill"><strong id="hh">—</strong>Más alto</div>
+    <div class="stat-pill"><strong id="hl">—</strong>Más bajo</div>
+    <div class="stat-pill"><strong id="ha">—</strong>Promedio</div>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('tabla')">📊 Tabla Mundial</div>
+  <div class="tab" onclick="showTab('comparar')">⚖️ Comparar</div>
+  <div class="tab" onclick="showTab('conversor')">💱 Conversor</div>
+  <div class="tab" onclick="showTab('regiones')">🌍 Regiones</div>
+  <div class="tab" onclick="showTab('stats')">📈 Estadísticas</div>
+</div>
+
+<div class="main">
+
+  <!-- TABLA -->
+  <div id="panel-tabla" class="panel active">
+    <div class="toolbar">
+      <input class="search-box" id="si" placeholder="🔍  Buscar país..." oninput="ft()">
+      <select class="fs" id="rf" onchange="ft()">
+        <option value="">Todas las regiones</option>
+        <option>América del Norte</option><option>América Latina</option>
+        <option>Europa</option><option>Asia</option>
+        <option>Oceanía</option><option>África</option><option>Oriente Medio</option>
+      </select>
+      <select class="fs" id="ss" onchange="st()">
+        <option value="ud">Mayor → Menor (USD)</option>
+        <option value="ua">Menor → Mayor (USD)</option>
+        <option value="na">País A–Z</option><option value="nd">País Z–A</option>
+      </select>
+      <button class="btn btn-blue" onclick="showTab('comparar')">⚖️ Ver comparación</button>
+    </div>
+    <div class="tw"><table><thead><tr>
+      <th>#</th><th>País</th><th>Región</th>
+      <th>Mensual (USD)</th><th>Moneda Local</th><th>Actualiz.</th><th>Barra</th><th>+</th>
+    </tr></thead><tbody id="tb"></tbody></table></div>
+  </div>
+
+  <!-- COMPARAR -->
+  <div id="panel-comparar" class="panel">
+    <div class="toolbar">
+      <select class="fs" id="acs" style="flex:1;max-width:320px;"><option value="">+ Añadir país...</option></select>
+      <button class="btn" onclick="afs()">Añadir</button>
+      <button class="btn btn-blue" onclick="clearCmp()">🗑️ Limpiar</button>
+    </div>
+    <div class="cg" id="cg"></div>
+    <div class="ccw" id="ccw" style="display:none;"><h3>📊 Comparativa Visual (USD/mes)</h3><div id="ccb"></div></div>
+  </div>
+
+  <!-- CONVERSOR -->
+  <div id="panel-conversor" class="panel">
+    <div class="conv-wrap">
+      <div class="conv-card">
+        <h2>💱 Conversor de Moneda en Tiempo Real</h2>
+        <p><span class="live-dot"></span>Tasas actualizadas automáticamente cada 10 minutos</p>
+        <div class="conv-row">
+          <div class="cf"><label>Cantidad</label><input type="number" id="ca" value="1" min="0" oninput="conv()"></div>
+          <div style="display:flex;align-items:flex-end;">
+            <button class="swap-btn" onclick="swapC()" title="Intercambiar">⇄</button>
+          </div>
+          <div class="cf"><label>De moneda</label><select id="cfrom" onchange="conv()"></select></div>
+        </div>
+        <div class="cf" style="margin-bottom:18px;"><label>A moneda</label><select id="cto" onchange="conv()"></select></div>
+        <div class="conv-res" id="cres">
+          <div class="abig" id="cra">—</div>
+          <div class="ri" id="cri">Cargando tasas de cambio...</div>
+          <div class="lu" id="clu"></div>
+          <span class="rbadge" id="crb"></span>
+        </div>
+      </div>
+      <div class="qc">
+        <h3>⚡ Pares populares</h3>
+        <div class="qg" id="qg"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGIONES -->
+  <div id="panel-regiones" class="panel"><div id="rc"></div></div>
+
+  <!-- STATS -->
+  <div id="panel-stats" class="panel">
+    <div class="sg" id="sg"></div>
+    <div class="ccw"><h3>🏆 Top 15 Salarios Más Altos (USD/mes)</h3><div id="t15"></div></div>
+    <div class="ccw" style="margin-top:14px;"><h3>📉 10 Salarios Más Bajos (USD/mes)</h3><div id="b10"></div></div>
+  </div>
+
+</div>
+
+<script>
+const COUNTRIES=[
+  // EUROPA
+  {f:'🇨🇭',n:'Suiza',r:'Europa',u:3200,l:'~3.500 CHF/mes',c:'CHF',y:'2025'},
+  {f:'🇱🇺',n:'Luxemburgo',r:'Europa',u:3102,l:'2.638 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇩🇰',n:'Dinamarca',r:'Europa',u:2900,l:'~22.000 DKK (conv.)',c:'DKK',y:'2025'},
+  {f:'🇦🇺',n:'Australia',r:'Oceanía',u:2720,l:'2.309 AUD/mes',c:'AUD',y:'2025'},
+  {f:'🇮🇸',n:'Islandia',r:'Europa',u:2600,l:'(por convenio)',c:'ISK',y:'2025'},
+  {f:'🇳🇴',n:'Noruega',r:'Europa',u:2600,l:'(por convenio)',c:'NOK',y:'2025'},
+  {f:'🇮🇪',n:'Irlanda',r:'Europa',u:2683,l:'2.282 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇳🇿',n:'Nueva Zelanda',r:'Oceanía',u:2620,l:'2.340 NZD/mes',c:'NZD',y:'2025'},
+  {f:'🇳🇱',n:'Países Bajos',r:'Europa',u:2572,l:'2.193 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇩🇪',n:'Alemania',r:'Europa',u:2537,l:'2.161 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇸🇪',n:'Suecia',r:'Europa',u:2200,l:'(por convenio)',c:'SEK',y:'2025'},
+  {f:'🇧🇪',n:'Bélgica',r:'Europa',u:2432,l:'2.070 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇨🇦',n:'Canadá',r:'América del Norte',u:2100,l:'2.880 CAD/mes',c:'CAD',y:'2025'},
+  {f:'🇫🇷',n:'Francia',r:'Europa',u:2115,l:'1.802 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇬🇧',n:'Reino Unido',r:'Europa',u:2060,l:'1.638 GBP/mes',c:'GBP',y:'2025'},
+  {f:'🇮🇱',n:'Israel',r:'Oriente Medio',u:1700,l:'6.248 ILS/mes',c:'ILS',y:'2025'},
+  {f:'🇰🇷',n:'Corea del Sur',r:'Asia',u:1550,l:'10.030 KRW/h',c:'KRW',y:'2025'},
+  {f:'🇪🇸',n:'España',r:'Europa',u:1620,l:'1.381 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇯🇵',n:'Japón',r:'Asia',u:1337,l:'1.113 JPY/h (Tokio)',c:'JPY',y:'2025'},
+  {f:'🇵🇱',n:'Polonia',r:'Europa',u:1332,l:'1.133 EUR/mes',c:'PLN',y:'2026'},
+  {f:'🇺🇸',n:'EE.UU.',r:'América del Norte',u:1256,l:'$7.25/hora (federal)',c:'USD',y:'2025'},
+  {f:'🇸🇬',n:'Singapur',r:'Asia',u:1120,l:'1.500 SGD/mes',c:'SGD',y:'2025'},
+  {f:'🇨🇿',n:'Rep. Checa',r:'Europa',u:1085,l:'923 EUR/mes',c:'CZK',y:'2026'},
+  {f:'🇵🇹',n:'Portugal',r:'Europa',u:1081,l:'920 EUR/mes',c:'EUR',y:'2026'},
+  {f:'🇨🇾',n:'Chipre',r:'Europa',u:1174,l:'1.000 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇬🇷',n:'Grecia',r:'Europa',u:1207,l:'1.027 EUR/mes',c:'EUR',y:'2026'},
+  {f:'🇭🇷',n:'Croacia',r:'Europa',u:1234,l:'1.050 EUR/mes',c:'EUR',y:'2026'},
+  {f:'🇲🇹',n:'Malta',r:'Europa',u:1167,l:'993 EUR/mes',c:'EUR',y:'2026'},
+  {f:'🇱🇹',n:'Lituania',r:'Europa',u:1220,l:'1.038 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇸🇮',n:'Eslovenia',r:'Europa',u:1500,l:'1.278 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇮🇹',n:'Italia',r:'Europa',u:1310,l:'(por convenio)',c:'EUR',y:'2025'},
+  {f:'🇪🇪',n:'Estonia',r:'Europa',u:1040,l:'886 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇸🇰',n:'Eslovaquia',r:'Europa',u:958,l:'816 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇱🇻',n:'Letonia',r:'Europa',u:869,l:'740 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇷🇴',n:'Rumanía',r:'Europa',u:956,l:'814 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇭🇺',n:'Hungría',r:'Europa',u:830,l:'707 EUR/mes',c:'HUF',y:'2025'},
+  {f:'🇧🇬',n:'Bulgaria',r:'Europa',u:647,l:'551 EUR/mes',c:'BGN',y:'2025'},
+  {f:'🇷🇸',n:'Serbia',r:'Europa',u:794,l:'679 EUR/mes',c:'RSD',y:'2026'},
+  {f:'🇲🇪',n:'Montenegro',r:'Europa',u:786,l:'670 EUR/mes',c:'EUR',y:'2025'},
+  {f:'🇹🇷',n:'Turquía',r:'Europa',u:763,l:'650 EUR/mes',c:'TRY',y:'2026'},
+  {f:'🇦🇱',n:'Albania',r:'Europa',u:606,l:'515 EUR/mes',c:'ALL',y:'2025'},
+  {f:'🇲🇩',n:'Moldavia',r:'Europa',u:335,l:'285 EUR/mes',c:'MDL',y:'2025'},
+  {f:'🇺🇦',n:'Ucrania',r:'Europa',u:193,l:'164 EUR/mes',c:'UAH',y:'2025'},
+  {f:'🇧🇦',n:'Bosnia',r:'Europa',u:616,l:'524 EUR/mes',c:'BAM',y:'2025'},
+  {f:'🇲🇰',n:'Macedonia Norte',r:'Europa',u:686,l:'584 EUR/mes',c:'MKD',y:'2025'},
+  // LATINOAMÉRICA
+  {f:'🇨🇷',n:'Costa Rica',r:'América Latina',u:751,l:'373.092 CRC/mes',c:'CRC',y:'2026'},
+  {f:'🇨🇱',n:'Chile',r:'América Latina',u:597,l:'539.000 CLP/mes',c:'CLP',y:'2026'},
+  {f:'🇺🇾',n:'Uruguay',r:'América Latina',u:537,l:'23.604 UYU/mes',c:'UYU',y:'2025'},
+  {f:'🇪🇨',n:'Ecuador',r:'América Latina',u:482,l:'482 USD/mes',c:'USD',y:'2026'},
+  {f:'🇬🇹',n:'Guatemala',r:'América Latina',u:466,l:'3.738 GTQ/mes',c:'GTQ',y:'2025'},
+  {f:'🇲🇽',n:'México',r:'América Latina',u:417,l:'278,80 MXN/día',c:'MXN',y:'2025'},
+  {f:'🇨🇴',n:'Colombia',r:'América Latina',u:446,l:'1.746.882 COP/mes',c:'COP',y:'2026'},
+  {f:'🇵🇾',n:'Paraguay',r:'América Latina',u:397,l:'2.680.373 PYG/mes',c:'PYG',y:'2025'},
+  {f:'🇧🇴',n:'Bolivia',r:'América Latina',u:397,l:'2.750 BOB/mes',c:'BOB',y:'2025'},
+  {f:'🇭🇳',n:'Honduras',r:'América Latina',u:357,l:'8.972 HNL/mes',c:'HNL',y:'2025'},
+  {f:'🇵🇦',n:'Panamá',r:'América Latina',u:341,l:'341 USD/mes',c:'USD',y:'2025'},
+  {f:'🇵🇪',n:'Perú',r:'América Latina',u:335,l:'1.130 PEN/mes',c:'PEN',y:'2025'},
+  {f:'🇩🇴',n:'Rep. Dominicana',r:'América Latina',u:267,l:'16.993 DOP/mes',c:'DOP',y:'2026'},
+  {f:'🇧🇷',n:'Brasil',r:'América Latina',u:295,l:'1.621 BRL/mes',c:'BRL',y:'2026'},
+  {f:'🇦🇷',n:'Argentina',r:'América Latina',u:233,l:'341.000 ARS/mes',c:'ARS',y:'2026'},
+  {f:'🇸🇻',n:'El Salvador',r:'América Latina',u:243,l:'365 USD/mes',c:'USD',y:'2025'},
+  {f:'🇳🇮',n:'Nicaragua',r:'América Latina',u:210,l:'6.338 NIO/mes',c:'NIO',y:'2025'},
+  {f:'🇭🇹',n:'Haití',r:'América Latina',u:75,l:'8.635 HTG/mes',c:'HTG',y:'2025'},
+  {f:'🇨🇺',n:'Cuba',r:'América Latina',u:7,l:'2.100 CUP/mes',c:'CUP',y:'2025'},
+  {f:'🇻🇪',n:'Venezuela',r:'América Latina',u:1,l:'130 VES/mes',c:'VES',y:'2025'},
+  // ASIA
+  {f:'🇰🇷',n:'Corea S.',r:'Asia',u:1550,l:'10.030 KRW/h',c:'KRW',y:'2025'},
+  {f:'🇯🇵',n:'Japón (prom)',r:'Asia',u:1337,l:'1.013 JPY/h (nac.)',c:'JPY',y:'2025'},
+  {f:'🇸🇬',n:'Singapur',r:'Asia',u:1120,l:'1.500 SGD/mes',c:'SGD',y:'2025'},
+  {f:'🇨🇳',n:'China (Shanghái)',r:'Asia',u:350,l:'2.690 CNY/mes',c:'CNY',y:'2025'},
+  {f:'🇲🇾',n:'Malasia',r:'Asia',u:330,l:'1.500 MYR/mes',c:'MYR',y:'2025'},
+  {f:'🇹🇭',n:'Tailandia',r:'Asia',u:330,l:'11.780 THB/mes',c:'THB',y:'2025'},
+  {f:'🇵🇭',n:'Filipinas',r:'Asia',u:280,l:'16.000 PHP/mes',c:'PHP',y:'2025'},
+  {f:'🇮🇩',n:'Indonesia',r:'Asia',u:255,l:'4.180.375 IDR/mes',c:'IDR',y:'2025'},
+  {f:'🇻🇳',n:'Vietnam',r:'Asia',u:210,l:'4.680.000 VND/mes',c:'VND',y:'2025'},
+  {f:'🇮🇳',n:'India (media)',r:'Asia',u:200,l:'16.000 INR/mes',c:'INR',y:'2025'},
+  {f:'🇦🇲',n:'Armenia',r:'Asia',u:230,l:'90.000 AMD/mes',c:'AMD',y:'2025'},
+  {f:'🇬🇪',n:'Georgia',r:'Asia',u:200,l:'550 GEL/mes',c:'GEL',y:'2025'},
+  {f:'🇦🇿',n:'Azerbaiyán',r:'Asia',u:210,l:'360 AZN/mes',c:'AZN',y:'2025'},
+  {f:'🇰🇿',n:'Kazajistán',r:'Asia',u:140,l:'70.000 KZT/mes',c:'KZT',y:'2025'},
+  {f:'🇳🇵',n:'Nepal',r:'Asia',u:135,l:'18.000 NPR/mes',c:'NPR',y:'2025'},
+  {f:'🇰🇭',n:'Camboya',r:'Asia',u:250,l:'1.023.000 KHR/mes',c:'KHR',y:'2024'},
+  {f:'🇱🇰',n:'Sri Lanka',r:'Asia',u:125,l:'40.000 LKR/mes',c:'LKR',y:'2025'},
+  {f:'🇵🇰',n:'Pakistán',r:'Asia',u:130,l:'36.000 PKR/mes',c:'PKR',y:'2025'},
+  {f:'🇧🇩',n:'Bangladés',r:'Asia',u:103,l:'12.500 BDT/mes',c:'BDT',y:'2024'},
+  {f:'🇲🇲',n:'Myanmar',r:'Asia',u:90,l:'4.800 MMK/mes',c:'MMK',y:'2024'},
+  {f:'🇺🇿',n:'Uzbekistán',r:'Asia',u:80,l:'1.050.000 UZS/mes',c:'UZS',y:'2025'},
+  // ORIENTE MEDIO
+  {f:'🇦🇪',n:'Emiratos Árabes',r:'Oriente Medio',u:820,l:'3.000 AED/mes',c:'AED',y:'2025'},
+  {f:'🇸🇦',n:'Arabia Saudita',r:'Oriente Medio',u:800,l:'3.000 SAR/mes',c:'SAR',y:'2025'},
+  {f:'🇮🇱',n:'Israel',r:'Oriente Medio',u:1700,l:'6.248 ILS/mes',c:'ILS',y:'2025'},
+  {f:'🇯🇴',n:'Jordania',r:'Oriente Medio',u:330,l:'234 JOD/mes',c:'JOD',y:'2025'},
+  {f:'🇮🇶',n:'Irak',r:'Oriente Medio',u:340,l:'450.000 IQD/mes',c:'IQD',y:'2025'},
+  {f:'🇮🇷',n:'Irán',r:'Oriente Medio',u:150,l:'23M IRR/mes',c:'IRR',y:'2025'},
+  {f:'🇱🇧',n:'Líbano',r:'Oriente Medio',u:80,l:'9M LBP/mes',c:'LBP',y:'2025'},
+  // OCEANÍA
+  {f:'🇦🇺',n:'Australia',r:'Oceanía',u:2720,l:'2.309 AUD/mes',c:'AUD',y:'2025'},
+  {f:'🇳🇿',n:'Nueva Zelanda',r:'Oceanía',u:2620,l:'2.340 NZD/mes',c:'NZD',y:'2025'},
+  // ÁFRICA
+  {f:'🇿🇦',n:'Sudáfrica',r:'África',u:350,l:'6.545 ZAR/mes',c:'ZAR',y:'2025'},
+  {f:'🇲🇦',n:'Marruecos',r:'África',u:320,l:'3.340 MAD/mes',c:'MAD',y:'2025'},
+  {f:'🇹🇳',n:'Túnez',r:'África',u:250,l:'795 TND/mes',c:'TND',y:'2025'},
+  {f:'🇳🇬',n:'Nigeria',r:'África',u:230,l:'375.000 NGN/mes',c:'NGN',y:'2025'},
+  {f:'🇿🇼',n:'Zimbabue',r:'África',u:175,l:'175 USD/mes',c:'USD',y:'2025'},
+  {f:'🇿🇲',n:'Zambia',r:'África',u:140,l:'3.100 ZMW/mes',c:'ZMW',y:'2025'},
+  {f:'🇬🇭',n:'Ghana',r:'África',u:130,l:'1.600 GHS/mes',c:'GHS',y:'2025'},
+  {f:'🇰🇪',n:'Kenia',r:'África',u:190,l:'24.000 KES/mes',c:'KES',y:'2025'},
+  {f:'🇪🇬',n:'Egipto',r:'África',u:120,l:'6.000 EGP/mes',c:'EGP',y:'2025'},
+  {f:'🇹🇿',n:'Tanzania',r:'África',u:100,l:'260.000 TZS/mes',c:'TZS',y:'2025'},
+  {f:'🇸🇳',n:'Senegal',r:'África',u:85,l:'52.680 XOF/mes',c:'XOF',y:'2025'},
+  {f:'🇨🇲',n:'Camerún',r:'África',u:70,l:'36.270 XAF/mes',c:'XAF',y:'2025'},
+  {f:'🇺🇬',n:'Uganda',r:'África',u:65,l:'245.000 UGX/mes',c:'UGX',y:'2025'},
+  {f:'🇪🇹',n:'Etiopía',r:'África',u:70,l:'3.800 ETB/mes',c:'ETB',y:'2025'},
+];
+
+// Remove dupes by name
+const seen=new Set();
+const C=COUNTRIES.filter(x=>{if(seen.has(x.n))return false;seen.add(x.n);return true;});
+C.sort((a,b)=>b.u-a.u);
+
+let filt=[...C];
+let cmp=[];
+let rates={};
+let rateTs=null;
+
+const CNAMES={
+  USD:'Dólar USD',EUR:'Euro',GBP:'Libra Esterlina',JPY:'Yen Japonés',CHF:'Franco Suizo',
+  CAD:'Dólar Canadiense',AUD:'Dólar Australiano',NZD:'Dólar NZ',CNY:'Yuan Chino',
+  KRW:'Won Surcoreano',MXN:'Peso Mexicano',BRL:'Real Brasileño',ARS:'Peso Argentino',
+  CLP:'Peso Chileno',COP:'Peso Colombiano',PEN:'Sol Peruano',UYU:'Peso Uruguayo',
+  CRC:'Colón Costarricense',PYG:'Guaraní',BOB:'Boliviano',HNL:'Lempira',
+  DOP:'Peso Dominicano',GTQ:'Quetzal',NIO:'Córdoba',VES:'Bolívar',
+  SEK:'Corona Sueca',NOK:'Corona Noruega',DKK:'Corona Danesa',PLN:'Złoty',
+  CZK:'Corona Checa',HUF:'Forinto',RON:'Leu Rumano',BGN:'Lev Búlgaro',
+  TRY:'Lira Turca',UAH:'Grivna',SGD:'Dólar Singapur',HKD:'Dólar HK',
+  THB:'Baht Tailandés',MYR:'Ringgit',IDR:'Rupia Indonesia',PHP:'Peso Filipino',
+  INR:'Rupia India',PKR:'Rupia Paquistaní',BDT:'Taka',VND:'Dong',
+  SAR:'Riyal Saudita',AED:'Dírham EAU',ILS:'Séquel Israelí',ZAR:'Rand',
+  EGP:'Libra Egipcia',MAD:'Dírham Marroquí',TND:'Dinar Tunecino',NGN:'Naira',
+  KES:'Chelín Keniano',GHS:'Cedi'
+};
+
+const QPAIRS=[['USD','EUR'],['USD','MXN'],['USD','COP'],['USD','BRL'],
+  ['EUR','GBP'],['USD','JPY'],['USD','ARS'],['USD','CLP'],
+  ['EUR','CHF'],['USD','CAD'],['USD','PEN'],['GBP','EUR']];
+
+const COLORS=['#e94560','#0f7dff','#00d4aa','#ffd700','#ff6b35','#a855f7'];
+const GRADS=['linear-gradient(90deg,#ffd700,#ffaa00)','linear-gradient(90deg,#c0c0c0,#909090)',
+  'linear-gradient(90deg,#cd7f32,#9a5c1a)','linear-gradient(90deg,#0f7dff,#00d4aa)',
+  'linear-gradient(90deg,#a855f7,#0f7dff)','linear-gradient(90deg,#ff6b35,#e94560)',
+  'linear-gradient(90deg,#00d4aa,#0f7dff)','linear-gradient(90deg,#ffd700,#ff6b35)',
+  'linear-gradient(90deg,#e94560,#a855f7)','linear-gradient(90deg,#0f7dff,#e94560)',
+  'linear-gradient(90deg,#a855f7,#ff6b35)','linear-gradient(90deg,#00d4aa,#ffd700)',
+  'linear-gradient(90deg,#ff6b35,#0f7dff)','linear-gradient(90deg,#e94560,#ffd700)',
+  'linear-gradient(90deg,#0f7dff,#a855f7)'];
+
+// === TABLE ===
+function renderTable(){
+  const body=document.getElementById('tb');
+  const mx=Math.max(...filt.map(c=>c.u));
+  if(!filt.length){body.innerHTML=`<tr><td colspan="8" class="nr">😕 Sin resultados</td></tr>`;return;}
+  body.innerHTML=filt.map((c,i)=>{
+    const rk=i+1;
+    let b=`<div class="rb rn">${rk}</div>`;
+    if(rk===1)b=`<div class="rb r1">🥇</div>`;
+    if(rk===2)b=`<div class="rb r2">🥈</div>`;
+    if(rk===3)b=`<div class="rb r3">🥉</div>`;
+    const pct=Math.round((c.u/mx)*100);
+    const chk=cmp.some(x=>x.n===c.n)?'checked':'';
+    return `<tr>
+      <td>${b}</td>
+      <td><span class="fe">${c.f}</span><span class="cn">${c.n}</span></td>
+      <td><span class="cr">${c.r}</span></td>
+      <td><div class="su">$${c.u.toLocaleString()}</div><div style="font-size:0.7rem;color:var(--accent3)">✓ ${c.y}</div></td>
+      <td><div class="sl">${c.l}</div></td>
+      <td><span class="cr">${c.y}</span></td>
+      <td style="min-width:110px;"><div class="mb"><div class="mbf" style="width:${pct}%"></div></div></td>
+      <td><input type="checkbox" class="cc" data-n="${c.n}" ${chk} onchange="toggleCmp('${c.n}')"></td>
+    </tr>`;
+  }).join('');
+}
+
+function ft(){
+  const q=document.getElementById('si').value.toLowerCase();
+  const rg=document.getElementById('rf').value;
+  filt=C.filter(c=>(c.n.toLowerCase().includes(q)||c.r.toLowerCase().includes(q))&&(!rg||c.r===rg));
+  sortFilt();renderTable();
+}
+
+function sortFilt(){
+  const s=document.getElementById('ss').value;
+  if(s==='ud')filt.sort((a,b)=>b.u-a.u);
+  else if(s==='ua')filt.sort((a,b)=>a.u-b.u);
+  else if(s==='na')filt.sort((a,b)=>a.n.localeCompare(b.n));
+  else filt.sort((a,b)=>b.n.localeCompare(a.n));
+}
+
+function st(){sortFilt();renderTable();}
+
+// === COMPARE ===
+function toggleCmp(n){
+  const c=C.find(x=>x.n===n);if(!c)return;
+  const i=cmp.findIndex(x=>x.n===n);
+  if(i>=0)cmp.splice(i,1);
+  else{if(cmp.length>=6){toast('⚠️ Máx. 6 países');return;}cmp.push(c);}
+  renderCmp();
+}
+
+function afs(){
+  const s=document.getElementById('acs');
+  const n=s.value;if(!n)return;
+  toggleCmp(n);s.value='';
+}
+
+function clearCmp(){
+  cmp=[];
+  document.querySelectorAll('.cc').forEach(cb=>cb.checked=false);
+  renderCmp();
+}
+
+function renderCmp(){
+  const g=document.getElementById('cg');
+  const cw=document.getElementById('ccw');
+  if(!cmp.length){
+    g.innerHTML=`<div class="cp"><span>🌍</span>Selecciona países en la tabla o usa el selector</div>`;
+    cw.style.display='none';return;
+  }
+  const mx=Math.max(...cmp.map(c=>c.u));
+  g.innerHTML=cmp.map((c,i)=>{
+    const pct=cmp.length>1?((c.u/mx)*100).toFixed(0):100;
+    return `<div class="cc-card">
+      <button class="rb-btn" onclick="removeCmp('${c.n}')">✕</button>
+      <div class="cflag">${c.f}</div>
+      <h3>${c.n}</h3><div class="cregion">${c.r}</div>
+      <div class="ms">$${c.u.toLocaleString()}</div>
+      <div class="cl">USD/mes · ${c.y}</div>
+      <div style="margin:10px 0;">
+        <div style="height:5px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;">
+          <div style="width:${pct}%;height:100%;background:${COLORS[i%COLORS.length]};border-radius:3px;"></div>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text2);margin-top:3px;">${pct}% del más alto</div>
+      </div>
+      <div class="dr"><span>📅 Anual</span><span>$${(c.u*12).toLocaleString()}</span></div>
+      <div class="dr"><span>📆 Semanal ~</span><span>$${(c.u/4.33).toFixed(0)}</span></div>
+      <div class="dr"><span>📊 Diario ~</span><span>$${(c.u/30).toFixed(1)}</span></div>
+      <div class="dr"><span>💱 Local</span><span style="font-size:0.75rem">${c.l}</span></div>
+    </div>`;
+  }).join('');
+  cw.style.display='block';
+  const s=[...cmp].sort((a,b)=>b.u-a.u);
+  document.getElementById('ccb').innerHTML=s.map((c,i)=>{
+    const p=Math.round((c.u/s[0].u)*100);
+    return `<div class="cbr"><div class="cbl">${c.f} ${c.n}</div>
+      <div class="cbo"><div class="cbi" style="width:${p}%;background:${COLORS[i%COLORS.length]}">${c.f} $${c.u.toLocaleString()}</div></div>
+      <div class="cv">$${c.u.toLocaleString()}</div></div>`;
+  }).join('');
+}
+
+function removeCmp(n){
+  cmp=cmp.filter(c=>c.n!==n);
+  document.querySelectorAll(`.cc[data-n="${n}"]`).forEach(cb=>cb.checked=false);
+  renderCmp();
+}
+
+// === CONVERTER ===
+async function fetchRates(){
+  try{
+    const r=await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+    if(!r.ok)throw new Error();
+    const d=await r.json();
+    rates=d.rates;rateTs=new Date();
+    upd();conv();renderQ();
+  }catch(e){
+    rates={USD:1,EUR:0.852,GBP:0.795,JPY:150.4,CHF:0.875,CAD:1.369,AUD:1.565,NZD:1.715,
+      CNY:7.25,KRW:1350,MXN:17.2,BRL:4.98,ARS:1050,CLP:940,COP:4200,PEN:3.72,
+      UYU:39.5,CRC:520,PYG:7600,BOB:6.91,HNL:24.7,DOP:58.5,GTQ:7.73,NIO:36.7,
+      VES:36.5,SEK:10.4,NOK:10.6,DKK:6.88,PLN:3.96,CZK:22.7,HUF:357,RON:4.58,
+      BGN:1.83,TRY:34.2,UAH:41.3,SGD:1.34,HKD:7.82,THB:35.8,MYR:4.71,IDR:15700,
+      PHP:57.2,INR:83.8,PKR:278,BDT:110,VND:24800,SAR:3.75,AED:3.67,ILS:3.67,
+      ZAR:18.7,EGP:50.2,MAD:9.93,TND:3.09,NGN:1650,KES:129,GHS:15.7,
+      IQD:1310,JOD:0.709,AMD:395,GEL:2.72,AZN:1.70};
+    rateTs=new Date();upd();conv();renderQ();
+    document.getElementById('clu').textContent+=' (datos de respaldo)';
+  }
+}
+
+function upd(){
+  if(rateTs){
+    const t=rateTs.toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});
+    document.getElementById('clu').textContent=`⏱️ Actualizado: ${t}`;
+  }
+}
+
+function initConvSel(){
+  const crs=Object.keys(CNAMES);
+  const fs=document.getElementById('cfrom'),ts=document.getElementById('cto');
+  crs.forEach(code=>{
+    const nm=CNAMES[code]||code;
+    fs.innerHTML+=`<option value="${code}" ${code==='USD'?'selected':''}>${code} – ${nm}</option>`;
+    ts.innerHTML+=`<option value="${code}" ${code==='COP'?'selected':''}>${code} – ${nm}</option>`;
+  });
+}
+
+function conv(){
+  if(!Object.keys(rates).length)return;
+  const amt=parseFloat(document.getElementById('ca').value)||0;
+  const fr=document.getElementById('cfrom').value;
+  const to=document.getElementById('cto').value;
+  if(!rates[fr]||!rates[to])return;
+  const res=(amt/rates[fr])*rates[to];
+  const rt=(1/rates[fr])*rates[to];
+  document.getElementById('cra').textContent=`${res.toLocaleString('es',{maximumFractionDigits:4})} ${to}`;
+  document.getElementById('cri').textContent=`1 ${fr} = ${rt.toLocaleString('es',{maximumFractionDigits:6})} ${to}`;
+  document.getElementById('crb').textContent=`1 ${to} = ${(1/rt).toLocaleString('es',{maximumFractionDigits:6})} ${fr}`;
+}
+
+function swapC(){
+  const f=document.getElementById('cfrom'),t=document.getElementById('cto');
+  const tmp=f.value;f.value=t.value;t.value=tmp;conv();
+}
+
+function renderQ(){
+  document.getElementById('qg').innerHTML=QPAIRS.map(([a,b])=>{
+    if(!rates[a]||!rates[b])return'';
+    const rt=((1/rates[a])*rates[b]);
+    return `<div class="qi" onclick="setQ('${a}','${b}')">
+      <div class="pair">${a} → ${b}</div>
+      <div class="rate">${rt.toLocaleString('es',{maximumFractionDigits:4})}</div>
+    </div>`;
+  }).join('');
+}
+
+function setQ(a,b){
+  document.getElementById('cfrom').value=a;
+  document.getElementById('cto').value=b;
+  document.getElementById('ca').value=1;
+  conv();showTab('conversor');
+}
+
+// === REGIONS ===
+function renderRegions(){
+  const ORD=['Europa','América del Norte','América Latina','Asia','Oriente Medio','Oceanía','África'];
+  const ICO={Europa:'🇪🇺','América del Norte':'🌎','América Latina':'🌎',Asia:'🌏','Oriente Medio':'🕌',Oceanía:'🌊',África:'🌍'};
+  document.getElementById('rc').innerHTML=ORD.map(rg=>{
+    const cs=C.filter(c=>c.r===rg).sort((a,b)=>b.u-a.u);
+    if(!cs.length)return'';
+    const avg=Math.round(cs.reduce((s,c)=>s+c.u,0)/cs.length);
+    return `<div class="rs">
+      <div class="rt"><span style="font-size:1.5rem">${ICO[rg]||'🌐'}</span>
+        <h3>${rg}</h3><span class="cnt">${cs.length} países · Prom. $${avg}</span></div>
+      <div class="rc">${cs.map(c=>`<div class="sp" onclick="addFromReg('${c.n}')" id="pill-${c.n.replace(/[\s.]/g,'_')}">
+          <span class="pf">${c.f}</span>
+          <div class="pi"><div class="pn">${c.n}</div><div class="pa">$${c.u.toLocaleString()}/mes</div></div>
+        </div>`).join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+function addFromReg(n){
+  const c=C.find(x=>x.n===n);if(!c)return;
+  if(cmp.some(x=>x.n===n)){toast(`❌ ${n} ya está`);return;}
+  if(cmp.length>=6){toast('⚠️ Máx. 6 países');return;}
+  cmp.push(c);
+  const el=document.getElementById(`pill-${n.replace(/[\s.]/g,'_')}`);
+  if(el)el.classList.add('sel');
+  toast(`✅ ${c.f} ${c.n} añadido`);
+}
+
+// === STATS ===
+function renderStats(){
+  const s=[...C].sort((a,b)=>b.u-a.u);
+  const top=s[0],bot=s[s.length-1];
+  const avg=Math.round(C.reduce((a,c)=>a+c.u,0)/C.length);
+  const med=s[Math.floor(s.length/2)].u;
+  const a1k=C.filter(c=>c.u>=1000).length;
+  const b2=C.filter(c=>c.u<200).length;
+  document.getElementById('sg').innerHTML=`
+    <div class="sc"><div class="ic">🏆</div><div class="lb">Salario más alto</div><div class="vl" style="color:var(--gold)">$${top.u.toLocaleString()}</div><div class="sb">${top.f} ${top.n}</div></div>
+    <div class="sc"><div class="ic">📉</div><div class="lb">Salario más bajo</div><div class="vl" style="color:var(--red)">$${bot.u}</div><div class="sb">${bot.f} ${bot.n}</div></div>
+    <div class="sc"><div class="ic">📊</div><div class="lb">Promedio mundial</div><div class="vl" style="color:var(--accent2)">$${avg.toLocaleString()}</div><div class="sb">USD/mes</div></div>
+    <div class="sc"><div class="ic">🎯</div><div class="lb">Mediana</div><div class="vl" style="color:var(--accent3)">$${med.toLocaleString()}</div><div class="sb">Punto medio</div></div>
+    <div class="sc"><div class="ic">💎</div><div class="lb">Sobre $1.000/mes</div><div class="vl" style="color:var(--accent3)">${a1k}</div><div class="sb">países</div></div>
+    <div class="sc"><div class="ic">⚠️</div><div class="lb">Bajo $200/mes</div><div class="vl" style="color:var(--red)">${b2}</div><div class="sb">países (crítico)</div></div>
+    <div class="sc"><div class="ic">🌍</div><div class="lb">Total países</div><div class="vl">${C.length}</div><div class="sb">con datos</div></div>
+    <div class="sc"><div class="ic">📅</div><div class="lb">Datos</div><div class="vl" style="font-size:1rem">2025–26</div><div class="sb">Fuentes oficiales</div></div>`;
+  const t15=s.slice(0,15);
+  document.getElementById('t15').innerHTML=t15.map((c,i)=>{
+    const p=Math.round((c.u/t15[0].u)*100);
+    return `<div class="cbr"><div class="cbl">${c.f} ${c.n}</div>
+      <div class="cbo"><div class="cbi" style="width:${p}%;background:${GRADS[i]}">${c.f} $${c.u.toLocaleString()}</div></div>
+      <div class="cv">$${c.u.toLocaleString()}</div></div>`;
+  }).join('');
+  const b10=s.slice(-10).reverse();
+  document.getElementById('b10').innerHTML=b10.map((c,i)=>{
+    const p=Math.max(Math.round((c.u/b10[0].u)*100),4);
+    return `<div class="cbr"><div class="cbl">${c.f} ${c.n}</div>
+      <div class="cbo"><div class="cbi" style="width:${p}%;background:linear-gradient(90deg,var(--red),#800020)">${c.f} $${c.u}</div></div>
+      <div class="cv" style="color:var(--red)">$${c.u}</div></div>`;
+  }).join('');
+}
+
+// === HEADER ===
+function initHeader(){
+  const s=[...C].sort((a,b)=>b.u-a.u);
+  document.getElementById('hc').textContent=C.length;
+  document.getElementById('hh').textContent='$'+s[0].u.toLocaleString();
+  document.getElementById('hl').textContent='$'+s[s.length-1].u;
+  document.getElementById('ha').textContent='$'+Math.round(C.reduce((a,c)=>a+c.u,0)/C.length);
+}
+
+// === ADD SELECT ===
+function initAddSel(){
+  const s=document.getElementById('acs');
+  [...C].sort((a,b)=>a.n.localeCompare(b.n)).forEach(c=>{
+    s.innerHTML+=`<option value="${c.n}">${c.f} ${c.n} · $${c.u}/mes</option>`;
+  });
+}
+
+// === TABS ===
+function showTab(t){
+  const idx={tabla:0,comparar:1,conversor:2,regiones:3,stats:4};
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab')[idx[t]].classList.add('active');
+  document.getElementById('panel-'+t).classList.add('active');
+}
+
+// === TOAST ===
+function toast(msg){
+  const t=document.createElement('div');
+  t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2600);
+}
+
+// === INIT ===
+function init(){
+  filt=[...C];
+  initHeader();renderTable();initAddSel();
+  initConvSel();renderCmp();renderRegions();renderStats();
+  fetchRates();
+  setInterval(fetchRates,600000);
+}
+
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
