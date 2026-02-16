@@ -77,16 +77,15 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(40px) saturate(180%);
-    -webkit-backdrop-filter: blur(40px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(245, 245, 247, 0.75); /* Gris Apple translúcido */
+    		backdrop-filter: blur(14px) saturate(180%);
+    		-webkit-backdrop-filter: blur(14px) saturate(180%);
+    border: 1px solid rgba(199, 199, 199, 0.87);
     border-radius: 20px;
     padding: 8px 16px;
     display: flex;
     gap: 10px;
     align-items: center;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.05) inset;
   }
   .dock-item {
     width: 48px; height: 48px;
@@ -128,7 +127,7 @@
     padding: 0 16px;
     gap: 16px;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 100;
   }
   .menubar-logo { font-size: 16px; font-weight: 100;}
   .menubar-item { color: var(--text-primary); opacity: 0.9; cursor: default; white-space: nowrap; }
@@ -161,14 +160,9 @@
     animation: windowOpen 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
 
-  @keyframes windowOpen {
-    from { opacity: 0; transform: scale(0.92) translateY(20px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-  }
-
   /* ─── TITLE BAR ─────────────────────────────────────────────── */
   .titlebar {
-    height: 42px;
+    height:52px;
     background: #C7C7CC;
     border-bottom: 1px solid rgba(255,255,255,0.08);
     display: flex;
@@ -210,6 +204,7 @@
     font-weight: 100;
     display: block;
     text-align: center;
+    padding-top: 5px;
   }
 
   /* ─── PROGRESS BAR ──────────────────────────────────────────── */
@@ -355,8 +350,8 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 14px 28px;
-    border-radius: var(--radius-md);
+    padding: 14px;
+    border-radius: 60px;
     font-size: 16px;
     font-weight: 100;
     font-family: inherit;
@@ -366,6 +361,8 @@
     transition: var(--transition);
     letter-spacing: -0.2px;
     white-space: nowrap;
+    height: 40px;
+    width: 10px;
   }
   .btn-primary {
     background: #0A84FF;
@@ -923,18 +920,25 @@
     </defs>
 
     <!-- Marco -->
-    <rect x="10" y="10" width="80" height="80" rx="18" stroke="url(#testGrad)" stroke-width="5" fill="none"/>
+    <rect x="9" y="9" width="80" height="80" rx="18" stroke="url(#testGrad)" stroke-width="5" fill="none"/>
 
-    <!-- S -->
-    <path d="M65 30
-             C55 22, 35 26, 35 40
-             C35 50, 65 48, 65 60
-             C65 75, 38 78, 30 68"
-          stroke="url(#testGrad)"
-          stroke-width="7"
-          fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
+    <!-- icono -->
+    <path d="M34 66
+         L58 32
+         C60 29, 65 29, 68 32
+         C71 35, 71 40, 68 43
+         L44 77
+         L34 80
+         Z
+         M58 32
+         L68 43"
+      stroke="url(#testGrad)"
+      stroke-width="6.5"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"/>
+
+
   </svg>
 </div>
 
@@ -1121,15 +1125,15 @@
         <div class="stats-row">
           <div class="stat-card correct">
             <span class="stat-value" id="stat-correct">0</span>
-            <span class="stat-label">✅ Correctas</span>
+            <span class="stat-label">Correctas</span>
           </div>
           <div class="stat-card incorrect">
             <span class="stat-value" id="stat-incorrect">0</span>
-            <span class="stat-label">❌ Incorrectas</span>
+            <span class="stat-label">Incorrectas</span>
           </div>
           <div class="stat-card total">
             <span class="stat-value" id="stat-total">0</span>
-            <span class="stat-label">📝 Total</span>
+            <span class="stat-label">Total</span>
           </div>
         </div>
 
