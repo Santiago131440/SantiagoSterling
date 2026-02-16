@@ -121,9 +121,9 @@
     top: 0; left: 0; right: 0;
     z-index: 1000;
     height: 28px;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(245, 245, 247, 0.75); /* Gris Apple translúcido */
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
     border-bottom: 1px solid rgba(255,255,255,0.06);
     display: flex;
     align-items: center;
@@ -132,12 +132,12 @@
     font-size: 13px;
     font-weight: 500;
   }
-  .menubar-logo { font-size: 16px; }
+  .menubar-logo { font-size: 16px; font-weight: 100;}
   .menubar-item { color: var(--text-primary); opacity: 0.9; cursor: default; white-space: nowrap; }
-  .menubar-item:first-of-type { font-weight: 700; }
+  .menubar-item:first-of-type { font-weight: 100; }
   .menubar-right { margin-left: auto; display: flex; gap: 12px; align-items: center; }
-  .menubar-time { font-size: 13px; font-weight: 500; }
-  .menubar-icon { font-size: 14px; }
+  .menubar-time { font-size: 13px; font-weight: 100; }
+  .menubar-icon { font-size: 14px; font-weight: 100;}
 
   /* ─── MAIN CONTAINER ─────────────────────────────────────── */
   .container {
@@ -935,8 +935,11 @@
     <!-- Marco -->
     <rect x="10" y="10" width="80" height="80" rx="18" stroke="url(#testGrad)" stroke-width="5" fill="none"/>
 
-    <!-- Check -->
-    <path d="M30 52 L45 66 L70 36"
+    <!-- S -->
+    <path d="M65 30
+             C55 22, 35 26, 35 40
+             C35 50, 65 48, 65 60
+             C65 75, 38 78, 30 68"
           stroke="url(#testGrad)"
           stroke-width="7"
           fill="none"
@@ -953,6 +956,7 @@
     <span class="menubar-time" id="menubar-clock">00:00</span>
   </div>
 </div>
+
 
 <!-- TOAST -->
 <div class="toast" id="toast">
