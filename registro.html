@@ -998,15 +998,15 @@
 
         <div class="tips-grid">
           <div class="tip-card">
-            <span class="tip-icon">Reloj</span>
+            <span class="tip-icon"></span>
             <div class="tip-text"><strong>20 seg/pregunta</strong>Cada pregunta tiene un tiempo límite para responder.</div>
           </div>
           <div class="tip-card">
-            <span class="tip-icon">Libros</span>
+            <span class="tip-icon">📚</span>
             <div class="tip-text"><strong>15 Preguntas</strong>Temas: Git, OOP, DB, APIs, Algoritmos y más.</div>
           </div>
           <div class="tip-card">
-            <span class="tip-icon">Check</span>
+            <span class="tip-icon">✅</span>
             <div class="tip-text"><strong>Una oportunidad</strong>No se puede cambiar la respuesta al confirmar.</div>
           </div>
           <div class="tip-card">
@@ -1360,9 +1360,9 @@ function showToast(msg, icon='ℹ️', dur=2500) {
 }
 
 // ─── TRAFFIC LIGHTS ────────────────────────────────────────────
-function closeWindow() { showToast('¡No cierres la ventana!); }
-function minimizeWindow() { showToast('Ventana minimizada'); }
-function maximizeWindow() { showToast('Ventana maximizada'); }
+function closeWindow() { showToast('¡No cierres la ventana! 😅', '⚠️'); }
+function minimizeWindow() { showToast('Ventana minimizada', '📌'); }
+function maximizeWindow() { showToast('Ventana maximizada', '⬛'); }
 
 // ─── PROGRESS ──────────────────────────────────────────────────
 function updateProgress(pct) {
@@ -1408,7 +1408,7 @@ function startQuiz() {
     document.getElementById('error-level').classList.add('show');
     valid = false;
   }
-  if (!valid) { showToast('Completa todos los campos'); return; }
+  if (!valid) { showToast('Completa todos los campos', '⚠️'); return; }
 
   state.name = name; state.email = email; state.level = level;
   state.answers = []; state.currentQ = 0; state.quizStarted = true;
@@ -1417,7 +1417,7 @@ function startQuiz() {
 
   goToScreen('question');
   renderQuestion();
-  showToast(`¡Buena suerte, ${name.split(' ')[0]}!, 3000);
+  showToast(`¡Buena suerte, ${name.split(' ')[0]}! 🚀`, '🎯', 3000);
 }
 
 // ─── RENDER QUESTION ──────────────────────────────────────────
