@@ -8,6 +8,7 @@
       { id: 's7', name: 'Restaurante', url: 'https://santiago131440.github.io/SantiagoSterling/Restaurante.html' },
       { id: 's8', name: 'ProyectoApp', url: 'https://santiago131440.github.io/SantiagoSterling/proyectoApp.html' },
       { id: 's9', name: 'Video Landing Page', url: 'https://santiago131440.github.io/SantiagoSterling/EntornoPrueba.html' },
+      { id: 's10', name: 'Tabla de Salarios', url: 'https://santiago131440.github.io/SantiagoSterling/Salarios.html' },
     ];
 
     // Elementos
@@ -204,6 +205,7 @@
     // Note about CORS / X-Frame-Options:
     // - algunos sitios (ej: google, muchas apps) bloquean ser embebidos en iframe.
     // - si ves un mensaje de bloqueo, considera usar una URL clonada o una captura/preview generada del sitio.
+
 
 
 
