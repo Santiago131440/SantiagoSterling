@@ -1,6 +1,3 @@
-
-/* styles.css - CSS adicional y utilidades (complementa Tailwind) */
-
 /* Base overrides and custom tokens */
 :root{
   --gold: #d4af37;
@@ -1140,6 +1137,7 @@ img[alt="Astronaut UX"] {
     background-position: 240px 240px;
   }
 }
+
 
 
 
