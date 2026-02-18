@@ -156,19 +156,33 @@ body{
 
 
         .titulosSterling-text {
-            background: linear-gradient(135deg, #fff 0%, #2c2c2c 100%);
+            background: linear-gradient(170deg, #fff 0%, #3b4b5e 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            font-weight: 500;
         }
         .titulosSterlingNegro-text {
-            background: linear-gradient(135deg, #000000 0%, #383838 100%);
+            background: linear-gradient(170deg, #000000 0%, #3b4b5e 70%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            font-weight: 500;
         }
-
-
+        .titulosSterlingNegro-text1 {
+            background: linear-gradient(170deg, #000000 0%, #3b4b5e 70%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 100;
+        }
+        .titulosSterling-text1 {
+            background: linear-gradient(170deg, #ffffff 20%, #3b4b5e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 100;
+        }
 
 
     /* APORTES CLAVE */
@@ -1119,7 +1133,6 @@ img[alt="Astronaut UX"] {
     background-position: 240px 240px;
   }
 }
-
 
 
 
