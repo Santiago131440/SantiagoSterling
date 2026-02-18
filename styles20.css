@@ -48,7 +48,7 @@ body{
 .button-primary{
   background: var(--accent);
   color: #0b0b0b;
-  font-weight: 700;
+  font-weight: 100;
   border-radius: 12px;
   padding: 0.6rem 1rem;
   display: inline-flex;
@@ -183,6 +183,13 @@ body{
             background-clip: text;
             font-weight: 100;
         }
+        .titulosSterling-text2 {
+            background: linear-gradient(170deg, #ffffff 20%, #d3d3d3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 100;
+        }
 
 
     /* APORTES CLAVE */
@@ -197,14 +204,14 @@ body{
 
         h1 {
             font-size: 3rem;
-            font-weight: 700;
+            font-weight: 100;
             margin-bottom: 20px;
             letter-spacing: -0.02em;
         }
 
         h2 {
             font-size: 2.5rem;
-            font-weight: 700;
+            font-weight: 100;
             margin-bottom: 20px;
             letter-spacing: -0.02em;
             line-height: 1.2;
@@ -299,7 +306,7 @@ body{
 
 .title {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 100;
   color: #555;
 }
 
@@ -336,7 +343,7 @@ body{
 
 .name {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 100;
 }
 
 .date {
@@ -390,7 +397,7 @@ body{
 }
 
 .folder-title {
-  font-weight: 600;
+  font-weight: 100;
   margin-bottom: 6px;
   cursor: pointer;
 }
@@ -453,7 +460,7 @@ body{
     font-size: 12px;
     text-align: center;
     color: #1c1c1e;
-    font-weight: 500;
+    font-weight: 100;
     line-height: 1.2;
   }
 
@@ -510,7 +517,7 @@ body{
     .apple-nav a {
       font-size: 14px;
       color: var(--text-secondary);
-      font-weight: 500;
+      font-weight: 100;
     }
     /* HERO */
     .hero {
@@ -523,7 +530,7 @@ body{
 
     .hero h1 {
       font-size: clamp(1rem, 6vw, 4rem);
-      font-weight: 700;
+      font-weight: 400;
       letter-spacing: -0.04em;
     }
 
@@ -531,7 +538,7 @@ body{
       font-family: "Segoe Script", "Apple Chancery", "Brush Script MT", cursive;
       font-size: 1.5rem;
       letter-spacing: -0.03em;
-      font-weight: 400;
+      font-weight: 100;
       color: #777;
     }
 
@@ -637,7 +644,7 @@ body{
    TITLE
 ------------------------- */
 .card h1 {
-  font-weight: 800;
+  font-weight: 100;
   letter-spacing: -0.04em;
   margin-bottom: 1rem;
 }
@@ -667,7 +674,7 @@ body{
   border-radius: 14px;
   padding: .6rem .9rem;
   font-size: .8rem;
-  font-weight: 500;
+  font-weight: 100;
   box-shadow: 0 10px 25px rgba(0,0,0,.12);
   white-space: nowrap;
 }
@@ -676,7 +683,7 @@ body{
   display: block;
   font-size: .7rem;
   color: #6e6e73;
-  font-weight: 400;
+  font-weight: 100;
 }
 
 .tag.left-top { top: 18%; left: -10%; }
@@ -701,7 +708,7 @@ body{
   padding: .75rem 1.4rem;
   border-radius: 999px;
   font-size: .9rem;
-  font-weight: 600;
+  font-weight: 100;
   cursor: pointer;
   border: none;
 }
@@ -873,7 +880,7 @@ img[alt="Astronaut UX"] {
 
 .card h1 {
   font-size: 56px;
-  font-weight: 700;
+  font-weight: 100;
 }
 
 .card p {
@@ -941,7 +948,7 @@ img[alt="Astronaut UX"] {
 
         .chip-name {
             font-size: 24px;
-            font-weight: 600;
+            font-weight: 300;
             letter-spacing: -0.5px;
             color:#000;
         }
@@ -960,12 +967,12 @@ img[alt="Astronaut UX"] {
             font-size: 13px;
             color: #6e6e73;
             margin-bottom: 4px;
-            font-weight: 400;
+            font-weight: 100;
         }
 
         .stat-value {
             font-size: 56px;
-            font-weight: 600;
+            font-weight: 400;
             line-height: 1.05;
             letter-spacing: -1px;
             margin-bottom: 4px;
@@ -982,7 +989,7 @@ img[alt="Astronaut UX"] {
         .stat-description {
             font-size: 17px;
             color: #6e6e73;
-            font-weight: 400;
+            font-weight: 100;
             line-height: 1.4;
         }
           .carousel-wrapper {
