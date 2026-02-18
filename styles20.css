@@ -551,7 +551,7 @@ body{
     .phone {
       width: 240px;
       height: 480px;
-      border-radius: 36px;
+      border-radius: 46px;
       background: #000;
       border: 6px solid #1d1d1f;
       position: relative;
@@ -562,12 +562,12 @@ body{
     .phone::before {
       content: "";
       position: absolute;
-      top: 14px;
+      top: 5px;
       left: 50%;
       transform: translateX(-50%);
-      width: 60px;
-      height: 8px;
-      border-radius: 4px;
+      width: 80px;
+      height: 22px;
+      border-radius: 60px;
       background: #000;
       z-index: 3;
     }
@@ -1137,7 +1137,6 @@ img[alt="Astronaut UX"] {
     background-position: 240px 240px;
   }
 }
-
 
 
 
