@@ -1,4 +1,3 @@
-
 (() => {
   "use strict";
 
@@ -663,4 +662,5 @@ Proyectos destacados:
     // Si prefieres abrir en nueva pestaña, usa esta línea en su lugar:
     // window.open(url, '_blank', 'noopener,noreferrer');
   }
+
 
