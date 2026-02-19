@@ -461,7 +461,7 @@ function renderCmp(){
   const g=document.getElementById('cg');
   const cw=document.getElementById('ccw');
   if(!cmp.length){
-    g.innerHTML=`<div class="cp"><span>🌍</span>Selecciona países en la tabla o usa el selector</div>`;
+    g.innerHTML=`<div class="cp">Selecciona países en la tabla o usa el selector</div>`;
     cw.style.display='none';return;
   }
   const mx=Math.max(...cmp.map(c=>c.u));
@@ -685,6 +685,7 @@ window.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
+
 
 
 
