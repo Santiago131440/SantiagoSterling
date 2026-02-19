@@ -441,7 +441,7 @@ function toggleCmp(n){
   const c=C.find(x=>x.n===n);if(!c)return;
   const i=cmp.findIndex(x=>x.n===n);
   if(i>=0)cmp.splice(i,1);
-  else{if(cmp.length>=6){toast('⚠️ Máx. 6 países');return;}cmp.push(c);}
+  else{if(cmp.length>=6){toast('Máx. 6 países');return;}cmp.push(c);}
   renderCmp();
 }
 
@@ -685,6 +685,7 @@ window.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
+
 
 
 
