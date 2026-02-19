@@ -479,10 +479,10 @@ function renderCmp(){
         </div>
         <div style="font-size:0.7rem;color:var(--text2);margin-top:3px;">${pct}% del más alto</div>
       </div>
-      <div class="dr"><span>📅 Anual</span><span>$${(c.u*12).toLocaleString()}</span></div>
-      <div class="dr"><span>📆 Semanal ~</span><span>$${(c.u/4.33).toFixed(0)}</span></div>
-      <div class="dr"><span>📊 Diario ~</span><span>$${(c.u/30).toFixed(1)}</span></div>
-      <div class="dr"><span>💱 Local</span><span style="font-size:0.75rem">${c.l}</span></div>
+      <div class="dr"><span>Anual</span><span>$${(c.u*12).toLocaleString()}</span></div>
+      <div class="dr"><span>Semanal ~</span><span>$${(c.u/4.33).toFixed(0)}</span></div>
+      <div class="dr"><span>Diario ~</span><span>$${(c.u/30).toFixed(1)}</span></div>
+      <div class="dr"><span>Local</span><span style="font-size:0.75rem">${c.l}</span></div>
     </div>`;
   }).join('');
   cw.style.display='block';
@@ -685,6 +685,7 @@ window.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
+
 
 
 
