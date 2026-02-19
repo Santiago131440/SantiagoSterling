@@ -597,12 +597,12 @@ function renderRegions(){
 
 function addFromReg(n){
   const c=C.find(x=>x.n===n);if(!c)return;
-  if(cmp.some(x=>x.n===n)){toast(`❌ ${n} ya está`);return;}
-  if(cmp.length>=6){toast('⚠️ Máx. 6 países');return;}
+  if(cmp.some(x=>x.n===n)){toast(`${n} ya está`);return;}
+  if(cmp.length>=6){toast('Máx. 6 países');return;}
   cmp.push(c);
   const el=document.getElementById(`pill-${n.replace(/[\s.]/g,'_')}`);
   if(el)el.classList.add('sel');
-  toast(`✅ ${c.f} ${c.n} añadido`);
+  toast(`${c.f} ${c.n} añadido`);
 }
 
 // === STATS ===
@@ -614,14 +614,14 @@ function renderStats(){
   const a1k=C.filter(c=>c.u>=1000).length;
   const b2=C.filter(c=>c.u<200).length;
   document.getElementById('sg').innerHTML=`
-    <div class="sc"><div class="ic">🏆</div><div class="lb">Salario más alto</div><div class="vl" style="color:var(--gold)">$${top.u.toLocaleString()}</div><div class="sb">${top.f} ${top.n}</div></div>
-    <div class="sc"><div class="ic">📉</div><div class="lb">Salario más bajo</div><div class="vl" style="color:var(--red)">$${bot.u}</div><div class="sb">${bot.f} ${bot.n}</div></div>
-    <div class="sc"><div class="ic">📊</div><div class="lb">Promedio mundial</div><div class="vl" style="color:var(--accent2)">$${avg.toLocaleString()}</div><div class="sb">USD/mes</div></div>
-    <div class="sc"><div class="ic">🎯</div><div class="lb">Mediana</div><div class="vl" style="color:var(--accent3)">$${med.toLocaleString()}</div><div class="sb">Punto medio</div></div>
-    <div class="sc"><div class="ic">💎</div><div class="lb">Sobre $1.000/mes</div><div class="vl" style="color:var(--accent3)">${a1k}</div><div class="sb">países</div></div>
-    <div class="sc"><div class="ic">⚠️</div><div class="lb">Bajo $200/mes</div><div class="vl" style="color:var(--red)">${b2}</div><div class="sb">países (crítico)</div></div>
-    <div class="sc"><div class="ic">🌍</div><div class="lb">Total países</div><div class="vl">${C.length}</div><div class="sb">con datos</div></div>
-    <div class="sc"><div class="ic">📅</div><div class="lb">Datos</div><div class="vl" style="font-size:1rem">2025–26</div><div class="sb">Fuentes oficiales</div></div>`;
+    <div class="sc"><div class="lb">Salario más alto</div><div class="vl" style="color:var(--gold)">$${top.u.toLocaleString()}</div><div class="sb">${top.f} ${top.n}</div></div>
+    <div class="sc"><div class="lb">Salario más bajo</div><div class="vl" style="color:var(--red)">$${bot.u}</div><div class="sb">${bot.f} ${bot.n}</div></div>
+    <div class="sc"><div class="lb">Promedio mundial</div><div class="vl" style="color:var(--accent2)">$${avg.toLocaleString()}</div><div class="sb">USD/mes</div></div>
+    <div class="sc"><div class="lb">Mediana</div><div class="vl" style="color:var(--accent3)">$${med.toLocaleString()}</div><div class="sb">Punto medio</div></div>
+    <div class="sc"><div class="lb">Sobre $1.000/mes</div><div class="vl" style="color:var(--accent3)">${a1k}</div><div class="sb">países</div></div>
+    <div class="sc"><div class="lb">Bajo $200/mes</div><div class="vl" style="color:var(--red)">${b2}</div><div class="sb">países (crítico)</div></div>
+    <div class="sc"><div class="lb">Total países</div><div class="vl">${C.length}</div><div class="sb">con datos</div></div>
+    <div class="sc"><div class="lb">Datos</div><div class="vl" style="font-size:1rem">2025–26</div><div class="sb">Fuentes oficiales</div></div>`;
   const t15=s.slice(0,15);
   document.getElementById('t15').innerHTML=t15.map((c,i)=>{
     const p=Math.round((c.u/t15[0].u)*100);
@@ -685,6 +685,7 @@ window.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
+
 
 
 
