@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard TEP · Rendimiento Empaque GN001</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05080f;
+    --bg2: #0b1120;
+    --bg3: #111a2e;
+    --border: rgba(99,179,237,0.12);
+    --accent: #00d4ff;
+    --accent2: #ff6b35;
+    --accent3: #a78bfa;
+    --accent4: #34d399;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --card: rgba(11,17,32,0.8);
+    --glow: 0 0 30px rgba(0,212,255,0.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content:'';
+    position:fixed; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 20%, rgba(0,212,255,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 80% 80%, rgba(167,139,250,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 60% 40%, rgba(52,211,153,0.04) 0%, transparent 50%);
+    pointer-events:none;
+  }
+
+  .grid-bg {
+    position:fixed; inset:0; z-index:0;
+    background-image:
+      linear-gradient(rgba(99,179,237,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,179,237,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events:none;
+  }
+
+  .container { position:relative; z-index:1; max-width:1400px; margin:0 auto; padding:32px 24px; }
+
+  /* HEADER */
+  header {
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:40px;
+    padding-bottom:24px;
+    border-bottom: 1px solid var(--border);
+    animation: fadeDown 0.6s ease both;
+  }
+  .header-left h1 {
+    font-family:'Syne',sans-serif;
+    font-size:clamp(20px,3vw,30px);
+    font-weight:800;
+    letter-spacing:-0.5px;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .header-left p { color:var(--muted); font-size:13px; margin-top:4px; }
+  .header-badge {
+    display:flex; align-items:center; gap:8px;
+    background: rgba(0,212,255,0.08);
+    border:1px solid rgba(0,212,255,0.2);
+    padding:8px 16px; border-radius:100px;
+    font-size:13px; color:var(--accent);
+  }
+  .badge-dot {
+    width:8px; height:8px; border-radius:50%;
+    background:var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  /* KPI CARDS */
+  .kpi-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap:16px;
+    margin-bottom:32px;
+  }
+  .kpi-card {
+    background: var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:24px 20px;
+    position:relative;
+    overflow:hidden;
+    backdrop-filter:blur(12px);
+    opacity:0;
+    transform:translateY(20px);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .kpi-card:hover {
+    transform:translateY(-4px);
+    box-shadow: var(--glow);
+  }
+  .kpi-card::before {
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:2px;
+    background: var(--kpi-color, var(--accent));
+    box-shadow: 0 0 12px var(--kpi-color, var(--accent));
+  }
+  .kpi-icon { font-size:28px; margin-bottom:12px; }
+  .kpi-label { font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:6px; }
+  .kpi-value {
+    font-family:'Syne',sans-serif;
+    font-size:clamp(22px,3vw,30px);
+    font-weight:800;
+    color:var(--kpi-color, var(--accent));
+    line-height:1;
+  }
+  .kpi-sub { font-size:11px; color:var(--muted); margin-top:6px; }
+
+  /* CHARTS GRID */
+  .charts-grid {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:20px;
+    margin-bottom:24px;
+  }
+  .charts-grid-3 {
+    display:grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap:20px;
+    margin-bottom:24px;
+  }
+  .chart-card {
+    background: var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:24px;
+    backdrop-filter:blur(12px);
+    opacity:0;
+    transform:translateY(20px);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .chart-card:hover { box-shadow: var(--glow); }
+  .chart-card.full { grid-column: 1 / -1; }
+  .chart-title {
+    font-family:'Syne',sans-serif;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:0.3px;
+    margin-bottom:4px;
+    color:var(--text);
+  }
+  .chart-subtitle { font-size:11px; color:var(--muted); margin-bottom:20px; }
+  canvas { max-height:260px; }
+
+  /* TIMELINE */
+  .timeline-section {
+    background: var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:28px;
+    margin-bottom:24px;
+    backdrop-filter:blur(12px);
+    opacity:0;
+    transform:translateY(20px);
+  }
+  .timeline-title {
+    font-family:'Syne',sans-serif;
+    font-size:16px; font-weight:800;
+    margin-bottom:6px;
+  }
+  .timeline-sub { font-size:12px; color:var(--muted); margin-bottom:28px; }
+
+  /* TABLE */
+  .table-section {
+    background: var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:28px;
+    margin-bottom:24px;
+    backdrop-filter:blur(12px);
+    overflow:hidden;
+    opacity:0;
+    transform:translateY(20px);
+  }
+  .section-header {
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:20px;
+  }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th {
+    font-family:'Syne',sans-serif;
+    font-size:10px; text-transform:uppercase; letter-spacing:1px;
+    color:var(--muted); text-align:left; padding:10px 14px;
+    border-bottom:1px solid var(--border);
+  }
+  td { padding:12px 14px; border-bottom:1px solid rgba(99,179,237,0.06); }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:rgba(0,212,255,0.03); }
+  .tag {
+    display:inline-flex; align-items:center;
+    padding:3px 10px; border-radius:100px;
+    font-size:11px; font-weight:500;
+  }
+  .bar-mini {
+    height:6px; border-radius:3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    margin-top:4px;
+    box-shadow: 0 0 8px rgba(0,212,255,0.3);
+  }
+
+  /* ALERTS */
+  .alerts-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    gap:16px;
+    margin-bottom:32px;
+  }
+  .alert-card {
+    border-radius:14px;
+    padding:18px 20px;
+    border:1px solid;
+    opacity:0;
+    transform:translateX(-20px);
+    transition: transform 0.3s;
+  }
+  .alert-card:hover { transform:scale(1.02); }
+  .alert-card.danger { background:rgba(239,68,68,0.08); border-color:rgba(239,68,68,0.25); }
+  .alert-card.warn { background:rgba(255,107,53,0.08); border-color:rgba(255,107,53,0.25); }
+  .alert-card.ok { background:rgba(52,211,153,0.08); border-color:rgba(52,211,153,0.25); }
+  .alert-icon { font-size:22px; margin-bottom:8px; }
+  .alert-title { font-family:'Syne',sans-serif; font-size:13px; font-weight:700; margin-bottom:4px; }
+  .alert-body { font-size:12px; color:var(--muted); }
+
+  /* FOOTER */
+  footer {
+    text-align:center; padding:24px 0 8px;
+    color:var(--muted); font-size:12px;
+    border-top:1px solid var(--border);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
+  @keyframes countUp { from {opacity:0} to {opacity:1} }
+  .animate-in { opacity:1 !important; transform:translateY(0) !important; transition:opacity 0.6s ease, transform 0.6s ease; }
+  .animate-in-x { opacity:1 !important; transform:translateX(0) !important; transition:opacity 0.5s ease, transform 0.5s ease; }
+
+  /* Progress ring */
+  .ring-wrap { display:flex; align-items:center; justify-content:center; flex-direction:column; padding:12px 0; }
+  .ring-label { font-family:'Syne',sans-serif; font-size:28px; font-weight:800; color:var(--accent4); }
+  .ring-sub { font-size:11px; color:var(--muted); margin-top:4px; }
+
+  @media(max-width:900px){
+    .charts-grid, .charts-grid-3 { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <h1>Dashboard TEP · Rendimiento &amp; Empaque GN001</h1>
+      <p>Línea Granulación · Periodo: 01 Feb – 16 Feb 2026 · 127 transacciones analizadas</p>
+    </div>
+    <div class="header-badge">
+      <span class="badge-dot"></span>
+      Actualizado Feb 2026
+    </div>
+  </header>
+
+  <!-- KPIs -->
+  <div class="kpi-grid" id="kpiGrid">
+    <div class="kpi-card" style="--kpi-color:#00d4ff">
+      <div class="kpi-icon">⏱</div>
+      <div class="kpi-label">Horas Ejecución</div>
+      <div class="kpi-value" data-count="128.9" data-suffix="h">0h</div>
+      <div class="kpi-sub">De 195.5h totales operadas</div>
+    </div>
+    <div class="kpi-card" style="--kpi-color:#ff6b35">
+      <div class="kpi-icon">🚧</div>
+      <div class="kpi-label">Horas Paro</div>
+      <div class="kpi-value" data-count="66.6" data-suffix="h">0h</div>
+      <div class="kpi-sub">34.1% del tiempo total</div>
+    </div>
+    <div class="kpi-card" style="--kpi-color:#34d399">
+      <div class="kpi-icon">⚡</div>
+      <div class="kpi-label">Eficiencia OEE</div>
+      <div class="kpi-value" data-count="65.9" data-suffix="%">0%</div>
+      <div class="kpi-sub">Meta recomendada ≥ 80%</div>
+    </div>
+    <div class="kpi-card" style="--kpi-color:#a78bfa">
+      <div class="kpi-icon">📦</div>
+      <div class="kpi-label">Kg Producidos</div>
+      <div class="kpi-value" data-count="188430" data-suffix="">0</div>
+      <div class="kpi-sub">Total kg empacados</div>
+    </div>
+    <div class="kpi-card" style="--kpi-color:#f59e0b">
+      <div class="kpi-icon">💰</div>
+      <div class="kpi-label">Costo Total</div>
+      <div class="kpi-value" data-count="43.6" data-suffix="M">$0</div>
+      <div class="kpi-sub">$ COP (MO + CIF)</div>
+    </div>
+    <div class="kpi-card" style="--kpi-color:#ec4899">
+      <div class="kpi-icon">📊</div>
+      <div class="kpi-label">Costo / Kg</div>
+      <div class="kpi-value" data-count="231.4" data-suffix="">$0</div>
+      <div class="kpi-sub">Promedio COP por kg</div>
+    </div>
+  </div>
+
+  <!-- ALERTAS DECISIÓN -->
+  <div class="alerts-grid" id="alertsGrid">
+    <div class="alert-card danger">
+      <div class="alert-icon">🔴</div>
+      <div class="alert-title">Eficiencia Crítica — 65.9%</div>
+      <div class="alert-body">La línea opera 14.1 puntos por debajo del estándar de clase mundial (80%). Acción inmediata requerida.</div>
+    </div>
+    <div class="alert-card warn">
+      <div class="alert-icon">🟠</div>
+      <div class="alert-title">Arranque/Parada: 18.67h perdidas</div>
+      <div class="alert-body">28% del tiempo de paro se debe a arranques y paradas. Revisar protocolos SMED y reducir tiempos de setup.</div>
+    </div>
+    <div class="alert-card warn">
+      <div class="alert-icon">🟡</div>
+      <div class="alert-title">Disponibilidad MP: 16.76h perdidas</div>
+      <div class="alert-body">Falta de materiales generó 25.2% de paros. Revisar planificación de suministro y stock mínimos.</div>
+    </div>
+    <div class="alert-card ok">
+      <div class="alert-icon">🟢</div>
+      <div class="alert-title">FERTICH lidera producción</div>
+      <div class="alert-body">85,600 kg producidos. Mayor volumen que MIX MENORES (102,080 kg) aunque con más horas dedicadas.</div>
+    </div>
+  </div>
+
+  <!-- TIMELINE: comportamiento diario -->
+  <div class="timeline-section" id="timelineSection">
+    <div class="timeline-title">📅 Línea de Tiempo — Comportamiento Diario</div>
+    <div class="timeline-sub">Horas de ejecución, paros y kilogramos producidos por día (01–16 Feb 2026)</div>
+    <canvas id="timelineChart"></canvas>
+  </div>
+
+  <!-- CHARTS ROW 1 -->
+  <div class="charts-grid">
+    <div class="chart-card" id="cc1">
+      <div class="chart-title">⚙️ Distribución de Horas por Tipo</div>
+      <div class="chart-subtitle">Ejecución vs Paro vs Alistamiento</div>
+      <canvas id="horasChart"></canvas>
+    </div>
+    <div class="chart-card" id="cc2">
+      <div class="chart-title">🔍 Causas de Paro</div>
+      <div class="chart-subtitle">Horas perdidas por motivo</div>
+      <canvas id="parosChart"></canvas>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 2 -->
+  <div class="charts-grid">
+    <div class="chart-card" id="cc3">
+      <div class="chart-title">📦 Producción por Producto (Kg)</div>
+      <div class="chart-subtitle">Volumen acumulado por SKU</div>
+      <canvas id="prodKgChart"></canvas>
+    </div>
+    <div class="chart-card" id="cc4">
+      <div class="chart-title">💵 Costo Total por Producto</div>
+      <div class="chart-subtitle">Distribución de costos MO + CIF</div>
+      <canvas id="costoChart"></canvas>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 3 -->
+  <div class="charts-grid">
+    <div class="chart-card" id="cc5">
+      <div class="chart-title">🔄 Rendimiento por Turno</div>
+      <div class="chart-subtitle">Horas ejecución, paro y kg por turno</div>
+      <canvas id="turnoChart"></canvas>
+    </div>
+    <div class="chart-card" id="cc6">
+      <div class="chart-title">📐 Eficiencia Diaria (%)</div>
+      <div class="chart-subtitle">Horas ejecución / (ejecución + paro)</div>
+      <canvas id="eficienciaChart"></canvas>
+    </div>
+  </div>
+
+  <!-- KG por PRESENTACION -->
+  <div class="charts-grid">
+    <div class="chart-card full" id="cc7">
+      <div class="chart-title">🏷️ Producción por Presentación (Tipo de Saco)</div>
+      <div class="chart-subtitle">Kg producidos por empaque</div>
+      <canvas id="presentacionChart" style="max-height:200px"></canvas>
+    </div>
+  </div>
+
+  <!-- TABLA DETALLE POR PRODUCTO -->
+  <div class="table-section" id="tableSection">
+    <div class="section-header">
+      <div>
+        <div class="chart-title">📋 Resumen Ejecutivo por Producto</div>
+        <div class="chart-subtitle" style="margin:0">Métricas clave para toma de decisiones</div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Línea</th>
+          <th>Hs Ejecución</th>
+          <th>Hs Paro</th>
+          <th>Eficiencia</th>
+          <th>Kg Producidos</th>
+          <th>Costo Total (COP)</th>
+          <th>COP/Kg</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FERTICH</strong></td>
+          <td><span style="color:var(--accent3)">Formulaciones Esp.</span></td>
+          <td>71.16h</td>
+          <td><span style="color:#ff6b35">34.01h</span></td>
+          <td>
+            <div>67.6%</div>
+            <div class="bar-mini" style="width:67.6%;background:linear-gradient(90deg,#ff6b35,#f59e0b)"></div>
+          </td>
+          <td><strong>85,600</strong></td>
+          <td>$24,064,675</td>
+          <td>$281</td>
+          <td><span class="tag" style="background:rgba(255,107,53,0.15);color:#ff6b35;border:1px solid rgba(255,107,53,0.3)">⚠ Revisar</span></td>
+        </tr>
+        <tr>
+          <td><strong>MIX MENORES</strong></td>
+          <td><span style="color:var(--accent)">Micronutrientes Rad.</span></td>
+          <td>56.09h</td>
+          <td><span style="color:#ff6b35">32.39h</span></td>
+          <td>
+            <div>63.4%</div>
+            <div class="bar-mini" style="width:63.4%;background:linear-gradient(90deg,#ef4444,#ff6b35)"></div>
+          </td>
+          <td><strong>102,080</strong></td>
+          <td>$18,968,348</td>
+          <td>$186</td>
+          <td><span class="tag" style="background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.3)">🔴 Crítico</span></td>
+        </tr>
+        <tr>
+          <td><strong>NUFLEX</strong></td>
+          <td><span style="color:var(--accent4)">Micronutrientes Rad.</span></td>
+          <td>1.67h</td>
+          <td><span style="color:#34d399">0.17h</span></td>
+          <td>
+            <div>90.8%</div>
+            <div class="bar-mini" style="width:90.8%;background:linear-gradient(90deg,#34d399,#00d4ff)"></div>
+          </td>
+          <td><strong>750</strong></td>
+          <td>$564,756</td>
+          <td>$753</td>
+          <td><span class="tag" style="background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.3)">✅ Óptimo</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TABLA TURNOS -->
+  <div class="table-section" id="tableTurnos">
+    <div class="section-header">
+      <div>
+        <div class="chart-title">🔄 Análisis por Turno</div>
+        <div class="chart-subtitle" style="margin:0">Comparativa de productividad entre turnos</div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Turno</th>
+          <th>Hs Ejecución</th>
+          <th>Hs Paro</th>
+          <th>Eficiencia</th>
+          <th>Kg Producidos</th>
+          <th>Kg/Hora</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tag" style="background:rgba(0,212,255,0.15);color:var(--accent);border:1px solid rgba(0,212,255,0.3)">Turno 1</span></td>
+          <td>48.59h</td>
+          <td>27.24h</td>
+          <td>
+            <div>64.1%</div>
+            <div class="bar-mini" style="width:64.1%"></div>
+          </td>
+          <td>64,310</td>
+          <td><strong>1,323</strong></td>
+        </tr>
+        <tr>
+          <td><span class="tag" style="background:rgba(167,139,250,0.15);color:var(--accent3);border:1px solid rgba(167,139,250,0.3)">Turno 2</span></td>
+          <td>25.09h</td>
+          <td>10.90h</td>
+          <td>
+            <div>69.7%</div>
+            <div class="bar-mini" style="width:69.7%;background:linear-gradient(90deg,var(--accent3),var(--accent))"></div>
+          </td>
+          <td>38,995</td>
+          <td><strong>1,554</strong></td>
+        </tr>
+        <tr>
+          <td><span class="tag" style="background:rgba(52,211,153,0.15);color:var(--accent4);border:1px solid rgba(52,211,153,0.3)">Turno 3</span></td>
+          <td>55.24h</td>
+          <td>28.43h</td>
+          <td>
+            <div>66.0%</div>
+            <div class="bar-mini" style="width:66%;background:linear-gradient(90deg,var(--accent4),var(--accent))"></div>
+          </td>
+          <td>85,125</td>
+          <td><strong>1,541</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    Dashboard generado automáticamente · Datos: Resumen_de_transacciones_TEP_DRA_Rendmto_TEP_Empaque_GN001 · Periodo: 01–16 Feb 2026
+  </footer>
+
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const dates = ['01/02','02/02','03/02','04/02','07/02','08/02','09/02','10/02','11/02','12/02','13/02','14/02','15/02','16/02'];
+const execHours = [4.17,8.75,16.84,15.92,7.00,4.42,11.25,8.58,9.25,5.41,8.58,7.75,10.00,11.00];
+const paroHours = [1.83,3.09,7.16,8.08,4.99,1.58,4.75,7.84,6.74,2.84,3.42,4.25,5.00,5.00];
+const kgDay    = [8360,13790,33680,18525,8935,9640,18100,12200,13900,6750,10275,9325,11200,13750];
+const eficDay  = execHours.map((e,i)=>parseFloat((e/(e+paroHours[i])*100).toFixed(1)));
+
+const CYAN='rgba(0,212,255', PURPLE='rgba(167,139,250', GREEN='rgba(52,211,153', ORANGE='rgba(255,107,53', AMBER='rgba(245,158,11';
+
+const defaults = {
+  plugins:{ legend:{ labels:{ color:'#94a3b8', font:{family:'DM Sans',size:11} } } },
+  scales:{
+    x:{ grid:{color:'rgba(99,179,237,0.06)'}, ticks:{color:'#64748b',font:{size:11}} },
+    y:{ grid:{color:'rgba(99,179,237,0.06)'}, ticks:{color:'#64748b',font:{size:11}} }
+  },
+  animation:{duration:1200,easing:'easeInOutCubic'}
+};
+
+Chart.defaults.color = '#94a3b8';
+Chart.defaults.borderColor = 'rgba(99,179,237,0.1)';
+
+// 1. TIMELINE
+new Chart(document.getElementById('timelineChart'),{
+  type:'bar',
+  data:{
+    labels:dates,
+    datasets:[
+      {type:'line', label:'Kg Producidos (eje der.)',data:kgDay,yAxisID:'y2',borderColor:`${CYAN},1)`,backgroundColor:`${CYAN},0.08)`,borderWidth:2.5,pointRadius:4,pointBackgroundColor:`${CYAN},1)`,tension:0.4,fill:true},
+      {label:'Horas Ejecución',data:execHours,backgroundColor:`${GREEN},0.75)`,borderRadius:6,borderSkipped:false},
+      {label:'Horas Paro',data:paroHours,backgroundColor:`${ORANGE},0.7)`,borderRadius:6,borderSkipped:false},
+    ]
+  },
+  options:{...defaults,
+    responsive:true,
+    plugins:{...defaults.plugins,legend:{...defaults.plugins.legend,position:'top'}},
+    scales:{
+      x:{...defaults.scales.x,stacked:false},
+      y:{...defaults.scales.y, title:{display:true,text:'Horas',color:'#64748b'}},
+      y2:{position:'right',ticks:{color:'#64748b',font:{size:10}},grid:{display:false},title:{display:true,text:'Kg',color:`${CYAN},0.8)`}}
+    }
+  }
+});
+
+// 2. HORAS TIPO
+new Chart(document.getElementById('horasChart'),{
+  type:'doughnut',
+  data:{
+    labels:['Ejecución 128.9h','Paro 66.6h','Alistamiento 0h'],
+    datasets:[{data:[128.9,66.6,0.1],backgroundColor:[`${GREEN},0.85)`,`${ORANGE},0.85)`,`${AMBER},0.5)`],borderWidth:0,hoverOffset:8}]
+  },
+  options:{responsive:true,plugins:{...defaults.plugins,legend:{position:'bottom',labels:{color:'#94a3b8',font:{size:11}}}},animation:{duration:1500}}
+});
+
+// 3. PAROS
+new Chart(document.getElementById('parosChart'),{
+  type:'bar',
+  data:{
+    labels:['Arranque/Parada','Disp. Material','Descanso','Limpieza','Fallas Proceso','Daño Equipos','Reuniones'],
+    datasets:[{data:[18.67,16.76,12.50,9.22,4.67,2.75,2.00],backgroundColor:[`${ORANGE},0.85)`,`${AMBER},0.85)`,`${CYAN},0.5)`,`${PURPLE},0.7)`,`rgba(239,68,68,0.8)`,`rgba(239,68,68,0.5)`,`${CYAN},0.3)`],borderRadius:6,borderSkipped:false}]
+  },
+  options:{...defaults,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{...defaults.scales.x},y:{...defaults.scales.y,ticks:{font:{size:10}}}}}
+});
+
+// 4. KG por Producto
+new Chart(document.getElementById('prodKgChart'),{
+  type:'bar',
+  data:{
+    labels:['FERTICH','MIX MENORES','NUFLEX'],
+    datasets:[{data:[85600,102080,750],backgroundColor:[`${ORANGE},0.8)`,`${CYAN},0.8)`,`${GREEN},0.8)`],borderRadius:10,borderSkipped:false}]
+  },
+  options:{...defaults,plugins:{legend:{display:false}}}
+});
+
+// 5. COSTO
+new Chart(document.getElementById('costoChart'),{
+  type:'doughnut',
+  data:{
+    labels:['FERTICH $24.1M','MIX MENORES $19.0M','NUFLEX $0.6M'],
+    datasets:[{data:[24064675,18968348,564756],backgroundColor:[`${ORANGE},0.85)`,`${CYAN},0.85)`,`${GREEN},0.75)`],borderWidth:0,hoverOffset:8}]
+  },
+  options:{responsive:true,plugins:{...defaults.plugins,legend:{position:'bottom',labels:{color:'#94a3b8',font:{size:11}}}},animation:{duration:1500}}
+});
+
+// 6. TURNO
+new Chart(document.getElementById('turnoChart'),{
+  type:'radar',
+  data:{
+    labels:['Hs Ejecución','Hs Paro','Kg (x1000)','Eficiencia %','Kg/Hora (x10)'],
+    datasets:[
+      {label:'Turno 1',data:[48.59,27.24,64.31,64.1,132.3],borderColor:`${CYAN},1)`,backgroundColor:`${CYAN},0.1)`,pointBackgroundColor:`${CYAN},1)`,borderWidth:2},
+      {label:'Turno 2',data:[25.09,10.90,38.995,69.7,155.4],borderColor:`${PURPLE},1)`,backgroundColor:`${PURPLE},0.1)`,pointBackgroundColor:`${PURPLE},1)`,borderWidth:2},
+      {label:'Turno 3',data:[55.24,28.43,85.125,66.0,154.1],borderColor:`${GREEN},1)`,backgroundColor:`${GREEN},0.1)`,pointBackgroundColor:`${GREEN},1)`,borderWidth:2}
+    ]
+  },
+  options:{responsive:true,plugins:{...defaults.plugins,legend:{position:'top'}},scales:{r:{grid:{color:'rgba(99,179,237,0.1)'},angleLines:{color:'rgba(99,179,237,0.1)'},pointLabels:{color:'#94a3b8',font:{size:10}},ticks:{display:false}}},animation:{duration:1400}}
+});
+
+// 7. EFICIENCIA DIARIA
+new Chart(document.getElementById('eficienciaChart'),{
+  type:'line',
+  data:{
+    labels:dates,
+    datasets:[
+      {label:'Eficiencia %',data:eficDay,borderColor:`${GREEN},1)`,backgroundColor:`${GREEN},0.1)`,fill:true,borderWidth:2.5,tension:0.4,pointRadius:4,pointBackgroundColor:eficDay.map(v=>v>=80?`${GREEN},1)`:`${ORANGE},1)`)},
+      {label:'Meta 80%',data:Array(14).fill(80),borderColor:`rgba(255,255,255,0.2)`,borderDash:[6,4],borderWidth:1.5,pointRadius:0}
+    ]
+  },
+  options:{...defaults,plugins:{legend:{...defaults.plugins.legend,position:'top'}},scales:{...defaults.scales,y:{...defaults.scales.y,min:40,max:100}}}
+});
+
+// 8. PRESENTACION
+new Chart(document.getElementById('presentacionChart'),{
+  type:'bar',
+  data:{
+    labels:['SACO X 40 KG','SACO X 50 KG','SACO X 25 KG'],
+    datasets:[{
+      label:'Kg producidos',
+      data:[102080+8360, 85600, 750],  // approximate from data
+      backgroundColor:[`${CYAN},0.8)`,`${PURPLE},0.8)`,`${AMBER},0.8)`],
+      borderRadius:8,borderSkipped:false
+    }]
+  },
+  options:{...defaults,plugins:{legend:{display:false}},scales:{...defaults.scales}}
+});
+
+// ── ANIMATIONS ────────────────────────────────────────────────────────────────
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>{
+        e.target.classList.add(e.target.classList.contains('alert-card')?'animate-in-x':'animate-in');
+      }, i*100);
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:0.1});
+
+document.querySelectorAll('.kpi-card,.chart-card,.timeline-section,.table-section,.alert-card').forEach(el=>observer.observe(el));
+
+// KPI counter animation
+function animateCount(el){
+  const target = parseFloat(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const isM = suffix === 'M';
+  const prefix = el.closest('.kpi-card').querySelector('.kpi-value').textContent.startsWith('$') ? '$' : '';
+  const duration = 1500;
+  const start = performance.now();
+  function update(now){
+    const t = Math.min((now-start)/duration,1);
+    const ease = 1-Math.pow(1-t,3);
+    const val = target*ease;
+    let display;
+    if(target >= 1000 && !isM) display = Math.round(val).toLocaleString('es-CO');
+    else display = val.toFixed(target<10?2:1);
+    el.textContent = (el.parentElement.querySelector('.kpi-icon').textContent==='💰'?'$':'') + display + suffix;
+    if(t<1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+const kpiObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('[data-count]').forEach(animateCount);
+      kpiObserver.unobserve(e.target);
+    }
+  });
+},{threshold:0.3});
+kpiObserver.observe(document.getElementById('kpiGrid'));
+</script>
+</body>
+</html>
