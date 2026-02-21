@@ -375,9 +375,25 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 
   <div class="header-spacer"></div>
 
-  <button class="tbtn" id="btn-add-track" style="border-color:var(--accent4);color:var(--accent4)">+ PISTA</button>
-  <button class="tbtn" id="btn-library" style="border-color:var(--accent2);color:var(--accent2)">📚 LIBRERÍA</button>
-  <button class="tbtn export-btn" id="btn-export">⬇ EXPORTAR</button>
+  <button class="tbtn" id="btn-add-track" style="border-color:var(--accent4);color:var(--accent4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+     stroke="currentColor" stroke-width="1.6"
+     stroke-linecap="round" stroke-linejoin="round">
+  <path d="M9 18V5l10-2v13"/>
+  <circle cx="7" cy="18" r="2"/>
+  <circle cx="17" cy="16" r="2"/>
+</svg> PISTA</button>
+  <button class="tbtn" id="btn-library" style="border-color:var(--accent2);color:var(--accent2)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+     stroke="currentColor" stroke-width="1.6"
+     stroke-linecap="round" stroke-linejoin="round">
+  <path d="M3 6h6l2 2h10v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+</svg> LIBRERÍA</button>
+  <button class="tbtn export-btn" id="btn-export"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+     stroke="currentColor" stroke-width="1.6"
+     stroke-linecap="round" stroke-linejoin="round">
+  <path d="M12 16V4"/>
+  <path d="M8 8l4-4 4 4"/>
+  <path d="M4 20h16"/>
+</svg> EXPORTAR</button>
 </div>
 
 <!-- ═══════════════ FX BAR ═══════════════ -->
@@ -553,13 +569,13 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 <!-- ═══════════════ BOTTOM TOOLBAR ═══════════════ -->
 <div id="toolbar">
   <div class="tg">
-    <button class="tool-btn on" id="tool-select" title="Seleccionar">↖ SELECT</button>
-    <button class="tool-btn" id="tool-pencil" title="Dibujar">✏ DRAW</button>
-    <button class="tool-btn" id="tool-cut" title="Cortar">✂ CUT</button>
-    <button class="tool-btn" id="tool-erase" title="Borrar">⌫ ERASE</button>
+    <button class="tool-btn on" id="tool-select" title="Seleccionar">↖ SELECCIONAR</button>
+    <button class="tool-btn" id="tool-pencil" title="Dibujar">✏ PISTA EN BLANCO</button>
+    <button class="tool-btn" id="tool-cut" title="Cortar">✂ CORTAR</button>
+    <button class="tool-btn" id="tool-erase" title="Borrar">⌫ BORRAR</button>
   </div>
   <div class="tg">
-    <button class="tool-btn on" id="btn-snap">⊞  SNAP</button>
+    <button class="tool-btn on" id="btn-snap">⊞  AJUSTAR A CUADRICULA</button>
     <label class="tool-btn" style="cursor:pointer" title="Cargar audio">
       📁 CARGAR
       <input type="file" id="file-input" accept="audio/*" multiple style="display:none">
@@ -571,7 +587,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
     <span id="zoom-val" style="font-size:9px;color:var(--accent4);min-width:28px">1.0×</span>
   </div>
   <div class="tg">
-    <span class="status" id="status-bar">LISTO</span>
+    <span class="status" id="status-bar">SANTIAGO STERLING</span>
   </div>
 </div>
 
