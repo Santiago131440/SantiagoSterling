@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>STERLING MIX</title>
+<title>Sterling Studio Pro</title>
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&family=Bebas+Neue&display=swap');
@@ -529,7 +529,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
     </div>
   </div>
 
-  <button id="fxbar-toggle" title="Ocultar FX">▲</button>
+  <button id="fxbar-toggle" title="Ocultar FX"><i class="fi fi-sr-arrow-up-from-dotted-line"></i></button>
 </div>
 
 <!-- ═══════════════ TIMELINE ═══════════════ -->
@@ -956,7 +956,7 @@ const SAMPLE_CATS = {
   'Perc Conga':'perc','Perc Shaker':'perc',
   'FX Riser':'fx','FX Down':'fx','FX Vinyl':'fx','Noise White':'fx',
 };
-const SAMPLE_ICONS = {drums:'🥁',bass:'🎸',synth:'🎹',fx:'✨',perc:'🪘'};
+const SAMPLE_ICONS = {drums:'<i class="fi fi-sr-drum"></i>',bass:'<i class="fi fi-sr-guitar-electric"></i>',synth:'<i class="fi fi-sr-piano-keyboard"></i>',fx:'<i class="fi fi-sr-turntable"></i>',perc:'<i class="fi fi-sr-drum-steelpan"></i>'};
 
 // ─── LIBRARY ─────────────────────────────────────────────────────────────────
 function initLibrary(){
@@ -1465,7 +1465,7 @@ function play(){
   playStartOffset = playhead;
   document.getElementById('btn-play').textContent='⏸ PAUSE';
   document.getElementById('btn-play').classList.add('on');
-
+  // ----------------------------------------------- Botón de Pausa ---------------------------------------------------------
   const now = getAC().currentTime;
   tracksData.forEach(track=>{
     track.clips.forEach(clip=>{
