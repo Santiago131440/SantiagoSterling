@@ -5,17 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Sterling Studio Pro</title>
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&family=Bebas+Neue&display=swap');
 :root {
-  --bg:#080810; --bg2:#0d0d1a; --bg3:#121222; --surface:#181830;
-  --surface2:#1e1e38; --surface3:#252545;
+  --bg:#515154; --bg2: #F5F5F7; --bg3:#c7c7c7; --surface:#cfcfcf;
+  --surface2:#cfcfcf; --surface3:#ff0000;
   --accent:#007891; --accent2:#00d4ff; --accent3:#00c499; --accent4:#2590a5;
-  --text:#f0f0ff; --text2:#7070a0; --text3:#404070;
-  --border:#252540; --border2:#303060;
+  --text:#000000; --text2:#4e4e4e; --text3:#8d8d8d;
+  --border:#c0c0c0; --border2:#adadad;
   --green:#00d4ff; --red:#00d4ff; --orange:#00d4ff; --yellow:#00d4ff;
-  --clip1:#e8ff0022; --clip1b:#00d4ff;
-  --clip2:#ff2d6b22; --clip2b:#00d4ff;
+  --clip1:rgba(255, 0, 0, 0.459); --clip1b:#00d4ff;
+  --clip2:rgba(255, 0, 0, 0.459); --clip2b:#00d4ff;
   --clip3:#00d4ff22; --clip3b:#00d4ff;
   --clip4:#b400ff22; --clip4b:#00d4ff;
   --clip5:#00ff8822; --clip5b:#00d4ff;
@@ -26,18 +27,24 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;background:var(--bg)}
-body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:flex;flex-direction:column}
+body{font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;color:var(--text);font-size:12px;display:flex;flex-direction:column}
 
 /* ── HEADER ── */
 #header{
-  height:var(--header-h);background:linear-gradient(90deg,#08081a,#12082a,#08081a);
+  height:var(--header-h);background:linear-gradient(90deg,#ffffff,#d6d6d6,#ffffff);
   border-bottom:1px solid var(--border2);display:flex;align-items:center;
   padding:0 12px;gap:10px;flex-shrink:0;position:relative;z-index:50;
   flex-wrap:nowrap;overflow:hidden;
 }
-.logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:5px;
-  color:var(--accent);text-shadow:0 0 20px rgba(232,255,0,0.4);white-space:nowrap;flex-shrink:0}
-.logo em{color:var(--accent2);font-style:normal}
+.logo{font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;;font-size:1.6rem;letter-spacing:0px;
+  background: linear-gradient(120deg, #ff0000, #ff66008c, #ff0000, #ff0000);
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;white-space:nowrap;font-weight: 700;flex-shrink:0}
+.logo em{background: linear-gradient(120deg, #ff0000, #ff66008c, #ff66008c);
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;;font-style:normal;font-weight: 300;}
 .transport{display:flex;align-items:center;gap:5px;flex-shrink:0}
 .tbtn{background:var(--surface);border:1px solid var(--border2);color:var(--text2);
   padding:5px 10px;border-radius:10px;cursor:pointer;font-family:'DM Mono',monospace;
@@ -48,11 +55,10 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 .tbtn.rec-on{background:rgba(255,45,107,0.15);border-color:var(--accent2);color:var(--accent2);
   animation:recblink 1s ease infinite}
 @keyframes recblink{0%,100%{opacity:1}50%{opacity:.4}}
-.tbtn.export-btn{border-color:var(--accent3);color:var(--accent3)}
+.tbtn.export-btn{color:var(--accent3)}
 .tbtn.export-btn:hover{background:rgba(0,212,255,0.1)}
 
-.bpm-box{display:flex;align-items:center;gap:4px;background:var(--bg2);
-  border:1px solid var(--border2);border-radius:30px;padding:3px 8px;flex-shrink:0}
+.bpm-box{display:flex;align-items:center;gap:4px;background:var(--bg2);border-radius:30px;padding:3px 8px;flex-shrink:0}
 .bpm-box label{font-size:9px;color:var(--text3);letter-spacing:1px}
 .bpm-num{font-family:'Bebas Neue';font-size:1.3rem;color:var(--accent3);min-width:44px;text-align:center;cursor:default}
 .bpm-box button{background:none;border:none;color:var(--text2);cursor:pointer;font-size:14px;line-height:1;padding:0 2px}
@@ -158,7 +164,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 .lane-inner{position:absolute;top:0;left:0;height:100%;pointer-events:none}
 
 /* ── CLIPS ── */
-.clip{position:absolute;top:0px;bottom:0px;border-radius:3px;overflow:hidden;
+.clip{position:absolute;top:0px;bottom:0px;border-radius:10px;overflow:hidden;
   cursor:grab;user-select:none;display:flex;flex-direction:column;
   border:1px solid transparent;transition:border-color .1s, box-shadow .1s;pointer-events:all}
 .clip:active{cursor:grabbing}
@@ -344,7 +350,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 
 <!-- ═══════════════ HEADER ═══════════════ -->
 <div id="header">
-  <div class="logo">STERL<em>ING</em> <span style="font-size:.8rem;color:var(--text2);font-family:'DM Mono'">Studio</span></div>
+  <div class="logo"><i class="fi fi-sr-circle-waveform-lines"></i> STERL<em>ING</em> <span style="font-size:.8rem;color:var(--text2);font-family:'DM Mono'">Studio</span></div>
 
   <div class="transport">
     <button class="tbtn" id="btn-rewind" title="Inicio"><i class="fi fi-sr-step-backward"></i></button>
