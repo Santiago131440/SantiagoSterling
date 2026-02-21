@@ -89,7 +89,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 .fx-slider::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:var(--accent2)}
 .fx-sep{width:1px;height:32px;background:var(--border2);flex-shrink:0}
 .fx-toggle{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);
-  padding:2px 7px;border-radius:3px;cursor:pointer;font-size:9px;font-family:'DM Mono'}
+  padding:2px 7px;border-radius:60px;cursor:pointer;font-size:9px;font-family:'DM Mono'}
 .fx-toggle.on{border-color:var(--accent);color:var(--accent);background:rgba(232,255,0,0.07)}
 #fxbar-toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);
   background:none;border:none;color:var(--text3);cursor:pointer;font-size:10px;padding:4px}
@@ -344,14 +344,14 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 
 <!-- ═══════════════ HEADER ═══════════════ -->
 <div id="header">
-  <div class="logo">STERL<em>ING</em> <span style="font-size:.8rem;color:var(--text2);font-family:'DM Mono'">MIX</span></div>
+  <div class="logo">STERL<em>ING</em> <span style="font-size:.8rem;color:var(--text2);font-family:'DM Mono'">Studio</span></div>
 
   <div class="transport">
-    <button class="tbtn" id="btn-rewind" title="Inicio">⏮</button>
+    <button class="tbtn" id="btn-rewind" title="Inicio"><i class="fi fi-sr-step-backward"></i></button>
     <button class="tbtn" id="btn-play">▶ PLAY</button>
-    <button class="tbtn" id="btn-stop" title="Stop">⏹</button>
-    <button class="tbtn" id="btn-rec" title="Grabar">⏺</button>
-    <button class="tbtn on" id="btn-loop" title="Loop">↻</button>
+    <button class="tbtn" id="btn-stop" title="Stop"><i class="fi fi-sr-square"></i></button>
+    <button class="tbtn" id="btn-rec" title="Grabar"><i class="fi fi-sr-circle-small"></i></button>
+    <button class="tbtn on" id="btn-loop" title="Loop"><i class="fi fi-sr-rotate-reverse"></i></button>
   </div>
 
   <div class="bpm-box">
@@ -376,25 +376,9 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 
   <div class="header-spacer"></div>
 
-  <button class="tbtn" id="btn-add-track" style="border-color:var(--accent4);color:var(--accent4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-     stroke="currentColor" stroke-width="1.6"
-     stroke-linecap="round" stroke-linejoin="round">
-  <path d="M9 18V5l10-2v13"/>
-  <circle cx="7" cy="18" r="2"/>
-  <circle cx="17" cy="16" r="2"/>
-</svg> PISTA</button>
-  <button class="tbtn" id="btn-library" style="border-color:var(--accent2);color:var(--accent2)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-     stroke="currentColor" stroke-width="1.6"
-     stroke-linecap="round" stroke-linejoin="round">
-  <path d="M3 6h6l2 2h10v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-</svg> LIBRERÍA</button>
-  <button class="tbtn export-btn" id="btn-export"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-     stroke="currentColor" stroke-width="1.6"
-     stroke-linecap="round" stroke-linejoin="round">
-  <path d="M12 16V4"/>
-  <path d="M8 8l4-4 4 4"/>
-  <path d="M4 20h16"/>
-</svg> EXPORTAR</button>
+  <button class="tbtn" id="btn-add-track" style="border-color:var(--accent4);color:var(--accent4)"><i class="fi fi-sr-list-music"></i> PISTA</button>
+  <button class="tbtn" id="btn-library" style="border-color:var(--accent2);color:var(--accent2)"><i class="fi fi-sr-folder-tree"></i> LIBRERÍA</button>
+  <button class="tbtn export-btn" id="btn-export"><i class="fi fi-sr-photo-film-music"></i> EXPORTAR</button>
 </div>
 
 <!-- ═══════════════ FX BAR ═══════════════ -->
