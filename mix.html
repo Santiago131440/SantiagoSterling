@@ -10,7 +10,7 @@
 :root {
   --bg:#080810; --bg2:#0d0d1a; --bg3:#121222; --surface:#181830;
   --surface2:#1e1e38; --surface3:#252545;
-  --accent:#00d4ff; --accent2:#00d4ff; --accent3:#00d4ff; --accent4:#00d4ff;
+  --accent:#007891; --accent2:#00d4ff; --accent3:#00c499; --accent4:#2590a5;
   --text:#f0f0ff; --text2:#7070a0; --text3:#404070;
   --border:#252540; --border2:#303060;
   --green:#00d4ff; --red:#00d4ff; --orange:#00d4ff; --yellow:#00d4ff;
@@ -83,10 +83,10 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 .fx-knob{width:32px;height:32px;background:var(--surface);border:1px solid var(--border2);
   border-radius:50%;cursor:pointer;position:relative;flex-shrink:0;touch-action:none}
 .fx-knob::before{content:'';position:absolute;width:3px;height:10px;background:var(--accent);
-  border-radius:2px;left:50%;top:4px;transform-origin:bottom center;transform:translateX(-50%) rotate(0deg);transition:none}
+  border-radius:60px;left:50%;top:4px;transform-origin:bottom center;transform:translateX(-50%) rotate(0deg);transition:none}
 .fx-knob-lbl{font-size:8px;color:var(--text3);text-align:center;width:36px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fx-slider{-webkit-appearance:none;width:80px;height:3px;background:var(--border2);border-radius:2px;outline:none;cursor:pointer}
-.fx-slider::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:var(--accent2)}
+.fx-slider::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:60px;background:var(--accent2)}
 .fx-sep{width:1px;height:32px;background:var(--border2);flex-shrink:0}
 .fx-toggle{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);
   padding:2px 7px;border-radius:60px;cursor:pointer;font-size:9px;font-family:'DM Mono'}
@@ -284,24 +284,24 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 #export-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);
   z-index:200;align-items:center;justify-content:center}
 #export-modal.show{display:flex}
-.modal-box{background:var(--surface);border:1px solid var(--border2);border-radius:6px;
-  padding:24px;width:360px;max-width:95vw;box-shadow:0 0 60px rgba(0,212,255,0.1)}
+.modal-box{background:var(--surface);border:1px solid var(--border2);border-radius:20px;
+  padding:24px;width:360px;max-width:95vw;box-shadow:0 0 60px rgba(0, 255, 179, 0.1)}
 .modal-title{font-family:'Bebas Neue';font-size:1.3rem;color:var(--accent3);letter-spacing:2px;margin-bottom:14px}
 .modal-row{margin-bottom:10px}
 .modal-lbl{font-size:10px;color:var(--text2);margin-bottom:4px;display:block}
 .modal-input{width:100%;background:var(--bg);border:1px solid var(--border2);
-  color:var(--text);padding:7px 10px;border-radius:3px;font-family:'DM Mono';font-size:11px}
+  color:var(--text);padding:7px 10px;border-radius:30px;font-family:'DM Mono';font-size:11px}
 .modal-input:focus{outline:none;border-color:var(--accent3)}
 .fmt-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .fmt-opt{background:var(--bg2);border:1px solid var(--border);color:var(--text2);
-  padding:9px 10px;border-radius:4px;cursor:pointer;text-align:center;
+  padding:9px 10px;border-radius:15px;cursor:pointer;text-align:center;
   font-size:12px;font-family:'DM Mono';transition:all .12s}
 .fmt-opt.on{background:rgba(0,212,255,0.1);border-color:var(--accent3);color:var(--accent3)}
 .exp-progress{width:100%;height:5px;background:var(--bg);border-radius:3px;overflow:hidden;margin-bottom:8px;display:none}
 .exp-prog-fill{height:100%;background:linear-gradient(90deg,var(--accent4),var(--accent3));border-radius:3px;transition:width .2s}
 .modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
 .modal-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text);
-  padding:7px 16px;border-radius:3px;cursor:pointer;font-family:'DM Mono';font-size:11px;transition:all .12s}
+  padding:7px 16px;border-radius:30px;cursor:pointer;font-family:'DM Mono';font-size:11px;transition:all .12s}
 .modal-btn:hover{border-color:var(--accent3);color:var(--accent3)}
 .modal-btn.primary{background:rgba(0,212,255,0.1);border-color:var(--accent3);color:var(--accent3)}
 
@@ -489,7 +489,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
         <div class="fx-knob" data-fx="filter-res" data-val="50" data-min="0" data-max="100" title="Resonance"></div>
         <div class="fx-knob-lbl">RES</div>
       </div>
-      <select id="filter-type" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);font-size:9px;padding:2px;border-radius:3px">
+      <select id="filter-type" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);font-size:9px;padding:2px;border-radius:60px">
         <option value="lowpass">LP</option>
         <option value="highpass">HP</option>
         <option value="bandpass">BP</option>
@@ -592,7 +592,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
   </div>
   <div id="lib-list"></div>
   <div class="lib-drop-zone" id="lib-drop-zone">
-    <div style="font-size:20px;margin-bottom:4px">📂</div>
+    <div style="font-size:20px;margin-bottom:4px"><i class="fi fi-sr-folder-music"></i></div>
     Arrastra archivos de audio aquí<br>para añadirlos a la librería
     <input type="file" id="lib-file-input" accept="audio/*" multiple style="display:none">
   </div>
@@ -697,15 +697,15 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 
 <!-- ═══════════════ CONTEXT MENU ═══════════════ -->
 <div id="ctx-menu">
-  <div class="ctx-item" id="ctx-edit">Editar clip</div>
-  <div class="ctx-item" id="ctx-split">Dividir aquí</div>
-  <div class="ctx-item" id="ctx-duplicate">Duplicar</div>
-  <div class="ctx-item" id="ctx-color">Cambiar color</div>
+  <div class="ctx-item" id="ctx-edit"><i class="fi fi-sr-file-edit"></i> Editar clip</div>
+  <div class="ctx-item" id="ctx-split"><i class="fi fi-sr-arrows-split-right-and-left"></i> Dividir aquí</div>
+  <div class="ctx-item" id="ctx-duplicate"><i class="fi fi-sr-window-restore"></i> Duplicar</div>
+  <div class="ctx-item" id="ctx-color"><i class="fi fi-sr-fill"></i> Cambiar color</div>
   <div class="ctx-sep"></div>
-  <div class="ctx-item" id="ctx-mute-clip">Silenciar clip</div>
-  <div class="ctx-item" id="ctx-reverse">Invertir</div>
+  <div class="ctx-item" id="ctx-mute-clip"><i class="fi fi-sr-volume-mute"></i> Silenciar clip</div>
+  <div class="ctx-item" id="ctx-reverse"><i class="fi fi-sr-reflect-horizontal"></i> Invertir</div>
   <div class="ctx-sep"></div>
-  <div class="ctx-item" id="ctx-delete" style="color:var(--red)">Eliminar</div>
+  <div class="ctx-item" id="ctx-delete" style="color:red"><i class="fi fi-sr-trash-xmark"></i> Eliminar</div>
 </div>
 
 <!-- ═══════════════ NOTIFICATION ═══════════════ -->
