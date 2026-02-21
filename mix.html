@@ -39,7 +39,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 .logo em{color:var(--accent2);font-style:normal}
 .transport{display:flex;align-items:center;gap:5px;flex-shrink:0}
 .tbtn{background:var(--surface);border:1px solid var(--border2);color:var(--text2);
-  padding:5px 10px;border-radius:3px;cursor:pointer;font-family:'DM Mono',monospace;
+  padding:5px 10px;border-radius:10px;cursor:pointer;font-family:'DM Mono',monospace;
   font-size:11px;transition:all .12s;white-space:nowrap;display:flex;align-items:center;gap:4px}
 .tbtn:hover{border-color:var(--accent);color:var(--accent);background:rgba(232,255,0,0.05)}
 .tbtn.on{background:rgba(232,255,0,0.1);border-color:var(--accent);color:var(--accent);
@@ -51,22 +51,22 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 .tbtn.export-btn:hover{background:rgba(0,212,255,0.1)}
 
 .bpm-box{display:flex;align-items:center;gap:4px;background:var(--bg2);
-  border:1px solid var(--border2);border-radius:3px;padding:3px 8px;flex-shrink:0}
+  border:1px solid var(--border2);border-radius:30px;padding:3px 8px;flex-shrink:0}
 .bpm-box label{font-size:9px;color:var(--text3);letter-spacing:1px}
 .bpm-num{font-family:'Bebas Neue';font-size:1.3rem;color:var(--accent3);min-width:44px;text-align:center;cursor:default}
 .bpm-box button{background:none;border:none;color:var(--text2);cursor:pointer;font-size:14px;line-height:1;padding:0 2px}
 .bpm-box button:hover{color:var(--accent3)}
-#bpmSlider{-webkit-appearance:none;width:60px;height:3px;background:var(--border2);border-radius:2px;outline:none;cursor:pointer}
+#bpmSlider{-webkit-appearance:none;width:80px;height:3px;background:var(--border2);border-radius:30px;outline:none;cursor:pointer}
 #bpmSlider::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;background:var(--accent3);border-radius:50%}
 
 .time-box{font-family:'Bebas Neue';font-size:1.1rem;color:var(--yellow);
   background:var(--bg);border:1px solid var(--border2);padding:3px 10px;
-  border-radius:3px;min-width:88px;text-align:center;letter-spacing:2px;flex-shrink:0}
+  border-radius:60px;min-width:88px;text-align:center;letter-spacing:2px;flex-shrink:0}
 
 .sig-box{display:flex;align-items:center;gap:4px;flex-shrink:0}
 .sig-box label{font-size:9px;color:var(--text3)}
 .sig-box select{background:var(--bg2);border:1px solid var(--border2);color:var(--text);
-  padding:3px 6px;border-radius:3px;font-family:'DM Mono',monospace;font-size:11px}
+  padding:3px 6px;border-radius:60px;font-family:'DM Mono',monospace;font-size:11px}
 
 .header-spacer{flex:1}
 
@@ -117,7 +117,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 .track-head{width:var(--track-header-w);min-width:var(--track-header-w);
   background:var(--surface);border-right:1px solid var(--border2);
   display:flex;flex-direction:column;justify-content:space-between;
-  padding:5px 7px;gap:3px;position:relative;flex-shrink:0}
+  padding:5px 7px;gap:3px;width: 230px;position:relative;flex-shrink:0}
 .th-top{display:flex;align-items:center;gap:5px}
 .th-color{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:1px}
 .th-name{font-size:11px;font-family:'Syne',sans-serif;font-weight:600;
@@ -126,7 +126,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 .th-name:focus{background:rgba(255,255,255,0.05);border-radius:2px;padding:0 2px}
 .th-btns{display:flex;gap:3px;align-items:center}
 .th-btn{background:var(--bg2);border:1px solid var(--border);color:var(--text3);
-  font-size:8px;font-weight:700;padding:2px 5px;border-radius:2px;cursor:pointer;
+  font-size:8px;font-weight:100;padding:2px 5px;border-radius:60px;cursor:pointer;
   transition:all .1s;font-family:'DM Mono';line-height:1.4}
 .th-btn:hover{border-color:var(--accent3);color:var(--accent3)}
 .th-btn.muted{background:rgba(255,51,85,0.15);border-color:var(--red);color:var(--red)}
