@@ -157,7 +157,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 .lane-inner{position:absolute;top:0;left:0;height:100%;pointer-events:none}
 
 /* ── CLIPS ── */
-.clip{position:absolute;top:5px;bottom:5px;border-radius:3px;overflow:hidden;
+.clip{position:absolute;top:0px;bottom:0px;border-radius:3px;overflow:hidden;
   cursor:grab;user-select:none;display:flex;flex-direction:column;
   border:1px solid transparent;transition:border-color .1s, box-shadow .1s;pointer-events:all}
 .clip:active{cursor:grabbing}
@@ -343,7 +343,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 
 <!-- ═══════════════ HEADER ═══════════════ -->
 <div id="header">
-  <div class="logo">STERLING<em>MIX</em> <span style="font-size:.8rem;color:var(--text2);font-family:'DM Mono'">PRO</span></div>
+  <div class="logo">STERL<em>ING</em> <span style="font-size:.8rem;color:var(--text2);font-family:'DM Mono'">MIX</span></div>
 
   <div class="transport">
     <button class="tbtn" id="btn-rewind" title="Inicio">⏮</button>
@@ -442,7 +442,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
   <div class="fx-sep"></div>
 
   <div class="fx-group">
-    <div class="fx-lbl">COMPRESSOR</div>
+    <div class="fx-lbl">COMPRESOR</div>
     <div class="fx-row">
       <div class="fx-knob-wrap">
         <div class="fx-knob" data-fx="comp-threshold" data-val="40" data-min="0" data-max="100" title="Threshold"></div>
@@ -462,7 +462,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
   <div class="fx-sep"></div>
 
   <div class="fx-group">
-    <div class="fx-lbl">DISTORTION</div>
+    <div class="fx-lbl">DISTORCIÓN</div>
     <div class="fx-row">
       <div class="fx-knob-wrap">
         <div class="fx-knob" data-fx="dist-amount" data-val="0" data-min="0" data-max="100" title="Amount"></div>
@@ -478,7 +478,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
   <div class="fx-sep"></div>
 
   <div class="fx-group">
-    <div class="fx-lbl">FILTER</div>
+    <div class="fx-lbl">FILTRO</div>
     <div class="fx-row">
       <div class="fx-knob-wrap">
         <div class="fx-knob" data-fx="filter-freq" data-val="80" data-min="0" data-max="100" title="Cutoff"></div>
@@ -499,7 +499,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
   <div class="fx-sep"></div>
 
   <div class="fx-group">
-    <div class="fx-lbl">MASTER</div>
+    <div class="fx-lbl">MAIN</div>
     <div class="fx-row">
       <div class="fx-knob-wrap">
         <div class="fx-knob" data-fx="master-vol" data-val="80" data-min="0" data-max="100" title="Volume"></div>
