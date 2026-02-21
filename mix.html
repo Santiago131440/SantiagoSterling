@@ -569,7 +569,11 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
 <!-- ═══════════════ BOTTOM TOOLBAR ═══════════════ -->
 <div id="toolbar">
   <div class="tg">
-    <button class="tool-btn on" id="tool-select" title="Seleccionar">↖ SELECCIONAR</button>
+    <button class="tool-btn on" id="tool-select" title="Seleccionar"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"
+     stroke="currentColor" stroke-width="1.6"
+     stroke-linecap="round" stroke-linejoin="round">
+  <path d="M4 2l14 7-7 2-2 7z"/>
+</svg> SELECCIONAR</button>
     <button class="tool-btn" id="tool-pencil" title="Dibujar">✏ PISTA EN BLANCO</button>
     <button class="tool-btn" id="tool-cut" title="Cortar">✂ CORTAR</button>
     <button class="tool-btn" id="tool-erase" title="Borrar">⌫ BORRAR</button>
@@ -577,7 +581,11 @@ body{font-family:'DM Mono',monospace;color:var(--text);font-size:12px;display:fl
   <div class="tg">
     <button class="tool-btn on" id="btn-snap">⊞  AJUSTAR A CUADRICULA</button>
     <label class="tool-btn" style="cursor:pointer" title="Cargar audio">
-      📁 CARGAR
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+     stroke="currentColor" stroke-width="1.6"
+     stroke-linecap="round" stroke-linejoin="round">
+  <path d="M3 6h6l2 2h10v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+</svg> CARGAR
       <input type="file" id="file-input" accept="audio/*" multiple style="display:none">
     </label>
   </div>
