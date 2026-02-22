@@ -563,7 +563,7 @@ new Chart(document.getElementById('timelineChart'),{
     datasets:[
       {type:'line', label:'Kg Producidos (eje der.)',data:kgDay,yAxisID:'y2',borderColor:`${CYAN},1)`,backgroundColor:`${CYAN},0.08)`,borderWidth:2.5,pointRadius:4,pointBackgroundColor:`${CYAN},1)`,tension:0.4,fill:true},
       {label:'Horas Ejecución',data:execHours,backgroundColor:`${GREEN},0.75)`,borderRadius:6,borderSkipped:false},
-      {label:'Horas Paro',data:paroHours,backgroundColor:`${ORANGE},0.7)`,borderRadius:6,borderSkipped:false},
+      {label:'Horas Paro',data:paroHours,backgroundColor:`${ORANGE},0.7)`,borderRadius:60,borderSkipped:false},
     ]
   },
   options:{...defaults,
