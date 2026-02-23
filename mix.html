@@ -14,12 +14,12 @@
   --text:#000000; --text2:#4e4e4e; --text3:#8d8d8d;
   --border:#c0c0c0; --border2:#adadad;
   --green:#00d4ff; --red:#00d4ff; --orange:#00d4ff; --yellow:#00d4ff;
-  --clip1:rgba(255, 0, 0, 0.459); --clip1b:#00d4ff;
-  --clip2:rgba(255, 0, 0, 0.459); --clip2b:#00d4ff;
-  --clip3:#00d4ff22; --clip3b:#00d4ff;
-  --clip4:#b400ff22; --clip4b:#00d4ff;
-  --clip5:#00ff8822; --clip5b:#00d4ff;
-  --clip6:#ff880022; --clip6b:#00d4ff;
+  --clip1:rgb(255, 0, 0); --clip1b:#00d4ff;
+  --clip2:rgb(255, 0, 0); --clip2b:#00d4ff;
+  --clip3:#00d5ff; --clip3b:#00d4ff;
+  --clip4:#b300ff; --clip4b:#00d4ff;
+  --clip5:#00ff88; --clip5b:#00d4ff;
+  --clip6:#ff8800; --clip6b:#00d4ff;
   --header-h:54px; --fx-h:44px;
   --mixer-h:280px; --toolbar-h:40px;
   --track-header-w:230px;
@@ -1593,15 +1593,15 @@ function drawRuler(){
   canvas.width=w; canvas.height=24;
   const ctx2d=canvas.getContext('2d');
   ctx2d.clearRect(0,0,w,24);
-  ctx2d.fillStyle='#0d0d1a'; ctx2d.fillRect(0,0,w,24);
+  ctx2d.fillStyle='#ffffff'; ctx2d.fillRect(0,0,w,24); // -------------------------- CAMBIO DE COLOR DE LA REGLA DEL TIME LINE
   const ppb=PPB(), pps=PPS();
   const barsVisible=Math.ceil(w/ppb)+1;
-  ctx2d.font='9px DM Mono'; ctx2d.textAlign='left';
+  ctx2d.font='9px Inter'; ctx2d.textAlign='left';
   for(let b=0;b<barsVisible;b++){
     const x=b*ppb;
     const isBar=(b%timeSignature===0);
-    ctx2d.strokeStyle=isBar?'#303060':'#1e1e3a';
-    ctx2d.lineWidth=isBar?1.5:0.5;
+    ctx2d.strokeStyle=isBar?'#000000':'#000000';
+    ctx2d.lineWidth=isBar?0.3:0.1;
     ctx2d.beginPath(); ctx2d.moveTo(x,0); ctx2d.lineTo(x,24); ctx2d.stroke();
     if(isBar){
       ctx2d.fillStyle='#505080';
@@ -1668,7 +1668,7 @@ function renderMixer(){
   const master=document.createElement('div');
   master.className='mx-ch mx-master';
   master.innerHTML=`
-    <div class="mx-master-lbl">MASTER</div>
+    <div class="mx-master-lbl">Master</div>
     <div class="mx-meter-wrap">
       <div class="mx-meter"><div class="mx-meter-fill" id="meter-master-l"
         style="height:40%;background:linear-gradient(to top,var(--green),var(--yellow) 70%,var(--red) 90%)"></div></div>
