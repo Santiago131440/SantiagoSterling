@@ -1812,13 +1812,13 @@ function updateKnobVisual(knob, val){
 }
 
 function getFxKnobColor(fx){
-  if(fx?.startsWith('reverb')) return 'var(--accent3)';
-  if(fx?.startsWith('delay')) return 'var(--accent4)';
+  if(fx?.startsWith('reverb')) return 'var(--accent)';
+  if(fx?.startsWith('delay')) return 'var(--accent)';
   if(fx?.startsWith('eq')) return 'var(--accent)';
-  if(fx?.startsWith('comp')) return 'var(--orange)';
-  if(fx?.startsWith('dist')) return 'var(--red)';
-  if(fx?.startsWith('filter')) return 'var(--accent2)';
-  if(fx?.startsWith('master')) return 'var(--yellow)';
+  if(fx?.startsWith('comp')) return 'var(--accent)';
+  if(fx?.startsWith('dist')) return 'var(--accent)';
+  if(fx?.startsWith('filter')) return 'var(--accent)';
+  if(fx?.startsWith('master')) return 'var(--accent)';
   return 'var(--accent)';
 }
 
