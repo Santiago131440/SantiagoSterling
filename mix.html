@@ -36,7 +36,7 @@ body{font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-s
   padding:0 12px;gap:10px;flex-shrink:0;position:relative;z-index:50;
   flex-wrap:nowrap;overflow:hidden;
 }
-.logo{font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;;font-size:1.6rem;letter-spacing:0px;
+.logo{font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:1.6rem;letter-spacing:0px;
   background: linear-gradient(120deg, #ff0000, #ff0000, #ff0000);
 -webkit-background-clip: text;
 background-clip: text;
@@ -44,11 +44,11 @@ background-clip: text;
 .logo em{background: linear-gradient(120deg, #ff0000, #ff0000);
 -webkit-background-clip: text;
 background-clip: text;
--webkit-text-fill-color: transparent;;font-style:normal;font-weight: 300;}
+-webkit-text-fill-color: transparent;font-style:normal;font-weight: 300;}
 .transport{display:flex;align-items:center;gap:5px;flex-shrink:0}
-.tbtn{background:var(--surface);border:1px solid var(--border2);color:var(--text2);
-  padding:5px 10px;border-radius:10px;cursor:pointer;font-family:'DM Mono',monospace;
-  font-size:11px;transition:all .12s;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.tbtn{background:#dddddd;border:1px solid var(--border2);color:var(--text2);
+  padding:5px 10px;border-radius:10px;cursor:pointer;font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size:11px;font-weight:300;transition:all .12s;white-space:nowrap;display:flex;align-items:center;gap:4px}
 .tbtn:hover{border-color:var(--accent);color:var(--accent);background:rgba(232,255,0,0.05)}
 .tbtn.on{background:rgba(232,255,0,0.1);border-color:var(--accent);color:var(--accent);
   box-shadow:0 0 8px rgba(232,255,0,0.2)}
@@ -60,20 +60,20 @@ background-clip: text;
 
 .bpm-box{display:flex;align-items:center;gap:4px;background:var(--bg2);border-radius:30px;padding:3px 8px;flex-shrink:0}
 .bpm-box label{font-size:9px;color:var(--text3);letter-spacing:1px}
-.bpm-num{font-family:'Bebas Neue';font-size:1.3rem;color:var(--accent3);min-width:44px;text-align:center;cursor:default}
+.bpm-num{font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:1.3rem;color:var(--accent3);min-width:44px;text-align:center;cursor:default}
 .bpm-box button{background:none;border:none;color:var(--text2);cursor:pointer;font-size:14px;line-height:1;padding:0 2px}
 .bpm-box button:hover{color:var(--accent3)}
 #bpmSlider{-webkit-appearance:none;width:80px;height:3px;background:var(--border2);border-radius:30px;outline:none;cursor:pointer}
 #bpmSlider::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;background:var(--accent3);border-radius:50%}
 
-.time-box{font-family:'Bebas Neue';font-size:1.1rem;color:var(--yellow);
+.time-box{font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:1.1rem;color:var(--yellow);
   background:var(--bg);border:1px solid var(--border2);padding:3px 10px;
   border-radius:60px;min-width:88px;text-align:center;letter-spacing:2px;flex-shrink:0}
 
 .sig-box{display:flex;align-items:center;gap:4px;flex-shrink:0}
 .sig-box label{font-size:9px;color:var(--text3)}
 .sig-box select{background:var(--bg2);border:1px solid var(--border2);color:var(--text);
-  padding:3px 6px;border-radius:60px;font-family:'DM Mono',monospace;font-size:11px}
+  padding:3px 6px;border-radius:60px;font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px}
 
 .header-spacer{flex:1}
 
@@ -95,7 +95,7 @@ background-clip: text;
 .fx-slider::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:60px;background:var(--accent2)}
 .fx-sep{width:1px;height:32px;background:var(--border2);flex-shrink:0}
 .fx-toggle{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);
-  padding:2px 7px;border-radius:60px;cursor:pointer;font-size:9px;font-family:'DM Mono'}
+  padding:2px 7px;border-radius:60px;cursor:pointer;font-size:9px;font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;}
 .fx-toggle.on{border-color:var(--accent);color:var(--accent);background:rgba(232,255,0,0.07)}
 #fxbar-toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);
   background:none;border:none;color:var(--text3);cursor:pointer;font-size:10px;padding:4px}
@@ -127,14 +127,14 @@ background-clip: text;
   padding:5px 7px;gap:3px;width: 230px;position:relative;flex-shrink:0}
 .th-top{display:flex;align-items:center;gap:5px}
 .th-color{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:1px}
-.th-name{font-size:11px;font-family:'Syne',sans-serif;font-weight:600;
+.th-name{font-size:11px;font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-weight:300;
   color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;
   white-space:nowrap;cursor:text;outline:none;min-width:0}
 .th-name:focus{background:rgba(255,255,255,0.05);border-radius:2px;padding:0 2px}
 .th-btns{display:flex;gap:3px;align-items:center}
 .th-btn{background:var(--bg2);border:1px solid var(--border);color:var(--text3);
   font-size:8px;font-weight:100;padding:2px 5px;border-radius:60px;cursor:pointer;
-  transition:all .1s;font-family:'DM Mono';line-height:1.4}
+  transition:all .1s;font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;line-height:1.4}
 .th-btn:hover{border-color:var(--accent3);color:var(--accent3)}
 .th-btn.muted{background:rgba(255,51,85,0.15);border-color:var(--red);color:var(--red)}
 .th-btn.soloed{background:rgba(255,215,0,0.15);border-color:var(--yellow);color:var(--yellow)}
@@ -170,7 +170,7 @@ background-clip: text;
 .clip:active{cursor:grabbing}
 .clip.selected{border-color:#fff !important;box-shadow:0 0 0 1px rgba(255,255,255,0.3)}
 .clip-hdr{font-size:9px;padding:2px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  font-family:'Syne',sans-serif;font-weight:600;flex-shrink:0;letter-spacing:.5px}
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-weight:300;flex-shrink:0;letter-spacing:.5px}
 .clip-wave{display:block;flex:1;width:100%}
 .clip-resize-r{position:absolute;right:0;top:0;bottom:0;width:6px;cursor:ew-resize;
   background:rgba(255,255,255,0.1);border-radius:0 3px 3px 0}
@@ -189,7 +189,7 @@ background-clip: text;
 .mx-ch{display:flex;flex-direction:column;align-items:center;padding:8px 6px;
   gap:4px;min-width:64px;border-right:1px solid var(--border);flex-shrink:0}
 .mx-ch-name{font-size:9px;color:var(--text3);text-align:center;width:56px;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'Syne';font-weight:600}
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-weight:300}
 .mx-meter-wrap{display:flex;gap:2px;height:80px;align-items:flex-end}
 .mx-meter{width:7px;height:80px;background:var(--bg);border-radius:2px;
   border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column-reverse}
@@ -202,7 +202,7 @@ background-clip: text;
   width:10px;height:10px;background:var(--surface3);
   border-radius:20px;cursor:grab;z-index:2}
 .mx-fader-thumb:active{cursor:grabbing}
-.mx-send-lbl{font-size:8px;color:var(--text3);font-family:'DM Mono'}
+.mx-send-lbl{font-size:8px;color:var(--text3);font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;}
 .mx-master{border-left:2px solid var(--border2);padding-left:10px}
 .mx-master-lbl{font-size:10px;font-family:'Bebas Neue';color:var(--accent);letter-spacing:1px}
 .mx-eq-mini{display:flex;gap:2px;margin-top:2px}
@@ -660,7 +660,7 @@ background-clip: text;
 <!-- ═══════════════ EXPORT MODAL ═══════════════ -->
 <div id="export-modal">
   <div class="modal-box">
-    <div class="modal-title">EXPORTAR MEZCLA</div>
+    <div class="modal-title">Exportar mezcla</div>
     <div class="modal-row">
       <span class="modal-lbl">Nombre del archivo</span>
       <input type="text" class="modal-input" id="exp-name" value="mi_mezcla">
