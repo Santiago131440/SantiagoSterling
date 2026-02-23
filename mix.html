@@ -49,8 +49,7 @@ background-clip: text;
   padding:5px 10px;border-radius:10px;cursor:pointer;font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size:11px;font-weight:300;transition:all .12s;white-space:nowrap;display:flex;align-items:center;gap:4px}
 .tbtn:hover{border-color:var(--accent);color:var(--accent);background:rgba(232,255,0,0.05)}
-.tbtn.on{background:rgba(232,255,0,0.1);border-color:var(--accent);color:var(--accent);
-  box-shadow:0 0 8px rgba(232,255,0,0.2)}
+.tbtn.on{background:rgba(232,255,0,0.1);border-color:var(--accent);color:var(--accent);}
 .tbtn.rec-on{background:rgba(255,45,107,0.15);border-color:var(--accent2);color:var(--accent2);
   animation:recblink 1s ease infinite}
 @keyframes recblink{0%,100%{opacity:1}50%{opacity:.4}}
@@ -165,9 +164,9 @@ background-clip: text;
 /* ── CLIPS ── */
 .clip{position:absolute;top:0px;bottom:0px;border-radius:10px;overflow:hidden;
   cursor:grab;user-select:none;display:flex;flex-direction:column;
-  border:1px solid transparent;transition:border-color .1s, box-shadow .1s;pointer-events:all}
+  border:1px solid transparent;transition:border-color .1s;pointer-events:all}
 .clip:active{cursor:grabbing}
-.clip.selected{border-color:#fff !important;box-shadow:0 0 0 1px rgba(255,255,255,0.3)}
+.clip.selected{border-color:#fff !important;}
 .clip-hdr{font-size:9px;padding:2px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-weight:300;flex-shrink:0;letter-spacing:.5px}
 .clip-wave{display:block;flex:1;width:100%}
@@ -177,7 +176,7 @@ background-clip: text;
 
 /* ── PLAYHEAD ── */
 .playhead-line{position:absolute;top:0;bottom:0;width:2px;pointer-events:none;z-index:20;
-  background:var(--accent2);box-shadow:0 0 6px var(--accent2)}
+  background:var(--accent2);}
 .playhead-head{position:absolute;top:0;left:-4px;width:10px;height:10px;
   background:var(--accent2);clip-path:polygon(50% 100%,0 0,100% 0)}
 
@@ -290,7 +289,7 @@ background-clip: text;
   z-index:200;align-items:center;justify-content:center}
 #export-modal.show{display:flex}
 .modal-box{background:var(--surface);border:1px solid var(--border2);border-radius:20px;
-  padding:24px;width:360px;max-width:95vw;box-shadow:0 0 60px rgba(0, 255, 179, 0.1)}
+  padding:24px;width:360px;max-width:95vw;}
 .modal-title{font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:1.3rem;color:var(--accent3);letter-spacing:2px;margin-bottom:14px}
 .modal-row{margin-bottom:10px}
 .modal-lbl{font-size:10px;color:var(--text2);margin-bottom:4px;display:block}
@@ -312,7 +311,7 @@ background-clip: text;
 
 /* ── CONTEXT MENU ── */
 #ctx-menu{display:none;position:fixed;background:var(--surface);border:1px solid var(--border2);
-  border-radius:4px;z-index:300;min-width:160px;box-shadow:0 8px 24px rgba(0,0,0,0.5)}
+  border-radius:4px;z-index:300;min-width:160px;}
 #ctx-menu.show{display:block}
 .ctx-item{padding:7px 14px;cursor:pointer;font-size:11px;display:flex;align-items:center;gap:7px;transition:background .08s}
 .ctx-item:hover{background:var(--surface2);color:var(--accent)}
@@ -321,7 +320,7 @@ background-clip: text;
 /* ── NOTIFICATION ── */
 #notif{position:fixed;bottom:50px;right:16px;z-index:400;background:var(--surface);
   border:1px solid var(--border2);color:var(--text);padding:8px 14px;border-radius:4px;
-  font-size:11px;font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;box-shadow:0 4px 20px rgba(0,0,0,0.4);
+  font-size:11px;font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   transform:translateY(50px);opacity:0;transition:all .25s;max-width:250px;pointer-events:none}
 #notif.show{transform:translateY(0);opacity:1}
 #notif.success{border-color:var(--green);color:var(--green)}
