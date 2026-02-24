@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Salarios Mínimos Mundiales</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
   <style>
     :root {
       --bg:#0f0f1a;--surface:#1a1a2e;--surface2:#16213e;--surface3:#0f3460;
@@ -127,9 +128,91 @@
     /* UTILS */
     .live-dot{display:inline-block;width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 1.5s ease-in-out infinite;margin-right:5px;}
     @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
-    .toast{position:fixed;bottom:22px;right:22px;background:var(--surface3);border:1px solid var(--accent3);border-radius:10px;padding:11px 18px;font-size:0.83rem;color:var(--text);z-index:999;animation:slideIn 0.3s ease;box-shadow:0 8px 28px rgba(0,0,0,0.4);}
+    .toast{position:fixed;bottom:22px;right:22px;background:var(--surface3);border:1px solid var(--accent3);border-radius:10px;padding:11px 18px;font-size:0.83rem;color:var(--text);z-index:9999;animation:slideIn 0.3s ease;box-shadow:0 8px 28px rgba(0,0,0,0.4);}
     @keyframes slideIn{from{transform:translateY(18px);opacity:0;}to{transform:translateY(0);opacity:1;}}
     @media(max-width:768px){.main{padding:14px;} header{padding:14px;} .conv-row{grid-template-columns:1fr;} .swap-btn{width:100%;height:34px;}}
+
+    /* ── MAPA TAB ── */
+    #panel-mapa{padding:0;overflow:hidden;}
+    #panel-mapa.active{display:flex;flex-direction:column;}
+    .map-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:14px 28px;background:var(--surface);border-bottom:1px solid var(--border);}
+    .map-search-wrap{position:relative;flex:1;max-width:320px;}
+    .map-search-wrap input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 14px 9px 34px;color:var(--text);font-size:0.85rem;outline:none;transition:border-color 0.2s;}
+    .map-search-wrap input:focus{border-color:var(--accent2);}
+    .map-search-wrap input::placeholder{color:var(--text2);}
+    .map-search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text2);font-size:0.85rem;pointer-events:none;}
+    #map-search-results{position:absolute;top:calc(100% + 5px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;max-height:240px;overflow-y:auto;z-index:9999;display:none;box-shadow:0 8px 30px rgba(0,0,0,0.5);}
+    .msr-item{padding:9px 14px;cursor:pointer;font-size:0.82rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;transition:background 0.15s;}
+    .msr-item:last-child{border-bottom:none;}
+    .msr-item:hover{background:rgba(15,125,255,0.1);}
+    .msr-item .msf{font-size:1.2rem;}
+    .msr-item .msn{font-weight:700;}
+    .msr-item .msu{font-size:0.73rem;color:var(--accent3);}
+    .map-fc-btn{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:5px 13px;font-size:0.75rem;color:var(--text2);cursor:pointer;white-space:nowrap;transition:all 0.15s;}
+    .map-fc-btn:hover,.map-fc-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+    .map-sort-wrap{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0;}
+    .map-sort-label{font-size:0.72rem;color:var(--text2);white-space:nowrap;}
+    select.map-fsm{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:5px 10px;color:var(--text);font-size:0.75rem;outline:none;cursor:pointer;}
+    #map-content{flex:1;position:relative;overflow:hidden;min-height:500px;}
+    #map{width:100%;height:100%;}
+    /* Leaflet custom markers */
+    .salary-marker{position:relative;cursor:pointer;}
+    .sm-bubble{background:rgba(15,15,26,0.93);border:2px solid var(--accent3);border-radius:8px;padding:4px 9px;font-size:0.7rem;font-weight:700;color:#fff;white-space:nowrap;box-shadow:0 3px 18px rgba(0,0,0,0.55);backdrop-filter:blur(6px);transition:transform 0.15s;display:flex;align-items:center;gap:5px;}
+    .sm-bubble:hover{transform:scale(1.12);}
+    .sm-bubble .sm-flag{font-size:1rem;}
+    .sm-bubble .sm-val{color:var(--accent3);}
+    .sm-bubble::after{content:'';position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--accent3);}
+    .tier-5 .sm-bubble{border-color:var(--gold);} .tier-5 .sm-bubble .sm-val{color:var(--gold);} .tier-5 .sm-bubble::after{border-top-color:var(--gold);}
+    .tier-4 .sm-bubble{border-color:var(--accent2);} .tier-4 .sm-bubble .sm-val{color:var(--accent2);} .tier-4 .sm-bubble::after{border-top-color:var(--accent2);}
+    .tier-3 .sm-bubble{border-color:var(--accent3);}
+    .tier-2 .sm-bubble{border-color:#a855f7;} .tier-2 .sm-bubble .sm-val{color:#a855f7;} .tier-2 .sm-bubble::after{border-top-color:#a855f7;}
+    .tier-1 .sm-bubble{border-color:var(--red);} .tier-1 .sm-bubble .sm-val{color:var(--red);} .tier-1 .sm-bubble::after{border-top-color:var(--red);}
+    /* Leaflet popup */
+    .leaflet-popup-content-wrapper{background:rgba(15,15,26,0.97)!important;border:1px solid var(--border)!important;border-radius:14px!important;color:var(--text)!important;box-shadow:0 8px 40px rgba(0,0,0,0.6)!important;padding:0!important;}
+    .leaflet-popup-content{margin:0!important;padding:0!important;}
+    .leaflet-popup-tip-container{display:none!important;}
+    .leaflet-popup-close-button{color:var(--text2)!important;top:10px!important;right:12px!important;font-size:1.1rem!important;}
+    .pop-inner{padding:18px 22px;min-width:210px;}
+    .pop-flag{font-size:2.4rem;margin-bottom:5px;}
+    .pop-name{font-size:1.1rem;font-weight:800;}
+    .pop-region{font-size:0.72rem;color:var(--text2);margin-bottom:12px;}
+    .pop-salary{font-size:2rem;font-weight:800;color:var(--accent3);margin-bottom:3px;font-variant-numeric:tabular-nums;}
+    .pop-local{font-size:0.75rem;color:var(--text2);margin-bottom:12px;}
+    .pop-bar{height:4px;background:rgba(255,255,255,0.07);border-radius:2px;margin:10px 0 4px;}
+    .pop-bar-fill{height:100%;border-radius:2px;}
+    .pop-rank{font-size:0.7rem;color:var(--text2);margin-bottom:8px;}
+    .pop-row{display:flex;justify-content:space-between;padding:5px 0;border-top:1px solid var(--border);font-size:0.78rem;}
+    .pop-row span:last-child{font-weight:700;}
+    /* side panel mapa */
+    #map-side{position:absolute;top:0;right:0;width:300px;height:100%;background:rgba(15,15,26,0.97);backdrop-filter:blur(16px);border-left:1px solid var(--border);z-index:800;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;}
+    #map-side.open{transform:translateX(0);}
+    .msp-header{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .msp-header h3{font-size:0.9rem;font-weight:700;}
+    .msp-close{background:none;border:1px solid var(--border);border-radius:7px;width:26px;height:26px;color:var(--text2);cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+    .msp-close:hover{background:var(--surface);color:var(--text);}
+    .msp-body{padding:12px;}
+    .msp-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:7px;cursor:pointer;display:flex;align-items:center;gap:9px;transition:border-color 0.15s,background 0.15s;}
+    .msp-item:hover{border-color:var(--accent2);background:rgba(15,125,255,0.06);}
+    .msp-item .mi-flag{font-size:1.4rem;}
+    .msp-item .mi-info{flex:1;}
+    .msp-item .mi-name{font-size:0.82rem;font-weight:700;}
+    .msp-item .mi-salary{font-size:0.88rem;font-weight:800;color:var(--accent3);}
+    .msp-item .mi-bar{height:3px;background:rgba(255,255,255,0.07);border-radius:2px;margin-top:4px;}
+    .msp-item .mi-bar-fill{height:100%;border-radius:2px;}
+    /* legend */
+    #map-legend{position:absolute;bottom:22px;left:12px;background:rgba(15,15,26,0.92);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:12px;padding:11px 13px;z-index:700;min-width:155px;}
+    #map-legend h4{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.07em;color:var(--text2);margin-bottom:8px;}
+    .lg-row{display:flex;align-items:center;gap:7px;margin-bottom:5px;font-size:0.72rem;}
+    .lg-dot{width:11px;height:11px;border-radius:3px;flex-shrink:0;}
+    #map-panel-toggle{position:absolute;top:12px;right:12px;z-index:850;background:rgba(15,15,26,0.92);border:1px solid var(--border);border-radius:10px;padding:7px 13px;color:var(--text);font-size:0.78rem;font-weight:600;cursor:pointer;backdrop-filter:blur(10px);transition:all 0.2s;display:flex;align-items:center;gap:6px;}
+    #map-panel-toggle:hover{border-color:var(--accent2);background:rgba(15,125,255,0.1);}
+    /* leaflet controls dark */
+    .leaflet-control-zoom{border:1px solid var(--border)!important;border-radius:10px!important;overflow:hidden!important;}
+    .leaflet-control-zoom a{background:rgba(15,15,26,0.92)!important;color:var(--text)!important;border-color:var(--border)!important;}
+    .leaflet-control-zoom a:hover{background:var(--surface)!important;}
+    .leaflet-control-attribution{background:rgba(15,15,26,0.7)!important;color:var(--text2)!important;font-size:0.65rem!important;}
+    .leaflet-control-attribution a{color:var(--accent3)!important;}
+    ::-webkit-scrollbar{width:5px;} ::-webkit-scrollbar-track{background:transparent;} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
   </style>
 </head>
 <body>
@@ -151,13 +234,14 @@
 
 <div class="tabs">
   <div class="tab active" onclick="showTab('tabla')">Tabla Mundial</div>
+  <div class="tab" onclick="showTab('mapa')">Mapamundi</div>
   <div class="tab" onclick="showTab('comparar')">Comparar</div>
   <div class="tab" onclick="showTab('conversor')">Conversor</div>
   <div class="tab" onclick="showTab('regiones')">Regiones</div>
   <div class="tab" onclick="showTab('stats')">Estadísticas</div>
 </div>
 
-<div class="main">
+<div class="main" id="main-content">
 
   <!-- TABLA -->
   <div id="panel-tabla" class="panel active">
@@ -180,6 +264,52 @@
       <th>#</th><th>País</th><th>Región</th>
       <th>Mensual (USD)</th><th>Moneda Local</th><th>Actualiz.</th><th>Barra</th><th>+</th>
     </tr></thead><tbody id="tb"></tbody></table></div>
+  </div>
+
+  <!-- MAPA -->
+  <div id="panel-mapa" class="panel">
+    <div class="map-toolbar">
+      <div class="map-search-wrap">
+        <span class="map-search-icon"></span>
+        <input type="text" id="map-search-input" placeholder="Buscar país en el mapa..." autocomplete="off">
+        <div id="map-search-results"></div>
+      </div>
+      <button class="map-fc-btn active" data-mregion="">Todas</button>
+      <button class="map-fc-btn" data-mregion="Europa">Europa</button>
+      <button class="map-fc-btn" data-mregion="América del Norte">N. América</button>
+      <button class="map-fc-btn" data-mregion="América Latina">Latam</button>
+      <button class="map-fc-btn" data-mregion="Asia">Asia</button>
+      <button class="map-fc-btn" data-mregion="Oriente Medio">Or. Medio</button>
+      <button class="map-fc-btn" data-mregion="Oceanía">Oceanía</button>
+      <button class="map-fc-btn" data-mregion="África">África</button>
+      <div class="map-sort-wrap">
+        <span class="map-sort-label">Ordenar:</span>
+        <select class="map-fsm" id="map-sort-sel">
+          <option value="ud">Mayor → Menor</option>
+          <option value="ua">Menor → Mayor</option>
+          <option value="na">A–Z</option>
+        </select>
+      </div>
+    </div>
+    <div id="map-content">
+      <div id="map"></div>
+      <button id="map-panel-toggle" onclick="toggleMapPanel()">Lista países</button>
+      <div id="map-legend">
+        <h4>Salario mensual USD</h4>
+        <div class="lg-row"><div class="lg-dot" style="background:var(--gold)"></div><span>> $2.000</span></div>
+        <div class="lg-row"><div class="lg-dot" style="background:var(--accent2)"></div><span>$1.000 – $2.000</span></div>
+        <div class="lg-row"><div class="lg-dot" style="background:var(--accent3)"></div><span>$500 – $999</span></div>
+        <div class="lg-row"><div class="lg-dot" style="background:#a855f7"></div><span>$200 – $499</span></div>
+        <div class="lg-row"><div class="lg-dot" style="background:var(--red)"></div><span>< $200</span></div>
+      </div>
+      <div id="map-side">
+        <div class="msp-header">
+          <h3>Países</h3>
+          <button class="msp-close" onclick="toggleMapPanel()">✕</button>
+        </div>
+        <div class="msp-body" id="msp-body"></div>
+      </div>
+    </div>
   </div>
 
   <!-- COMPARAR -->
@@ -233,123 +363,118 @@
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 const COUNTRIES=[
   // EUROPA
-  {f:'🇨🇭',n:'Suiza',r:'Europa',u:3200,l:'~3.500 CHF/mes',c:'CHF',y:'2025'},
-  {f:'🇱🇺',n:'Luxemburgo',r:'Europa',u:3102,l:'2.638 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇩🇰',n:'Dinamarca',r:'Europa',u:2900,l:'~22.000 DKK (conv.)',c:'DKK',y:'2025'},
-  {f:'🇦🇺',n:'Australia',r:'Oceanía',u:2720,l:'2.309 AUD/mes',c:'AUD',y:'2025'},
-  {f:'🇮🇸',n:'Islandia',r:'Europa',u:2600,l:'(por convenio)',c:'ISK',y:'2025'},
-  {f:'🇳🇴',n:'Noruega',r:'Europa',u:2600,l:'(por convenio)',c:'NOK',y:'2025'},
-  {f:'🇮🇪',n:'Irlanda',r:'Europa',u:2683,l:'2.282 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇳🇿',n:'Nueva Zelanda',r:'Oceanía',u:2620,l:'2.340 NZD/mes',c:'NZD',y:'2025'},
-  {f:'🇳🇱',n:'Países Bajos',r:'Europa',u:2572,l:'2.193 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇩🇪',n:'Alemania',r:'Europa',u:2537,l:'2.161 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇸🇪',n:'Suecia',r:'Europa',u:2200,l:'(por convenio)',c:'SEK',y:'2025'},
-  {f:'🇧🇪',n:'Bélgica',r:'Europa',u:2432,l:'2.070 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇨🇦',n:'Canadá',r:'América del Norte',u:2100,l:'2.880 CAD/mes',c:'CAD',y:'2025'},
-  {f:'🇫🇷',n:'Francia',r:'Europa',u:2115,l:'1.802 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇬🇧',n:'Reino Unido',r:'Europa',u:2060,l:'1.638 GBP/mes',c:'GBP',y:'2025'},
-  {f:'🇮🇱',n:'Israel',r:'Oriente Medio',u:1700,l:'6.248 ILS/mes',c:'ILS',y:'2025'},
-  {f:'🇰🇷',n:'Corea del Sur',r:'Asia',u:1550,l:'10.030 KRW/h',c:'KRW',y:'2025'},
-  {f:'🇪🇸',n:'España',r:'Europa',u:1620,l:'1.381 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇯🇵',n:'Japón',r:'Asia',u:1337,l:'1.113 JPY/h (Tokio)',c:'JPY',y:'2025'},
-  {f:'🇵🇱',n:'Polonia',r:'Europa',u:1332,l:'1.133 EUR/mes',c:'PLN',y:'2026'},
-  {f:'🇺🇸',n:'EE.UU.',r:'América del Norte',u:1256,l:'$7.25/hora (federal)',c:'USD',y:'2025'},
-  {f:'🇸🇬',n:'Singapur',r:'Asia',u:1120,l:'1.500 SGD/mes',c:'SGD',y:'2025'},
-  {f:'🇨🇿',n:'Rep. Checa',r:'Europa',u:1085,l:'923 EUR/mes',c:'CZK',y:'2026'},
-  {f:'🇵🇹',n:'Portugal',r:'Europa',u:1081,l:'920 EUR/mes',c:'EUR',y:'2026'},
-  {f:'🇨🇾',n:'Chipre',r:'Europa',u:1174,l:'1.000 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇬🇷',n:'Grecia',r:'Europa',u:1207,l:'1.027 EUR/mes',c:'EUR',y:'2026'},
-  {f:'🇭🇷',n:'Croacia',r:'Europa',u:1234,l:'1.050 EUR/mes',c:'EUR',y:'2026'},
-  {f:'🇲🇹',n:'Malta',r:'Europa',u:1167,l:'993 EUR/mes',c:'EUR',y:'2026'},
-  {f:'🇱🇹',n:'Lituania',r:'Europa',u:1220,l:'1.038 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇸🇮',n:'Eslovenia',r:'Europa',u:1500,l:'1.278 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇮🇹',n:'Italia',r:'Europa',u:1310,l:'(por convenio)',c:'EUR',y:'2025'},
-  {f:'🇪🇪',n:'Estonia',r:'Europa',u:1040,l:'886 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇸🇰',n:'Eslovaquia',r:'Europa',u:958,l:'816 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇱🇻',n:'Letonia',r:'Europa',u:869,l:'740 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇷🇴',n:'Rumanía',r:'Europa',u:956,l:'814 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇭🇺',n:'Hungría',r:'Europa',u:830,l:'707 EUR/mes',c:'HUF',y:'2025'},
-  {f:'🇧🇬',n:'Bulgaria',r:'Europa',u:647,l:'551 EUR/mes',c:'BGN',y:'2025'},
-  {f:'🇷🇸',n:'Serbia',r:'Europa',u:794,l:'679 EUR/mes',c:'RSD',y:'2026'},
-  {f:'🇲🇪',n:'Montenegro',r:'Europa',u:786,l:'670 EUR/mes',c:'EUR',y:'2025'},
-  {f:'🇹🇷',n:'Turquía',r:'Europa',u:763,l:'650 EUR/mes',c:'TRY',y:'2026'},
-  {f:'🇦🇱',n:'Albania',r:'Europa',u:606,l:'515 EUR/mes',c:'ALL',y:'2025'},
-  {f:'🇲🇩',n:'Moldavia',r:'Europa',u:335,l:'285 EUR/mes',c:'MDL',y:'2025'},
-  {f:'🇺🇦',n:'Ucrania',r:'Europa',u:193,l:'164 EUR/mes',c:'UAH',y:'2025'},
-  {f:'🇧🇦',n:'Bosnia',r:'Europa',u:616,l:'524 EUR/mes',c:'BAM',y:'2025'},
-  {f:'🇲🇰',n:'Macedonia Norte',r:'Europa',u:686,l:'584 EUR/mes',c:'MKD',y:'2025'},
+  {f:'🇨🇭',n:'Suiza',r:'Europa',u:3200,l:'~3.500 CHF/mes',c:'CHF',y:'2025',lat:46.8,lng:8.2},
+  {f:'🇱🇺',n:'Luxemburgo',r:'Europa',u:3102,l:'2.638 EUR/mes',c:'EUR',y:'2025',lat:49.8,lng:6.1},
+  {f:'🇩🇰',n:'Dinamarca',r:'Europa',u:2900,l:'~22.000 DKK (conv.)',c:'DKK',y:'2025',lat:56.2,lng:9.5},
+  {f:'🇮🇸',n:'Islandia',r:'Europa',u:2600,l:'(por convenio)',c:'ISK',y:'2025',lat:64.9,lng:-18.1},
+  {f:'🇳🇴',n:'Noruega',r:'Europa',u:2600,l:'(por convenio)',c:'NOK',y:'2025',lat:60.5,lng:8.4},
+  {f:'🇮🇪',n:'Irlanda',r:'Europa',u:2683,l:'2.282 EUR/mes',c:'EUR',y:'2025',lat:53.1,lng:-8.2},
+  {f:'🇳🇱',n:'Países Bajos',r:'Europa',u:2572,l:'2.193 EUR/mes',c:'EUR',y:'2025',lat:52.1,lng:5.3},
+  {f:'🇩🇪',n:'Alemania',r:'Europa',u:2537,l:'2.161 EUR/mes',c:'EUR',y:'2025',lat:51.2,lng:10.5},
+  {f:'🇸🇪',n:'Suecia',r:'Europa',u:2200,l:'(por convenio)',c:'SEK',y:'2025',lat:60.1,lng:18.6},
+  {f:'🇧🇪',n:'Bélgica',r:'Europa',u:2432,l:'2.070 EUR/mes',c:'EUR',y:'2025',lat:50.5,lng:4.5},
+  {f:'🇫🇷',n:'Francia',r:'Europa',u:2115,l:'1.802 EUR/mes',c:'EUR',y:'2025',lat:46.2,lng:2.2},
+  {f:'🇬🇧',n:'Reino Unido',r:'Europa',u:2060,l:'1.638 GBP/mes',c:'GBP',y:'2025',lat:55.4,lng:-3.4},
+  {f:'🇮🇱',n:'Israel',r:'Oriente Medio',u:1700,l:'6.248 ILS/mes',c:'ILS',y:'2025',lat:31.0,lng:34.9},
+  {f:'🇰🇷',n:'Corea del Sur',r:'Asia',u:1550,l:'10.030 KRW/h',c:'KRW',y:'2025',lat:36.6,lng:128.0},
+  {f:'🇪🇸',n:'España',r:'Europa',u:1620,l:'1.381 EUR/mes',c:'EUR',y:'2025',lat:40.5,lng:-3.7},
+  {f:'🇯🇵',n:'Japón',r:'Asia',u:1337,l:'1.113 JPY/h (Tokio)',c:'JPY',y:'2025',lat:36.2,lng:138.2},
+  {f:'🇵🇱',n:'Polonia',r:'Europa',u:1332,l:'1.133 EUR/mes',c:'PLN',y:'2026',lat:51.9,lng:19.1},
+  {f:'🇺🇸',n:'EE.UU.',r:'América del Norte',u:1256,l:'$7.25/hora (federal)',c:'USD',y:'2025',lat:38.9,lng:-97.0},
+  {f:'🇸🇬',n:'Singapur',r:'Asia',u:1120,l:'1.500 SGD/mes',c:'SGD',y:'2025',lat:1.35,lng:103.8},
+  {f:'🇨🇿',n:'Rep. Checa',r:'Europa',u:1085,l:'923 EUR/mes',c:'CZK',y:'2026',lat:49.8,lng:15.5},
+  {f:'🇵🇹',n:'Portugal',r:'Europa',u:1081,l:'920 EUR/mes',c:'EUR',y:'2026',lat:39.4,lng:-8.2},
+  {f:'🇨🇾',n:'Chipre',r:'Europa',u:1174,l:'1.000 EUR/mes',c:'EUR',y:'2025',lat:35.1,lng:33.4},
+  {f:'🇬🇷',n:'Grecia',r:'Europa',u:1207,l:'1.027 EUR/mes',c:'EUR',y:'2026',lat:39.1,lng:21.8},
+  {f:'🇭🇷',n:'Croacia',r:'Europa',u:1234,l:'1.050 EUR/mes',c:'EUR',y:'2026',lat:45.1,lng:16.4},
+  {f:'🇲🇹',n:'Malta',r:'Europa',u:1167,l:'993 EUR/mes',c:'EUR',y:'2026',lat:35.9,lng:14.4},
+  {f:'🇱🇹',n:'Lituania',r:'Europa',u:1220,l:'1.038 EUR/mes',c:'EUR',y:'2025',lat:55.2,lng:24.0},
+  {f:'🇸🇮',n:'Eslovenia',r:'Europa',u:1500,l:'1.278 EUR/mes',c:'EUR',y:'2025',lat:46.1,lng:14.8},
+  {f:'🇮🇹',n:'Italia',r:'Europa',u:1310,l:'(por convenio)',c:'EUR',y:'2025',lat:42.8,lng:12.6},
+  {f:'🇪🇪',n:'Estonia',r:'Europa',u:1040,l:'886 EUR/mes',c:'EUR',y:'2025',lat:58.6,lng:25.0},
+  {f:'🇸🇰',n:'Eslovaquia',r:'Europa',u:958,l:'816 EUR/mes',c:'EUR',y:'2025',lat:48.7,lng:19.7},
+  {f:'🇱🇻',n:'Letonia',r:'Europa',u:869,l:'740 EUR/mes',c:'EUR',y:'2025',lat:56.9,lng:24.6},
+  {f:'🇷🇴',n:'Rumanía',r:'Europa',u:956,l:'814 EUR/mes',c:'EUR',y:'2025',lat:45.9,lng:24.9},
+  {f:'🇭🇺',n:'Hungría',r:'Europa',u:830,l:'707 EUR/mes',c:'HUF',y:'2025',lat:47.2,lng:19.5},
+  {f:'🇧🇬',n:'Bulgaria',r:'Europa',u:647,l:'551 EUR/mes',c:'BGN',y:'2025',lat:42.7,lng:25.5},
+  {f:'🇷🇸',n:'Serbia',r:'Europa',u:794,l:'679 EUR/mes',c:'RSD',y:'2026',lat:44.0,lng:21.0},
+  {f:'🇲🇪',n:'Montenegro',r:'Europa',u:786,l:'670 EUR/mes',c:'EUR',y:'2025',lat:42.7,lng:19.4},
+  {f:'🇹🇷',n:'Turquía',r:'Europa',u:763,l:'650 EUR/mes',c:'TRY',y:'2026',lat:39.1,lng:35.2},
+  {f:'🇦🇱',n:'Albania',r:'Europa',u:606,l:'515 EUR/mes',c:'ALL',y:'2025',lat:41.2,lng:20.2},
+  {f:'🇲🇩',n:'Moldavia',r:'Europa',u:335,l:'285 EUR/mes',c:'MDL',y:'2025',lat:47.4,lng:28.4},
+  {f:'🇺🇦',n:'Ucrania',r:'Europa',u:193,l:'164 EUR/mes',c:'UAH',y:'2025',lat:49.0,lng:31.2},
+  {f:'🇧🇦',n:'Bosnia',r:'Europa',u:616,l:'524 EUR/mes',c:'BAM',y:'2025',lat:44.2,lng:17.9},
+  {f:'🇲🇰',n:'Macedonia Norte',r:'Europa',u:686,l:'584 EUR/mes',c:'MKD',y:'2025',lat:41.6,lng:21.7},
   // LATINOAMÉRICA
-  {f:'🇨🇷',n:'Costa Rica',r:'América Latina',u:751,l:'373.092 CRC/mes',c:'CRC',y:'2026'},
-  {f:'🇨🇱',n:'Chile',r:'América Latina',u:597,l:'539.000 CLP/mes',c:'CLP',y:'2026'},
-  {f:'🇺🇾',n:'Uruguay',r:'América Latina',u:537,l:'23.604 UYU/mes',c:'UYU',y:'2025'},
-  {f:'🇪🇨',n:'Ecuador',r:'América Latina',u:482,l:'482 USD/mes',c:'USD',y:'2026'},
-  {f:'🇬🇹',n:'Guatemala',r:'América Latina',u:466,l:'3.738 GTQ/mes',c:'GTQ',y:'2025'},
-  {f:'🇲🇽',n:'México',r:'América Latina',u:417,l:'278,80 MXN/día',c:'MXN',y:'2025'},
-  {f:'🇨🇴',n:'Colombia',r:'América Latina',u:446,l:'1.746.882 COP/mes',c:'COP',y:'2026'},
-  {f:'🇵🇾',n:'Paraguay',r:'América Latina',u:397,l:'2.680.373 PYG/mes',c:'PYG',y:'2025'},
-  {f:'🇧🇴',n:'Bolivia',r:'América Latina',u:397,l:'2.750 BOB/mes',c:'BOB',y:'2025'},
-  {f:'🇭🇳',n:'Honduras',r:'América Latina',u:357,l:'8.972 HNL/mes',c:'HNL',y:'2025'},
-  {f:'🇵🇦',n:'Panamá',r:'América Latina',u:341,l:'341 USD/mes',c:'USD',y:'2025'},
-  {f:'🇵🇪',n:'Perú',r:'América Latina',u:335,l:'1.130 PEN/mes',c:'PEN',y:'2025'},
-  {f:'🇩🇴',n:'Rep. Dominicana',r:'América Latina',u:267,l:'16.993 DOP/mes',c:'DOP',y:'2026'},
-  {f:'🇧🇷',n:'Brasil',r:'América Latina',u:295,l:'1.621 BRL/mes',c:'BRL',y:'2026'},
-  {f:'🇦🇷',n:'Argentina',r:'América Latina',u:233,l:'341.000 ARS/mes',c:'ARS',y:'2026'},
-  {f:'🇸🇻',n:'El Salvador',r:'América Latina',u:243,l:'365 USD/mes',c:'USD',y:'2025'},
-  {f:'🇳🇮',n:'Nicaragua',r:'América Latina',u:210,l:'6.338 NIO/mes',c:'NIO',y:'2025'},
-  {f:'🇭🇹',n:'Haití',r:'América Latina',u:75,l:'8.635 HTG/mes',c:'HTG',y:'2025'},
-  {f:'🇨🇺',n:'Cuba',r:'América Latina',u:7,l:'2.100 CUP/mes',c:'CUP',y:'2025'},
-  {f:'🇻🇪',n:'Venezuela',r:'América Latina',u:1,l:'130 VES/mes',c:'VES',y:'2025'},
+  {f:'🇨🇷',n:'Costa Rica',r:'América Latina',u:751,l:'373.092 CRC/mes',c:'CRC',y:'2026',lat:9.7,lng:-83.8},
+  {f:'🇨🇱',n:'Chile',r:'América Latina',u:597,l:'539.000 CLP/mes',c:'CLP',y:'2026',lat:-35.7,lng:-71.5},
+  {f:'🇺🇾',n:'Uruguay',r:'América Latina',u:537,l:'23.604 UYU/mes',c:'UYU',y:'2025',lat:-32.5,lng:-55.8},
+  {f:'🇪🇨',n:'Ecuador',r:'América Latina',u:482,l:'482 USD/mes',c:'USD',y:'2026',lat:-1.8,lng:-78.2},
+  {f:'🇬🇹',n:'Guatemala',r:'América Latina',u:466,l:'3.738 GTQ/mes',c:'GTQ',y:'2025',lat:15.8,lng:-90.2},
+  {f:'🇲🇽',n:'México',r:'América Latina',u:417,l:'278,80 MXN/día',c:'MXN',y:'2025',lat:23.6,lng:-102.5},
+  {f:'🇨🇴',n:'Colombia',r:'América Latina',u:446,l:'1.746.882 COP/mes',c:'COP',y:'2026',lat:4.6,lng:-74.3},
+  {f:'🇵🇾',n:'Paraguay',r:'América Latina',u:397,l:'2.680.373 PYG/mes',c:'PYG',y:'2025',lat:-23.4,lng:-58.4},
+  {f:'🇧🇴',n:'Bolivia',r:'América Latina',u:397,l:'2.750 BOB/mes',c:'BOB',y:'2025',lat:-17.0,lng:-65.1},
+  {f:'🇭🇳',n:'Honduras',r:'América Latina',u:357,l:'8.972 HNL/mes',c:'HNL',y:'2025',lat:15.0,lng:-86.5},
+  {f:'🇵🇦',n:'Panamá',r:'América Latina',u:341,l:'341 USD/mes',c:'USD',y:'2025',lat:8.5,lng:-80.1},
+  {f:'🇵🇪',n:'Perú',r:'América Latina',u:335,l:'1.130 PEN/mes',c:'PEN',y:'2025',lat:-9.2,lng:-75.0},
+  {f:'🇩🇴',n:'Rep. Dominicana',r:'América Latina',u:267,l:'16.993 DOP/mes',c:'DOP',y:'2026',lat:18.7,lng:-70.2},
+  {f:'🇧🇷',n:'Brasil',r:'América Latina',u:295,l:'1.621 BRL/mes',c:'BRL',y:'2026',lat:-14.2,lng:-51.9},
+  {f:'🇦🇷',n:'Argentina',r:'América Latina',u:233,l:'341.000 ARS/mes',c:'ARS',y:'2026',lat:-38.4,lng:-63.6},
+  {f:'🇸🇻',n:'El Salvador',r:'América Latina',u:243,l:'365 USD/mes',c:'USD',y:'2025',lat:13.8,lng:-88.9},
+  {f:'🇳🇮',n:'Nicaragua',r:'América Latina',u:210,l:'6.338 NIO/mes',c:'NIO',y:'2025',lat:12.9,lng:-85.2},
+  {f:'🇭🇹',n:'Haití',r:'América Latina',u:75,l:'8.635 HTG/mes',c:'HTG',y:'2025',lat:18.9,lng:-72.3},
+  {f:'🇨🇺',n:'Cuba',r:'América Latina',u:7,l:'2.100 CUP/mes',c:'CUP',y:'2025',lat:22.0,lng:-79.5},
+  {f:'🇻🇪',n:'Venezuela',r:'América Latina',u:1,l:'130 VES/mes',c:'VES',y:'2025',lat:8.0,lng:-66.6},
+  {f:'🇨🇦',n:'Canadá',r:'América del Norte',u:2100,l:'2.880 CAD/mes',c:'CAD',y:'2025',lat:56.1,lng:-96.3},
   // ASIA
-  {f:'🇰🇷',n:'Corea S.',r:'Asia',u:1550,l:'10.030 KRW/h',c:'KRW',y:'2025'},
-  {f:'🇯🇵',n:'Japón (prom)',r:'Asia',u:1337,l:'1.013 JPY/h (nac.)',c:'JPY',y:'2025'},
-  {f:'🇸🇬',n:'Singapur',r:'Asia',u:1120,l:'1.500 SGD/mes',c:'SGD',y:'2025'},
-  {f:'🇨🇳',n:'China (Shanghái)',r:'Asia',u:350,l:'2.690 CNY/mes',c:'CNY',y:'2025'},
-  {f:'🇲🇾',n:'Malasia',r:'Asia',u:330,l:'1.500 MYR/mes',c:'MYR',y:'2025'},
-  {f:'🇹🇭',n:'Tailandia',r:'Asia',u:330,l:'11.780 THB/mes',c:'THB',y:'2025'},
-  {f:'🇵🇭',n:'Filipinas',r:'Asia',u:280,l:'16.000 PHP/mes',c:'PHP',y:'2025'},
-  {f:'🇮🇩',n:'Indonesia',r:'Asia',u:255,l:'4.180.375 IDR/mes',c:'IDR',y:'2025'},
-  {f:'🇻🇳',n:'Vietnam',r:'Asia',u:210,l:'4.680.000 VND/mes',c:'VND',y:'2025'},
-  {f:'🇮🇳',n:'India (media)',r:'Asia',u:200,l:'16.000 INR/mes',c:'INR',y:'2025'},
-  {f:'🇦🇲',n:'Armenia',r:'Asia',u:230,l:'90.000 AMD/mes',c:'AMD',y:'2025'},
-  {f:'🇬🇪',n:'Georgia',r:'Asia',u:200,l:'550 GEL/mes',c:'GEL',y:'2025'},
-  {f:'🇦🇿',n:'Azerbaiyán',r:'Asia',u:210,l:'360 AZN/mes',c:'AZN',y:'2025'},
-  {f:'🇰🇿',n:'Kazajistán',r:'Asia',u:140,l:'70.000 KZT/mes',c:'KZT',y:'2025'},
-  {f:'🇳🇵',n:'Nepal',r:'Asia',u:135,l:'18.000 NPR/mes',c:'NPR',y:'2025'},
-  {f:'🇰🇭',n:'Camboya',r:'Asia',u:250,l:'1.023.000 KHR/mes',c:'KHR',y:'2024'},
-  {f:'🇱🇰',n:'Sri Lanka',r:'Asia',u:125,l:'40.000 LKR/mes',c:'LKR',y:'2025'},
-  {f:'🇵🇰',n:'Pakistán',r:'Asia',u:130,l:'36.000 PKR/mes',c:'PKR',y:'2025'},
-  {f:'🇧🇩',n:'Bangladés',r:'Asia',u:103,l:'12.500 BDT/mes',c:'BDT',y:'2024'},
-  {f:'🇲🇲',n:'Myanmar',r:'Asia',u:90,l:'4.800 MMK/mes',c:'MMK',y:'2024'},
-  {f:'🇺🇿',n:'Uzbekistán',r:'Asia',u:80,l:'1.050.000 UZS/mes',c:'UZS',y:'2025'},
+  {f:'🇨🇳',n:'China (Shanghái)',r:'Asia',u:350,l:'2.690 CNY/mes',c:'CNY',y:'2025',lat:35.9,lng:104.2},
+  {f:'🇲🇾',n:'Malasia',r:'Asia',u:330,l:'1.500 MYR/mes',c:'MYR',y:'2025',lat:4.2,lng:108.0},
+  {f:'🇹🇭',n:'Tailandia',r:'Asia',u:330,l:'11.780 THB/mes',c:'THB',y:'2025',lat:15.9,lng:100.9},
+  {f:'🇵🇭',n:'Filipinas',r:'Asia',u:280,l:'16.000 PHP/mes',c:'PHP',y:'2025',lat:12.9,lng:121.8},
+  {f:'🇮🇩',n:'Indonesia',r:'Asia',u:255,l:'4.180.375 IDR/mes',c:'IDR',y:'2025',lat:-0.8,lng:113.9},
+  {f:'🇻🇳',n:'Vietnam',r:'Asia',u:210,l:'4.680.000 VND/mes',c:'VND',y:'2025',lat:14.1,lng:108.3},
+  {f:'🇮🇳',n:'India (media)',r:'Asia',u:200,l:'16.000 INR/mes',c:'INR',y:'2025',lat:20.6,lng:78.0},
+  {f:'🇦🇲',n:'Armenia',r:'Asia',u:230,l:'90.000 AMD/mes',c:'AMD',y:'2025',lat:40.1,lng:45.0},
+  {f:'🇬🇪',n:'Georgia',r:'Asia',u:200,l:'550 GEL/mes',c:'GEL',y:'2025',lat:42.3,lng:43.4},
+  {f:'🇦🇿',n:'Azerbaiyán',r:'Asia',u:210,l:'360 AZN/mes',c:'AZN',y:'2025',lat:40.1,lng:47.6},
+  {f:'🇰🇿',n:'Kazajistán',r:'Asia',u:140,l:'70.000 KZT/mes',c:'KZT',y:'2025',lat:48.0,lng:67.8},
+  {f:'🇳🇵',n:'Nepal',r:'Asia',u:135,l:'18.000 NPR/mes',c:'NPR',y:'2025',lat:28.4,lng:84.1},
+  {f:'🇰🇭',n:'Camboya',r:'Asia',u:250,l:'1.023.000 KHR/mes',c:'KHR',y:'2024',lat:12.6,lng:104.9},
+  {f:'🇱🇰',n:'Sri Lanka',r:'Asia',u:125,l:'40.000 LKR/mes',c:'LKR',y:'2025',lat:7.9,lng:80.8},
+  {f:'🇵🇰',n:'Pakistán',r:'Asia',u:130,l:'36.000 PKR/mes',c:'PKR',y:'2025',lat:30.4,lng:69.3},
+  {f:'🇧🇩',n:'Bangladés',r:'Asia',u:103,l:'12.500 BDT/mes',c:'BDT',y:'2024',lat:23.7,lng:90.4},
+  {f:'🇲🇲',n:'Myanmar',r:'Asia',u:90,l:'4.800 MMK/mes',c:'MMK',y:'2024',lat:19.2,lng:96.7},
+  {f:'🇺🇿',n:'Uzbekistán',r:'Asia',u:80,l:'1.050.000 UZS/mes',c:'UZS',y:'2025',lat:41.4,lng:64.6},
   // ORIENTE MEDIO
-  {f:'🇦🇪',n:'Emiratos Árabes',r:'Oriente Medio',u:820,l:'3.000 AED/mes',c:'AED',y:'2025'},
-  {f:'🇸🇦',n:'Arabia Saudita',r:'Oriente Medio',u:800,l:'3.000 SAR/mes',c:'SAR',y:'2025'},
-  {f:'🇮🇱',n:'Israel',r:'Oriente Medio',u:1700,l:'6.248 ILS/mes',c:'ILS',y:'2025'},
-  {f:'🇯🇴',n:'Jordania',r:'Oriente Medio',u:330,l:'234 JOD/mes',c:'JOD',y:'2025'},
-  {f:'🇮🇶',n:'Irak',r:'Oriente Medio',u:340,l:'450.000 IQD/mes',c:'IQD',y:'2025'},
-  {f:'🇮🇷',n:'Irán',r:'Oriente Medio',u:150,l:'23M IRR/mes',c:'IRR',y:'2025'},
-  {f:'🇱🇧',n:'Líbano',r:'Oriente Medio',u:80,l:'9M LBP/mes',c:'LBP',y:'2025'},
+  {f:'🇦🇪',n:'Emiratos Árabes',r:'Oriente Medio',u:820,l:'3.000 AED/mes',c:'AED',y:'2025',lat:23.4,lng:53.8},
+  {f:'🇸🇦',n:'Arabia Saudita',r:'Oriente Medio',u:800,l:'3.000 SAR/mes',c:'SAR',y:'2025',lat:23.9,lng:45.1},
+  {f:'🇯🇴',n:'Jordania',r:'Oriente Medio',u:330,l:'234 JOD/mes',c:'JOD',y:'2025',lat:30.6,lng:36.2},
+  {f:'🇮🇶',n:'Irak',r:'Oriente Medio',u:340,l:'450.000 IQD/mes',c:'IQD',y:'2025',lat:33.2,lng:43.7},
+  {f:'🇮🇷',n:'Irán',r:'Oriente Medio',u:150,l:'23M IRR/mes',c:'IRR',y:'2025',lat:32.4,lng:53.7},
+  {f:'🇱🇧',n:'Líbano',r:'Oriente Medio',u:80,l:'9M LBP/mes',c:'LBP',y:'2025',lat:33.9,lng:35.5},
   // OCEANÍA
-  {f:'🇦🇺',n:'Australia',r:'Oceanía',u:2720,l:'2.309 AUD/mes',c:'AUD',y:'2025'},
-  {f:'🇳🇿',n:'Nueva Zelanda',r:'Oceanía',u:2620,l:'2.340 NZD/mes',c:'NZD',y:'2025'},
+  {f:'🇦🇺',n:'Australia',r:'Oceanía',u:2720,l:'2.309 AUD/mes',c:'AUD',y:'2025',lat:-25.3,lng:133.8},
+  {f:'🇳🇿',n:'Nueva Zelanda',r:'Oceanía',u:2620,l:'2.340 NZD/mes',c:'NZD',y:'2025',lat:-40.9,lng:172.7},
   // ÁFRICA
-  {f:'🇿🇦',n:'Sudáfrica',r:'África',u:350,l:'6.545 ZAR/mes',c:'ZAR',y:'2025'},
-  {f:'🇲🇦',n:'Marruecos',r:'África',u:320,l:'3.340 MAD/mes',c:'MAD',y:'2025'},
-  {f:'🇹🇳',n:'Túnez',r:'África',u:250,l:'795 TND/mes',c:'TND',y:'2025'},
-  {f:'🇳🇬',n:'Nigeria',r:'África',u:230,l:'375.000 NGN/mes',c:'NGN',y:'2025'},
-  {f:'🇿🇼',n:'Zimbabue',r:'África',u:175,l:'175 USD/mes',c:'USD',y:'2025'},
-  {f:'🇿🇲',n:'Zambia',r:'África',u:140,l:'3.100 ZMW/mes',c:'ZMW',y:'2025'},
-  {f:'🇬🇭',n:'Ghana',r:'África',u:130,l:'1.600 GHS/mes',c:'GHS',y:'2025'},
-  {f:'🇰🇪',n:'Kenia',r:'África',u:190,l:'24.000 KES/mes',c:'KES',y:'2025'},
-  {f:'🇪🇬',n:'Egipto',r:'África',u:120,l:'6.000 EGP/mes',c:'EGP',y:'2025'},
-  {f:'🇹🇿',n:'Tanzania',r:'África',u:100,l:'260.000 TZS/mes',c:'TZS',y:'2025'},
-  {f:'🇸🇳',n:'Senegal',r:'África',u:85,l:'52.680 XOF/mes',c:'XOF',y:'2025'},
-  {f:'🇨🇲',n:'Camerún',r:'África',u:70,l:'36.270 XAF/mes',c:'XAF',y:'2025'},
-  {f:'🇺🇬',n:'Uganda',r:'África',u:65,l:'245.000 UGX/mes',c:'UGX',y:'2025'},
-  {f:'🇪🇹',n:'Etiopía',r:'África',u:70,l:'3.800 ETB/mes',c:'ETB',y:'2025'},
+  {f:'🇿🇦',n:'Sudáfrica',r:'África',u:350,l:'6.545 ZAR/mes',c:'ZAR',y:'2025',lat:-30.6,lng:22.9},
+  {f:'🇲🇦',n:'Marruecos',r:'África',u:320,l:'3.340 MAD/mes',c:'MAD',y:'2025',lat:31.8,lng:-7.1},
+  {f:'🇹🇳',n:'Túnez',r:'África',u:250,l:'795 TND/mes',c:'TND',y:'2025',lat:33.9,lng:9.6},
+  {f:'🇳🇬',n:'Nigeria',r:'África',u:230,l:'375.000 NGN/mes',c:'NGN',y:'2025',lat:9.1,lng:8.7},
+  {f:'🇿🇼',n:'Zimbabue',r:'África',u:175,l:'175 USD/mes',c:'USD',y:'2025',lat:-19.0,lng:29.2},
+  {f:'🇿🇲',n:'Zambia',r:'África',u:140,l:'3.100 ZMW/mes',c:'ZMW',y:'2025',lat:-13.1,lng:27.8},
+  {f:'🇬🇭',n:'Ghana',r:'África',u:130,l:'1.600 GHS/mes',c:'GHS',y:'2025',lat:7.9,lng:-1.0},
+  {f:'🇰🇪',n:'Kenia',r:'África',u:190,l:'24.000 KES/mes',c:'KES',y:'2025',lat:0.0,lng:37.9},
+  {f:'🇪🇬',n:'Egipto',r:'África',u:120,l:'6.000 EGP/mes',c:'EGP',y:'2025',lat:26.8,lng:30.8},
+  {f:'🇹🇿',n:'Tanzania',r:'África',u:100,l:'260.000 TZS/mes',c:'TZS',y:'2025',lat:-6.4,lng:34.9},
+  {f:'🇸🇳',n:'Senegal',r:'África',u:85,l:'52.680 XOF/mes',c:'XOF',y:'2025',lat:14.5,lng:-14.5},
+  {f:'🇨🇲',n:'Camerún',r:'África',u:70,l:'36.270 XAF/mes',c:'XAF',y:'2025',lat:3.9,lng:11.5},
+  {f:'🇺🇬',n:'Uganda',r:'África',u:65,l:'245.000 UGX/mes',c:'UGX',y:'2025',lat:1.4,lng:32.3},
+  {f:'🇪🇹',n:'Etiopía',r:'África',u:70,l:'3.800 ETB/mes',c:'ETB',y:'2025',lat:9.1,lng:40.5},
 ];
 
 // Remove dupes by name
@@ -361,6 +486,15 @@ let filt=[...C];
 let cmp=[];
 let rates={};
 let rateTs=null;
+
+// ── MAP STATE ──
+let leafMap=null;
+let mapMarkers=[];
+let mapPanelOpen=false;
+let mapActiveRegion='';
+let mapInitialized=false;
+const MAP_MAX=Math.max(...C.map(x=>x.u));
+const sortedAll=[...C].sort((a,b)=>b.u-a.u);
 
 const CNAMES={
   USD:'Dólar USD',EUR:'Euro',GBP:'Libra Esterlina',JPY:'Yen Japonés',CHF:'Franco Suizo',
@@ -393,7 +527,9 @@ const GRADS=['linear-gradient(90deg,#ffd700,#ffaa00)','linear-gradient(90deg,#c0
   'linear-gradient(90deg,#ff6b35,#0f7dff)','linear-gradient(90deg,#e94560,#ffd700)',
   'linear-gradient(90deg,#0f7dff,#a855f7)'];
 
-// === TABLE ===
+// ══════════════════════════════════════════
+//  TABLA
+// ══════════════════════════════════════════
 function renderTable(){
   const body=document.getElementById('tb');
   const mx=Math.max(...filt.map(c=>c.u));
@@ -436,7 +572,9 @@ function sortFilt(){
 
 function st(){sortFilt();renderTable();}
 
-// === COMPARE ===
+// ══════════════════════════════════════════
+//  COMPARE
+// ══════════════════════════════════════════
 function toggleCmp(n){
   const c=C.find(x=>x.n===n);if(!c)return;
   const i=cmp.findIndex(x=>x.n===n);
@@ -461,7 +599,7 @@ function renderCmp(){
   const g=document.getElementById('cg');
   const cw=document.getElementById('ccw');
   if(!cmp.length){
-    g.innerHTML=`<div class="cp">Selecciona países en la tabla o usa el selector</div>`;
+    g.innerHTML=`<div class="cp"><span></span>Selecciona países en la tabla o usa el selector</div>`;
     cw.style.display='none';return;
   }
   const mx=Math.max(...cmp.map(c=>c.u));
@@ -501,7 +639,9 @@ function removeCmp(n){
   renderCmp();
 }
 
-// === CONVERTER ===
+// ══════════════════════════════════════════
+//  CONVERTER
+// ══════════════════════════════════════════
 async function fetchRates(){
   try{
     const r=await fetch('https://api.exchangerate-api.com/v4/latest/USD');
@@ -576,7 +716,9 @@ function setQ(a,b){
   conv();showTab('conversor');
 }
 
-// === REGIONS ===
+// ══════════════════════════════════════════
+//  REGIONS
+// ══════════════════════════════════════════
 function renderRegions(){
   const ORD=['Europa','América del Norte','América Latina','Asia','Oriente Medio','Oceanía','África'];
   const ICO={Europa:'🇪🇺','América del Norte':'🌎','América Latina':'🌎',Asia:'🌏','Oriente Medio':'🕌',Oceanía:'🌊',África:'🌍'};
@@ -587,7 +729,7 @@ function renderRegions(){
     return `<div class="rs">
       <div class="rt"><span style="font-size:1.5rem">${ICO[rg]||'🌐'}</span>
         <h3>${rg}</h3><span class="cnt">${cs.length} países · Prom. $${avg}</span></div>
-      <div class="rc">${cs.map(c=>`<div class="sp" onclick="addFromReg('${c.n}')" id="pill-${c.n.replace(/[\s.]/g,'_')}">
+      <div class="rc">${cs.map(c=>`<div class="sp" onclick="addFromReg('${c.n}')" id="pill-${c.n.replace(/[\s.()]/g,'_')}">
           <span class="pf">${c.f}</span>
           <div class="pi"><div class="pn">${c.n}</div><div class="pa">$${c.u.toLocaleString()}/mes</div></div>
         </div>`).join('')}</div>
@@ -600,12 +742,14 @@ function addFromReg(n){
   if(cmp.some(x=>x.n===n)){toast(`${n} ya está`);return;}
   if(cmp.length>=6){toast('Máx. 6 países');return;}
   cmp.push(c);
-  const el=document.getElementById(`pill-${n.replace(/[\s.]/g,'_')}`);
+  const el=document.getElementById(`pill-${n.replace(/[\s.()]/g,'_')}`);
   if(el)el.classList.add('sel');
   toast(`${c.f} ${c.n} añadido`);
 }
 
-// === STATS ===
+// ══════════════════════════════════════════
+//  STATS
+// ══════════════════════════════════════════
 function renderStats(){
   const s=[...C].sort((a,b)=>b.u-a.u);
   const top=s[0],bot=s[s.length-1];
@@ -638,7 +782,9 @@ function renderStats(){
   }).join('');
 }
 
-// === HEADER ===
+// ══════════════════════════════════════════
+//  HEADER
+// ══════════════════════════════════════════
 function initHeader(){
   const s=[...C].sort((a,b)=>b.u-a.u);
   document.getElementById('hc').textContent=C.length;
@@ -647,7 +793,6 @@ function initHeader(){
   document.getElementById('ha').textContent='$'+Math.round(C.reduce((a,c)=>a+c.u,0)/C.length);
 }
 
-// === ADD SELECT ===
 function initAddSel(){
   const s=document.getElementById('acs');
   [...C].sort((a,b)=>a.n.localeCompare(b.n)).forEach(c=>{
@@ -655,16 +800,210 @@ function initAddSel(){
   });
 }
 
-// === TABS ===
+// ══════════════════════════════════════════
+//  TABS
+// ══════════════════════════════════════════
 function showTab(t){
-  const idx={tabla:0,comparar:1,conversor:2,regiones:3,stats:4};
+  const tabs=['tabla','mapa','comparar','conversor','regiones','stats'];
+  const idx=tabs.indexOf(t);
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.tab')[idx[t]].classList.add('active');
+  document.querySelectorAll('.tab')[idx].classList.add('active');
   document.getElementById('panel-'+t).classList.add('active');
+
+  // Mapa: ajuste de layout + init lazy
+  const mc=document.getElementById('main-content');
+  if(t==='mapa'){
+    mc.style.padding='0';
+    mc.style.maxWidth='none';
+    if(!mapInitialized){
+      mapInitialized=true;
+      setTimeout(initMap,50);
+    } else {
+      setTimeout(()=>leafMap&&leafMap.invalidateSize(),100);
+    }
+  } else {
+    mc.style.padding='22px 28px';
+    mc.style.maxWidth='1400px';
+  }
 }
 
-// === TOAST ===
+// ══════════════════════════════════════════
+//  MAPA – helpers
+// ══════════════════════════════════════════
+function mapTier(u){
+  if(u>=2000)return 5;
+  if(u>=1000)return 4;
+  if(u>=500)return 3;
+  if(u>=200)return 2;
+  return 1;
+}
+function tierBarColor(t){
+  return ['','var(--red)','#a855f7','var(--accent3)','var(--accent2)','var(--gold)'][t];
+}
+function tierBarGrad(t){
+  return ['','linear-gradient(90deg,#e94560,#c0002f)','linear-gradient(90deg,#a855f7,#7c3aed)',
+    'linear-gradient(90deg,#00d4aa,#009e86)','linear-gradient(90deg,#0f7dff,#0054c8)',
+    'linear-gradient(90deg,#ffd700,#e8a000)'][t];
+}
+
+function createMapIcon(country){
+  const tier=mapTier(country.u);
+  const val=country.u>=1000?'$'+(country.u/1000).toFixed(country.u%1000===0?0:1)+'k':'$'+country.u;
+  const html=`<div class="salary-marker tier-${tier}"><div class="sm-bubble"><span class="sm-flag">${country.f}</span><span class="sm-val">${val}</span></div></div>`;
+  return L.divIcon({html,className:'',iconAnchor:[40,38],iconSize:[80,38]});
+}
+
+function buildPopup(c){
+  const rank=sortedAll.findIndex(x=>x.n===c.n)+1;
+  const pct=Math.round((c.u/MAP_MAX)*100);
+  const tier=mapTier(c.u);
+  return `<div class="pop-inner">
+    <div class="pop-flag">${c.f}</div>
+    <div class="pop-name">${c.n}</div>
+    <div class="pop-region">${c.r} · ${c.y}</div>
+    <div class="pop-salary">$${c.u.toLocaleString()}</div>
+    <div class="pop-local">${c.l}</div>
+    <div class="pop-bar"><div class="pop-bar-fill" style="width:${pct}%;background:${tierBarGrad(tier)}"></div></div>
+    <div class="pop-rank">Puesto #${rank} de ${C.length} · ${pct}% del máximo</div>
+    <div class="pop-row"><span>Anual</span><span>$${(c.u*12).toLocaleString()}</span></div>
+    <div class="pop-row"><span>Semanal ~</span><span>$${(c.u/4.33).toFixed(0)}</span></div>
+    <div class="pop-row"><span>Diario ~</span><span>$${(c.u/30).toFixed(1)}</span></div>
+    <div class="pop-row"><span>Moneda</span><span>${c.c}</span></div>
+  </div>`;
+}
+
+function renderMapMarkers(list){
+  mapMarkers.forEach(m=>leafMap.removeLayer(m));
+  mapMarkers=[];
+  list.forEach(c=>{
+    if(c.lat==null)return;
+    const icon=createMapIcon(c);
+    const m=L.marker([c.lat,c.lng],{icon,title:c.n});
+    m.bindPopup(buildPopup(c),{maxWidth:280,minWidth:230});
+    m.addTo(leafMap);
+    mapMarkers.push(m);
+  });
+}
+
+function renderMapPanel(list){
+  const sv=document.getElementById('map-sort-sel').value;
+  let arr=[...list];
+  if(sv==='ud')arr.sort((a,b)=>b.u-a.u);
+  else if(sv==='ua')arr.sort((a,b)=>a.u-b.u);
+  else arr.sort((a,b)=>a.n.localeCompare(b.n));
+  const mx=Math.max(...arr.map(x=>x.u));
+  document.getElementById('msp-body').innerHTML=arr.map(c=>{
+    const p=Math.round((c.u/mx)*100);
+    const col=tierBarColor(mapTier(c.u));
+    return `<div class="msp-item" onclick="mapFlyTo(${JSON.stringify(c).replace(/"/g,'&quot;')})">
+      <span class="mi-flag">${c.f}</span>
+      <div class="mi-info">
+        <div class="mi-name">${c.n}</div>
+        <div class="mi-salary">$${c.u.toLocaleString()}/mes</div>
+        <div class="mi-bar"><div class="mi-bar-fill" style="width:${p}%;background:${col}"></div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function mapFlyTo(c){
+  if(!leafMap)return;
+  leafMap.flyTo([c.lat,c.lng],5,{duration:1.4});
+  setTimeout(()=>{
+    const mk=mapMarkers.find(m=>m.options.title===c.n);
+    if(mk)mk.openPopup();
+  },1500);
+  if(mapPanelOpen)toggleMapPanel();
+}
+
+function filterMap(rg){
+  mapActiveRegion=rg;
+  document.querySelectorAll('.map-fc-btn').forEach(b=>{
+    b.classList.toggle('active',b.dataset.mregion===rg);
+  });
+  const list=rg?C.filter(c=>c.r===rg):C;
+  renderMapMarkers(list);
+  renderMapPanel(list);
+  if(rg){
+    const pts=list.filter(c=>c.lat!=null).map(c=>[c.lat,c.lng]);
+    if(pts.length)leafMap.fitBounds(pts,{padding:[50,50],maxZoom:5});
+  } else {
+    leafMap.flyTo([20,10],2.5,{duration:1});
+  }
+}
+
+function toggleMapPanel(){
+  mapPanelOpen=!mapPanelOpen;
+  document.getElementById('map-side').classList.toggle('open',mapPanelOpen);
+  document.getElementById('map-panel-toggle').textContent=mapPanelOpen?'✕ Cerrar':'📋 Lista países';
+}
+
+function initMapSearch(){
+  const inp=document.getElementById('map-search-input');
+  const res=document.getElementById('map-search-results');
+  inp.addEventListener('input',()=>{
+    const q=inp.value.trim().toLowerCase();
+    if(!q){res.style.display='none';return;}
+    const matches=C.filter(c=>c.n.toLowerCase().includes(q)||c.r.toLowerCase().includes(q)).slice(0,8);
+    if(!matches.length){res.style.display='none';return;}
+    res.style.display='block';
+    res.innerHTML=matches.map(c=>`<div class="msr-item" onclick="mapSelectFromSearch(${JSON.stringify(c).replace(/"/g,'&quot;')})">
+      <span class="msf">${c.f}</span>
+      <div><div class="msn">${c.n}</div><div class="msu">$${c.u.toLocaleString()}/mes · ${c.r}</div></div>
+    </div>`).join('');
+  });
+  document.addEventListener('click',e=>{
+    if(!e.target.closest('.map-search-wrap'))res.style.display='none';
+  });
+}
+
+function mapSelectFromSearch(c){
+  document.getElementById('map-search-input').value=c.n;
+  document.getElementById('map-search-results').style.display='none';
+  mapFlyTo(c);
+}
+
+// ── INIT MAP ──
+function initMap(){
+  const mapEl=document.getElementById('map-content');
+  document.getElementById('map').style.height=mapEl.offsetHeight+'px';
+
+  leafMap=L.map('map',{
+    center:[20,10],zoom:2.5,
+    minZoom:1.5,maxZoom:12,
+    zoomControl:true,
+    worldCopyJump:true
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+    subdomains:'abcd',maxZoom:20
+  }).addTo(leafMap);
+
+  renderMapMarkers(C);
+  renderMapPanel(C);
+  initMapSearch();
+
+  document.querySelectorAll('.map-fc-btn').forEach(b=>{
+    b.addEventListener('click',()=>filterMap(b.dataset.mregion));
+  });
+  document.getElementById('map-sort-sel').addEventListener('change',()=>{
+    const list=mapActiveRegion?C.filter(c=>c.r===mapActiveRegion):C;
+    renderMapPanel(list);
+  });
+
+  // keep map height in sync
+  window.addEventListener('resize',()=>{
+    const h=document.getElementById('map-content').offsetHeight;
+    document.getElementById('map').style.height=h+'px';
+    leafMap.invalidateSize();
+  });
+}
+
+// ══════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════
 function toast(msg){
   const t=document.createElement('div');
   t.className='toast';t.textContent=msg;
@@ -672,7 +1011,9 @@ function toast(msg){
   setTimeout(()=>t.remove(),2600);
 }
 
-// === INIT ===
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
 function init(){
   filt=[...C];
   initHeader();renderTable();initAddSel();
