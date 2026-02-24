@@ -234,12 +234,12 @@
 </header>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('mapa')">Mapa Interactivo</div>
-  <div class="tab" onclick="showTab('tabla')">Tabla Mundial</div>
-  <div class="tab" onclick="showTab('comparar')">Comparar</div>
-  <div class="tab" onclick="showTab('conversor')">Conversor</div>
-  <div class="tab" onclick="showTab('regiones')">Regiones</div>
-  <div class="tab" onclick="showTab('stats')">Estadísticas</div>
+  <div class="tab active" onclick="showTab('mapa')"><i class="fi fi-sr-compass-alt"></i> Mapa Interactivo</div>
+  <div class="tab" onclick="showTab('tabla')"><i class="fi fi-sr-table-columns"></i> Tabla Mundial</div>
+  <div class="tab" onclick="showTab('comparar')"><i class="fi fi-sr-rank"></i> Comparar</div>
+  <div class="tab" onclick="showTab('conversor')"><i class="fi fi-sr-transaction-euro"></i> Conversor</div>
+  <div class="tab" onclick="showTab('regiones')"><i class="fi fi-sr-land-location"></i> Regiones</div>
+  <div class="tab" onclick="showTab('stats')"><i class="fi fi-sr-chart-pie-simple-circle-dollar"></i> Estadísticas</div>
 </div>
 
 <div class="main" id="main-content">
@@ -271,7 +271,7 @@
   <div id="panel-mapa" class="panel active">
     <div class="map-toolbar">
       <div class="map-search-wrap">
-        <span class="map-search-icon">🔍</span>
+        <span class="map-search-icon"><i class="fi fi-sr-assessment"></i></span>
         <input type="text" id="map-search-input" placeholder="Buscar país en el mapa..." autocomplete="off">
         <div id="map-search-results"></div>
       </div>
@@ -294,18 +294,18 @@
     </div>
     <div id="map-content">
       <div id="map"></div>
-      <button id="map-panel-toggle" onclick="toggleMapPanel()">📋 Lista países</button>
+      <button id="map-panel-toggle" onclick="toggleMapPanel()">Lista países</button>
       <div id="map-legend">
         <h4>Salario mensual USD</h4>
         <div class="lg-row"><div class="lg-dot" style="background:var(--gold)"></div><span>> $2.000</span></div>
         <div class="lg-row"><div class="lg-dot" style="background:var(--accent2)"></div><span>$1.000 – $2.000</span></div>
         <div class="lg-row"><div class="lg-dot" style="background:var(--accent3)"></div><span>$500 – $999</span></div>
-        <div class="lg-row"><div class="lg-dot" style="background:#a855f7"></div><span>$200 – $499</span></div>
+        <div class="lg-row"><div class="lg-dot" style="background:#5b00af"></div><span>$200 – $499</span></div>
         <div class="lg-row"><div class="lg-dot" style="background:var(--red)"></div><span>< $200</span></div>
       </div>
       <div id="map-side">
         <div class="msp-header">
-          <h3>🌍 Países</h3>
+          <h3><i class="fi fi-sr-usa-map-pin"></i> Países</h3>
           <button class="msp-close" onclick="toggleMapPanel()">✕</button>
         </div>
         <div class="msp-body" id="msp-body"></div>
@@ -538,9 +538,9 @@ function renderTable(){
   body.innerHTML=filt.map((c,i)=>{
     const rk=i+1;
     let b=`<div class="rb rn">${rk}</div>`;
-    if(rk===1)b=`<div class="rb r1">🥇</div>`;
-    if(rk===2)b=`<div class="rb r2">🥈</div>`;
-    if(rk===3)b=`<div class="rb r3">🥉</div>`;
+    if(rk===1)b=`<div class="rb r1"><i class="fi fi-sr-1"></i></div>`;
+    if(rk===2)b=`<div class="rb r2"><i class="fi fi-sr-2"></i></div>`;
+    if(rk===3)b=`<div class="rb r3"><i class="fi fi-sr-3"></i></div>`;
     const pct=Math.round((c.u/mx)*100);
     const chk=cmp.some(x=>x.n===c.n)?'checked':'';
     return `<tr>
@@ -600,7 +600,7 @@ function renderCmp(){
   const g=document.getElementById('cg');
   const cw=document.getElementById('ccw');
   if(!cmp.length){
-    g.innerHTML=`<div class="cp"><span>🌍</span>Selecciona países en la tabla o usa el selector</div>`;
+    g.innerHTML=`<div class="cp"><span><i class="fi fi-sr-earth-americas"></i></span>Selecciona países en la tabla o usa el selector</div>`;
     cw.style.display='none';return;
   }
   const mx=Math.max(...cmp.map(c=>c.u));
@@ -722,13 +722,13 @@ function setQ(a,b){
 // ══════════════════════════════════════════
 function renderRegions(){
   const ORD=['Europa','América del Norte','América Latina','Asia','Oriente Medio','Oceanía','África'];
-  const ICO={Europa:'🇪🇺','América del Norte':'🌎','América Latina':'🌎',Asia:'🌏','Oriente Medio':'🕌',Oceanía:'🌊',África:'🌍'};
+  const ICO={Europa:'','América del Norte':'','América Latina':'',Asia:'','Oriente Medio':'',Oceanía:'',África:''};
   document.getElementById('rc').innerHTML=ORD.map(rg=>{
     const cs=C.filter(c=>c.r===rg).sort((a,b)=>b.u-a.u);
     if(!cs.length)return'';
     const avg=Math.round(cs.reduce((s,c)=>s+c.u,0)/cs.length);
     return `<div class="rs">
-      <div class="rt"><span style="font-size:1.5rem">${ICO[rg]||'🌐'}</span>
+      <div class="rt"><span style="font-size:1.5rem">${ICO[rg]||''}</span>
         <h3>${rg}</h3><span class="cnt">${cs.length} países · Prom. $${avg}</span></div>
       <div class="rc">${cs.map(c=>`<div class="sp" onclick="addFromReg('${c.n}')" id="pill-${c.n.replace(/[\s.()]/g,'_')}">
           <span class="pf">${c.f}</span>
