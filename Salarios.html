@@ -145,7 +145,7 @@
     #map-search-results{position:absolute;top:calc(100% + 5px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;max-height:240px;overflow-y:auto;z-index:9999;display:none;}
     .msr-item{padding:9px 14px;cursor:pointer;font-size:0.82rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;transition:background 0.15s;}
     .msr-item:last-child{border-bottom:none;}
-    .msr-item:hover{background:rgba(15,125,255,0.1);}
+    .msr-item:hover{background:rgba(82, 82, 82, 0.1);}
     .msr-item .msf{font-size:1.2rem;}
     .msr-item .msn{font-weight:100;}
     .msr-item .msu{font-size:0.73rem;color:var(--accent3);}
@@ -977,7 +977,7 @@ function initMap(){
     worldCopyJump:true
   });
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
     attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
     subdomains:'abcd',maxZoom:20
   }).addTo(leafMap);
