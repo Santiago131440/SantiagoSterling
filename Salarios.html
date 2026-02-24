@@ -121,15 +121,15 @@
     .sp .pa{font-size:0.92rem;font-weight:100;color:var(--accent3);}
     /* STATS */
     .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:22px;}
-    .sc{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:18px;}
+    .sc{background:var(--surface);border:1px solid var(--border);border-radius:25px;padding:18px;}
     .sc .ic{font-size:1.7rem;margin-bottom:7px;}
     .sc .lb{font-size:0.76rem;color:var(--text2);margin-bottom:3px;}
     .sc .vl{font-size:1.4rem;font-weight:100;}
     .sc .sb{font-size:0.76rem;color:var(--text2);margin-top:2px;}
     /* UTILS */
-    .live-dot{display:inline-block;width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 1.5s ease-in-out infinite;margin-right:5px;}
+    .live-dot{display:inline-block;width:7px;height:7px;background:var(--green);border-radius:80%;animation:pulse 1.5s ease-in-out infinite;margin-right:5px;}
     @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
-    .toast{position:fixed;bottom:22px;right:22px;background:var(--surface3);border:1px solid var(--accent3);border-radius:10px;padding:11px 18px;font-size:0.83rem;color:var(--text);z-index:9999;animation:slideIn 0.3s ease;}
+    .toast{position:fixed;bottom:22px;right:22px;background:var(--surface3);border:1px solid var(--accent3);border-radius:60px;padding:11px 18px;font-size:0.83rem;color:var(--text);z-index:9999;animation:slideIn 0.3s ease;}
     @keyframes slideIn{from{transform:translateY(18px);opacity:0;}to{transform:translateY(0);opacity:1;}}
     @media(max-width:768px){.main{padding:14px;} header{padding:14px;} .conv-row{grid-template-columns:1fr;} .swap-btn{width:100%;height:34px;}}
 
@@ -158,7 +158,7 @@
     #map{width:100%;height:100%;}
     /* Leaflet custom markers */
     .salary-marker{position:relative;cursor:pointer;}
-    .sm-bubble{background:rgba(15,15,26,0.93);border:2px solid var(--accent3);border-radius:8px;padding:4px 9px;font-size:0.7rem;font-weight:100;color:#fff;white-space:nowrap;backdrop-filter:blur(6px);transition:transform 0.15s;display:flex;align-items:center;gap:5px;}
+    .sm-bubble{background:rgba(15,15,26,0.93);border:2px solid var(--accent3);border-radius:80px;padding:4px 9px;font-size:0.7rem;font-weight:100;color:#fff;white-space:nowrap;backdrop-filter:blur(6px);transition:transform 0.15s;display:flex;align-items:center;gap:5px;}
     .sm-bubble:hover{transform:scale(1.12);}
     .sm-bubble .sm-flag{font-size:1rem;}
     .sm-bubble .sm-val{color:var(--accent3);}
