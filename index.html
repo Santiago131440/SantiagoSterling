@@ -926,44 +926,56 @@
     <br>
     <br>
 
-   <section class="hero">
+   <section class="hero" style="position: relative; overflow: hidden;">
+    <!-- Imagen de fondo a la izquierda -->
+    <img 
+      src="https://cdn.pixabay.com/photo/2020/03/09/21/31/moon-4917183_1280.png" 
+      alt="Fondo izquierda"
+      style="
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 100%;
+        width: auto;
+        object-fit: contain;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.85;
+      "
+    />
 
-    <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl mb-4 titulosSterlingNegro-text">
+    <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl mb-4 titulosSterlingNegro-text"
+        style="position: relative; z-index: 1;">
     Visión Académica
   </h2>
-  <p class="titulosSterlingNegro-text1 text-xl">Mi visión es explorar nuevos horizontes digitales.</p>
-    <div class="visual">
+  <p class="titulosSterlingNegro-text1 text-xl" style="position: relative; z-index: 1;">Mi visión es explorar nuevos horizontes digitales.</p>
+    <div class="visual" style="position: relative; z-index: 1;">
       <!-- Imagen principal -->
       <img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284041_1280.png"
            alt="Astronaut UX">
-
       <!-- Floating labels -->
       <div class="tag left-top text-black">
         Fundamentos Científicos y Algorítmicos
         <span>Sustentos técnicos sólidos.</span>
       </div>
-
       <div class="tag left-mid text-black">
         Ingeniería de Software y Arquitectura
         <span>Comprensión profunda de metodologías.</span>
       </div>
-
       <div class="tag right-top text-black">
         Aprendizaje Continuo e Investigación Tecnológica
         <span>Capacidad académica para innovar.</span>
       </div>
-
       <div class="tag right-mid text-black">
         Ética, Impacto y Pensamiento Sistémico
         <span>Impacto social del software.</span>
       </div>
     </div>
-
-    <div class="actions">
+    <div class="actions" style="position: relative; z-index: 1;">
       <a class="button primary px-5 py-2" onclick="launchOrbit()">En órbita</a>
       <a class="button secondary px-5 py-2">Lanzamiento en curso</a>
     </div>
-
     <!-- OVERLAY FULLSCREEN -->
     <div id="orbit-overlay">
       <div class="rocket">🛸</div>
@@ -978,9 +990,7 @@
         <span>Internauta cósmico</span>
       </div>
     </div>
-
 </section>
-
 
     <!-- BLOG PREVIEW -->
   <section id="estrategia"
@@ -1199,6 +1209,7 @@
 
 </body>
 </html>
+
 
 
 
