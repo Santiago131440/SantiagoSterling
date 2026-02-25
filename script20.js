@@ -663,3 +663,138 @@ Proyectos destacados:
     // window.open(url, '_blank', 'noopener,noreferrer');
   }
 
+// --------------------------------- COMPETENCIAS METODOLOGICAS ---------------------------
+(function () {
+
+  /* ── Datos de cada categoría ── */
+  var CATEGORIAS = {
+    lenguajes: {
+      titulo: 'Lenguajes de programación',
+      items: [
+        { img: 'https://cdn-icons-png.flaticon.com/512/5968/5968292.png',      label: 'JavaScript' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Python.jpg?raw=true',       label: 'Python' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Csharp.jpg?raw=true',       label: 'C#' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20SQL.jpg?raw=true',          label: 'SQL' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Visual%20Basic.jpg?raw=true', label: 'Visual Basic' }
+      ]
+    },
+    herramientas: {
+      titulo: 'Herramientas',
+      items: [
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20HTML5.jpg?raw=true',       label: 'HTML' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20CSS3.jpg?raw=true',        label: 'CSS' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20TailwindCSS.jpg?raw=true', label: 'Tailwind' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20React.jpg?raw=true',       label: 'React' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Angular.jpg?raw=true',     label: 'Angular' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20NodeJS.jpg?raw=true',      label: 'NodeJS' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20django.jpg?raw=true',      label: 'Django' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20.Net%20Core.jpg?raw=true', label: '.NET' }
+      ]
+    },
+    extras: {
+      titulo: 'Habilidades Extra',
+      items: [
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20git.jpg?raw=true',          label: 'GitHub' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20gitbranch.jpg?raw=true',    label: 'Git' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20WordPress.jpg?raw=true',    label: 'WordPress' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Excel.jpg?raw=true',        label: 'Excel Avanzado' },
+        { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/1051px-Adobe_Photoshop_CC_icon.svg.png', label: 'Photoshop' },
+        { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Adobe_Illustrator_CC_icon.svg/2048px-Adobe_Illustrator_CC_icon.svg.png', label: 'Illustrator' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Power%20BI.jpg?raw=true',   label: 'Power BI' },
+        { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20DAX.jpg?raw=true',          label: 'DAX' }
+      ]
+    },
+    interpersonal: {
+      titulo: 'Inteligencia Interpersonal',
+      items: [
+        { img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXrPUwJ6tW0KozNRbo0cRYNbdoiH5wln83Dg&s',           label: 'Trabajo en equipo' },
+        { img: 'https://images.seeklogo.com/logo-png/42/2/scrum-logo-png_seeklogo-428358.png',                             label: 'Scrum' },
+        { img: 'https://w7.pngwing.com/pngs/921/147/png-transparent-public-relations-communication-organization-marketing-logo-las-service-industry-marketing-plan.png', label: 'Comunicación' },
+        { img: 'https://cdn-icons-png.flaticon.com/512/860/860430.png',                                                    label: 'Liderazgo' },
+        { img: 'https://cdn-icons-png.freepik.com/512/17772/17772810.png',                                                 label: 'Responsabilidad' },
+        { img: 'https://cdn-icons-png.flaticon.com/512/5526/5526196.png',                                                  label: 'Pensamiento crítico' },
+        { img: 'https://cdn-icons-png.freepik.com/512/1838/1838332.png',                                                   label: 'Resolución de problemas' },
+        { img: 'https://cdn-icons-png.freepik.com/256/12316/12316790.png?semt=ais_white_label',                            label: 'Adaptabilidad' },
+        { img: 'https://cdn-icons-png.freepik.com/512/18290/18290950.png',                                                 label: 'Atención al detalle' }
+      ]
+    }
+  };
+
+  /* ── Abrir ── */
+  window.abrirModalSterling = function (categoria) {
+    var data   = CATEGORIAS[categoria];
+    var modal  = document.getElementById('modalSterling');
+    var window_ = document.getElementById('modalSterling-window');
+    var titulo = document.getElementById('modalSterling-titulo');
+    var grid   = document.getElementById('modalSterling-grid');
+
+    if (!data) return;
+
+    /* Título */
+    titulo.textContent = data.titulo;
+
+    /* Inyectar iconos */
+    grid.innerHTML = data.items.map(function (item) {
+      return (
+        '<div style="display:flex;flex-direction:column;align-items:center;gap:8px;cursor:default;">' +
+          '<div style="' +
+            'width:72px;height:72px;border-radius:18px;' +
+            'overflow:hidden;background:#f4f4f4;' +
+            'box-shadow:0 4px 14px rgba(0,0,0,.1);' +
+            'transition:transform .2s, box-shadow .2s;' +
+            'display:flex;align-items:center;justify-content:center;' +
+          '" ' +
+          'onmouseover="this.style.transform=\'scale(1.12)\';this.style.boxShadow=\'0 8px 24px rgba(0,0,0,.18)\'" ' +
+          'onmouseout="this.style.transform=\'scale(1)\';this.style.boxShadow=\'0 4px 14px rgba(0,0,0,.1)\'">' +
+            '<img src="' + item.img + '" alt="' + item.label + '" ' +
+                 'style="width:52px;height:52px;object-fit:contain;" />' +
+          '</div>' +
+          '<span style="font-size:11px;font-weight:500;color:#555;text-align:center;line-height:1.3;">' +
+            item.label +
+          '</span>' +
+        '</div>'
+      );
+    }).join('');
+
+    /* Mostrar overlay */
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+
+    /* Animación entrada */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        window_.style.transform = 'scale(1) translateY(0)';
+        window_.style.opacity   = '1';
+      });
+    });
+
+    /* Cerrar con Escape */
+    document._modalSterlingKeyHandler = function (e) {
+      if (e.key === 'Escape') cerrarModalSterling();
+    };
+    document.addEventListener('keydown', document._modalSterlingKeyHandler);
+  };
+
+  /* ── Cerrar ── */
+  window.cerrarModalSterling = function () {
+    var modal   = document.getElementById('modalSterling');
+    var window_ = document.getElementById('modalSterling-window');
+
+    window_.style.transform = 'scale(0.92) translateY(16px)';
+    window_.style.opacity   = '0';
+
+    setTimeout(function () {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+    }, 250);
+
+    document.removeEventListener('keydown', document._modalSterlingKeyHandler);
+  };
+
+  /* ── Cerrar al hacer clic en el overlay (fuera de la ventana) ── */
+  document.getElementById('modalSterling').addEventListener('click', function (e) {
+    if (e.target === this) cerrarModalSterling();
+  });
+
+})();
+
