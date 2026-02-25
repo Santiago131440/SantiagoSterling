@@ -1,1035 +1,2638 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Salarios Mínimos Mundiales</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
-  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg:#ffffff;--surface:#eeeeee;--surface2:#e0e0e0;--surface3:#ffffff;
-      --accent:#007AFF;--accent2:#0f7dff;--accent3:#007562;
-      --text:#3b3b3b;--text2:#818181;--border:#c2c2c2;
-      --gold:#d69200;--green:#03ff6c;--red:#cc1800;
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-    header{background:linear-gradient(135deg,var(--surface3) 0%,#E5E5EA 100%);padding:20px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:2px solid var(--accent);}
-    .logo{display:flex;align-items:center;gap:12px;}
-    .logo-icon{width:32px;height:32px;padding:20px;border-radius:72px;display:flex;align-items:center;justify-content:center;font-size:52px;color: var(--accent)}
-    .logo h1{font-size:1.4rem;font-weight:600;background: linear-gradient(160deg, #007AFF, #27F557);-webkit-background-clip: text;-webkit-text-fill-color: transparent;background-clip: text;}
-    .logo h1 span{color:var(--accent);}
-    .logo p{font-size:0.73rem;color:var(--text2);margin-top:2px;}
-    .header-stats{display:flex;gap:20px;flex-wrap:wrap;}
-    .stat-pill{background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:50px;padding:2px 10px;font-size:0.78rem;text-align:center;}
-    .stat-pill strong{display:block;font-size:1.05rem;color:var(--accent3);}
-    .tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;}
-    .tab{padding:13px 22px;cursor:pointer;font-size:0.88rem;font-weight:100;color:var(--text2);white-space:nowrap;border-bottom:3px solid transparent;transition:all 0.2s;}
-    .tab:hover{color:var(--text);background:rgba(255,255,255,0.04);}
-    .tab.active{color:var(--accent);border-color:var(--accent);}
-    .main{padding:22px 28px;max-width:1400px;margin:0 auto;}
-    .panel{display:none;}
-    .panel.active{display:block;}
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px;}
-    .search-box{flex:1;min-width:180px;background:var(--surface);border:1px solid var(--border);border-radius:60px;padding:9px 14px;color:var(--text);font-size:0.88rem;outline:none;transition:border-color 0.2s;}
-    .search-box:focus{border-color:var(--accent2);}
-    .search-box::placeholder{color:var(--text2);}
-    select.fs{background:var(--surface);border:1px solid var(--border);border-radius:60px;padding:9px 14px;color:var(--text);font-size:0.88rem;outline:none;cursor:pointer;}
-    .btn{background:linear-gradient(135deg,var(--accent),#007AFF);border:none;border-radius:60px;padding:9px 18px;color:#fff;font-size:0.88rem;font-weight:100;cursor:pointer;transition:transform 0.15s;}
-    .btn:hover{transform:translateY(-2px);}
-    .btn-blue{background:linear-gradient(135deg,var(--accent2),#007AFF);}
-    .btn-green{background:linear-gradient(135deg,var(--accent3),#007a61);}
-    .tw{background:var(--surface);border-radius:14px;border:1px solid var(--border);overflow:hidden;}
-    table{width:100%;border-collapse:collapse;}
-    thead{background:linear-gradient(90deg,var(--surface3),#c7c7c7);}
-    th{padding:12px 14px;text-align:left;font-size:0.77rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text2);cursor:pointer;user-select:none;white-space:nowrap;}
-    th:hover{color:var(--text);}
-    td{padding:11px 14px;border-top:1px solid rgba(255,255,255,0.04);font-size:0.86rem;}
-    tbody tr{transition:background 0.15s;}
-    tbody tr:hover{background:rgba(255,255,255,0.03);}
-    .rb{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:70px;font-weight:100;font-size:0.78rem;}
-    .r1{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#000;}
-    .r2{background:linear-gradient(135deg,#c0c0c0,#909090);color:#000;}
-    .r3{background:linear-gradient(135deg,#cd7f32,#9a5c1a);color:#fff;}
-    .rn{background:rgba(255, 255, 255, 0.08);color:var(--text2);}
-    .fe{font-size:1.3rem;margin-right:7px;}
-    .cn{font-weight:100;}
-    .cr{font-size:0.73rem;color:var(--text2);}
-    .su{font-weight:100;font-size:0.93rem;}
-    .sl{font-size:0.76rem;color:var(--text2);margin-top:2px;}
-    .mb{height:5px;background:rgba(255,255,255,0.06);border-radius:60px;overflow:hidden;margin-top:4px;min-width:100px;}
-    .mbf{height:100%;border-radius:30px;background:linear-gradient(90deg,var(--accent2),var(--accent3));}
-    .cc{cursor:pointer;width:17px;height:17px;accent-color:var(--accent);}
-    .nr{text-align:center;padding:50px;color:var(--text2);}
-    .cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-bottom:22px;}
-    .cc-card{background:var(--surface);border:1px solid var(--border);border-radius:60px;padding:18px;position:relative;transition:transform 0.2s;}
-    .cc-card:hover{transform:translateY(-3px);}
-    .cc-card .rb-btn{position:absolute;top:11px;right:11px;background:rgba(233,69,96,0.15);border:1px solid rgba(233,69,96,0.3);color:var(--accent);border-radius:60px;width:22px;height:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:100;}
-    .cc-card .cflag{font-size:2.3rem;margin-bottom:7px;}
-    .cc-card h3{font-size:1.05rem;margin-bottom:3px;}
-    .cc-card .cregion{font-size:0.73rem;color:var(--text2);margin-bottom:10px;}
-    .cc-card .ms{font-size:1.9rem;font-weight:100;color:var(--accent3);}
-    .cc-card .cl{font-size:0.73rem;color:var(--text2);}
-    .cc-card .dr{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid var(--border);font-size:0.8rem;}
-    .cc-card .dr span:last-child{font-weight:100;}
-    .cp{background:var(--surface);border:2px dashed var(--border);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:180px;color:var(--text2);font-size:0.88rem;gap:7px;}
-    .cp span{font-size:1.8rem;}
-    .ccw{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:22px;margin-top:18px;}
-    .ccw h3{margin-bottom:14px;font-size:0.95rem;color:var(--text2);}
-    .cbr{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-    .cbl{width:120px;font-size:0.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .cbo{flex:1;height:26px;background:rgba(255,255,255,0.05);border-radius:20px;overflow:hidden;position:relative;}
-    .cbi{height:100%;border-radius:20px;display:flex;align-items:center;padding-left:9px;font-size:0.76rem;font-weight:100;color:#fff;transition:width 0.6s ease;min-width:50px;}
-    .cv{width:88px;text-align:right;font-size:0.8rem;font-weight:100;color:var(--accent3);}
-    /* CONVERTER */
-    .conv-wrap{max-width:680px;margin:0 auto;}
-    .conv-card{background:var(--surface);border:1px solid var(--border);border-radius:30px;padding:28px;margin-bottom:22px;}
-    .conv-card h2{font-size:1.25rem;margin-bottom:7px;}
-    .conv-card p{font-size:0.82rem;color:var(--text2);margin-bottom:22px;}
-    .conv-row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:end;margin-bottom:16px;}
-    .cf label{display:block;font-size:0.78rem;color:var(--text2);margin-bottom:5px;}
-    .cf input,.cf select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:60px;padding:11px 13px;color:var(--text);font-size:0.97rem;outline:none;transition:border-color 0.2s;}
-    .cf input:focus,.cf select:focus{border-color:var(--accent2);}
-    .swap-btn{background:var(--surface3);border:1px solid var(--border);border-radius:60px;width:42px;height:42px;cursor:pointer;color:var(--text);font-size:1.15rem;display:flex;align-items:center;justify-content:center;transition:background 0.2s,transform 0.2s;}
-    .swap-btn:hover{background:var(--accent);transform:rotate(180deg);}
-    .conv-res{background:linear-gradient(135deg,rgba(0,212,170,0.1),rgba(15,125,255,0.1));border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:18px;text-align:center;}
-    .conv-res .abig{font-size:2.3rem;font-weight:100;color:var(--accent3);}
-    .conv-res .ri{font-size:0.78rem;color:var(--text2);margin-top:5px;}
-    .conv-res .lu{font-size:0.7rem;color:var(--text2);margin-top:4px;}
-    .rbadge{display:inline-block;background:rgba(0,212,170,0.15);border:1px solid rgba(0,212,170,0.3);color:var(--accent3);border-radius:60px;padding:3px 9px;font-size:0.73rem;font-weight:100;margin-top:7px;}
-    .qc{background:var(--surface);border:1px solid var(--border);border-radius:30px;padding:18px;}
-    .qc h3{margin-bottom:10px;font-size:0.85rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;}
-    .qg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px;}
-    .qi{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:11px;cursor:pointer;transition:background 0.15s,border-color 0.15s;}
-    .qi:hover{background:rgba(15,125,255,0.1);border-color:var(--accent2);}
-    .qi .pair{font-size:0.78rem;color:var(--text2);}
-    .qi .rate{font-size:0.97rem;font-weight:100;color:var(--text);}
-    /* REGIONS */
-    .rs{margin-bottom:30px;}
-    .rt{display:flex;align-items:center;gap:9px;margin-bottom:12px;}
-    .rt h3{font-size:1.05rem;}
-    .rt .cnt{background:rgba(255,255,255,0.08);border-radius:8px;padding:2px 7px;font-size:0.73rem;color:var(--text2);}
-    .rc{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:9px;}
-    .sp{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color 0.15s,transform 0.15s;}
-    .sp:hover{border-color:var(--accent2);transform:translateY(-2px);}
-    .sp.sel{border-color:var(--accent);background:rgba(233,69,96,0.08);}
-    .sp .pf{font-size:1.5rem;}
-    .sp .pi{flex:1;}
-    .sp .pn{font-size:0.83rem;font-weight:100;}
-    .sp .pa{font-size:0.92rem;font-weight:100;color:var(--accent3);}
-    /* STATS */
-    .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:22px;}
-    .sc{background:var(--surface);border:1px solid var(--border);border-radius:25px;padding:18px;}
-    .sc .ic{font-size:1.7rem;margin-bottom:7px;}
-    .sc .lb{font-size:0.76rem;color:var(--text2);margin-bottom:3px;}
-    .sc .vl{font-size:1.4rem;font-weight:100;}
-    .sc .sb{font-size:0.76rem;color:var(--text2);margin-top:2px;}
-    /* UTILS */
-    .live-dot{display:inline-block;width:7px;height:7px;background:var(--green);border-radius:80%;animation:pulse 1.5s ease-in-out infinite;margin-right:5px;}
-    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
-    .toast{position:fixed;bottom:22px;right:22px;background:var(--surface3);border:1px solid var(--accent3);border-radius:60px;padding:11px 18px;font-size:0.83rem;color:var(--text);z-index:9999;animation:slideIn 0.3s ease;}
-    @keyframes slideIn{from{transform:translateY(18px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-    @media(max-width:768px){.main{padding:14px;} header{padding:14px;} .conv-row{grid-template-columns:1fr;} .swap-btn{width:100%;height:34px;}}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos Santiago Sterling</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+            <circle cx='50' cy='50' r='50' fill='black'/>
+            <text x='50' y='62' text-anchor='middle' font-size='50' fill='white' font-family='Arial'>S</text>
+          </svg>">
 
-    /* ── MAPA TAB ── */
-    #panel-mapa{padding:0;overflow:hidden;}
-    #panel-mapa.active{display:flex;flex-direction:column;}
-    .map-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:14px 28px;background:var(--surface);border-bottom:1px solid var(--border);}
-    .map-search-wrap{position:relative;flex:1;max-width:320px;}
-    .map-search-wrap input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 14px 9px 34px;color:var(--text);font-size:0.85rem;outline:none;transition:border-color 0.2s;}
-    .map-search-wrap input:focus{border-color:var(--accent2);}
-    .map-search-wrap input::placeholder{color:var(--text2);}
-    .map-search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text2);font-size:0.85rem;pointer-events:none;}
-    #map-search-results{position:absolute;top:calc(100% + 5px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;max-height:240px;overflow-y:auto;z-index:9999;display:none;}
-    .msr-item{padding:9px 14px;cursor:pointer;font-size:0.82rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;transition:background 0.15s;}
-    .msr-item:last-child{border-bottom:none;}
-    .msr-item:hover{background:rgba(82, 82, 82, 0.1);}
-    .msr-item .msf{font-size:1.2rem;}
-    .msr-item .msn{font-weight:100;}
-    .msr-item .msu{font-size:0.73rem;color:var(--accent3);}
-    .map-fc-btn{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:5px 13px;font-size:0.75rem;color:var(--text2);cursor:pointer;white-space:nowrap;transition:all 0.15s;}
-    .map-fc-btn:hover,.map-fc-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
-    .map-sort-wrap{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0;}
-    .map-sort-label{font-size:0.72rem;color:var(--text2);white-space:nowrap;}
-    select.map-fsm{background:var(--bg);border:1px solid var(--border);border-radius:30px;padding:5px 10px;color:var(--text);font-size:0.75rem;outline:none;cursor:pointer;}
-    #map-content{flex:1;position:relative;overflow:hidden;min-height:500px;}
-    #map{width:100%;height:100%;}
-    /* Leaflet custom markers */
-    .salary-marker{position:relative;cursor:pointer;}
-    .sm-bubble{background:rgba(97, 97, 97, 0.336);border:1px solid var(--accent3);border-radius:80px;padding:4px 9px;font-size:0.7rem;font-weight:100;color:#fff;white-space:nowrap;backdrop-filter:blur(6px);transition:transform 0.15s;display:flex;align-items:center;gap:5px;}
-    .sm-bubble:hover{transform:scale(1.12);}
-    .sm-bubble .sm-flag{font-size:1rem;}
-    .sm-bubble .sm-val{color:var(--accent3);}
-    .sm-bubble::after{content:'';position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--accent3);}
-    .tier-5 .sm-bubble{border-color:var(--gold);} .tier-5 .sm-bubble .sm-val{color:var(--gold);} .tier-5 .sm-bubble::after{border-top-color:var(--gold);}
-    .tier-4 .sm-bubble{border-color:var(--accent2);} .tier-4 .sm-bubble .sm-val{color:var(--accent2);} .tier-4 .sm-bubble::after{border-top-color:var(--accent2);}
-    .tier-3 .sm-bubble{border-color:var(--accent3);}
-    .tier-2 .sm-bubble{border-color:#7201db;} .tier-2 .sm-bubble .sm-val{color:#7201db;} .tier-2 .sm-bubble::after{border-top-color:#7201db;}
-    .tier-1 .sm-bubble{border-color:var(--red);} .tier-1 .sm-bubble .sm-val{color:var(--red);} .tier-1 .sm-bubble::after{border-top-color:var(--red);}
-    /* Leaflet popup */
-    .leaflet-popup-content-wrapper{background:rgba(255, 255, 255, 0.712)!important;border:1px solid var(--border)!important;border-radius:20px!important;color:var(--text)!important;padding:0!important;}
-    .leaflet-popup-content{margin:0!important;padding:0!important;}
-    .leaflet-popup-tip-container{display:none!important;}
-    .leaflet-popup-close-button{color:var(--text2)!important;top:10px!important;right:12px!important;font-size:1.1rem!important;}
-    .pop-inner{padding:18px 22px;min-width:210px;}
-    .pop-flag{font-size:2.4rem;margin-bottom:5px;}
-    .pop-name{font-size:1.1rem;font-weight:100;}
-    .pop-region{font-size:0.72rem;color:var(--text2);margin-bottom:12px;}
-    .pop-salary{font-size:2rem;font-weight:100;color:var(--accent3);margin-bottom:3px;font-variant-numeric:tabular-nums;}
-    .pop-local{font-size:0.75rem;color:var(--text2);margin-bottom:12px;}
-    .pop-bar{height:4px;background:rgba(255,255,255,0.07);border-radius:2px;margin:10px 0 4px;}
-    .pop-bar-fill{height:100%;border-radius:2px;}
-    .pop-rank{font-size:0.7rem;color:var(--text2);margin-bottom:8px;}
-    .pop-row{display:flex;justify-content:space-between;padding:5px 0;border-top:1px solid var(--border);font-size:0.78rem;}
-    .pop-row span:last-child{font-weight:100;}
-    /* side panel mapa */
-    #map-side{position:absolute;top:0;right:0;width:300px;height:100%;background:rgba(255, 255, 255, 0.97);backdrop-filter:blur(16px);border-left:1px solid var(--border);z-index:800;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;}
-    #map-side.open{transform:translateX(0);}
-    .msp-header{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-    .msp-header h3{font-size:0.9rem;font-weight:100;}
-    .msp-close{background:none;border:1px solid var(--border);border-radius:7px;width:26px;height:26px;color:var(--text2);cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
-    .msp-close:hover{background:var(--surface);color:var(--text);}
-    .msp-body{padding:12px;}
-    .msp-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:7px;cursor:pointer;display:flex;align-items:center;gap:9px;transition:border-color 0.15s,background 0.15s;}
-    .msp-item:hover{border-color:var(--accent2);background:rgb(0, 100, 223);}
-    .msp-item .mi-flag{font-size:1.4rem;}
-    .msp-item .mi-info{flex:1;}
-    .msp-item .mi-name{font-size:0.82rem;font-weight:100;}
-    .msp-item .mi-salary{font-size:0.88rem;font-weight:100;color:var(--accent3);}
-    .msp-item .mi-bar{height:3px;background:rgba(255,255,255,0.07);border-radius:2px;margin-top:4px;}
-    .msp-item .mi-bar-fill{height:100%;border-radius:2px;}
-    /* legend */
-    #map-legend{position:absolute;bottom:22px;left:12px;background:rgba(97, 97, 97, 0.281);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:12px;padding:11px 13px;z-index:700;min-width:155px;}
-    #map-legend h4{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.07em;color:white;margin-bottom:10px;}
-    .lg-row{display:flex;align-items:center;gap:7px;margin-bottom:5px;font-size:0.72rem;}
-    .lg-dot{width:11px;height:11px;border-radius:3px;flex-shrink:0;}
-    #map-panel-toggle{position:absolute;top:12px;right:12px;z-index:850;background:rgba(255, 255, 255, 0.92);border:1px solid var(--border);border-radius:10px;padding:7px 13px;color:var(--text);font-size:0.78rem;font-weight:100;cursor:pointer;backdrop-filter:blur(10px);transition:all 0.2s;display:flex;align-items:center;gap:6px;}
-    #map-panel-toggle:hover{border-color:var(--accent2);background:rgba(116, 116, 116, 0.1);}
-    /* leaflet controls dark */
-    .leaflet-control-zoom{border:1px solid var(--border)!important;border-radius:10px!important;overflow:hidden!important;}
-    .leaflet-control-zoom a{background:rgba(255, 255, 255, 0.92)!important;color:var(--text)!important;border-color:var(--border)!important;}
-    .leaflet-control-zoom a:hover{background:var(--surface)!important;}
-    .leaflet-control-attribution{background:rgba(255, 255, 255, 0.7)!important;color:var(--text2)!important;font-size:0.65rem!important;}
-    .leaflet-control-attribution a{color:var(--accent3)!important;}
-    ::-webkit-scrollbar{width:5px;} ::-webkit-scrollbar-track{background:transparent;} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
-  </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+               'Helvetica Neue', Arial, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #007AFF;
+            --primary-dark: #004182;
+            --background: #F5F5F7;
+            --card-bg: #ffffff;
+            --text-primary: #000000de;
+            --text-secondary: #00000099;
+            --border-color: #9999992f;
+            --hover-bg: #0000000a;
+            --success-green: #057642;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-weight: 100;
+        }
+
+        /* Header/Navbar */
+        .navbar {
+    		background: rgba(245, 245, 247, 0.75);
+    		backdrop-filter: blur(14px) saturate(180%);
+    		-webkit-backdrop-filter: blur(14px) saturate(180%);
+   		 border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+   		 position: sticky;
+   		 top: 0;
+   		 z-index: 1000;
+   		 box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
+		}
+
+
+        .navbar-container {
+            max-width: 1128px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 42px;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .logo {
+    		font-size: 28px;
+    		font-weight: 300;
+   	        text-decoration: none;
+    		letter-spacing: -0.6px;
+    		white-space: nowrap;
+    		background: linear-gradient(135deg, #F5CC27 0%, #FF4800 45%, #F527B0 100%);
+    		-webkit-background-clip: text;
+    		background-clip: text;
+    		color: transparent;
+		}
+
+
+        .search-box {
+            position: relative;
+            max-width: 280px;
+            flex: 1;
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 30px;
+            padding: 8px 12px 8px 38px;
+            border: 1px solid #C8C1C1;
+            background: #ffffff;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 100;
+            transition: all 0.2s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            background: #d3e4f5;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .navbar-center {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 100;
+            border-radius: 4px;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            color: var(--text-primary);
+            background: var(--hover-bg);
+        }
+
+        .nav-item.active {
+            color: var(--text-primary);
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--text-primary);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            font-weight: 100;
+            margin-bottom: 2px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            background: rgb(255, 0, 0);
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 10px;
+            font-weight: 100;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            font-weight: 100;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1188px;
+            margin: 24px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 225px 1fr 320px;
+            gap: 24px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 6px;
+            font-weight: 100;
+        }
+
+        /* Sidebar Left */
+        .profile-card {
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-cover {
+            height: 56px;
+            width: 140px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .profile-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 2px solid white;
+            margin: -36px auto 12px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 100;
+            color: white;
+        }
+
+        .profile-info {
+            padding: 0 12px 12px;
+        }
+
+        .profile-name {
+            font-size: 8px;
+            font-weight: 100;
+            margin-bottom: 4px;
+            cursor: pointer;
+        }
+
+        .profile-name:hover {
+            color: var(--primary-blue);
+        }
+
+        .profile-headline {
+            font-size: 12px;
+            font-weight: 100;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .profile-stats {
+            padding: 12px;
+            border-top: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 100;
+            color: var(--text-secondary);
+            padding: 6px 0;
+            cursor: pointer;
+        }
+
+        .stat-item:hover {
+            color: var(--primary-blue);
+        }
+
+        .stat-number {
+            color: var(--primary-blue);
+            font-weight: 100;
+        }
+
+        /* Feed Section */
+        .create-post-card {
+            padding: 16px;
+        }
+
+        .create-post-input {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .create-post-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a19704 0%, #fee140 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 100;
+            color: white;
+            font-size: 20px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .create-post-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .create-post-input input {
+            flex: 1;
+            padding: 10px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 100;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .create-post-input input:hover {
+            background: var(--hover-bg);
+        }
+
+        .create-post-actions {
+            display: flex;
+            gap: 8px;
+            padding-top: 8px;
+        }
+
+        .post-action-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 100;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .post-action-btn:hover {
+            background: var(--hover-bg);
+        }
+
+        .post-action-icon {
+            font-size: 18px;
+            font-weight: 100;
+        }
+
+        /* Post Card */
+        .post-card {
+            animation: slideIn 0.3s ease-out;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+        }
+
+        .post-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .post-header {
+            display: flex;
+            gap: 12px;
+            padding: 16px 16px 0;
+        }
+
+        .post-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 100;
+            color: white;
+            font-size: 20px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .post-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post-info {
+            flex: 1;
+        }
+
+        .post-author {
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        .post-author a {
+            color: inherit;
+            text-decoration: none;
+            font-weight: 400;
+        }
+
+        .post-author a:hover {
+            text-decoration: underline;
+            color: var(--primary-blue);
+        }
+
+        /* Ícono de enlace externo junto al título */
+        .post-author .external-link-icon {
+            display: inline-flex;
+            align-items: center;
+            margin-left: 6px;
+            color: var(--primary-blue);
+            opacity: 0;
+            transition: opacity 0.2s;
+            font-size: 12px;
+            vertical-align: middle;
+        }
+
+        .post-header:hover .external-link-icon {
+            opacity: 1;
+        }
+
+        .post-meta {
+            font-size: 12px;
+            font-weight: 100;
+            color: var(--text-secondary);
+        }
+
+        .post-menu-btn {
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            font-weight: 100;
+            cursor: pointer;
+            padding: 4px 8px;
+            color: var(--text-secondary);
+            border-radius: 4px;
+        }
+
+        .post-menu-btn:hover {
+            background: var(--hover-bg);
+        }
+
+        .post-content {
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 100;
+            line-height: 1.6;
+        }
+
+        .post-content.truncated {
+            max-height: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .see-more {
+            color: var(--primary-blue);
+            cursor: pointer;
+            font-weight: 100;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .see-more:hover {
+            color: var(--text-secondary);
+        }
+
+        /* Photo Gallery */
+        .post-gallery {
+            display: grid;
+            gap: 2px;
+            margin-top: 8px;
+        }
+
+        .post-gallery.single {
+            grid-template-columns: 1fr;
+        }
+
+        .post-gallery.single .gallery-item {
+            height: 400px;
+        }
+
+        .post-gallery.double {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .post-gallery.double .gallery-item {
+            height: 300px;
+        }
+
+        .post-gallery.triple {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 250px 250px;
+        }
+
+        .post-gallery.triple .gallery-item:first-child {
+            grid-row: span 2;
+            height: 500px;
+        }
+
+        .post-gallery.quad {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 250px 250px;
+        }
+
+        .post-gallery.quad .gallery-item {
+            height: 250px;
+        }
+
+        .post-gallery.many {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 250px 250px;
+            position: relative;
+        }
+
+        .post-gallery.many .gallery-item {
+            height: 250px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-more {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 60px;
+            font-weight: 100;
+        }
+
+        .post-stats {
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 100;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .post-reactions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .post-reactions:hover {
+            text-decoration: underline;
+        }
+
+        .reaction-icons {
+            display: flex;
+            margin-right: 4px;
+        }
+
+        .reaction-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            margin-left: -4px;
+            border: 1px solid white;
+        }
+
+        .reaction-icon:first-child {
+            margin-left: 0;
+        }
+
+        .like-icon {
+            background: #0a66c2;
+            color: white;
+        }
+
+        .love-icon {
+            background: #df704d;
+            color: white;
+        }
+
+        .celebrate-icon {
+            background: #6dae4f;
+            color: white;
+        }
+
+        .post-actions {
+            display: flex;
+            padding: 4px 8px;
+        }
+
+        .post-action {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 4px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 100;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .post-action:hover {
+            background: #007AFF;
+	        color: #ffffff;
+        }
+
+        .post-action.liked {
+            color: red;
+        }
+
+        .comments-section {
+            padding: 0 16px 12px;
+            display: none;
+        }
+
+        .comments-section.active {
+            display: block;
+        }
+
+        .comment {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .comment-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 100;
+            color: white;
+            font-size: 14px;
+            font-weight: 100;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .comment-content {
+            background: var(--background);
+            padding: 8px 12px;
+            border-radius: 8px;
+            flex: 1;
+            font-weight: 100;
+        }
+
+        .comment-author {
+            font-weight: 400;
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+
+        .comment-text {
+            font-size: 13px;
+            font-weight: 100;
+            line-height: 1.5;
+        }
+
+        .comment-time {
+            font-size: 12px;
+            font-weight: 100;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .add-comment {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .add-comment input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        /* Post Detail View */
+        .post-detail-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .post-detail-overlay.active {
+            display: flex;
+        }
+
+        .post-detail-container {
+            background: var(--card-bg);
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            position: relative;
+            font-weight: 100;
+        }
+
+        .post-detail-media {
+            background: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-detail-media img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .media-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s;
+        }
+
+        .media-nav-btn:hover {
+            background:rgba(0, 0, 0, 0.295);
+            color:white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .media-nav-btn.prev {
+            left: 12px;
+        }
+
+        .media-nav-btn.next {
+            right: 12px;
+        }
+
+        .photo-counter {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 100;
+        }
+
+        .post-detail-sidebar {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .post-detail-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 24px;
+            font-weight: 100;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .post-detail-close:hover {
+            background: white;
+        }
+
+        /* Sidebar Right */
+        .news-card {
+            padding: 16px;
+        }
+
+        .news-header {
+            font-size: 16px;
+            font-weight: 200;
+            margin-bottom: 16px;
+        }
+
+        .news-item {
+            margin-bottom: 16px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .news-item:hover {
+            background: var(--hover-bg);
+        }
+
+        .news-title {
+            font-size: 14px;
+            font-weight: 100;
+            margin-bottom: 4px;
+        }
+
+        .news-meta {
+            font-size: 12px;
+            font-weight: 100;
+            color: var(--text-secondary);
+        }
+
+        /* Profile Page */
+        .profile-page-header {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+            font-weight: 100;
+        }
+
+        .profile-banner {
+            height: 200px;
+            width: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+        .profile-main-info {
+            padding: 0 24px 24px;
+            position: relative;
+        }
+
+        .profile-avatar-large {
+            width: 152px;
+            height: 152px;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin-top: -76px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            font-weight: 100;
+            color: white;
+        }
+
+        .profile-name-large {
+            font-size: 36px;
+            font-weight: 300;
+            margin: 16px 0 8px;
+        }
+
+        .profile-headline-large {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .profile-location {
+            font-size: 14px;
+            font-weight: 100;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn-primary {
+            padding: 10px 24px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            font-weight: 100;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            padding: 10px 24px;
+            background: transparent;
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+            border-radius: 24px;
+            font-weight: 100;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #d0e8ff;
+            border-color: var(--primary-dark);
+        }
+
+        /* Network Page */
+        .network-tabs {
+            display: flex;
+            gap: 24px;
+            padding: 16px 24px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .network-tab {
+            padding: 8px 0;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .network-tab.active {
+            color: var(--primary-blue);
+            border-bottom-color: var(--primary-blue);
+        }
+
+        .network-tab:hover {
+            color: var(--primary-dark);
+        }
+
+        .connection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .connection-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            transition: box-shadow 0.2s;
+            font-weight: 100;
+        }
+
+        .connection-cover {
+            height: 60px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .connection-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin: -40px auto 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 100;
+            color: white;
+        }
+
+        .connection-info {
+            padding: 0 16px 16px;
+        }
+
+        .connection-name {
+            font-weight: 100;
+            font-size: 16px;
+            margin-bottom: 4px;
+            
+        }
+
+        .connection-title {
+            font-size: 13px;
+            font-weight: 100;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .connection-mutual {
+            font-size: 12px;
+            font-weight: 100;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        /* Jobs Page */
+        .job-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+
+        .job-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .job-logo {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 100;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .job-info {
+            flex: 1;
+        }
+
+        .job-title {
+            font-size: 16px;
+            font-weight: 200;
+            margin-bottom: 4px;
+            color: var(--primary-blue);
+        }
+
+        .job-company {
+            font-size: 14px;
+            margin-bottom: 4px;
+            font-weight: 100;
+        }
+
+        .job-location {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 100;
+        }
+
+        .job-details {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-weight: 100;
+        }
+
+        .job-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .job-tag {
+            padding: 4px 12px;
+            background: var(--background);
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 100;
+            color: var(--text-secondary);
+        }
+
+        /* Chat Widget */  
+    .chat-widget {  
+        position: fixed;  
+        bottom: 0;  
+        right: 24px;  
+        width: 320px;  
+        background: rgba(245, 245, 247, 0.75);
+    	backdrop-filter: blur(14px) saturate(180%);
+    	-webkit-backdrop-filter: blur(14px) saturate(180%);
+        border: 1px solid var(--border-color);  
+        border-bottom: none;  
+        border-radius: 14px 14px 14px 14px;  
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);  
+        z-index: 999;  
+        display: none;  
+        animation: slideUp 0.3s ease-out;  
+    }  
+
+    .chat-widget.active {  
+        display: block;  
+    }  
+
+    @keyframes slideUp {  
+        from {  
+            transform: translateY(100%);  
+        }  
+        to {  
+            transform: translateY(0);  
+        }  
+    }  
+
+    .chat-header {  
+        padding: 12px 16px;  
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--border-color);  
+        display: flex;  
+        justify-content: space-between;  
+        align-items: center;  
+        cursor: pointer;  
+        border-radius: 14px 14px 0 0;
+    }  
+
+    .chat-user-info {  
+        display: flex;  
+        align-items: center;  
+        gap: 10px;  
+        font-weight: 100;
+    } 
+
+    .chat-avatar {  
+        width: 32px;  
+        height: 32px;  
+        border-radius: 50%;  
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        font-weight: 600;  
+        color: white;  
+        font-size: 14px;  
+    } 
+
+    .chat-name {  
+        font-weight: 200;  
+        font-size: 14px;  
+    }  
+
+    .chat-messages {  
+        height: 300px;  
+        overflow-y: auto;  
+        padding: 16px;  
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }  
+
+    .chat-message {  
+        margin-bottom: 12px;  
+        display: flex;  
+        gap: 8px;  
+        animation: fadeIn 0.3s;  
+    }  
+
+    @keyframes fadeIn {  
+        from { opacity: 0; }  
+        to { opacity: 1; }  
+    }  
+
+    .chat-message.own {  
+        flex-direction: row-reverse;  
+    }  
+
+    .chat-message-avatar {  
+        width: 28px;  
+        height: 28px;  
+        border-radius: 50%;  
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        font-weight: 600;  
+        color: white;  
+        font-size: 12px;  
+        flex-shrink: 0;  
+        font-weight: 100;
+    }  
+
+    .chat-message-content {  
+        background: rgb(224, 224, 224);  
+        padding: 8px 12px;  
+        border-radius: 12px;  
+        max-width: 70%;  
+        font-size: 13px;
+        font-weight: 100;
+    }  
+
+    .chat-message.own .chat-message-content {  
+        background: var(--primary-blue);  
+        color: white;  
+        font-weight: 100;
+    }  
+
+    .chat-input-container {  
+        padding: 12px;  
+        border-top: 1px solid var(--border-color);  
+        display: flex;  
+        gap: 8px;  
+    }  
+
+    .chat-input-container input {  
+        flex: 1;  
+        padding: 8px 12px;  
+        border: 1px solid var(--border-color);  
+        border-radius: 20px;  
+        font-size: 13px;  
+        font-weight: 100;
+    }  
+
+    .chat-send-btn {  
+        padding: 1px 12px;  
+        background: var(--primary-blue);  
+        color: white;  
+        border: none;  
+        border-radius: 20px;  
+        cursor: pointer;  
+        font-weight: 100;  
+        transition: all 0.2s;  
+    }  
+
+    .chat-send-btn:hover {  
+        background: var(--primary-dark);  
+    }
+
+        /* Modal for images */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            align-items: center;
+            font-weight: 100;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-left,
+            .sidebar-right {
+                display: none;
+            }
+
+            .post-detail-container {
+                grid-template-columns: 1fr;
+                max-height: 95vh;
+            }
+
+            .post-detail-media {
+                max-height: 50vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-center {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                border-top: 1px solid var(--border-color);
+                padding: 30px 0;
+                justify-content: space-around;
+                box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+            }
+            
+
+            .nav-item {
+                font-size: 11px;
+                padding: 4px 8px;
+		top: 30px;
+		
+            }
+
+            .nav-icon {
+                font-size: 22px;
+            }
+
+            .main-container {
+                padding: 0 8px;
+                margin-bottom: 10px;
+            }
+
+            .navbar-container {
+                padding: 0 8px;
+		height: 100px;
+            }
+
+            .search-box {
+                max-width: 400px;
+		Bottom: 20px;
+            }
+
+	   .logo {
+    		font-size: 28px;
+		margin-bottom: 40px;
+		}
+
+
+            .connection-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-widget {
+                width: 100%;
+                right: 0;
+                left: 0;
+                border-radius: 0;
+            }
+
+            .post-detail-container {
+                max-height: 100vh;
+                border-radius: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+    .card {
+    border-radius: 0px;
+    border: none;
+    outline: none
+    }
+}
+
+/* Card base */
+.profile-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0px auto;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont;
+  font-weight: 100;
+}
+
+/* Cover image */
+.profile-card > img {
+  width: 240px;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.05) contrast(1.05);
+}
+
+/* Avatar container */
+.profile-avatar {
+  position: absolute;
+  top: 70px;
+  left: 70px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  padding: 1px;
+}
+
+.profile-name {
+ font-size:18px;
+ font-weight: 100;
+}
+
+/* Avatar image */
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Initials fallback */
+.initials {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 100;
+  color: #ffffff;
+  background: linear-gradient(135deg, #111827, #374151);
+  border-radius: 50%;
+  letter-spacing: 1px;
+}
+
+.profile-avatar-large {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-avatar-large img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-banner {
+  width: 100%;
+  aspect-ratio: 3 / 1;
+  max-height: 350px;
+  min-height: 180px;
+
+  background-image: url("https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Spaceman_Sterling_Whiteman.jpg?raw=true");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.profile-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.profile-banner {
+  position: relative;
+}
+
+@media (max-width: 600px) {
+  .profile-banner {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+.apple-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 16px;
+    border-radius: 60px;
+    background: linear-gradient(
+        180deg,
+        #0a84ff 0%,
+        #0066ff 100%
+    );
+    text-decoration: none;
+    transition: 
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.apple-btn span {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 100;
+    color: #ffffff;
+    letter-spacing: 0.2px;
+}
+
+/* Active (click) */
+.apple-btn:active {
+    transform: scale(0.96);
+    box-shadow:
+        0 4px 10px rgba(0, 102, 255, 0.35);
+}
+
+.profile-location{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--primary-blue);
+}
+
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chat-message-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-message-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+    </style>
 </head>
 <body>
-<header>
-  <div class="logo">
-    <div class="logo-icon"><i class="fi fi-sr-comments-dollar"></i></div>
-    <div>
-      <h1>Salarios Mínimos Mundial</h1>
-      <p><span class="live-dot"></span>Datos actualizados 2025–2026</p>
-    </div>
-  </div>
-  <div class="header-stats">
-    <div class="stat-pill"><strong id="hc">—</strong>Países</div>
-    <div class="stat-pill"><strong id="hh">—</strong>Más alto</div>
-    <div class="stat-pill"><strong id="hl">—</strong>Más bajo</div>
-    <div class="stat-pill"><strong id="ha">—</strong>Promedio</div>
-  </div>
-</header>
-
-<div class="tabs">
-  <div class="tab active" onclick="showTab('mapa')"><i class="fi fi-sr-compass-alt"></i> Mapa Interactivo</div>
-  <div class="tab" onclick="showTab('tabla')"><i class="fi fi-sr-table-columns"></i> Tabla Mundial</div>
-  <div class="tab" onclick="showTab('comparar')"><i class="fi fi-sr-rank"></i> Comparar</div>
-  <div class="tab" onclick="showTab('conversor')"><i class="fi fi-sr-transaction-euro"></i> Conversor</div>
-  <div class="tab" onclick="showTab('regiones')"><i class="fi fi-sr-land-location"></i> Regiones</div>
-  <div class="tab" onclick="showTab('stats')"><i class="fi fi-sr-chart-pie-simple-circle-dollar"></i> Estadísticas</div>
-</div>
-
-<div class="main" id="main-content">
-
-  <!-- TABLA -->
-  <div id="panel-tabla" class="panel">
-    <div class="toolbar">
-      <input class="search-box" id="si" placeholder="Buscar país..." oninput="ft()">
-      <select class="fs" id="rf" onchange="ft()">
-        <option value="">Todas las regiones</option>
-        <option>América del Norte</option><option>América Latina</option>
-        <option>Europa</option><option>Asia</option>
-        <option>Oceanía</option><option>África</option><option>Oriente Medio</option>
-      </select>
-      <select class="fs" id="ss" onchange="st()">
-        <option value="ud">Mayor → Menor (USD)</option>
-        <option value="ua">Menor → Mayor (USD)</option>
-        <option value="na">País A–Z</option><option value="nd">País Z–A</option>
-      </select>
-      <button class="btn btn-blue" onclick="showTab('comparar')">Ver comparación</button>
-    </div>
-    <div class="tw"><table><thead><tr>
-      <th>#</th><th>País</th><th>Región</th>
-      <th>Mensual (USD)</th><th>Moneda Local</th><th>Actualiz.</th><th>Barra</th><th>+</th>
-    </tr></thead><tbody id="tb"></tbody></table></div>
-  </div>
-
-  <!-- MAPA -->
-  <div id="panel-mapa" class="panel active">
-    <div class="map-toolbar">
-      <div class="map-search-wrap">
-        <span class="map-search-icon"><i class="fi fi-sr-assessment"></i></span>
-        <input type="text" id="map-search-input" placeholder="Buscar país en el mapa..." autocomplete="off">
-        <div id="map-search-results"></div>
-      </div>
-      <button class="map-fc-btn active" data-mregion="">Todas</button>
-      <button class="map-fc-btn" data-mregion="Europa">Europa</button>
-      <button class="map-fc-btn" data-mregion="América del Norte">N. América</button>
-      <button class="map-fc-btn" data-mregion="América Latina">Latam</button>
-      <button class="map-fc-btn" data-mregion="Asia">Asia</button>
-      <button class="map-fc-btn" data-mregion="Oriente Medio">Or. Medio</button>
-      <button class="map-fc-btn" data-mregion="Oceanía">Oceanía</button>
-      <button class="map-fc-btn" data-mregion="África">África</button>
-      <div class="map-sort-wrap">
-        <span class="map-sort-label">Ordenar:</span>
-        <select class="map-fsm" id="map-sort-sel">
-          <option value="ud">Mayor → Menor</option>
-          <option value="ua">Menor → Mayor</option>
-          <option value="na">A–Z</option>
-        </select>
-      </div>
-    </div>
-    <div id="map-content">
-      <div id="map"></div>
-      <button id="map-panel-toggle" onclick="toggleMapPanel()">Lista países</button>
-      <div id="map-legend">
-        <h4>Salario mensual USD</h4>
-        <div class="lg-row"><div class="lg-dot" style="background:var(--gold)"></div><span>> $2.000</span></div>
-        <div class="lg-row"><div class="lg-dot" style="background:var(--accent2)"></div><span>$1.000 – $2.000</span></div>
-        <div class="lg-row"><div class="lg-dot" style="background:var(--accent3)"></div><span>$500 – $999</span></div>
-        <div class="lg-row"><div class="lg-dot" style="background:#5b00af"></div><span>$200 – $499</span></div>
-        <div class="lg-row"><div class="lg-dot" style="background:var(--red)"></div><span>< $200</span></div>
-      </div>
-      <div id="map-side">
-        <div class="msp-header">
-          <h3><i class="fi fi-sr-usa-map-pin"></i> Países</h3>
-          <button class="msp-close" onclick="toggleMapPanel()">✕</button>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-left">
+                <a href="#" class="logo" onclick="navigateTo('home')">Proyectos</a>
+                <div class="search-box">
+                    <span class="search-icon"><i class="fi fi-rr-search"></i></span>
+                    <input type="text" placeholder="Explorar proyectos...">
+                </div>
+            </div>
+            <div class="navbar-center">
+                <a href="#" class="nav-item" data-page="home" onclick="navigateTo('home')">
+                    <span class="nav-icon"><i class="fi fi-rr-home"></i></span>
+                    <span></span>
+                </a>
+                <a href="#" class="nav-item" data-page="network" onclick="navigateTo('network')">
+                    <span class="nav-icon"><i class="fi fi-rr-users"></i></span>
+                    <span></span>
+                    <span class="notification-badge">2</span>
+                </a>
+                <a href="#" class="nav-item" data-page="jobs" onclick="navigateTo('jobs')">
+                    <span class="nav-icon"><i class="fi fi-rr-briefcase"></i></span>
+                    <span></span>
+                </a>
+                <a href="#" class="nav-item" onclick="toggleChat()">
+                     <span class="nav-icon"><i class="fi fi-rr-comment"></i></span>
+                    <span></span>
+                    <span class="notification-badge">1</span>
+                </a>
+                <a href="#" class="nav-item" data-page="profile" onclick="navigateTo('profile')">
+                    <span class="nav-icon"><i class="fi fi-rr-user"></i></span>
+                    <span></span>
+                </a>
+            </div>
         </div>
-        <div class="msp-body" id="msp-body"></div>
-      </div>
-    </div>
-  </div>
+    </nav>
 
-  <!-- COMPARAR -->
-  <div id="panel-comparar" class="panel">
-    <div class="toolbar">
-      <select class="fs" id="acs" style="flex:1;max-width:320px;"><option value="">+ Añadir país...</option></select>
-      <button class="btn" onclick="afs()">Añadir</button>
-      <button class="btn btn-blue" onclick="clearCmp()">Limpiar</button>
-    </div>
-    <div class="cg" id="cg"></div>
-    <div class="ccw" id="ccw" style="display:none;"><h3>Comparativa Visual (USD/mes)</h3><div id="ccb"></div></div>
-  </div>
+    <!-- Home Page -->
+    <div class="page active" id="home-page">
+        <div class="main-container">
+            <!-- Sidebar Left -->
+            <aside class="sidebar-left">
+                <div class="card profile-card"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Spaceman_Sterling_Whiteman.jpg?raw=true" alt="Cover">
+                    <div class="profile-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar">
+                      <span class="initials">SS</span>
+                    </div>
+                    <br>
 
-  <!-- CONVERSOR -->
-  <div id="panel-conversor" class="panel">
-    <div class="conv-wrap">
-      <div class="conv-card">
-        <h2>Conversor de Moneda en Tiempo Real</h2>
-        <p><span class="live-dot"></span>Tasas actualizadas automáticamente cada 10 minutos</p>
-        <div class="conv-row">
-          <div class="cf"><label>Cantidad</label><input type="number" id="ca" value="1" min="0" oninput="conv()"></div>
-          <div style="display:flex;align-items:flex-end;">
-            <button class="swap-btn" onclick="swapC()" title="Intercambiar">⇄</button>
-          </div>
-          <div class="cf"><label>De moneda</label><select id="cfrom" onchange="conv()"></select></div>
+                    <div class="profile-info">
+                        <div class="profile-name" onclick="navigateTo('profile')">Santiago Sterling</div>
+                        <div class="profile-headline">Tecnologo en análisis y desarrollo de software</div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span>Conexiones</span>
+                            <span class="stat-number">84</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>Visitas del perfil</span>
+                            <span class="stat-number">21</span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="card" style="padding: 12px;">
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+                        <strong>Accesos rápidos</strong>
+                    </div>
+                    <a href="https://santiago131440.github.io/SantiagoSterling/index.html" class="stat-item">
+                        <span>Portafolio</span>
+                    </a>
+                    <a href="https://santiago131440.github.io/SantiagoSterling/windows.html" class="stat-item">
+                        <span>Repositorio</span>
+                    </a>
+                    <div class="stat-item">
+                        <span>LinkedIn</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Feed -->
+            <main class="feed">
+                <!-- Create Post -->
+                <div class="card create-post-card">
+                    <div class="create-post-input">
+                        <div class="create-post-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
+                        <input type="text" placeholder="¿En qué estás pensando?" onclick="createNewPost()">
+                    </div>
+                    <div class="create-post-actions">
+                        <button class="post-action-btn" onclick="createPostWithImages()">
+                            <span class="post-action-icon"><i class="fi fi-rr-camera"></i></span>
+                            <span>Foto</span>
+                        </button>
+                        <button class="post-action-btn">
+                            <span class="post-action-icon"><i class="fi fi-rr-video-camera"></i></span>
+                            <span>Video</span>
+                        </button>
+                        <button class="post-action-btn">
+                            <span class="post-action-icon"><i class="fi fi-rr-document"></i></span>
+                            <span>Doc</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Feed Posts -->
+                <div id="feed-posts">
+
+                    <!-- Post 1 -->
+                    <div class="card post-card" 
+                         data-author="Santiago Sterling"
+                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
+                         data-headline="Desarrollador de software"
+                         data-time="2026"
+                         data-url="https://santiago131440.github.io/SantiagoSterling/index.html"
+                         data-content="Transformo ideas en soluciones digitales que generan impacto real. Este espacio reúne los proyectos que he desarrollado y las soluciones en las que he dejado mi huella profesional. Mi objetivo es que cada experiencia sea clara, útil y de alto valor."
+                         data-images="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800,https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800,https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800"
+                         data-likes="23"
+                         data-comments="3"
+                         data-shares="1">
+                    </div>
+
+                    <!-- Post 2 -->
+                    <div class="card post-card" 
+                         data-author="Salarios Minimos a nivel mundial"
+                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
+                         data-headline="HTML | CSS | JavaScript"
+                         data-time="5h"
+                         data-url="https://santiago131440.github.io/SantiagoSterling/Salarios.html"
+                         data-content="Construí este proyecto para transformar datos salariales dispersos en una comparación clara, directa y justa, estandarizando todos los valores en USD mensuales y eliminando distorsiones cambiarias. El dashboard revela de forma visual las brechas económicas entre países, el poder adquisitivo real y las diferencias estructurales del mercado laboral. Más que mostrar cifras, expone realidades, convirtiendo datos complejos en información estratégica para el análisis y la toma de decisiones."
+                         data-images="https://github.com/Santiago131440/Salarios-Minimos-Mundiales/blob/main/img/Salarios.jpg?raw=true"
+                         data-likes="15"
+                         data-comments="4"
+                         data-shares="8">
+                    </div>
+
+                    <!-- Post 3 -->
+                    <div class="card post-card" 
+                         data-author="Dashboard control producción"
+                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
+                         data-headline="Excel | Power Query | Power BI | Dax"
+                         data-time="5h"
+                         data-url="https://github.com/Santiago131440/dashboard-control-produccion"
+                         data-content="Desarrollé un dashboard en Power BI para analizar y monitorear el desempeño productivo de la empresa, permitiendo visualizar el histórico por año, mes, semana y turno, con métricas clave como producción, órdenes de producción y componentes. Además, integré un indicador de límite inferior para detectar incumplimientos de la meta diaria, facilitando el control operativo, la identificación temprana de desviaciones y la toma de decisiones."
+                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Power%20BI%2000.jpg?raw=true"
+                         data-likes="15"
+                         data-comments="4"
+                         data-shares="8">
+                    </div>
+
+                    <!-- Post 4 -->
+                    <div class="card post-card" 
+                         data-author="Dashboard control producción"
+                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
+                         data-headline="Excel | Power Query | Power BI | Dax"
+                         data-time="5h"
+                         data-url="https://github.com/Santiago131440/dashboard-control-produccion"
+                         data-content="Desarrollé un dashboard en Power BI para analizar y monitorear el desempeño productivo de la empresa, permitiendo visualizar el histórico por año, mes, semana y turno, con métricas clave como producción, órdenes de producción y componentes. Además, integré un indicador de límite inferior para detectar incumplimientos de la meta diaria, facilitando el control operativo, la identificación temprana de desviaciones y la toma de decisiones."
+                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Power%20BI%2000.jpg?raw=true"
+                         data-likes="15"
+                         data-comments="4"
+                         data-shares="8">
+                    </div>
+
+                    <!-- Post 5 -->
+                    <div class="card post-card" 
+                         data-author="Dashboard control producción"
+                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
+                         data-headline="Excel | Power Query | Power BI | Dax"
+                         data-time="5h"
+                         data-url="https://github.com/Santiago131440/dashboard-control-produccion"
+                         data-content="Desarrollé un dashboard en Power BI para analizar y monitorear el desempeño productivo de la empresa, permitiendo visualizar el histórico por año, mes, semana y turno, con métricas clave como producción, órdenes de producción y componentes. Además, integré un indicador de límite inferior para detectar incumplimientos de la meta diaria, facilitando el control operativo, la identificación temprana de desviaciones y la toma de decisiones."
+                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Power%20BI%2000.jpg?raw=true"
+                         data-likes="15"
+                         data-comments="4"
+                         data-shares="8">
+                    </div>
+
+                    <!-- Post 6 -->
+                    <div class="card post-card" 
+                         data-author="Sterling Music Player"
+                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
+                         data-headline="HTML | CSS | JavaScript | Tailwind"
+                         data-time="2025"
+                         data-url="https://santiago131440.github.io/SantiagoSterling/Music.html"
+                         data-content="Reproductor de música online diseñado para la reproducción de archivos de audio locales, que permite al usuario cargar su música directamente desde el dispositivo y escucharla en el navegador sin necesidad de instalaciones externas. La aplicación ofrece una experiencia fluida, optimizada y accesible, con controles intuitivos de reproducción y compatibilidad con los principales formatos de audio, aprovechando las capacidades nativas de las tecnologías web modernas para garantizar un rendimiento estable y una interacción sencilla."
+                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/file_00000000284471f58925bcd890f691f6.png?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicMovil1.jpeg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicMovil2.jpeg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicPC2.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicPC1.jpg?raw=true"
+                         data-likes="9"
+                         data-comments="1"
+                         data-shares="5"
+                         data-hasliked="true">
+                    </div>
+
+                    <!-- Post 7 -->
+                    <div class="card post-card" 
+                         data-author="Comparación de OP"
+                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
+                         data-headline="Excel | VBA | Macros"
+                         data-time="2025"
+                         data-url="https://github.com/Santiago131440/comparacion-ordenes-produccion"
+                         data-content="El sistema permite cargar archivos de Excel sin restricciones y compararlos para detectar coincidencias, diferencias e inconsistencias. Optimiza el análisis de datos al mejorar la trazabilidad, reducir errores manuales y agilizar la gestión de información."
+                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%206.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%207.jpg?raw=true"
+                         data-likes="38"
+                         data-comments="2"
+                         data-shares="3"
+                         data-hasliked="true">
+                    </div>
+
+                    <!-- Post 8 -->
+                    <div class="card post-card" 
+                         data-author="Control de Inventario"
+                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
+                         data-headline="Excel | VBA | Macros"
+                         data-time="2025"
+                         data-url="https://github.com/Santiago131440/control-inventario-excel"
+                         data-content="Sistema integral en Excel con macros y VBA para gestionar inventarios, que permite registrar productos, controlar ingresos y salidas, consultar stock en tiempo real, generar reportes y elaborar pedidos al almacén, asegurando trazabilidad y eficiencia."
+                         data-images="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen1.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen2.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen3.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen4.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen5.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen6.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen7.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen8.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen9.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen10.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen11.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen12.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen13.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen14.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen15.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen16.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen17.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen18.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen19.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen20.png?raw=true"
+                         data-likes="68"
+                         data-comments="1"
+                         data-shares="5">
+                    </div>
+
+		                <!-- Post 9 -->
+                    <div class="card post-card" 
+                         data-author="Dashboard Indicadores de planta"
+                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
+                         data-headline="Excel | VBA | Macros"
+                         data-time="2023"
+                         data-url="https://github.com/Santiago131440/dashboard-indicadores-planta"
+                         data-content="Este proyecto de Dashboard de Indicadores de Producción nace con el objetivo de transformar datos operativos en información estratégica, permitiendo visualizar en tiempo real el desempeño de la planta a través de indicadores clave como productividad, eficiencia, calidad, tiempos de parada y cumplimiento de objetivos.
+
+Mediante una visualización clara, intuitiva y centralizada, el dashboard facilita la detección temprana de desviaciones, el análisis de tendencias y la identificación de oportunidades de mejora continua. De esta manera, se convierte en una herramienta fundamental para optimizar procesos, reducir costos y fortalecer la toma de decisiones en todos los niveles de la organización."
+                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%203.jpg?raw=true"
+                         data-likes="18"
+                         data-comments="2"
+                         data-shares="5">
+                    </div>
+
+		                <!-- Post 10 -->
+                    <div class="card post-card" 
+                         data-author="Gestión de inventario de tintas"
+                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
+                         data-headline="Excel | VBA | Macros"
+                         data-time="2023"
+                         data-url="https://github.com/Santiago131440/inventario-tintas-vba"
+                         data-content="Macro desarrollada en Microsoft Excel con VBA para la gestión integral del inventario de tintas, que incorpora un sistema de control de usuarios por roles para garantizar seguridad y confiabilidad de la información. La herramienta dispone de un usuario básico, enfocado en la consulta y visualización del inventario sin permisos de modificación, y un usuario administrador, protegido mediante clave de acceso, con privilegios avanzados para realizar operaciones CRUD (crear, leer, actualizar y eliminar) sobre todos los registros del inventario. El sistema permite administrar referencias, cantidades, movimientos y estados de las tintas, integrando validaciones, automatización de procesos y formularios VBA que facilitan una gestión eficiente, ordenada y segura, ideal para entornos operativos que requieren control y trazabilidad del inventario."
+                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%206.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%207.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%208.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%209.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%2010.jpg?raw=truehttps://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%2011.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%2012.jpg?raw=true"
+                         data-likes="18"
+                         data-comments="2"
+                         data-shares="5">
+                    </div>
+                </div>
+            </main>
+
+            <!-- Sidebar Right -->
+            <aside class="sidebar-right">
+                <div class="card news-card">
+                    <div class="news-header">Noticias destacadas</div>
+                    <div class="news-item">
+                        <div class="news-title">Nuevas tendencias</div>
+                        <div class="news-meta">1d • 12,453 lectores</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title">Cambios en el mercado laboral</div>
+                        <div class="news-meta">2d • 8,921 lectores</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title">IA y el futuro del trabajo</div>
+                        <div class="news-meta">3d • 15,234 lectores</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title">Startups que revolucionan</div>
+                        <div class="news-meta">4d • 6,782 lectores</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-title">Consejos para networking</div>
+                        <div class="news-meta">5d • 9,445 lectores</div>
+                    </div>
+                </div>
+
+                <div style="font-size: 11px; color: var(--text-secondary); padding: 16px; text-align: center;">
+                    <div style="margin-bottom: 8px;">
+                        <a href="#" style="color: var(--text-secondary); margin: 0 8px;">Acerca de</a>
+                        <a href="#" style="color: var(--text-secondary); margin: 0 8px;">Accesibilidad</a>
+                        <a href="#" style="color: var(--text-secondary); margin: 0 8px;">Protección de datos</a>
+                    </div>
+                    <div>Santiago Sterling © 2026</div>
+                </div>
+            </aside>
         </div>
-        <div class="cf" style="margin-bottom:18px;"><label>A moneda</label><select id="cto" onchange="conv()"></select></div>
-        <div class="conv-res" id="cres">
-          <div class="abig" id="cra">—</div>
-          <div class="ri" id="cri">Cargando tasas de cambio...</div>
-          <div class="lu" id="clu"></div>
-          <span class="rbadge" id="crb"></span>
-        </div>
-      </div>
-      <div class="qc">
-        <h3>Pares populares</h3>
-        <div class="qg" id="qg"></div>
-      </div>
     </div>
-  </div>
 
-  <!-- REGIONES -->
-  <div id="panel-regiones" class="panel"><div id="rc"></div></div>
+    <!-- Profile Page -->
+    <div class="page" id="profile-page">
+        <div class="main-container">
+            <div style="grid-column: 1 / -1;">
+                <div class="profile-page-header">
+                    <div class="profile-banner"></div>
+                    <div class="profile-main-info">
+                        <div class="profile-avatar-large"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
+                        <div class="profile-name-large">Santiago Sterling</div>
+                        <div class="profile-headline-large">Tecnologo en análisis y desarrollo de software</div>
+                        <div class="profile-location">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-right:6px; vertical-align:middle;">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#EA4335"/>
+                                <circle cx="12" cy="9" r="3" fill="white"/>
+                            </svg>
+                            Cali, Valle del Cauca, Colombia
+                        </div>
+                        <div class="profile-actions">
+                            <a href="https://santiago131440.github.io/SantiagoSterling/index.html" class="stat-item apple-btn"><span>LinkedIn</span></a>
+                            <a href="https://santiago131440.github.io/SantiagoSterling/index.html" class="stat-item apple-btn"><span>Portafolio</span></a>
+                            <a href="https://santiago131440.github.io/SantiagoSterling/windows.html" class="stat-item apple-btn"><span>Repositorio</span></a>
+                        </div>
+                    </div>
+                </div>
 
-  <!-- STATS -->
-  <div id="panel-stats" class="panel">
-    <div class="sg" id="sg"></div>
-    <div class="ccw"><h3>Top 15 Salarios Más Altos (USD/mes)</h3><div id="t15"></div></div>
-    <div class="ccw" style="margin-top:14px;"><h3>10 Salarios Más Bajos (USD/mes)</h3><div id="b10"></div></div>
-  </div>
+                <div class="card" style="padding: 24px; margin-bottom: 16px;"></div>
 
-</div>
+                <div class="card" style="padding: 24px; margin-bottom: 16px;">
+                    <h2 style="font-size: 20px; margin-bottom: 16px;">Experiencia</h2>
+                    <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                        <div class="job-logo">TC</div>
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 16px; font-weight: 600;">Desarrollador Senior</h3>
+                            <div style="font-size: 14px; margin-bottom: 4px;">Tech Company</div>
+                            <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">Ene 2022 - Presente • 3 años</div>
+                            <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary);">
+                                Liderando el desarrollo de aplicaciones web modernas usando React, Node.js y tecnologías cloud. Implementación de arquitecturas escalables y mejores prácticas de desarrollo.
+                            </p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <div class="job-logo" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">ST</div>
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 16px; font-weight: 600;">Desarrollador Full Stack</h3>
+                            <div style="font-size: 14px; margin-bottom: 4px;">StartupTech</div>
+                            <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">Jun 2020 - Dic 2021 • 1 año 7 meses</div>
+                            <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary);">
+                                Desarrollo de features end-to-end para plataforma SaaS. Colaboración con equipos multidisciplinarios en ambiente ágil.
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script>
-const COUNTRIES=[
-  // EUROPA
-  {f:'🇨🇭',n:'Suiza',r:'Europa',u:3200,l:'~3.500 CHF/mes',c:'CHF',y:'2025',lat:46.8,lng:8.2},
-  {f:'🇱🇺',n:'Luxemburgo',r:'Europa',u:3102,l:'2.638 EUR/mes',c:'EUR',y:'2025',lat:49.8,lng:6.1},
-  {f:'🇩🇰',n:'Dinamarca',r:'Europa',u:2900,l:'~22.000 DKK (conv.)',c:'DKK',y:'2025',lat:56.2,lng:9.5},
-  {f:'🇮🇸',n:'Islandia',r:'Europa',u:2600,l:'(por convenio)',c:'ISK',y:'2025',lat:64.9,lng:-18.1},
-  {f:'🇳🇴',n:'Noruega',r:'Europa',u:2600,l:'(por convenio)',c:'NOK',y:'2025',lat:60.5,lng:8.4},
-  {f:'🇮🇪',n:'Irlanda',r:'Europa',u:2683,l:'2.282 EUR/mes',c:'EUR',y:'2025',lat:53.1,lng:-8.2},
-  {f:'🇳🇱',n:'Países Bajos',r:'Europa',u:2572,l:'2.193 EUR/mes',c:'EUR',y:'2025',lat:52.1,lng:5.3},
-  {f:'🇩🇪',n:'Alemania',r:'Europa',u:2537,l:'2.161 EUR/mes',c:'EUR',y:'2025',lat:51.2,lng:10.5},
-  {f:'🇸🇪',n:'Suecia',r:'Europa',u:2200,l:'(por convenio)',c:'SEK',y:'2025',lat:60.1,lng:18.6},
-  {f:'🇧🇪',n:'Bélgica',r:'Europa',u:2432,l:'2.070 EUR/mes',c:'EUR',y:'2025',lat:50.5,lng:4.5},
-  {f:'🇫🇷',n:'Francia',r:'Europa',u:2115,l:'1.802 EUR/mes',c:'EUR',y:'2025',lat:46.2,lng:2.2},
-  {f:'🇬🇧',n:'Reino Unido',r:'Europa',u:2060,l:'1.638 GBP/mes',c:'GBP',y:'2025',lat:55.4,lng:-3.4},
-  {f:'🇮🇱',n:'Israel',r:'Oriente Medio',u:1700,l:'6.248 ILS/mes',c:'ILS',y:'2025',lat:31.0,lng:34.9},
-  {f:'🇰🇷',n:'Corea del Sur',r:'Asia',u:1550,l:'10.030 KRW/h',c:'KRW',y:'2025',lat:36.6,lng:128.0},
-  {f:'🇪🇸',n:'España',r:'Europa',u:1620,l:'1.381 EUR/mes',c:'EUR',y:'2025',lat:40.5,lng:-3.7},
-  {f:'🇯🇵',n:'Japón',r:'Asia',u:1337,l:'1.113 JPY/h (Tokio)',c:'JPY',y:'2025',lat:36.2,lng:138.2},
-  {f:'🇵🇱',n:'Polonia',r:'Europa',u:1332,l:'1.133 EUR/mes',c:'PLN',y:'2026',lat:51.9,lng:19.1},
-  {f:'🇺🇸',n:'EE.UU.',r:'América del Norte',u:1256,l:'$7.25/hora (federal)',c:'USD',y:'2025',lat:38.9,lng:-97.0},
-  {f:'🇸🇬',n:'Singapur',r:'Asia',u:1120,l:'1.500 SGD/mes',c:'SGD',y:'2025',lat:1.35,lng:103.8},
-  {f:'🇨🇿',n:'Rep. Checa',r:'Europa',u:1085,l:'923 EUR/mes',c:'CZK',y:'2026',lat:49.8,lng:15.5},
-  {f:'🇵🇹',n:'Portugal',r:'Europa',u:1081,l:'920 EUR/mes',c:'EUR',y:'2026',lat:39.4,lng:-8.2},
-  {f:'🇨🇾',n:'Chipre',r:'Europa',u:1174,l:'1.000 EUR/mes',c:'EUR',y:'2025',lat:35.1,lng:33.4},
-  {f:'🇬🇷',n:'Grecia',r:'Europa',u:1207,l:'1.027 EUR/mes',c:'EUR',y:'2026',lat:39.1,lng:21.8},
-  {f:'🇭🇷',n:'Croacia',r:'Europa',u:1234,l:'1.050 EUR/mes',c:'EUR',y:'2026',lat:45.1,lng:16.4},
-  {f:'🇲🇹',n:'Malta',r:'Europa',u:1167,l:'993 EUR/mes',c:'EUR',y:'2026',lat:35.9,lng:14.4},
-  {f:'🇱🇹',n:'Lituania',r:'Europa',u:1220,l:'1.038 EUR/mes',c:'EUR',y:'2025',lat:55.2,lng:24.0},
-  {f:'🇸🇮',n:'Eslovenia',r:'Europa',u:1500,l:'1.278 EUR/mes',c:'EUR',y:'2025',lat:46.1,lng:14.8},
-  {f:'🇮🇹',n:'Italia',r:'Europa',u:1310,l:'(por convenio)',c:'EUR',y:'2025',lat:42.8,lng:12.6},
-  {f:'🇪🇪',n:'Estonia',r:'Europa',u:1040,l:'886 EUR/mes',c:'EUR',y:'2025',lat:58.6,lng:25.0},
-  {f:'🇸🇰',n:'Eslovaquia',r:'Europa',u:958,l:'816 EUR/mes',c:'EUR',y:'2025',lat:48.7,lng:19.7},
-  {f:'🇱🇻',n:'Letonia',r:'Europa',u:869,l:'740 EUR/mes',c:'EUR',y:'2025',lat:56.9,lng:24.6},
-  {f:'🇷🇴',n:'Rumanía',r:'Europa',u:956,l:'814 EUR/mes',c:'EUR',y:'2025',lat:45.9,lng:24.9},
-  {f:'🇭🇺',n:'Hungría',r:'Europa',u:830,l:'707 EUR/mes',c:'HUF',y:'2025',lat:47.2,lng:19.5},
-  {f:'🇧🇬',n:'Bulgaria',r:'Europa',u:647,l:'551 EUR/mes',c:'BGN',y:'2025',lat:42.7,lng:25.5},
-  {f:'🇷🇸',n:'Serbia',r:'Europa',u:794,l:'679 EUR/mes',c:'RSD',y:'2026',lat:44.0,lng:21.0},
-  {f:'🇲🇪',n:'Montenegro',r:'Europa',u:786,l:'670 EUR/mes',c:'EUR',y:'2025',lat:42.7,lng:19.4},
-  {f:'🇹🇷',n:'Turquía',r:'Europa',u:763,l:'650 EUR/mes',c:'TRY',y:'2026',lat:39.1,lng:35.2},
-  {f:'🇦🇱',n:'Albania',r:'Europa',u:606,l:'515 EUR/mes',c:'ALL',y:'2025',lat:41.2,lng:20.2},
-  {f:'🇲🇩',n:'Moldavia',r:'Europa',u:335,l:'285 EUR/mes',c:'MDL',y:'2025',lat:47.4,lng:28.4},
-  {f:'🇺🇦',n:'Ucrania',r:'Europa',u:193,l:'164 EUR/mes',c:'UAH',y:'2025',lat:49.0,lng:31.2},
-  {f:'🇧🇦',n:'Bosnia',r:'Europa',u:616,l:'524 EUR/mes',c:'BAM',y:'2025',lat:44.2,lng:17.9},
-  {f:'🇲🇰',n:'Macedonia Norte',r:'Europa',u:686,l:'584 EUR/mes',c:'MKD',y:'2025',lat:41.6,lng:21.7},
-  // LATINOAMÉRICA
-  {f:'🇨🇷',n:'Costa Rica',r:'América Latina',u:751,l:'373.092 CRC/mes',c:'CRC',y:'2026',lat:9.7,lng:-83.8},
-  {f:'🇨🇱',n:'Chile',r:'América Latina',u:597,l:'539.000 CLP/mes',c:'CLP',y:'2026',lat:-35.7,lng:-71.5},
-  {f:'🇺🇾',n:'Uruguay',r:'América Latina',u:537,l:'23.604 UYU/mes',c:'UYU',y:'2025',lat:-32.5,lng:-55.8},
-  {f:'🇪🇨',n:'Ecuador',r:'América Latina',u:482,l:'482 USD/mes',c:'USD',y:'2026',lat:-1.8,lng:-78.2},
-  {f:'🇬🇹',n:'Guatemala',r:'América Latina',u:466,l:'3.738 GTQ/mes',c:'GTQ',y:'2025',lat:15.8,lng:-90.2},
-  {f:'🇲🇽',n:'México',r:'América Latina',u:417,l:'278,80 MXN/día',c:'MXN',y:'2025',lat:23.6,lng:-102.5},
-  {f:'🇨🇴',n:'Colombia',r:'América Latina',u:446,l:'1.746.882 COP/mes',c:'COP',y:'2026',lat:4.6,lng:-74.3},
-  {f:'🇵🇾',n:'Paraguay',r:'América Latina',u:397,l:'2.680.373 PYG/mes',c:'PYG',y:'2025',lat:-23.4,lng:-58.4},
-  {f:'🇧🇴',n:'Bolivia',r:'América Latina',u:397,l:'2.750 BOB/mes',c:'BOB',y:'2025',lat:-17.0,lng:-65.1},
-  {f:'🇭🇳',n:'Honduras',r:'América Latina',u:357,l:'8.972 HNL/mes',c:'HNL',y:'2025',lat:15.0,lng:-86.5},
-  {f:'🇵🇦',n:'Panamá',r:'América Latina',u:341,l:'341 USD/mes',c:'USD',y:'2025',lat:8.5,lng:-80.1},
-  {f:'🇵🇪',n:'Perú',r:'América Latina',u:335,l:'1.130 PEN/mes',c:'PEN',y:'2025',lat:-9.2,lng:-75.0},
-  {f:'🇩🇴',n:'Rep. Dominicana',r:'América Latina',u:267,l:'16.993 DOP/mes',c:'DOP',y:'2026',lat:18.7,lng:-70.2},
-  {f:'🇧🇷',n:'Brasil',r:'América Latina',u:295,l:'1.621 BRL/mes',c:'BRL',y:'2026',lat:-14.2,lng:-51.9},
-  {f:'🇦🇷',n:'Argentina',r:'América Latina',u:233,l:'341.000 ARS/mes',c:'ARS',y:'2026',lat:-38.4,lng:-63.6},
-  {f:'🇸🇻',n:'El Salvador',r:'América Latina',u:243,l:'365 USD/mes',c:'USD',y:'2025',lat:13.8,lng:-88.9},
-  {f:'🇳🇮',n:'Nicaragua',r:'América Latina',u:210,l:'6.338 NIO/mes',c:'NIO',y:'2025',lat:12.9,lng:-85.2},
-  {f:'🇭🇹',n:'Haití',r:'América Latina',u:75,l:'8.635 HTG/mes',c:'HTG',y:'2025',lat:18.9,lng:-72.3},
-  {f:'🇨🇺',n:'Cuba',r:'América Latina',u:7,l:'2.100 CUP/mes',c:'CUP',y:'2025',lat:22.0,lng:-79.5},
-  {f:'🇻🇪',n:'Venezuela',r:'América Latina',u:1,l:'130 VES/mes',c:'VES',y:'2025',lat:8.0,lng:-66.6},
-  {f:'🇨🇦',n:'Canadá',r:'América del Norte',u:2100,l:'2.880 CAD/mes',c:'CAD',y:'2025',lat:56.1,lng:-96.3},
-  // ASIA
-  {f:'🇨🇳',n:'China (Shanghái)',r:'Asia',u:350,l:'2.690 CNY/mes',c:'CNY',y:'2025',lat:35.9,lng:104.2},
-  {f:'🇲🇾',n:'Malasia',r:'Asia',u:330,l:'1.500 MYR/mes',c:'MYR',y:'2025',lat:4.2,lng:108.0},
-  {f:'🇹🇭',n:'Tailandia',r:'Asia',u:330,l:'11.780 THB/mes',c:'THB',y:'2025',lat:15.9,lng:100.9},
-  {f:'🇵🇭',n:'Filipinas',r:'Asia',u:280,l:'16.000 PHP/mes',c:'PHP',y:'2025',lat:12.9,lng:121.8},
-  {f:'🇮🇩',n:'Indonesia',r:'Asia',u:255,l:'4.180.375 IDR/mes',c:'IDR',y:'2025',lat:-0.8,lng:113.9},
-  {f:'🇻🇳',n:'Vietnam',r:'Asia',u:210,l:'4.680.000 VND/mes',c:'VND',y:'2025',lat:14.1,lng:108.3},
-  {f:'🇮🇳',n:'India (media)',r:'Asia',u:200,l:'16.000 INR/mes',c:'INR',y:'2025',lat:20.6,lng:78.0},
-  {f:'🇦🇲',n:'Armenia',r:'Asia',u:230,l:'90.000 AMD/mes',c:'AMD',y:'2025',lat:40.1,lng:45.0},
-  {f:'🇬🇪',n:'Georgia',r:'Asia',u:200,l:'550 GEL/mes',c:'GEL',y:'2025',lat:42.3,lng:43.4},
-  {f:'🇦🇿',n:'Azerbaiyán',r:'Asia',u:210,l:'360 AZN/mes',c:'AZN',y:'2025',lat:40.1,lng:47.6},
-  {f:'🇰🇿',n:'Kazajistán',r:'Asia',u:140,l:'70.000 KZT/mes',c:'KZT',y:'2025',lat:48.0,lng:67.8},
-  {f:'🇳🇵',n:'Nepal',r:'Asia',u:135,l:'18.000 NPR/mes',c:'NPR',y:'2025',lat:28.4,lng:84.1},
-  {f:'🇰🇭',n:'Camboya',r:'Asia',u:250,l:'1.023.000 KHR/mes',c:'KHR',y:'2024',lat:12.6,lng:104.9},
-  {f:'🇱🇰',n:'Sri Lanka',r:'Asia',u:125,l:'40.000 LKR/mes',c:'LKR',y:'2025',lat:7.9,lng:80.8},
-  {f:'🇵🇰',n:'Pakistán',r:'Asia',u:130,l:'36.000 PKR/mes',c:'PKR',y:'2025',lat:30.4,lng:69.3},
-  {f:'🇧🇩',n:'Bangladés',r:'Asia',u:103,l:'12.500 BDT/mes',c:'BDT',y:'2024',lat:23.7,lng:90.4},
-  {f:'🇲🇲',n:'Myanmar',r:'Asia',u:90,l:'4.800 MMK/mes',c:'MMK',y:'2024',lat:19.2,lng:96.7},
-  {f:'🇺🇿',n:'Uzbekistán',r:'Asia',u:80,l:'1.050.000 UZS/mes',c:'UZS',y:'2025',lat:41.4,lng:64.6},
-  // ORIENTE MEDIO
-  {f:'🇦🇪',n:'Emiratos Árabes',r:'Oriente Medio',u:820,l:'3.000 AED/mes',c:'AED',y:'2025',lat:23.4,lng:53.8},
-  {f:'🇸🇦',n:'Arabia Saudita',r:'Oriente Medio',u:800,l:'3.000 SAR/mes',c:'SAR',y:'2025',lat:23.9,lng:45.1},
-  {f:'🇯🇴',n:'Jordania',r:'Oriente Medio',u:330,l:'234 JOD/mes',c:'JOD',y:'2025',lat:30.6,lng:36.2},
-  {f:'🇮🇶',n:'Irak',r:'Oriente Medio',u:340,l:'450.000 IQD/mes',c:'IQD',y:'2025',lat:33.2,lng:43.7},
-  {f:'🇮🇷',n:'Irán',r:'Oriente Medio',u:150,l:'23M IRR/mes',c:'IRR',y:'2025',lat:32.4,lng:53.7},
-  {f:'🇱🇧',n:'Líbano',r:'Oriente Medio',u:80,l:'9M LBP/mes',c:'LBP',y:'2025',lat:33.9,lng:35.5},
-  // OCEANÍA
-  {f:'🇦🇺',n:'Australia',r:'Oceanía',u:2720,l:'2.309 AUD/mes',c:'AUD',y:'2025',lat:-25.3,lng:133.8},
-  {f:'🇳🇿',n:'Nueva Zelanda',r:'Oceanía',u:2620,l:'2.340 NZD/mes',c:'NZD',y:'2025',lat:-40.9,lng:172.7},
-  // ÁFRICA
-  {f:'🇿🇦',n:'Sudáfrica',r:'África',u:350,l:'6.545 ZAR/mes',c:'ZAR',y:'2025',lat:-30.6,lng:22.9},
-  {f:'🇲🇦',n:'Marruecos',r:'África',u:320,l:'3.340 MAD/mes',c:'MAD',y:'2025',lat:31.8,lng:-7.1},
-  {f:'🇹🇳',n:'Túnez',r:'África',u:250,l:'795 TND/mes',c:'TND',y:'2025',lat:33.9,lng:9.6},
-  {f:'🇳🇬',n:'Nigeria',r:'África',u:230,l:'375.000 NGN/mes',c:'NGN',y:'2025',lat:9.1,lng:8.7},
-  {f:'🇿🇼',n:'Zimbabue',r:'África',u:175,l:'175 USD/mes',c:'USD',y:'2025',lat:-19.0,lng:29.2},
-  {f:'🇿🇲',n:'Zambia',r:'África',u:140,l:'3.100 ZMW/mes',c:'ZMW',y:'2025',lat:-13.1,lng:27.8},
-  {f:'🇬🇭',n:'Ghana',r:'África',u:130,l:'1.600 GHS/mes',c:'GHS',y:'2025',lat:7.9,lng:-1.0},
-  {f:'🇰🇪',n:'Kenia',r:'África',u:190,l:'24.000 KES/mes',c:'KES',y:'2025',lat:0.0,lng:37.9},
-  {f:'🇪🇬',n:'Egipto',r:'África',u:120,l:'6.000 EGP/mes',c:'EGP',y:'2025',lat:26.8,lng:30.8},
-  {f:'🇹🇿',n:'Tanzania',r:'África',u:100,l:'260.000 TZS/mes',c:'TZS',y:'2025',lat:-6.4,lng:34.9},
-  {f:'🇸🇳',n:'Senegal',r:'África',u:85,l:'52.680 XOF/mes',c:'XOF',y:'2025',lat:14.5,lng:-14.5},
-  {f:'🇨🇲',n:'Camerún',r:'África',u:70,l:'36.270 XAF/mes',c:'XAF',y:'2025',lat:3.9,lng:11.5},
-  {f:'🇺🇬',n:'Uganda',r:'África',u:65,l:'245.000 UGX/mes',c:'UGX',y:'2025',lat:1.4,lng:32.3},
-  {f:'🇪🇹',n:'Etiopía',r:'África',u:70,l:'3.800 ETB/mes',c:'ETB',y:'2025',lat:9.1,lng:40.5},
-];
-
-// Remove dupes by name
-const seen=new Set();
-const C=COUNTRIES.filter(x=>{if(seen.has(x.n))return false;seen.add(x.n);return true;});
-C.sort((a,b)=>b.u-a.u);
-
-let filt=[...C];
-let cmp=[];
-let rates={};
-let rateTs=null;
-
-// ── MAP STATE ──
-let leafMap=null;
-let mapMarkers=[];
-let mapPanelOpen=false;
-let mapActiveRegion='';
-let mapInitialized=false;
-const MAP_MAX=Math.max(...C.map(x=>x.u));
-const sortedAll=[...C].sort((a,b)=>b.u-a.u);
-
-const CNAMES={
-  USD:'Dólar USD',EUR:'Euro',GBP:'Libra Esterlina',JPY:'Yen Japonés',CHF:'Franco Suizo',
-  CAD:'Dólar Canadiense',AUD:'Dólar Australiano',NZD:'Dólar NZ',CNY:'Yuan Chino',
-  KRW:'Won Surcoreano',MXN:'Peso Mexicano',BRL:'Real Brasileño',ARS:'Peso Argentino',
-  CLP:'Peso Chileno',COP:'Peso Colombiano',PEN:'Sol Peruano',UYU:'Peso Uruguayo',
-  CRC:'Colón Costarricense',PYG:'Guaraní',BOB:'Boliviano',HNL:'Lempira',
-  DOP:'Peso Dominicano',GTQ:'Quetzal',NIO:'Córdoba',VES:'Bolívar',
-  SEK:'Corona Sueca',NOK:'Corona Noruega',DKK:'Corona Danesa',PLN:'Złoty',
-  CZK:'Corona Checa',HUF:'Forinto',RON:'Leu Rumano',BGN:'Lev Búlgaro',
-  TRY:'Lira Turca',UAH:'Grivna',SGD:'Dólar Singapur',HKD:'Dólar HK',
-  THB:'Baht Tailandés',MYR:'Ringgit',IDR:'Rupia Indonesia',PHP:'Peso Filipino',
-  INR:'Rupia India',PKR:'Rupia Paquistaní',BDT:'Taka',VND:'Dong',
-  SAR:'Riyal Saudita',AED:'Dírham EAU',ILS:'Séquel Israelí',ZAR:'Rand',
-  EGP:'Libra Egipcia',MAD:'Dírham Marroquí',TND:'Dinar Tunecino',NGN:'Naira',
-  KES:'Chelín Keniano',GHS:'Cedi'
-};
-
-const QPAIRS=[['USD','EUR'],['USD','MXN'],['USD','COP'],['USD','BRL'],
-  ['EUR','GBP'],['USD','JPY'],['USD','ARS'],['USD','CLP'],
-  ['EUR','CHF'],['USD','CAD'],['USD','PEN'],['GBP','EUR']];
-
-const COLORS=['#e94560','#0f7dff','#00d4aa','#ffd700','#ff6b35','#a855f7'];
-const GRADS=['linear-gradient(90deg,#ffd700,#ffaa00)','linear-gradient(90deg,#c0c0c0,#909090)',
-  'linear-gradient(90deg,#cd7f32,#9a5c1a)','linear-gradient(90deg,#0f7dff,#00d4aa)',
-  'linear-gradient(90deg,#a855f7,#0f7dff)','linear-gradient(90deg,#ff6b35,#e94560)',
-  'linear-gradient(90deg,#00d4aa,#0f7dff)','linear-gradient(90deg,#ffd700,#ff6b35)',
-  'linear-gradient(90deg,#e94560,#a855f7)','linear-gradient(90deg,#0f7dff,#e94560)',
-  'linear-gradient(90deg,#a855f7,#ff6b35)','linear-gradient(90deg,#00d4aa,#ffd700)',
-  'linear-gradient(90deg,#ff6b35,#0f7dff)','linear-gradient(90deg,#e94560,#ffd700)',
-  'linear-gradient(90deg,#0f7dff,#a855f7)'];
-
-// ══════════════════════════════════════════
-//  TABLA
-// ══════════════════════════════════════════
-function renderTable(){
-  const body=document.getElementById('tb');
-  const mx=Math.max(...filt.map(c=>c.u));
-  if(!filt.length){body.innerHTML=`<tr><td colspan="8" class="nr">Sin resultados</td></tr>`;return;}
-  body.innerHTML=filt.map((c,i)=>{
-    const rk=i+1;
-    let b=`<div class="rb rn">${rk}</div>`;
-    if(rk===1)b=`<div class="rb r1"><i class="fi fi-sr-1"></i></div>`;
-    if(rk===2)b=`<div class="rb r2"><i class="fi fi-sr-2"></i></div>`;
-    if(rk===3)b=`<div class="rb r3"><i class="fi fi-sr-3"></i></div>`;
-    const pct=Math.round((c.u/mx)*100);
-    const chk=cmp.some(x=>x.n===c.n)?'checked':'';
-    return `<tr>
-      <td>${b}</td>
-      <td><span class="fe">${c.f}</span><span class="cn">${c.n}</span></td>
-      <td><span class="cr">${c.r}</span></td>
-      <td><div class="su">$${c.u.toLocaleString()}</div><div style="font-size:0.7rem;color:var(--accent3)">✓ ${c.y}</div></td>
-      <td><div class="sl">${c.l}</div></td>
-      <td><span class="cr">${c.y}</span></td>
-      <td style="min-width:110px;"><div class="mb"><div class="mbf" style="width:${pct}%"></div></div></td>
-      <td><input type="checkbox" class="cc" data-n="${c.n}" ${chk} onchange="toggleCmp('${c.n}')"></td>
-    </tr>`;
-  }).join('');
-}
-
-function ft(){
-  const q=document.getElementById('si').value.toLowerCase();
-  const rg=document.getElementById('rf').value;
-  filt=C.filter(c=>(c.n.toLowerCase().includes(q)||c.r.toLowerCase().includes(q))&&(!rg||c.r===rg));
-  sortFilt();renderTable();
-}
-
-function sortFilt(){
-  const s=document.getElementById('ss').value;
-  if(s==='ud')filt.sort((a,b)=>b.u-a.u);
-  else if(s==='ua')filt.sort((a,b)=>a.u-b.u);
-  else if(s==='na')filt.sort((a,b)=>a.n.localeCompare(b.n));
-  else filt.sort((a,b)=>b.n.localeCompare(a.n));
-}
-
-function st(){sortFilt();renderTable();}
-
-// ══════════════════════════════════════════
-//  COMPARE
-// ══════════════════════════════════════════
-function toggleCmp(n){
-  const c=C.find(x=>x.n===n);if(!c)return;
-  const i=cmp.findIndex(x=>x.n===n);
-  if(i>=0)cmp.splice(i,1);
-  else{if(cmp.length>=6){toast('Máx. 6 países');return;}cmp.push(c);}
-  renderCmp();
-}
-
-function afs(){
-  const s=document.getElementById('acs');
-  const n=s.value;if(!n)return;
-  toggleCmp(n);s.value='';
-}
-
-function clearCmp(){
-  cmp=[];
-  document.querySelectorAll('.cc').forEach(cb=>cb.checked=false);
-  renderCmp();
-}
-
-function renderCmp(){
-  const g=document.getElementById('cg');
-  const cw=document.getElementById('ccw');
-  if(!cmp.length){
-    g.innerHTML=`<div class="cp"><span><i class="fi fi-sr-earth-americas"></i></span>Selecciona países en la tabla o usa el selector</div>`;
-    cw.style.display='none';return;
-  }
-  const mx=Math.max(...cmp.map(c=>c.u));
-  g.innerHTML=cmp.map((c,i)=>{
-    const pct=cmp.length>1?((c.u/mx)*100).toFixed(0):100;
-    return `<div class="cc-card">
-      <button class="rb-btn" onclick="removeCmp('${c.n}')">✕</button>
-      <div class="cflag">${c.f}</div>
-      <h3>${c.n}</h3><div class="cregion">${c.r}</div>
-      <div class="ms">$${c.u.toLocaleString()}</div>
-      <div class="cl">USD/mes · ${c.y}</div>
-      <div style="margin:10px 0;">
-        <div style="height:5px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;">
-          <div style="width:${pct}%;height:100%;background:${COLORS[i%COLORS.length]};border-radius:3px;"></div>
+                <div class="card" style="padding: 24px;">
+                    <h2 style="font-size: 20px; margin-bottom: 16px;">Aptitudes</h2>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <div class="job-tag" style="background: var(--primary-blue); color: white;">HTML5</div>
+                        <div class="job-tag" style="background: var(--primary-blue); color: white;">CSS3</div>
+                        <div class="job-tag" style="background: var(--primary-blue); color: white;">JavaScript</div>
+                        <div class="job-tag">Python</div>
+                        <div class="job-tag">Django</div>
+                        <div class="job-tag">AWS</div>
+                        <div class="job-tag">MongoDB</div>
+                        <div class="job-tag">SQL</div>
+                        <div class="job-tag">Docker</div>
+                        <div class="job-tag">Git</div>
+                        <div class="job-tag">Excel</div>
+                        <div class="job-tag">Power BI</div>
+                        <div class="job-tag">Macros | VBA</div>
+                        <div class="job-tag">Clean Code</div>
+                        <div class="job-tag">Agile</div>
+                        <div class="job-tag">API.REST</div>
+                        <div class="job-tag">Software Development</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div style="font-size:0.7rem;color:var(--text2);margin-top:3px;">${pct}% del más alto</div>
-      </div>
-      <div class="dr"><span>Anual</span><span>$${(c.u*12).toLocaleString()}</span></div>
-      <div class="dr"><span>Semanal ~</span><span>$${(c.u/4.33).toFixed(0)}</span></div>
-      <div class="dr"><span>Diario ~</span><span>$${(c.u/30).toFixed(1)}</span></div>
-      <div class="dr"><span>Local</span><span style="font-size:0.75rem">${c.l}</span></div>
-    </div>`;
-  }).join('');
-  cw.style.display='block';
-  const s=[...cmp].sort((a,b)=>b.u-a.u);
-  document.getElementById('ccb').innerHTML=s.map((c,i)=>{
-    const p=Math.round((c.u/s[0].u)*100);
-    return `<div class="cbr"><div class="cbl">${c.f} ${c.n}</div>
-      <div class="cbo"><div class="cbi" style="width:${p}%;background:${COLORS[i%COLORS.length]}">${c.f} $${c.u.toLocaleString()}</div></div>
-      <div class="cv">$${c.u.toLocaleString()}</div></div>`;
-  }).join('');
-}
+    </div>
 
-function removeCmp(n){
-  cmp=cmp.filter(c=>c.n!==n);
-  document.querySelectorAll(`.cc[data-n="${n}"]`).forEach(cb=>cb.checked=false);
-  renderCmp();
-}
+    <!-- Network Page -->
+    <div class="page" id="network-page">
+        <div class="main-container">
+            <div style="grid-column: 1 / -1;">
+                <div class="network-tabs">
+                    <div class="network-tab active">Conexiones</div>
+                    <div class="network-tab">Invitaciones</div>
+                </div>
+                <div class="connection-grid" id="connections-grid"></div>
+            </div>
+        </div>
+    </div>
 
-// ══════════════════════════════════════════
-//  CONVERTER
-// ══════════════════════════════════════════
-async function fetchRates(){
-  try{
-    const r=await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-    if(!r.ok)throw new Error();
-    const d=await r.json();
-    rates=d.rates;rateTs=new Date();
-    upd();conv();renderQ();
-  }catch(e){
-    rates={USD:1,EUR:0.852,GBP:0.795,JPY:150.4,CHF:0.875,CAD:1.369,AUD:1.565,NZD:1.715,
-      CNY:7.25,KRW:1350,MXN:17.2,BRL:4.98,ARS:1050,CLP:940,COP:4200,PEN:3.72,
-      UYU:39.5,CRC:520,PYG:7600,BOB:6.91,HNL:24.7,DOP:58.5,GTQ:7.73,NIO:36.7,
-      VES:36.5,SEK:10.4,NOK:10.6,DKK:6.88,PLN:3.96,CZK:22.7,HUF:357,RON:4.58,
-      BGN:1.83,TRY:34.2,UAH:41.3,SGD:1.34,HKD:7.82,THB:35.8,MYR:4.71,IDR:15700,
-      PHP:57.2,INR:83.8,PKR:278,BDT:110,VND:24800,SAR:3.75,AED:3.67,ILS:3.67,
-      ZAR:18.7,EGP:50.2,MAD:9.93,TND:3.09,NGN:1650,KES:129,GHS:15.7,
-      IQD:1310,JOD:0.709,AMD:395,GEL:2.72,AZN:1.70};
-    rateTs=new Date();upd();conv();renderQ();
-    document.getElementById('clu').textContent+=' (datos de respaldo)';
-  }
-}
+    <!-- Jobs Page -->
+    <div class="page" id="jobs-page">
+        <div class="main-container">
+            <div style="grid-column: 1 / -1;">
+                <div class="card" style="padding: 16px; margin-bottom: 16px;">
+                    <div style="font-size: 20px; font-weight: 600; margin-bottom: 16px;">Conoce la gama de empleos del sector</div>
+                    <div style="font-size: 14px; color: var(--text-secondary);">Basados en tu perfil y búsquedas</div>
+                </div>
+                <div id="jobs-list"></div>
+            </div>
+        </div>
+    </div>
 
-function upd(){
-  if(rateTs){
-    const t=rateTs.toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});
-    document.getElementById('clu').textContent=`Actualizado: ${t}`;
-  }
-}
+    <!-- Post Detail Overlay -->
+    <div class="post-detail-overlay" id="postDetailOverlay">
+        <div class="post-detail-container">
+            <button class="post-detail-close" onclick="closePostDetail()">×</button>
+            <div class="post-detail-media">
+                <button class="media-nav-btn prev" onclick="navigateMedia(-1)" id="prevMediaBtn">‹</button>
+                <button class="media-nav-btn next" onclick="navigateMedia(1)" id="nextMediaBtn">›</button>
+                <div class="photo-counter" id="photoCounter">1 / 3</div>
+                <img src="" alt="Post media" id="detailMediaImage">
+            </div>
+            <div class="post-detail-sidebar">
+                <div class="post-header">
+                    <div class="post-avatar" id="detailAvatar">SS</div>
+                    <div class="post-info">
+                        <div class="post-author" id="detailAuthor">Santiago Sterling</div>
+                        <div class="post-meta" id="detailMeta">Tecnologo en análisis y desarrollo de software | 2h</div>
+                    </div>
+                </div>
+                <div class="post-content" id="detailContent" style="max-height: none;">
+                    Contenido del post...
+                </div>
+                <div class="post-stats">
+                    <div class="post-reactions">
+                        <div class="reaction-icons">
+                            <span class="reaction-icon like-icon"><i class="fi fi-rr-thumbs-up"></i></span>
+                            <span class="reaction-icon love-icon"><i class="fi fi-rr-heart"></i></span>
+                            <span class="reaction-icon celebrate-icon">🎉</span>
+                        </div>
+                        <span id="detailLikes">24</span>
+                    </div>
+                    <div>
+                        <span id="detailComments">2 comentarios</span>
+                    </div>
+                </div>
+                <div class="post-actions">
+                    <button class="post-action" onclick="toggleDetailLike()">
+                        <span class="post-action-icon"><i class="fi fi-rr-heart"></i></span>
+                        <span>Me gusta</span>
+                    </button>
+                    <button class="post-action">
+                        <span class="post-action-icon"><i class="fi fi-rr-comment"></i></span>
+                        <span>Comentar</span>
+                    </button>
+                    <button class="post-action" id="detailViewBtn" onclick="openDetailUrl()">
+                        <span class="post-action-icon"><i class="fi fi-rr-magic-wand"></i></span>
+                        <span>Ver proyecto</span>
+                    </button>
+                </div>
+                <div class="comments-section active" style="flex: 1; overflow-y: auto;">
+                    <div class="comment">
+                        <div class="comment-avatar"><img src="https://i.pravatar.cc/150?img=8" alt="JP"></div>
+                        <div>
+                            <div class="comment-content">
+                                <div class="comment-author">Julián Rivas</div>
+                                <div class="comment-text">¡Felicidades! se nota tu esfuerzo 👏</div>
+                            </div>
+                            <div class="comment-time">3h • Me gusta • Responder</div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <div class="comment-avatar"><img src="https://i.pravatar.cc/150?img=9" alt="MC"></div>
+                        <div>
+                            <div class="comment-content">
+                                <div class="comment-author">Ximena Sterling</div>
+                                <div class="comment-text">Increíble logro! Sigue así</div>
+                            </div>
+                            <div class="comment-time">2h • Me gusta • Responder</div>
+                        </div>
+                    </div>
+                    <div class="add-comment">
+                        <div class="comment-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
+                        <input type="text" placeholder="Añade un comentario...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-function initConvSel(){
-  const crs=Object.keys(CNAMES);
-  const fs=document.getElementById('cfrom'),ts=document.getElementById('cto');
-  crs.forEach(code=>{
-    const nm=CNAMES[code]||code;
-    fs.innerHTML+=`<option value="${code}" ${code==='USD'?'selected':''}>${code} – ${nm}</option>`;
-    ts.innerHTML+=`<option value="${code}" ${code==='COP'?'selected':''}>${code} – ${nm}</option>`;
-  });
-}
+    <!-- Chat Widget -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header" onclick="minimizeChat()">
+            <div class="chat-user-info">
+                <div class="chat-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
+                <div>
+                    <div class="chat-name">Santiago Sterling</div>
+                    <div style="font-size: 11px; color: var(--success-green);">● En línea</div>
+                </div>
+            </div>
+            <button style="border: none; background: transparent; cursor: pointer; font-size: 20px;" onclick="event.stopPropagation(); toggleChat()">×</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message">
+                <div class="chat-message-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
+                <div class="chat-message-content">
+                    Te doy la bienvenida a este espacio donde las ideas se convierten en acción y cada avance suma. Gracias por ser parte del camino.
+                </div>
+            </div>
+            <div class="chat-message own">
+                <div class="chat-message-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
+                <div class="chat-message-content">Muchas gracias!</div>
+            </div>
+            <div class="chat-message">
+                <div class="chat-message-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
+                <div class="chat-message-content">
+                    Llego para aportar valor, transformar ideas en resultados y llevar cada proyecto más lejos. ¿Deseas contactar?
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" placeholder="Escribe un mensaje..." id="chatInput" onkeypress="handleChatEnter(event)">
+            <button class="chat-send-btn" onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
 
-function conv(){
-  if(!Object.keys(rates).length)return;
-  const amt=parseFloat(document.getElementById('ca').value)||0;
-  const fr=document.getElementById('cfrom').value;
-  const to=document.getElementById('cto').value;
-  if(!rates[fr]||!rates[to])return;
-  const res=(amt/rates[fr])*rates[to];
-  const rt=(1/rates[fr])*rates[to];
-  document.getElementById('cra').textContent=`${res.toLocaleString('es',{maximumFractionDigits:4})} ${to}`;
-  document.getElementById('cri').textContent=`1 ${fr} = ${rt.toLocaleString('es',{maximumFractionDigits:6})} ${to}`;
-  document.getElementById('crb').textContent=`1 ${to} = ${(1/rt).toLocaleString('es',{maximumFractionDigits:6})} ${fr}`;
-}
+    <script>
+        let posts = [];
 
-function swapC(){
-  const f=document.getElementById('cfrom'),t=document.getElementById('cto');
-  const tmp=f.value;f.value=t.value;t.value=tmp;conv();
-}
+        const connections = [
+            { name: "María Contreras", title: "Frontend Developer en Google", avatar: "MC", mutual: 45 },
+            { name: "Juan Pérez", title: "Data Scientist en Microsoft", avatar: "JP", mutual: 32 },
+            { name: "Elena Torres", title: "Product Manager en Amazon", avatar: "ET", mutual: 28 },
+            { name: "Roberto Silva", title: "Backend Engineer en Meta", avatar: "RS", mutual: 51 },
+            { name: "Carmen López", title: "UX Designer en Apple", avatar: "CL", mutual: 39 },
+            { name: "Miguel Ángel", title: "DevOps Engineer en Netflix", avatar: "MA", mutual: 22 },
+            { name: "Isabel García", title: "Marketing Manager en Spotify", avatar: "IG", mutual: 47 },
+            { name: "Fernando Ruiz", title: "ML Engineer en Tesla", avatar: "FR", mutual: 19 }
+        ];
 
-function renderQ(){
-  document.getElementById('qg').innerHTML=QPAIRS.map(([a,b])=>{
-    if(!rates[a]||!rates[b])return'';
-    const rt=((1/rates[a])*rates[b]);
-    return `<div class="qi" onclick="setQ('${a}','${b}')">
-      <div class="pair">${a} → ${b}</div>
-      <div class="rate">${rt.toLocaleString('es',{maximumFractionDigits:4})}</div>
-    </div>`;
-  }).join('');
-}
+        const jobs = [
+            {
+                title: "Senior Full Stack Developer",
+                company: "TechCorp Innovation",
+                location: "Remoto",
+                logo: "TC",
+                time: "Publicado hace 2 días",
+                applicants: "34 solicitantes",
+                tags: ["React", "Node.js", "AWS"]
+            },
+            {
+                title: "UX/UI Designer",
+                company: "Design Studio Pro",
+                location: "Remoto",
+                logo: "DS",
+                time: "Publicado hace 5 días",
+                applicants: "92 solicitantes",
+                tags: ["Figma", "User Research", "Prototyping"]
+            },
+            {
+                title: "DevOps Engineer",
+                company: "Cloud Systems Ltd",
+                location: "Valencia, España",
+                logo: "CS",
+                time: "Publicado hace 1 día",
+                applicants: "43 solicitantes",
+                tags: ["Docker", "Kubernetes", "CI/CD"]
+            }
+        ];
 
-function setQ(a,b){
-  document.getElementById('cfrom').value=a;
-  document.getElementById('cto').value=b;
-  document.getElementById('ca').value=1;
-  conv();showTab('conversor');
-}
+        let currentPostDetail = null;
+        let currentMediaIndex = 0;
 
-// ══════════════════════════════════════════
-//  REGIONS
-// ══════════════════════════════════════════
-function renderRegions(){
-  const ORD=['Europa','América del Norte','América Latina','Asia','Oriente Medio','Oceanía','África'];
-  const ICO={Europa:'','América del Norte':'','América Latina':'',Asia:'','Oriente Medio':'',Oceanía:'',África:''};
-  document.getElementById('rc').innerHTML=ORD.map(rg=>{
-    const cs=C.filter(c=>c.r===rg).sort((a,b)=>b.u-a.u);
-    if(!cs.length)return'';
-    const avg=Math.round(cs.reduce((s,c)=>s+c.u,0)/cs.length);
-    return `<div class="rs">
-      <div class="rt"><span style="font-size:1.5rem">${ICO[rg]||''}</span>
-        <h3>${rg}</h3><span class="cnt">${cs.length} países · Prom. $${avg}</span></div>
-      <div class="rc">${cs.map(c=>`<div class="sp" onclick="addFromReg('${c.n}')" id="pill-${c.n.replace(/[\s.()]/g,'_')}">
-          <span class="pf">${c.f}</span>
-          <div class="pi"><div class="pn">${c.n}</div><div class="pa">$${c.u.toLocaleString()}/mes</div></div>
-        </div>`).join('')}</div>
-    </div>`;
-  }).join('');
-}
+        function initializeApp() {
+            loadPostsFromHTML();
+            renderPosts();
+            initializeConnections();
+            initializeJobs();
+            updateActiveNav();
+        }
 
-function addFromReg(n){
-  const c=C.find(x=>x.n===n);if(!c)return;
-  if(cmp.some(x=>x.n===n)){toast(`${n} ya está`);return;}
-  if(cmp.length>=6){toast('Máx. 6 países');return;}
-  cmp.push(c);
-  const el=document.getElementById(`pill-${n.replace(/[\s.()]/g,'_')}`);
-  if(el)el.classList.add('sel');
-  toast(`${c.f} ${c.n} añadido`);
-}
+        function loadPostsFromHTML() {
+            const postElements = document.querySelectorAll('#feed-posts .post-card');
+            posts = Array.from(postElements).map((el, index) => {
+                const images = el.dataset.images ? el.dataset.images.split(',') : [];
+                return {
+                    id: index + 1,
+                    author: el.dataset.author,
+                    avatar: el.dataset.avatar,
+                    headline: el.dataset.headline,
+                    time: el.dataset.time,
+                    url: el.dataset.url || null,
+                    content: el.dataset.content,
+                    images: images,
+                    likes: parseInt(el.dataset.likes) || 0,
+                    comments: parseInt(el.dataset.comments) || 0,
+                    shares: parseInt(el.dataset.shares) || 0,
+                    hasLiked: el.dataset.hasliked === 'true'
+                };
+            });
+        }
 
-// ══════════════════════════════════════════
-//  STATS
-// ══════════════════════════════════════════
-function renderStats(){
-  const s=[...C].sort((a,b)=>b.u-a.u);
-  const top=s[0],bot=s[s.length-1];
-  const avg=Math.round(C.reduce((a,c)=>a+c.u,0)/C.length);
-  const med=s[Math.floor(s.length/2)].u;
-  const a1k=C.filter(c=>c.u>=1000).length;
-  const b2=C.filter(c=>c.u<200).length;
-  document.getElementById('sg').innerHTML=`
-    <div class="sc"><div class="lb">Salario más alto</div><div class="vl" style="color:var(--gold)">$${top.u.toLocaleString()}</div><div class="sb">${top.f} ${top.n}</div></div>
-    <div class="sc"><div class="lb">Salario más bajo</div><div class="vl" style="color:var(--red)">$${bot.u}</div><div class="sb">${bot.f} ${bot.n}</div></div>
-    <div class="sc"><div class="lb">Promedio mundial</div><div class="vl" style="color:var(--accent2)">$${avg.toLocaleString()}</div><div class="sb">USD/mes</div></div>
-    <div class="sc"><div class="lb">Mediana</div><div class="vl" style="color:var(--accent3)">$${med.toLocaleString()}</div><div class="sb">Punto medio</div></div>
-    <div class="sc"><div class="lb">Sobre $1.000/mes</div><div class="vl" style="color:var(--accent3)">${a1k}</div><div class="sb">países</div></div>
-    <div class="sc"><div class="lb">Bajo $200/mes</div><div class="vl" style="color:var(--red)">${b2}</div><div class="sb">países (crítico)</div></div>
-    <div class="sc"><div class="lb">Total países</div><div class="vl">${C.length}</div><div class="sb">con datos</div></div>
-    <div class="sc"><div class="lb">Datos</div><div class="vl" style="font-size:1rem">2025–26</div><div class="sb">Fuentes oficiales</div></div>`;
-  const t15=s.slice(0,15);
-  document.getElementById('t15').innerHTML=t15.map((c,i)=>{
-    const p=Math.round((c.u/t15[0].u)*100);
-    return `<div class="cbr"><div class="cbl">${c.f} ${c.n}</div>
-      <div class="cbo"><div class="cbi" style="width:${p}%;background:${GRADS[i]}">${c.f} $${c.u.toLocaleString()}</div></div>
-      <div class="cv">$${c.u.toLocaleString()}</div></div>`;
-  }).join('');
-  const b10=s.slice(-10).reverse();
-  document.getElementById('b10').innerHTML=b10.map((c,i)=>{
-    const p=Math.max(Math.round((c.u/b10[0].u)*100),4);
-    return `<div class="cbr"><div class="cbl">${c.f} ${c.n}</div>
-      <div class="cbo"><div class="cbi" style="width:${p}%;background:linear-gradient(90deg,var(--red),#800020)">${c.f} $${c.u}</div></div>
-      <div class="cv" style="color:var(--red)">$${c.u}</div></div>`;
-  }).join('');
-}
+        function renderPosts() {
+            const feedContainer = document.getElementById('feed-posts');
+            feedContainer.innerHTML = '';
+            posts.forEach(post => {
+                feedContainer.innerHTML += createPostHTML(post);
+            });
+        }
 
-// ══════════════════════════════════════════
-//  HEADER
-// ══════════════════════════════════════════
-function initHeader(){
-  const s=[...C].sort((a,b)=>b.u-a.u);
-  document.getElementById('hc').textContent=C.length;
-  document.getElementById('hh').textContent='$'+s[0].u.toLocaleString();
-  document.getElementById('hl').textContent='$'+s[s.length-1].u;
-  document.getElementById('ha').textContent='$'+Math.round(C.reduce((a,c)=>a+c.u,0)/C.length);
-}
+        function navigateTo(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`${page}-page`).classList.add('active');
+            updateActiveNav(page);
+        }
 
-function initAddSel(){
-  const s=document.getElementById('acs');
-  [...C].sort((a,b)=>a.n.localeCompare(b.n)).forEach(c=>{
-    s.innerHTML+=`<option value="${c.n}">${c.f} ${c.n} · $${c.u}/mes</option>`;
-  });
-}
+        function updateActiveNav(activePage = 'home') {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.page === activePage) {
+                    item.classList.add('active');
+                }
+            });
+        }
 
-// ══════════════════════════════════════════
-//  TABS
-// ══════════════════════════════════════════
-function showTab(t){
-  const tabs=['mapa','tabla','comparar','conversor','regiones','stats'];
-  const idx=tabs.indexOf(t);
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.tab')[idx].classList.add('active');
-  document.getElementById('panel-'+t).classList.add('active');
+        function createPostHTML(post) {
+            const galleryClass = getGalleryClass(post.images.length);
+            const truncated = post.content.length > 200 ? 'truncated' : '';
+            const displayContent = post.content.length > 200 ? post.content.substring(0, 200) + '...' : post.content;
 
-  // Mapa: ajuste de layout + init lazy
-  const mc=document.getElementById('main-content');
-  if(t==='mapa'){
-    mc.style.padding='0';
-    mc.style.maxWidth='none';
-    if(!mapInitialized){
-      mapInitialized=true;
-      setTimeout(initMap,50);
-    } else {
-      setTimeout(()=>leafMap&&leafMap.invalidateSize(),100);
-    }
-  } else {
-    mc.style.padding='22px 28px';
-    mc.style.maxWidth='1400px';
-  }
-}
+            let galleryHTML = '';
+            if (post.images.length > 0) {
+                galleryHTML = `<div class="post-gallery ${galleryClass}">`;
+                post.images.slice(0, 4).forEach((img, idx) => {
+                    if (idx === 3 && post.images.length > 4) {
+                        galleryHTML += `
+                            <div class="gallery-item" onclick="openPostDetail(${post.id}, ${idx})">
+                                <img src="${img}" alt="Post image">
+                                <div class="gallery-more">+${post.images.length - 4}</div>
+                            </div>`;
+                    } else {
+                        galleryHTML += `
+                            <div class="gallery-item" onclick="openPostDetail(${post.id}, ${idx})">
+                                <img src="${img}" alt="Post image">
+                            </div>`;
+                    }
+                });
+                galleryHTML += '</div>';
+            }
 
-// ══════════════════════════════════════════
-//  MAPA – helpers
-// ══════════════════════════════════════════
-function mapTier(u){
-  if(u>=2000)return 5;
-  if(u>=1000)return 4;
-  if(u>=500)return 3;
-  if(u>=200)return 2;
-  return 1;
-}
-function tierBarColor(t){
-  return ['','var(--red)','#a855f7','var(--accent3)','var(--accent2)','var(--gold)'][t];
-}
-function tierBarGrad(t){
-  return ['','linear-gradient(90deg,#e94560,#c0002f)','linear-gradient(90deg,#a855f7,#7c3aed)',
-    'linear-gradient(90deg,#00d4aa,#009e86)','linear-gradient(90deg,#0f7dff,#0054c8)',
-    'linear-gradient(90deg,#ffd700,#e8a000)'][t];
-}
+            const avatarHTML = post.avatar.startsWith('http')
+                ? `<img src="${post.avatar}" alt="${post.author}">`
+                : post.avatar;
 
-function createMapIcon(country){
-  const tier=mapTier(country.u);
-  const val=country.u>=1000?'$'+(country.u/1000).toFixed(country.u%1000===0?0:1)+'k':'$'+country.u;
-  const html=`<div class="salary-marker tier-${tier}"><div class="sm-bubble"><span class="sm-flag">${country.f}</span><span class="sm-val">${val}</span></div></div>`;
-  return L.divIcon({html,className:'',iconAnchor:[40,38],iconSize:[80,38]});
-}
+            // Título: enlace si tiene URL, texto si no
+            const authorHTML = post.url
+                ? `<a href="${post.url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${post.author}</a>
+                   <span class="external-link-icon">
+                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                       <polyline points="15 3 21 3 21 9"/>
+                       <line x1="10" y1="14" x2="21" y2="3"/>
+                     </svg>
+                   </span>`
+                : post.author;
 
-function buildPopup(c){
-  const rank=sortedAll.findIndex(x=>x.n===c.n)+1;
-  const pct=Math.round((c.u/MAP_MAX)*100);
-  const tier=mapTier(c.u);
-  return `<div class="pop-inner">
-    <div class="pop-flag">${c.f}</div>
-    <div class="pop-name">${c.n}</div>
-    <div class="pop-region">${c.r} · ${c.y}</div>
-    <div class="pop-salary">$${c.u.toLocaleString()}</div>
-    <div class="pop-local">${c.l}</div>
-    <div class="pop-bar"><div class="pop-bar-fill" style="width:${pct}%;background:${tierBarGrad(tier)}"></div></div>
-    <div class="pop-rank">Puesto #${rank} de ${C.length} · ${pct}% del máximo</div>
-    <div class="pop-row"><span>Anual</span><span>$${(c.u*12).toLocaleString()}</span></div>
-    <div class="pop-row"><span>Semanal ~</span><span>$${(c.u/4.33).toFixed(0)}</span></div>
-    <div class="pop-row"><span>Diario ~</span><span>$${(c.u/30).toFixed(1)}</span></div>
-    <div class="pop-row"><span>Moneda</span><span>${c.c}</span></div>
-  </div>`;
-}
+            return `
+                <div class="card post-card" data-post-id="${post.id}">
+                    <div class="post-header">
+                        <div class="post-avatar">${avatarHTML}</div>
+                        <div class="post-info">
+                            <div class="post-author">${authorHTML}</div>
+                            <div class="post-meta">${post.headline} • ${post.time}</div>
+                        </div>
+                        <button class="post-menu-btn">⋯</button>
+                    </div>
+                    <div class="post-content ${truncated}" onclick="${post.images.length === 0 ? `openPostDetail(${post.id}, 0)` : ''}">
+                        ${displayContent}
+                        ${post.content.length > 200 ? `<span class="see-more" onclick="openPostDetail(${post.id}, 0)">ver más</span>` : ''}
+                    </div>
+                    ${galleryHTML}
+                    <div class="post-stats">
+                        <div class="post-reactions">
+                            <div class="reaction-icons">
+                                <span class="reaction-icon like-icon">👍</span>
+                                <span class="reaction-icon love-icon">❤️</span>
+                                <span class="reaction-icon celebrate-icon">🎉</span>
+                            </div>
+                            <span>${post.likes}</span>
+                        </div>
+                        <div>
+                            <span>${post.comments} comentarios • ${post.shares} veces compartido</span>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="post-action ${post.hasLiked ? 'liked' : ''}" onclick="toggleLike(${post.id})">
+                            <span class="post-action-icon"><i class="fi fi-rr-heart"></i></span>
+                            <span>Me gusta</span>
+                        </button>
+                        <button class="post-action" onclick="toggleComments(${post.id})">
+                            <span class="post-action-icon"><i class="fi fi-rr-comment"></i></span>
+                            <span>Comentar</span>
+                        </button>
+                        ${post.url
+                            ? `<a class="post-action" href="${post.url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="text-decoration:none;">
+                                <span class="post-action-icon"><i class="fi fi-rr-magic-wand"></i></span>
+                                <span>Ver proyecto</span>
+                               </a>`
+                            : `<button class="post-action">
+                                <span class="post-action-icon"><i class="fi fi-rr-magic-wand"></i></span>
+                                <span>Ver</span>
+                               </button>`
+                        }
+                    </div>
+                    <div class="comments-section" id="comments-${post.id}">
+                        <div class="comment">
+                            <div class="comment-avatar"><img src="https://i.pravatar.cc/150?img=8" alt="JP"></div>
+                            <div>
+                                <div class="comment-content">
+                                    <div class="comment-author">Julián Rivas</div>
+                                    <div class="comment-text">¡Felicidades! se nota tu esfuerzo 👏</div>
+                                </div>
+                                <div class="comment-time">3h • Me gusta • Responder</div>
+                            </div>
+                        </div>
+                        <div class="add-comment">
+                            <div class="chat-message-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
+                            <input type="text" placeholder="Añade un comentario..." onkeypress="handleCommentEnter(event, ${post.id})">
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
 
-function renderMapMarkers(list){
-  mapMarkers.forEach(m=>leafMap.removeLayer(m));
-  mapMarkers=[];
-  list.forEach(c=>{
-    if(c.lat==null)return;
-    const icon=createMapIcon(c);
-    const m=L.marker([c.lat,c.lng],{icon,title:c.n});
-    m.bindPopup(buildPopup(c),{maxWidth:280,minWidth:230});
-    m.addTo(leafMap);
-    mapMarkers.push(m);
-  });
-}
+        function getGalleryClass(count) {
+            if (count === 1) return 'single';
+            if (count === 2) return 'double';
+            if (count === 3) return 'triple';
+            if (count === 4) return 'quad';
+            return 'many';
+        }
 
-function renderMapPanel(list){
-  const sv=document.getElementById('map-sort-sel').value;
-  let arr=[...list];
-  if(sv==='ud')arr.sort((a,b)=>b.u-a.u);
-  else if(sv==='ua')arr.sort((a,b)=>a.u-b.u);
-  else arr.sort((a,b)=>a.n.localeCompare(b.n));
-  const mx=Math.max(...arr.map(x=>x.u));
-  document.getElementById('msp-body').innerHTML=arr.map(c=>{
-    const p=Math.round((c.u/mx)*100);
-    const col=tierBarColor(mapTier(c.u));
-    return `<div class="msp-item" onclick="mapFlyTo(${JSON.stringify(c).replace(/"/g,'&quot;')})">
-      <span class="mi-flag">${c.f}</span>
-      <div class="mi-info">
-        <div class="mi-name">${c.n}</div>
-        <div class="mi-salary">$${c.u.toLocaleString()}/mes</div>
-        <div class="mi-bar"><div class="mi-bar-fill" style="width:${p}%;background:${col}"></div></div>
-      </div>
-    </div>`;
-  }).join('');
-}
+        function openPostDetail(postId, mediaIndex = 0) {
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
 
-function mapFlyTo(c){
-  if(!leafMap)return;
-  leafMap.flyTo([c.lat,c.lng],5,{duration:1.4});
-  setTimeout(()=>{
-    const mk=mapMarkers.find(m=>m.options.title===c.n);
-    if(mk)mk.openPopup();
-  },1500);
-  if(mapPanelOpen)toggleMapPanel();
-}
+            currentPostDetail = post;
+            currentMediaIndex = mediaIndex;
 
-function filterMap(rg){
-  mapActiveRegion=rg;
-  document.querySelectorAll('.map-fc-btn').forEach(b=>{
-    b.classList.toggle('active',b.dataset.mregion===rg);
-  });
-  const list=rg?C.filter(c=>c.r===rg):C;
-  renderMapMarkers(list);
-  renderMapPanel(list);
-  if(rg){
-    const pts=list.filter(c=>c.lat!=null).map(c=>[c.lat,c.lng]);
-    if(pts.length)leafMap.fitBounds(pts,{padding:[50,50],maxZoom:5});
-  } else {
-    leafMap.flyTo([20,10],2.5,{duration:1});
-  }
-}
+            const overlay = document.getElementById('postDetailOverlay');
+            const avatarHTML = post.avatar.startsWith('http')
+                ? `<img src="${post.avatar}" alt="${post.author}">`
+                : post.avatar;
 
-function toggleMapPanel(){
-  mapPanelOpen=!mapPanelOpen;
-  document.getElementById('map-side').classList.toggle('open',mapPanelOpen);
-  document.getElementById('map-panel-toggle').textContent=mapPanelOpen?'✕ Cerrar':'📋 Lista países';
-}
+            // Título en el modal también con enlace si aplica
+            const authorHTML = post.url
+                ? `<a href="${post.url}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;font-weight:400;" onmouseover="this.style.textDecoration='underline';this.style.color='var(--primary-blue)'" onmouseout="this.style.textDecoration='none';this.style.color='inherit'">${post.author} ↗</a>`
+                : post.author;
 
-function initMapSearch(){
-  const inp=document.getElementById('map-search-input');
-  const res=document.getElementById('map-search-results');
-  inp.addEventListener('input',()=>{
-    const q=inp.value.trim().toLowerCase();
-    if(!q){res.style.display='none';return;}
-    const matches=C.filter(c=>c.n.toLowerCase().includes(q)||c.r.toLowerCase().includes(q)).slice(0,8);
-    if(!matches.length){res.style.display='none';return;}
-    res.style.display='block';
-    res.innerHTML=matches.map(c=>`<div class="msr-item" onclick="mapSelectFromSearch(${JSON.stringify(c).replace(/"/g,'&quot;')})">
-      <span class="msf">${c.f}</span>
-      <div><div class="msn">${c.n}</div><div class="msu">$${c.u.toLocaleString()}/mes · ${c.r}</div></div>
-    </div>`).join('');
-  });
-  document.addEventListener('click',e=>{
-    if(!e.target.closest('.map-search-wrap'))res.style.display='none';
-  });
-}
+            document.getElementById('detailAvatar').innerHTML = avatarHTML;
+            document.getElementById('detailAuthor').innerHTML = authorHTML;
+            document.getElementById('detailMeta').textContent = `${post.headline} • ${post.time}`;
+            document.getElementById('detailContent').textContent = post.content;
+            document.getElementById('detailLikes').textContent = post.likes;
+            document.getElementById('detailComments').textContent = `${post.comments} comentarios`;
 
-function mapSelectFromSearch(c){
-  document.getElementById('map-search-input').value=c.n;
-  document.getElementById('map-search-results').style.display='none';
-  mapFlyTo(c);
-}
+            // Botón "Ver proyecto" en el modal
+            const viewBtn = document.getElementById('detailViewBtn');
+            if (post.url) {
+                viewBtn.style.display = 'flex';
+            } else {
+                viewBtn.style.display = 'none';
+            }
 
-// ── INIT MAP ──
-function initMap(){
-  const mapEl=document.getElementById('map-content');
-  document.getElementById('map').style.height=mapEl.offsetHeight+'px';
+            if (post.images.length > 0) {
+                document.getElementById('detailMediaImage').src = post.images[mediaIndex];
+                document.getElementById('photoCounter').textContent = `${mediaIndex + 1} / ${post.images.length}`;
+                document.getElementById('prevMediaBtn').style.display = post.images.length > 1 ? 'block' : 'none';
+                document.getElementById('nextMediaBtn').style.display = post.images.length > 1 ? 'block' : 'none';
+            } else {
+                document.querySelector('.post-detail-media').style.display = 'none';
+            }
 
-  leafMap=L.map('map',{
-    center:[20,10],zoom:2.5,
-    minZoom:1.5,maxZoom:12,
-    zoomControl:true,
-    worldCopyJump:true
-  });
+            overlay.classList.add('active');
+        }
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
-    subdomains:'abcd',maxZoom:20
-  }).addTo(leafMap);
+        function openDetailUrl() {
+            if (currentPostDetail && currentPostDetail.url) {
+                window.open(currentPostDetail.url, '_blank', 'noopener,noreferrer');
+            }
+        }
 
-  renderMapMarkers(C);
-  renderMapPanel(C);
-  initMapSearch();
+        function closePostDetail() {
+            document.getElementById('postDetailOverlay').classList.remove('active');
+            currentPostDetail = null;
+        }
 
-  document.querySelectorAll('.map-fc-btn').forEach(b=>{
-    b.addEventListener('click',()=>filterMap(b.dataset.mregion));
-  });
-  document.getElementById('map-sort-sel').addEventListener('change',()=>{
-    const list=mapActiveRegion?C.filter(c=>c.r===mapActiveRegion):C;
-    renderMapPanel(list);
-  });
+        function navigateMedia(direction) {
+            if (!currentPostDetail || currentPostDetail.images.length === 0) return;
+            currentMediaIndex += direction;
+            if (currentMediaIndex < 0) currentMediaIndex = currentPostDetail.images.length - 1;
+            if (currentMediaIndex >= currentPostDetail.images.length) currentMediaIndex = 0;
+            document.getElementById('detailMediaImage').src = currentPostDetail.images[currentMediaIndex];
+            document.getElementById('photoCounter').textContent = `${currentMediaIndex + 1} / ${currentPostDetail.images.length}`;
+        }
 
-  // keep map height in sync
-  window.addEventListener('resize',()=>{
-    const h=document.getElementById('map-content').offsetHeight;
-    document.getElementById('map').style.height=h+'px';
-    leafMap.invalidateSize();
-  });
-}
+        function initializeConnections() {
+            const grid = document.getElementById('connections-grid');
+            connections.forEach(conn => {
+                const gradient = getRandomGradient();
+                grid.innerHTML += `
+                    <div class="connection-card">
+                        <div class="connection-cover" style="background: ${getRandomGradient()};"></div>
+                        <div class="connection-avatar" style="background: ${gradient};">${conn.avatar}</div>
+                        <div class="connection-info">
+                            <div class="connection-name">${conn.name}</div>
+                            <div class="connection-title">${conn.title}</div>
+                            <div class="connection-mutual">${conn.mutual} conexiones en común</div>
+                            <button class="btn-secondary" style="width: 100%;">Mensaje</button>
+                        </div>
+                    </div>`;
+            });
+        }
 
-// ══════════════════════════════════════════
-//  TOAST
-// ══════════════════════════════════════════
-function toast(msg){
-  const t=document.createElement('div');
-  t.className='toast';t.textContent=msg;
-  document.body.appendChild(t);
-  setTimeout(()=>t.remove(),2600);
-}
+        function initializeJobs() {
+            const list = document.getElementById('jobs-list');
+            jobs.forEach(job => {
+                const gradient = getRandomGradient();
+                list.innerHTML += `
+                    <div class="job-card">
+                        <div class="job-header">
+                            <div class="job-logo" style="background: ${gradient};">${job.logo}</div>
+                            <div class="job-info">
+                                <div class="job-title">${job.title}</div>
+                                <div class="job-company">${job.company}</div>
+                                <div class="job-location">📍 ${job.location}</div>
+                            </div>
+                        </div>
+                        <div class="job-details">${job.time} • ${job.applicants}</div>
+                        <div class="job-tags">
+                            ${job.tags.map(tag => `<span class="job-tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>`;
+            });
+        }
 
-// ══════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════
-function init(){
-  filt=[...C];
-  initHeader();renderTable();initAddSel();
-  initConvSel();renderCmp();renderRegions();renderStats();
-  fetchRates();
-  setInterval(fetchRates,600000);
-  // Iniciar mapa al cargar — es la pestaña activa por defecto
-  const mc=document.getElementById('main-content');
-  mc.style.padding='0';
-  mc.style.maxWidth='none';
-  mapInitialized=true;
-  setTimeout(initMap,80);
-}
+        function getRandomGradient() {
+            const gradients = [
+                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+                'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
+                'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+                'linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%)'
+            ];
+            return gradients[Math.floor(Math.random() * gradients.length)];
+        }
 
-window.addEventListener('DOMContentLoaded',init);
-</script>
+        function toggleLike(postId) {
+            const post = posts.find(p => p.id === postId);
+            const postElement = document.querySelector(`[data-post-id="${postId}"]`);
+            const likeButton = postElement.querySelector('.post-action');
+            const likesCount = postElement.querySelector('.post-reactions span:last-child');
+
+            if (post.hasLiked) {
+                post.likes--;
+                post.hasLiked = false;
+                likeButton.classList.remove('liked');
+            } else {
+                post.likes++;
+                post.hasLiked = true;
+                likeButton.classList.add('liked');
+            }
+            likesCount.textContent = post.likes;
+        }
+
+        function toggleDetailLike() {
+            if (!currentPostDetail) return;
+            toggleLike(currentPostDetail.id);
+            document.getElementById('detailLikes').textContent = currentPostDetail.likes;
+        }
+
+        function toggleComments(postId) {
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            commentsSection.classList.toggle('active');
+        }
+
+        function handleCommentEnter(event, postId) {
+            if (event.key === 'Enter' && event.target.value.trim()) {
+                addComment(postId, event.target.value);
+                event.target.value = '';
+            }
+        }
+
+        function addComment(postId, text) {
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            const addCommentDiv = commentsSection.querySelector('.add-comment');
+            const newComment = document.createElement('div');
+            newComment.className = 'comment';
+            newComment.innerHTML = `
+                <div class="chat-message-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
+                <div>
+                    <div class="comment-content">
+                        <div class="comment-author">Tú</div>
+                        <div class="comment-text">${text}</div>
+                    </div>
+                    <div class="comment-time">Ahora • Me gusta • Responder</div>
+                </div>`;
+            commentsSection.insertBefore(newComment, addCommentDiv);
+
+            const post = posts.find(p => p.id === postId);
+            post.comments++;
+            const postElement = document.querySelector(`[data-post-id="${postId}"]`);
+            const commentsCount = postElement.querySelector('.post-stats > div:last-child span');
+            commentsCount.textContent = `${post.comments} comentarios • ${post.shares} veces compartido`;
+        }
+
+        function createNewPost() {
+            const text = prompt('¿Qué quieres compartir?');
+            if (text && text.trim()) {
+                const newPost = {
+                    id: posts.length + 1,
+                    author: 'Tú',
+                    avatar: 'TU',
+                    headline: 'Profesional',
+                    time: 'Ahora',
+                    url: null,
+                    content: text,
+                    images: [],
+                    likes: 0,
+                    comments: 0,
+                    shares: 0,
+                    hasLiked: false
+                };
+                posts.unshift(newPost);
+                renderPosts();
+            }
+        }
+
+        function createPostWithImages() {
+            const text = prompt('¿Qué quieres compartir?');
+            if (text && text.trim()) {
+                const numImages = parseInt(prompt('¿Cuántas imágenes? (1-5)', '1'));
+                const images = [];
+                if (numImages > 0 && numImages <= 5) {
+                    for (let i = 0; i < numImages; i++) {
+                        const url = prompt(`URL de la imagen ${i + 1}:`, 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800');
+                        if (url) images.push(url);
+                    }
+                }
+                const newPost = {
+                    id: posts.length + 1,
+                    author: 'Tú',
+                    avatar: 'TU',
+                    headline: 'Profesional',
+                    time: 'Ahora',
+                    url: null,
+                    content: text,
+                    images: images,
+                    likes: 0,
+                    comments: 0,
+                    shares: 0,
+                    hasLiked: false
+                };
+                posts.unshift(newPost);
+                renderPosts();
+            }
+        }
+
+        function toggleChat() {
+            const chatWidget = document.getElementById('chatWidget');
+            chatWidget.classList.toggle('active');
+        }
+
+        function minimizeChat() {}
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (message) {
+                const messagesContainer = document.getElementById('chatMessages');
+                const newMessage = document.createElement('div');
+                newMessage.className = 'chat-message own';
+                newMessage.innerHTML = `
+                    <div class="chat-message-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
+                    <div class="chat-message-content">${message}</div>`;
+                messagesContainer.appendChild(newMessage);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                input.value = '';
+
+                setTimeout(() => {
+                    const response = document.createElement('div');
+                    response.className = 'chat-message';
+                    response.innerHTML = `
+                        <div class="chat-message-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
+                        <div class="chat-message-content">Mi usuario de LinkedIn es in/santisterling</div>`;
+                    messagesContainer.appendChild(response);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 1500);
+            }
+        }
+
+        function handleChatEnter(event) {
+            if (event.key === 'Enter') sendMessage();
+        }
+
+        window.onload = function () {
+            initializeApp();
+        };
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closePostDetail();
+        });
+    </script>
 </body>
 </html>
