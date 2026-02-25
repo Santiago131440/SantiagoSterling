@@ -9,9 +9,10 @@
       { id: 's8', name: 'ProyectoApp', url: 'https://santiago131440.github.io/SantiagoSterling/proyectoApp.html' },
       { id: 's9', name: 'Video Landing Page', url: 'https://santiago131440.github.io/SantiagoSterling/EntornoPrueba.html' },
       { id: 's10', name: 'Tabla de Salarios', url: 'https://santiago131440.github.io/SantiagoSterling/Salarios.html' },
-      { id: 's11', name: 'Portafolio 2', url: 'https://santiago131440.github.io/SantiagoSterling/index20.html' },
+      { id: 's11', name: 'Mario Bros', url: 'https://santiago131440.github.io/SantiagoSterling/Super Mario.html' },
       { id: 's12', name: 'Indicadores', url: 'https://santiago131440.github.io/SantiagoSterling/Indicadores.HTML' },
-      { id: 's13', name: 'Portafolio 2', url: 'https://santiago131440.github.io/SantiagoSterling/mix.html' },
+      { id: 's13', name: 'Sterling Music Studio', url: 'https://santiago131440.github.io/SantiagoSterling/mix.html' },
+      { id: 's14', name: 'Buscaminas', url: 'https://santiago131440.github.io/SantiagoSterling/Buscaminas.html' },
     ];
 
     // Elementos
@@ -208,6 +209,7 @@
     // Note about CORS / X-Frame-Options:
     // - algunos sitios (ej: google, muchas apps) bloquean ser embebidos en iframe.
     // - si ves un mensaje de bloqueo, considera usar una URL clonada o una captura/preview generada del sitio.
+
 
 
 
