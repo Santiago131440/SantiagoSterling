@@ -46,7 +46,7 @@
 
         /* Header/Navbar */
         .navbar {
-    		background: rgba(245, 245, 247, 0.75); /* Gris Apple translúcido */
+    		background: rgba(245, 245, 247, 0.75);
     		backdrop-filter: blur(14px) saturate(180%);
     		-webkit-backdrop-filter: blur(14px) saturate(180%);
    		 border-bottom: 1px solid rgba(255, 255, 255, 0.35);
@@ -299,7 +299,6 @@
             margin-bottom: 12px;
         }
 
-        /* -------- Avatar de TU ------- La persona que está viendo los proyectos ----------------*/
         .create-post-avatar {
             width: 48px;
             height: 48px;
@@ -426,9 +425,31 @@
             font-size: 14px;
         }
 
-        .post-author:hover {
+        .post-author a {
+            color: inherit;
+            text-decoration: none;
+            font-weight: 400;
+        }
+
+        .post-author a:hover {
             text-decoration: underline;
             color: var(--primary-blue);
+        }
+
+        /* Ícono de enlace externo junto al título */
+        .post-author .external-link-icon {
+            display: inline-flex;
+            align-items: center;
+            margin-left: 6px;
+            color: var(--primary-blue);
+            opacity: 0;
+            transition: opacity 0.2s;
+            font-size: 12px;
+            vertical-align: middle;
+        }
+
+        .post-header:hover .external-link-icon {
+            opacity: 1;
         }
 
         .post-meta {
@@ -1143,10 +1164,9 @@
         bottom: 0;  
         right: 24px;  
         width: 320px;  
-        background: rgba(245, 245, 247, 0.75); /* Gris Apple translúcido */
+        background: rgba(245, 245, 247, 0.75);
     	backdrop-filter: blur(14px) saturate(180%);
     	-webkit-backdrop-filter: blur(14px) saturate(180%);
- 
         border: 1px solid var(--border-color);  
         border-bottom: none;  
         border-radius: 14px 14px 14px 14px;  
@@ -1214,7 +1234,6 @@
         background: rgba(255, 255, 255, 0.08);
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
-
     }  
 
     .chat-message {  
@@ -1483,7 +1502,7 @@
 .initials {
   position: absolute;
   inset: 0;
-  display: none; /* mostrar solo si no hay imagen */
+  display: none;
   align-items: center;
   justify-content: center;
   font-size: 28px;
@@ -1514,7 +1533,7 @@
   min-height: 180px;
 
   background-image: url("https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Spaceman_Sterling_Whiteman.jpg?raw=true");
-  background-size: cover;           /* clave del efecto cover */
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -1684,12 +1703,11 @@
                         <strong>Accesos rápidos</strong>
                     </div>
                     <a href="https://santiago131440.github.io/SantiagoSterling/index.html" class="stat-item">
-    <span>Portafolio</span>
-</a>
-
+                        <span>Portafolio</span>
+                    </a>
                     <a href="https://santiago131440.github.io/SantiagoSterling/windows.html" class="stat-item">
-    <span>Repositorio</span>
-</a>
+                        <span>Repositorio</span>
+                    </a>
                     <div class="stat-item">
                         <span>LinkedIn</span>
                     </div>
@@ -1722,12 +1740,14 @@
 
                 <!-- Feed Posts -->
                 <div id="feed-posts">
+
                     <!-- Post 1 -->
                     <div class="card post-card" 
                          data-author="Santiago Sterling"
                          data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
                          data-headline="Desarrollador de software"
                          data-time="2026"
+                         data-url="https://santiago131440.github.io/SantiagoSterling/index.html"
                          data-content="Transformo ideas en soluciones digitales que generan impacto real. Este espacio reúne los proyectos que he desarrollado y las soluciones en las que he dejado mi huella profesional. Mi objetivo es que cada experiencia sea clara, útil y de alto valor."
                          data-images="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800,https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800,https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800"
                          data-likes="23"
@@ -1737,12 +1757,13 @@
 
                     <!-- Post 2 -->
                     <div class="card post-card" 
-                         data-author="Dashboard control producción"
+                         data-author="Salarios Minimos a nivel mundial"
                          data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
-                         data-headline="Excel | Power Query | Power BI | Dax"
+                         data-headline="HTML | CSS | JavaScript"
                          data-time="5h"
-                         data-content="Desarrollé un dashboard en Power BI para analizar y monitorear el desempeño productivo de la empresa, permitiendo visualizar el histórico por año, mes, semana y turno, con métricas clave como producción, órdenes de producción y componentes. Además, integré un indicador de límite inferior para detectar incumplimientos de la meta diaria, facilitando el control operativo, la identificación temprana de desviaciones y la toma de decisiones."
-                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Power%20BI%2000.jpg?raw=true"
+                         data-url="https://santiago131440.github.io/SantiagoSterling/Salarios.html"
+                         data-content="Construí este proyecto para transformar datos salariales dispersos en una comparación clara, directa y justa, estandarizando todos los valores en USD mensuales y eliminando distorsiones cambiarias. El dashboard revela de forma visual las brechas económicas entre países, el poder adquisitivo real y las diferencias estructurales del mercado laboral. Más que mostrar cifras, expone realidades, convirtiendo datos complejos en información estratégica para el análisis y la toma de decisiones."
+                         data-images="https://github.com/Santiago131440/Salarios-Minimos-Mundiales/blob/main/img/Salarios.jpg?raw=true"
                          data-likes="15"
                          data-comments="4"
                          data-shares="8">
@@ -1750,10 +1771,53 @@
 
                     <!-- Post 3 -->
                     <div class="card post-card" 
+                         data-author="Dashboard control producción"
+                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
+                         data-headline="Excel | Power Query | Power BI | Dax"
+                         data-time="5h"
+                         data-url="https://github.com/Santiago131440/dashboard-control-produccion"
+                         data-content="Desarrollé un dashboard en Power BI para analizar y monitorear el desempeño productivo de la empresa, permitiendo visualizar el histórico por año, mes, semana y turno, con métricas clave como producción, órdenes de producción y componentes. Además, integré un indicador de límite inferior para detectar incumplimientos de la meta diaria, facilitando el control operativo, la identificación temprana de desviaciones y la toma de decisiones."
+                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Power%20BI%2000.jpg?raw=true"
+                         data-likes="15"
+                         data-comments="4"
+                         data-shares="8">
+                    </div>
+
+                    <!-- Post 4 -->
+                    <div class="card post-card" 
+                         data-author="Dashboard control producción"
+                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
+                         data-headline="Excel | Power Query | Power BI | Dax"
+                         data-time="5h"
+                         data-url="https://github.com/Santiago131440/dashboard-control-produccion"
+                         data-content="Desarrollé un dashboard en Power BI para analizar y monitorear el desempeño productivo de la empresa, permitiendo visualizar el histórico por año, mes, semana y turno, con métricas clave como producción, órdenes de producción y componentes. Además, integré un indicador de límite inferior para detectar incumplimientos de la meta diaria, facilitando el control operativo, la identificación temprana de desviaciones y la toma de decisiones."
+                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Power%20BI%2000.jpg?raw=true"
+                         data-likes="15"
+                         data-comments="4"
+                         data-shares="8">
+                    </div>
+
+                    <!-- Post 5 -->
+                    <div class="card post-card" 
+                         data-author="Dashboard control producción"
+                         data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
+                         data-headline="Excel | Power Query | Power BI | Dax"
+                         data-time="5h"
+                         data-url="https://github.com/Santiago131440/dashboard-control-produccion"
+                         data-content="Desarrollé un dashboard en Power BI para analizar y monitorear el desempeño productivo de la empresa, permitiendo visualizar el histórico por año, mes, semana y turno, con métricas clave como producción, órdenes de producción y componentes. Además, integré un indicador de límite inferior para detectar incumplimientos de la meta diaria, facilitando el control operativo, la identificación temprana de desviaciones y la toma de decisiones."
+                         data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling_Power%20BI%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Power%20BI%2000.jpg?raw=true"
+                         data-likes="15"
+                         data-comments="4"
+                         data-shares="8">
+                    </div>
+
+                    <!-- Post 6 -->
+                    <div class="card post-card" 
                          data-author="Sterling Music Player"
                          data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
                          data-headline="HTML | CSS | JavaScript | Tailwind"
                          data-time="2025"
+                         data-url="https://santiago131440.github.io/SantiagoSterling/Music.html"
                          data-content="Reproductor de música online diseñado para la reproducción de archivos de audio locales, que permite al usuario cargar su música directamente desde el dispositivo y escucharla en el navegador sin necesidad de instalaciones externas. La aplicación ofrece una experiencia fluida, optimizada y accesible, con controles intuitivos de reproducción y compatibilidad con los principales formatos de audio, aprovechando las capacidades nativas de las tecnologías web modernas para garantizar un rendimiento estable y una interacción sencilla."
                          data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/file_00000000284471f58925bcd890f691f6.png?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicMovil1.jpeg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicMovil2.jpeg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicPC2.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/SterlingMusicPC1.jpg?raw=true"
                          data-likes="9"
@@ -1762,12 +1826,13 @@
                          data-hasliked="true">
                     </div>
 
-                    <!-- Post 4 -->
+                    <!-- Post 7 -->
                     <div class="card post-card" 
                          data-author="Comparación de OP"
                          data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
                          data-headline="Excel | VBA | Macros"
                          data-time="2025"
+                         data-url="https://github.com/Santiago131440/comparacion-ordenes-produccion"
                          data-content="El sistema permite cargar archivos de Excel sin restricciones y compararlos para detectar coincidencias, diferencias e inconsistencias. Optimiza el análisis de datos al mejorar la trazabilidad, reducir errores manuales y agilizar la gestión de información."
                          data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%206.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Imagen%207.jpg?raw=true"
                          data-likes="38"
@@ -1776,12 +1841,13 @@
                          data-hasliked="true">
                     </div>
 
-                    <!-- Post 5 -->
+                    <!-- Post 8 -->
                     <div class="card post-card" 
                          data-author="Control de Inventario"
                          data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
                          data-headline="Excel | VBA | Macros"
                          data-time="2025"
+                         data-url="https://github.com/Santiago131440/control-inventario-excel"
                          data-content="Sistema integral en Excel con macros y VBA para gestionar inventarios, que permite registrar productos, controlar ingresos y salidas, consultar stock en tiempo real, generar reportes y elaborar pedidos al almacén, asegurando trazabilidad y eficiencia."
                          data-images="https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen1.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen2.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen3.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen4.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen5.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen6.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen7.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen8.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen9.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen10.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen11.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen12.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen13.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen14.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen15.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen16.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen17.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen18.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen19.png?raw=true,https://github.com/Santiago131440/Inventario-de-consumibles-imagenes-paso-a-paso./blob/main/Imagen20.png?raw=true"
                          data-likes="68"
@@ -1789,12 +1855,13 @@
                          data-shares="5">
                     </div>
 
-		    <!-- Post 6 -->
+		                <!-- Post 9 -->
                     <div class="card post-card" 
                          data-author="Dashboard Indicadores de planta"
                          data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
                          data-headline="Excel | VBA | Macros"
                          data-time="2023"
+                         data-url="https://github.com/Santiago131440/dashboard-indicadores-planta"
                          data-content="Este proyecto de Dashboard de Indicadores de Producción nace con el objetivo de transformar datos operativos en información estratégica, permitiendo visualizar en tiempo real el desempeño de la planta a través de indicadores clave como productividad, eficiencia, calidad, tiempos de parada y cumplimiento de objetivos.
 
 Mediante una visualización clara, intuitiva y centralizada, el dashboard facilita la detección temprana de desviaciones, el análisis de tendencias y la identificación de oportunidades de mejora continua. De esta manera, se convierte en una herramienta fundamental para optimizar procesos, reducir costos y fortalecer la toma de decisiones en todos los niveles de la organización."
@@ -1803,12 +1870,14 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                          data-comments="2"
                          data-shares="5">
                     </div>
-		    <!-- Post 7 -->
+
+		                <!-- Post 10 -->
                     <div class="card post-card" 
                          data-author="Gestión de inventario de tintas"
                          data-avatar="https://avatars.githubusercontent.com/u/98182135?v=4"
                          data-headline="Excel | VBA | Macros"
                          data-time="2023"
+                         data-url="https://github.com/Santiago131440/inventario-tintas-vba"
                          data-content="Macro desarrollada en Microsoft Excel con VBA para la gestión integral del inventario de tintas, que incorpora un sistema de control de usuarios por roles para garantizar seguridad y confiabilidad de la información. La herramienta dispone de un usuario básico, enfocado en la consulta y visualización del inventario sin permisos de modificación, y un usuario administrador, protegido mediante clave de acceso, con privilegios avanzados para realizar operaciones CRUD (crear, leer, actualizar y eliminar) sobre todos los registros del inventario. El sistema permite administrar referencias, cantidades, movimientos y estados de las tintas, integrando validaciones, automatización de procesos y formularios VBA que facilitan una gestión eficiente, ordenada y segura, ideal para entornos operativos que requieren control y trazabilidad del inventario."
                          data-images="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%201.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%202.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%203.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%204.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%205.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%206.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%207.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%208.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%209.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%2010.jpg?raw=truehttps://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%2011.jpg?raw=true,https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Santiago%20Sterling%20-%20Excel%20de%20tintas%2012.jpg?raw=true"
                          data-likes="18"
@@ -1867,13 +1936,12 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                         <div class="profile-name-large">Santiago Sterling</div>
                         <div class="profile-headline-large">Tecnologo en análisis y desarrollo de software</div>
                         <div class="profile-location">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-right:6px; vertical-align:middle;">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#EA4335"/>
-        <circle cx="12" cy="9" r="3" fill="white"/>
-    </svg>
-    Cali, Valle del Cauca, Colombia
-</div>
-     
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-right:6px; vertical-align:middle;">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#EA4335"/>
+                                <circle cx="12" cy="9" r="3" fill="white"/>
+                            </svg>
+                            Cali, Valle del Cauca, Colombia
+                        </div>
                         <div class="profile-actions">
                             <a href="https://santiago131440.github.io/SantiagoSterling/index.html" class="stat-item apple-btn"><span>LinkedIn</span></a>
                             <a href="https://santiago131440.github.io/SantiagoSterling/index.html" class="stat-item apple-btn"><span>Portafolio</span></a>
@@ -1882,8 +1950,7 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                     </div>
                 </div>
 
-                <div class="card" style="padding: 24px; margin-bottom: 16px;">
-                </div>
+                <div class="card" style="padding: 24px; margin-bottom: 16px;"></div>
 
                 <div class="card" style="padding: 24px; margin-bottom: 16px;">
                     <h2 style="font-size: 20px; margin-bottom: 16px;">Experiencia</h2>
@@ -1924,13 +1991,13 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                         <div class="job-tag">SQL</div>
                         <div class="job-tag">Docker</div>
                         <div class="job-tag">Git</div>
-						<div class="job-tag">Excel</div>
-						<div class="job-tag">Power BI</div>
-						<div class="job-tag">Macros | VBA</div>
-      <div class="job-tag">Clean Code</div>
-      <div class="job-tag">Agile</div>
-      <div class="job-tag">API.REST</div>
-      <div class="job-tag">Software Development</div>
+                        <div class="job-tag">Excel</div>
+                        <div class="job-tag">Power BI</div>
+                        <div class="job-tag">Macros | VBA</div>
+                        <div class="job-tag">Clean Code</div>
+                        <div class="job-tag">Agile</div>
+                        <div class="job-tag">API.REST</div>
+                        <div class="job-tag">Software Development</div>
                     </div>
                 </div>
             </div>
@@ -1945,10 +2012,7 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                     <div class="network-tab active">Conexiones</div>
                     <div class="network-tab">Invitaciones</div>
                 </div>
-
-                <div class="connection-grid" id="connections-grid">
-                    <!-- Connections will be added here -->
-                </div>
+                <div class="connection-grid" id="connections-grid"></div>
             </div>
         </div>
     </div>
@@ -1961,10 +2025,7 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                     <div style="font-size: 20px; font-weight: 600; margin-bottom: 16px;">Conoce la gama de empleos del sector</div>
                     <div style="font-size: 14px; color: var(--text-secondary);">Basados en tu perfil y búsquedas</div>
                 </div>
-
-                <div id="jobs-list">
-                    <!-- Jobs will be added here -->
-                </div>
+                <div id="jobs-list"></div>
             </div>
         </div>
     </div>
@@ -2012,10 +2073,10 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                         <span class="post-action-icon"><i class="fi fi-rr-comment"></i></span>
                         <span>Comentar</span>
                     </button>
-                    <button class="post-action">
-                            <span class="post-action-icon"><i class="fi fi-rr-magic-wand"></i></span>
-                            <span>Ver</span>
-                        </button>
+                    <button class="post-action" id="detailViewBtn" onclick="openDetailUrl()">
+                        <span class="post-action-icon"><i class="fi fi-rr-magic-wand"></i></span>
+                        <span>Ver</span>
+                    </button>
                 </div>
                 <div class="comments-section active" style="flex: 1; overflow-y: auto;">
                     <div class="comment">
@@ -2068,13 +2129,10 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             </div>
             <div class="chat-message own">
                 <div class="chat-message-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
-                <div class="chat-message-content">
-                    Muchas gracias!
-                </div>
+                <div class="chat-message-content">Muchas gracias!</div>
             </div>
             <div class="chat-message">
                 <div class="chat-message-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
-
                 <div class="chat-message-content">
                     Llego para aportar valor, transformar ideas en resultados y llevar cada proyecto más lejos. ¿Deseas contactar?
                 </div>
@@ -2087,7 +2145,6 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
     </div>
 
     <script>
-        // Posts array - will be populated from HTML data attributes
         let posts = [];
 
         const connections = [
@@ -2134,7 +2191,6 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
         let currentPostDetail = null;
         let currentMediaIndex = 0;
 
-        // Initialize
         function initializeApp() {
             loadPostsFromHTML();
             renderPosts();
@@ -2143,7 +2199,6 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             updateActiveNav();
         }
 
-        // Load posts from HTML data attributes
         function loadPostsFromHTML() {
             const postElements = document.querySelectorAll('#feed-posts .post-card');
             posts = Array.from(postElements).map((el, index) => {
@@ -2154,6 +2209,7 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                     avatar: el.dataset.avatar,
                     headline: el.dataset.headline,
                     time: el.dataset.time,
+                    url: el.dataset.url || null,
                     content: el.dataset.content,
                     images: images,
                     likes: parseInt(el.dataset.likes) || 0,
@@ -2164,7 +2220,6 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             });
         }
 
-        // Render posts
         function renderPosts() {
             const feedContainer = document.getElementById('feed-posts');
             feedContainer.innerHTML = '';
@@ -2173,7 +2228,6 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             });
         }
 
-        // Navigation
         function navigateTo(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(`${page}-page`).classList.add('active');
@@ -2189,12 +2243,11 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             });
         }
 
-        // Create post HTML
         function createPostHTML(post) {
             const galleryClass = getGalleryClass(post.images.length);
             const truncated = post.content.length > 200 ? 'truncated' : '';
             const displayContent = post.content.length > 200 ? post.content.substring(0, 200) + '...' : post.content;
-            
+
             let galleryHTML = '';
             if (post.images.length > 0) {
                 galleryHTML = `<div class="post-gallery ${galleryClass}">`;
@@ -2204,29 +2257,39 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                             <div class="gallery-item" onclick="openPostDetail(${post.id}, ${idx})">
                                 <img src="${img}" alt="Post image">
                                 <div class="gallery-more">+${post.images.length - 4}</div>
-                            </div>
-                        `;
+                            </div>`;
                     } else {
                         galleryHTML += `
                             <div class="gallery-item" onclick="openPostDetail(${post.id}, ${idx})">
                                 <img src="${img}" alt="Post image">
-                            </div>
-                        `;
+                            </div>`;
                     }
                 });
                 galleryHTML += '</div>';
             }
 
-            const avatarHTML = post.avatar.startsWith('http') 
+            const avatarHTML = post.avatar.startsWith('http')
                 ? `<img src="${post.avatar}" alt="${post.author}">`
                 : post.avatar;
+
+            // Título: enlace si tiene URL, texto si no
+            const authorHTML = post.url
+                ? `<a href="${post.url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${post.author}</a>
+                   <span class="external-link-icon">
+                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                       <polyline points="15 3 21 3 21 9"/>
+                       <line x1="10" y1="14" x2="21" y2="3"/>
+                     </svg>
+                   </span>`
+                : post.author;
 
             return `
                 <div class="card post-card" data-post-id="${post.id}">
                     <div class="post-header">
                         <div class="post-avatar">${avatarHTML}</div>
                         <div class="post-info">
-                            <div class="post-author">${post.author}</div>
+                            <div class="post-author">${authorHTML}</div>
                             <div class="post-meta">${post.headline} • ${post.time}</div>
                         </div>
                         <button class="post-menu-btn">⋯</button>
@@ -2251,17 +2314,23 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                     </div>
                     <div class="post-actions">
                         <button class="post-action ${post.hasLiked ? 'liked' : ''}" onclick="toggleLike(${post.id})">
-                            <span class="post-action-icon"><i class="fi fi-rr-heart"></i></i></span>
+                            <span class="post-action-icon"><i class="fi fi-rr-heart"></i></span>
                             <span>Me gusta</span>
                         </button>
                         <button class="post-action" onclick="toggleComments(${post.id})">
                             <span class="post-action-icon"><i class="fi fi-rr-comment"></i></span>
                             <span>Comentar</span>
                         </button>
-                        <button class="post-action">
-                            <span class="post-action-icon"><i class="fi fi-rr-magic-wand"></i></span>
-                            <span>Ver</span>
-                        </button>
+                        ${post.url
+                            ? `<a class="post-action" href="${post.url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="text-decoration:none;">
+                                <span class="post-action-icon"><i class="fi fi-rr-magic-wand"></i></span>
+                                <span>Ver</span>
+                               </a>`
+                            : `<button class="post-action">
+                                <span class="post-action-icon"><i class="fi fi-rr-magic-wand"></i></span>
+                                <span>Ver</span>
+                               </button>`
+                        }
                     </div>
                     <div class="comments-section" id="comments-${post.id}">
                         <div class="comment">
@@ -2291,7 +2360,6 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             return 'many';
         }
 
-        // Post detail
         function openPostDetail(postId, mediaIndex = 0) {
             const post = posts.find(p => p.id === postId);
             if (!post) return;
@@ -2300,16 +2368,29 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             currentMediaIndex = mediaIndex;
 
             const overlay = document.getElementById('postDetailOverlay');
-            const avatarHTML = post.avatar.startsWith('http') 
+            const avatarHTML = post.avatar.startsWith('http')
                 ? `<img src="${post.avatar}" alt="${post.author}">`
                 : post.avatar;
 
+            // Título en el modal también con enlace si aplica
+            const authorHTML = post.url
+                ? `<a href="${post.url}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;font-weight:400;" onmouseover="this.style.textDecoration='underline';this.style.color='var(--primary-blue)'" onmouseout="this.style.textDecoration='none';this.style.color='inherit'">${post.author} ↗</a>`
+                : post.author;
+
             document.getElementById('detailAvatar').innerHTML = avatarHTML;
-            document.getElementById('detailAuthor').textContent = post.author;
+            document.getElementById('detailAuthor').innerHTML = authorHTML;
             document.getElementById('detailMeta').textContent = `${post.headline} • ${post.time}`;
             document.getElementById('detailContent').textContent = post.content;
             document.getElementById('detailLikes').textContent = post.likes;
             document.getElementById('detailComments').textContent = `${post.comments} comentarios`;
+
+            // Botón "Ver proyecto" en el modal
+            const viewBtn = document.getElementById('detailViewBtn');
+            if (post.url) {
+                viewBtn.style.display = 'flex';
+            } else {
+                viewBtn.style.display = 'none';
+            }
 
             if (post.images.length > 0) {
                 document.getElementById('detailMediaImage').src = post.images[mediaIndex];
@@ -2323,6 +2404,12 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             overlay.classList.add('active');
         }
 
+        function openDetailUrl() {
+            if (currentPostDetail && currentPostDetail.url) {
+                window.open(currentPostDetail.url, '_blank', 'noopener,noreferrer');
+            }
+        }
+
         function closePostDetail() {
             document.getElementById('postDetailOverlay').classList.remove('active');
             currentPostDetail = null;
@@ -2330,16 +2417,13 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
 
         function navigateMedia(direction) {
             if (!currentPostDetail || currentPostDetail.images.length === 0) return;
-
             currentMediaIndex += direction;
             if (currentMediaIndex < 0) currentMediaIndex = currentPostDetail.images.length - 1;
             if (currentMediaIndex >= currentPostDetail.images.length) currentMediaIndex = 0;
-
             document.getElementById('detailMediaImage').src = currentPostDetail.images[currentMediaIndex];
             document.getElementById('photoCounter').textContent = `${currentMediaIndex + 1} / ${currentPostDetail.images.length}`;
         }
 
-        // Initialize connections
         function initializeConnections() {
             const grid = document.getElementById('connections-grid');
             connections.forEach(conn => {
@@ -2354,12 +2438,10 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                             <div class="connection-mutual">${conn.mutual} conexiones en común</div>
                             <button class="btn-secondary" style="width: 100%;">Mensaje</button>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
         }
 
-        // Initialize jobs
         function initializeJobs() {
             const list = document.getElementById('jobs-list');
             jobs.forEach(job => {
@@ -2378,12 +2460,10 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                         <div class="job-tags">
                             ${job.tags.map(tag => `<span class="job-tag">${tag}</span>`).join('')}
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
         }
 
-        // Random gradient generator
         function getRandomGradient() {
             const gradients = [
                 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -2398,13 +2478,12 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             return gradients[Math.floor(Math.random() * gradients.length)];
         }
 
-        // Toggle like
         function toggleLike(postId) {
             const post = posts.find(p => p.id === postId);
             const postElement = document.querySelector(`[data-post-id="${postId}"]`);
             const likeButton = postElement.querySelector('.post-action');
             const likesCount = postElement.querySelector('.post-reactions span:last-child');
-            
+
             if (post.hasLiked) {
                 post.likes--;
                 post.hasLiked = false;
@@ -2414,7 +2493,6 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                 post.hasLiked = true;
                 likeButton.classList.add('liked');
             }
-            
             likesCount.textContent = post.likes;
         }
 
@@ -2424,13 +2502,11 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             document.getElementById('detailLikes').textContent = currentPostDetail.likes;
         }
 
-        // Toggle comments section
         function toggleComments(postId) {
             const commentsSection = document.getElementById(`comments-${postId}`);
             commentsSection.classList.toggle('active');
         }
 
-        // Handle comment enter
         function handleCommentEnter(event, postId) {
             if (event.key === 'Enter' && event.target.value.trim()) {
                 addComment(postId, event.target.value);
@@ -2438,7 +2514,6 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             }
         }
 
-        // Add comment
         function addComment(postId, text) {
             const commentsSection = document.getElementById(`comments-${postId}`);
             const addCommentDiv = commentsSection.querySelector('.add-comment');
@@ -2452,10 +2527,9 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                         <div class="comment-text">${text}</div>
                     </div>
                     <div class="comment-time">Ahora • Me gusta • Responder</div>
-                </div>
-            `;
+                </div>`;
             commentsSection.insertBefore(newComment, addCommentDiv);
-            
+
             const post = posts.find(p => p.id === postId);
             post.comments++;
             const postElement = document.querySelector(`[data-post-id="${postId}"]`);
@@ -2463,7 +2537,6 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             commentsCount.textContent = `${post.comments} comentarios • ${post.shares} veces compartido`;
         }
 
-        // Create new post
         function createNewPost() {
             const text = prompt('¿Qué quieres compartir?');
             if (text && text.trim()) {
@@ -2473,6 +2546,7 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                     avatar: 'TU',
                     headline: 'Profesional',
                     time: 'Ahora',
+                    url: null,
                     content: text,
                     images: [],
                     likes: 0,
@@ -2485,26 +2559,24 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             }
         }
 
-        // Create post with images
         function createPostWithImages() {
             const text = prompt('¿Qué quieres compartir?');
             if (text && text.trim()) {
                 const numImages = parseInt(prompt('¿Cuántas imágenes? (1-5)', '1'));
                 const images = [];
-                
                 if (numImages > 0 && numImages <= 5) {
                     for (let i = 0; i < numImages; i++) {
                         const url = prompt(`URL de la imagen ${i + 1}:`, 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800');
                         if (url) images.push(url);
                     }
                 }
-                
                 const newPost = {
                     id: posts.length + 1,
                     author: 'Tú',
                     avatar: 'TU',
                     headline: 'Profesional',
                     time: 'Ahora',
+                    url: null,
                     content: text,
                     images: images,
                     likes: 0,
@@ -2517,14 +2589,12 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
             }
         }
 
-        // Chat functions
         function toggleChat() {
             const chatWidget = document.getElementById('chatWidget');
             chatWidget.classList.toggle('active');
         }
 
-        function minimizeChat() {
-        }
+        function minimizeChat() {}
 
         function sendMessage() {
             const input = document.getElementById('chatInput');
@@ -2535,19 +2605,17 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
                 newMessage.className = 'chat-message own';
                 newMessage.innerHTML = `
                     <div class="chat-message-avatar"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Avatar%20Fondo%20Rojo.jpg?raw=true" alt="Avatar"></div>
-                    <div class="chat-message-content">${message}</div>
-                `;
+                    <div class="chat-message-content">${message}</div>`;
                 messagesContainer.appendChild(newMessage);
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
                 input.value = '';
-                
+
                 setTimeout(() => {
                     const response = document.createElement('div');
                     response.className = 'chat-message';
                     response.innerHTML = `
                         <div class="chat-message-avatar"><img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar"></div>
-                        <div class="chat-message-content">Mi usuario de LinkedIn es in/santisterling</div>
-                    `;
+                        <div class="chat-message-content">Mi usuario de LinkedIn es in/santisterling</div>`;
                     messagesContainer.appendChild(response);
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
                 }, 1500);
@@ -2555,21 +2623,15 @@ Mediante una visualización clara, intuitiva y centralizada, el dashboard facili
         }
 
         function handleChatEnter(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
+            if (event.key === 'Enter') sendMessage();
         }
 
-        // Initialize on load
-        window.onload = function() {
+        window.onload = function () {
             initializeApp();
         };
 
-        // Close post detail on escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closePostDetail();
-            }
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closePostDetail();
         });
     </script>
 </body>
