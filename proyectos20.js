@@ -13,7 +13,7 @@
       { id: 's12', name: 'Indicadores', url: 'https://santiago131440.github.io/SantiagoSterling/Indicadores.HTML' },
       { id: 's13', name: 'Sterling Music Studio', url: 'https://santiago131440.github.io/SantiagoSterling/mix.html' },
       { id: 's14', name: 'Buscaminas', url: 'https://santiago131440.github.io/SantiagoSterling/Buscaminas.html' },
-      { id: 's15', name: 'Index', url: 'https://github.com/Santiago131440/Proyectos/blob/main/index.html' },
+      { id: 's15', name: 'Index', url: 'https://santiago131440.github.io/Proyectos/index.html' },
     ];
 
     // Elementos
@@ -210,6 +210,7 @@
     // Note about CORS / X-Frame-Options:
     // - algunos sitios (ej: google, muchas apps) bloquean ser embebidos en iframe.
     // - si ves un mensaje de bloqueo, considera usar una URL clonada o una captura/preview generada del sitio.
+
 
 
 
