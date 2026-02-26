@@ -15,10 +15,12 @@ body {
   background: linear-gradient(180deg, #eef6f8 0%, #fff 60%);
   color: #0b1220;
   padding: 20px;
+  font-weight: 100;
 }
 .h2 {
   justify-content: center;
   align-items: center;
+  font-weight: 300;
 }
 
 .frame {
@@ -97,7 +99,7 @@ body {
 
 .right .title {
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 300;
   margin-bottom: 8px;
 }
 
@@ -137,7 +139,7 @@ tbody tr:hover {
   padding: 10px 14px;
   border: none;
   border-radius: 10px;
-  font-weight: 600;
+  font-weight: 100;
   cursor: pointer;
   font-size: 14px;
 }
@@ -217,3 +219,4 @@ canvas {
   .dot { width: 36px; height: 36px; }
 
 }
+
