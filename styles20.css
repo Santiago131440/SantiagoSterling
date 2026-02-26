@@ -1098,8 +1098,8 @@ img[alt="Astronaut UX"] {
           img[style]{
             left: 50% !important;
             top: 55% !important;
-            transform: translate(-50%, -50%) !important;
-            width: 88vw !important;
+            transform: translate(-20%, -50%) !important;
+            width: 700px !important;
             height: auto !important;
           }
         }
