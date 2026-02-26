@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -84,7 +83,6 @@
     .cbo{flex:1;height:26px;background:rgba(255,255,255,0.05);border-radius:20px;overflow:hidden;position:relative;}
     .cbi{height:100%;border-radius:20px;display:flex;align-items:center;padding-left:9px;font-size:0.76rem;font-weight:100;color:#fff;transition:width 0.6s ease;min-width:50px;}
     .cv{width:88px;text-align:right;font-size:0.8rem;font-weight:100;color:var(--accent3);}
-    /* CONVERTER */
     .conv-wrap{max-width:680px;margin:0 auto;}
     .conv-card{background:var(--surface);border:1px solid var(--border);border-radius:30px;padding:28px;margin-bottom:22px;}
     .conv-card h2{font-size:1.25rem;margin-bottom:7px;}
@@ -107,7 +105,6 @@
     .qi:hover{background:rgba(15,125,255,0.1);border-color:var(--accent2);}
     .qi .pair{font-size:0.78rem;color:var(--text2);}
     .qi .rate{font-size:0.97rem;font-weight:100;color:var(--text);}
-    /* REGIONS */
     .rs{margin-bottom:30px;}
     .rt{display:flex;align-items:center;gap:9px;margin-bottom:12px;}
     .rt h3{font-size:1.05rem;}
@@ -120,21 +117,17 @@
     .sp .pi{flex:1;}
     .sp .pn{font-size:0.83rem;font-weight:100;}
     .sp .pa{font-size:0.92rem;font-weight:100;color:var(--accent3);}
-    /* STATS */
     .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:22px;}
     .sc{background:var(--surface);border:1px solid var(--border);border-radius:25px;padding:18px;}
     .sc .ic{font-size:1.7rem;margin-bottom:7px;}
     .sc .lb{font-size:0.76rem;color:var(--text2);margin-bottom:3px;}
     .sc .vl{font-size:1.4rem;font-weight:100;}
     .sc .sb{font-size:0.76rem;color:var(--text2);margin-top:2px;}
-    /* UTILS */
     .live-dot{display:inline-block;width:7px;height:7px;background:var(--green);border-radius:80%;animation:pulse 1.5s ease-in-out infinite;margin-right:5px;}
     @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
     .toast{position:fixed;bottom:22px;right:22px;background:var(--surface3);border:1px solid var(--accent3);border-radius:60px;padding:11px 18px;font-size:0.83rem;color:var(--text);z-index:9999;animation:slideIn 0.3s ease;}
     @keyframes slideIn{from{transform:translateY(18px);opacity:0;}to{transform:translateY(0);opacity:1;}}
     @media(max-width:768px){.main{padding:14px;} header{padding:14px;} .conv-row{grid-template-columns:1fr;} .swap-btn{width:100%;height:34px;}}
-
-    /* ── MAPA TAB ── */
     #panel-mapa{padding:0;overflow:hidden;}
     #panel-mapa.active{display:flex;flex-direction:column;}
     .map-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:14px 28px;background:var(--surface);border-bottom:1px solid var(--border);}
@@ -157,7 +150,6 @@
     select.map-fsm{background:var(--bg);border:1px solid var(--border);border-radius:30px;padding:5px 10px;color:var(--text);font-size:0.75rem;outline:none;cursor:pointer;}
     #map-content{flex:1;position:relative;overflow:hidden;min-height:500px;}
     #map{width:100%;height:100%;}
-    /* Leaflet custom markers */
     .salary-marker{position:relative;cursor:pointer;}
     .sm-bubble{background:rgba(97, 97, 97, 0.336);border:1px solid var(--accent3);border-radius:80px;padding:4px 9px;font-size:0.7rem;font-weight:100;color:#fff;white-space:nowrap;backdrop-filter:blur(6px);transition:transform 0.15s;display:flex;align-items:center;gap:5px;}
     .sm-bubble:hover{transform:scale(1.12);}
@@ -169,7 +161,6 @@
     .tier-3 .sm-bubble{border-color:var(--accent3);}
     .tier-2 .sm-bubble{border-color:#7201db;} .tier-2 .sm-bubble .sm-val{color:#7201db;} .tier-2 .sm-bubble::after{border-top-color:#7201db;}
     .tier-1 .sm-bubble{border-color:var(--red);} .tier-1 .sm-bubble .sm-val{color:var(--red);} .tier-1 .sm-bubble::after{border-top-color:var(--red);}
-    /* Leaflet popup */
     .leaflet-popup-content-wrapper{background:rgba(255, 255, 255, 0.712)!important;border:1px solid var(--border)!important;border-radius:20px!important;color:var(--text)!important;padding:0!important;}
     .leaflet-popup-content{margin:0!important;padding:0!important;}
     .leaflet-popup-tip-container{display:none!important;}
@@ -185,7 +176,9 @@
     .pop-rank{font-size:0.7rem;color:var(--text2);margin-bottom:8px;}
     .pop-row{display:flex;justify-content:space-between;padding:5px 0;border-top:1px solid var(--border);font-size:0.78rem;}
     .pop-row span:last-child{font-weight:100;}
-    /* side panel mapa */
+    .pop-time{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid var(--border);font-size:0.78rem;}
+    .pop-time-val{font-weight:700;color:var(--accent);font-size:0.9rem;font-variant-numeric:tabular-nums;letter-spacing:0.03em;}
+    .pop-time-tz{font-size:0.68rem;color:var(--text2);margin-top:1px;}
     #map-side{position:absolute;top:0;right:0;width:300px;height:100%;background:rgba(255, 255, 255, 0.97);backdrop-filter:blur(16px);border-left:1px solid var(--border);z-index:800;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;}
     #map-side.open{transform:translateX(0);}
     .msp-header{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
@@ -201,14 +194,12 @@
     .msp-item .mi-salary{font-size:0.88rem;font-weight:100;color:var(--accent3);}
     .msp-item .mi-bar{height:3px;background:rgba(255,255,255,0.07);border-radius:2px;margin-top:4px;}
     .msp-item .mi-bar-fill{height:100%;border-radius:2px;}
-    /* legend */
     #map-legend{position:absolute;bottom:22px;left:12px;background:rgba(97, 97, 97, 0.281);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:12px;padding:11px 13px;z-index:700;min-width:155px;}
     #map-legend h4{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.07em;color:white;margin-bottom:10px;}
     .lg-row{display:flex;align-items:center;gap:7px;margin-bottom:5px;font-size:0.72rem;}
     .lg-dot{width:11px;height:11px;border-radius:3px;flex-shrink:0;}
     #map-panel-toggle{position:absolute;top:12px;right:12px;z-index:850;background:rgba(255, 255, 255, 0.92);border:1px solid var(--border);border-radius:10px;padding:7px 13px;color:var(--text);font-size:0.78rem;font-weight:100;cursor:pointer;backdrop-filter:blur(10px);transition:all 0.2s;display:flex;align-items:center;gap:6px;}
     #map-panel-toggle:hover{border-color:var(--accent2);background:rgba(116, 116, 116, 0.1);}
-    /* leaflet controls dark */
     .leaflet-control-zoom{border:1px solid var(--border)!important;border-radius:10px!important;overflow:hidden!important;}
     .leaflet-control-zoom a{background:rgba(255, 255, 255, 0.92)!important;color:var(--text)!important;border-color:var(--border)!important;}
     .leaflet-control-zoom a:hover{background:var(--surface)!important;}
@@ -223,17 +214,16 @@
     <div class="logo-icon"><i class="fi fi-sr-comments-dollar"></i></div>
     <div>
       <h1>Salarios Mínimos Mundial</h1>
-      <p><span class="live-dot"></span>Datos actualizados 2025–2026</p>
+      <p><span class="live-dot"></span>Datos actualizados 2025&#8211;2026</p>
     </div>
   </div>
   <div class="header-stats">
-    <div class="stat-pill"><strong id="hc">—</strong>Países</div>
-    <div class="stat-pill"><strong id="hh">—</strong>Más alto</div>
-    <div class="stat-pill"><strong id="hl">—</strong>Más bajo</div>
-    <div class="stat-pill"><strong id="ha">—</strong>Promedio</div>
+    <div class="stat-pill"><strong id="hc">&#8212;</strong>Países</div>
+    <div class="stat-pill"><strong id="hh">&#8212;</strong>Más alto</div>
+    <div class="stat-pill"><strong id="hl">&#8212;</strong>Más bajo</div>
+    <div class="stat-pill"><strong id="ha">&#8212;</strong>Promedio</div>
   </div>
 </header>
-
 <div class="tabs">
   <div class="tab active" onclick="showTab('mapa')"><i class="fi fi-sr-compass-alt"></i> Mapa Interactivo</div>
   <div class="tab" onclick="showTab('tabla')"><i class="fi fi-sr-table-columns"></i> Tabla Mundial</div>
@@ -242,10 +232,7 @@
   <div class="tab" onclick="showTab('regiones')"><i class="fi fi-sr-land-location"></i> Regiones</div>
   <div class="tab" onclick="showTab('stats')"><i class="fi fi-sr-chart-pie-simple-circle-dollar"></i> Estadísticas</div>
 </div>
-
 <div class="main" id="main-content">
-
-  <!-- TABLA -->
   <div id="panel-tabla" class="panel">
     <div class="toolbar">
       <input class="search-box" id="si" placeholder="Buscar país..." oninput="ft()">
@@ -256,9 +243,9 @@
         <option>Oceanía</option><option>África</option><option>Oriente Medio</option>
       </select>
       <select class="fs" id="ss" onchange="st()">
-        <option value="ud">Mayor → Menor (USD)</option>
-        <option value="ua">Menor → Mayor (USD)</option>
-        <option value="na">País A–Z</option><option value="nd">País Z–A</option>
+        <option value="ud">Mayor &#x2192; Menor (USD)</option>
+        <option value="ua">Menor &#x2192; Mayor (USD)</option>
+        <option value="na">País A&#8211;Z</option><option value="nd">País Z&#8211;A</option>
       </select>
       <button class="btn btn-blue" onclick="showTab('comparar')">Ver comparación</button>
     </div>
@@ -267,8 +254,6 @@
       <th>Mensual (USD)</th><th>Moneda Local</th><th>Actualiz.</th><th>Barra</th><th>+</th>
     </tr></thead><tbody id="tb"></tbody></table></div>
   </div>
-
-  <!-- MAPA -->
   <div id="panel-mapa" class="panel active">
     <div class="map-toolbar">
       <div class="map-search-wrap">
@@ -287,9 +272,9 @@
       <div class="map-sort-wrap">
         <span class="map-sort-label">Ordenar:</span>
         <select class="map-fsm" id="map-sort-sel">
-          <option value="ud">Mayor → Menor</option>
-          <option value="ua">Menor → Mayor</option>
-          <option value="na">A–Z</option>
+          <option value="ud">Mayor &#x2192; Menor</option>
+          <option value="ua">Menor &#x2192; Mayor</option>
+          <option value="na">A&#8211;Z</option>
         </select>
       </div>
     </div>
@@ -298,23 +283,21 @@
       <button id="map-panel-toggle" onclick="toggleMapPanel()">Lista países</button>
       <div id="map-legend">
         <h4>Salario mensual USD</h4>
-        <div class="lg-row"><div class="lg-dot" style="background:var(--gold)"></div><span>> $2.000</span></div>
-        <div class="lg-row"><div class="lg-dot" style="background:var(--accent2)"></div><span>$1.000 – $2.000</span></div>
-        <div class="lg-row"><div class="lg-dot" style="background:var(--accent3)"></div><span>$500 – $999</span></div>
-        <div class="lg-row"><div class="lg-dot" style="background:#5b00af"></div><span>$200 – $499</span></div>
-        <div class="lg-row"><div class="lg-dot" style="background:var(--red)"></div><span>< $200</span></div>
+        <div class="lg-row"><div class="lg-dot" style="background:var(--gold)"></div><span>&gt; $2.000</span></div>
+        <div class="lg-row"><div class="lg-dot" style="background:var(--accent2)"></div><span>$1.000 &#8211; $2.000</span></div>
+        <div class="lg-row"><div class="lg-dot" style="background:var(--accent3)"></div><span>$500 &#8211; $999</span></div>
+        <div class="lg-row"><div class="lg-dot" style="background:#5b00af"></div><span>$200 &#8211; $499</span></div>
+        <div class="lg-row"><div class="lg-dot" style="background:var(--red)"></div><span>&lt; $200</span></div>
       </div>
       <div id="map-side">
         <div class="msp-header">
           <h3><i class="fi fi-sr-usa-map-pin"></i> Países</h3>
-          <button class="msp-close" onclick="toggleMapPanel()">✕</button>
+          <button class="msp-close" onclick="toggleMapPanel()">&#x2715;</button>
         </div>
         <div class="msp-body" id="msp-body"></div>
       </div>
     </div>
   </div>
-
-  <!-- COMPARAR -->
   <div id="panel-comparar" class="panel">
     <div class="toolbar">
       <select class="fs" id="acs" style="flex:1;max-width:320px;"><option value="">+ Añadir país...</option></select>
@@ -324,8 +307,6 @@
     <div class="cg" id="cg"></div>
     <div class="ccw" id="ccw" style="display:none;"><h3>Comparativa Visual (USD/mes)</h3><div id="ccb"></div></div>
   </div>
-
-  <!-- CONVERSOR -->
   <div id="panel-conversor" class="panel">
     <div class="conv-wrap">
       <div class="conv-card">
@@ -334,13 +315,13 @@
         <div class="conv-row">
           <div class="cf"><label>Cantidad</label><input type="number" id="ca" value="1" min="0" oninput="conv()"></div>
           <div style="display:flex;align-items:flex-end;">
-            <button class="swap-btn" onclick="swapC()" title="Intercambiar">⇄</button>
+            <button class="swap-btn" onclick="swapC()" title="Intercambiar">&#x21C4;</button>
           </div>
           <div class="cf"><label>De moneda</label><select id="cfrom" onchange="conv()"></select></div>
         </div>
         <div class="cf" style="margin-bottom:18px;"><label>A moneda</label><select id="cto" onchange="conv()"></select></div>
         <div class="conv-res" id="cres">
-          <div class="abig" id="cra">—</div>
+          <div class="abig" id="cra">&#8212;</div>
           <div class="ri" id="cri">Cargando tasas de cambio...</div>
           <div class="lu" id="clu"></div>
           <span class="rbadge" id="crb"></span>
@@ -352,134 +333,122 @@
       </div>
     </div>
   </div>
-
-  <!-- REGIONES -->
   <div id="panel-regiones" class="panel"><div id="rc"></div></div>
-
-  <!-- STATS -->
   <div id="panel-stats" class="panel">
     <div class="sg" id="sg"></div>
     <div class="ccw"><h3>Top 15 Salarios Más Altos (USD/mes)</h3><div id="t15"></div></div>
     <div class="ccw" style="margin-top:14px;"><h3>10 Salarios Más Bajos (USD/mes)</h3><div id="b10"></div></div>
   </div>
-
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
+
 const COUNTRIES=[
-  // EUROPA
-  {f:'🇨🇭',n:'Suiza',r:'Europa',u:3200,l:'~3.500 CHF/mes',c:'CHF',y:'2025',lat:46.8,lng:8.2},
-  {f:'🇱🇺',n:'Luxemburgo',r:'Europa',u:3102,l:'2.638 EUR/mes',c:'EUR',y:'2025',lat:49.8,lng:6.1},
-  {f:'🇩🇰',n:'Dinamarca',r:'Europa',u:2900,l:'~22.000 DKK (conv.)',c:'DKK',y:'2025',lat:56.2,lng:9.5},
-  {f:'🇮🇸',n:'Islandia',r:'Europa',u:2600,l:'(por convenio)',c:'ISK',y:'2025',lat:64.9,lng:-18.1},
-  {f:'🇳🇴',n:'Noruega',r:'Europa',u:2600,l:'(por convenio)',c:'NOK',y:'2025',lat:60.5,lng:8.4},
-  {f:'🇮🇪',n:'Irlanda',r:'Europa',u:2683,l:'2.282 EUR/mes',c:'EUR',y:'2025',lat:53.1,lng:-8.2},
-  {f:'🇳🇱',n:'Países Bajos',r:'Europa',u:2572,l:'2.193 EUR/mes',c:'EUR',y:'2025',lat:52.1,lng:5.3},
-  {f:'🇩🇪',n:'Alemania',r:'Europa',u:2537,l:'2.161 EUR/mes',c:'EUR',y:'2025',lat:51.2,lng:10.5},
-  {f:'🇸🇪',n:'Suecia',r:'Europa',u:2200,l:'(por convenio)',c:'SEK',y:'2025',lat:60.1,lng:18.6},
-  {f:'🇧🇪',n:'Bélgica',r:'Europa',u:2432,l:'2.070 EUR/mes',c:'EUR',y:'2025',lat:50.5,lng:4.5},
-  {f:'🇫🇷',n:'Francia',r:'Europa',u:2115,l:'1.802 EUR/mes',c:'EUR',y:'2025',lat:46.2,lng:2.2},
-  {f:'🇬🇧',n:'Reino Unido',r:'Europa',u:2060,l:'1.638 GBP/mes',c:'GBP',y:'2025',lat:55.4,lng:-3.4},
-  {f:'🇮🇱',n:'Israel',r:'Oriente Medio',u:1700,l:'6.248 ILS/mes',c:'ILS',y:'2025',lat:31.0,lng:34.9},
-  {f:'🇰🇷',n:'Corea del Sur',r:'Asia',u:1550,l:'10.030 KRW/h',c:'KRW',y:'2025',lat:36.6,lng:128.0},
-  {f:'🇪🇸',n:'España',r:'Europa',u:1620,l:'1.381 EUR/mes',c:'EUR',y:'2025',lat:40.5,lng:-3.7},
-  {f:'🇯🇵',n:'Japón',r:'Asia',u:1337,l:'1.113 JPY/h (Tokio)',c:'JPY',y:'2025',lat:36.2,lng:138.2},
-  {f:'🇵🇱',n:'Polonia',r:'Europa',u:1332,l:'1.133 EUR/mes',c:'PLN',y:'2026',lat:51.9,lng:19.1},
-  {f:'🇺🇸',n:'EE.UU.',r:'América del Norte',u:1256,l:'$7.25/hora (federal)',c:'USD',y:'2025',lat:38.9,lng:-97.0},
-  {f:'🇸🇬',n:'Singapur',r:'Asia',u:1120,l:'1.500 SGD/mes',c:'SGD',y:'2025',lat:1.35,lng:103.8},
-  {f:'🇨🇿',n:'Rep. Checa',r:'Europa',u:1085,l:'923 EUR/mes',c:'CZK',y:'2026',lat:49.8,lng:15.5},
-  {f:'🇵🇹',n:'Portugal',r:'Europa',u:1081,l:'920 EUR/mes',c:'EUR',y:'2026',lat:39.4,lng:-8.2},
-  {f:'🇨🇾',n:'Chipre',r:'Europa',u:1174,l:'1.000 EUR/mes',c:'EUR',y:'2025',lat:35.1,lng:33.4},
-  {f:'🇬🇷',n:'Grecia',r:'Europa',u:1207,l:'1.027 EUR/mes',c:'EUR',y:'2026',lat:39.1,lng:21.8},
-  {f:'🇭🇷',n:'Croacia',r:'Europa',u:1234,l:'1.050 EUR/mes',c:'EUR',y:'2026',lat:45.1,lng:16.4},
-  {f:'🇲🇹',n:'Malta',r:'Europa',u:1167,l:'993 EUR/mes',c:'EUR',y:'2026',lat:35.9,lng:14.4},
-  {f:'🇱🇹',n:'Lituania',r:'Europa',u:1220,l:'1.038 EUR/mes',c:'EUR',y:'2025',lat:55.2,lng:24.0},
-  {f:'🇸🇮',n:'Eslovenia',r:'Europa',u:1500,l:'1.278 EUR/mes',c:'EUR',y:'2025',lat:46.1,lng:14.8},
-  {f:'🇮🇹',n:'Italia',r:'Europa',u:1310,l:'(por convenio)',c:'EUR',y:'2025',lat:42.8,lng:12.6},
-  {f:'🇪🇪',n:'Estonia',r:'Europa',u:1040,l:'886 EUR/mes',c:'EUR',y:'2025',lat:58.6,lng:25.0},
-  {f:'🇸🇰',n:'Eslovaquia',r:'Europa',u:958,l:'816 EUR/mes',c:'EUR',y:'2025',lat:48.7,lng:19.7},
-  {f:'🇱🇻',n:'Letonia',r:'Europa',u:869,l:'740 EUR/mes',c:'EUR',y:'2025',lat:56.9,lng:24.6},
-  {f:'🇷🇴',n:'Rumanía',r:'Europa',u:956,l:'814 EUR/mes',c:'EUR',y:'2025',lat:45.9,lng:24.9},
-  {f:'🇭🇺',n:'Hungría',r:'Europa',u:830,l:'707 EUR/mes',c:'HUF',y:'2025',lat:47.2,lng:19.5},
-  {f:'🇧🇬',n:'Bulgaria',r:'Europa',u:647,l:'551 EUR/mes',c:'BGN',y:'2025',lat:42.7,lng:25.5},
-  {f:'🇷🇸',n:'Serbia',r:'Europa',u:794,l:'679 EUR/mes',c:'RSD',y:'2026',lat:44.0,lng:21.0},
-  {f:'🇲🇪',n:'Montenegro',r:'Europa',u:786,l:'670 EUR/mes',c:'EUR',y:'2025',lat:42.7,lng:19.4},
-  {f:'🇹🇷',n:'Turquía',r:'Europa',u:763,l:'650 EUR/mes',c:'TRY',y:'2026',lat:39.1,lng:35.2},
-  {f:'🇦🇱',n:'Albania',r:'Europa',u:606,l:'515 EUR/mes',c:'ALL',y:'2025',lat:41.2,lng:20.2},
-  {f:'🇲🇩',n:'Moldavia',r:'Europa',u:335,l:'285 EUR/mes',c:'MDL',y:'2025',lat:47.4,lng:28.4},
-  {f:'🇺🇦',n:'Ucrania',r:'Europa',u:193,l:'164 EUR/mes',c:'UAH',y:'2025',lat:49.0,lng:31.2},
-  {f:'🇧🇦',n:'Bosnia',r:'Europa',u:616,l:'524 EUR/mes',c:'BAM',y:'2025',lat:44.2,lng:17.9},
-  {f:'🇲🇰',n:'Macedonia Norte',r:'Europa',u:686,l:'584 EUR/mes',c:'MKD',y:'2025',lat:41.6,lng:21.7},
-  // LATINOAMÉRICA
-  {f:'🇨🇷',n:'Costa Rica',r:'América Latina',u:751,l:'373.092 CRC/mes',c:'CRC',y:'2026',lat:9.7,lng:-83.8},
-  {f:'🇨🇱',n:'Chile',r:'América Latina',u:597,l:'539.000 CLP/mes',c:'CLP',y:'2026',lat:-35.7,lng:-71.5},
-  {f:'🇺🇾',n:'Uruguay',r:'América Latina',u:537,l:'23.604 UYU/mes',c:'UYU',y:'2025',lat:-32.5,lng:-55.8},
-  {f:'🇪🇨',n:'Ecuador',r:'América Latina',u:482,l:'482 USD/mes',c:'USD',y:'2026',lat:-1.8,lng:-78.2},
-  {f:'🇬🇹',n:'Guatemala',r:'América Latina',u:466,l:'3.738 GTQ/mes',c:'GTQ',y:'2025',lat:15.8,lng:-90.2},
-  {f:'🇲🇽',n:'México',r:'América Latina',u:417,l:'278,80 MXN/día',c:'MXN',y:'2025',lat:23.6,lng:-102.5},
-  {f:'🇨🇴',n:'Colombia',r:'América Latina',u:446,l:'1.746.882 COP/mes',c:'COP',y:'2026',lat:4.6,lng:-74.3},
-  {f:'🇵🇾',n:'Paraguay',r:'América Latina',u:397,l:'2.680.373 PYG/mes',c:'PYG',y:'2025',lat:-23.4,lng:-58.4},
-  {f:'🇧🇴',n:'Bolivia',r:'América Latina',u:397,l:'2.750 BOB/mes',c:'BOB',y:'2025',lat:-17.0,lng:-65.1},
-  {f:'🇭🇳',n:'Honduras',r:'América Latina',u:357,l:'8.972 HNL/mes',c:'HNL',y:'2025',lat:15.0,lng:-86.5},
-  {f:'🇵🇦',n:'Panamá',r:'América Latina',u:341,l:'341 USD/mes',c:'USD',y:'2025',lat:8.5,lng:-80.1},
-  {f:'🇵🇪',n:'Perú',r:'América Latina',u:335,l:'1.130 PEN/mes',c:'PEN',y:'2025',lat:-9.2,lng:-75.0},
-  {f:'🇩🇴',n:'Rep. Dominicana',r:'América Latina',u:267,l:'16.993 DOP/mes',c:'DOP',y:'2026',lat:18.7,lng:-70.2},
-  {f:'🇧🇷',n:'Brasil',r:'América Latina',u:295,l:'1.621 BRL/mes',c:'BRL',y:'2026',lat:-14.2,lng:-51.9},
-  {f:'🇦🇷',n:'Argentina',r:'América Latina',u:233,l:'341.000 ARS/mes',c:'ARS',y:'2026',lat:-38.4,lng:-63.6},
-  {f:'🇸🇻',n:'El Salvador',r:'América Latina',u:243,l:'365 USD/mes',c:'USD',y:'2025',lat:13.8,lng:-88.9},
-  {f:'🇳🇮',n:'Nicaragua',r:'América Latina',u:210,l:'6.338 NIO/mes',c:'NIO',y:'2025',lat:12.9,lng:-85.2},
-  {f:'🇭🇹',n:'Haití',r:'América Latina',u:75,l:'8.635 HTG/mes',c:'HTG',y:'2025',lat:18.9,lng:-72.3},
-  {f:'🇨🇺',n:'Cuba',r:'América Latina',u:7,l:'2.100 CUP/mes',c:'CUP',y:'2025',lat:22.0,lng:-79.5},
-  {f:'🇻🇪',n:'Venezuela',r:'América Latina',u:1,l:'130 VES/mes',c:'VES',y:'2025',lat:8.0,lng:-66.6},
-  {f:'🇨🇦',n:'Canadá',r:'América del Norte',u:2100,l:'2.880 CAD/mes',c:'CAD',y:'2025',lat:56.1,lng:-96.3},
-  // ASIA
-  {f:'🇨🇳',n:'China (Shanghái)',r:'Asia',u:350,l:'2.690 CNY/mes',c:'CNY',y:'2025',lat:35.9,lng:104.2},
-  {f:'🇲🇾',n:'Malasia',r:'Asia',u:330,l:'1.500 MYR/mes',c:'MYR',y:'2025',lat:4.2,lng:108.0},
-  {f:'🇹🇭',n:'Tailandia',r:'Asia',u:330,l:'11.780 THB/mes',c:'THB',y:'2025',lat:15.9,lng:100.9},
-  {f:'🇵🇭',n:'Filipinas',r:'Asia',u:280,l:'16.000 PHP/mes',c:'PHP',y:'2025',lat:12.9,lng:121.8},
-  {f:'🇮🇩',n:'Indonesia',r:'Asia',u:255,l:'4.180.375 IDR/mes',c:'IDR',y:'2025',lat:-0.8,lng:113.9},
-  {f:'🇻🇳',n:'Vietnam',r:'Asia',u:210,l:'4.680.000 VND/mes',c:'VND',y:'2025',lat:14.1,lng:108.3},
-  {f:'🇮🇳',n:'India (media)',r:'Asia',u:200,l:'16.000 INR/mes',c:'INR',y:'2025',lat:20.6,lng:78.0},
-  {f:'🇦🇲',n:'Armenia',r:'Asia',u:230,l:'90.000 AMD/mes',c:'AMD',y:'2025',lat:40.1,lng:45.0},
-  {f:'🇬🇪',n:'Georgia',r:'Asia',u:200,l:'550 GEL/mes',c:'GEL',y:'2025',lat:42.3,lng:43.4},
-  {f:'🇦🇿',n:'Azerbaiyán',r:'Asia',u:210,l:'360 AZN/mes',c:'AZN',y:'2025',lat:40.1,lng:47.6},
-  {f:'🇰🇿',n:'Kazajistán',r:'Asia',u:140,l:'70.000 KZT/mes',c:'KZT',y:'2025',lat:48.0,lng:67.8},
-  {f:'🇳🇵',n:'Nepal',r:'Asia',u:135,l:'18.000 NPR/mes',c:'NPR',y:'2025',lat:28.4,lng:84.1},
-  {f:'🇰🇭',n:'Camboya',r:'Asia',u:250,l:'1.023.000 KHR/mes',c:'KHR',y:'2024',lat:12.6,lng:104.9},
-  {f:'🇱🇰',n:'Sri Lanka',r:'Asia',u:125,l:'40.000 LKR/mes',c:'LKR',y:'2025',lat:7.9,lng:80.8},
-  {f:'🇵🇰',n:'Pakistán',r:'Asia',u:130,l:'36.000 PKR/mes',c:'PKR',y:'2025',lat:30.4,lng:69.3},
-  {f:'🇧🇩',n:'Bangladés',r:'Asia',u:103,l:'12.500 BDT/mes',c:'BDT',y:'2024',lat:23.7,lng:90.4},
-  {f:'🇲🇲',n:'Myanmar',r:'Asia',u:90,l:'4.800 MMK/mes',c:'MMK',y:'2024',lat:19.2,lng:96.7},
-  {f:'🇺🇿',n:'Uzbekistán',r:'Asia',u:80,l:'1.050.000 UZS/mes',c:'UZS',y:'2025',lat:41.4,lng:64.6},
-  // ORIENTE MEDIO
-  {f:'🇦🇪',n:'Emiratos Árabes',r:'Oriente Medio',u:820,l:'3.000 AED/mes',c:'AED',y:'2025',lat:23.4,lng:53.8},
-  {f:'🇸🇦',n:'Arabia Saudita',r:'Oriente Medio',u:800,l:'3.000 SAR/mes',c:'SAR',y:'2025',lat:23.9,lng:45.1},
-  {f:'🇯🇴',n:'Jordania',r:'Oriente Medio',u:330,l:'234 JOD/mes',c:'JOD',y:'2025',lat:30.6,lng:36.2},
-  {f:'🇮🇶',n:'Irak',r:'Oriente Medio',u:340,l:'450.000 IQD/mes',c:'IQD',y:'2025',lat:33.2,lng:43.7},
-  {f:'🇮🇷',n:'Irán',r:'Oriente Medio',u:150,l:'23M IRR/mes',c:'IRR',y:'2025',lat:32.4,lng:53.7},
-  {f:'🇱🇧',n:'Líbano',r:'Oriente Medio',u:80,l:'9M LBP/mes',c:'LBP',y:'2025',lat:33.9,lng:35.5},
-  // OCEANÍA
-  {f:'🇦🇺',n:'Australia',r:'Oceanía',u:2720,l:'2.309 AUD/mes',c:'AUD',y:'2025',lat:-25.3,lng:133.8},
-  {f:'🇳🇿',n:'Nueva Zelanda',r:'Oceanía',u:2620,l:'2.340 NZD/mes',c:'NZD',y:'2025',lat:-40.9,lng:172.7},
-  // ÁFRICA
-  {f:'🇿🇦',n:'Sudáfrica',r:'África',u:350,l:'6.545 ZAR/mes',c:'ZAR',y:'2025',lat:-30.6,lng:22.9},
-  {f:'🇲🇦',n:'Marruecos',r:'África',u:320,l:'3.340 MAD/mes',c:'MAD',y:'2025',lat:31.8,lng:-7.1},
-  {f:'🇹🇳',n:'Túnez',r:'África',u:250,l:'795 TND/mes',c:'TND',y:'2025',lat:33.9,lng:9.6},
-  {f:'🇳🇬',n:'Nigeria',r:'África',u:230,l:'375.000 NGN/mes',c:'NGN',y:'2025',lat:9.1,lng:8.7},
-  {f:'🇿🇼',n:'Zimbabue',r:'África',u:175,l:'175 USD/mes',c:'USD',y:'2025',lat:-19.0,lng:29.2},
-  {f:'🇿🇲',n:'Zambia',r:'África',u:140,l:'3.100 ZMW/mes',c:'ZMW',y:'2025',lat:-13.1,lng:27.8},
-  {f:'🇬🇭',n:'Ghana',r:'África',u:130,l:'1.600 GHS/mes',c:'GHS',y:'2025',lat:7.9,lng:-1.0},
-  {f:'🇰🇪',n:'Kenia',r:'África',u:190,l:'24.000 KES/mes',c:'KES',y:'2025',lat:0.0,lng:37.9},
-  {f:'🇪🇬',n:'Egipto',r:'África',u:120,l:'6.000 EGP/mes',c:'EGP',y:'2025',lat:26.8,lng:30.8},
-  {f:'🇹🇿',n:'Tanzania',r:'África',u:100,l:'260.000 TZS/mes',c:'TZS',y:'2025',lat:-6.4,lng:34.9},
-  {f:'🇸🇳',n:'Senegal',r:'África',u:85,l:'52.680 XOF/mes',c:'XOF',y:'2025',lat:14.5,lng:-14.5},
-  {f:'🇨🇲',n:'Camerún',r:'África',u:70,l:'36.270 XAF/mes',c:'XAF',y:'2025',lat:3.9,lng:11.5},
-  {f:'🇺🇬',n:'Uganda',r:'África',u:65,l:'245.000 UGX/mes',c:'UGX',y:'2025',lat:1.4,lng:32.3},
-  {f:'🇪🇹',n:'Etiopía',r:'África',u:70,l:'3.800 ETB/mes',c:'ETB',y:'2025',lat:9.1,lng:40.5},
+  {f:'\u{1F1E8}\u{1F1ED}',n:'Suiza',r:'Europa',u:3200,l:'~3.500 CHF/mes',c:'CHF',y:'2025',lat:46.8,lng:8.2},
+  {f:'\u{1F1F1}\u{1F1FA}',n:'Luxemburgo',r:'Europa',u:3102,l:'2.638 EUR/mes',c:'EUR',y:'2025',lat:49.8,lng:6.1},
+  {f:'\u{1F1E9}\u{1F1F0}',n:'Dinamarca',r:'Europa',u:2900,l:'~22.000 DKK (conv.)',c:'DKK',y:'2025',lat:56.2,lng:9.5},
+  {f:'\u{1F1EE}\u{1F1F8}',n:'Islandia',r:'Europa',u:2600,l:'(por convenio)',c:'ISK',y:'2025',lat:64.9,lng:-18.1},
+  {f:'\u{1F1F3}\u{1F1F4}',n:'Noruega',r:'Europa',u:2600,l:'(por convenio)',c:'NOK',y:'2025',lat:60.5,lng:8.4},
+  {f:'\u{1F1EE}\u{1F1EA}',n:'Irlanda',r:'Europa',u:2683,l:'2.282 EUR/mes',c:'EUR',y:'2025',lat:53.1,lng:-8.2},
+  {f:'\u{1F1F3}\u{1F1F1}',n:'Pa\xEDses Bajos',r:'Europa',u:2572,l:'2.193 EUR/mes',c:'EUR',y:'2025',lat:52.1,lng:5.3},
+  {f:'\u{1F1E9}\u{1F1EA}',n:'Alemania',r:'Europa',u:2537,l:'2.161 EUR/mes',c:'EUR',y:'2025',lat:51.2,lng:10.5},
+  {f:'\u{1F1F8}\u{1F1EA}',n:'Suecia',r:'Europa',u:2200,l:'(por convenio)',c:'SEK',y:'2025',lat:60.1,lng:18.6},
+  {f:'\u{1F1E7}\u{1F1EA}',n:'B\xE9lgica',r:'Europa',u:2432,l:'2.070 EUR/mes',c:'EUR',y:'2025',lat:50.5,lng:4.5},
+  {f:'\u{1F1EB}\u{1F1F7}',n:'Francia',r:'Europa',u:2115,l:'1.802 EUR/mes',c:'EUR',y:'2025',lat:46.2,lng:2.2},
+  {f:'\u{1F1EC}\u{1F1E7}',n:'Reino Unido',r:'Europa',u:2060,l:'1.638 GBP/mes',c:'GBP',y:'2025',lat:55.4,lng:-3.4},
+  {f:'\u{1F1EE}\u{1F1F1}',n:'Israel',r:'Oriente Medio',u:1700,l:'6.248 ILS/mes',c:'ILS',y:'2025',lat:31.0,lng:34.9},
+  {f:'\u{1F1F0}\u{1F1F7}',n:'Corea del Sur',r:'Asia',u:1550,l:'10.030 KRW/h',c:'KRW',y:'2025',lat:36.6,lng:128.0},
+  {f:'\u{1F1EA}\u{1F1F8}',n:'Espa\xF1a',r:'Europa',u:1620,l:'1.381 EUR/mes',c:'EUR',y:'2025',lat:40.5,lng:-3.7},
+  {f:'\u{1F1EF}\u{1F1F5}',n:'Jap\xF3n',r:'Asia',u:1337,l:'1.113 JPY/h (Tokio)',c:'JPY',y:'2025',lat:36.2,lng:138.2},
+  {f:'\u{1F1F5}\u{1F1F1}',n:'Polonia',r:'Europa',u:1332,l:'1.133 EUR/mes',c:'PLN',y:'2026',lat:51.9,lng:19.1},
+  {f:'\u{1F1FA}\u{1F1F8}',n:'EE.UU.',r:'Am\xE9rica del Norte',u:1256,l:'$7.25/hora (federal)',c:'USD',y:'2025',lat:38.9,lng:-97.0},
+  {f:'\u{1F1F8}\u{1F1EC}',n:'Singapur',r:'Asia',u:1120,l:'1.500 SGD/mes',c:'SGD',y:'2025',lat:1.35,lng:103.8},
+  {f:'\u{1F1E8}\u{1F1FF}',n:'Rep. Checa',r:'Europa',u:1085,l:'923 EUR/mes',c:'CZK',y:'2026',lat:49.8,lng:15.5},
+  {f:'\u{1F1F5}\u{1F1F9}',n:'Portugal',r:'Europa',u:1081,l:'920 EUR/mes',c:'EUR',y:'2026',lat:39.4,lng:-8.2},
+  {f:'\u{1F1E8}\u{1F1FE}',n:'Chipre',r:'Europa',u:1174,l:'1.000 EUR/mes',c:'EUR',y:'2025',lat:35.1,lng:33.4},
+  {f:'\u{1F1EC}\u{1F1F7}',n:'Grecia',r:'Europa',u:1207,l:'1.027 EUR/mes',c:'EUR',y:'2026',lat:39.1,lng:21.8},
+  {f:'\u{1F1ED}\u{1F1F7}',n:'Croacia',r:'Europa',u:1234,l:'1.050 EUR/mes',c:'EUR',y:'2026',lat:45.1,lng:16.4},
+  {f:'\u{1F1F2}\u{1F1F9}',n:'Malta',r:'Europa',u:1167,l:'993 EUR/mes',c:'EUR',y:'2026',lat:35.9,lng:14.4},
+  {f:'\u{1F1F1}\u{1F1F9}',n:'Lituania',r:'Europa',u:1220,l:'1.038 EUR/mes',c:'EUR',y:'2025',lat:55.2,lng:24.0},
+  {f:'\u{1F1F8}\u{1F1EE}',n:'Eslovenia',r:'Europa',u:1500,l:'1.278 EUR/mes',c:'EUR',y:'2025',lat:46.1,lng:14.8},
+  {f:'\u{1F1EE}\u{1F1F9}',n:'Italia',r:'Europa',u:1310,l:'(por convenio)',c:'EUR',y:'2025',lat:42.8,lng:12.6},
+  {f:'\u{1F1EA}\u{1F1EA}',n:'Estonia',r:'Europa',u:1040,l:'886 EUR/mes',c:'EUR',y:'2025',lat:58.6,lng:25.0},
+  {f:'\u{1F1F8}\u{1F1F0}',n:'Eslovaquia',r:'Europa',u:958,l:'816 EUR/mes',c:'EUR',y:'2025',lat:48.7,lng:19.7},
+  {f:'\u{1F1F1}\u{1F1FB}',n:'Letonia',r:'Europa',u:869,l:'740 EUR/mes',c:'EUR',y:'2025',lat:56.9,lng:24.6},
+  {f:'\u{1F1F7}\u{1F1F4}',n:'Ruman\xEDa',r:'Europa',u:956,l:'814 EUR/mes',c:'EUR',y:'2025',lat:45.9,lng:24.9},
+  {f:'\u{1F1ED}\u{1F1FA}',n:'Hungr\xEDa',r:'Europa',u:830,l:'707 EUR/mes',c:'HUF',y:'2025',lat:47.2,lng:19.5},
+  {f:'\u{1F1E7}\u{1F1EC}',n:'Bulgaria',r:'Europa',u:647,l:'551 EUR/mes',c:'BGN',y:'2025',lat:42.7,lng:25.5},
+  {f:'\u{1F1F7}\u{1F1F8}',n:'Serbia',r:'Europa',u:794,l:'679 EUR/mes',c:'RSD',y:'2026',lat:44.0,lng:21.0},
+  {f:'\u{1F1F2}\u{1F1EA}',n:'Montenegro',r:'Europa',u:786,l:'670 EUR/mes',c:'EUR',y:'2025',lat:42.7,lng:19.4},
+  {f:'\u{1F1F9}\u{1F1F7}',n:'Turqu\xEDa',r:'Europa',u:763,l:'650 EUR/mes',c:'TRY',y:'2026',lat:39.1,lng:35.2},
+  {f:'\u{1F1E6}\u{1F1F1}',n:'Albania',r:'Europa',u:606,l:'515 EUR/mes',c:'ALL',y:'2025',lat:41.2,lng:20.2},
+  {f:'\u{1F1F2}\u{1F1E9}',n:'Moldavia',r:'Europa',u:335,l:'285 EUR/mes',c:'MDL',y:'2025',lat:47.4,lng:28.4},
+  {f:'\u{1F1FA}\u{1F1E6}',n:'Ucrania',r:'Europa',u:193,l:'164 EUR/mes',c:'UAH',y:'2025',lat:49.0,lng:31.2},
+  {f:'\u{1F1E7}\u{1F1E6}',n:'Bosnia',r:'Europa',u:616,l:'524 EUR/mes',c:'BAM',y:'2025',lat:44.2,lng:17.9},
+  {f:'\u{1F1F2}\u{1F1F0}',n:'Macedonia Norte',r:'Europa',u:686,l:'584 EUR/mes',c:'MKD',y:'2025',lat:41.6,lng:21.7},
+  {f:'\u{1F1E8}\u{1F1F7}',n:'Costa Rica',r:'Am\xE9rica Latina',u:751,l:'373.092 CRC/mes',c:'CRC',y:'2026',lat:9.7,lng:-83.8},
+  {f:'\u{1F1E8}\u{1F1F1}',n:'Chile',r:'Am\xE9rica Latina',u:597,l:'539.000 CLP/mes',c:'CLP',y:'2026',lat:-35.7,lng:-71.5},
+  {f:'\u{1F1FA}\u{1F1FE}',n:'Uruguay',r:'Am\xE9rica Latina',u:537,l:'23.604 UYU/mes',c:'UYU',y:'2025',lat:-32.5,lng:-55.8},
+  {f:'\u{1F1EA}\u{1F1E8}',n:'Ecuador',r:'Am\xE9rica Latina',u:482,l:'482 USD/mes',c:'USD',y:'2026',lat:-1.8,lng:-78.2},
+  {f:'\u{1F1EC}\u{1F1F9}',n:'Guatemala',r:'Am\xE9rica Latina',u:466,l:'3.738 GTQ/mes',c:'GTQ',y:'2025',lat:15.8,lng:-90.2},
+  {f:'\u{1F1F2}\u{1F1FD}',n:'M\xE9xico',r:'Am\xE9rica Latina',u:417,l:'278,80 MXN/d\xEDa',c:'MXN',y:'2025',lat:23.6,lng:-102.5},
+  {f:'\u{1F1E8}\u{1F1F4}',n:'Colombia',r:'Am\xE9rica Latina',u:446,l:'1.746.882 COP/mes',c:'COP',y:'2026',lat:4.6,lng:-74.3},
+  {f:'\u{1F1F5}\u{1F1FE}',n:'Paraguay',r:'Am\xE9rica Latina',u:397,l:'2.680.373 PYG/mes',c:'PYG',y:'2025',lat:-23.4,lng:-58.4},
+  {f:'\u{1F1E7}\u{1F1F4}',n:'Bolivia',r:'Am\xE9rica Latina',u:397,l:'2.750 BOB/mes',c:'BOB',y:'2025',lat:-17.0,lng:-65.1},
+  {f:'\u{1F1ED}\u{1F1F3}',n:'Honduras',r:'Am\xE9rica Latina',u:357,l:'8.972 HNL/mes',c:'HNL',y:'2025',lat:15.0,lng:-86.5},
+  {f:'\u{1F1F5}\u{1F1E6}',n:'Panam\xE1',r:'Am\xE9rica Latina',u:341,l:'341 USD/mes',c:'USD',y:'2025',lat:8.5,lng:-80.1},
+  {f:'\u{1F1F5}\u{1F1EA}',n:'Per\xFA',r:'Am\xE9rica Latina',u:335,l:'1.130 PEN/mes',c:'PEN',y:'2025',lat:-9.2,lng:-75.0},
+  {f:'\u{1F1E9}\u{1F1F4}',n:'Rep. Dominicana',r:'Am\xE9rica Latina',u:267,l:'16.993 DOP/mes',c:'DOP',y:'2026',lat:18.7,lng:-70.2},
+  {f:'\u{1F1E7}\u{1F1F7}',n:'Brasil',r:'Am\xE9rica Latina',u:295,l:'1.621 BRL/mes',c:'BRL',y:'2026',lat:-14.2,lng:-51.9},
+  {f:'\u{1F1E6}\u{1F1F7}',n:'Argentina',r:'Am\xE9rica Latina',u:233,l:'341.000 ARS/mes',c:'ARS',y:'2026',lat:-38.4,lng:-63.6},
+  {f:'\u{1F1F8}\u{1F1FB}',n:'El Salvador',r:'Am\xE9rica Latina',u:243,l:'365 USD/mes',c:'USD',y:'2025',lat:13.8,lng:-88.9},
+  {f:'\u{1F1F3}\u{1F1EE}',n:'Nicaragua',r:'Am\xE9rica Latina',u:210,l:'6.338 NIO/mes',c:'NIO',y:'2025',lat:12.9,lng:-85.2},
+  {f:'\u{1F1ED}\u{1F1F9}',n:'Hait\xED',r:'Am\xE9rica Latina',u:75,l:'8.635 HTG/mes',c:'HTG',y:'2025',lat:18.9,lng:-72.3},
+  {f:'\u{1F1E8}\u{1F1FA}',n:'Cuba',r:'Am\xE9rica Latina',u:7,l:'2.100 CUP/mes',c:'CUP',y:'2025',lat:22.0,lng:-79.5},
+  {f:'\u{1F1FB}\u{1F1EA}',n:'Venezuela',r:'Am\xE9rica Latina',u:1,l:'130 VES/mes',c:'VES',y:'2025',lat:8.0,lng:-66.6},
+  {f:'\u{1F1E8}\u{1F1E6}',n:'Canad\xE1',r:'Am\xE9rica del Norte',u:2100,l:'2.880 CAD/mes',c:'CAD',y:'2025',lat:56.1,lng:-96.3},
+  {f:'\u{1F1E8}\u{1F1F3}',n:'China (Shangh\xE1i)',r:'Asia',u:350,l:'2.690 CNY/mes',c:'CNY',y:'2025',lat:35.9,lng:104.2},
+  {f:'\u{1F1F2}\u{1F1FE}',n:'Malasia',r:'Asia',u:330,l:'1.500 MYR/mes',c:'MYR',y:'2025',lat:4.2,lng:108.0},
+  {f:'\u{1F1F9}\u{1F1ED}',n:'Tailandia',r:'Asia',u:330,l:'11.780 THB/mes',c:'THB',y:'2025',lat:15.9,lng:100.9},
+  {f:'\u{1F1F5}\u{1F1ED}',n:'Filipinas',r:'Asia',u:280,l:'16.000 PHP/mes',c:'PHP',y:'2025',lat:12.9,lng:121.8},
+  {f:'\u{1F1EE}\u{1F1E9}',n:'Indonesia',r:'Asia',u:255,l:'4.180.375 IDR/mes',c:'IDR',y:'2025',lat:-0.8,lng:113.9},
+  {f:'\u{1F1FB}\u{1F1F3}',n:'Vietnam',r:'Asia',u:210,l:'4.680.000 VND/mes',c:'VND',y:'2025',lat:14.1,lng:108.3},
+  {f:'\u{1F1EE}\u{1F1F3}',n:'India (media)',r:'Asia',u:200,l:'16.000 INR/mes',c:'INR',y:'2025',lat:20.6,lng:78.0},
+  {f:'\u{1F1E6}\u{1F1F2}',n:'Armenia',r:'Asia',u:230,l:'90.000 AMD/mes',c:'AMD',y:'2025',lat:40.1,lng:45.0},
+  {f:'\u{1F1EC}\u{1F1EA}',n:'Georgia',r:'Asia',u:200,l:'550 GEL/mes',c:'GEL',y:'2025',lat:42.3,lng:43.4},
+  {f:'\u{1F1E6}\u{1F1FF}',n:'Azerbaiy\xE1n',r:'Asia',u:210,l:'360 AZN/mes',c:'AZN',y:'2025',lat:40.1,lng:47.6},
+  {f:'\u{1F1F0}\u{1F1FF}',n:'Kazajist\xE1n',r:'Asia',u:140,l:'70.000 KZT/mes',c:'KZT',y:'2025',lat:48.0,lng:67.8},
+  {f:'\u{1F1F3}\u{1F1F5}',n:'Nepal',r:'Asia',u:135,l:'18.000 NPR/mes',c:'NPR',y:'2025',lat:28.4,lng:84.1},
+  {f:'\u{1F1F0}\u{1F1ED}',n:'Camboya',r:'Asia',u:250,l:'1.023.000 KHR/mes',c:'KHR',y:'2024',lat:12.6,lng:104.9},
+  {f:'\u{1F1F1}\u{1F1F0}',n:'Sri Lanka',r:'Asia',u:125,l:'40.000 LKR/mes',c:'LKR',y:'2025',lat:7.9,lng:80.8},
+  {f:'\u{1F1F5}\u{1F1F0}',n:'Pakist\xE1n',r:'Asia',u:130,l:'36.000 PKR/mes',c:'PKR',y:'2025',lat:30.4,lng:69.3},
+  {f:'\u{1F1E7}\u{1F1E9}',n:'Banglade\u{0301}s',r:'Asia',u:103,l:'12.500 BDT/mes',c:'BDT',y:'2024',lat:23.7,lng:90.4},
+  {f:'\u{1F1F2}\u{1F1F2}',n:'Myanmar',r:'Asia',u:90,l:'4.800 MMK/mes',c:'MMK',y:'2024',lat:19.2,lng:96.7},
+  {f:'\u{1F1FA}\u{1F1FF}',n:'Uzbekist\xE1n',r:'Asia',u:80,l:'1.050.000 UZS/mes',c:'UZS',y:'2025',lat:41.4,lng:64.6},
+  {f:'\u{1F1E6}\u{1F1EA}',n:'Emiratos \xC1rabes',r:'Oriente Medio',u:820,l:'3.000 AED/mes',c:'AED',y:'2025',lat:23.4,lng:53.8},
+  {f:'\u{1F1F8}\u{1F1E6}',n:'Arabia Saudita',r:'Oriente Medio',u:800,l:'3.000 SAR/mes',c:'SAR',y:'2025',lat:23.9,lng:45.1},
+  {f:'\u{1F1EF}\u{1F1F4}',n:'Jordania',r:'Oriente Medio',u:330,l:'234 JOD/mes',c:'JOD',y:'2025',lat:30.6,lng:36.2},
+  {f:'\u{1F1EE}\u{1F1F6}',n:'Irak',r:'Oriente Medio',u:340,l:'450.000 IQD/mes',c:'IQD',y:'2025',lat:33.2,lng:43.7},
+  {f:'\u{1F1EE}\u{1F1F7}',n:'Ir\xE1n',r:'Oriente Medio',u:150,l:'23M IRR/mes',c:'IRR',y:'2025',lat:32.4,lng:53.7},
+  {f:'\u{1F1F1}\u{1F1E7}',n:'L\xEDbano',r:'Oriente Medio',u:80,l:'9M LBP/mes',c:'LBP',y:'2025',lat:33.9,lng:35.5},
+  {f:'\u{1F1E6}\u{1F1FA}',n:'Australia',r:'Ocean\xEDa',u:2720,l:'2.309 AUD/mes',c:'AUD',y:'2025',lat:-25.3,lng:133.8},
+  {f:'\u{1F1F3}\u{1F1FF}',n:'Nueva Zelanda',r:'Ocean\xEDa',u:2620,l:'2.340 NZD/mes',c:'NZD',y:'2025',lat:-40.9,lng:172.7},
+  {f:'\u{1F1FF}\u{1F1E6}',n:'Sud\xE1frica',r:'\xC1frica',u:350,l:'6.545 ZAR/mes',c:'ZAR',y:'2025',lat:-30.6,lng:22.9},
+  {f:'\u{1F1F2}\u{1F1E6}',n:'Marruecos',r:'\xC1frica',u:320,l:'3.340 MAD/mes',c:'MAD',y:'2025',lat:31.8,lng:-7.1},
+  {f:'\u{1F1F9}\u{1F1F3}',n:'T\xFAnez',r:'\xC1frica',u:250,l:'795 TND/mes',c:'TND',y:'2025',lat:33.9,lng:9.6},
+  {f:'\u{1F1F3}\u{1F1EC}',n:'Nigeria',r:'\xC1frica',u:230,l:'375.000 NGN/mes',c:'NGN',y:'2025',lat:9.1,lng:8.7},
+  {f:'\u{1F1FF}\u{1F1FC}',n:'Zimbabue',r:'\xC1frica',u:175,l:'175 USD/mes',c:'USD',y:'2025',lat:-19.0,lng:29.2},
+  {f:'\u{1F1FF}\u{1F1F2}',n:'Zambia',r:'\xC1frica',u:140,l:'3.100 ZMW/mes',c:'ZMW',y:'2025',lat:-13.1,lng:27.8},
+  {f:'\u{1F1EC}\u{1F1ED}',n:'Ghana',r:'\xC1frica',u:130,l:'1.600 GHS/mes',c:'GHS',y:'2025',lat:7.9,lng:-1.0},
+  {f:'\u{1F1F0}\u{1F1EA}',n:'Kenia',r:'\xC1frica',u:190,l:'24.000 KES/mes',c:'KES',y:'2025',lat:0.0,lng:37.9},
+  {f:'\u{1F1EA}\u{1F1EC}',n:'Egipto',r:'\xC1frica',u:120,l:'6.000 EGP/mes',c:'EGP',y:'2025',lat:26.8,lng:30.8},
+  {f:'\u{1F1F9}\u{1F1FF}',n:'Tanzania',r:'\xC1frica',u:100,l:'260.000 TZS/mes',c:'TZS',y:'2025',lat:-6.4,lng:34.9},
+  {f:'\u{1F1F8}\u{1F1F3}',n:'Senegal',r:'\xC1frica',u:85,l:'52.680 XOF/mes',c:'XOF',y:'2025',lat:14.5,lng:-14.5},
+  {f:'\u{1F1E8}\u{1F1F2}',n:'Camer\xFAn',r:'\xC1frica',u:70,l:'36.270 XAF/mes',c:'XAF',y:'2025',lat:3.9,lng:11.5},
+  {f:'\u{1F1FA}\u{1F1EC}',n:'Uganda',r:'\xC1frica',u:65,l:'245.000 UGX/mes',c:'UGX',y:'2025',lat:1.4,lng:32.3},
+  {f:'\u{1F1EA}\u{1F1F9}',n:'Etiop\xEDa',r:'\xC1frica',u:70,l:'3.800 ETB/mes',c:'ETB',y:'2025',lat:9.1,lng:40.5},
 ];
 
-// Remove dupes by name
 const seen=new Set();
 const C=COUNTRIES.filter(x=>{if(seen.has(x.n))return false;seen.add(x.n);return true;});
 C.sort((a,b)=>b.u-a.u);
@@ -489,7 +458,74 @@ let cmp=[];
 let rates={};
 let rateTs=null;
 
-// ── MAP STATE ──
+// ══════════════════════════════════════════
+//  TIMEZONE MAP
+// ══════════════════════════════════════════
+const COUNTRY_TZ = {
+  'Suiza':'Europe/Zurich','Luxemburgo':'Europe/Luxembourg','Dinamarca':'Europe/Copenhagen',
+  'Islandia':'Atlantic/Reykjavik','Noruega':'Europe/Oslo','Irlanda':'Europe/Dublin',
+  'Pa\xEDses Bajos':'Europe/Amsterdam','Alemania':'Europe/Berlin','Suecia':'Europe/Stockholm',
+  'B\xE9lgica':'Europe/Brussels','Francia':'Europe/Paris','Reino Unido':'Europe/London',
+  'Israel':'Asia/Jerusalem','Corea del Sur':'Asia/Seoul','Espa\xF1a':'Europe/Madrid',
+  'Jap\xF3n':'Asia/Tokyo','Polonia':'Europe/Warsaw','EE.UU.':'America/New_York',
+  'Singapur':'Asia/Singapore','Rep. Checa':'Europe/Prague','Portugal':'Europe/Lisbon',
+  'Chipre':'Asia/Nicosia','Grecia':'Europe/Athens','Croacia':'Europe/Zagreb',
+  'Malta':'Europe/Malta','Lituania':'Europe/Vilnius','Eslovenia':'Europe/Ljubljana',
+  'Italia':'Europe/Rome','Estonia':'Europe/Tallinn','Eslovaquia':'Europe/Bratislava',
+  'Letonia':'Europe/Riga','Ruman\xEDa':'Europe/Bucharest','Hungr\xEDa':'Europe/Budapest',
+  'Bulgaria':'Europe/Sofia','Serbia':'Europe/Belgrade','Montenegro':'Europe/Podgorica',
+  'Turqu\xEDa':'Europe/Istanbul','Albania':'Europe/Tirane','Moldavia':'Europe/Chisinau',
+  'Ucrania':'Europe/Kiev','Bosnia':'Europe/Sarajevo','Macedonia Norte':'Europe/Skopje',
+  'Costa Rica':'America/Costa_Rica','Chile':'America/Santiago','Uruguay':'America/Montevideo',
+  'Ecuador':'America/Guayaquil','Guatemala':'America/Guatemala','M\xE9xico':'America/Mexico_City',
+  'Colombia':'America/Bogota','Paraguay':'America/Asuncion','Bolivia':'America/La_Paz',
+  'Honduras':'America/Tegucigalpa','Panam\xE1':'America/Panama','Per\xFA':'America/Lima',
+  'Rep. Dominicana':'America/Santo_Domingo','Brasil':'America/Sao_Paulo',
+  'Argentina':'America/Argentina/Buenos_Aires','El Salvador':'America/El_Salvador',
+  'Nicaragua':'America/Managua','Hait\xED':'America/Port-au-Prince','Cuba':'America/Havana',
+  'Venezuela':'America/Caracas','Canad\xE1':'America/Toronto',
+  'China (Shangh\xE1i)':'Asia/Shanghai','Malasia':'Asia/Kuala_Lumpur','Tailandia':'Asia/Bangkok',
+  'Filipinas':'Asia/Manila','Indonesia':'Asia/Jakarta','Vietnam':'Asia/Ho_Chi_Minh',
+  'India (media)':'Asia/Kolkata','Armenia':'Asia/Yerevan','Georgia':'Asia/Tbilisi',
+  'Azerbaiy\xE1n':'Asia/Baku','Kazajist\xE1n':'Asia/Almaty','Nepal':'Asia/Kathmandu',
+  'Camboya':'Asia/Phnom_Penh','Sri Lanka':'Asia/Colombo','Pakist\xE1n':'Asia/Karachi',
+  'Banglade\u{0301}s':'Asia/Dhaka','Myanmar':'Asia/Rangoon','Uzbekist\xE1n':'Asia/Tashkent',
+  'Emiratos \xC1rabes':'Asia/Dubai','Arabia Saudita':'Asia/Riyadh','Jordania':'Asia/Amman',
+  'Irak':'Asia/Baghdad','Ir\xE1n':'Asia/Tehran','L\xEDbano':'Asia/Beirut',
+  'Australia':'Australia/Sydney','Nueva Zelanda':'Pacific/Auckland',
+  'Sud\xE1frica':'Africa/Johannesburg','Marruecos':'Africa/Casablanca','T\xFAnez':'Africa/Tunis',
+  'Nigeria':'Africa/Lagos','Zimbabue':'Africa/Harare','Zambia':'Africa/Lusaka',
+  'Ghana':'Africa/Accra','Kenia':'Africa/Nairobi','Egipto':'Africa/Cairo',
+  'Tanzania':'Africa/Dar_es_Salaam','Senegal':'Africa/Dakar','Camer\xFAn':'Africa/Douala',
+  'Uganda':'Africa/Kampala','Etiop\xEDa':'Africa/Addis_Ababa',
+};
+
+function getLocalTime(countryName) {
+  const tz = COUNTRY_TZ[countryName];
+  if (!tz) return { time: '\u2014', tz: '' };
+  try {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('es', {
+      timeZone: tz,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    });
+    const offsetStr = now.toLocaleTimeString('es', {
+      timeZone: tz,
+      timeZoneName: 'short',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    const parts = offsetStr.split(' ');
+    const tzAbbr = parts.length > 1 ? parts[parts.length - 1] : tz.split('/').pop();
+    return { time: timeStr, tz: tzAbbr };
+  } catch(e) {
+    return { time: '\u2014', tz: '' };
+  }
+}
+
 let leafMap=null;
 let mapMarkers=[];
 let mapPanelOpen=false;
@@ -499,20 +535,20 @@ const MAP_MAX=Math.max(...C.map(x=>x.u));
 const sortedAll=[...C].sort((a,b)=>b.u-a.u);
 
 const CNAMES={
-  USD:'Dólar USD',EUR:'Euro',GBP:'Libra Esterlina',JPY:'Yen Japonés',CHF:'Franco Suizo',
-  CAD:'Dólar Canadiense',AUD:'Dólar Australiano',NZD:'Dólar NZ',CNY:'Yuan Chino',
-  KRW:'Won Surcoreano',MXN:'Peso Mexicano',BRL:'Real Brasileño',ARS:'Peso Argentino',
+  USD:'D\xF3lar USD',EUR:'Euro',GBP:'Libra Esterlina',JPY:'Yen Japon\xE9s',CHF:'Franco Suizo',
+  CAD:'D\xF3lar Canadiense',AUD:'D\xF3lar Australiano',NZD:'D\xF3lar NZ',CNY:'Yuan Chino',
+  KRW:'Won Surcoreano',MXN:'Peso Mexicano',BRL:'Real Brasile\xF1o',ARS:'Peso Argentino',
   CLP:'Peso Chileno',COP:'Peso Colombiano',PEN:'Sol Peruano',UYU:'Peso Uruguayo',
-  CRC:'Colón Costarricense',PYG:'Guaraní',BOB:'Boliviano',HNL:'Lempira',
-  DOP:'Peso Dominicano',GTQ:'Quetzal',NIO:'Córdoba',VES:'Bolívar',
-  SEK:'Corona Sueca',NOK:'Corona Noruega',DKK:'Corona Danesa',PLN:'Złoty',
-  CZK:'Corona Checa',HUF:'Forinto',RON:'Leu Rumano',BGN:'Lev Búlgaro',
-  TRY:'Lira Turca',UAH:'Grivna',SGD:'Dólar Singapur',HKD:'Dólar HK',
-  THB:'Baht Tailandés',MYR:'Ringgit',IDR:'Rupia Indonesia',PHP:'Peso Filipino',
-  INR:'Rupia India',PKR:'Rupia Paquistaní',BDT:'Taka',VND:'Dong',
-  SAR:'Riyal Saudita',AED:'Dírham EAU',ILS:'Séquel Israelí',ZAR:'Rand',
-  EGP:'Libra Egipcia',MAD:'Dírham Marroquí',TND:'Dinar Tunecino',NGN:'Naira',
-  KES:'Chelín Keniano',GHS:'Cedi'
+  CRC:'Col\xF3n Costarricense',PYG:'Guaran\xED',BOB:'Boliviano',HNL:'Lempira',
+  DOP:'Peso Dominicano',GTQ:'Quetzal',NIO:'C\xF3rdoba',VES:'Bol\xEDvar',
+  SEK:'Corona Sueca',NOK:'Corona Noruega',DKK:'Corona Danesa',PLN:'Z\u0142oty',
+  CZK:'Corona Checa',HUF:'Forinto',RON:'Leu Rumano',BGN:'Lev B\xFAlgaro',
+  TRY:'Lira Turca',UAH:'Grivna',SGD:'D\xF3lar Singapur',HKD:'D\xF3lar HK',
+  THB:'Baht Tailand\xE9s',MYR:'Ringgit',IDR:'Rupia Indonesia',PHP:'Peso Filipino',
+  INR:'Rupia India',PKR:'Rupia Paquistan\xED',BDT:'Taka',VND:'Dong',
+  SAR:'Riyal Saudita',AED:'D\xEDrham EAU',ILS:'S\xE9quel Israel\xED',ZAR:'Rand',
+  EGP:'Libra Egipcia',MAD:'D\xEDrham Marroqu\xED',TND:'Dinar Tunecino',NGN:'Naira',
+  KES:'Chel\xEDn Keniano',GHS:'Cedi'
 };
 
 const QPAIRS=[['USD','EUR'],['USD','MXN'],['USD','COP'],['USD','BRL'],
@@ -529,9 +565,6 @@ const GRADS=['linear-gradient(90deg,#ffd700,#ffaa00)','linear-gradient(90deg,#c0
   'linear-gradient(90deg,#ff6b35,#0f7dff)','linear-gradient(90deg,#e94560,#ffd700)',
   'linear-gradient(90deg,#0f7dff,#a855f7)'];
 
-// ══════════════════════════════════════════
-//  TABLA
-// ══════════════════════════════════════════
 function renderTable(){
   const body=document.getElementById('tb');
   const mx=Math.max(...filt.map(c=>c.u));
@@ -548,7 +581,7 @@ function renderTable(){
       <td>${b}</td>
       <td><span class="fe">${c.f}</span><span class="cn">${c.n}</span></td>
       <td><span class="cr">${c.r}</span></td>
-      <td><div class="su">$${c.u.toLocaleString()}</div><div style="font-size:0.7rem;color:var(--accent3)">✓ ${c.y}</div></td>
+      <td><div class="su">$${c.u.toLocaleString()}</div><div style="font-size:0.7rem;color:var(--accent3)">\u2713 ${c.y}</div></td>
       <td><div class="sl">${c.l}</div></td>
       <td><span class="cr">${c.y}</span></td>
       <td style="min-width:110px;"><div class="mb"><div class="mbf" style="width:${pct}%"></div></div></td>
@@ -574,14 +607,11 @@ function sortFilt(){
 
 function st(){sortFilt();renderTable();}
 
-// ══════════════════════════════════════════
-//  COMPARE
-// ══════════════════════════════════════════
 function toggleCmp(n){
   const c=C.find(x=>x.n===n);if(!c)return;
   const i=cmp.findIndex(x=>x.n===n);
   if(i>=0)cmp.splice(i,1);
-  else{if(cmp.length>=6){toast('Máx. 6 países');return;}cmp.push(c);}
+  else{if(cmp.length>=6){toast('M\xE1x. 6 pa\xEDses');return;}cmp.push(c);}
   renderCmp();
 }
 
@@ -601,23 +631,23 @@ function renderCmp(){
   const g=document.getElementById('cg');
   const cw=document.getElementById('ccw');
   if(!cmp.length){
-    g.innerHTML=`<div class="cp"><span><i class="fi fi-sr-earth-americas"></i></span>Selecciona países en la tabla o usa el selector</div>`;
+    g.innerHTML=`<div class="cp"><span><i class="fi fi-sr-earth-americas"></i></span>Selecciona pa\xEDses en la tabla o usa el selector</div>`;
     cw.style.display='none';return;
   }
   const mx=Math.max(...cmp.map(c=>c.u));
   g.innerHTML=cmp.map((c,i)=>{
     const pct=cmp.length>1?((c.u/mx)*100).toFixed(0):100;
     return `<div class="cc-card">
-      <button class="rb-btn" onclick="removeCmp('${c.n}')">✕</button>
+      <button class="rb-btn" onclick="removeCmp('${c.n}')">\u2715</button>
       <div class="cflag">${c.f}</div>
       <h3>${c.n}</h3><div class="cregion">${c.r}</div>
       <div class="ms">$${c.u.toLocaleString()}</div>
-      <div class="cl">USD/mes · ${c.y}</div>
+      <div class="cl">USD/mes \xB7 ${c.y}</div>
       <div style="margin:10px 0;">
         <div style="height:5px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;">
           <div style="width:${pct}%;height:100%;background:${COLORS[i%COLORS.length]};border-radius:3px;"></div>
         </div>
-        <div style="font-size:0.7rem;color:var(--text2);margin-top:3px;">${pct}% del más alto</div>
+        <div style="font-size:0.7rem;color:var(--text2);margin-top:3px;">${pct}% del m\xE1s alto</div>
       </div>
       <div class="dr"><span>Anual</span><span>$${(c.u*12).toLocaleString()}</span></div>
       <div class="dr"><span>Semanal ~</span><span>$${(c.u/4.33).toFixed(0)}</span></div>
@@ -641,9 +671,6 @@ function removeCmp(n){
   renderCmp();
 }
 
-// ══════════════════════════════════════════
-//  CONVERTER
-// ══════════════════════════════════════════
 async function fetchRates(){
   try{
     const r=await fetch('https://api.exchangerate-api.com/v4/latest/USD');
@@ -677,8 +704,8 @@ function initConvSel(){
   const fs=document.getElementById('cfrom'),ts=document.getElementById('cto');
   crs.forEach(code=>{
     const nm=CNAMES[code]||code;
-    fs.innerHTML+=`<option value="${code}" ${code==='USD'?'selected':''}>${code} – ${nm}</option>`;
-    ts.innerHTML+=`<option value="${code}" ${code==='COP'?'selected':''}>${code} – ${nm}</option>`;
+    fs.innerHTML+=`<option value="${code}" ${code==='USD'?'selected':''}>${code} \u2013 ${nm}</option>`;
+    ts.innerHTML+=`<option value="${code}" ${code==='COP'?'selected':''}>${code} \u2013 ${nm}</option>`;
   });
 }
 
@@ -705,7 +732,7 @@ function renderQ(){
     if(!rates[a]||!rates[b])return'';
     const rt=((1/rates[a])*rates[b]);
     return `<div class="qi" onclick="setQ('${a}','${b}')">
-      <div class="pair">${a} → ${b}</div>
+      <div class="pair">${a} \u2192 ${b}</div>
       <div class="rate">${rt.toLocaleString('es',{maximumFractionDigits:4})}</div>
     </div>`;
   }).join('');
@@ -718,20 +745,15 @@ function setQ(a,b){
   conv();showTab('conversor');
 }
 
-// ══════════════════════════════════════════
-//  REGIONS
-// ══════════════════════════════════════════
 function renderRegions(){
-  const ORD=['Europa','América del Norte','América Latina','Asia','Oriente Medio','Oceanía','África'];
-  const ICO={Europa:'','América del Norte':'','América Latina':'',Asia:'','Oriente Medio':'',Oceanía:'',África:''};
+  const ORD=['Europa','Am\xE9rica del Norte','Am\xE9rica Latina','Asia','Oriente Medio','Ocean\xEDa','\xC1frica'];
   document.getElementById('rc').innerHTML=ORD.map(rg=>{
     const cs=C.filter(c=>c.r===rg).sort((a,b)=>b.u-a.u);
     if(!cs.length)return'';
     const avg=Math.round(cs.reduce((s,c)=>s+c.u,0)/cs.length);
     return `<div class="rs">
-      <div class="rt"><span style="font-size:1.5rem">${ICO[rg]||''}</span>
-        <h3>${rg}</h3><span class="cnt">${cs.length} países · Prom. $${avg}</span></div>
-      <div class="rc">${cs.map(c=>`<div class="sp" onclick="addFromReg('${c.n}')" id="pill-${c.n.replace(/[\s.()]/g,'_')}">
+      <div class="rt"><h3>${rg}</h3><span class="cnt">${cs.length} pa\xEDses \xB7 Prom. $${avg}</span></div>
+      <div class="rc">${cs.map(c=>`<div class="sp" onclick="addFromReg('${c.n.replace(/'/g,"\\'")}')" id="pill-${c.n.replace(/[\s.()]/g,'_')}">
           <span class="pf">${c.f}</span>
           <div class="pi"><div class="pn">${c.n}</div><div class="pa">$${c.u.toLocaleString()}/mes</div></div>
         </div>`).join('')}</div>
@@ -741,17 +763,14 @@ function renderRegions(){
 
 function addFromReg(n){
   const c=C.find(x=>x.n===n);if(!c)return;
-  if(cmp.some(x=>x.n===n)){toast(`${n} ya está`);return;}
-  if(cmp.length>=6){toast('Máx. 6 países');return;}
+  if(cmp.some(x=>x.n===n)){toast(`${n} ya est\xE1`);return;}
+  if(cmp.length>=6){toast('M\xE1x. 6 pa\xEDses');return;}
   cmp.push(c);
   const el=document.getElementById(`pill-${n.replace(/[\s.()]/g,'_')}`);
   if(el)el.classList.add('sel');
-  toast(`${c.f} ${c.n} añadido`);
+  toast(`${c.f} ${c.n} a\xF1adido`);
 }
 
-// ══════════════════════════════════════════
-//  STATS
-// ══════════════════════════════════════════
 function renderStats(){
   const s=[...C].sort((a,b)=>b.u-a.u);
   const top=s[0],bot=s[s.length-1];
@@ -760,14 +779,14 @@ function renderStats(){
   const a1k=C.filter(c=>c.u>=1000).length;
   const b2=C.filter(c=>c.u<200).length;
   document.getElementById('sg').innerHTML=`
-    <div class="sc"><div class="lb">Salario más alto</div><div class="vl" style="color:var(--gold)">$${top.u.toLocaleString()}</div><div class="sb">${top.f} ${top.n}</div></div>
-    <div class="sc"><div class="lb">Salario más bajo</div><div class="vl" style="color:var(--red)">$${bot.u}</div><div class="sb">${bot.f} ${bot.n}</div></div>
+    <div class="sc"><div class="lb">Salario m\xE1s alto</div><div class="vl" style="color:var(--gold)">$${top.u.toLocaleString()}</div><div class="sb">${top.f} ${top.n}</div></div>
+    <div class="sc"><div class="lb">Salario m\xE1s bajo</div><div class="vl" style="color:var(--red)">$${bot.u}</div><div class="sb">${bot.f} ${bot.n}</div></div>
     <div class="sc"><div class="lb">Promedio mundial</div><div class="vl" style="color:var(--accent2)">$${avg.toLocaleString()}</div><div class="sb">USD/mes</div></div>
     <div class="sc"><div class="lb">Mediana</div><div class="vl" style="color:var(--accent3)">$${med.toLocaleString()}</div><div class="sb">Punto medio</div></div>
-    <div class="sc"><div class="lb">Sobre $1.000/mes</div><div class="vl" style="color:var(--accent3)">${a1k}</div><div class="sb">países</div></div>
-    <div class="sc"><div class="lb">Bajo $200/mes</div><div class="vl" style="color:var(--red)">${b2}</div><div class="sb">países (crítico)</div></div>
-    <div class="sc"><div class="lb">Total países</div><div class="vl">${C.length}</div><div class="sb">con datos</div></div>
-    <div class="sc"><div class="lb">Datos</div><div class="vl" style="font-size:1rem">2025–26</div><div class="sb">Fuentes oficiales</div></div>`;
+    <div class="sc"><div class="lb">Sobre $1.000/mes</div><div class="vl" style="color:var(--accent3)">${a1k}</div><div class="sb">pa\xEDses</div></div>
+    <div class="sc"><div class="lb">Bajo $200/mes</div><div class="vl" style="color:var(--red)">${b2}</div><div class="sb">pa\xEDses (cr\xEDtico)</div></div>
+    <div class="sc"><div class="lb">Total pa\xEDses</div><div class="vl">${C.length}</div><div class="sb">con datos</div></div>
+    <div class="sc"><div class="lb">Datos</div><div class="vl" style="font-size:1rem">2025\u201326</div><div class="sb">Fuentes oficiales</div></div>`;
   const t15=s.slice(0,15);
   document.getElementById('t15').innerHTML=t15.map((c,i)=>{
     const p=Math.round((c.u/t15[0].u)*100);
@@ -784,9 +803,6 @@ function renderStats(){
   }).join('');
 }
 
-// ══════════════════════════════════════════
-//  HEADER
-// ══════════════════════════════════════════
 function initHeader(){
   const s=[...C].sort((a,b)=>b.u-a.u);
   document.getElementById('hc').textContent=C.length;
@@ -798,13 +814,10 @@ function initHeader(){
 function initAddSel(){
   const s=document.getElementById('acs');
   [...C].sort((a,b)=>a.n.localeCompare(b.n)).forEach(c=>{
-    s.innerHTML+=`<option value="${c.n}">${c.f} ${c.n} · $${c.u}/mes</option>`;
+    s.innerHTML+=`<option value="${c.n}">${c.f} ${c.n} \xB7 $${c.u}/mes</option>`;
   });
 }
 
-// ══════════════════════════════════════════
-//  TABS
-// ══════════════════════════════════════════
 function showTab(t){
   const tabs=['mapa','tabla','comparar','conversor','regiones','stats'];
   const idx=tabs.indexOf(t);
@@ -812,8 +825,6 @@ function showTab(t){
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.tab')[idx].classList.add('active');
   document.getElementById('panel-'+t).classList.add('active');
-
-  // Mapa: ajuste de layout + init lazy
   const mc=document.getElementById('main-content');
   if(t==='mapa'){
     mc.style.padding='0';
@@ -830,9 +841,6 @@ function showTab(t){
   }
 }
 
-// ══════════════════════════════════════════
-//  MAPA – helpers
-// ══════════════════════════════════════════
 function mapTier(u){
   if(u>=2000)return 5;
   if(u>=1000)return 4;
@@ -860,14 +868,16 @@ function buildPopup(c){
   const rank=sortedAll.findIndex(x=>x.n===c.n)+1;
   const pct=Math.round((c.u/MAP_MAX)*100);
   const tier=mapTier(c.u);
+  const localTime=getLocalTime(c.n);
   return `<div class="pop-inner">
     <div class="pop-flag">${c.f}</div>
     <div class="pop-name">${c.n}</div>
-    <div class="pop-region">${c.r} · ${c.y}</div>
+    <div class="pop-region">${c.r} \xB7 ${c.y}</div>
     <div class="pop-salary">$${c.u.toLocaleString()}</div>
     <div class="pop-local">${c.l}</div>
     <div class="pop-bar"><div class="pop-bar-fill" style="width:${pct}%;background:${tierBarGrad(tier)}"></div></div>
-    <div class="pop-rank">Puesto #${rank} de ${C.length} · ${pct}% del máximo</div>
+    <div class="pop-rank">Puesto #${rank} de ${C.length} \xB7 ${pct}% del m\xE1ximo</div>
+    <div class="pop-time"><span>\u{1F550} Hora local</span><div style="text-align:right"><div class="pop-time-val">${localTime.time}</div><div class="pop-time-tz">${localTime.tz}</div></div></div>
     <div class="pop-row"><span>Anual</span><span>$${(c.u*12).toLocaleString()}</span></div>
     <div class="pop-row"><span>Semanal ~</span><span>$${(c.u/4.33).toFixed(0)}</span></div>
     <div class="pop-row"><span>Diario ~</span><span>$${(c.u/30).toFixed(1)}</span></div>
@@ -938,7 +948,7 @@ function filterMap(rg){
 function toggleMapPanel(){
   mapPanelOpen=!mapPanelOpen;
   document.getElementById('map-side').classList.toggle('open',mapPanelOpen);
-  document.getElementById('map-panel-toggle').textContent=mapPanelOpen?'✕ Cerrar':'📋 Lista países';
+  document.getElementById('map-panel-toggle').textContent=mapPanelOpen?'\u2715 Cerrar':'\u{1F4CB} Lista pa\xEDses';
 }
 
 function initMapSearch(){
@@ -952,7 +962,7 @@ function initMapSearch(){
     res.style.display='block';
     res.innerHTML=matches.map(c=>`<div class="msr-item" onclick="mapSelectFromSearch(${JSON.stringify(c).replace(/"/g,'&quot;')})">
       <span class="msf">${c.f}</span>
-      <div><div class="msn">${c.n}</div><div class="msu">$${c.u.toLocaleString()}/mes · ${c.r}</div></div>
+      <div><div class="msn">${c.n}</div><div class="msu">$${c.u.toLocaleString()}/mes \xB7 ${c.r}</div></div>
     </div>`).join('');
   });
   document.addEventListener('click',e=>{
@@ -966,27 +976,22 @@ function mapSelectFromSearch(c){
   mapFlyTo(c);
 }
 
-// ── INIT MAP ──
 function initMap(){
   const mapEl=document.getElementById('map-content');
   document.getElementById('map').style.height=mapEl.offsetHeight+'px';
-
   leafMap=L.map('map',{
     center:[20,10],zoom:2.5,
     minZoom:1.5,maxZoom:12,
     zoomControl:true,
     worldCopyJump:true
   });
-
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
     attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
     subdomains:'abcd',maxZoom:20
   }).addTo(leafMap);
-
   renderMapMarkers(C);
   renderMapPanel(C);
   initMapSearch();
-
   document.querySelectorAll('.map-fc-btn').forEach(b=>{
     b.addEventListener('click',()=>filterMap(b.dataset.mregion));
   });
@@ -994,8 +999,6 @@ function initMap(){
     const list=mapActiveRegion?C.filter(c=>c.r===mapActiveRegion):C;
     renderMapPanel(list);
   });
-
-  // keep map height in sync
   window.addEventListener('resize',()=>{
     const h=document.getElementById('map-content').offsetHeight;
     document.getElementById('map').style.height=h+'px';
@@ -1003,9 +1006,6 @@ function initMap(){
   });
 }
 
-// ══════════════════════════════════════════
-//  TOAST
-// ══════════════════════════════════════════
 function toast(msg){
   const t=document.createElement('div');
   t.className='toast';t.textContent=msg;
@@ -1013,16 +1013,12 @@ function toast(msg){
   setTimeout(()=>t.remove(),2600);
 }
 
-// ══════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════
 function init(){
   filt=[...C];
   initHeader();renderTable();initAddSel();
   initConvSel();renderCmp();renderRegions();renderStats();
   fetchRates();
   setInterval(fetchRates,600000);
-  // Iniciar mapa al cargar — es la pestaña activa por defecto
   const mc=document.getElementById('main-content');
   mc.style.padding='0';
   mc.style.maxWidth='none';
