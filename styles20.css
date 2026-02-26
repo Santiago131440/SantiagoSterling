@@ -1091,8 +1091,31 @@ img[alt="Astronaut UX"] {
             padding: 1px 18px;
             font-size: 1rem;
           }
-
         }
+
+        /* 📱 Versión móvil */
+        @media (max-width: 768px){
+          img[style]{
+            left: 50% !important;
+            top: 55% !important;
+            transform: translate(-50%, -50%) !important;
+            width: 88vw !important;
+            height: auto !important;
+          }
+        }
+
+        .hero-img{
+        position: absolute;
+        left: 10%;
+        top: 105%;
+        transform: translateY(-50%);
+        height: 100%;
+        width: auto;
+        object-fit: contain;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 1;
+      }
 
 /* ---------------------------- CODIGO DE ANIMACIONES DE DESARROLLO E INNOVACIONES ----------------------*/
 
@@ -1137,6 +1160,3 @@ img[alt="Astronaut UX"] {
     background-position: 240px 240px;
   }
 }
-
-
-
