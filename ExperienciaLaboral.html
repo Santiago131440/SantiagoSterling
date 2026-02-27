@@ -6,9 +6,6 @@
 <title>Sterl-ink sketching</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
-<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
-<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
-<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
@@ -37,6 +34,7 @@
   box-sizing:border-box;
   user-select:none;
   -webkit-tap-highlight-color:transparent;
+   font-weight: 100;
 }
 
 body{
@@ -46,6 +44,7 @@ body{
   background:var(--bg);
   color:var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+   font-weight: 100;
 }
 
 /* ===============================
@@ -170,7 +169,7 @@ input[type=range]{
   border-radius: 999px;
   padding: 3px 20px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 100;
   font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   color: #ffffff;
   background: linear-gradient(
@@ -246,7 +245,7 @@ input[type=range]{
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
-  font-weight: 600;
+  font-weight: 100;
 }
 
 /* Close button */
@@ -276,16 +275,16 @@ input[type=range]{
 
 <!-- TOOLS -->
 <div class="panel" id="tools">
-  <div class="tool active" data-tool="pen" name="Lápiz"><i class="fi fi-sr-attribution-pencil"></i></div>
-  <div class="tool" data-tool="brush" name="Pincel"><i class="fi fi-ss-makeup-brush"></i></div>
-  <div class="tool" data-tool="marker" name="Marcador"><i class="fi fi-sr-pen-fancy"></i></i></div>
-  <div class="tool" data-tool="eraser" name="Borrador"><i class="fi fi-sr-eraser"></i></i></div>
-  <div class="tool" data-tool="line" name="Línea"><i class="fi fi-br-slash"></i></i></div>
-  <div class="tool" data-tool="rect" name="Cuadro"><i class="fi fi-br-frame"></i></div>
-  <div class="tool" data-tool="circle" name="Circulo"><i class="fi fi-br-circle-dashed"></i></div>
-  <div class="tool" id="undo" name="Retroceder"><i class="fi fi-br-undo-alt"></i></div>
-  <div class="tool" id="redo" name="Rehacer"><i class="fi fi-br-redo-alt"></i></div>
-  <div class="tool" id="menuBubble"><span><i class="fi fi-br-add"></i></span></div>
+  <div class="tool active" data-tool="pen" name="Lápiz"><i class="fi fi-sr-pencil"></i></div>
+  <div class="tool" data-tool="brush" name="Pincel"><i class="fi fi-sr-paintbrush-pencil"></i></div>
+  <div class="tool" data-tool="marker" name="Marcador"><i class="fi fi-sr-pen-fancy"></i></div>
+  <div class="tool" data-tool="eraser" name="Borrador"><i class="fi fi-sr-eraser"></i></div>
+  <div class="tool" data-tool="line" name="Línea"><i class="fi fi-sr-slash"></i></div>
+  <div class="tool" data-tool="rect" name="Cuadro"><i class="fi fi-sr-square-dashed"></i></div>
+  <div class="tool" data-tool="circle" name="Circulo"><i class="fi fi-sr-circle-dashed"></i></div>
+  <div class="tool" id="undo" name="Retroceder"><i class="fi fi-sr-undo-alt"></i></div>
+  <div class="tool" id="redo" name="Rehacer"><i class="fi fi-sr-redo-alt"></i></div>
+  <div class="tool" id="menuBubble"><span><i class="fi fi-sr-grid"></i></span></div>
 </div>
 
 <!-- OPTIONS PANEL -->
