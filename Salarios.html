@@ -877,7 +877,7 @@ function buildPopup(c){
     <div class="pop-local">${c.l}</div>
     <div class="pop-bar"><div class="pop-bar-fill" style="width:${pct}%;background:${tierBarGrad(tier)}"></div></div>
     <div class="pop-rank">Puesto #${rank} de ${C.length} \xB7 ${pct}% del m\xE1ximo</div>
-    <div class="pop-time"><span>\u{1F550} Hora local</span><div style="text-align:right"><div class="pop-time-val">${localTime.time}</div><div class="pop-time-tz">${localTime.tz}</div></div></div>
+    <div class="pop-time"><span>Hora local</span><div style="text-align:right"><div class="pop-time-val">${localTime.time}</div><div class="pop-time-tz">${localTime.tz}</div></div></div>
     <div class="pop-row"><span>Anual</span><span>$${(c.u*12).toLocaleString()}</span></div>
     <div class="pop-row"><span>Semanal ~</span><span>$${(c.u/4.33).toFixed(0)}</span></div>
     <div class="pop-row"><span>Diario ~</span><span>$${(c.u/30).toFixed(1)}</span></div>
@@ -1030,3 +1030,4 @@ window.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
+
