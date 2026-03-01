@@ -102,8 +102,8 @@ const apps = {
     },
 
     buscaminas: {
-        title: "8-Bit Danger!",
-        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-OKfQqecvB9mY0RcKgGlLsHJ1iqi0Ik.png&w=500&q=75",
+        title: "Santiago Sterling World",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-e3kGOJ1Nx9Q68omg5PbnlZh8hFAJkX.png&w=500&q=75",
         content: `
         <div style="
             width: 100vw;
@@ -115,7 +115,7 @@ const apps = {
             border: 1px solid transparent;
         ">
             <iframe 
-                src="https://github.com/Santiago131440/SantiagoSterling/blob/main/Buscaminas/Buscaminas.html"
+                src="https://santiago131440.github.io/SantiagoSterling/Super Mario.html"
                 style="width:100%; height:100%; border:none;"
             ></iframe>
         </div>
