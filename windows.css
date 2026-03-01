@@ -201,17 +201,19 @@ body {
 
 .explorer-sidebar {
     width: 160px;
+    height: calc(100vh - 30px); 
     background: rgba(255,255,255,0.06);
     border-right: 1px solid rgba(255,255,255,0.15);
     padding: 10px;
 }
 
 .explorer-sidebar div {
-    padding: 8px;
+    padding: 10px;
     font-size: 14px;
     color: white;
-    border-radius: 6px;
+    border-radius: 60px;
     cursor: pointer;
+    text-align: center;
 }
 
 .explorer-sidebar div:hover {
