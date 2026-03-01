@@ -49,7 +49,7 @@ body {
 .desktop-icon {
     width: 85px;
     text-align: center;
-    align-items: center;   /* centra imagen y texto horizontalmente */
+    align-items: center;
     padding: 6px;
     margin: 8px;
     border-radius: 8px;
@@ -158,7 +158,7 @@ body {
 .window-content {
     flex: 1;
     overflow: auto;
-    padding: 10px;
+    padding: 0px;
     color: white;
 }
 
