@@ -455,10 +455,6 @@ padding: 2px 4px;
 }
 
 
-
-/* ============================================================
-   INICIO DE CSS DE BOOSTRAP EN CALENDARIO
-============================================================ */
 /* =====================================================
    PANEL CALENDARIO (WINDOWS 11)
 ===================================================== */
@@ -467,10 +463,8 @@ padding: 2px 4px;
   right: 14px;
   bottom: 64px;
   z-index: 9999;
-
   width: 340px;
   max-width: 92vw;
-
   animation: fadeUp 0.25s ease;
 }
 
@@ -480,20 +474,17 @@ padding: 2px 4px;
 .card {
   position: relative;
   overflow: hidden;
-
-  /* Forma más orgánica */
-  border-radius: 72px;
-
+  border-radius: 7px;
   /* Vidrio ultra translúcido */
   background:
     linear-gradient(
       180deg,
-      rgba(255,255,255,0.38),
-      rgba(255,255,255,0.12)
+      rgba(30, 255, 0, 0.027),
+      rgba(255, 0, 0, 0.027)
     ),
     radial-gradient(
       140% 100% at 20% 0%,
-      rgba(255,255,255,0.45),
+      rgba(255, 255, 255, 0.068),
       transparent 65%
     );
 
@@ -512,16 +503,12 @@ padding: 2px 4px;
 
   color: #111;
 }
-
-
-
-
 /* =====================================================
    RELOJ SUPERIOR
 ===================================================== */
 #clockFull {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 100;
   color: #1f2937;
   margin-bottom: 10px;
 }
@@ -543,7 +530,7 @@ padding: 2px 4px;
 ===================================================== */
 .calendar-header {
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 100;
   color: #6b7280;
   padding-bottom: 6px;
 }
