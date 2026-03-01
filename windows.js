@@ -13,7 +13,7 @@ let draggingIconOffset = { x: 0, y: 0 };
 
 let contextTarget = null;
 
-let recycleBin = []; // Archivos eliminados
+let recycleBin = [];
 
 
 /* ============================================================
@@ -32,12 +32,13 @@ const apps = {
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-KBUXl6AhDj2IsoZnozHL39yX1acqa5.png&w=1000&q=75",
         content: `
         <div style="
-            width:100%;
-            height:80vh;
-            border-radius: 12px;
-            overflow:hidden;
-            border: 2px solid transparent;
-
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            border-radius: 1px;
+            overflow: hidden;
+            border: 1px solid transparent;
         ">
             <iframe 
                 src="https://www.bing.com/search?q=Google"
@@ -63,11 +64,13 @@ const apps = {
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hYb7C5vkHO9CJDCDmnVhWYl6v3ECyg.png&w=1000&q=75",
         content: `
             <div style="
-                width:100%;
-                height:80vh;
-                border-radius: 12px;
-                overflow:hidden;
-                border: 2px solid #ccc;
+                width: 100vw;
+                height: 100vh;
+                margin: 0;
+                padding: 0;
+                border-radius: 1px;
+                overflow: hidden;
+                border: 1px solid transparent;
             ">
                 <iframe 
                     src="https://santiago131440.github.io/SantiagoSterling/Music.html" 
@@ -82,12 +85,13 @@ const apps = {
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75",
         content: `
         <div style="
-            width:100%;
-            height:80vh;
-            border-radius: 12px;
-            overflow:hidden;
-            border: 2px solid transparent;
-
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            border-radius: 1px;
+            overflow: hidden;
+            border: 1px solid transparent;
         ">
             <iframe 
                 src="https://santiago131440.github.io/SantiagoSterling/ExperienciaLaboral.html"
@@ -102,12 +106,13 @@ const apps = {
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-OKfQqecvB9mY0RcKgGlLsHJ1iqi0Ik.png&w=500&q=75",
         content: `
         <div style="
-            width:100%;
-            height:80vh;
-            border-radius: 12px;
-            overflow:hidden;
-            border: 2px solid transparent;
-
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            border-radius: 1px;
+            overflow: hidden;
+            border: 1px solid transparent;
         ">
             <iframe 
                 src="https://github.com/Santiago131440/SantiagoSterling/blob/main/Buscaminas/Buscaminas.html"
@@ -608,7 +613,7 @@ function loadExplorer(win, folder) {
     const sidebar = area.querySelector(".explorer-sidebar");
     const main = area.querySelector(".explorer-main");
 
-    sidebar.innerHTML = `<div data-path="root">Repositorios</div>`;
+    sidebar.innerHTML = `<div data-path="root">Mis Repositorios</div>`;
 
     sidebar.querySelector("div").onclick = () => loadFolder(main, fileSystem.root);
 
