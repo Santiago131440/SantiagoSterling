@@ -165,6 +165,7 @@ body {
 /* Animación maximizar / restaurar */
 .window.maximized {
     animation: maximize 0.2s ease-out;
+    border-radius: 1px;
 }
 
 @keyframes maximize {
