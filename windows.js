@@ -156,13 +156,13 @@ Mi propósito es integrar la eficiencia industrial con la inteligencia tecnológ
                     },
 
 
-                    "lista.txt": { 
+                    "mix.html": { 
                         type: "file", 
                         app: "notes",
-                        content: "- Comprar pan\n- Revisar proyecto Quantix\n- Enviar reporte"
+                        content: "- Comprar pan\n- Revisar proyecto Quantix\n- Enviar report"
                     },
 
-                    "tareas.txt": { 
+                    "Buscaminas.html": { 
                         type: "file", 
                         app: "notes",
                         content: "Tareas pendientes:\n1. Completar interfaz\n2. Revisar errores\n3. Enviar versión final"
