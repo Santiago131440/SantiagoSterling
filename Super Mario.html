@@ -862,21 +862,54 @@ class Block {
                 ctx.fillRect(dx+3,dy+3,TS/2-4,TS/2-4);
                 ctx.fillRect(dx+TS/2+1,dy+TS/2+1,TS/2-4,TS/2-4);
                 break;
-            case 'question':
-                const qcol = this.used ? '#8B6914' : '#ffd700';
-                ctx.fillStyle = qcol;
-                ctx.fillRect(dx,dy,TS,TS);
-                ctx.fillStyle = this.used?'#6B4F0E':'#e6c000';
-                ctx.fillRect(dx,dy,TS,3);
-                ctx.fillRect(dx,dy+TS-3,TS,3);
-                ctx.fillRect(dx,dy,3,TS);
-                ctx.fillRect(dx+TS-3,dy,3,TS);
-                if (!this.used) {
-                    ctx.fillStyle='#fff';
-                    ctx.font='bold 20px serif';
-                    ctx.textAlign='center';
-                    ctx.fillText('?', dx+TS/2, dy+TS-8);
-                }
+            function roundRect(ctx, x, y, width, height, radius) {
+              if (typeof radius === 'number') {
+                  radius = { tl: radius, tr: radius, br: radius, bl: radius };
+              } else {
+                  radius = { tl: 0, tr: 0, br: 0, bl: 0, ...radius };
+              }
+
+              ctx.beginPath();
+              ctx.moveTo(x + radius.tl, y);
+              ctx.lineTo(x + width - radius.tr, y);
+              ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+              ctx.lineTo(x + width, y + height - radius.br);
+              ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
+              ctx.lineTo(x + radius.bl, y + height);
+              ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+              ctx.lineTo(x, y + radius.tl);
+              ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+              ctx.closePath();
+          }
+          case 'question':
+              const qcol = this.used ? '#8B6914' : '#ffd700';
+              const radius = 8; // Ajusta aquí el nivel de redondeo
+
+              ctx.fillStyle = qcol;
+              roundRect(ctx, dx, dy, TS, TS, radius);
+              ctx.fill();
+
+              // Borde interno decorativo
+              ctx.fillStyle = this.used ? '#6B4F0E' : '#e6c000';
+
+              roundRect(ctx, dx, dy, TS, 3, { tl: radius, tr: radius, br: 0, bl: 0 });
+              ctx.fill();
+
+              roundRect(ctx, dx, dy + TS - 3, TS, 3, { tl: 0, tr: 0, br: radius, bl: radius });
+              ctx.fill();
+
+              roundRect(ctx, dx, dy, 3, TS, { tl: radius, tr: 0, br: 0, bl: radius });
+              ctx.fill();
+
+              roundRect(ctx, dx + TS - 3, dy, 3, TS, { tl: 0, tr: radius, br: radius, bl: 0 });
+              ctx.fill();
+
+              if (!this.used) {
+                  ctx.fillStyle = '#fff';
+                  ctx.font = 'bold 20px serif';
+                  ctx.textAlign = 'center';
+                  ctx.fillText('?', dx + TS / 2, dy + TS - 8);
+              }
                 break;
             case 'stone':
                 ctx.fillStyle='#888';
