@@ -6,97 +6,242 @@
   <title>Proyectos Destacados</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/98182135?v=4">
-
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Estilos personalizados -->
-  <link rel="stylesheet" href="proyectos20.css">
+  <style>
+    :root{
+      --glass-bg: rgba(255,255,255,0.04);
+      --glass-border: rgba(102,102,102,0.5);
+      --accent1: #7c3aed;
+      --accent2: #06b6d4;
+      --shadow-strong: 0 20px 50px rgba(2,6,23,0.6);
+    }
+    html,body{height:100%;overflow-x:hidden;}
+    body{
+      font-family:'Inter','Segoe UI',sans-serif;
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      padding:24px 16px;
+      background: #000;
+      box-sizing:border-box;
+    }
+
+    /* ── Wrapper ── */
+    .showcase-wrap{max-width:1200px;margin:0 auto;width:100%;}
+
+    /* ── Navbar ── */
+    .filter-menu{
+      display:flex;flex-wrap:wrap;gap:16px;
+      font-size:.9rem;font-weight:500;
+      justify-content:center;align-items:center;
+      color:#6b7280;position:relative;padding-bottom:4px;
+    }
+    .filter-menu a{color:#6b7280;text-decoration:none;transition:color .2s;}
+    .filter-menu a:hover{color:#fff;}
+    .indicator{position:absolute;bottom:0;height:2px;background:#fff;transition:all .3s ease;}
+
+    /* ── Controls panel ── */
+    .controls-panel{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      justify-content:space-between;
+      backdrop-filter:blur(6px);
+      background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+      border:1px solid var(--glass-border);
+      padding:10px 12px;border-radius:12px;
+      box-shadow:var(--shadow-strong);
+      width:100%;box-sizing:border-box;
+    }
+    .controls-left,.controls-right{
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    }
+
+    /* ── Device frame ── */
+    .device-frame{
+      border-radius:22px;overflow:hidden;
+      background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+      border:1px solid var(--glass-border);
+      position:relative;
+      transition:all 400ms cubic-bezier(.22,.9,.3,1);
+      box-shadow:var(--shadow-strong);
+      display:flex;flex-direction:column;align-items:stretch;
+      width:100%;box-sizing:border-box;
+    }
+    .frame-header{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:8px 14px;
+      background:rgba(2,6,23,.6);
+      border-bottom:1px solid rgba(255,255,255,.03);
+      flex-wrap:wrap;gap:6px;
+    }
+    .frame-header-label{
+      font-size:.7rem;color:#fff;
+      background:rgba(255,255,255,.05);
+      border-radius:99px;padding:3px 14px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+      max-width:60%;
+    }
+    .frame-dots{display:flex;gap:7px;align-items:center;flex-shrink:0;}
+    .frame-dot{width:10px;height:10px;border-radius:99px;}
+    .dot-red{background:#ef4444}.dot-yellow{background:#f59e0b}.dot-green{background:#16a34a}
+
+    /* ── Preview viewport & frame ── */
+    .preview-viewport{
+      overflow:auto;display:flex;align-items:flex-start;justify-content:center;
+      background:#050816;transition:height 300ms ease;
+      padding:12px;
+    }
+    .preview-frame{
+      border-radius:10px;overflow:hidden;
+      transform-origin:top center;
+      transition:transform 300ms ease;
+      box-shadow:0 8px 30px rgba(2,6,23,.6);
+      border:1px solid rgba(255,255,255,.05);
+      background:#fff;flex-shrink:0;
+    }
+    iframe{display:block;border:0;width:100%;height:100%;}
+
+    /* ── Tamaños dispositivo ── */
+    .device-mobile .preview-frame{width:360px;height:700px;}
+    .device-desktop .preview-frame{width:960px;height:600px;}
+
+    @media(max-width:1100px){
+      .device-desktop .preview-frame{width:820px;height:520px;}
+    }
+    @media(max-width:900px){
+      .device-desktop .preview-frame{width:680px;height:460px;}
+    }
+    @media(max-width:600px){
+      .device-desktop .preview-frame{width:480px;height:380px;}
+      .device-mobile  .preview-frame{width:300px;height:620px;}
+    }
+
+    /* ── Fullscreen ── */
+    .is-fullscreen{
+      position:fixed!important;top:50%!important;left:50%!important;
+      transform:translate(-50%,-50%) scale(1)!important;
+      width:95%!important;height:92%!important;z-index:2000;
+      border-radius:18px!important;padding:18px;
+      transition:all 380ms cubic-bezier(.22,.9,.3,1)!important;
+    }
+
+    /* ── Glass button ── */
+    .glass-btn{
+      background:linear-gradient(90deg,rgba(255,255,255,.03),rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.7);
+      padding:4px 18px;border-radius:10px;
+      color:#e6eef8;font-weight:600;font-size:.8rem;
+      cursor:pointer;white-space:nowrap;transition:background .2s,color .2s;
+    }
+
+    /* ── Títulos ── */
+    .titulosSterling-text{
+      background:linear-gradient(135deg,#fff 0%,#afafaf 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+
+    /* ── Grid de proyectos (thumbs) ── */
+    .projects-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(130px,1fr));
+      gap:10px;
+      width:100%;box-sizing:border-box;
+    }
+    .project-card{
+      display:flex;flex-direction:column;align-items:center;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;padding:10px 8px;
+      cursor:pointer;transition:border-color .2s,background .2s,transform .15s;
+      text-align:center;
+    }
+    .project-card:hover{
+      background:rgba(255,255,255,.07);
+      border-color:rgba(255,255,255,.25);
+      transform:translateY(-2px);
+    }
+    .project-card.active{
+      border-color:rgba(124,58,237,.9);
+      background:rgba(124,58,237,.08);
+      box-shadow:0 4px 20px rgba(124,58,237,.2);
+    }
+    .project-card-num{
+      font-size:.65rem;color:#6b7280;margin-bottom:4px;font-weight:600;letter-spacing:.05em;
+    }
+    .project-card-name{
+      font-size:.72rem;color:#d1d5db;font-weight:500;line-height:1.3;
+    }
+    .project-card.active .project-card-name{color:#fff;}
+
+    /* ── Zoom range ── */
+    input[type=range]{accent-color:#7c3aed;height:4px;cursor:pointer;}
+
+    /* ── Footer ── */
+    footer{margin-top:32px;background:linear-gradient(135deg,rgba(0,0,0,.9),rgba(0,0,0,.8));
+      color:#fff;padding:28px 24px;border-radius:18px;border:1px solid rgba(255,255,255,.1);}
+    footer .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;}
+  </style>
 </head>
-<body class="bg-gradient-to-br from-black to-black text-white antialiased leading-relaxed">
+<body>
   <div class="showcase-wrap">
-            <div class="filter-menu justify-center items-center text-center text-gray-500">
-              <a href="index.html" class="hover:text-white transition-colors ">Inicio</a>
-              <a href="index.html#sobremi" class="hover:text-white transition-colors">Sobre mi</a>
-              <a href="index.html#estudio" class="hover:text-white transition-colors">Formación</a>
-              <a href="index.html#experiencia" class="hover:text-white transition-colors">Experiencia</a>
-              <a href="index.html#desarrollo" class="hover:text-white transition-colors">Desarrollos</a>
-              <a href="index.html#competencia" class="hover:text-white transition-colors">Competencias</a>
-              <a href="index.html#estrategia" class="hover:text-white transition-colors">Estrategias</a>
-              <a href="index.html#contacto" class="hover:text-white transition-colors">Contacto</a>
-              <div class="indicator"></div>
-            </div>
-    <br>
-    <br>
-    <header class="flex items-center justify-center text-center mb-6">
-      
-      <div>
-        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 mt-16 titulosSterling-text">Proyectos destacados.</h1><br>
-        <span class="px-2 py-1 text-3xl bg-gradient-to-r font-bold from-orange-500 via-amber-400 to-rose-500 bg-clip-text text-transparent rounded-full">Explora mis proyectos</span>
-        <p class="text-xl font-semibold mb-4 text-white mt-1">En vista previa o accede al sitio completo con un solo clic.</p>
-      </div>
+
+    <!-- NAVBAR -->
+    <nav class="filter-menu mb-8">
+      <a href="index.html">Inicio</a>
+      <a href="index.html#sobremi">Sobre mi</a>
+      <a href="index.html#estudio">Formación</a>
+      <a href="index.html#experiencia">Experiencia</a>
+      <a href="index.html#desarrollo">Desarrollos</a>
+      <a href="index.html#competencia">Competencias</a>
+      <a href="index.html#estrategia">Estrategias</a>
+      <a href="index.html#contacto">Contacto</a>
+      <div class="indicator"></div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="text-center mb-8 mt-8">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 titulosSterling-text">Proyectos destacados.</h1>
+      <span class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-500 via-amber-400 to-rose-500 bg-clip-text text-transparent">Explora mis proyectos</span>
+      <p class="text-base font-semibold text-white mt-2">En vista previa o accede al sitio completo con un solo clic.</p>
     </header>
 
     <!-- CONTROLES -->
-<div class="controls-panel flex items-center justify-between">
-  <!-- left section: device selector + gallery -->
-  <div class="flex items-center gap-6">
-    <!-- device selector -->
-    <div class="flex items-center gap-2">
-      <label class="text-xl font-semibold mb-4 text-white mt-1">Dispositivo: </label>
-      <div class="flex items-center gap-2">
-        <button id="btnMobile" class="glass-btn hover:bg-white/30 hover:text-amber-400" aria-pressed="true">Mobile</button>
-        <button id="btnDesktop" class="glass-btn hover:bg-white/30 hover:text-rose-400" aria-pressed="false">Desktop</button>
+    <div class="controls-panel mb-4">
+      <!-- Izquierda: dispositivo -->
+      <div class="controls-left">
+        <label class="text-sm font-semibold text-white">Dispositivo:</label>
+        <button id="btnMobile"  class="glass-btn hover:bg-white/30 hover:text-amber-400"  aria-pressed="true">Mobile</button>
+        <button id="btnDesktop" class="glass-btn hover:bg-white/30 hover:text-rose-400"   aria-pressed="false">Desktop</button>
+      </div>
+
+      <!-- Derecha: zoom, rotar, fullscreen -->
+      <div class="controls-right">
+        <label class="text-sm font-semibold text-white">Zoom:</label>
+        <input id="zoom" type="range" min="50" max="150" value="100" style="width:100px;" />
+
+        <label class="text-sm font-semibold text-white">Rotar:</label>
+        <button id="rotLeft"  class="glass-btn hover:bg-white/30 hover:text-red-400">⟲</button>
+        <button id="rotRight" class="glass-btn hover:bg-white/30 hover:text-red-400">⟳</button>
+
+        <button id="fullscreenBtn" class="glass-btn hover:bg-white/30 hover:text-emerald-400">Fullscreen</button>
+        <button id="openOriginal"  class="glass-btn hover:bg-white/30 hover:text-sky-400">Abrir ↗</button>
       </div>
     </div>
-
-    <!-- gallery -->
-    <div class="flex items-center gap-3">
-      <label class="text-xl font-semibold mb-4 text-white mt-1">Proyectos: </label>
-      <div id="gallery" class="flex items-center border border-white/10 hover:border-white/30 rounded-lg px-2 py-30 hover:bg-white/5 gap-2">
-        <!-- thumbs inserted by JS -->
-      </div>
-    </div>
-  </div>
-
-  <!-- right section: zoom & rotate + fullscreen -->
-  <div class="flex items-center gap-6">
-    <!-- zoom & rotate -->
-    <div class="flex items-center gap-3">
-      <label class="text-xl font-semibold mb-4 text-white mt-1">Zoom: </label>
-      <input id="zoom" type="range" min="50" max="150" value="100" class="h-1 w-40" />
-      <label class="text-xl font-semibold mb-4 text-white mt-1">Rotar: </label>
-      <div class="flex items-center gap-2">
-        <button id="rotLeft" class="glass-btn hover:bg-white/30 hover:text-red-700">⟲</button>
-        <button id="rotRight" class="glass-btn hover:bg-white/30 hover:text-red-700">⟳</button>
-      </div>
-    </div>
-
-    <!-- fullscreen -->
-    <div class="flex items-center gap-2">
-      <button id="fullscreenBtn" class="glass-btn hover:bg-white/30 hover:text-emerald-400">Abrir en Fullscreen</button>
-      <button id="openOriginal" class="glass-btn hover:bg-white/30 hover:text-sky-400">Abrir original ↗</button>
-    </div>
-  </div>
-</div>
-
 
     <!-- DEVICE FRAME -->
-    <div id="deviceFrame" class="device-frame device-mobile mt-6">
+    <div id="deviceFrame" class="device-frame device-mobile">
       <div class="frame-header">
         <div class="frame-dots">
           <span class="frame-dot dot-red"></span>
           <span class="frame-dot dot-yellow"></span>
           <span class="frame-dot dot-green"></span>
         </div>
-        <div class="text-xs text-white bg-white/5 hover:text-white/60 rounded-full py-1 px-12 bg-white-700 ">Vista interactiva — puedes navegar en la página seleccionada aquí abajo</div>
-        <div class="text-xs text-white">Previsualización</div>
+        <div class="frame-header-label">Vista interactiva — navega en la página seleccionada</div>
+        <div style="font-size:.7rem;color:#fff;flex-shrink:0;">Previsualización</div>
       </div>
 
-      <div id="previewViewport" class="preview-viewport p-6 flex justify-center">
+      <div id="previewViewport" class="preview-viewport">
         <div id="previewFrame" class="preview-frame">
-          <!-- iframe: navegable -->
-          <iframe id="miniIframe" src="https://github.com/Santiago131440/SantiagoSterling/blob/main/1000234043.jpg?raw=true"
+          <iframe id="miniIframe" src=""
             sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-modals allow-downloads"
             referrerpolicy="no-referrer"
             scrolling="yes"
@@ -105,69 +250,180 @@
         </div>
       </div>
     </div>
-      <br>
-      <!-- right section: URLs en la galería -->
-      <div class="w-full md:w-full items-center justify-center text-center">
-        <div class="bg-gradient-to-br from-white/2 to-white/1 p-3 rounded-xl border border-white/4">
-          <div class="text-xl font-semibold mb-4 text-white mt-1">Proyectos:</div>
-          <div id="thumbList" class="grid grid-cols-10 gap-2">
-            <!-- thumbnails generados por JS -->
-          </div>
-        </div>
+
+    <!-- GRID DE PROYECTOS -->
+    <div class="mt-6 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-4">
+      <p class="text-sm font-semibold text-white mb-3">Proyectos <span id="projectCount" class="text-white/40"></span></p>
+      <div id="thumbList" class="projects-grid">
+        <!-- generado por JS -->
       </div>
     </div>
 
     <!-- FOOTER -->
-    <footer class="mt-12 bg-gradient-to-br from-black/90 to-black/80 text-white p-8 rounded-2xl border border-white/10">
-      <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 text-center md:text-left">
-        
-        <!-- Sección: Sobre mí -->
+    <footer>
+      <div class="footer-grid">
         <div>
-          <h2 class="text-2xl font-bold mb-4">Proyectos realizados</h2>
-          <p class="text-sm text-white/80">
-            Mis proyectos representan la combinación de creatividad, innovación y funcionalidad. Cada uno ha sido desarrollado pensando en la experiencia del usuario y en soluciones eficientes, aplicando buenas prácticas de desarrollo web y software. Desde aplicaciones interactivas hasta maquetación de sitios web, cada proyecto refleja mi capacidad para enfrentar retos y transformar ideas en productos digitales de calidad.
+          <h2 class="text-xl font-bold mb-3">Proyectos realizados</h2>
+          <p class="text-sm text-white/70 leading-relaxed">
+            Mis proyectos representan la combinación de creatividad, innovación y funcionalidad. Cada uno ha sido desarrollado pensando en la experiencia del usuario y en soluciones eficientes, aplicando buenas prácticas de desarrollo web y software.
           </p>
         </div>
-
-        <!-- Sección: Enlaces rápidos -->
         <div>
-          <h2 class="text-2xl font-bold mb-4">Enlaces rápidos</h2>
-          <ul class="text-sm text-white/80 space-y-2">
+          <h2 class="text-xl font-bold mb-3">Enlaces rápidos</h2>
+          <ul class="text-sm text-white/70 space-y-2">
             <li><a href="index20.html" class="hover:text-amber-400 transition-colors">Inicio</a></li>
             <li><a href="index20.html#projects" class="hover:text-amber-400 transition-colors">Experiencia Laboral</a></li>
             <li><a href="index20.html#contact" class="hover:text-amber-400 transition-colors">Contacto</a></li>
           </ul>
         </div>
-
-        <!-- Sección: Redes sociales -->
         <div>
-          <h2 class="text-2xl font-bold mb-4">Sígueme</h2>
-          <div class="flex justify-center md:justify-start gap-4 mt-2">
-            <a href="https://github.com/Santiago131440" target="_blank" class="glass-btn text-white font-semibold rounded-lg hover:bg-white/10 transition">
-              GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/santiago-sterling" target="_blank" class="glass-btn text-white font-semibold rounded-lg hover:bg-white/10 transition">
-              LinkedIn
-            </a>
-            <a href="mailto:example@email.com" class="glass-btn text-white font-semibold rounded-lg hover:bg-white/10 transition">
-              Email
-            </a>
+          <h2 class="text-xl font-bold mb-3">Sígueme</h2>
+          <div class="flex flex-wrap gap-3 mt-2">
+            <a href="https://github.com/Santiago131440" target="_blank" class="glass-btn hover:bg-white/10">GitHub</a>
+            <a href="https://www.linkedin.com/in/santiago-sterling" target="_blank" class="glass-btn hover:bg-white/10">LinkedIn</a>
+            <a href="mailto:example@email.com" class="glass-btn hover:bg-white/10">Email</a>
           </div>
         </div>
       </div>
-
-      <!-- Créditos -->
-      <div class="mt-8 text-center text-white/50 text-sm">
-        &copy; 2025 Santiago Sterling. Todos los derechos reservados.
-      </div>
+      <div class="mt-6 text-center text-white/40 text-xs">&copy; 2025 Santiago Sterling. Todos los derechos reservados.</div>
     </footer>
-
-
 
   </div>
 
-  <!-- JS principal -->
-  <script src="proyectos20.js"></script>
+  <script>
+    const SITES = [
+      { id:'s1',  name:'Luis Díaz Statics',   url:'https://santiago131440.github.io/SantiagoSterling/Dashboard2.html' },
+      { id:'s2',  name:'Red Pericial',         url:'https://santiago131440.github.io/SantiagoSterling/producto.html' },
+      { id:'s3',  name:'Music Blog',           url:'https://santiago131440.github.io/SantiagoSterling/Music.html' },
+      { id:'s4',  name:'Test',                 url:'https://santiago131440.github.io/SantiagoSterling/registro.html' },
+      { id:'s5',  name:'Dashboard',            url:'https://santiago131440.github.io/SantiagoSterling/Dashboard3.html' },
+      { id:'s6',  name:'Pagina prueba',        url:'https://santiago131440.github.io/SantiagoSterling/Dashboard1.html' },
+      { id:'s7',  name:'Restaurante',          url:'https://santiago131440.github.io/SantiagoSterling/Restaurante.html' },
+      { id:'s8',  name:'ProyectoApp',          url:'https://santiago131440.github.io/SantiagoSterling/proyectoApp.html' },
+      { id:'s9',  name:'Video Landing Page',   url:'https://santiago131440.github.io/SantiagoSterling/EntornoPrueba.html' },
+      { id:'s10', name:'Tabla de Salarios',    url:'https://santiago131440.github.io/SantiagoSterling/Salarios.html' },
+      { id:'s11', name:'Mario Bros',           url:'https://santiago131440.github.io/SantiagoSterling/Super Mario.html' },
+      { id:'s12', name:'Indicadores',          url:'https://santiago131440.github.io/SantiagoSterling/Indicadores.HTML' },
+      { id:'s13', name:'Sterling Music Studio',url:'https://santiago131440.github.io/SantiagoSterling/mix.html' },
+      { id:'s14', name:'Buscaminas',           url:'https://santiago131440.github.io/SantiagoSterling/Buscaminas.html' },
+    ];
+
+    const deviceFrame   = document.getElementById('deviceFrame');
+    const btnMobile     = document.getElementById('btnMobile');
+    const btnDesktop    = document.getElementById('btnDesktop');
+    const zoomInput     = document.getElementById('zoom');
+    const rotLeft       = document.getElementById('rotLeft');
+    const rotRight      = document.getElementById('rotRight');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const openOriginal  = document.getElementById('openOriginal');
+    const thumbList     = document.getElementById('thumbList');
+    const miniIframe    = document.getElementById('miniIframe');
+    const previewFrame  = document.getElementById('previewFrame');
+    const projectCount  = document.getElementById('projectCount');
+
+    let currentSite   = SITES[0];
+    let currentZoom   = 1.0;
+    let currentRotate = 0;
+
+    /* ── Build grid ── */
+    function buildGrid(){
+      thumbList.innerHTML = '';
+      projectCount.textContent = `(${SITES.length})`;
+      SITES.forEach((s, i) => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.dataset.site = s.id;
+        card.innerHTML = `
+          <div class="project-card-num">${String(i+1).padStart(2,'0')}</div>
+          <div class="project-card-name">${s.name}</div>
+        `;
+        card.addEventListener('click', () => selectSite(s.id));
+        thumbList.appendChild(card);
+      });
+      setActiveCard(currentSite.id);
+    }
+
+    function setActiveCard(siteId){
+      thumbList.querySelectorAll('.project-card').forEach(el => {
+        el.classList.toggle('active', el.dataset.site === siteId);
+      });
+    }
+
+    function selectSite(siteId){
+      const site = SITES.find(x => x.id === siteId);
+      if(!site) return;
+      currentSite = site;
+      miniIframe.src = site.url;
+      setActiveCard(siteId);
+    }
+
+    /* ── Device toggles ── */
+    btnMobile.addEventListener('click', () => {
+      deviceFrame.classList.replace('device-desktop','device-mobile');
+      btnMobile.setAttribute('aria-pressed','true');
+      btnDesktop.setAttribute('aria-pressed','false');
+    });
+    btnDesktop.addEventListener('click', () => {
+      deviceFrame.classList.replace('device-mobile','device-desktop');
+      btnDesktop.setAttribute('aria-pressed','true');
+      btnMobile.setAttribute('aria-pressed','false');
+    });
+
+    /* ── Zoom ── */
+    zoomInput.addEventListener('input', e => {
+      currentZoom = Number(e.target.value) / 100;
+      applyTransform();
+    });
+
+    /* ── Rotate ── */
+    rotLeft.addEventListener('click',  () => { currentRotate = (currentRotate - 90) % 360; applyTransform(); });
+    rotRight.addEventListener('click', () => { currentRotate = (currentRotate + 90) % 360; applyTransform(); });
+
+    function applyTransform(){
+      previewFrame.style.transform = `scale(${currentZoom}) rotate(${currentRotate}deg)`;
+      previewFrame.style.transformOrigin = 'top center';
+    }
+
+    /* ── Fullscreen ── */
+    fullscreenBtn.addEventListener('click', async () => {
+      try {
+        if (deviceFrame.requestFullscreen) await deviceFrame.requestFullscreen();
+        else if (deviceFrame.webkitRequestFullscreen) await deviceFrame.webkitRequestFullscreen();
+        deviceFrame.classList.add('is-fullscreen');
+      } catch(e){
+        deviceFrame.classList.add('is-fullscreen');
+      }
+    });
+    document.addEventListener('fullscreenchange', () => {
+      deviceFrame.classList.toggle('is-fullscreen', !!document.fullscreenElement);
+    });
+
+    /* ── Open original ── */
+    openOriginal.addEventListener('click', () => {
+      window.open(currentSite.url, '_blank', 'noopener,noreferrer');
+    });
+
+    /* ── Keyboard ── */
+    document.addEventListener('keydown', e => {
+      if(e.key==='+' || e.key==='='){zoomInput.value=Math.min(150,+zoomInput.value+10);zoomInput.dispatchEvent(new Event('input'));}
+      if(e.key==='-'){zoomInput.value=Math.max(50,+zoomInput.value-10);zoomInput.dispatchEvent(new Event('input'));}
+      if(e.key.toLowerCase()==='r') rotRight.click();
+      if(e.key.toLowerCase()==='l') rotLeft.click();
+      if(e.key.toLowerCase()==='f') fullscreenBtn.click();
+    });
+
+    /* ── Double tap ── */
+    let lastTap = 0;
+    previewFrame.addEventListener('touchend', () => {
+      const now = Date.now();
+      if(now - lastTap < 300) openOriginal.click();
+      lastTap = now;
+    });
+
+    /* ── Init ── */
+    buildGrid();
+    selectSite(currentSite.id);
+    applyTransform();
+  </script>
 </body>
 </html>
-
