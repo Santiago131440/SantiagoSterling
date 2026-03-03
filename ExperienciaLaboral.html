@@ -977,12 +977,12 @@
       </div>
       <div id="layers-list"></div>
       <div class="layers-toolbar">
-        <div class="layers-tool-btn" onclick="addNewLayer()" title="Nueva capa">＋</div>
-        <div class="layers-tool-btn" onclick="duplicateLayer()" title="Duplicar">⧉</div>
-        <div class="layers-tool-btn" onclick="deleteActiveLayer()" title="Eliminar">🗑</div>
-        <div class="layers-tool-btn" onclick="moveLayerUp()" title="Subir capa">↑</div>
-        <div class="layers-tool-btn" onclick="moveLayerDown()" title="Bajar capa">↓</div>
-        <div class="layers-tool-btn" onclick="flattenLayers()" title="Aplanar">⬜</div>
+        <div class="layers-tool-btn" onclick="addNewLayer()" title="Nueva capa"><i class="fi fi-sr-add"></i></div>
+        <div class="layers-tool-btn" onclick="duplicateLayer()" title="Duplicar"><i class="fi fi-sr-clone"></i></div>
+        <div class="layers-tool-btn" onclick="deleteActiveLayer()" title="Eliminar"><i class="fi fi-sr-delete-document"></i></div>
+        <div class="layers-tool-btn" onclick="moveLayerUp()" title="Subir capa"><i class="fi fi-sr-arrow-up-to-dotted-line"></i></div>
+        <div class="layers-tool-btn" onclick="moveLayerDown()" title="Bajar capa"><i class="fi fi-sr-arrow-down-from-dotted-line"></i></div>
+        <div class="layers-tool-btn" onclick="flattenLayers()" title="Agrupar"><i class="fi fi-sr-object-union"></i></div>
       </div>
     </div>
 
@@ -1217,7 +1217,12 @@ function updateLayersPanel() {
 
     const vis = document.createElement('div');
     vis.className = 'layer-vis' + (layer.visible ? '' : ' hidden');
-    vis.textContent = '👁️';
+    vis.innerHTML = `
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>
+      `;
     vis.onclick = (e) => { e.stopPropagation(); toggleLayerVisibility(i); };
 
     const thumb = document.createElement('div');
