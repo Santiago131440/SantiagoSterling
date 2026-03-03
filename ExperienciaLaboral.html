@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sterl-ink sketching</title>
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-chubby/css/uicons-solid-chubby.css'>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
 
@@ -811,26 +812,26 @@
       <i class="fi fi-sr-eye-dropper-half"></i><span class="tool-tooltip">Cuentagotas (I)</span>
     </div>
     <div class="tool-btn" id="tool-blur-tool" onclick="selectTool('blur-tool')">
-      💧<span class="tool-tooltip">Desenfocar</span>
+      <i class="fi fi-sr-border-center-h"></i><span class="tool-tooltip">Desenfocar</span>
     </div>
     <div class="tool-btn" id="tool-dodge" onclick="selectTool('dodge')">
-      ☀️<span class="tool-tooltip">Sobreexponer (O)</span>
+      <i class="fi fi-sr-sun-dust"></i><span class="tool-tooltip">Sobreexponer (O)</span>
     </div>
     <div class="tool-btn" id="tool-burn" onclick="selectTool('burn')">
-      🌑<span class="tool-tooltip">Subexponer</span>
+      <i class="fi fi-sr-dark-mode"></i><span class="tool-tooltip">Subexponer</span>
     </div>
     <div class="tool-btn" id="tool-smudge" onclick="selectTool('smudge')">
-      👆<span class="tool-tooltip">Difuminar</span>
+      <i class="fi fi-sr-subscription-alt"></i><span class="tool-tooltip">Difuminar</span>
     </div>
     <div class="tool-sep"></div>
     <div class="tool-btn" id="tool-zoom-in" onclick="zoomIn()">
-      🔍+<span class="tool-tooltip">Acercar (+)</span>
+      <i class="fi fi-sc-zoom-in"></i><span class="tool-tooltip">Acercar (+)</span>
     </div>
     <div class="tool-btn" id="tool-zoom-out" onclick="zoomOut()">
-      🔍-<span class="tool-tooltip">Alejar (-)</span>
+      <i class="fi fi-sc-zoom-out"></i><span class="tool-tooltip">Alejar (-)</span>
     </div>
     <div class="tool-btn" id="tool-hand" onclick="selectTool('hand')">
-      ✋<span class="tool-tooltip">Mano (H)</span>
+      <i class="fi fi-sr-tap"></i><span class="tool-tooltip">Mano (H)</span>
     </div>
   </div>
 
@@ -851,7 +852,7 @@
     <!-- COLOR PANEL -->
     <div class="panel">
       <div class="panel-header" onclick="togglePanel('color-body')">
-        🎨 Color <span class="panel-toggle" id="toggle-color-body">▼</span>
+        <i class="fi fi-sr-palette"></i> Color <span class="panel-toggle" id="toggle-color-body">▼</span>
       </div>
       <div class="panel-body" id="color-body">
         <div class="color-swatch-row">
