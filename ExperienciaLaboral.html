@@ -62,9 +62,13 @@
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
                'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
                'Helvetica Neue', Arial, sans-serif;
-    font-size: 13px;
-    font-weight: 100;
-    color: var(--accent);
+    font-size: 16px;
+    font-weight: 500;
+    background: linear-gradient(90deg, var(--accent), #00c6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
     letter-spacing: -0.5px;
     margin-right: 12px;
   }
@@ -674,7 +678,7 @@
 
 <!-- MENU BAR -->
 <div id="menubar">
-  <div class="logo"><i class="fi fi-sr-add-image"></i> Sterl-ink sketching</div>
+  <div class="logo"><i class="fi fi-sr-pen-circle"></i> Sterl-ink Sketching</div>
   
   <div class="menu-item">Archivo
     <div class="dropdown">
@@ -876,7 +880,7 @@
           <div class="fg-bg-swatches">
             <div class="swatch-bg" id="bg-color-swatch" onclick="activateColorPicker('bg')" title="Color de fondo"></div>
             <div class="swatch-fg" id="fg-color-swatch" onclick="activateColorPicker('fg')" title="Color frontal"></div>
-            <div class="swap-btn" onclick="swapColors()" title="Intercambiar">⇄</div>
+            <div class="swap-btn" onclick="swapColors()" title="Intercambiar"><i class="fi fi-sr-exchange"></i></div>
           </div>
           <div style="flex:1">
             <input type="color" id="color-picker-fg" class="color-picker-full" value="#000000" oninput="setFgColor(this.value)">
