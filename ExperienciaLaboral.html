@@ -6,6 +6,7 @@
 <title>Sterl-ink sketching</title>
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-chubby/css/uicons-solid-chubby.css'>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
 
@@ -15,7 +16,7 @@
     --panel2: #2c2c2c;
     --panel3: #333;
     --border: #3a3a3a;
-    --accent: #4a9eff;
+    --accent: #007AFF;
     --accent2: #ff6b35;
     --text: #d4d4d4;
     --text-dim: #888;
@@ -25,7 +26,7 @@
     --tool-active: #4a9eff22;
     --input-bg: #1a1a1a;
     --slider-track: #444;
-    --slider-fill: #4a9eff;
+    --slider-fill: #007AFF;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
@@ -33,12 +34,15 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+               'Helvetica Neue', Arial, sans-serif;
     font-size: 12px;
     height: 100vh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    font-weight: 100;
   }
 
   /* ── MENUBAR ─────────────────────────────────────────────── */
@@ -55,9 +59,11 @@
   }
 
   .logo {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+               'Helvetica Neue', Arial, sans-serif;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 100;
     color: var(--accent);
     letter-spacing: -0.5px;
     margin-right: 12px;
@@ -124,7 +130,9 @@
     border-radius: 3px;
     width: 50px;
     font-size: 11px;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+               'Helvetica Neue', Arial, sans-serif;
   }
   .opt-input:focus { outline: none; border-color: var(--accent); }
   .opt-sep { width: 1px; height: 18px; background: var(--border); margin: 0 4px; }
@@ -240,7 +248,9 @@
     color: var(--text);
     padding: 3px 10px;
     border-radius: 20px;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+               'Helvetica Neue', Arial, sans-serif;
     font-size: 11px;
     pointer-events: none;
   }
@@ -254,7 +264,9 @@
     color: var(--text-dim);
     padding: 3px 10px;
     border-radius: 20px;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+               'Helvetica Neue', Arial, sans-serif;
     font-size: 11px;
     pointer-events: none;
   }
@@ -283,10 +295,9 @@
     cursor: pointer;
     background: var(--panel2);
     font-size: 11px;
-    font-weight: 500;
+    font-weight: 100;
     letter-spacing: 0.5px;
     color: var(--text-dim);
-    text-transform: uppercase;
     gap: 6px;
     transition: background 0.1s;
   }
@@ -332,7 +343,9 @@
   .adj-value {
     width: 34px;
     text-align: right;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+               'Helvetica Neue', Arial, sans-serif;
     font-size: 10px;
     color: var(--text);
   }
@@ -427,7 +440,9 @@
   }
 
   .layer-opacity-mini {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+               'Helvetica Neue', Arial, sans-serif;
     font-size: 10px;
     color: var(--text-dim);
     flex-shrink: 0;
@@ -543,7 +558,9 @@
     flex-shrink: 0;
     font-size: 11px;
     color: var(--text-dim);
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+               'Helvetica Neue', Arial, sans-serif;
   }
   .status-item { display: flex; gap: 4px; }
   .status-key { color: var(--text-dim); }
@@ -577,7 +594,7 @@
     display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--border);
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 100;
     color: var(--text-bright);
   }
   .modal-close {
@@ -863,7 +880,9 @@
           </div>
           <div style="flex:1">
             <input type="color" id="color-picker-fg" class="color-picker-full" value="#000000" oninput="setFgColor(this.value)">
-            <div style="font-size:10px; color:var(--text-dim); margin-top:3px; font-family:'IBM Plex Mono';" id="hex-display">#000000</div>
+            <div style="font-size:10px; color:var(--text-dim); margin-top:3px; font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+               'Helvetica Neue', Arial, sans-serif;" id="hex-display">#000000</div>
           </div>
         </div>
         <div class="color-presets" id="color-presets">
@@ -973,7 +992,9 @@
       <div style="padding:4px 6px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:6px;">
         <span style="color:var(--text-dim);font-size:10px;">Opacidad:</span>
         <input type="range" id="layer-opacity-slider" min="0" max="100" value="100" style="flex:1;height:3px;" class="adj-slider" oninput="setLayerOpacity(this.value)">
-        <span id="layer-opacity-val" style="font-family:'IBM Plex Mono';font-size:10px;width:28px;text-align:right;">100%</span>
+        <span id="layer-opacity-val" style="font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+               'Helvetica Neue', Arial, sans-serif;;font-size:10px;width:28px;text-align:right;">100%</span>
       </div>
       <div id="layers-list"></div>
       <div class="layers-toolbar">
