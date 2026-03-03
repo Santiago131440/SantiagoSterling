@@ -64,7 +64,7 @@
                'Helvetica Neue', Arial, sans-serif;
     font-size: 16px;
     font-weight: 500;
-    background: linear-gradient(90deg, var(--accent), #00c6ff);
+    background: linear-gradient(90deg, var(--accent), #00ffea);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1841,10 +1841,7 @@ function applyConvolution(imgData, kernel) {
   return new ImageData(result, w, h);
 }
 
-// ═══════════════════════════════════════════════════════════════
-// ADJUSTMENTS
-// ═══════════════════════════════════════════════════════════════
-// Store original for non-destructive preview
+
 let adjOriginal = null;
 
 function applyAdjustment(type, value) {
@@ -1861,7 +1858,7 @@ function previewAdjustments() {
       adjOriginal[l.id] = l.ctx.getImageData(0, 0, l.canvas.width, l.canvas.height);
     }
   }
-  // Apply to active layer only for preview
+
   const layer = getActiveLayer();
   const orig = adjOriginal[layer.id];
   if (!orig) return;
@@ -1878,23 +1875,21 @@ function processAdjustments(imgData) {
   for (let i = 0; i < d.length; i += 4) {
     let r = d[i], g = d[i+1], b = d[i+2];
     
-    // Brightness
     if (adj.brightness !== 0) {
       const bv = adj.brightness * 2.55;
       r = clamp(r + bv); g = clamp(g + bv); b = clamp(b + bv);
     }
-    // Contrast
+
     if (adj.contrast !== 0) {
       const cf = (259*(adj.contrast+255))/(255*(259-adj.contrast));
       r = clamp(cf*(r-128)+128); g = clamp(cf*(g-128)+128); b = clamp(cf*(b-128)+128);
     }
-    // Exposure
+
     if (adj.exposure !== 0) {
       const ef = Math.pow(2, adj.exposure/50);
       r = clamp(r*ef); g = clamp(g*ef); b = clamp(b*ef);
     }
     
-    // Convert to HSL for saturation/hue
     if (adj.saturation !== 0 || adj.hue !== 0 || adj.shadows !== 0 || adj.highlights !== 0) {
       let [h, s, l] = rgbToHsl(r,g,b);
       if (adj.hue !== 0) h = ((h + adj.hue/360) % 1 + 1) % 1;
@@ -1965,9 +1960,6 @@ function resetAdjustments(revert = true) {
   renderCanvas();
 }
 
-// ═══════════════════════════════════════════════════════════════
-// IMAGE OPERATIONS
-// ═══════════════════════════════════════════════════════════════
 function flipHorizontal() {
   const layer = getActiveLayer();
   const tmp = document.createElement('canvas');
@@ -2158,8 +2150,8 @@ function updateBrushSize(v) {
 // COLORS
 // ═══════════════════════════════════════════════════════════════
 const COLOR_PRESETS = [
-  '#000000','#ffffff','#ff0000','#00ff00','#0000ff','#ffff00',
-  '#ff00ff','#00ffff','#ff8800','#8800ff','#ff8888','#88ff88',
+  '#000000','#ffffff','#007AFF','#5AC8FA','#0A84FF','#00C6FF',
+  '#34C759','#30D158','#2ECC71','#248A3D','#ff8888','#88ff88',
   '#8888ff','#888888','#444444','#cccccc','#ff4444','#44ff44',
   '#4444ff','#ffaa00','#00aaff','#aa00ff','#ff0088','#00ff88'
 ];
