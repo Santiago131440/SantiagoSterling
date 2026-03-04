@@ -21,27 +21,22 @@
   --blur:22px;
 }
 
-*{box-sizing:border-box;font-family: 'Product Sans', 'Arial Rounded MT Bold', Arial, sans-serif;}
+*{box-sizing:border-box;font-family:'Product Sans','Arial Rounded MT Bold',Arial,sans-serif;}
 
 body{
   margin:0;
-  background-image: linear-gradient(135deg, rgba(245,247,250,0.85), rgba(195,207,226,0.15));
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-    font-family: 'Product Sans', 'Arial Rounded MT Bold', Arial, sans-serif;
-
+  background-image:linear-gradient(135deg,rgba(245,247,250,0.85),rgba(195,207,226,0.15));
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
   color:var(--text);
   height:100vh;
   display:flex;
   overflow:hidden;
 }
 
-.app{
-  display:flex;
-  width:100%;
-}
+.app{display:flex;width:100%;}
 
 /* Sidebar */
 .sidebar{
@@ -54,15 +49,9 @@ body{
   transition:transform .25s ease;
 }
 
-.sidebar h2{
-  font-size:18px;
-  margin:8px 0 12px;
-}
+.sidebar h2{font-size:18px;margin:8px 0 12px;}
 
-.chat-list{
-  flex:1;
-  overflow:auto;
-}
+.chat-list{flex:1;overflow:auto;}
 
 .chat-item{
   padding:12px;
@@ -77,35 +66,15 @@ body{
 
 .chat-item span{flex:1}
 
-.chat-item.active,
-.chat-item:hover{
-  background:rgba(0,0,0,.05);
-}
+.chat-item.active,.chat-item:hover{background:rgba(0,0,0,.05);}
 
-.chat-item button{
-  background:none;
-  border:none;
-  cursor:pointer;
-  font-size:14px;
-  opacity:.6;
-}
+.chat-item button{background:none;border:none;cursor:pointer;font-size:14px;opacity:.6;}
 
-.new-chat{
-  color:var(--accent);
-  border:none;
-  padding:8px;
-  border-radius:64px;
-  font-weight:300;
-}
-
+.new-chat{color:var(--accent);border:none;padding:8px;border-radius:64px;font-weight:300;background:transparent;cursor:pointer;}
 .new-chat i{font-size:28px}
 
 /* Main */
-.main{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;}
 
 .header{
   padding:16px;
@@ -116,119 +85,273 @@ body{
   display:flex;
   align-items:center;
   gap:10px;
+  flex-shrink:0;
 }
 
-/* Hamburger invisible */
-.hamburger{
-  width:22px;
-  height:14px;
-  position:relative;
-  opacity:.45;
-  display:none;
-}
-.hamburger span{
-  position:absolute;
-  width:100%;
-  height:2px;
-  background:#000;
-  border-radius:2px;
-}
+.hamburger{width:22px;height:14px;position:relative;opacity:.45;display:none;}
+.hamburger span{position:absolute;width:100%;height:2px;background:#000;border-radius:2px;}
 .hamburger span:nth-child(1){top:0}
 .hamburger span:nth-child(2){top:6px}
 .hamburger span:nth-child(3){top:12px}
 
-.header-actions{
-  margin-left:auto;
-  display:flex;
-  gap:10px;
+.header-actions{margin-left:auto;display:flex;gap:10px;}
+.header-actions button{background:none;border:none;cursor:pointer;font-size:36px;opacity:.6;color:var(--accent)}
+
+.messages{flex:1;padding:16px;overflow:auto;display:flex;flex-direction:column;gap:2px;}
+
+/* Date separator like WhatsApp */
+.date-separator{
+  text-align:center;
+  margin:10px 0 6px;
+}
+.date-separator span{
+  background:rgba(0,0,0,.07);
+  color:var(--muted);
+  font-size:11px;
+  padding:3px 10px;
+  border-radius:20px;
 }
 
-.header-actions button{
-  background:none;
-  border:none;
-  cursor:pointer;
-  font-size:36px;
-  opacity:.6;
-  color: var(--accent)
-}
-
-.messages{
-  flex:1;
-  padding:16px;
-  overflow:auto;
-}
-
+/* Message bubble */
 .message{
   background:var(--card);
   backdrop-filter:blur(var(--blur));
-  border-radius:60px;
-  padding:12px 14px;
-  margin-bottom:10px;
+  border-radius:22px 22px 22px 6px;
+  padding:10px 14px 8px;
+  margin-bottom:2px;
   position:relative;
+  max-width:85%;
+  align-self:flex-start;
+  box-shadow:0 1px 3px rgba(0,0,0,.07);
+  animation:popIn .18s ease;
 }
 
-.message small{
-  color:var(--muted);
+@keyframes popIn{
+  from{opacity:0;transform:scale(.95) translateY(4px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+
+.message .msg-text{font-size:15px;line-height:1.4;word-break:break-word;}
+
+.message .msg-image{
+  max-width:100%;
+  border-radius:14px;
+  margin-bottom:6px;
   display:block;
+  max-height:200px;
+  object-fit:cover;
+  cursor:pointer;
+}
+
+.message .msg-meta{
+  display:flex;
+  align-items:center;
+  gap:8px;
   margin-top:4px;
+  flex-wrap:wrap;
+}
+
+.message .msg-value{
+  color:var(--accent);
+  font-size:13px;
+  font-weight:600;
+}
+
+.message .msg-time{
+  color:var(--muted);
+  font-size:11px;
+  margin-left:auto;
 }
 
 .message .actions{
+  display:none;
   position:absolute;
-  right:10px;
-  top:8px;
-  display:flex;
-  gap:6px;
+  right:-4px;
+  top:-6px;
+  gap:4px;
+  background:white;
+  border-radius:20px;
+  padding:3px 6px;
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
+  z-index:2;
 }
+.message:hover .actions{display:flex;}
+.message .actions button{background:none;border:none;cursor:pointer;font-size:14px;padding:2px;}
 
 .footer{
   padding:14px;
   display:flex;
   gap:10px;
   border-top:1px solid var(--border);
+  align-items:center;
+  flex-shrink:0;
 }
 
-.footer input{
+.footer input[type=text]{
   flex:1;
   padding:14px;
   border-radius:16px;
   border:1px solid var(--border);
+  background:rgba(255,255,255,.8);
+  font-size:15px;
 }
+
+.footer input[type=text]:focus{outline:none;border-color:var(--accent);}
 
 .footer button{
   padding:1px 1px;
   border-radius:60px;
   border:none;
   color:var(--accent);
-  background-color: transparent;
+  background-color:transparent;
+  cursor:pointer;
+  flex-shrink:0;
 }
 
-.footer i {
-  font-size: 26px;
+.footer i{font-size:26px;}
+
+/* Image attach button */
+.attach-btn{
+  color:var(--muted) !important;
+  font-size:22px !important;
 }
+
+/* Image preview in footer */
+.img-preview-wrap{
+  padding:8px 14px 0;
+  display:none;
+}
+.img-preview-wrap.show{display:flex;align-items:center;gap:8px;}
+.img-preview-wrap img{height:50px;width:50px;object-fit:cover;border-radius:10px;}
+.img-preview-wrap button{background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted);}
 
 .total{
   padding:14px 18px;
   background:rgba(0,0,0,.03);
   font-weight:300;
+  flex-shrink:0;
 }
+
+/* Lightbox */
+.lightbox{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+}
+.lightbox.show{display:flex;}
+.lightbox img{max-width:90vw;max-height:90vh;border-radius:12px;}
+.lightbox-close{position:absolute;top:16px;right:20px;background:none;border:none;color:white;font-size:36px;cursor:pointer;}
+
+/* Share modal */
+.modal-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  z-index:50;
+  align-items:flex-end;
+  justify-content:center;
+}
+.modal-overlay.show{display:flex;}
+.share-modal{
+  background:white;
+  border-radius:24px 24px 0 0;
+  padding:20px;
+  width:100%;
+  max-width:480px;
+  animation:slideUp .25s ease;
+}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+.share-modal h3{margin:0 0 16px;font-size:16px;text-align:center;color:var(--muted);}
+.share-options{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;}
+.share-option{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  cursor:pointer;
+  padding:12px 16px;
+  border-radius:16px;
+  border:none;
+  background:rgba(0,0,0,.04);
+  font-size:13px;
+  color:var(--text);
+  transition:.2s;
+}
+.share-option:hover{background:rgba(0,122,255,.1);color:var(--accent);}
+.share-option i{font-size:28px;}
+.share-icon-wa{color:#25d366;}
+.share-icon-mail{color:#007aff;}
+.share-icon-copy{color:#ff9500;}
+.modal-cancel{width:100%;padding:14px;border:none;background:rgba(0,0,0,.05);border-radius:16px;font-size:15px;cursor:pointer;}
+
+/* Hidden file inputs */
+#fileInput{display:none;}
+#cameraInput{display:none;}
+
+/* Photo value modal */
+.photo-modal-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:60;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.photo-modal-overlay.show{display:flex;}
+.photo-modal{
+  background:white;
+  border-radius:24px;
+  padding:20px;
+  width:100%;
+  max-width:400px;
+  animation:slideUp .22s ease;
+}
+.photo-modal h3{margin:0 0 14px;font-size:16px;text-align:center;}
+.photo-modal img{
+  width:100%;
+  max-height:200px;
+  object-fit:cover;
+  border-radius:16px;
+  margin-bottom:14px;
+  display:block;
+}
+.photo-modal input[type=text]{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  font-size:15px;
+  margin-bottom:10px;
+}
+.photo-modal input[type=text]:focus{outline:none;border-color:var(--accent);}
+.photo-modal-actions{display:flex;gap:10px;}
+.photo-modal-actions button{
+  flex:1;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  font-size:15px;
+  cursor:pointer;
+}
+.btn-cancel-photo{background:rgba(0,0,0,.06);color:var(--text);}
+.btn-send-photo{background:var(--accent);color:white;}
 
 /* Mobile */
 @media(max-width:720px){
   .sidebar{
-    position:absolute;
-    height:100%;
-    left:0;
-    top:0;
-    transform:translateX(-100%);
-    z-index:10;
+    position:absolute;height:100%;left:0;top:0;
+    transform:translateX(-100%);z-index:10;
   }
-  .sidebar.show{
-    transform:translateX(0);
-  }
-  .hamburger{
-    display:block;
-  }
+  .sidebar.show{transform:translateX(0);}
+  .hamburger{display:block;}
 }
 </style>
 </head>
@@ -245,108 +368,222 @@ body{
   <div class="main" id="main">
 
     <div class="header" id="chatTitle">
-      <div class="hamburger">
-        <span></span><span></span><span></span>
-      </div>
+      <div class="hamburger"><span></span><span></span><span></span></div>
       <span id="titleText">Selecciona una lista</span>
-
       <div class="header-actions">
-        <button onclick="downloadPDF()"><i class="fi fi-sr-file-pdf"></i></button>
+        <button onclick="openShare()" title="Compartir"><i class="fi fi-sr-share"></i></button>
+        <button onclick="downloadPDF()" title="Descargar PDF"><i class="fi fi-sr-file-pdf"></i></button>
       </div>
     </div>
 
     <div class="messages" id="messages"></div>
     <div class="total" id="total">Total: $0</div>
 
+    <!-- Image preview strip -->
+    <div class="img-preview-wrap" id="imgPreviewWrap">
+      <img id="imgPreviewThumb" src="" alt="">
+      <span id="imgPreviewName" style="font-size:12px;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+      <button onclick="clearImagePreview()">✕</button>
+    </div>
+
     <div class="footer">
-      <input id="input" placeholder="Ej: Carro 35000">
+      <button class="attach-btn" onclick="document.getElementById('fileInput').click()" title="Adjuntar imagen">
+        <i class="fi fi-sr-picture"></i>
+      </button>
+      <button class="attach-btn" onclick="document.getElementById('cameraInput').click()" title="Tomar foto">
+        <i class="fi fi-sr-camera"></i>
+      </button>
+      <input type="file" id="fileInput" accept="image/*" onchange="handleImageSelect(event)">
+      <input type="file" id="cameraInput" accept="image/*" capture="environment" onchange="handleCameraCapture(event)">
+      <input type="text" id="input" placeholder="Ej: Carro 35000" onkeydown="if(event.key==='Enter')sendMessage()">
       <button onclick="sendMessage()"><i class="fi fi-sr-paper-plane-top"></i></button>
     </div>
-  </div>
 
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- Share Modal -->
+<div class="modal-overlay" id="shareModal" onclick="closeShare(event)">
+  <div class="share-modal">
+    <h3>Compartir lista</h3>
+    <div class="share-options">
+      <button class="share-option" onclick="shareWhatsApp()">
+        <i class="fi fi-sr-comment-alt share-icon-wa"></i>WhatsApp
+      </button>
+      <button class="share-option" onclick="shareEmail()">
+        <i class="fi fi-sr-envelope share-icon-mail"></i>Correo
+      </button>
+      <button class="share-option" onclick="copyToClipboard()">
+        <i class="fi fi-sr-copy share-icon-copy"></i>Copiar
+      </button>
+    </div>
+    <button class="modal-cancel" onclick="document.getElementById('shareModal').classList.remove('show')">Cancelar</button>
+  </div>
+</div>
+
+<!-- Photo value modal -->
+<div class="photo-modal-overlay" id="photoModal">
+  <div class="photo-modal">
+    <h3>📸 Agregar producto</h3>
+    <img id="photoPreviewModal" src="" alt="foto">
+    <input type="text" id="photoName" placeholder="Nombre del producto (ej: Arroz)">
+    <input type="text" id="photoValue" placeholder="Valor (ej: 3500)" inputmode="numeric" onkeydown="if(event.key==='Enter')confirmPhoto()">
+    <div class="photo-modal-actions">
+      <button class="btn-cancel-photo" onclick="cancelPhoto()">Cancelar</button>
+      <button class="btn-send-photo" onclick="confirmPhoto()">✅ Agregar</button>
+    </div>
+  </div>
 </div>
 
 <script>
 let data = JSON.parse(localStorage.getItem("shoppingChat")) || { chats:{} }
 let currentChat = null
+let pendingImageBase64 = null
 
 const sidebar = document.getElementById("sidebar")
 const main = document.getElementById("main")
 
 function isMobile(){ return innerWidth <= 720 }
 
-/* Toggle sidebar from header */
 document.getElementById("chatTitle").onclick = () => {
   if(isMobile()) sidebar.classList.toggle("show")
 }
 
-/* === SWIPE GESTURE === */
-let startX = 0
-let startY = 0
-
-main.addEventListener("touchstart", e=>{
-  startX = e.touches[0].clientX
-  startY = e.touches[0].clientY
-},{passive:true})
-
-main.addEventListener("touchend", e=>{
-  const endX = e.changedTouches[0].clientX
-  const endY = e.changedTouches[0].clientY
-
-  const diffX = endX - startX
-  const diffY = Math.abs(endY - startY)
-
-  if(!isMobile()) return
-
-  /* Evita interferir con scroll vertical */
-  if(diffY > 60) return
-
-  if(diffX > 80){
-    sidebar.classList.add("show")     // izquierda → derecha
-  }
-
-  if(diffX < -80){
-    sidebar.classList.remove("show")  // derecha → izquierda
-  }
+/* Swipe */
+let startX=0, startY=0
+main.addEventListener("touchstart",e=>{startX=e.touches[0].clientX;startY=e.touches[0].clientY},{passive:true})
+main.addEventListener("touchend",e=>{
+  const diffX=e.changedTouches[0].clientX-startX
+  const diffY=Math.abs(e.changedTouches[0].clientY-startY)
+  if(!isMobile()||diffY>60) return
+  if(diffX>80) sidebar.classList.add("show")
+  if(diffX<-80) sidebar.classList.remove("show")
 })
 
-function save(){
-  localStorage.setItem("shoppingChat",JSON.stringify(data))
+function save(){ localStorage.setItem("shoppingChat",JSON.stringify(data)) }
+
+/* === DATE HELPERS === */
+function getNow(){
+  const d=new Date()
+  return{
+    date:d.toLocaleDateString("es-CO",{day:"2-digit",month:"2-digit",year:"numeric"}),
+    time:d.toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit",hour12:true}),
+    ts:d.getTime()
+  }
 }
 
+function formatDateLabel(dateStr){
+  const today=new Date().toLocaleDateString("es-CO",{day:"2-digit",month:"2-digit",year:"numeric"})
+  const yesterday=new Date(Date.now()-86400000).toLocaleDateString("es-CO",{day:"2-digit",month:"2-digit",year:"numeric"})
+  if(dateStr===today) return "Hoy"
+  if(dateStr===yesterday) return "Ayer"
+  return dateStr
+}
+
+/* === CAMERA === */
+let pendingCameraBase64 = null
+
+function handleCameraCapture(e){
+  const file=e.target.files[0]
+  if(!file) return
+  const reader=new FileReader()
+  reader.onload=ev=>{
+    pendingCameraBase64=ev.target.result
+    document.getElementById("photoPreviewModal").src=pendingCameraBase64
+    document.getElementById("photoName").value=""
+    document.getElementById("photoValue").value=""
+    document.getElementById("photoModal").classList.add("show")
+    setTimeout(()=>document.getElementById("photoName").focus(),300)
+  }
+  reader.readAsDataURL(file)
+  e.target.value=""
+}
+
+function cancelPhoto(){
+  pendingCameraBase64=null
+  document.getElementById("photoModal").classList.remove("show")
+}
+
+function confirmPhoto(){
+  if(!currentChat || !pendingCameraBase64) return
+  const name=document.getElementById("photoName").value.trim()
+  const rawVal=document.getElementById("photoValue").value.trim()
+  const match=rawVal.match(/(\d+(\.\d+)?)/)
+  const value=match?Number(match[1]):0
+  const now=getNow()
+
+  const msg={
+    id:Date.now().toString(),
+    text:name||(value?"Producto $"+value.toLocaleString():"Producto"),
+    value,
+    image:pendingCameraBase64,
+    date:now.date,
+    time:now.time,
+    ts:now.ts
+  }
+
+  data.chats[currentChat].messages.push(msg)
+  pendingCameraBase64=null
+  document.getElementById("photoModal").classList.remove("show")
+  save(); renderChat()
+}
+
+
+function handleImageSelect(e){
+  const file=e.target.files[0]
+  if(!file) return
+  const reader=new FileReader()
+  reader.onload=ev=>{
+    pendingImageBase64=ev.target.result
+    document.getElementById("imgPreviewThumb").src=pendingImageBase64
+    document.getElementById("imgPreviewName").textContent=file.name
+    document.getElementById("imgPreviewWrap").classList.add("show")
+  }
+  reader.readAsDataURL(file)
+  e.target.value=""
+}
+
+function clearImagePreview(){
+  pendingImageBase64=null
+  document.getElementById("imgPreviewWrap").classList.remove("show")
+  document.getElementById("imgPreviewThumb").src=""
+}
+
+/* === CHATS === */
 function createChat(){
-  const name = prompt("Nombre de la lista")
+  const name=prompt("Nombre de la lista")
   if(!name) return
-  const id = Date.now().toString()
-  data.chats[id] = { name, messages:[] }
-  currentChat = id
-  save()
-  renderChats()
-  renderChat()
+  const id=Date.now().toString()
+  data.chats[id]={name,messages:[]}
+  currentChat=id
+  save(); renderChats(); renderChat()
 }
 
 function editChat(id){
-  const name = prompt("Editar nombre", data.chats[id].name)
+  const name=prompt("Editar nombre",data.chats[id].name)
   if(!name) return
-  data.chats[id].name = name
-  save()
-  renderChats()
-  renderChat()
+  data.chats[id].name=name
+  save(); renderChats(); renderChat()
 }
 
 function deleteChat(id){
   if(!confirm("¿Eliminar esta lista?")) return
   delete data.chats[id]
-  if(currentChat === id) currentChat = null
-  save()
-  renderChats()
+  if(currentChat===id) currentChat=null
+  save(); renderChats()
   document.getElementById("messages").innerHTML=""
   document.getElementById("titleText").textContent="Selecciona una lista"
   document.getElementById("total").textContent="Total: $0"
 }
 
 function renderChats(){
-  const list = document.getElementById("chatList")
+  const list=document.getElementById("chatList")
   list.innerHTML=""
   Object.entries(data.chats).forEach(([id,chat])=>{
     const div=document.createElement("div")
@@ -357,9 +594,7 @@ function renderChats(){
       <button onclick="event.stopPropagation();deleteChat('${id}')">🗑️</button>
     `
     div.onclick=()=>{
-      currentChat=id
-      renderChats()
-      renderChat()
+      currentChat=id; renderChats(); renderChat()
       if(isMobile()) sidebar.classList.remove("show")
     }
     list.appendChild(div)
@@ -372,13 +607,36 @@ function renderChat(){
   const box=document.getElementById("messages")
   box.innerHTML=""
   let total=0
+  let lastDate=""
 
   data.chats[currentChat].messages.forEach(m=>{
+    /* Date separator */
+    const msgDate=m.date||""
+    if(msgDate && msgDate!==lastDate){
+      const sep=document.createElement("div")
+      sep.className="date-separator"
+      sep.innerHTML=`<span>${formatDateLabel(msgDate)}</span>`
+      box.appendChild(sep)
+      lastDate=msgDate
+    }
+
     const div=document.createElement("div")
     div.className="message"
+
+    let imageHTML=""
+    if(m.image){
+      imageHTML=`<img class="msg-image" src="${m.image}" alt="imagen" onclick="openLightbox('${m.id}')">`
+    }
+
+    let valueHTML=""
+    if(m.value) valueHTML=`<span class="msg-value">$${m.value.toLocaleString()}</span>`
+
+    let timeHTML=m.time?`<span class="msg-time">${m.time}</span>`:""
+
     div.innerHTML=`
-      ${m.text}
-      <small>${m.value?("$"+m.value.toLocaleString()):""}</small>
+      ${imageHTML}
+      <div class="msg-text">${m.text||""}</div>
+      <div class="msg-meta">${valueHTML}${timeHTML}</div>
       <div class="actions">
         <button onclick="editMsg('${m.id}')">✏️</button>
         <button onclick="delMsg('${m.id}')">🗑️</button>
@@ -388,61 +646,134 @@ function renderChat(){
   })
 
   document.getElementById("total").textContent="Total: $"+total.toLocaleString()
+  box.scrollTop=box.scrollHeight
 }
 
 function sendMessage(){
   if(!currentChat) return
   const input=document.getElementById("input")
   const text=input.value.trim()
-  if(!text) return
+  if(!text && !pendingImageBase64) return
 
   const match=text.match(/(\d+(\.\d+)?)/)
   const value=match?Number(match[1]):0
+  const now=getNow()
 
-  data.chats[currentChat].messages.push({
+  const msg={
     id:Date.now().toString(),
     text,
-    value
-  })
+    value,
+    image:pendingImageBase64||null,
+    date:now.date,
+    time:now.time,
+    ts:now.ts
+  }
 
+  data.chats[currentChat].messages.push(msg)
   input.value=""
-  save()
-  renderChat()
+  clearImagePreview()
+  save(); renderChat()
 }
 
 function editMsg(id){
   const msg=data.chats[currentChat].messages.find(m=>m.id===id)
   const text=prompt("Editar",msg.text)
-  if(!text) return
+  if(text===null) return
   const match=text.match(/(\d+(\.\d+)?)/)
   msg.text=text
   msg.value=match?Number(match[1]):0
-  save()
-  renderChat()
+  save(); renderChat()
 }
 
 function delMsg(id){
-  data.chats[currentChat].messages =
-    data.chats[currentChat].messages.filter(m=>m.id!==id)
-  save()
-  renderChat()
+  data.chats[currentChat].messages=data.chats[currentChat].messages.filter(m=>m.id!==id)
+  save(); renderChat()
 }
 
+/* === LIGHTBOX === */
+function openLightbox(id){
+  const msg=data.chats[currentChat].messages.find(m=>m.id===id)
+  if(!msg||!msg.image) return
+  document.getElementById("lightboxImg").src=msg.image
+  document.getElementById("lightbox").classList.add("show")
+}
+function closeLightbox(){document.getElementById("lightbox").classList.remove("show")}
+
+/* === SHARE === */
+function buildShareText(){
+  if(!currentChat) return ""
+  const chat=data.chats[currentChat]
+  let lines=[`📋 *${chat.name}*\n`]
+  chat.messages.forEach(m=>{
+    if(m.text){
+      let line=m.text
+      if(m.value) line+=` — $${m.value.toLocaleString()}`
+      if(m.time) line+=` (${m.time})`
+      lines.push(line)
+    }
+    if(m.image && !m.text) lines.push(`[Imagen]${m.time?" ("+m.time+")":""}`)
+  })
+  const total=chat.messages.reduce((a,m)=>a+(m.value||0),0)
+  lines.push(`\n💰 Total: $${total.toLocaleString()}`)
+  return lines.join("\n")
+}
+
+function openShare(){
+  if(!currentChat) return
+  document.getElementById("shareModal").classList.add("show")
+}
+function closeShare(e){
+  if(e.target===document.getElementById("shareModal"))
+    document.getElementById("shareModal").classList.remove("show")
+}
+
+function shareWhatsApp(){
+  const text=encodeURIComponent(buildShareText())
+  window.open(`https://wa.me/?text=${text}`,"_blank")
+  document.getElementById("shareModal").classList.remove("show")
+}
+
+function shareEmail(){
+  const chat=data.chats[currentChat]
+  const subject=encodeURIComponent("Lista: "+chat.name)
+  const body=encodeURIComponent(buildShareText())
+  window.open(`mailto:?subject=${subject}&body=${body}`)
+  document.getElementById("shareModal").classList.remove("show")
+}
+
+function copyToClipboard(){
+  navigator.clipboard.writeText(buildShareText()).then(()=>{
+    alert("✅ Lista copiada al portapapeles")
+  }).catch(()=>{
+    alert(buildShareText())
+  })
+  document.getElementById("shareModal").classList.remove("show")
+}
+
+/* === PDF === */
 function downloadPDF(){
   if(!currentChat) return
+  const chat=data.chats[currentChat]
+  const total=chat.messages.reduce((a,m)=>a+(m.value||0),0)
 
-  const element = document.createElement("div")
-  element.innerHTML = `
-    <h2>${data.chats[currentChat].name}</h2>
-    ${data.chats[currentChat].messages.map(m=>`
-      <p>${m.text} ${m.value?("- $"+m.value.toLocaleString()):""}</p>
-    `).join("")}
-    <h3>${document.getElementById("total").textContent}</h3>
+  const element=document.createElement("div")
+  element.style.fontFamily="Arial,sans-serif"
+  element.innerHTML=`
+    <h2 style="color:#007aff">${chat.name}</h2>
+    <hr>
+    ${chat.messages.map(m=>{
+      let img=m.image?`<img src="${m.image}" style="max-width:200px;border-radius:8px;display:block;margin:4px 0;">`:""
+      let val=m.value?` <strong style="color:#007aff">$${m.value.toLocaleString()}</strong>`:""
+      let time=m.time?` <span style="color:#999;font-size:12px">${m.date||""} ${m.time}</span>`:""
+      return`<p style="margin:8px 0">${img}${m.text||""}${val}${time}</p>`
+    }).join("")}
+    <hr>
+    <h3>Total: $${total.toLocaleString()}</h3>
   `
 
   html2pdf().from(element).set({
     margin:10,
-    filename:data.chats[currentChat].name+".pdf",
+    filename:chat.name+".pdf",
     html2canvas:{scale:2}
   }).save()
 }
