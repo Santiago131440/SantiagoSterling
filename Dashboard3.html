@@ -23,35 +23,49 @@
 
 *{box-sizing:border-box;font-family:'Product Sans','Arial Rounded MT Bold',Arial,sans-serif;}
 
-body{
+html, body{
   margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+body{ 
   background-image:linear-gradient(135deg,rgba(245,247,250,0.85),rgba(195,207,226,0.15));
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
   background-attachment:fixed;
   color:var(--text);
-  height:100vh;
   display:flex;
-  overflow:hidden;
 }
 
-.app{display:flex;width:100%;}
+.app{
+  display:flex;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
 
 /* Sidebar */
 .sidebar{
   width:280px;
+  min-width:280px;
+  max-width:280px;
   background:var(--card);
   backdrop-filter:blur(var(--blur));
   padding:14px;
   display:flex;
   flex-direction:column;
-  transition:transform .25s ease;
+  height:100%;
+  overflow:hidden;
+  flex-shrink:0;
 }
 
-.sidebar h2{font-size:18px;margin:8px 0 12px;}
+.sidebar h2{font-size:18px;margin:8px 0 12px;flex-shrink:0;}
 
-.chat-list{flex:1;overflow:auto;}
+.chat-list{flex:1;overflow-y:auto;overflow-x:hidden;}
 
 .chat-item{
   padding:12px;
@@ -64,17 +78,24 @@ body{
   gap:8px;
 }
 
-.chat-item span{flex:1}
+.chat-item span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
 .chat-item.active,.chat-item:hover{background:rgba(0,0,0,.05);}
 
-.chat-item button{background:none;border:none;cursor:pointer;font-size:14px;opacity:.6;}
+.chat-item button{background:none;border:none;cursor:pointer;font-size:14px;opacity:.6;flex-shrink:0;}
 
-.new-chat{color:var(--accent);border:none;padding:8px;border-radius:64px;font-weight:300;background:transparent;cursor:pointer;}
+.new-chat{color:var(--accent);border:none;padding:8px;border-radius:64px;font-weight:300;background:transparent;cursor:pointer;flex-shrink:0;}
 .new-chat i{font-size:28px}
 
 /* Main */
-.main{flex:1;display:flex;flex-direction:column;min-width:0;}
+.main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  height:100%;
+  overflow:hidden;
+}
 
 .header{
   padding:16px;
@@ -88,16 +109,16 @@ body{
   flex-shrink:0;
 }
 
-.hamburger{width:22px;height:14px;position:relative;opacity:.45;display:none;}
+.hamburger{width:22px;height:14px;position:relative;opacity:.45;display:none;flex-shrink:0;}
 .hamburger span{position:absolute;width:100%;height:2px;background:#000;border-radius:2px;}
 .hamburger span:nth-child(1){top:0}
 .hamburger span:nth-child(2){top:6px}
 .hamburger span:nth-child(3){top:12px}
 
-.header-actions{margin-left:auto;display:flex;gap:10px;}
+.header-actions{margin-left:auto;display:flex;gap:10px;flex-shrink:0;}
 .header-actions button{background:none;border:none;cursor:pointer;font-size:36px;opacity:.6;color:var(--accent)}
 
-.messages{flex:1;padding:16px;overflow:auto;display:flex;flex-direction:column;gap:2px;}
+.messages{flex:1;padding:16px;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;gap:2px;min-height:0;}
 
 /* Date separator like WhatsApp */
 .date-separator{
@@ -194,6 +215,7 @@ body{
   border:1px solid var(--border);
   background:rgba(255,255,255,.8);
   font-size:15px;
+  min-width:0;
 }
 
 .footer input[type=text]:focus{outline:none;border-color:var(--accent);}
@@ -220,10 +242,11 @@ body{
 .img-preview-wrap{
   padding:8px 14px 0;
   display:none;
+  flex-shrink:0;
 }
 .img-preview-wrap.show{display:flex;align-items:center;gap:8px;}
-.img-preview-wrap img{height:50px;width:50px;object-fit:cover;border-radius:10px;}
-.img-preview-wrap button{background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted);}
+.img-preview-wrap img{height:50px;width:50px;object-fit:cover;border-radius:10px;flex-shrink:0;}
+.img-preview-wrap button{background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted);flex-shrink:0;}
 
 .total{
   padding:14px 18px;
