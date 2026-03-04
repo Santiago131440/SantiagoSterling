@@ -20,7 +20,7 @@ body {
 .h2 {
   justify-content: center;
   align-items: center;
-  font-weight: 300;
+  font-weight: 100;
 }
 
 .frame {
@@ -99,7 +99,7 @@ body {
 
 .right .title {
   font-size: 28px;
-  font-weight: 300;
+  font-weight: 100;
   margin-bottom: 8px;
 }
 
@@ -219,5 +219,6 @@ canvas {
   .dot { width: 36px; height: 36px; }
 
 }
+
 
 
