@@ -5,7 +5,7 @@
   --muted: #9aa4ae;
   --card-shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
   --glass-2: rgba(255, 255, 255, 0.45);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Product Sans', 'Arial Rounded MT Bold', Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -219,4 +219,5 @@ canvas {
   .dot { width: 36px; height: 36px; }
 
 }
+
 
