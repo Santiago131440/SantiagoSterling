@@ -68,7 +68,7 @@ body{
 .chat-list{flex:1;overflow-y:auto;overflow-x:hidden;}
 
 .chat-item{
-  padding:12px;
+  padding:6px;
   border-radius:14px;
   margin-bottom:8px;
   cursor:pointer;
@@ -411,7 +411,7 @@ body{
 
     <div class="footer">
       <button class="attach-btn" onclick="document.getElementById('fileInput').click()" title="Adjuntar imagen">
-        <i class="fi fi-sr-picture"></i>
+        <i class="fi fi-sr-file-image"></i>
       </button>
       <button class="attach-btn" onclick="document.getElementById('cameraInput').click()" title="Tomar foto">
         <i class="fi fi-sr-camera"></i>
@@ -437,13 +437,13 @@ body{
     <h3>Compartir lista</h3>
     <div class="share-options">
       <button class="share-option" onclick="shareWhatsApp()">
-        <i class="fi fi-sr-comment-alt share-icon-wa"></i>WhatsApp
+        <i class="fi fi-sr-circle-phone"></i>WhatsApp
       </button>
       <button class="share-option" onclick="shareEmail()">
-        <i class="fi fi-sr-envelope share-icon-mail"></i>Correo
+        <i class="fi fi-sr-envelopes"></i>Correo
       </button>
       <button class="share-option" onclick="copyToClipboard()">
-        <i class="fi fi-sr-copy share-icon-copy"></i>Copiar
+        <i class="fi fi-sr-copy-alt"></i>Copiar
       </button>
     </div>
     <button class="modal-cancel" onclick="document.getElementById('shareModal').classList.remove('show')">Cancelar</button>
@@ -453,13 +453,13 @@ body{
 <!-- Photo value modal -->
 <div class="photo-modal-overlay" id="photoModal">
   <div class="photo-modal">
-    <h3>📸 Agregar producto</h3>
+    <h3>Agregar producto</h3>
     <img id="photoPreviewModal" src="" alt="foto">
     <input type="text" id="photoName" placeholder="Nombre del producto (ej: Arroz)">
     <input type="text" id="photoValue" placeholder="Valor (ej: 3500)" inputmode="numeric" onkeydown="if(event.key==='Enter')confirmPhoto()">
     <div class="photo-modal-actions">
       <button class="btn-cancel-photo" onclick="cancelPhoto()">Cancelar</button>
-      <button class="btn-send-photo" onclick="confirmPhoto()">✅ Agregar</button>
+      <button class="btn-send-photo" onclick="confirmPhoto()">Agregar</button>
     </div>
   </div>
 </div>
@@ -613,8 +613,9 @@ function renderChats(){
     div.className="chat-item"+(id===currentChat?" active":"")
     div.innerHTML=`
       <span>${chat.name}</span>
-      <button onclick="event.stopPropagation();editChat('${id}')">✏️</button>
-      <button onclick="event.stopPropagation();deleteChat('${id}')">🗑️</button>
+      <button onclick="event.stopPropagation();editChat('${id}')">Editar</button>
+      <p>|</p>
+      <button onclick="event.stopPropagation();deleteChat('${id}')">Borrar</button>
     `
     div.onclick=()=>{
       currentChat=id; renderChats(); renderChat()
@@ -661,8 +662,9 @@ function renderChat(){
       <div class="msg-text">${m.text||""}</div>
       <div class="msg-meta">${valueHTML}${timeHTML}</div>
       <div class="actions">
-        <button onclick="editMsg('${m.id}')">✏️</button>
-        <button onclick="delMsg('${m.id}')">🗑️</button>
+        <button onclick="editMsg('${m.id}')">Editar</button>
+        <p style="color:#F2F2F7">|</p>
+        <button onclick="delMsg('${m.id}')">Borrar</button>
       </div>`
     box.appendChild(div)
     total+=m.value||0
@@ -726,7 +728,7 @@ function closeLightbox(){document.getElementById("lightbox").classList.remove("s
 function buildShareText(){
   if(!currentChat) return ""
   const chat=data.chats[currentChat]
-  let lines=[`📋 *${chat.name}*\n`]
+  let lines=[`*${chat.name}*\n`]
   chat.messages.forEach(m=>{
     if(m.text){
       let line=m.text
@@ -737,7 +739,7 @@ function buildShareText(){
     if(m.image && !m.text) lines.push(`[Imagen]${m.time?" ("+m.time+")":""}`)
   })
   const total=chat.messages.reduce((a,m)=>a+(m.value||0),0)
-  lines.push(`\n💰 Total: $${total.toLocaleString()}`)
+  lines.push(`\nTotal: $${total.toLocaleString()}`)
   return lines.join("\n")
 }
 
@@ -766,7 +768,7 @@ function shareEmail(){
 
 function copyToClipboard(){
   navigator.clipboard.writeText(buildShareText()).then(()=>{
-    alert("✅ Lista copiada al portapapeles")
+    alert("Lista copiada al portapapeles")
   }).catch(()=>{
     alert(buildShareText())
   })
