@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Red Pericial Hospitalaria — Defensa Técnica Médico-Legal</title>
+  <title>Red Pericial — Defensa Médica Legal</title>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
   <meta name="description" content="Red Pericial Hospitalaria: protección del patrimonio institucional con defensa técnica especializada. Colombia 2026." />
 
   <!-- Fonts -->
@@ -15,16 +16,99 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="redPericial.css" />
 </head>
 <body>
 
   <!-- LOADER -->
   <div class="loader" id="loader">
     <div class="loader__inner">
-      <svg class="loader__cross" viewBox="0 0 60 60"><path d="M30 5 L30 55 M5 30 L55 30" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+      <svg class="loader__cross" viewBox="0 0 400 500" width="320" xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#0b132b"/>
+<stop offset="100%" stop-color="#1c2541"/>
+</linearGradient>
+
+<linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#3a86ff"/>
+<stop offset="100%" stop-color="#1b2a49"/>
+</linearGradient>
+
+<linearGradient id="towerLight" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#ffffff"/>
+<stop offset="100%" stop-color="#d1d5db"/>
+</linearGradient>
+
+<linearGradient id="towerRed" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#ff595e"/>
+<stop offset="100%" stop-color="#b91c1c"/>
+</linearGradient>
+
+<radialGradient id="beam">
+<stop offset="0%" stop-color="#fff7a8"/>
+<stop offset="70%" stop-color="#fff7a8" stop-opacity="0.3"/>
+<stop offset="100%" stop-color="#fff7a8" stop-opacity="0"/>
+</radialGradient>
+
+</defs>
+
+<!-- cielo -->
+<rect width="400" height="500" fill="url(#sky)"/>
+
+<!-- haz de luz -->
+<ellipse cx="200" cy="140" rx="180" ry="80" fill="url(#beam)"/>
+
+<!-- mar -->
+<path d="
+M0 360
+C60 350 120 370 200 360
+C280 350 340 370 400 360
+L400 500
+L0 500
+Z" fill="url(#sea)"/>
+
+<!-- roca -->
+<path d="
+M120 350
+L150 300
+L250 300
+L280 350
+Z" fill="#2d3748"/>
+
+<!-- torre -->
+<path d="
+M160 300
+L180 140
+L220 140
+L240 300
+Z" fill="url(#towerLight)"/>
+
+<!-- franjas -->
+<rect x="175" y="240" width="50" height="22" fill="url(#towerRed)"/>
+<rect x="178" y="200" width="44" height="20" fill="url(#towerRed)"/>
+
+<!-- ventanas -->
+<rect x="195" y="250" width="12" height="16" fill="#1f2937"/>
+<rect x="195" y="210" width="12" height="16" fill="#1f2937"/>
+
+<!-- balcón -->
+<rect x="170" y="135" width="60" height="10" fill="#374151"/>
+
+<!-- linterna -->
+<rect x="182" y="110" width="36" height="25" fill="#475569"/>
+
+<!-- luz -->
+<circle cx="200" cy="122" r="6" fill="#fde047"/>
+
+<!-- techo -->
+<polygon points="170,110 230,110 200,80" fill="#374151"/>
+
+</svg>
       <div class="loader__bar"><div class="loader__fill" id="loaderFill"></div></div>
-      <p class="loader__text">Santiago Sterling</p>
+      <p class="loader__text">Red Pericial</p>
     </div>
   </div>
 
@@ -78,9 +162,8 @@
       </div>
 
       <h1 class="hero__title">
-        <span class="hero__word" id="hw1">Santiago</span>
-        <span class="hero__word hero__word--outline" id="hw2">Sterling</span>
-        <span class="hero__word" id="hw3">Rivas</span>
+        <span class="hero__word" id="hw1">Red</span>
+        <span class="hero__word hero__word--outline" id="hw2">Pericial</span>
       </h1>
 
       <div class="hero__bottom">
@@ -323,9 +406,9 @@
 
         <div class="btabs__pane active" data-pane="inst">
           <div class="bgrid">
-            <div class="bgrid__card" data-reveal><span class="bgrid__icon">🏛</span><h4>Dirección pericial</h4><p>Organización y dirección de la red pericial hospitalaria propia de su institución.</p></div>
-            <div class="bgrid__card" data-reveal><span class="bgrid__icon">📋</span><h4>Convenio directo</h4><p>Contrato de ejecución sucesiva con preacuerdo de términos, condiciones y tarifas.</p></div>
-            <div class="bgrid__card" data-reveal><span class="bgrid__icon">🔒</span><h4>Confidencialidad</h4><p>Información pactada bajo estrictos acuerdos de reserva institucional.</p></div>
+            <div class="bgrid__card" data-reveal><span class="bgrid__icon"><i class="fi fi-sr-bank"></i></span><h4>Dirección pericial</h4><p>Organización y dirección de la red pericial hospitalaria propia de su institución.</p></div>
+            <div class="bgrid__card" data-reveal><span class="bgrid__icon"><i class="fi fi-sr-license"></i></span><h4>Convenio directo</h4><p>Contrato de ejecución sucesiva con preacuerdo de términos, condiciones y tarifas.</p></div>
+            <div class="bgrid__card" data-reveal><span class="bgrid__icon"><i class="fi fi-sr-confidential-folder"></i></span><h4>Confidencialidad</h4><p>Información pactada bajo estrictos acuerdos de reserva institucional.</p></div>
             <div class="bgrid__card" data-reveal><span class="bgrid__icon">⚖</span><h4>Juntas Periciales</h4><p>Pruebas de contradicción con mayor relevancia procesal mediante Juntas Médicas Defensivas.</p></div>
             <div class="bgrid__card" data-reveal><span class="bgrid__icon">🛡</span><h4>Protección patrimonial</h4><p>Blindaje activo del patrimonio institucional frente a condenas millonarias.</p></div>
             <div class="bgrid__card" data-reveal><span class="bgrid__icon">💰</span><h4>Retorno corporativo</h4><p>Descuentos tarifarios aplicados vía convenio por volumen y continuidad del servicio.</p></div>
@@ -550,6 +633,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="redPericial.js"></script>
 </body>
 </html>
