@@ -1,9 +1,3 @@
-/**
- * RED PERICIAL HOSPITALARIA — main.js
- * Senior Frontend · GSAP ScrollTrigger · Canvas Particles
- * Full cinematic experience with storytelling scroll
- */
-
 'use strict';
 
 /* ════════════════════════════════════════════
