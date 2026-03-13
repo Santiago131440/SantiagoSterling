@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documento1 - Word Clone</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --word-blue: #2b579a;
+  --word-blue-dark: #1e3f72;
+  --word-blue-light: #c7d3e8;
+  --ribbon-bg: #ffffff;
+  --ribbon-border: #d1d1d1;
+  --btn-hover: #e5eaf4;
+  --btn-active: #ccd6ed;
+  --page-bg: #f3f3f3;
+  --page-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  --status-bg: #2b579a;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 12px;
+  background: var(--page-bg);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  color: #1a1a1a;
+}
+
+/* ===== TITLE BAR ===== */
+#title-bar {
+  background: var(--word-blue);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  height: 32px;
+  min-height: 32px;
+  flex-shrink: 0;
+}
+#quick-access {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 2px;
+  height: 100%;
+}
+.qa-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 2px;
+  font-size: 13px;
+  line-height: 1;
+}
+.qa-btn:hover { background: rgba(255,255,255,0.2); }
+#doc-title-center {
+  flex: 1;
+  text-align: center;
+  font-size: 12px;
+  pointer-events: none;
+  letter-spacing: 0.3px;
+}
+#window-controls {
+  display: flex;
+  height: 100%;
+}
+.wc { background: none; border: none; color: white; padding: 0 14px; cursor: pointer; font-size: 11px; height: 100%; }
+.wc:hover { background: rgba(255,255,255,0.2); }
+.wc.close:hover { background: #e81123; }
+
+/* ===== MENU BAR ===== */
+#menu-bar {
+  background: var(--word-blue);
+  display: flex;
+  padding: 0 4px;
+  flex-shrink: 0;
+}
+.menu-item {
+  color: white;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 3px 3px 0 0;
+  position: relative;
+}
+.menu-item:hover, .menu-item.open { background: white; color: var(--word-blue); }
+
+/* Dropdown menus */
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #bbb;
+  box-shadow: 2px 4px 12px rgba(0,0,0,0.2);
+  z-index: 2000;
+  min-width: 200px;
+  display: none;
+  padding: 3px 0;
+}
+.menu-item.open .dropdown { display: block; }
+.dd-item {
+  padding: 5px 20px 5px 28px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #222;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+.dd-item:hover { background: var(--btn-hover); }
+.dd-item .shortcut { margin-left: auto; color: #888; font-size: 11px; }
+.dd-sep { border-top: 1px solid #e0e0e0; margin: 3px 0; }
+.dd-item .dd-icon { position: absolute; left: 6px; font-size: 13px; }
+
+/* ===== RIBBON ===== */
+#ribbon {
+  background: var(--ribbon-bg);
+  border-bottom: 1px solid var(--ribbon-border);
+  flex-shrink: 0;
+}
+#ribbon-tabs {
+  display: flex;
+  background: var(--word-blue);
+  padding: 0 4px;
+}
+.rtab {
+  color: rgba(255,255,255,0.85);
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.1s;
+}
+.rtab:hover { color: white; }
+.rtab.active {
+  background: white;
+  color: var(--word-blue);
+  border-radius: 3px 3px 0 0;
+  font-weight: 600;
+}
+
+#ribbon-body {
+  display: flex;
+  align-items: stretch;
+  padding: 4px 6px 2px;
+  gap: 0;
+  overflow-x: auto;
+  min-height: 70px;
+}
+.rgroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #e0e0e0;
+  padding: 0 6px 0 4px;
+  margin-right: 2px;
+  min-width: fit-content;
+}
+.rgroup-label {
+  font-size: 10px;
+  color: #666;
+  margin-top: auto;
+  padding-top: 2px;
+  white-space: nowrap;
+}
+.rgroup-btns {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+/* Ribbon Buttons */
+.rb {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 3px 5px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  white-space: nowrap;
+  min-height: 24px;
+  transition: background 0.1s;
+  position: relative;
+}
+.rb:hover { background: var(--btn-hover); border-color: #b8cce4; }
+.rb.active, .rb:active { background: var(--btn-active); border-color: #7ba7d4; }
+.rb.large {
+  flex-direction: column;
+  padding: 4px 8px;
+  font-size: 11px;
+  min-height: 54px;
+  min-width: 46px;
+}
+.rb.large .ri { font-size: 22px; }
+.ri { font-size: 14px; line-height: 1; }
+
+/* Tooltip */
+.rb[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+  white-space: nowrap;
+  z-index: 999;
+  pointer-events: none;
+}
+
+/* Selects in ribbon */
+.r-select {
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding: 2px 4px;
+  font-size: 12px;
+  height: 24px;
+  background: white;
+  cursor: pointer;
+  color: #222;
+}
+.r-select:focus { outline: 1px solid var(--word-blue); }
+
+#font-name { width: 140px; }
+#font-size-sel { width: 44px; }
+
+.rb-row { display: flex; gap: 1px; align-items: center; }
+
+/* Color swatches */
+.color-indicator {
+  display: block;
+  width: 16px;
+  height: 3px;
+  border: 1px solid rgba(0,0,0,0.2);
+  margin-top: 1px;
+}
+
+/* ===== RULER ===== */
+#ruler-container {
+  background: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+#ruler {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+.ruler-unit {
+  font-size: 9px;
+  color: #666;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 2px;
+}
+.ruler-margin { background: #d8d8d8; height: 100%; position: absolute; top: 0; }
+#margin-left-handle, #margin-right-handle {
+  position: absolute;
+  top: 0;
+  width: 8px;
+  height: 100%;
+  cursor: col-resize;
+  z-index: 5;
+}
+.tab-marker {
+  position: absolute;
+  bottom: 3px;
+  font-size: 10px;
+  color: #555;
+  cursor: pointer;
+}
+
+/* ===== MAIN AREA ===== */
+#main-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  background: var(--page-bg);
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== DOCUMENT PAGE ===== */
+.page {
+  background: white;
+  width: 816px;
+  min-height: 1056px;
+  margin-bottom: 20px;
+  box-shadow: var(--page-shadow);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.page-header-area {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 72px;
+  padding: 12px 96px 0;
+  border-bottom: 1px dashed #ccc;
+  cursor: text;
+  color: #aaa;
+  font-size: 12px;
+}
+.page-footer-area {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 72px;
+  padding: 0 96px 12px;
+  border-top: 1px dashed #ccc;
+  display: flex;
+  align-items: flex-end;
+  cursor: text;
+  color: #aaa;
+  font-size: 12px;
+}
+.page-number {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #888;
+}
+
+#editor-content {
+  position: relative;
+  margin: 72px 96px;
+  min-height: 912px;
+  outline: none;
+  font-family: 'Calibri', 'Times New Roman', serif;
+  font-size: 24px; /* 12pt */
+  line-height: 1.5;
+  color: #000;
+  caret-color: #000;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+#editor-content:empty::before {
+  content: '';
+}
+
+#editor-content:focus {
+  outline: none;
+}
+
+/* Selection highlight */
+::selection { background: #b4d0f7; }
+
+/* ===== FIND & REPLACE ===== */
+#find-bar {
+  position: fixed;
+  top: 130px;
+  right: 20px;
+  background: white;
+  border: 1px solid #999;
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+  z-index: 3000;
+  padding: 12px;
+  min-width: 300px;
+  display: none;
+  border-radius: 4px;
+}
+#find-bar h4 { color: var(--word-blue); margin-bottom: 10px; font-size: 13px; }
+.fb-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+.fb-row label { width: 82px; font-size: 12px; color: #444; }
+.fb-row input { flex: 1; border: 1px solid #ccc; padding: 3px 6px; font-size: 12px; border-radius: 2px; }
+.fb-row input:focus { outline: 1px solid var(--word-blue); }
+.fb-btns { display: flex; gap: 5px; justify-content: flex-end; flex-wrap: wrap; }
+.fb-btn { padding: 4px 12px; border: 1px solid #bbb; background: #f5f5f5; cursor: pointer; font-size: 12px; border-radius: 2px; }
+.fb-btn:hover { background: var(--btn-hover); border-color: var(--word-blue); }
+.fb-btn.primary { background: var(--word-blue); color: white; border-color: var(--word-blue); }
+.fb-btn.primary:hover { background: var(--word-blue-dark); }
+#find-status { font-size: 11px; color: #666; margin-top: 6px; }
+
+/* ===== SPELLING ===== */
+.spell-error { border-bottom: 2px wavy #e53935; }
+.grammar-error { border-bottom: 2px wavy #1e88e5; }
+
+/* ===== COMMENT PANEL ===== */
+#comment-panel {
+  position: fixed;
+  right: 0; top: 0; bottom: 0;
+  width: 260px;
+  background: white;
+  border-left: 1px solid #ddd;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+}
+#comment-panel h3 { padding: 12px; background: var(--word-blue); color: white; font-size: 13px; }
+#comments-list { flex: 1; overflow-y: auto; padding: 8px; }
+.comment-card { background: #fff8dc; border-left: 3px solid #f5a623; padding: 8px; margin-bottom: 8px; border-radius: 2px; font-size: 11px; }
+.comment-card .cc-author { font-weight: bold; color: var(--word-blue); }
+.comment-card .cc-date { color: #999; font-size: 10px; }
+#add-comment-area { padding: 8px; border-top: 1px solid #eee; }
+#add-comment-area textarea { width: 100%; height: 60px; border: 1px solid #ccc; padding: 4px; font-size: 11px; resize: none; }
+#add-comment-btn { margin-top: 4px; width: 100%; padding: 4px; background: var(--word-blue); color: white; border: none; cursor: pointer; font-size: 12px; }
+
+/* ===== CONTEXT MENU ===== */
+#ctx-menu {
+  position: fixed;
+  background: white;
+  border: 1px solid #bbb;
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+  z-index: 5000;
+  min-width: 200px;
+  display: none;
+  padding: 3px 0;
+  border-radius: 3px;
+}
+.ctx-i {
+  padding: 5px 20px 5px 28px;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+.ctx-i:hover { background: var(--btn-hover); }
+.ctx-i .ctx-icon { position: absolute; left: 6px; }
+.ctx-i .ctx-key { margin-left: auto; color: #999; font-size: 11px; }
+.ctx-sep { border-top: 1px solid #e8e8e8; margin: 3px 0; }
+.ctx-mini-fmt { display: flex; gap: 4px; padding: 5px 8px; align-items: center; background: #f5f5f5; border-bottom: 1px solid #e0e0e0; }
+.ctx-mini-btn { padding: 2px 7px; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 12px; border-radius: 2px; }
+.ctx-mini-btn:hover { background: var(--btn-hover); }
+
+/* ===== STATUS BAR ===== */
+#status-bar {
+  background: var(--status-bg);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  height: 22px;
+  min-height: 22px;
+  font-size: 11px;
+  flex-shrink: 0;
+  gap: 0;
+}
+.sb-item {
+  padding: 0 10px;
+  border-right: 1px solid rgba(255,255,255,0.25);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: default;
+  white-space: nowrap;
+}
+.sb-item:hover { background: rgba(255,255,255,0.15); }
+.sb-right { margin-left: auto; display: flex; align-items: center; gap: 0; }
+#zoom-slider-sb { width: 80px; accent-color: white; }
+
+/* ===== PRINT LAYOUT ===== */
+@media print {
+  #title-bar, #menu-bar, #ribbon, #ruler-container, #status-bar { display: none !important; }
+  body { background: white; }
+  #main-area { padding: 0; }
+  .page { box-shadow: none; margin: 0; }
+}
+
+/* ===== TABLE STYLES ===== */
+#editor-content table {
+  border-collapse: collapse;
+  width: auto;
+  margin: 4px 0;
+}
+#editor-content td, #editor-content th {
+  border: 1px solid #999;
+  padding: 4px 8px;
+  min-width: 60px;
+  min-height: 20px;
+}
+#editor-content th { background: #e8e8e8; font-weight: bold; }
+
+/* ===== MISC ===== */
+.highlight-yellow { background: #ffff00; }
+.highlight-green { background: #00ff00; }
+.highlight-pink { background: #ff69b4; }
+.track-insert { color: #0066cc; text-decoration: underline; }
+.track-delete { color: #cc0000; text-decoration: line-through; }
+
+input[type="color"] { width: 0; height: 0; opacity: 0; position: absolute; pointer-events: none; }
+
+/* Divider line */
+#editor-content hr { border: none; border-top: 1px solid #ccc; margin: 8px 0; }
+
+/* Lists */
+#editor-content ul, #editor-content ol { padding-left: 36px; }
+
+/* Block quote */
+#editor-content blockquote {
+  border-left: 3px solid #aaa;
+  margin-left: 20px;
+  padding-left: 12px;
+  color: #555;
+}
+
+/* Headings default styles */
+#editor-content h1 { font-size: 36px; color: #2e74b5; border-bottom: 1px solid #2e74b5; padding-bottom: 4px; margin: 8px 0; }
+#editor-content h2 { font-size: 26px; color: #2e74b5; margin: 6px 0; }
+#editor-content h3 { font-size: 22px; color: #1f3864; margin: 6px 0; }
+#editor-content h4 { font-size: 20px; color: #2e74b5; font-style: italic; margin: 4px 0; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f0f0f0; }
+::-webkit-scrollbar-thumb { background: #bbb; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #999; }
+
+/* Image resize */
+#editor-content img {
+  max-width: 100%;
+  cursor: pointer;
+  position: relative;
+}
+#editor-content img.selected {
+  outline: 2px solid var(--word-blue);
+}
+
+/* Paragraph spacing */
+#editor-content p { margin: 0; padding: 0; }
+
+/* Page break indicator */
+.page-break-indicator {
+  border-top: 1px dashed #aaa;
+  margin: 4px -96px;
+  position: relative;
+}
+.page-break-indicator::before {
+  content: '--- Salto de página ---';
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 0 8px;
+  font-size: 10px;
+  color: #aaa;
+}
+
+.loading-fonts { opacity: 0; transition: opacity 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- Hidden color pickers -->
+<input type="color" id="font-color-input" value="#ff0000" onchange="applyFontColor(this.value)">
+<input type="color" id="highlight-input" value="#ffff00" onchange="applyHighlight(this.value)">
+<input type="color" id="page-color-input" value="#ffffff" onchange="setPageColor(this.value)">
+
+<!-- Title Bar -->
+<div id="title-bar">
+  <div id="quick-access">
+    <span style="font-size:16px;margin-right:4px">Ⓦ</span>
+    <button class="qa-btn" title="Guardar" onclick="saveDoc()">💾</button>
+    <button class="qa-btn" title="Deshacer" onclick="document.execCommand('undo')">↩</button>
+    <button class="qa-btn" title="Rehacer" onclick="document.execCommand('redo')">↪</button>
+    <button class="qa-btn" title="Imprimir" onclick="window.print()">🖨</button>
+  </div>
+  <div id="doc-title-center">
+    <span id="doc-name">Documento1</span> — Word Clone
+  </div>
+  <div id="window-controls">
+    <button class="wc">—</button>
+    <button class="wc">⬜</button>
+    <button class="wc close">✕</button>
+  </div>
+</div>
+
+<!-- Menu Bar -->
+<div id="menu-bar">
+  <div class="menu-item" id="menu-archivo" onclick="toggleMenu('archivo')">Archivo
+    <div class="dropdown" id="dd-archivo">
+      <div class="dd-item" onclick="newDoc()"><span class="dd-icon">📄</span>Nuevo <span class="shortcut">Ctrl+U</span></div>
+      <div class="dd-item" onclick="openDoc()"><span class="dd-icon">📂</span>Abrir <span class="shortcut">Ctrl+A</span></div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="saveDoc()"><span class="dd-icon">💾</span>Guardar <span class="shortcut">Ctrl+G</span></div>
+      <div class="dd-item" onclick="saveAs()"><span class="dd-icon">💾</span>Guardar como...</div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="window.print()"><span class="dd-icon">🖨</span>Imprimir <span class="shortcut">Ctrl+P</span></div>
+      <div class="dd-sep"></div>
+      <div class="dd-item"><span class="dd-icon">ℹ️</span>Propiedades</div>
+    </div>
+  </div>
+  <div class="menu-item" id="menu-edicion" onclick="toggleMenu('edicion')">Edición
+    <div class="dropdown" id="dd-edicion">
+      <div class="dd-item" onclick="document.execCommand('undo')"><span class="dd-icon">↩</span>Deshacer <span class="shortcut">Ctrl+Z</span></div>
+      <div class="dd-item" onclick="document.execCommand('redo')"><span class="dd-icon">↪</span>Rehacer <span class="shortcut">Ctrl+Y</span></div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="document.execCommand('cut')"><span class="dd-icon">✂</span>Cortar <span class="shortcut">Ctrl+X</span></div>
+      <div class="dd-item" onclick="document.execCommand('copy')"><span class="dd-icon">📋</span>Copiar <span class="shortcut">Ctrl+C</span></div>
+      <div class="dd-item" onclick="document.execCommand('paste')"><span class="dd-icon">📌</span>Pegar <span class="shortcut">Ctrl+V</span></div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="document.execCommand('selectAll')"><span class="dd-icon">⬛</span>Seleccionar todo <span class="shortcut">Ctrl+E</span></div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="openFind()"><span class="dd-icon">🔍</span>Buscar <span class="shortcut">Ctrl+B</span></div>
+      <div class="dd-item" onclick="openFind(true)"><span class="dd-icon">🔄</span>Reemplazar <span class="shortcut">Ctrl+H</span></div>
+    </div>
+  </div>
+  <div class="menu-item" id="menu-insertar" onclick="toggleMenu('insertar')">Insertar
+    <div class="dropdown" id="dd-insertar">
+      <div class="dd-item" onclick="insertTable()"><span class="dd-icon">⊞</span>Tabla</div>
+      <div class="dd-item" onclick="insertImage()"><span class="dd-icon">🖼</span>Imagen</div>
+      <div class="dd-item" onclick="insertHR()"><span class="dd-icon">—</span>Línea horizontal</div>
+      <div class="dd-item" onclick="insertPageBreak()"><span class="dd-icon">📄</span>Salto de página</div>
+      <div class="dd-item" onclick="insertLink()"><span class="dd-icon">🔗</span>Hipervínculo <span class="shortcut">Ctrl+K</span></div>
+      <div class="dd-item" onclick="insertEmoji()"><span class="dd-icon">😊</span>Emoji / Símbolo</div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="insertDate()"><span class="dd-icon">📅</span>Fecha y hora</div>
+      <div class="dd-item" onclick="insertPageNumber()"><span class="dd-icon">#</span>Número de página</div>
+    </div>
+  </div>
+  <div class="menu-item" id="menu-formato" onclick="toggleMenu('formato')">Formato
+    <div class="dropdown" id="dd-formato">
+      <div class="dd-item" onclick="showFontDialog()"><span class="dd-icon">Aa</span>Fuente...</div>
+      <div class="dd-item" onclick="showParaDialog()"><span class="dd-icon">¶</span>Párrafo...</div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="applyStyle('h1')"><span class="dd-icon">H1</span>Título 1</div>
+      <div class="dd-item" onclick="applyStyle('h2')"><span class="dd-icon">H2</span>Título 2</div>
+      <div class="dd-item" onclick="applyStyle('h3')"><span class="dd-icon">H3</span>Título 3</div>
+      <div class="dd-item" onclick="applyStyle('p')"><span class="dd-icon">¶</span>Normal</div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="document.getElementById('page-color-input').click()"><span class="dd-icon">🎨</span>Color de página</div>
+    </div>
+  </div>
+  <div class="menu-item" id="menu-revisar" onclick="toggleMenu('revisar')">Revisar
+    <div class="dropdown" id="dd-revisar">
+      <div class="dd-item" onclick="checkSpelling()"><span class="dd-icon">🔤</span>Ortografía</div>
+      <div class="dd-item" onclick="toggleComments()"><span class="dd-icon">💬</span>Comentarios</div>
+      <div class="dd-item" onclick="toggleTrackChanges()"><span class="dd-icon">📝</span>Control de cambios</div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="wordCount()"><span class="dd-icon">🔢</span>Contar palabras</div>
+    </div>
+  </div>
+  <div class="menu-item" id="menu-vista" onclick="toggleMenu('vista')">Vista
+    <div class="dropdown" id="dd-vista">
+      <div class="dd-item" onclick="setView('print')"><span class="dd-icon">📄</span>Diseño de impresión</div>
+      <div class="dd-item" onclick="setView('web')"><span class="dd-icon">🌐</span>Diseño web</div>
+      <div class="dd-item" onclick="setView('draft')"><span class="dd-icon">📝</span>Borrador</div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="toggleRuler()"><span class="dd-icon">📏</span>Regla</div>
+      <div class="dd-item" onclick="toggleGridLines()"><span class="dd-icon">⊞</span>Líneas de cuadrícula</div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="setZoom(100)"><span class="dd-icon">🔍</span>100%</div>
+      <div class="dd-item" onclick="setZoom(75)"><span class="dd-icon">🔍</span>75%</div>
+      <div class="dd-item" onclick="setZoom(125)"><span class="dd-icon">🔍</span>125%</div>
+      <div class="dd-item" onclick="setZoom(150)"><span class="dd-icon">🔍</span>150%</div>
+    </div>
+  </div>
+</div>
+
+<!-- Ribbon -->
+<div id="ribbon">
+  <div id="ribbon-tabs">
+    <div class="rtab active" onclick="switchRibbonTab('inicio', this)">Inicio</div>
+    <div class="rtab" onclick="switchRibbonTab('insertar', this)">Insertar</div>
+    <div class="rtab" onclick="switchRibbonTab('diseno', this)">Diseño</div>
+    <div class="rtab" onclick="switchRibbonTab('disposicion', this)">Disposición</div>
+    <div class="rtab" onclick="switchRibbonTab('referencias', this)">Referencias</div>
+    <div class="rtab" onclick="switchRibbonTab('revisar', this)">Revisar</div>
+    <div class="rtab" onclick="switchRibbonTab('vista', this)">Vista</div>
+  </div>
+
+  <div id="ribbon-body" data-tab="inicio">
+    <!-- Clipboard -->
+    <div class="rgroup">
+      <div class="rgroup-btns">
+        <button class="rb large" title="Pegar (Ctrl+V)" onclick="document.execCommand('paste')">
+          <span class="ri">📋</span>Pegar
+        </button>
+        <div style="display:flex;flex-direction:column;gap:1px">
+          <button class="rb" title="Cortar (Ctrl+X)" onclick="document.execCommand('cut')">✂ Cortar</button>
+          <button class="rb" title="Copiar (Ctrl+C)" onclick="document.execCommand('copy')">📋 Copiar</button>
+          <button class="rb" title="Copiar formato" id="btn-format-painter">🖌 Copiar formato</button>
+        </div>
+      </div>
+      <span class="rgroup-label">Portapapeles</span>
+    </div>
+
+    <!-- Font -->
+    <div class="rgroup">
+      <div class="rgroup-btns" style="flex-direction:column;gap:3px;align-items:flex-start">
+        <div class="rb-row">
+          <select class="r-select" id="font-name" onchange="applyFont(this.value)" title="Fuente">
+            <option>Calibri</option><option>Arial</option><option>Times New Roman</option>
+            <option>Courier New</option><option>Verdana</option><option>Georgia</option>
+            <option>Garamond</option><option>Trebuchet MS</option><option>Palatino</option>
+            <option>Book Antiqua</option><option>Comic Sans MS</option><option>Impact</option>
+            <option>Lucida Console</option><option>Tahoma</option><option>Century Gothic</option>
+          </select>
+          <select class="r-select" id="font-size-sel" onchange="applyFontSize(this.value)" title="Tamaño">
+            <option>8</option><option>9</option><option>10</option><option>11</option>
+            <option selected>12</option><option>14</option><option>16</option><option>18</option>
+            <option>20</option><option>22</option><option>24</option><option>26</option>
+            <option>28</option><option>36</option><option>48</option><option>72</option>
+          </select>
+          <button class="rb" title="Aumentar tamaño de fuente" onclick="changeFontSize(2)">A▲</button>
+          <button class="rb" title="Reducir tamaño de fuente" onclick="changeFontSize(-2)">A▼</button>
+          <button class="rb" title="Borrar formato" onclick="clearFormatting()">✗ Aa</button>
+        </div>
+        <div class="rb-row">
+          <button class="rb" id="btn-bold" title="Negrita (Ctrl+N)" onclick="fmt('bold')"><b>N</b></button>
+          <button class="rb" id="btn-italic" title="Cursiva (Ctrl+K)" onclick="fmt('italic')"><i>K</i></button>
+          <button class="rb" id="btn-underline" title="Subrayado (Ctrl+S)" onclick="fmt('underline')"><u>S</u></button>
+          <button class="rb" id="btn-strike" title="Tachado" onclick="fmt('strikeThrough')"><s>abc</s></button>
+          <button class="rb" title="Subíndice" onclick="fmt('subscript')">X₂</button>
+          <button class="rb" title="Superíndice" onclick="fmt('superscript')">X²</button>
+          <button class="rb" title="Color de fuente" onclick="document.getElementById('font-color-input').click()">
+            A<span class="color-indicator" id="font-color-ind" style="background:#ff0000"></span>
+          </button>
+          <button class="rb" title="Color de resaltado" onclick="document.getElementById('highlight-input').click()">
+            🖊<span class="color-indicator" id="hl-color-ind" style="background:#ffff00"></span>
+          </button>
+        </div>
+      </div>
+      <span class="rgroup-label">Fuente</span>
+    </div>
+
+    <!-- Paragraph -->
+    <div class="rgroup">
+      <div class="rgroup-btns" style="flex-direction:column;gap:3px;align-items:flex-start">
+        <div class="rb-row">
+          <button class="rb" title="Lista con viñetas" onclick="fmt('insertUnorderedList')">☰ •</button>
+          <button class="rb" title="Lista numerada" onclick="fmt('insertOrderedList')">☰ 1.</button>
+          <button class="rb" title="Lista multinivel" onclick="insertMultiList()">☰▾</button>
+          <button class="rb" title="Reducir sangría" onclick="fmt('outdent')">⇤</button>
+          <button class="rb" title="Aumentar sangría" onclick="fmt('indent')">⇥</button>
+          <button class="rb" title="Ordenar" onclick="sortList()">↕ AZ</button>
+          <button class="rb" id="btn-para-marks" title="Mostrar todo" onclick="toggleParaMarks()">¶</button>
+        </div>
+        <div class="rb-row">
+          <button class="rb" id="btn-align-left" title="Alinear a la izquierda (Ctrl+Q)" onclick="align('Left')">☰◂</button>
+          <button class="rb" id="btn-align-center" title="Centrar (Ctrl+T)" onclick="align('Center')">☰=</button>
+          <button class="rb" id="btn-align-right" title="Alinear a la derecha (Ctrl+D)" onclick="align('Right')">☰▸</button>
+          <button class="rb" id="btn-align-justify" title="Justificar (Ctrl+J)" onclick="align('Full')">☰☰</button>
+          <select class="r-select" id="line-spacing" onchange="setLineSpacing(this.value)" style="width:56px" title="Espaciado">
+            <option value="1">1.0</option>
+            <option value="1.15">1.15</option>
+            <option value="1.5" selected>1.5</option>
+            <option value="2">2.0</option>
+            <option value="2.5">2.5</option>
+            <option value="3">3.0</option>
+          </select>
+          <button class="rb" title="Sombreado de párrafo" onclick="shadeParagraph()">🎨</button>
+          <button class="rb" title="Bordes" onclick="addBorder()">▦</button>
+        </div>
+      </div>
+      <span class="rgroup-label">Párrafo</span>
+    </div>
+
+    <!-- Styles -->
+    <div class="rgroup">
+      <div class="rgroup-btns" style="gap:3px;flex-wrap:wrap;max-width:280px">
+        <button class="rb" onclick="applyStyle('p')" style="font-size:11px;padding:3px 8px">Normal</button>
+        <button class="rb" onclick="applyStyle('h1')" style="font-size:11px;padding:3px 8px;color:#2e74b5"><b>Título 1</b></button>
+        <button class="rb" onclick="applyStyle('h2')" style="font-size:11px;padding:3px 8px;color:#2e74b5">Título 2</button>
+        <button class="rb" onclick="applyStyle('h3')" style="font-size:11px;padding:3px 8px;color:#1f3864">Título 3</button>
+        <button class="rb" onclick="applyStyle('h4')" style="font-size:11px;padding:3px 8px;color:#2e74b5"><i>Título 4</i></button>
+        <button class="rb" onclick="applyBlockquote()" style="font-size:11px;padding:3px 8px;color:#555"><i>Cita</i></button>
+        <button class="rb" onclick="applyCode()" style="font-size:11px;padding:3px 8px;font-family:monospace">Código</button>
+        <button class="rb" onclick="applyStyle('p')" style="font-size:11px;padding:3px 8px"><i>Sin espaciado</i></button>
+      </div>
+      <span class="rgroup-label">Estilos</span>
+    </div>
+
+    <!-- Editing -->
+    <div class="rgroup">
+      <div class="rgroup-btns" style="flex-direction:column;gap:2px">
+        <button class="rb" title="Buscar" onclick="openFind()">🔍 Buscar</button>
+        <button class="rb" title="Reemplazar" onclick="openFind(true)">🔄 Reemplazar</button>
+        <button class="rb" title="Seleccionar todo" onclick="document.execCommand('selectAll')">⬛ Seleccionar</button>
+        <button class="rb" title="Ir a..." onclick="goToPage()">↗ Ir a</button>
+      </div>
+      <span class="rgroup-label">Edición</span>
+    </div>
+  </div>
+</div>
+
+<!-- Ruler -->
+<div id="ruler-container">
+  <div style="width:50px;background:#d8d8d8;height:100%;border-right:1px solid #bbb;flex-shrink:0"></div>
+  <div id="ruler" style="flex:1;position:relative;height:100%;overflow:hidden">
+    <canvas id="ruler-canvas" height="22"></canvas>
+  </div>
+</div>
+
+<!-- Main -->
+<div id="main-area" onclick="closeMenus()">
+  <div class="page" id="page-1">
+    <div class="page-header-area" id="header-area" onclick="editHeader()" title="Haz clic para editar encabezado">
+      <span id="header-text" style="color:#aaa">Encabezado</span>
+    </div>
+    <div id="editor-content" contenteditable="true" spellcheck="true"
+         onkeyup="onEditorChange()" onmouseup="onEditorChange()"
+         onpaste="onPaste(event)"
+         oncontextmenu="showContextMenu(event)">
+      <p><br></p>
+    </div>
+    <div class="page-footer-area" id="footer-area">
+      <span id="footer-text" style="color:#aaa">Pie de página</span>
+    </div>
+    <div class="page-number" id="page-number-display">1</div>
+  </div>
+</div>
+
+<!-- Find & Replace -->
+<div id="find-bar">
+  <h4>🔍 Buscar y Reemplazar</h4>
+  <div class="fb-row">
+    <label>Buscar:</label>
+    <input type="text" id="find-input" placeholder="Texto a buscar..." oninput="highlightFind()">
+  </div>
+  <div class="fb-row" id="replace-row" style="display:none">
+    <label>Reemplazar:</label>
+    <input type="text" id="replace-input" placeholder="Reemplazar con...">
+  </div>
+  <div class="fb-btns">
+    <button class="fb-btn" onclick="findPrev()">◀ Anterior</button>
+    <button class="fb-btn" onclick="findNext()">Siguiente ▶</button>
+    <button class="fb-btn" id="replace-btn" onclick="replaceOne()" style="display:none">Reemplazar</button>
+    <button class="fb-btn" id="replace-all-btn" onclick="replaceAll()" style="display:none">Reemplazar todo</button>
+    <button class="fb-btn" onclick="closeFindBar()">Cerrar</button>
+  </div>
+  <div id="find-status"></div>
+</div>
+
+<!-- Context Menu -->
+<div id="ctx-menu">
+  <div class="ctx-mini-fmt">
+    <button class="ctx-mini-btn" onclick="fmt('bold');hideCtx()"><b>N</b></button>
+    <button class="ctx-mini-btn" onclick="fmt('italic');hideCtx()"><i>K</i></button>
+    <button class="ctx-mini-btn" onclick="fmt('underline');hideCtx()"><u>S</u></button>
+    <button class="ctx-mini-btn" onclick="fmt('strikeThrough');hideCtx()"><s>T</s></button>
+    <button class="ctx-mini-btn" onclick="document.execCommand('copy');hideCtx()">📋</button>
+  </div>
+  <div class="ctx-i" onclick="document.execCommand('cut');hideCtx()"><span class="ctx-icon">✂</span>Cortar<span class="ctx-key">Ctrl+X</span></div>
+  <div class="ctx-i" onclick="document.execCommand('copy');hideCtx()"><span class="ctx-icon">📋</span>Copiar<span class="ctx-key">Ctrl+C</span></div>
+  <div class="ctx-i" onclick="document.execCommand('paste');hideCtx()"><span class="ctx-icon">📌</span>Pegar<span class="ctx-key">Ctrl+V</span></div>
+  <div class="ctx-i" onclick="pasteAsPlain();hideCtx()"><span class="ctx-icon">📝</span>Pegar solo texto</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-i" onclick="fmt('bold');hideCtx()"><span class="ctx-icon"><b>N</b></span>Negrita</div>
+  <div class="ctx-i" onclick="fmt('italic');hideCtx()"><span class="ctx-icon"><i>K</i></span>Cursiva</div>
+  <div class="ctx-i" onclick="fmt('underline');hideCtx()"><span class="ctx-icon"><u>S</u></span>Subrayado</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-i" onclick="insertLink();hideCtx()"><span class="ctx-icon">🔗</span>Hipervínculo</div>
+  <div class="ctx-i" onclick="addComment();hideCtx()"><span class="ctx-icon">💬</span>Nuevo comentario</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-i" onclick="showFontDialog();hideCtx()"><span class="ctx-icon">Aa</span>Fuente...</div>
+  <div class="ctx-i" onclick="showParaDialog();hideCtx()"><span class="ctx-icon">¶</span>Párrafo...</div>
+</div>
+
+<!-- Comment Panel -->
+<div id="comment-panel">
+  <h3>💬 Comentarios</h3>
+  <div id="comments-list"></div>
+  <div id="add-comment-area">
+    <textarea id="new-comment" placeholder="Escribe un comentario..."></textarea>
+    <button id="add-comment-btn" onclick="submitComment()">Agregar comentario</button>
+  </div>
+</div>
+
+<!-- Status Bar -->
+<div id="status-bar">
+  <div class="sb-item" id="sb-pages">Página 1 de 1</div>
+  <div class="sb-item" id="sb-words">0 palabras</div>
+  <div class="sb-item" id="sb-chars">0 caracteres</div>
+  <div class="sb-item" id="sb-lang">Español (Colombia)</div>
+  <div class="sb-item" id="sb-mode">Insertar</div>
+  <div class="sb-right">
+    <div class="sb-item" id="sb-view-print" title="Diseño de impresión" style="cursor:pointer" onclick="setView('print')">📄</div>
+    <div class="sb-item" id="sb-view-web" title="Diseño web" style="cursor:pointer" onclick="setView('web')">🌐</div>
+    <div class="sb-item" id="sb-view-read" title="Modo lectura" style="cursor:pointer" onclick="setView('read')">📖</div>
+    <div class="sb-item" style="gap:6px">
+      <button onclick="changeZoomSb(-10)" style="background:none;border:none;color:white;cursor:pointer;font-size:13px">−</button>
+      <input type="range" id="zoom-slider-sb" min="50" max="200" value="100" oninput="setZoom(this.value)">
+      <button onclick="changeZoomSb(10)" style="background:none;border:none;color:white;cursor:pointer;font-size:13px">+</button>
+      <span id="sb-zoom-label" style="min-width:36px">100%</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let currentZoom = 100;
+let showParaMarksActive = false;
+let trackChanges = false;
+let commentsList = [];
+let findResults = [];
+let findIndex = -1;
+let lastSavedContent = '';
+let docModified = false;
+let currentFontColor = '#ff0000';
+let currentHighlightColor = '#ffff00';
+let insertMode = true;
+let selectedRange = null;
+
+const editor = document.getElementById('editor-content');
+
+// ============================================================
+// DOCUMENT COMMANDS
+// ============================================================
+function fmt(cmd, val) {
+  editor.focus();
+  document.execCommand(cmd, false, val || null);
+  updateToolbarState();
+}
+
+function align(dir) {
+  editor.focus();
+  document.execCommand('justify' + dir, false, null);
+  updateToolbarState();
+}
+
+function applyFont(font) {
+  editor.focus();
+  document.execCommand('fontName', false, font);
+}
+
+function applyFontSize(size) {
+  editor.focus();
+  // execCommand fontSize uses 1-7 scale, we use a workaround
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+    document.execCommand('fontSize', false, '7');
+    const spans = editor.querySelectorAll('font[size="7"]');
+    spans.forEach(el => {
+      el.removeAttribute('size');
+      el.style.fontSize = size + 'px';
+    });
+  }
+}
+
+function changeFontSize(delta) {
+  const sel = document.getElementById('font-size-sel');
+  const newVal = Math.max(8, Math.min(96, parseInt(sel.value) + delta));
+  sel.value = newVal;
+  applyFontSize(newVal);
+}
+
+function applyFontColor(color) {
+  currentFontColor = color;
+  document.getElementById('font-color-ind').style.background = color;
+  editor.focus();
+  document.execCommand('foreColor', false, color);
+}
+
+function applyHighlight(color) {
+  currentHighlightColor = color;
+  document.getElementById('hl-color-ind').style.background = color;
+  editor.focus();
+  document.execCommand('hiliteColor', false, color);
+}
+
+function clearFormatting() {
+  editor.focus();
+  document.execCommand('removeFormat', false, null);
+}
+
+function applyStyle(tag) {
+  editor.focus();
+  document.execCommand('formatBlock', false, tag);
+}
+
+function applyBlockquote() {
+  editor.focus();
+  document.execCommand('formatBlock', false, 'blockquote');
+}
+
+function applyCode() {
+  const sel = window.getSelection();
+  if (sel && !sel.isCollapsed) {
+    const range = sel.getRangeAt(0);
+    const code = document.createElement('code');
+    code.style.fontFamily = 'Courier New, monospace';
+    code.style.background = '#f4f4f4';
+    code.style.padding = '0 3px';
+    code.style.borderRadius = '2px';
+    try { range.surroundContents(code); } catch(e) { document.execCommand('insertHTML', false, `<code style="font-family:monospace;background:#f4f4f4;padding:0 3px">${sel.toString()}</code>`); }
+  }
+}
+
+function setLineSpacing(val) {
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0) return;
+  let node = sel.anchorNode;
+  while (node && node !== editor) {
+    if (node.nodeType === 1 && ['P','DIV','H1','H2','H3','H4','LI','BLOCKQUOTE'].includes(node.tagName)) {
+      node.style.lineHeight = val;
+      return;
+    }
+    node = node.parentNode;
+  }
+  editor.style.lineHeight = val;
+}
+
+function shadeParagraph() {
+  const colors = ['#fff2cc','#dae8fc','#d5e8d4','#f8d7da','#e1d5e7','transparent'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0) return;
+  let node = sel.anchorNode;
+  while (node && node !== editor) {
+    if (node.nodeType === 1 && ['P','DIV','H1','H2','H3'].includes(node.tagName)) {
+      node.style.backgroundColor = color;
+      return;
+    }
+    node = node.parentNode;
+  }
+}
+
+function addBorder() {
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0) return;
+  let node = sel.anchorNode;
+  while (node && node !== editor) {
+    if (node.nodeType === 1 && ['P','DIV'].includes(node.tagName)) {
+      node.style.border = node.style.border ? '' : '1px solid #999';
+      node.style.padding = node.style.padding ? '' : '4px 8px';
+      return;
+    }
+    node = node.parentNode;
+  }
+}
+
+// ============================================================
+// INSERT
+// ============================================================
+function insertTable(rows, cols) {
+  rows = rows || parseInt(prompt('Filas:', '3')) || 3;
+  cols = cols || parseInt(prompt('Columnas:', '3')) || 3;
+  let html = '<table style="border-collapse:collapse;width:auto;margin:4px 0">';
+  for (let r = 0; r < rows; r++) {
+    html += '<tr>';
+    for (let c = 0; c < cols; c++) {
+      html += `<td style="border:1px solid #aaa;padding:5px 10px;min-width:80px">&nbsp;</td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</table><p><br></p>';
+  editor.focus();
+  document.execCommand('insertHTML', false, html);
+}
+
+function insertImage() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      editor.focus();
+      document.execCommand('insertHTML', false, `<img src="${ev.target.result}" style="max-width:100%;height:auto;margin:4px 0" onclick="this.classList.toggle('selected')">`);
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+}
+
+function insertHR() {
+  editor.focus();
+  document.execCommand('insertHTML', false, '<hr style="border:none;border-top:1px solid #ccc;margin:8px 0"><p><br></p>');
+}
+
+function insertPageBreak() {
+  editor.focus();
+  document.execCommand('insertHTML', false, '<div style="page-break-after:always;border-top:1px dashed #aaa;margin:4px -96px;position:relative;text-align:center;font-size:10px;color:#aaa">— Salto de página —</div><p><br></p>');
+}
+
+function insertLink() {
+  const url = prompt('URL del hipervínculo:', 'https://');
+  if (!url) return;
+  const text = window.getSelection()?.toString() || url;
+  editor.focus();
+  document.execCommand('insertHTML', false, `<a href="${url}" style="color:#0563c1;text-decoration:underline" target="_blank">${text}</a>`);
+}
+
+function insertDate() {
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('es-CO', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  editor.focus();
+  document.execCommand('insertText', false, dateStr);
+}
+
+function insertPageNumber() {
+  editor.focus();
+  document.execCommand('insertHTML', false, '<span style="background:#e8f0fe;padding:0 4px;border-radius:2px;font-size:11px">[Página #]</span>');
+}
+
+function insertEmoji() {
+  const emojis = ['😊','👍','❤️','🎉','📝','✅','⚠️','🔴','🟢','🔵','⭐','🏆','💡','🔍','📌','📊','📈','🖊️','🗂️','📧'];
+  const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+  editor.focus();
+  document.execCommand('insertText', false, emoji);
+}
+
+function insertMultiList() {
+  editor.focus();
+  document.execCommand('insertHTML', false, '<ul style="list-style:disc"><li>Elemento 1<ul style="list-style:circle"><li>Subelemento</li></ul></li><li>Elemento 2</li></ul>');
+}
+
+// ============================================================
+// TOOLBAR STATE UPDATE
+// ============================================================
+function updateToolbarState() {
+  document.getElementById('btn-bold').classList.toggle('active', document.queryCommandState('bold'));
+  document.getElementById('btn-italic').classList.toggle('active', document.queryCommandState('italic'));
+  document.getElementById('btn-underline').classList.toggle('active', document.queryCommandState('underline'));
+  document.getElementById('btn-strike').classList.toggle('active', document.queryCommandState('strikeThrough'));
+
+  document.getElementById('btn-align-left').classList.toggle('active', document.queryCommandState('justifyLeft'));
+  document.getElementById('btn-align-center').classList.toggle('active', document.queryCommandState('justifyCenter'));
+  document.getElementById('btn-align-right').classList.toggle('active', document.queryCommandState('justifyRight'));
+  document.getElementById('btn-align-justify').classList.toggle('active', document.queryCommandState('justifyFull'));
+
+  // Sync font
+  try {
+    const fontName = document.queryCommandValue('fontName').replace(/['"]/g,'');
+    if (fontName) {
+      const sel = document.getElementById('font-name');
+      for (let i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value.toLowerCase() === fontName.toLowerCase()) {
+          sel.selectedIndex = i; break;
+        }
+      }
+    }
+  } catch(e) {}
+
+  updateWordCount();
+}
+
+// ============================================================
+// WORD COUNT
+// ============================================================
+function updateWordCount() {
+  const text = editor.innerText || '';
+  const words = text.trim().split(/\s+/).filter(w => w.length > 0);
+  const chars = text.replace(/\n/g,'').length;
+  document.getElementById('sb-words').textContent = `${words.length} palabras`;
+  document.getElementById('sb-chars').textContent = `${chars} caracteres`;
+}
+
+function wordCount() {
+  const text = editor.innerText || '';
+  const words = text.trim().split(/\s+/).filter(w => w.length > 0);
+  const paras = editor.querySelectorAll('p,div,h1,h2,h3,h4').length;
+  alert(`📊 Estadísticas del documento\n\nPalabras: ${words.length}\nCaracteres: ${text.length}\nCaracteres (sin espacios): ${text.replace(/\s/g,'').length}\nPárrafos: ${paras}\nPáginas: 1`);
+}
+
+// ============================================================
+// EDITOR EVENTS
+// ============================================================
+function onEditorChange() {
+  updateToolbarState();
+  docModified = true;
+  document.getElementById('doc-name').textContent = 'Documento1*';
+}
+
+function onPaste(e) {
+  // Default paste, we allow it but update state after
+  setTimeout(updateToolbarState, 50);
+}
+
+function pasteAsPlain() {
+  navigator.clipboard.readText().then(text => {
+    editor.focus();
+    document.execCommand('insertText', false, text);
+  }).catch(() => {
+    const text = prompt('Pega el texto aquí:');
+    if (text) document.execCommand('insertText', false, text);
+  });
+}
+
+// ============================================================
+// FIND & REPLACE
+// ============================================================
+function openFind(withReplace) {
+  const bar = document.getElementById('find-bar');
+  bar.style.display = 'block';
+  document.getElementById('replace-row').style.display = withReplace ? 'flex' : 'none';
+  document.getElementById('replace-btn').style.display = withReplace ? '' : 'none';
+  document.getElementById('replace-all-btn').style.display = withReplace ? '' : 'none';
+  document.getElementById('find-input').focus();
+}
+
+function closeFindBar() {
+  document.getElementById('find-bar').style.display = 'none';
+  clearHighlights();
+}
+
+function highlightFind() {
+  clearHighlights();
+  const term = document.getElementById('find-input').value;
+  if (!term) return;
+  const html = editor.innerHTML;
+  const regex = new RegExp(`(${escapeRegex(term)})`, 'gi');
+  editor.innerHTML = html.replace(regex, '<mark class="find-hl" style="background:#ffee00;padding:0">$1</mark>');
+  findResults = Array.from(editor.querySelectorAll('.find-hl'));
+  findIndex = -1;
+  document.getElementById('find-status').textContent = `${findResults.length} coincidencias`;
+}
+
+function findNext() {
+  if (!findResults.length) { highlightFind(); return; }
+  findIndex = (findIndex + 1) % findResults.length;
+  findResults[findIndex].scrollIntoView({ block: 'center' });
+  findResults.forEach((el, i) => el.style.background = i === findIndex ? '#ff8c00' : '#ffee00');
+}
+
+function findPrev() {
+  if (!findResults.length) { highlightFind(); return; }
+  findIndex = (findIndex - 1 + findResults.length) % findResults.length;
+  findResults[findIndex].scrollIntoView({ block: 'center' });
+  findResults.forEach((el, i) => el.style.background = i === findIndex ? '#ff8c00' : '#ffee00');
+}
+
+function clearHighlights() {
+  editor.querySelectorAll('.find-hl').forEach(el => {
+    el.replaceWith(document.createTextNode(el.textContent));
+  });
+  editor.normalize();
+  findResults = [];
+}
+
+function replaceOne() {
+  if (findIndex < 0 || findIndex >= findResults.length) { findNext(); return; }
+  const repl = document.getElementById('replace-input').value;
+  findResults[findIndex].replaceWith(document.createTextNode(repl));
+  findResults.splice(findIndex, 1);
+  if (findIndex >= findResults.length) findIndex = 0;
+  document.getElementById('find-status').textContent = `${findResults.length} restantes`;
+}
+
+function replaceAll() {
+  const term = document.getElementById('find-input').value;
+  const repl = document.getElementById('replace-input').value;
+  if (!term) return;
+  highlightFind();
+  let count = findResults.length;
+  findResults.forEach(el => el.replaceWith(document.createTextNode(repl)));
+  findResults = [];
+  document.getElementById('find-status').textContent = `Reemplazados: ${count}`;
+}
+
+function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+
+// ============================================================
+// CONTEXT MENU
+// ============================================================
+function showContextMenu(e) {
+  e.preventDefault();
+  const menu = document.getElementById('ctx-menu');
+  menu.style.display = 'block';
+  menu.style.left = Math.min(e.clientX, window.innerWidth - 220) + 'px';
+  menu.style.top = Math.min(e.clientY, window.innerHeight - 350) + 'px';
+}
+
+function hideCtx() {
+  document.getElementById('ctx-menu').style.display = 'none';
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('#ctx-menu')) hideCtx();
+  if (!e.target.closest('.menu-item')) closeMenus();
+});
+
+// ============================================================
+// MENUS
+// ============================================================
+function toggleMenu(name) {
+  const items = document.querySelectorAll('.menu-item');
+  items.forEach(i => {
+    if (i.id === `menu-${name}`) i.classList.toggle('open');
+    else i.classList.remove('open');
+  });
+}
+
+function closeMenus() {
+  document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('open'));
+}
+
+// ============================================================
+// RIBBON TABS
+// ============================================================
+function switchRibbonTab(tab, el) {
+  document.querySelectorAll('.rtab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ============================================================
+// ZOOM
+// ============================================================
+function setZoom(val) {
+  currentZoom = parseInt(val);
+  document.getElementById('zoom-slider-sb').value = currentZoom;
+  document.getElementById('sb-zoom-label').textContent = currentZoom + '%';
+  document.querySelector('.page').style.transform = `scale(${currentZoom/100})`;
+  document.querySelector('.page').style.transformOrigin = 'top center';
+}
+
+function changeZoomSb(delta) {
+  setZoom(Math.max(50, Math.min(200, currentZoom + delta)));
+}
+
+// ============================================================
+// VIEW
+// ============================================================
+function setView(mode) {
+  const page = document.querySelector('.page');
+  const mainArea = document.getElementById('main-area');
+  if (mode === 'web') {
+    page.style.width = '100%';
+    page.style.maxWidth = '100%';
+    page.style.boxShadow = 'none';
+    mainArea.style.background = 'white';
+  } else if (mode === 'draft') {
+    page.style.width = '100%';
+    page.style.boxShadow = 'none';
+    document.getElementById('header-area').style.display = 'none';
+    document.getElementById('footer-area').style.display = 'none';
+  } else if (mode === 'read') {
+    page.style.width = '700px';
+    editor.contentEditable = 'false';
+    document.getElementById('sb-mode').textContent = 'Solo lectura';
+  } else {
+    page.style.width = '816px';
+    page.style.maxWidth = '';
+    page.style.boxShadow = '0 2px 8px rgba(0,0,0,0.18)';
+    mainArea.style.background = '#f3f3f3';
+    document.getElementById('header-area').style.display = '';
+    document.getElementById('footer-area').style.display = '';
+    editor.contentEditable = 'true';
+    document.getElementById('sb-mode').textContent = 'Insertar';
+  }
+}
+
+// ============================================================
+// TOGGLE PARAGRAPH MARKS
+// ============================================================
+function toggleParaMarks() {
+  showParaMarksActive = !showParaMarksActive;
+  document.getElementById('btn-para-marks').classList.toggle('active', showParaMarksActive);
+  if (showParaMarksActive) {
+    editor.style.whiteSpace = 'pre-wrap';
+    // Visual only: add pilcrow marks
+    editor.querySelectorAll('p').forEach(p => {
+      if (!p.querySelector('.para-mark')) {
+        const mark = document.createElement('span');
+        mark.className = 'para-mark';
+        mark.textContent = '¶';
+        mark.style.color = '#aaa';
+        mark.style.userSelect = 'none';
+        mark.contentEditable = 'false';
+        p.appendChild(mark);
+      }
+    });
+  } else {
+    editor.querySelectorAll('.para-mark').forEach(m => m.remove());
+  }
+}
+
+// ============================================================
+// RULER
+// ============================================================
+function drawRuler() {
+  const canvas = document.getElementById('ruler-canvas');
+  const container = document.getElementById('ruler');
+  canvas.width = container.offsetWidth;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#f0f0f0';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  const marginLeft = 96 * (currentZoom/100);
+  const pageWidth = 816 * (currentZoom/100);
+  const offsetX = (container.offsetWidth - pageWidth) / 2 + marginLeft;
+  
+  ctx.fillStyle = '#e0e0e0';
+  ctx.fillRect(0, 0, (container.offsetWidth - pageWidth) / 2 + marginLeft, canvas.height);
+  ctx.fillRect((container.offsetWidth + pageWidth) / 2 - 96 * (currentZoom/100), 0, 9999, canvas.height);
+  
+  ctx.strokeStyle = '#888';
+  ctx.lineWidth = 0.5;
+  const cmPx = 37.8 * (currentZoom/100);
+  const contentWidth = (816 - 192) * (currentZoom/100);
+  
+  for (let x = 0; x <= contentWidth; x += cmPx/2) {
+    const isCm = Math.round(x / (cmPx/2)) % 2 === 0;
+    const xPos = offsetX + x;
+    ctx.beginPath();
+    ctx.moveTo(xPos, isCm ? 4 : 8);
+    ctx.lineTo(xPos, 18);
+    ctx.stroke();
+    if (isCm && x > 0) {
+      ctx.fillStyle = '#666';
+      ctx.font = '9px Segoe UI';
+      ctx.textAlign = 'center';
+      ctx.fillText(Math.round(x/cmPx), xPos, 10);
+    }
+  }
+  
+  // Tab stop indicator
+  ctx.fillStyle = '#555';
+  ctx.font = '12px Segoe UI';
+  ctx.fillText('L', 5, 15);
+}
+
+// ============================================================
+// TRACK CHANGES
+// ============================================================
+function toggleTrackChanges() {
+  trackChanges = !trackChanges;
+  alert(trackChanges ? '✅ Control de cambios activado' : '❌ Control de cambios desactivado');
+}
+
+// ============================================================
+// COMMENTS
+// ============================================================
+function toggleComments() {
+  const panel = document.getElementById('comment-panel');
+  panel.style.display = panel.style.display === 'flex' ? 'none' : 'flex';
+}
+
+function addComment() {
+  toggleComments();
+  document.getElementById('new-comment').focus();
+}
+
+function submitComment() {
+  const text = document.getElementById('new-comment').value.trim();
+  if (!text) return;
+  commentsList.push({ text, author: 'Usuario', date: new Date().toLocaleDateString('es-CO') });
+  renderComments();
+  document.getElementById('new-comment').value = '';
+}
+
+function renderComments() {
+  const list = document.getElementById('comments-list');
+  list.innerHTML = commentsList.map((c, i) => `
+    <div class="comment-card">
+      <div class="cc-author">${c.author} <span class="cc-date">${c.date}</span></div>
+      <div style="margin-top:3px">${c.text}</div>
+      <div style="margin-top:4px;text-align:right">
+        <span style="color:#888;cursor:pointer;font-size:11px" onclick="deleteComment(${i})">🗑 Eliminar</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function deleteComment(i) {
+  commentsList.splice(i, 1);
+  renderComments();
+}
+
+// ============================================================
+// MISC DIALOGS
+// ============================================================
+function showFontDialog() {
+  const font = prompt('Nombre de fuente:', document.queryCommandValue('fontName') || 'Calibri');
+  if (font) applyFont(font);
+}
+
+function showParaDialog() {
+  const spacing = prompt('Espaciado de línea (ej: 1, 1.5, 2):', '1.5');
+  if (spacing) setLineSpacing(spacing);
+}
+
+function checkSpelling() {
+  editor.spellcheck = true;
+  alert('✅ Revisión ortográfica activada. El navegador marcará errores automáticamente.');
+}
+
+function goToPage() {
+  const pg = prompt('Ir a la página:', '1');
+  if (pg) document.getElementById('sb-pages').textContent = `Página ${pg} de 1`;
+}
+
+function setPageColor(color) {
+  document.querySelector('.page').style.background = color;
+  document.getElementById('editor-content').style.background = color;
+}
+
+function toggleRuler() {
+  const r = document.getElementById('ruler-container');
+  r.style.display = r.style.display === 'none' ? 'flex' : 'none';
+}
+
+function toggleGridLines() {
+  editor.style.backgroundImage = editor.style.backgroundImage ? '' : 'linear-gradient(rgba(0,0,0,0.05) 1px,transparent 1px)';
+  editor.style.backgroundSize = '100% 24px';
+}
+
+function sortList() {
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0) return;
+  let node = sel.anchorNode;
+  while (node && node !== editor) {
+    if (node.tagName === 'UL' || node.tagName === 'OL') {
+      const items = Array.from(node.querySelectorAll(':scope > li')).map(li => li.innerHTML);
+      items.sort();
+      node.querySelectorAll(':scope > li').forEach((li, i) => li.innerHTML = items[i]);
+      return;
+    }
+    node = node.parentNode;
+  }
+}
+
+// ============================================================
+// SAVE / OPEN
+// ============================================================
+function saveDoc() {
+  const content = editor.innerHTML;
+  const blob = new Blob([`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Documento</title><style>body{font-family:Calibri,serif;font-size:12pt;max-width:800px;margin:auto;padding:20px}</style></head><body>${content}</body></html>`], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Documento1.html';
+  a.click();
+  docModified = false;
+  document.getElementById('doc-name').textContent = 'Documento1';
+}
+
+function saveAs() {
+  const name = prompt('Nombre del archivo:', 'Documento1');
+  if (name) saveDoc();
+}
+
+function newDoc() {
+  if (docModified && !confirm('¿Guardar cambios antes de continuar?')) return;
+  if (docModified) saveDoc();
+  editor.innerHTML = '<p><br></p>';
+  docModified = false;
+  document.getElementById('doc-name').textContent = 'Documento1';
+  updateWordCount();
+}
+
+function openDoc() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.html,.txt,.htm';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      editor.innerHTML = ev.target.result;
+      document.getElementById('doc-name').textContent = file.name;
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+// ============================================================
+// HEADER / FOOTER
+// ============================================================
+function editHeader() {
+  const h = document.getElementById('header-text');
+  h.style.color = '#333';
+  const text = prompt('Texto del encabezado:', h.textContent === 'Encabezado' ? '' : h.textContent);
+  if (text !== null) {
+    h.textContent = text || '';
+    h.style.color = text ? '#333' : '#aaa';
+    if (!text) h.textContent = 'Encabezado';
+  }
+}
+
+// ============================================================
+// KEYBOARD SHORTCUTS
+// ============================================================
+document.addEventListener('keydown', e => {
+  const ctrl = e.ctrlKey || e.metaKey;
+  if (!ctrl) return;
+  
+  const shortcuts = {
+    'g': saveDoc, 'p': () => window.print(),
+    'b': () => openFind(), 'h': () => openFind(true),
+    'k': () => insertLink(),
+  };
+  
+  if (shortcuts[e.key] && e.key !== 'b' && e.key !== 'h') {
+    e.preventDefault();
+    shortcuts[e.key]();
+  }
+  if (e.key === 'b' && !['input','textarea'].includes(document.activeElement.tagName.toLowerCase())) {
+    // b for bold only in editor
+  }
+});
+
+editor.addEventListener('keydown', e => {
+  // Tab inserts spaces instead of leaving editor
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    document.execCommand('insertHTML', false, '&nbsp;&nbsp;&nbsp;&nbsp;');
+  }
+  // F7 for spell check
+  if (e.key === 'F7') { checkSpelling(); }
+});
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('load', () => {
+  drawRuler();
+  window.addEventListener('resize', drawRuler);
+  
+  // Insert initial content
+  editor.innerHTML = `<h1>Bienvenido a Word Clone</h1>
+<p>Este es un editor de documentos completo, similar a Microsoft Word. Puedes escribir, dar formato y trabajar con tu documento aquí.</p>
+<p>&nbsp;</p>
+<h2>Características disponibles</h2>
+<p>Este editor incluye las siguientes funcionalidades:</p>
+<ul>
+  <li><strong>Formato de texto</strong>: Negrita, cursiva, subrayado, tachado, subíndice y superíndice</li>
+  <li><strong>Fuentes y tamaños</strong>: Cambia la fuente y el tamaño del texto</li>
+  <li><strong>Alineación</strong>: Izquierda, derecha, centro y justificado</li>
+  <li><strong>Estilos de párrafo</strong>: Títulos 1, 2, 3, Normal, Cita, Código</li>
+  <li><strong>Listas</strong>: Con viñetas, numeradas y multinivel</li>
+  <li><strong>Tablas</strong>: Inserta y edita tablas</li>
+  <li><strong>Imágenes</strong>: Inserta imágenes desde tu computador</li>
+  <li><strong>Hipervínculos</strong>: Crea enlaces a páginas web</li>
+  <li><strong>Buscar y reemplazar</strong>: Encuentra texto rápidamente</li>
+  <li><strong>Zoom y vistas</strong>: Diseño de impresión, web y borrador</li>
+</ul>
+<p>&nbsp;</p>
+<h3>Atajos de teclado</h3>
+<table style="border-collapse:collapse;width:auto">
+  <tr><th style="border:1px solid #aaa;padding:5px 12px;background:#e8e8e8">Atajo</th><th style="border:1px solid #aaa;padding:5px 12px;background:#e8e8e8">Función</th></tr>
+  <tr><td style="border:1px solid #aaa;padding:4px 12px"><code>Ctrl+N</code></td><td style="border:1px solid #aaa;padding:4px 12px">Negrita</td></tr>
+  <tr><td style="border:1px solid #aaa;padding:4px 12px"><code>Ctrl+K</code></td><td style="border:1px solid #aaa;padding:4px 12px">Cursiva</td></tr>
+  <tr><td style="border:1px solid #aaa;padding:4px 12px"><code>Ctrl+S</code></td><td style="border:1px solid #aaa;padding:4px 12px">Subrayado</td></tr>
+  <tr><td style="border:1px solid #aaa;padding:4px 12px"><code>Ctrl+Z</code></td><td style="border:1px solid #aaa;padding:4px 12px">Deshacer</td></tr>
+  <tr><td style="border:1px solid #aaa;padding:4px 12px"><code>Ctrl+G</code></td><td style="border:1px solid #aaa;padding:4px 12px">Guardar</td></tr>
+  <tr><td style="border:1px solid #aaa;padding:4px 12px"><code>Ctrl+B</code></td><td style="border:1px solid #aaa;padding:4px 12px">Buscar</td></tr>
+</table>
+<p>&nbsp;</p>
+<p>¡Empieza a escribir tu documento aquí! 🚀</p>`;
+
+  updateWordCount();
+});
+
+// Warn before leaving if modified
+window.addEventListener('beforeunload', e => {
+  if (docModified) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+</script>
+</body>
+</html>
