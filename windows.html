@@ -2,336 +2,303 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Repositorio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repositorio – Santiago Sterling</title>
 <link rel="stylesheet" href="windows.css">
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
-<div id="desktop-container">
 
-    <div id="desktop1" class="desktop active">
-
-        <!-- ICONOS DEL ESCRITORIO -->
-        <div class="desktop-icon" data-app="explorer">
-            <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75" class="justify-center">
-            <span style="text-shadow: 2px 2px 2px rgba(0,0,0,0.8);">Archivos</span>
-        </div>
-
-        <div class="desktop-icon" data-app="browser">
-            <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-KBUXl6AhDj2IsoZnozHL39yX1acqa5.png&w=1000&q=75" class="justify-center">
-            <span style="text-shadow: 2px 2px 2px rgba(0,0,0,0.8);">Navegador</span>
-        </div>
-
-        <div class="desktop-icon" data-app="notes">
-            <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75" class="justify-center">
-            <span style="text-shadow: 2px 2px 2px rgba(0,0,0,0.8);">Notas</span>
-        </div>
-
-        <div class="desktop-icon" data-app="player">
-            <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hYb7C5vkHO9CJDCDmnVhWYl6v3ECyg.png&w=1000&q=75" class="justify-center">
-            <span style="text-shadow: 2px 2px 2px rgba(0,0,0,0.8);">Sterling Music Player</span>
-        </div>
-
-        <div class="desktop-icon" data-app="paint">
-            <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75" class="justify-center">
-            <span style="text-shadow: 2px 2px 2px rgba(0,0,0,0.8);">Sterl-ink Sketching</span>
-        </div>
-
-        <!-- PAPELERA -->
-        <div class="desktop-icon" data-app="recycle-bin" id="recycleBinIcon">
-            <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-lSpzRMqmwGWoV08dHuh6wchQDokHkw.png&w=1000&q=75" class="justify-center">
-            <span style="text-shadow: 2px 2px 2px rgba(0,0,0,0.8);">Papelera</span>
-        </div>
-
+<!-- ============================================================ LOCK SCREEN -->
+<div id="lockScreen">
+  <div class="lock-content">
+    <div class="lock-time" id="lockTime">00:00</div>
+    <div class="lock-date" id="lockDate">jueves, 12 de marzo</div>
+    <div class="lock-hint">
+      <span class="lock-icon">🔒</span>
+      <span>Haz clic para desbloquear</span>
     </div>
-
+  </div>
 </div>
 
+<!-- ============================================================ DESKTOP CONTAINER -->
+<div id="desktop-container">
+  <div id="desktop1" class="desktop active">
 
-<!-- ============================================================
-     CONTENEDOR DE VENTANAS
-============================================================ -->
+    <!-- Desktop Icons -->
+    <div class="desktop-icon" data-app="explorer">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75">
+      <span>Archivos</span>
+    </div>
+
+    <div class="desktop-icon" data-app="browser">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-KBUXl6AhDj2IsoZnozHL39yX1acqa5.png&w=1000&q=75">
+      <span>Navegador</span>
+    </div>
+
+    <div class="desktop-icon" data-app="notes">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75">
+      <span>Notas</span>
+    </div>
+
+    <div class="desktop-icon" data-app="player">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hYb7C5vkHO9CJDCDmnVhWYl6v3ECyg.png&w=1000&q=75">
+      <span>Sterling Music Player</span>
+    </div>
+
+    <div class="desktop-icon" data-app="paint">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75">
+      <span>Sterl-ink Sketching</span>
+    </div>
+
+    <div class="desktop-icon" data-app="recycle-bin" id="recycleBinIcon">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-lSpzRMqmwGWoV08dHuh6wchQDokHkw.png&w=1000&q=75">
+      <span>Papelera</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ WINDOWS CONTAINER -->
 <div id="windowsContainer"></div>
 
+<!-- ============================================================ START MENU -->
+<div id="startMenu" class="hidden">
 
-<!-- ============================================================
-     MENÚ INICIO
-============================================================ -->
-<div id="startMenu" class="start-menu hidden">
-
-<div class="start-header">
-    <h2><i class="fi fi-sr-display-code"></i> Repositorio</h2>
-</div>
-
-    <div class="start-apps">
-
-        <div class="start-app" data-app="explorer">
-            <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75">
-            <span>Explorador</span>
-        </div>
-
-        <div class="start-app" data-app="browser">
-            <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-KBUXl6AhDj2IsoZnozHL39yX1acqa5.png&w=1000&q=75">
-            <span>Navegador</span>
-        </div>
-
-        <div class="start-app" data-app="notes">
-            <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75">
-            <span>Notas</span>
-        </div>
-
-        <div class="start-app" data-app="player">
-            <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hYb7C5vkHO9CJDCDmnVhWYl6v3ECyg.png&w=1000&q=75">
-            <span>Sterling Music Player</span>
-        </div>
-
-        <div class="start-app" data-app="paint">
-             <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75">
-            <span>Sterl-link Sketching</span>
-        </div>
-
-        <div class="start-app" data-app="buscaminas">
-             <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-e3kGOJ1Nx9Q68omg5PbnlZh8hFAJkX.png&w=500&q=75">
-            <span>Santiago Sterling World</span>
-        </div>
-
+  <div class="start-search-area">
+    <div class="start-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      Buscar aplicaciones, configuración y archivos
     </div>
-    <br>
-    <hr style="border: 1px solid #ffffffad;">
-
-    <div class="start-option" id="openWallpaperPanel"><i class="fi fi-sr-desktop-wallpaper"></i> Cambiar fondo</div>
-    <div class="start-option" id="openDesktopSwitcher"><i class="fi fi-sr-briefcase-arrow-right"></i> Ver portafolio</div>
-    <div class="start-option" id="openDesktopSwitcher" onclick="window.location.href='proyectos20.html'"><i class="fi fi-sr-ux-browser"></i> 
-    Ver proyectos
-</div>
-
-    <hr style="border: 1px solid #ffffffad; margin-top: 10px; margin-bottom: 10px;">
-    <br>
-    <h2 class="text-white text-center font-bold"><i class="fi fi-sr-person-cv"></i> Santiago Sterling</h2>
-</div>
-</div>
-
-<!-- ============================================================
-     CAMBIAR FONDO WALLPAPER PANEL
-============================================================ -->
-<div id="wallpaperPanel" class="panel hidden" 
-     style="padding:20px; width:400px; max-height:500px; overflow:auto;">
-
-    <h2><i class="fi fi-sr-desktop-wallpaper"></i> Cambiar Fondo</h2>
-    <br>
-    <p>Puedes cambiar el fondo por una de las imagenes predeterminadas, o carga una imagen desde tu dispositivo.</p>
-    <br>
-    <input type="file" id="wallpaperInput">
-
-    <div id="wallpaperList" 
-    
-         style="
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 10px;
-         ">
-
-        <img src="https://cdn.pixabay.com/photo/2014/07/16/05/18/beach-394503_1280.jpg" 
-             style="
-                width: 100%;
-                height: 70px;
-                object-fit: cover;
-                border-radius: 8px;
-                cursor:pointer;
-             ">
-
-        <img src="https://cdn.pixabay.com/photo/2024/05/15/07/59/flowers-8763039_1280.jpg" 
-             style="
-                width: 100%;
-                height: 70px;
-                object-fit: cover;
-                border-radius: 8px;
-                cursor:pointer;
-             ">
-
-        <img src="https://cdn.pixabay.com/photo/2023/07/18/12/00/aircraft-8134636_1280.jpg" 
-             style="
-                width: 100%;
-                height: 70px;
-                object-fit: cover;
-                border-radius: 8px;
-                cursor:pointer;
-             ">
-
-        <img src="https://cdn.pixabay.com/photo/2017/06/16/10/03/texture-2408546_1280.jpg" 
-             style="
-                width: 100%;
-                height: 70px;
-                object-fit: cover;
-                border-radius: 8px;
-                cursor:pointer;
-             ">
-
-        <img src="https://cdn.pixabay.com/photo/2022/10/10/05/25/rottweiler-7510792_1280.jpg" 
-             style="
-                width: 100%;
-                height: 70px;
-                object-fit: cover;
-                border-radius: 8px;
-                cursor:pointer;
-             ">
-
-        <img src="https://cdn.pixabay.com/photo/2016/03/26/13/09/sackcloth-1280539_1280.jpg" 
-             style="
-                width: 100%;
-                height: 70px;
-                object-fit: cover;
-                border-radius: 8px;
-                cursor:pointer;
-             ">
-    </div>
-
-    <button id="closeWallpaperPanel" 
-            style="
-            margin-top:15px;
-            padding:2px 30px;
-            background: linear-gradient(135deg, #4a90e2, #357abd);
-            color:white;
-            border:none;
-            border-radius:60px;
-            font-size:15px;
-            font-weight:300;
-            cursor:pointer;
-            box-shadow:0 4px 10px rgba(0,0,0,0.15);
-            transition:all .25s ease;
-            ">
-            Cerrar
-    </button>
-</div>
-
-
-
-<!-- ============================================================
-     PANEL VOLUMEN / WIFI / RELOJ
-============================================================ -->
-<div id="volumePanel" class="panel hidden">
-    <h3 style="text-align: center;"><i class="fi fi-sr-volume"></i> Volumen</h3>
-    <hr style="border: 1px solid #ffffffad;">
-    <br>
-    <input type="range" min="0" max="100" value="80">
-</div>
-
-<div id="wifiPanel" class="panel hidden">
-    <h3 style="text-align: center;"><i class="fi fi-sr-router-wifi"></i> Redes WiFi</h3>
-    <hr style="border: 1px solid #ffffffad;">
-    <br>
-    <ul>
-        <li><i class="fi fi-sr-wifi"></i> Sterling 5G (Fuerte)</li>
-        <li><i class="fi fi-sr-smartphone"></i> S26 Ultra de Santiago</li>
-        <li><i class="fi fi-sr-wifi-lock"></i> Familia Sterling</li>
-        <li><i class="fi fi-sr-smartphone"></i> iPhone de Santiago</li>
-        <li><i class="fi fi-sr-smartphone"></i> S26 Ultra de Santiago</li>
-    </ul>
-</div>
-
-    
-
-<!-- ============================================================
-     INICIO DE CALENDARIO CON BOOTSTRAP
-============================================================ -->
-<!-- PANEL CALENDARIO -->
-<div id="calendarPanel" class="calendar-panel hidden">
-  <div class="card shadow" style="max-width: 350px;">
-    <div class="card-body">
-
-      <h5 class="card-title text-center"><i class="fi fi-sr-calendar-clock"></i> Fecha y Hora</h5>
-      <hr style="border: 1px solid #000000ad;">
-      <div id="clockFull" class="text-center mb-3 fw-bold"></div>
-
-      <div class="d-flex justify-content-between align-items-center mb-2">
-  <button class="btn btn-sm btn-light" onclick="changeMonth(-1)">❮</button>
-
-  <div class="month-year-wrapper">
-    <span id="monthYear" class="month-label"></span>
-    <select id="yearSelect" class="year-select"></select>
   </div>
 
-  <button class="btn btn-sm btn-light" onclick="changeMonth(1)">❯</button>
+  <div class="start-section-label">Anclado</div>
+
+  <div class="start-apps">
+    <div class="start-app" data-app="explorer">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75">
+      <span>Explorador</span>
+    </div>
+    <div class="start-app" data-app="browser">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-KBUXl6AhDj2IsoZnozHL39yX1acqa5.png&w=1000&q=75">
+      <span>Navegador</span>
+    </div>
+    <div class="start-app" data-app="notes">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75">
+      <span>Notas</span>
+    </div>
+    <div class="start-app" data-app="player">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hYb7C5vkHO9CJDCDmnVhWYl6v3ECyg.png&w=1000&q=75">
+      <span>Sterling Music</span>
+    </div>
+    <div class="start-app" data-app="paint">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75">
+      <span>Sterl-ink</span>
+    </div>
+    <div class="start-app" data-app="buscaminas">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-e3kGOJ1Nx9Q68omg5PbnlZh8hFAJkX.png&w=500&q=75">
+      <span>Sterling World</span>
+    </div>
+  </div>
+
+  <div class="start-divider"></div>
+  <div class="start-options">
+    <div class="start-option" id="openWallpaperPanel">
+      🖼️ Cambiar fondo de escritorio
+    </div>
+    <div class="start-option" id="openDesktopSwitcher">
+      💼 Ver portafolio
+    </div>
+    <div class="start-option" onclick="window.location.href='proyectos20.html'">
+      🌐 Ver proyectos
+    </div>
+  </div>
+
+  <div class="start-footer">
+    <div class="start-user">
+      <div class="start-avatar">SS</div>
+      <div class="start-user-name">Santiago Sterling</div>
+    </div>
+    <div class="start-footer-actions">
+      <div class="start-footer-btn" title="Configuración">⚙️</div>
+      <div class="start-footer-btn" title="Apagar" onclick="showToast('Sistema','Apagando...')">⏻</div>
+    </div>
+  </div>
+
 </div>
 
-
-      <div id="calendar"></div>
+<!-- ============================================================ WIFI PANEL -->
+<div id="wifiPanel" class="sys-panel hidden">
+  <div class="sys-panel-title">📶 Redes WiFi</div>
+  <div class="wifi-list">
+    <div class="wifi-item">
+      <div class="wifi-item-icon">📶</div>
+      <div class="wifi-item-info">
+        <div class="wifi-item-name">Sterling 5G</div>
+        <div class="wifi-item-status">Conectado · Segura</div>
+      </div>
+      <div class="wifi-connected-badge">Conectado</div>
+    </div>
+    <div class="wifi-item">
+      <div class="wifi-item-icon">📱</div>
+      <div class="wifi-item-info">
+        <div class="wifi-item-name">S26 Ultra de Santiago</div>
+        <div class="wifi-item-status">Zona wifi · Segura</div>
+      </div>
+    </div>
+    <div class="wifi-item">
+      <div class="wifi-item-icon">🔒</div>
+      <div class="wifi-item-info">
+        <div class="wifi-item-name">Familia Sterling</div>
+        <div class="wifi-item-status">Segura · 5 GHz</div>
+      </div>
+    </div>
+    <div class="wifi-item">
+      <div class="wifi-item-icon">📱</div>
+      <div class="wifi-item-info">
+        <div class="wifi-item-name">iPhone de Santiago</div>
+        <div class="wifi-item-status">Zona wifi</div>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- ============================================================ VOLUME PANEL -->
+<div id="volumePanel" class="sys-panel hidden">
+  <div class="sys-panel-title">🔊 Centro de acciones</div>
+  <div class="quick-tiles">
+    <div class="quick-tile on" onclick="this.classList.toggle('on')">
+      <div class="quick-tile-icon">📶</div>
+      <div class="quick-tile-label">WiFi</div>
+    </div>
+    <div class="quick-tile on" onclick="this.classList.toggle('on')">
+      <div class="quick-tile-icon">🔵</div>
+      <div class="quick-tile-label">Bluetooth</div>
+    </div>
+    <div class="quick-tile" onclick="this.classList.toggle('on')">
+      <div class="quick-tile-icon">✈️</div>
+      <div class="quick-tile-label">Avión</div>
+    </div>
+    <div class="quick-tile on" onclick="this.classList.toggle('on')">
+      <div class="quick-tile-icon">🌙</div>
+      <div class="quick-tile-label">No molestar</div>
+    </div>
+    <div class="quick-tile" onclick="this.classList.toggle('on')">
+      <div class="quick-tile-icon">🔆</div>
+      <div class="quick-tile-label">Ahorro</div>
+    </div>
+    <div class="quick-tile on" onclick="this.classList.toggle('on')">
+      <div class="quick-tile-icon">🖥️</div>
+      <div class="quick-tile-label">Proyectar</div>
+    </div>
+  </div>
+  <div class="slider-row">
+    <span>🔊</span>
+    <input type="range" class="sys-slider" min="0" max="100" value="80" id="volSlider">
+    <span style="font-size:12px;color:var(--text-secondary);width:28px;" id="volLabel">80</span>
+  </div>
+  <div class="slider-row">
+    <span>🔆</span>
+    <input type="range" class="sys-slider" min="0" max="100" value="70" id="briSlider">
+    <span style="font-size:12px;color:var(--text-secondary);width:28px;" id="briLabel">70</span>
+  </div>
+</div>
 
+<!-- ============================================================ CALENDAR PANEL -->
+<div id="calendarPanel" class="hidden">
+  <div id="clockFull"></div>
+  <div class="cal-nav">
+    <div class="cal-nav-btn" onclick="changeMonth(-1)">&#8249;</div>
+    <div id="monthYear"></div>
+    <div class="cal-nav-btn" onclick="changeMonth(1)">&#8250;</div>
+  </div>
+  <div id="calendar"></div>
+</div>
 
+<!-- ============================================================ WALLPAPER PANEL -->
+<div id="wallpaperPanel" class="hidden">
+  <h2>🖼️ Fondo de pantalla</h2>
+  <p class="wp-sub">Elige un fondo predeterminado o carga tu propia imagen desde el dispositivo.</p>
+  <input type="file" id="wallpaperInput" accept="image/*">
+  <div id="wallpaperList">
+    <img src="https://cdn.pixabay.com/photo/2014/07/16/05/18/beach-394503_1280.jpg">
+    <img src="https://cdn.pixabay.com/photo/2024/05/15/07/59/flowers-8763039_1280.jpg">
+    <img src="https://cdn.pixabay.com/photo/2023/07/18/12/00/aircraft-8134636_1280.jpg">
+    <img src="https://cdn.pixabay.com/photo/2017/06/16/10/03/texture-2408546_1280.jpg">
+    <img src="https://cdn.pixabay.com/photo/2022/10/10/05/25/rottweiler-7510792_1280.jpg">
+    <img src="https://cdn.pixabay.com/photo/2016/03/26/13/09/sackcloth-1280539_1280.jpg">
+  </div>
+  <button class="wp-btn" id="closeWallpaperPanel">Cerrar</button>
+</div>
 
-
-
-<!-- ============================================================
-     MENÚ CONTEXTUAL DEL ESCRITORIO
-============================================================ -->
-<ul id="contextMenu" class="context-menu hidden">
-    <li id="ctxOpen"><i class="fi fi-sr-browsers"></i>  Abrir</li>
-    <li id="ctxOpen"><i class="fi fi-sr-refresh"></i>  Actualizar</li>
-    <li id="ctxRename"><i class="fi fi-sr-text-box-dots"></i>  Renombrar</li>
-    <li id="ctxDelete"><i class="fi fi-sr-trash-list"></i>  Eliminar</li>
+<!-- ============================================================ CONTEXT MENU -->
+<ul id="contextMenu" class="hidden">
+  <li id="ctxOpen">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+    Abrir
+  </li>
+  <li id="ctxRefresh">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+    Actualizar
+  </li>
+  <li class="ctx-sep"></li>
+  <li id="ctxRename">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+    Renombrar
+  </li>
+  <li id="ctxDelete">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+    Eliminar
+  </li>
+  <li class="ctx-sep"></li>
+  <li id="ctxWallpaper">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+    Cambiar fondo
+  </li>
 </ul>
 
-
-<!-- ============================================================
-     BARRA DE TAREAS
-============================================================ -->
+<!-- ============================================================ TASKBAR -->
 <div id="taskbar">
+  <div class="taskbar-center">
 
-    <div id="startButton" class="taskbar-center-btn">
-        <div style="
-            width:40px;
-            height:40px;
-            border-radius:16px;
-            background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            flex-shrink:0;
-        ">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 2C7 2 3 6 3 11c0 4.5 3.4 8 7.8 8.9L12 22l1.2-2.1C17.6 19 21 15.5 21 11c0-5-4-9-9-9z"
-                stroke="rgba(255,255,255,0.9)"
-                stroke-width="1.2"
-                stroke-linecap="round"
-                stroke-linejoin="round"></path>
-            </svg>
-        </div>
+    <!-- Start Button -->
+    <div id="startButton" data-tooltip="Inicio">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 3h8v8H3V3z" fill="rgba(0,120,215,0.9)"/>
+        <path d="M13 3h8v8h-8V3z" fill="rgba(0,120,215,0.7)"/>
+        <path d="M3 13h8v8H3v-8z" fill="rgba(0,120,215,0.7)"/>
+        <path d="M13 13h8v8h-8v-8z" fill="rgba(0,120,215,0.5)"/>
+      </svg>
     </div>
 
+    <!-- Search -->
+    <div id="searchBtn" data-tooltip="Buscar">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      Buscar
+    </div>
 
+    <!-- Task app buttons -->
     <div id="taskButtons" class="taskbar-apps"></div>
+  </div>
 
-    <div class="taskbar-right">
-	<p>Santiago Sterling</p>
-	<p>ESP</P>
-        <div id="volumeIcon" class="task-icon">
-          <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-YbKiwSLSGLhOMMZyseXSHJ4EoabTN9.png&w=1000&q=75" alt="Internet" width="20" height="20">
-        </div>
-        <div id="wifiIcon" class="task-icon">
-            <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-lN63fxMooXI0qb9TN9M4gzEYlXg15u.png&w=1000&q=75" alt="Internet" width="20" height="20">
-        </div>
-        <div id="clock" class="task-icon">00:00:00</div>
+  <!-- System Tray -->
+  <div class="taskbar-right">
+    <div class="tray-group" id="volumeIcon" data-tooltip="Volumen y acceso rápido">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-YbKiwSLSGLhOMMZyseXSHJ4EoabTN9.png&w=1000&q=75" class="tray-icon">
+      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-lN63fxMooXI0qb9TN9M4gzEYlXg15u.png&w=1000&q=75" class="tray-icon" id="wifiIcon" style="cursor:default">
     </div>
 
+    <div class="clock-area" id="clockArea" data-tooltip="Calendario">
+      <div id="clock-time">00:00</div>
+      <div id="clock-date">1/1/2026</div>
+    </div>
+  </div>
 </div>
 
-
-<!-- ============================================================
-     SCRIPTS
-============================================================ -->
 <script src="windows.js"></script>
-
 </body>
 </html>
