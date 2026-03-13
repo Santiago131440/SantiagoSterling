@@ -74,6 +74,12 @@ const apps = {
         width: 820, height: 600,
         content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/Sterling Letter.html" style="width:100%;height:100%;border:none;"></iframe>`
     },
+   powerpoint: {
+        title: "Sterling Presentation",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-L8T5N6DbL9jezTcIoss4pIKNG256jy.png&w=1000&q=75",
+        width: 820, height: 600,
+        content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/Sterling Presentation.html" style="width:100%;height:100%;border:none;"></iframe>`
+    },
     "recycle-bin": {
         title: "Papelera de reciclaje",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-lSpzRMqmwGWoV08dHuh6wchQDokHkw.png&w=1000&q=75",
