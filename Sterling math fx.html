@@ -147,35 +147,17 @@
 </head>
 <body>
 
-<!-- Title Bar -->
-<div id="title-bar">
-  <span>📊</span>
-  <span class="app-title">Libro1 - Excel Clone</span>
-  <div class="window-controls">
-    <button class="wc-btn">─</button>
-    <button class="wc-btn">□</button>
-    <button class="wc-btn close">✕</button>
-  </div>
-</div>
-
-<!-- Menu Bar -->
-<div id="menu-bar">
-  <div class="menu-item" onclick="showMenu('archivo')">Archivo</div>
-  <div class="menu-item" onclick="showMenu('inicio')">Inicio</div>
-  <div class="menu-item" onclick="showMenu('insertar')">Insertar</div>
-  <div class="menu-item" onclick="showMenu('formulas')">Fórmulas</div>
-  <div class="menu-item" onclick="showMenu('datos')">Datos</div>
-  <div class="menu-item" onclick="showMenu('revisar')">Revisar</div>
-  <div class="menu-item" onclick="showMenu('vista')">Vista</div>
-</div>
-
 <!-- Ribbon -->
 <div id="ribbon">
   <div id="ribbon-tabs">
+    <div class="ribbon-tab" onclick="switchTab('archivo')">Archivo</div>
     <div class="ribbon-tab active" onclick="switchTab('inicio')">Inicio</div>
     <div class="ribbon-tab" onclick="switchTab('insertar')">Insertar</div>
+    <div class="ribbon-tab" onclick="switchTab('dibujar')">Dibujar</div>
+    <div class="ribbon-tab" onclick="switchTab('disposicion')">Disposición de páginas</div>
     <div class="ribbon-tab" onclick="switchTab('formulas')">Fórmulas</div>
     <div class="ribbon-tab" onclick="switchTab('datos')">Datos</div>
+    <div class="ribbon-tab" onclick="switchTab('revisar')">Revisar</div>
     <div class="ribbon-tab" onclick="switchTab('vista')">Vista</div>
   </div>
   <div id="ribbon-content">
