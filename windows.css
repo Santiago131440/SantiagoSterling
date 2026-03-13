@@ -1,601 +1,381 @@
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --accent: #0067c0;
+  --accent-light: #0078d4;
+  --accent-hover: #106ebe;
+  --surface: rgba(32, 32, 32, 0.88);
+  --surface-light: rgba(255,255,255,0.06);
+  --surface-hover: rgba(255,255,255,0.10);
+  --surface-active: rgba(255,255,255,0.15);
+  --border: rgba(255,255,255,0.12);
+  --border-strong: rgba(255,255,255,0.20);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255,255,255,0.7);
+  --text-muted: rgba(255,255,255,0.45);
+  --shadow: 0 8px 32px rgba(0,0,0,0.55), 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-heavy: 0 20px 60px rgba(0,0,0,0.7), 0 4px 16px rgba(0,0,0,0.4);
+  --radius-win: 8px;
+  --radius-lg: 12px;
+  --taskbar-h: 48px;
+}
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    user-select: none;
-    font-family: "Segoe UI", sans-serif;
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
 }
 
-html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-/* ============================================================
-   FONDO (Wallpaper)
-============================================================ */
+html, body { width: 100%; height: 100%; overflow: hidden; }
 
 body {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: #0e0e0e;
-    background-image: url('https://cdn.pixabay.com/photo/2014/07/16/05/18/beach-394503_1280.jpg');
-
-}
-
-/* ============================================================
-   ESCRITORIOS
-============================================================ */
-
-.desktop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: calc(100% - 48px);
-    display: none;
-}
-
-.desktop.active {
-    display: block;
-}
-
-/* ============================================================
-   ICONOS DEL ESCRITORIO
-============================================================ */
-
-.desktop-icon {
-    width: 85px;
-    text-align: center;
-    align-items: center;
-    padding: 6px;
-    margin: 8px;
-    border-radius: 8px;
-    position: absolute;
-    cursor: default;
-    transition: background 0.15s;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 6px;
-}
-
-.desktop-icon img {
-    width: 48px;
-    height: 48px;
-    display: block;
-}
-
-.desktop-icon span {
-    color: white;
-    text-shadow: 0 0 2px black;
-    font-size: 13px;
-}
-
-.desktop-icon:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.desktop-icon.dragging {
-    opacity: 0.5;
-    border: 1px dashed #fff;
-}
-
-/* ============================================================
-   VENTANAS
-============================================================ */
-
-.window {
-    position: absolute;
-    width: 480px;
-    height: 320px;
-    display: flex;
-    flex-direction: column;
-    backdrop-filter: blur(18px) saturate(1.5);
-    background: rgba(30, 30, 30, 0.45);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 0 25px rgba(0,0,0,0.35);
-    animation: fadeIn 0.2s ease-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(.97);
-    }
-}
-
-.window-header {
-    height: 36px;
-    background: rgba(255, 255, 255, 0.04);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 0 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 12px 12px 0 0;
-    cursor: grab;
-}
-
-.window-header span {
-    color: white;
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.window-header:active {
-    cursor: grabbing;
-}
-
-.window-buttons {
-    display: flex;
-    gap: 6px;
-}
-
-.win-btn {
-    width: 24px;
-    height: 24px;
-    display: grid;
-    place-items: center;
-    color: rgb(255, 255, 255);
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.1s, color 0.1s;
-    font-size: 16px;
-}
-
-.win-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-}
-
-.win-btn.close:hover {
-    background: #e81123;
-}
-
-.window-content {
-    flex: 1;
-    overflow: auto;
-    padding: 0px;
-    color: white;
-}
-
-/* Animación maximizar / restaurar */
-.window.maximized {
-    animation: maximize 0.2s ease-out;
-    border-radius: 1px;
-}
-
-@keyframes maximize {
-    from {
-        transform: scale(0.95);
-        opacity: 0.6;
-    }
-}
-
-/* Resaltado de Asistencia de Ajuste */
-.snap-highlight {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 50%;
-    height: calc(100% - 48px);
-    border: 2px dashed rgba(255,255,255,0.5);
-    pointer-events: none;
-}
-
-.snap-highlight.right {
-    left: 50%;
-}
-
-/* ============================================================
-   EXPLORADOR DE ARCHIVOS
-============================================================ */
-
-.explorer-container {
-    display: flex;
-    height: 100%;
-}
-
-.explorer-sidebar {
-    width: 160px;
-    height: calc(100vh - 30px); 
-    background: rgba(255,255,255,0.06);
-    border-right: 1px solid rgba(255,255,255,0.15);
-    padding: 10px;
-}
-
-.explorer-sidebar div {
-    padding: 10px;
-    font-size: 14px;
-    color: white;
-    border-radius: 60px;
-    cursor: pointer;
-    text-align: center;
-}
-
-.explorer-sidebar div:hover {
-    background: rgba(255,255,255,0.15);
-}
-
-.explorer-main {
-    flex: 1;
-    padding: 15px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2px;
-}
-
-.folder-item, .file-item {
-    width: 80px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.folder-item img, .file-item img {
-    width: 48px;
-    height: 48px;
-}
-
-/* ============================================================
-   MENÚ INICIO
-============================================================ */
-
-.start-menu {
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 60px;
-    width: 420px;
-    background: rgba(40,40,40,0.45);
-    backdrop-filter: blur(25px);
-    border-radius: 18px;
-    padding: 20px;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 0 30px rgba(0,0,0,0.4);
-    animation: fadeInUp 0.15s ease-out;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translate(-50%, 20px);
-    }
-}
-
-.start-header h2 {
-    color: white;
-    margin-bottom: 15px;
-}
-
-.start-apps {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center; /* horizontal */
-    align-items: center;     /* vertical */
-}
-
-.start-app {
-    width: 110px;
-    padding: 10px;
-    text-align: center;
-    border-radius: 12px;
-    cursor: pointer;
-    background: rgba(255,255,255,0.06);
-    justify-items: center;
-}
-
-.start-app:hover {
-    background: rgba(255,255,255,0.15);
-}
-
-.start-app img {
-    width: 36px;
-    margin-bottom: 8px;
-    justify-content: center;
-    align-items: center;
-}
-
-.start-app span {
-    color: white;
-    font-size: 13px;
-    justify-content: center;
-    align-items: center;
-}
-
-.start-option {
-    margin-top: 10px;
-    padding: 10px;
-    cursor: pointer;
-    background: rgba(255,255,255,0.06);
-    border-radius: 60px;
-    color: white;
-}
-
-.start-option:hover {
-    background: rgba(255,255,255,0.15);
-}
-
-/* ============================================================
-   PANELS (WiFi, Volumen, Reloj)
-============================================================ */
-
-.panel {
-    position: fixed;
-    right: 15px;
-    bottom: 60px;
-    background: rgba(40,40,40,0.45);
-    backdrop-filter: blur(25px);
-    padding: 15px;
-    border-radius: 12px;
-    width: 230px;
-    color: white;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 0 25px rgba(0,0,0,0.4);
-}
-
-/* ============================================================
-   MENÚ CONTEXTUAL
-============================================================ */
-
-.context-menu {
-    position: fixed;
-    background: rgba(40,40,40,0.75);
-    backdrop-filter: blur(15px);
-    list-style: none;
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.12);
-    padding: 6px 0;
-    width: 180px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.35);
-    z-index: 999999;
-}
-
-.context-menu li {
-    padding: 10px 15px;
-    color: white;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.context-menu li:hover {
-    background: rgba(255,255,255,0.15);
-}
-
-.hidden {
-    display: none;
-}
-
-/* ============================================================
-   TASKBAR (BARRA DE TAREAS)
-============================================================ */
-
-#taskbar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 52px;
-    background: rgba(25, 25, 25, 0.397);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(255,255,255,0.12);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.taskbar-center-btn {
-    width: 42px;
-    height: 42px;
-    display: grid;
-    place-items: center;
-    background: rgba(0, 183, 255, 0.534);
-    border-radius: 100px;
-    margin-right: 12px;
-    font-size: 22px;
-    color: rgb(255, 0, 0);
-    cursor: pointer;
-}
-
-.taskbar-center-btn:hover {
-    background: rgba(255,255,255,0.18);
-}
-
-.taskbar-apps {
-    display: flex;
-    gap: 8px;
-}
-
-.task-btn {
-    padding: 6px 14px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    color: white;
-}
-
-.task-btn img {
-    width: 20px;
-}
-
-.task-btn:hover {
-    background: rgba(255,255,255,0.20);
-}
-
-.task-btn.active {
-    background: rgba(255,255,255,0.30);
-}
-
-.taskbar-right {
-    position: absolute;
-    right: 14px;
-    display: flex;
-    gap: 12px;
-}
-
-.task-icon {
-    color: white;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.task-icon:hover {
-    color: #ddd;
-}
-
-.taskbar-right p{
-color: #ffffff;
-font-size: 12px;
-padding: 2px 4px;
-}
-
-
-/* =====================================================
-   PANEL CALENDARIO (WINDOWS 11)
-===================================================== */
-.calendar-panel {
-  position: fixed;
-  right: 14px;
-  bottom: 64px;
-  z-index: 9999;
-  width: 340px;
-  max-width: 92vw;
-  animation: fadeUp 0.25s ease;
-}
-
-/* =====================================================
-   TARJETA – LIQUID GLASS (iOS 26)
-===================================================== */
-.card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 7px;
-  /* Vidrio ultra translúcido */
-  background:
-    linear-gradient(
-      180deg,
-      rgba(30, 255, 0, 0.027),
-      rgba(255, 0, 0, 0.027)
-    ),
-    radial-gradient(
-      140% 100% at 20% 0%,
-      rgba(255, 255, 255, 0.068),
-      transparent 65%
-    );
-
-  /* Blur real + saturación (liquid glass) */
-  backdrop-filter: blur(42px) saturate(185%);
-  -webkit-backdrop-filter: blur(42px) saturate(185%);
-
-  /* Borde de cristal más marcado */
-  border: 2px solid rgba(255,255,255,0.45);
-
-  /* Profundidad estilo sistema */
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.7),
-    inset 0 -2px 4px rgba(255,255,255,0.15),
-    0 28px 70px rgba(0,0,0,0.38);
-
-  color: #111;
-}
-/* =====================================================
-   RELOJ SUPERIOR
-===================================================== */
-#clockFull {
-  font-size: 0.9rem;
-  font-weight: 100;
-  color: #1f2937;
-  margin-bottom: 10px;
-}
-
-/* =====================================================
-   GRID CALENDARIO
-===================================================== */
-#calendar {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  font-size: 0.82rem;
-  text-align: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #1a2a3a;
+  background-image: url('https://cdn.pixabay.com/photo/2014/07/16/05/18/beach-394503_1280.jpg');
   user-select: none;
 }
 
-/* =====================================================
-   ENCABEZADOS
-===================================================== */
-.calendar-header {
-  font-size: 0.72rem;
-  font-weight: 100;
-  color: #6b7280;
-  padding-bottom: 6px;
+/* ============================================================ LOCK SCREEN */
+#lockScreen {
+  position: fixed; inset: 0; z-index: 99999;
+  background-image: inherit; background-size: cover; background-position: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; transition: opacity 0.5s ease;
 }
-
-/* =====================================================
-   DÍAS
-===================================================== */
-.calendar-day {
-  height: 34px;
-  width: 34px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+#lockScreen::before {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(0,0,0,0.3); backdrop-filter: blur(1px);
 }
+#lockScreen .lock-content { position: relative; text-align: center; color: white; animation: fadeIn 1.2s ease; }
+.lock-time { font-size: 88px; font-weight: 100; letter-spacing: -3px; line-height: 1; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+.lock-date { font-size: 20px; font-weight: 300; margin-top: 8px; opacity: 0.88; text-shadow: 0 1px 8px rgba(0,0,0,0.4); }
+.lock-hint { margin-top: 52px; font-size: 13px; opacity: 0.6; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; }
+.lock-icon { font-size: 20px; animation: floatUp 2.5s ease-in-out infinite; }
+@keyframes floatUp { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
 
-/* Hover */
-.calendar-day:hover {
-  background: rgba(0,0,0,0.06);
+/* ============================================================ DESKTOP */
+.desktop { position: absolute; top: 0; left: 0; width: 100%; height: calc(100% - var(--taskbar-h)); display: none; }
+.desktop.active { display: block; }
+
+/* ============================================================ DESKTOP ICONS */
+.desktop-icon {
+  width: 80px; text-align: center; padding: 8px 4px; margin: 4px;
+  border-radius: 6px; position: absolute; cursor: default;
+  transition: background 0.12s; display: flex; flex-direction: column; align-items: center; gap: 5px;
 }
+.desktop-icon img { width: 44px; height: 44px; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5)); }
+.desktop-icon span { color: white; font-size: 12px; line-height: 1.3; text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 12px rgba(0,0,0,0.6); word-break: break-word; }
+.desktop-icon:hover { background: rgba(255,255,255,0.14); backdrop-filter: blur(4px); }
+.desktop-icon.selected { background: rgba(0,120,215,0.35); outline: 1px solid rgba(0,120,215,0.6); }
+.desktop-icon.dragging { opacity: 0.55; }
 
-/* =====================================================
-   DÍA ACTUAL
-===================================================== */
-.calendar-today {
-  background: rgba(0,0,0,0.06);
-  font-weight: 600;
+/* ============================================================ WINDOWS */
+.window {
+  position: absolute; min-width: 320px; min-height: 200px;
+  display: flex; flex-direction: column;
+  background: rgba(28, 28, 28, 0.90);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.65), 0 2px 8px rgba(0,0,0,0.35);
+  animation: windowOpen 0.22s cubic-bezier(0.23,1,0.32,1);
+  overflow: hidden;
 }
+.window.focused { box-shadow: 0 20px 60px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.14), 0 4px 16px rgba(0,0,0,0.5); }
+@keyframes windowOpen { from{opacity:0;transform:scale(0.94) translateY(8px)} to{opacity:1;transform:scale(1) translateY(0)} }
 
-/* =====================================================
-   DÍA SELECCIONADO
-===================================================== */
-.calendar-selected {
-  background: #0b5ed7;
-  color: #fff;
-  font-weight: 600;
+/* Title bar */
+.window-header {
+  height: 32px; padding: 0 0 0 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  cursor: grab; flex-shrink: 0; background: rgba(255,255,255,0.02);
 }
+.window-header:active { cursor: grabbing; }
+.window-title-area { display: flex; align-items: center; gap: 8px; flex: 1; overflow: hidden; }
+.window-title-icon { width: 16px; height: 16px; object-fit: contain; flex-shrink: 0; }
+.title-text { color: var(--text-primary); font-size: 12px; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* =====================================================
-   DÍAS FUERA DEL MES
-===================================================== */
-.calendar-muted {
-  color: #9ca3af;
+/* Window controls */
+.window-buttons { display: flex; gap: 0; margin-left: 8px; }
+.win-btn {
+  width: 46px; height: 32px; display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); cursor: pointer; transition: background 0.1s, color 0.1s; font-size: 11px;
 }
+.win-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+.win-btn.close:hover { background: #c42b1c; color: white; }
 
-/* =====================================================
-   OCULTO
-===================================================== */
-.hidden {
-  display: none !important;
+.window-content { flex: 1; overflow: auto; color: white; position: relative; }
+.window-content::-webkit-scrollbar { width: 6px; }
+.window-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 3px; }
+
+.window.maximized { border-radius: 0 !important; border: none !important; }
+
+/* Snap */
+.snap-highlight {
+  position: fixed; top: 0; left: 0; width: 50%; height: calc(100% - var(--taskbar-h));
+  background: rgba(0,120,215,0.10); border: 2px solid rgba(0,120,215,0.4);
+  backdrop-filter: blur(2px); pointer-events: none; border-radius: 8px; animation: snapPulse 0.25s ease;
 }
+.snap-highlight.right { left: 50%; }
+@keyframes snapPulse { from{opacity:0;transform:scaleY(0.95)} to{opacity:1;transform:scaleY(1)} }
 
-/* =====================================================
-   ANIMACIÓN
-===================================================== */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+/* ============================================================ FILE EXPLORER */
+.explorer-container { display: flex; height: 100%; background: rgba(18,18,18,0.6); }
+.explorer-sidebar { width: 185px; padding: 8px 6px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; }
+.explorer-sidebar-header { font-size: 11px; color: var(--text-muted); padding: 8px 10px 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.explorer-sidebar-item {
+  padding: 6px 10px; font-size: 13px; color: var(--text-secondary); border-radius: 4px;
+  cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.1s;
+}
+.explorer-sidebar-item:hover { background: var(--surface-hover); color: white; }
+.explorer-sidebar-item.active { background: rgba(0,120,215,0.22); color: white; }
+.explorer-sidebar-item img { width: 16px; height: 16px; object-fit: contain; }
+
+.explorer-right { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.explorer-toolbar {
+  height: 44px; padding: 0 8px; display: flex; align-items: center; gap: 2px;
+  border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02);
+}
+.explorer-tool-btn {
+  height: 32px; padding: 0 8px; border-radius: 4px; display: flex; align-items: center;
+  gap: 6px; color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: background 0.1s;
+}
+.explorer-tool-btn:hover { background: var(--surface-hover); color: white; }
+.explorer-tool-btn img { width: 16px; height: 16px; object-fit: contain; }
+.explorer-tool-sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
+
+.explorer-address { height: 34px; padding: 0 10px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.01); }
+.explorer-nav-btn { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer; color: var(--text-muted); font-size: 14px; transition: background 0.1s; }
+.explorer-nav-btn:hover { background: var(--surface-hover); color: white; }
+.explorer-address-bar { flex: 1; height: 22px; background: rgba(255,255,255,0.07); border-radius: 3px; padding: 0 8px; display: flex; align-items: center; font-size: 12px; color: var(--text-secondary); }
+
+.explorer-main { flex: 1; padding: 10px; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 2px; overflow-y: auto; }
+.folder-item, .file-item { width: 85px; padding: 8px 4px; text-align: center; cursor: pointer; border-radius: 4px; transition: background 0.1s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.folder-item:hover, .file-item:hover { background: var(--surface-hover); }
+.folder-item img, .file-item img { width: 40px; height: 40px; object-fit: contain; }
+.folder-item span, .file-item span { font-size: 12px; color: var(--text-secondary); word-break: break-word; line-height: 1.3; }
+.explorer-status { height: 22px; padding: 0 10px; display: flex; align-items: center; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-muted); }
+
+/* ============================================================ NOTEPAD */
+.notepad-container { display: flex; flex-direction: column; height: 100%; background: rgba(18,18,18,0.4); }
+.notepad-menubar { height: 28px; padding: 0 4px; display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); }
+.notepad-menu-item { padding: 3px 10px; font-size: 13px; color: var(--text-secondary); cursor: pointer; border-radius: 3px; }
+.notepad-menu-item:hover { background: var(--surface-hover); color: white; }
+.notepad-textarea { flex: 1; background: transparent; border: none; outline: none; color: white; font-size: 14px; font-family: "Consolas", monospace; padding: 12px 16px; resize: none; line-height: 1.65; }
+.notepad-statusbar { height: 22px; padding: 0 12px; display: flex; align-items: center; justify-content: flex-end; gap: 20px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-muted); }
+
+/* ============================================================ TASKBAR */
+#taskbar {
+  position: fixed; bottom: 0; left: 0; width: 100%; height: var(--taskbar-h);
+  background: rgba(18,18,18,0.85);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  display: flex; align-items: center; justify-content: center; z-index: 9000;
+}
+.taskbar-center { display: flex; align-items: center; gap: 2px; }
+
+#startButton {
+  width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+  border-radius: 6px; cursor: pointer; transition: background 0.12s; margin-right: 2px; flex-shrink: 0;
+}
+#startButton:hover { background: var(--surface-hover); }
+#startButton.active { background: var(--surface-active); }
+#startButton svg { width: 20px; height: 20px; }
+
+#searchBtn {
+  width: 200px; height: 34px; display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.07); border-radius: 20px; border: 1px solid var(--border);
+  padding: 0 14px; cursor: text; color: var(--text-muted); font-size: 13px;
+  transition: background 0.12s, border-color 0.12s; margin-right: 4px;
+}
+#searchBtn:hover { background: rgba(255,255,255,0.10); border-color: var(--border-strong); color: var(--text-secondary); }
+
+.taskbar-apps { display: flex; align-items: center; gap: 2px; }
+.task-btn {
+  width: 44px; height: 44px; border-radius: 6px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; cursor: pointer; transition: background 0.12s; position: relative;
+}
+.task-btn img { width: 22px; height: 22px; object-fit: contain; }
+.task-btn:hover { background: var(--surface-hover); }
+.task-btn.active { background: var(--surface-active); }
+.task-btn::after { content: ''; display: none; width: 16px; height: 3px; border-radius: 2px; background: var(--accent-light); position: absolute; bottom: 3px; transition: width 0.15s; }
+.task-btn.active::after { display: block; }
+.task-btn:hover::after { display: block; width: 10px; background: rgba(255,255,255,0.5); }
+.task-btn.active:hover::after { width: 20px; }
+
+/* System tray */
+.taskbar-right { position: absolute; right: 0; height: 100%; display: flex; align-items: center; }
+.tray-group { display: flex; align-items: center; height: 100%; padding: 0 6px; gap: 6px; cursor: pointer; border-radius: 6px; transition: background 0.12s; margin-right: 2px; }
+.tray-group:hover { background: var(--surface-hover); }
+.tray-icon { width: 18px; height: 18px; object-fit: contain; opacity: 0.8; transition: opacity 0.1s; }
+.tray-icon:hover { opacity: 1; }
+.clock-area { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 12px; cursor: pointer; border-radius: 6px; transition: background 0.12s; height: 100%; }
+.clock-area:hover { background: var(--surface-hover); }
+#clock-time { color: white; font-size: 12px; font-weight: 400; line-height: 1.3; }
+#clock-date { color: var(--text-secondary); font-size: 11px; line-height: 1.3; }
+
+/* ============================================================ START MENU */
+#startMenu {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: calc(var(--taskbar-h) + 12px); width: 650px; max-width: 96vw;
+  background: rgba(30,30,30,0.94);
+  backdrop-filter: blur(50px) saturate(180%);
+  -webkit-backdrop-filter: blur(50px) saturate(180%);
+  border-radius: 16px; border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-heavy); z-index: 9500; overflow: hidden;
+  animation: startMenuOpen 0.2s cubic-bezier(0.23,1,0.32,1);
+}
+@keyframes startMenuOpen { from{opacity:0;transform:translateX(-50%) translateY(14px) scale(0.97)} to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)} }
+
+.start-search-area { padding: 20px 20px 0; }
+.start-search { width: 100%; height: 36px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); border-radius: 20px; display: flex; align-items: center; gap: 10px; padding: 0 16px; color: var(--text-muted); font-size: 13px; cursor: pointer; transition: all 0.15s; }
+.start-search:hover { background: rgba(255,255,255,0.12); border-color: var(--border-strong); color: var(--text-secondary); }
+.start-section-label { font-size: 13px; font-weight: 600; color: var(--text-primary); padding: 16px 20px 10px; }
+
+.start-apps { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; padding: 0 12px; }
+.start-app { padding: 12px 4px; border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: background 0.12s; }
+.start-app:hover { background: var(--surface-hover); }
+.start-app:active { background: var(--surface-active); }
+.start-app img { width: 36px; height: 36px; object-fit: contain; }
+.start-app span { color: var(--text-secondary); font-size: 12px; text-align: center; line-height: 1.3; }
+
+.start-footer { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; margin-top: 10px; background: rgba(255,255,255,0.03); border-top: 1px solid var(--border); }
+.start-user { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 6px 10px; border-radius: 6px; transition: background 0.12s; }
+.start-user:hover { background: var(--surface-hover); }
+.start-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: white; flex-shrink: 0; }
+.start-user-name { font-size: 13px; color: white; }
+.start-footer-actions { display: flex; gap: 4px; }
+.start-footer-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; color: var(--text-secondary); font-size: 16px; transition: background 0.12s; }
+.start-footer-btn:hover { background: var(--surface-hover); color: white; }
+
+.start-divider { height: 1px; background: var(--border); margin: 2px 16px; }
+.start-options { padding: 4px 10px; }
+.start-option { padding: 8px 12px; cursor: pointer; border-radius: 6px; color: var(--text-secondary); font-size: 13px; display: flex; align-items: center; gap: 10px; transition: background 0.12s; }
+.start-option:hover { background: var(--surface-hover); color: white; }
+
+/* ============================================================ SYSTEM PANELS */
+.sys-panel {
+  position: fixed; right: 12px; bottom: calc(var(--taskbar-h) + 12px); width: 380px;
+  background: rgba(30,30,30,0.96);
+  backdrop-filter: blur(50px) saturate(180%);
+  -webkit-backdrop-filter: blur(50px) saturate(180%);
+  border-radius: 16px; border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-heavy); z-index: 9500; padding: 16px;
+  animation: panelOpen 0.2s cubic-bezier(0.23,1,0.32,1); color: white;
+}
+@keyframes panelOpen { from{opacity:0;transform:translateY(12px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
+
+.sys-panel-title { font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+.quick-tiles { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 14px; }
+.quick-tile { height: 64px; background: rgba(255,255,255,0.08); border-radius: 8px; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; padding: 10px; cursor: pointer; transition: background 0.12s; position: relative; }
+.quick-tile:hover { background: rgba(255,255,255,0.14); }
+.quick-tile.on { background: rgba(0,120,215,0.28); outline: 1px solid rgba(0,120,215,0.45); }
+.quick-tile-icon { font-size: 18px; position: absolute; top: 10px; left: 10px; }
+.quick-tile-label { font-size: 11px; color: var(--text-secondary); }
+.quick-tile.on .quick-tile-label { color: white; }
+.slider-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.slider-row span { font-size: 16px; width: 22px; text-align: center; }
+.sys-slider { flex: 1; -webkit-appearance: none; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.2); outline: none; cursor: pointer; }
+.sys-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: white; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+
+.wifi-list { display: flex; flex-direction: column; gap: 2px; }
+.wifi-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px; cursor: pointer; transition: background 0.12s; }
+.wifi-item:hover { background: var(--surface-hover); }
+.wifi-item-icon { font-size: 18px; }
+.wifi-item-info { flex: 1; }
+.wifi-item-name { font-size: 13px; color: white; }
+.wifi-item-status { font-size: 11px; color: var(--text-muted); }
+.wifi-connected-badge { font-size: 11px; color: #60cdff; background: rgba(0,120,215,0.2); padding: 2px 8px; border-radius: 10px; }
+
+/* ============================================================ CALENDAR PANEL */
+#calendarPanel {
+  position: fixed; right: 12px; bottom: calc(var(--taskbar-h) + 12px); width: 360px;
+  background: rgba(30,30,30,0.96);
+  backdrop-filter: blur(50px) saturate(180%);
+  -webkit-backdrop-filter: blur(50px) saturate(180%);
+  border-radius: 16px; border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-heavy); z-index: 9500; padding: 20px;
+  animation: panelOpen 0.2s cubic-bezier(0.23,1,0.32,1); color: white;
+}
+#clockFull { text-align: center; font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; text-transform: capitalize; }
+.cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.cal-nav-btn { width: 28px; height: 28px; border-radius: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); font-size: 14px; transition: background 0.1s; }
+.cal-nav-btn:hover { background: var(--surface-hover); color: white; }
+#monthYear { font-size: 14px; font-weight: 600; cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: background 0.1s; text-transform: capitalize; }
+#monthYear:hover { background: var(--surface-hover); }
+#calendar { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; font-size: 13px; text-align: center; }
+.calendar-header { font-size: 11px; color: var(--text-muted); padding: 4px 0 6px; font-weight: 600; }
+.calendar-day { height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; color: var(--text-secondary); transition: background 0.12s, color 0.12s; font-size: 13px; }
+.calendar-day:hover { background: var(--surface-hover); color: white; }
+.calendar-today { background: rgba(255,255,255,0.1); color: white; font-weight: 600; }
+.calendar-selected { background: var(--accent-light) !important; color: white !important; font-weight: 600; }
+.calendar-muted { color: var(--text-muted); }
+
+/* ============================================================ CONTEXT MENU */
+#contextMenu {
+  position: fixed; background: rgba(36,36,36,0.96);
+  backdrop-filter: blur(30px) saturate(180%); -webkit-backdrop-filter: blur(30px) saturate(180%);
+  list-style: none; border-radius: 10px; border: 1px solid var(--border-strong);
+  padding: 4px; width: 220px; box-shadow: var(--shadow-heavy); z-index: 999999;
+  animation: ctxOpen 0.12s ease;
+}
+@keyframes ctxOpen { from{opacity:0;transform:scale(0.94)} }
+#contextMenu li { padding: 8px 14px; color: var(--text-secondary); cursor: pointer; font-size: 13px; border-radius: 6px; display: flex; align-items: center; gap: 10px; transition: background 0.08s; }
+#contextMenu li:hover { background: var(--surface-hover); color: white; }
+#contextMenu .ctx-sep { height: 1px; background: var(--border); margin: 4px 6px; padding: 0; cursor: default; }
+#contextMenu .ctx-sep:hover { background: var(--border); }
+
+/* ============================================================ WALLPAPER PANEL */
+#wallpaperPanel {
+  position: fixed; right: 12px; bottom: calc(var(--taskbar-h) + 12px); width: 420px;
+  background: rgba(30,30,30,0.96);
+  backdrop-filter: blur(50px) saturate(180%);
+  -webkit-backdrop-filter: blur(50px) saturate(180%);
+  border-radius: 16px; border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-heavy); z-index: 9500; padding: 20px; color: white;
+  animation: panelOpen 0.2s cubic-bezier(0.23,1,0.32,1); max-height: 80vh; overflow-y: auto;
+}
+#wallpaperPanel h2 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+#wallpaperPanel .wp-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+#wallpaperList { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 16px; }
+#wallpaperList img { width: 100%; height: 72px; object-fit: cover; border-radius: 6px; cursor: pointer; border: 2px solid transparent; transition: border-color 0.15s, transform 0.15s; }
+#wallpaperList img:hover { border-color: var(--accent-light); transform: scale(1.03); }
+#wallpaperList img.active { border-color: var(--accent-light); }
+#wallpaperPanel input[type="file"] { width: 100%; padding: 8px; background: var(--surface-light); border: 1px dashed var(--border-strong); border-radius: 6px; color: var(--text-secondary); font-size: 13px; cursor: pointer; margin-bottom: 12px; }
+.wp-btn { display: inline-flex; align-items: center; padding: 7px 18px; background: var(--accent-light); color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; transition: background 0.12s; }
+.wp-btn:hover { background: var(--accent-hover); }
+
+/* ============================================================ TOAST */
+.win-toast {
+  position: fixed; bottom: calc(var(--taskbar-h) + 16px); right: 16px; width: 360px;
+  background: rgba(36,36,36,0.97); backdrop-filter: blur(30px);
+  border-radius: 10px; border: 1px solid var(--border-strong);
+  padding: 14px 16px; box-shadow: var(--shadow-heavy); z-index: 99998;
+  display: flex; gap: 12px; align-items: flex-start; animation: toastIn 0.3s cubic-bezier(0.23,1,0.32,1);
+}
+@keyframes toastIn { from{transform:translateX(20px);opacity:0} to{transform:translateX(0);opacity:1} }
+.toast-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.toast-content { flex: 1; }
+.toast-title { font-size: 13px; font-weight: 600; color: white; margin-bottom: 2px; }
+.toast-body { font-size: 12px; color: var(--text-secondary); }
+.toast-close { color: var(--text-muted); cursor: pointer; font-size: 16px; line-height: 1; flex-shrink: 0; padding: 2px 4px; border-radius: 3px; transition: background 0.1s; }
+.toast-close:hover { background: var(--surface-hover); color: white; }
+
+/* ============================================================ UTILS */
+.hidden { display: none !important; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.28); }
+
+[data-tooltip] { position: relative; }
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: rgba(36,36,36,0.97); color: white; font-size: 12px; padding: 4px 10px;
+  border-radius: 5px; white-space: nowrap; border: 1px solid var(--border); pointer-events: none; z-index: 99999; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
