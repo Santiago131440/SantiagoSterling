@@ -379,3 +379,16 @@ body {
   background: rgba(36,36,36,0.97); color: white; font-size: 12px; padding: 4px 10px;
   border-radius: 5px; white-space: nowrap; border: 1px solid var(--border); pointer-events: none; z-index: 99999; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
+
+.start-avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  overflow:hidden;
+}
+
+.start-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
