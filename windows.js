@@ -114,7 +114,7 @@ lockScreen.addEventListener("click", () => {
     lockScreen.style.opacity = "0";
     setTimeout(() => {
         lockScreen.style.display = "none";
-        showToast("Sistema", "Bienvenido, Santiago Sterling 👋");
+        showToast("Santiago Sterling", "Bienvenido, Soy Santiago Sterling, y este es mi repositorio, el sitio donde dejo todo mi código de las aplicaciones que he creado.");
     }, 500);
 });
 
@@ -151,13 +151,13 @@ function openApp(appName, extra = null) {
           </div>
           <div class="window-buttons">
             <div class="win-btn min" title="Minimizar">
-              <svg viewBox="0 0 10 1"><line x1="0" y1="0.5" x2="10" y2="0.5" stroke="currentColor" stroke-width="1"/></svg>
+              <svg viewBox="0 0 40 1"><line x1="0" y1="0.5" x2="10" y2="0.5" stroke="currentColor" stroke-width="1"/></svg>
             </div>
             <div class="win-btn max" title="Maximizar">
-              <svg viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" stroke="currentColor" fill="none" stroke-width="1"/></svg>
+              <svg viewBox="0 0 40 40"><rect x="0.5" y="0.5" width="9" height="9" stroke="currentColor" fill="none" stroke-width="1"/></svg>
             </div>
             <div class="win-btn close" title="Cerrar">
-              <svg viewBox="0 0 10 10"><line x1="0" y1="0" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="0" x2="0" y2="10" stroke="currentColor" stroke-width="1.2"/></svg>
+              <svg viewBox="0 0 40 40"><line x1="0" y1="0" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="0" x2="0" y2="10" stroke="currentColor" stroke-width="1.2"/></svg>
             </div>
           </div>
         </div>
