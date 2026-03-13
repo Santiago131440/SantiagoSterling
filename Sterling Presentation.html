@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presentación1 - PowerPoint Clone</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ppt-red: #c43e1c;
+  --ppt-red-dark: #a03018;
+  --ppt-orange: #d35230;
+  --ribbon-bg: #fff;
+  --btn-hover: #fce4dc;
+  --btn-active: #f4c4b4;
+  --panel-bg: #2d2d2d;
+  --slide-panel-bg: #3c3c3c;
+  --thumb-border: #555;
+  --thumb-active: #c43e1c;
+  --stage-bg: #525252;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: #1e1e1e;
+  color: #222;
+}
+
+/* ===== TITLE BAR ===== */
+#title-bar {
+  background: var(--ppt-red);
+  color: white;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  min-height: 30px;
+  flex-shrink: 0;
+}
+#qa-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 1px;
+}
+.qa { background: none; border: none; color: white; cursor: pointer; padding: 3px 6px; border-radius: 2px; font-size: 13px; }
+.qa:hover { background: rgba(255,255,255,0.2); }
+#title-center { flex: 1; text-align: center; font-size: 12px; pointer-events: none; }
+#win-controls { display: flex; height: 100%; }
+.wc { background: none; border: none; color: white; padding: 0 13px; cursor: pointer; font-size: 11px; }
+.wc:hover { background: rgba(255,255,255,0.2); }
+.wc.cls:hover { background: #e81123; }
+
+/* ===== MENU BAR ===== */
+#menu-bar {
+  background: var(--ppt-red);
+  display: flex;
+  padding: 0 4px;
+  flex-shrink: 0;
+}
+.mi {
+  color: white;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 3px 3px 0 0;
+  position: relative;
+}
+.mi:hover, .mi.open { background: white; color: var(--ppt-red); }
+.dropdown {
+  position: absolute; top: 100%; left: 0;
+  background: white; border: 1px solid #ccc;
+  box-shadow: 2px 4px 12px rgba(0,0,0,0.2);
+  z-index: 2000; min-width: 200px; display: none; padding: 3px 0;
+}
+.mi.open .dropdown { display: block; }
+.ddi {
+  padding: 5px 20px 5px 28px; cursor: pointer; font-size: 12px; color: #222;
+  display: flex; align-items: center; gap: 8px; position: relative;
+}
+.ddi:hover { background: var(--btn-hover); }
+.ddi .ico { position: absolute; left: 7px; }
+.ddi .sh { margin-left: auto; color: #999; font-size: 11px; }
+.dd-sep { border-top: 1px solid #eee; margin: 3px 0; }
+
+/* ===== RIBBON ===== */
+#ribbon { background: var(--ribbon-bg); border-bottom: 2px solid var(--ppt-red); flex-shrink: 0; }
+#ribbon-tabs { display: flex; background: var(--ppt-red); padding: 0 4px; }
+.rtab {
+  color: rgba(255,255,255,0.85); padding: 5px 12px; cursor: pointer;
+  font-size: 12px; border-bottom: 2px solid transparent;
+}
+.rtab:hover { color: white; }
+.rtab.active { background: white; color: var(--ppt-red); border-radius: 3px 3px 0 0; font-weight: 600; }
+#ribbon-body { display: flex; align-items: stretch; padding: 4px 6px 2px; gap: 0; min-height: 68px; overflow-x: auto; }
+
+.rg { display: flex; flex-direction: column; align-items: center; border-right: 1px solid #e8e8e8; padding: 0 6px; margin-right: 2px; }
+.rg-label { font-size: 10px; color: #888; margin-top: auto; padding-top: 2px; white-space: nowrap; }
+.rg-btns { display: flex; align-items: center; gap: 1px; flex: 1; flex-wrap: wrap; }
+
+.rb { background: none; border: 1px solid transparent; border-radius: 3px; padding: 3px 5px; cursor: pointer; font-size: 12px; color: #222; display: flex; align-items: center; justify-content: center; gap: 3px; white-space: nowrap; min-height: 24px; position: relative; }
+.rb:hover { background: var(--btn-hover); border-color: #f0b0a0; }
+.rb.active { background: var(--btn-active); border-color: var(--ppt-red); }
+.rb.lg { flex-direction: column; padding: 4px 8px; font-size: 11px; min-height: 54px; min-width: 44px; }
+.rb.lg .ico { font-size: 22px; }
+.rb-row { display: flex; gap: 1px; align-items: center; }
+.rb-col { display: flex; flex-direction: column; gap: 1px; }
+.rsel { border: 1px solid #ccc; border-radius: 2px; padding: 2px 4px; font-size: 12px; height: 24px; background: white; cursor: pointer; }
+
+/* ===== MAIN LAYOUT ===== */
+#app-body { display: flex; flex: 1; overflow: hidden; }
+
+/* ===== SLIDE PANEL (left) ===== */
+#slide-panel {
+  width: 200px; min-width: 160px; max-width: 300px;
+  background: var(--slide-panel-bg);
+  display: flex; flex-direction: column;
+  border-right: 2px solid #222;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+#slide-panel-header {
+  background: #2a2a2a; padding: 6px 10px; font-size: 11px;
+  color: #aaa; border-bottom: 1px solid #222; display: flex; gap: 6px; align-items: center;
+}
+#slide-panel-header button { background: var(--ppt-red); border: none; color: white; padding: 2px 8px; cursor: pointer; border-radius: 2px; font-size: 11px; }
+#slide-panel-header button:hover { background: var(--ppt-red-dark); }
+#slide-thumbs { flex: 1; overflow-y: auto; padding: 8px 6px; display: flex; flex-direction: column; gap: 6px; }
+#slide-thumbs::-webkit-scrollbar { width: 6px; }
+#slide-thumbs::-webkit-scrollbar-thumb { background: #555; border-radius: 3px; }
+
+.slide-thumb {
+  position: relative; cursor: pointer; border: 2px solid var(--thumb-border);
+  border-radius: 3px; overflow: hidden; background: white;
+  transition: border-color 0.15s; flex-shrink: 0;
+}
+.slide-thumb:hover { border-color: #aaa; }
+.slide-thumb.active { border-color: var(--thumb-active); }
+.thumb-number {
+  position: absolute; left: -18px; top: 50%; transform: translateY(-50%);
+  font-size: 10px; color: #888; width: 16px; text-align: right;
+}
+.thumb-canvas { width: 100%; display: block; }
+.thumb-delete {
+  position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.5);
+  color: white; border: none; border-radius: 2px; width: 16px; height: 16px;
+  font-size: 10px; cursor: pointer; display: none; align-items: center; justify-content: center;
+}
+.slide-thumb:hover .thumb-delete { display: flex; }
+
+/* Panel resize handle */
+#panel-resize {
+  width: 4px; background: #333; cursor: col-resize; flex-shrink: 0;
+}
+#panel-resize:hover { background: var(--ppt-red); }
+
+/* ===== STAGE ===== */
+#stage-area {
+  flex: 1; background: var(--stage-bg); display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-start; overflow: auto; padding: 20px;
+  position: relative;
+}
+
+/* ===== SLIDE CANVAS ===== */
+#slide-canvas-wrap {
+  position: relative; box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  flex-shrink: 0;
+}
+#slide-canvas {
+  width: 960px; height: 540px; position: relative; overflow: hidden;
+  background: white; display: block;
+}
+
+/* Selected element outline */
+.el-selected {
+  outline: 2px solid #0078d4 !important;
+}
+.resize-handle {
+  position: absolute; width: 8px; height: 8px; background: white;
+  border: 1px solid #0078d4; border-radius: 1px; z-index: 100;
+}
+
+/* ===== SLIDE ELEMENTS ===== */
+.slide-el {
+  position: absolute; cursor: move; user-select: none;
+  box-sizing: border-box;
+}
+.slide-el:hover { outline: 1px dashed #0078d4; }
+.slide-el.selected { outline: 2px solid #0078d4; }
+
+.el-text {
+  overflow: hidden; word-wrap: break-word;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.el-text [contenteditable] { outline: none; width: 100%; height: 100%; }
+.el-image img { width: 100%; height: 100%; object-fit: contain; }
+.el-shape { display: flex; align-items: center; justify-content: center; }
+
+/* ===== NOTES PANEL ===== */
+#notes-panel {
+  height: 100px; min-height: 60px; background: #2a2a2a;
+  border-top: 2px solid #222; flex-shrink: 0; display: flex; flex-direction: column;
+}
+#notes-header { padding: 4px 10px; font-size: 11px; color: #888; background: #222; }
+#notes-input {
+  flex: 1; background: transparent; border: none; color: #ccc; padding: 6px 10px;
+  font-size: 12px; resize: none; font-family: 'Segoe UI', sans-serif; outline: none;
+}
+
+/* ===== RIGHT PANEL ===== */
+#right-panel {
+  width: 220px; background: #f8f8f8; border-left: 1px solid #ddd;
+  flex-shrink: 0; display: flex; flex-direction: column; overflow: hidden;
+}
+#right-panel-tabs {
+  display: flex; background: #efefef; border-bottom: 1px solid #ddd;
+}
+.rpt {
+  flex: 1; padding: 6px; text-align: center; cursor: pointer; font-size: 11px;
+  color: #666; border-bottom: 2px solid transparent;
+}
+.rpt.active { color: var(--ppt-red); border-bottom-color: var(--ppt-red); font-weight: 600; }
+.rpt:hover { background: #e8e8e8; }
+#right-panel-content { flex: 1; overflow-y: auto; padding: 8px; }
+
+/* Format panel */
+.fp-section { margin-bottom: 12px; }
+.fp-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; font-weight: 600; }
+.fp-row { display: flex; gap: 4px; margin-bottom: 4px; align-items: center; }
+.fp-input { border: 1px solid #ccc; border-radius: 2px; padding: 2px 5px; font-size: 11px; width: 100%; }
+.fp-input:focus { outline: 1px solid var(--ppt-red); }
+.fp-color { width: 28px; height: 22px; border: 1px solid #ccc; border-radius: 2px; cursor: pointer; padding: 1px; }
+.fp-sel { border: 1px solid #ccc; border-radius: 2px; padding: 2px 4px; font-size: 11px; width: 100%; background: white; }
+.fp-btn { background: var(--ppt-red); color: white; border: none; padding: 4px 10px; border-radius: 2px; cursor: pointer; font-size: 11px; width: 100%; }
+.fp-btn:hover { background: var(--ppt-red-dark); }
+.fp-btn-ghost { background: white; color: var(--ppt-red); border: 1px solid var(--ppt-red); padding: 3px 10px; border-radius: 2px; cursor: pointer; font-size: 11px; flex: 1; }
+.fp-btn-ghost:hover { background: var(--btn-hover); }
+
+/* Animation panel */
+.anim-item { padding: 5px 8px; border: 1px solid #e0e0e0; border-radius: 3px; margin-bottom: 4px; cursor: pointer; font-size: 11px; display: flex; align-items: center; gap: 6px; }
+.anim-item:hover { background: var(--btn-hover); border-color: var(--ppt-red); }
+.anim-item.active { background: #fce4dc; border-color: var(--ppt-red); }
+
+/* ===== STATUS BAR ===== */
+#status-bar {
+  background: var(--ppt-red); color: white; display: flex; align-items: center;
+  padding: 0 10px; height: 22px; min-height: 22px; font-size: 11px; flex-shrink: 0; gap: 0;
+}
+.sbi { padding: 0 10px; border-right: 1px solid rgba(255,255,255,0.3); height: 100%; display: flex; align-items: center; cursor: default; white-space: nowrap; }
+.sbi:hover { background: rgba(255,255,255,0.15); }
+.sb-right { margin-left: auto; display: flex; align-items: center; }
+#zoom-sb { width: 80px; accent-color: white; }
+
+/* ===== PRESENTATION MODE ===== */
+#present-mode {
+  display: none; position: fixed; inset: 0; background: black;
+  z-index: 10000; flex-direction: column; align-items: center; justify-content: center;
+}
+#present-slide {
+  position: relative; background: white;
+  width: 100vw; height: 56.25vw; /* 16:9 */
+  max-height: 100vh; max-width: 177.78vh;
+  overflow: hidden;
+}
+#present-controls {
+  position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px; z-index: 10001; background: rgba(0,0,0,0.6);
+  border-radius: 20px; padding: 6px 14px;
+}
+.pc-btn {
+  background: rgba(255,255,255,0.15); border: none; color: white;
+  padding: 6px 16px; cursor: pointer; border-radius: 14px; font-size: 13px;
+}
+.pc-btn:hover { background: rgba(255,255,255,0.3); }
+#present-counter { color: white; padding: 6px 10px; font-size: 13px; }
+#present-notes {
+  position: fixed; bottom: 60px; right: 20px; max-width: 300px;
+  background: rgba(0,0,0,0.7); color: #ddd; padding: 10px 14px;
+  border-radius: 6px; font-size: 12px; display: none;
+}
+
+/* ===== CONTEXT MENU ===== */
+#ctx { position: fixed; background: white; border: 1px solid #ccc; box-shadow: 2px 4px 10px rgba(0,0,0,0.2); z-index: 5000; min-width: 180px; display: none; padding: 3px 0; border-radius: 3px; }
+.ci { padding: 5px 18px 5px 28px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 8px; position: relative; }
+.ci:hover { background: var(--btn-hover); }
+.ci .cico { position: absolute; left: 7px; }
+.c-sep { border-top: 1px solid #eee; margin: 3px 0; }
+
+/* ===== SHAPE GALLERY ===== */
+#shape-gallery {
+  position: fixed; background: white; border: 1px solid #ccc; box-shadow: 2px 4px 12px rgba(0,0,0,0.2);
+  z-index: 3000; padding: 10px; display: none; border-radius: 4px; width: 280px;
+}
+#shape-gallery h4 { font-size: 11px; color: #888; margin-bottom: 8px; text-transform: uppercase; }
+.shape-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 8px; }
+.sg-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid #e0e0e0; border-radius: 3px; font-size: 18px; }
+.sg-btn:hover { background: var(--btn-hover); border-color: var(--ppt-red); }
+
+/* ===== THEME GALLERY ===== */
+#theme-gallery {
+  position: fixed; background: white; border: 1px solid #ccc; box-shadow: 2px 4px 12px rgba(0,0,0,0.2);
+  z-index: 3000; padding: 12px; display: none; border-radius: 4px; width: 360px;
+}
+#theme-gallery h4 { font-size: 12px; color: #555; margin-bottom: 10px; font-weight: 600; }
+.theme-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tg-btn { cursor: pointer; border: 2px solid transparent; border-radius: 4px; overflow: hidden; }
+.tg-btn:hover { border-color: var(--ppt-red); }
+.tg-preview { height: 52px; display: flex; flex-direction: column; }
+.tg-top { flex: 2; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold; }
+.tg-bottom { flex: 1; }
+.tg-name { font-size: 10px; text-align: center; padding: 2px; color: #555; }
+
+/* ===== TABLE PICKER ===== */
+#table-picker {
+  position: fixed; background: white; border: 1px solid #ccc; box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
+  z-index: 3000; padding: 10px; display: none; border-radius: 4px;
+}
+.tp-grid { display: grid; grid-template-columns: repeat(10, 20px); gap: 2px; }
+.tp-cell { width: 20px; height: 20px; border: 1px solid #ddd; cursor: pointer; }
+.tp-cell.hover { background: #fce4dc; border-color: var(--ppt-red); }
+#tp-label { font-size: 11px; color: #666; text-align: center; margin-top: 6px; }
+
+/* ===== SLIDE TRANSITIONS ===== */
+.slide-enter { animation: slideInRight 0.4s ease; }
+@keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.slide-enter-fade { animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.slide-enter-zoom { animation: zoomIn 0.4s ease; }
+@keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: #2a2a2a; }
+::-webkit-scrollbar-thumb { background: #555; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #777; }
+
+/* ===== TRANSITIONS FOR ANIMATIONS ===== */
+.anim-fly-in { animation: flyIn 0.5s ease forwards; }
+@keyframes flyIn { from { transform: translateY(-40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.anim-bounce { animation: bounceIn 0.6s cubic-bezier(.36,.07,.19,.97) forwards; }
+@keyframes bounceIn { 0%{transform:scale(0)}60%{transform:scale(1.1)}100%{transform:scale(1)} }
+.anim-fade { animation: fadeIn 0.5s ease forwards; }
+.anim-spin { animation: spin 0.6s ease forwards; }
+@keyframes spin { from{transform:rotate(-180deg) scale(0)}to{transform:rotate(0) scale(1)} }
+
+input[type="color"] { width: 0; height: 0; opacity: 0; position: absolute; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<!-- Hidden inputs -->
+<input type="color" id="el-fill-picker" value="#e74c3c" onchange="applyElFill(this.value)">
+<input type="color" id="el-text-color-picker" value="#ffffff" onchange="applyElTextColor(this.value)">
+<input type="color" id="el-border-picker" value="#2c3e50" onchange="applyElBorder(this.value)">
+<input type="color" id="bg-color-picker" value="#ffffff" onchange="applyBgColor(this.value)">
+
+<!-- Title Bar -->
+<div id="title-bar">
+  <div id="qa-toolbar">
+    <span style="font-size:15px;margin-right:4px">📊</span>
+    <button class="qa" onclick="savePresentation()" title="Guardar">💾</button>
+    <button class="qa" onclick="history.go(-1)" title="Deshacer">↩</button>
+    <button class="qa" onclick="history.go(1)" title="Rehacer">↪</button>
+    <button class="qa" onclick="startPresentation()" title="Presentar desde el inicio">▶</button>
+    <button class="qa" onclick="window.print()" title="Imprimir">🖨</button>
+  </div>
+  <div id="title-center">
+    <span id="doc-name">Presentación1</span> — PowerPoint Clone
+  </div>
+  <div id="win-controls">
+    <button class="wc">—</button>
+    <button class="wc">⬜</button>
+    <button class="wc cls">✕</button>
+  </div>
+</div>
+
+<!-- Menu Bar -->
+<div id="menu-bar">
+  <div class="mi" id="mi-archivo" onclick="toggleMenu('archivo')">Archivo
+    <div class="dropdown">
+      <div class="ddi" onclick="newPresentation()"><span class="ico">📄</span>Nueva presentación <span class="sh">Ctrl+U</span></div>
+      <div class="ddi" onclick="openFile()"><span class="ico">📂</span>Abrir <span class="sh">Ctrl+A</span></div>
+      <div class="dd-sep"></div>
+      <div class="ddi" onclick="savePresentation()"><span class="ico">💾</span>Guardar <span class="sh">Ctrl+G</span></div>
+      <div class="ddi" onclick="exportHTML()"><span class="ico">🌐</span>Exportar como HTML</div>
+      <div class="dd-sep"></div>
+      <div class="ddi" onclick="window.print()"><span class="ico">🖨</span>Imprimir <span class="sh">Ctrl+P</span></div>
+      <div class="ddi" onclick="printNotes()"><span class="ico">📝</span>Imprimir con notas</div>
+    </div>
+  </div>
+  <div class="mi" id="mi-inicio" onclick="toggleMenu('inicio')">Inicio
+    <div class="dropdown">
+      <div class="ddi" onclick="addSlide()"><span class="ico">➕</span>Nueva diapositiva <span class="sh">Ctrl+M</span></div>
+      <div class="ddi" onclick="duplicateSlide()"><span class="ico">⧉</span>Duplicar diapositiva</div>
+      <div class="ddi" onclick="deleteSlide()"><span class="ico">🗑</span>Eliminar diapositiva <span class="sh">Del</span></div>
+      <div class="dd-sep"></div>
+      <div class="ddi" onclick="moveSlideUp()"><span class="ico">⬆</span>Mover arriba</div>
+      <div class="ddi" onclick="moveSlideDown()"><span class="ico">⬇</span>Mover abajo</div>
+    </div>
+  </div>
+  <div class="mi" id="mi-insertar" onclick="toggleMenu('insertar')">Insertar
+    <div class="dropdown">
+      <div class="ddi" onclick="addTextBox()"><span class="ico">T</span>Cuadro de texto</div>
+      <div class="ddi" onclick="showShapeGallery(event)"><span class="ico">⬟</span>Formas</div>
+      <div class="ddi" onclick="insertImage()"><span class="ico">🖼</span>Imagen</div>
+      <div class="ddi" onclick="showTablePicker(event)"><span class="ico">⊞</span>Tabla</div>
+      <div class="ddi" onclick="insertChart()"><span class="ico">📊</span>Gráfico</div>
+      <div class="dd-sep"></div>
+      <div class="ddi" onclick="insertVideoPlaceholder()"><span class="ico">🎬</span>Video</div>
+      <div class="ddi" onclick="insertLink()"><span class="ico">🔗</span>Hipervínculo</div>
+      <div class="ddi" onclick="insertIcon()"><span class="ico">⭐</span>Ícono / Emoji</div>
+      <div class="ddi" onclick="insertWordArt()"><span class="ico">✨</span>WordArt</div>
+    </div>
+  </div>
+  <div class="mi" id="mi-diseno" onclick="toggleMenu('diseno')">Diseño
+    <div class="dropdown">
+      <div class="ddi" onclick="showThemeGallery(event)"><span class="ico">🎨</span>Temas</div>
+      <div class="ddi" onclick="document.getElementById('bg-color-picker').click()"><span class="ico">🖌</span>Color de fondo</div>
+      <div class="ddi" onclick="setSlideSize('16:9')"><span class="ico">📐</span>Tamaño 16:9</div>
+      <div class="ddi" onclick="setSlideSize('4:3')"><span class="ico">📐</span>Tamaño 4:3</div>
+    </div>
+  </div>
+  <div class="mi" id="mi-transiciones" onclick="toggleMenu('transiciones')">Transiciones
+    <div class="dropdown">
+      <div class="ddi" onclick="setTransition('none')"><span class="ico">⬜</span>Sin transición</div>
+      <div class="ddi" onclick="setTransition('slide')"><span class="ico">➡</span>Deslizar</div>
+      <div class="ddi" onclick="setTransition('fade')"><span class="ico">🌫</span>Fundido</div>
+      <div class="ddi" onclick="setTransition('zoom')"><span class="ico">🔍</span>Zoom</div>
+      <div class="ddi" onclick="setTransition('flip')"><span class="ico">🔄</span>Voltear</div>
+      <div class="ddi" onclick="applyTransitionAll()"><span class="ico">✅</span>Aplicar a todas</div>
+    </div>
+  </div>
+  <div class="mi" id="mi-presentacion" onclick="toggleMenu('presentacion')">Presentación
+    <div class="dropdown">
+      <div class="ddi" onclick="startPresentation()"><span class="ico">▶</span>Desde el principio <span class="sh">F5</span></div>
+      <div class="ddi" onclick="startPresentationCurrent()"><span class="ico">▶</span>Desde diapositiva actual <span class="sh">Shift+F5</span></div>
+      <div class="dd-sep"></div>
+      <div class="ddi" onclick="togglePresenterView()"><span class="ico">👁</span>Vista del presentador</div>
+      <div class="ddi" onclick="setAutoPlay()"><span class="ico">⏱</span>Temporización automática</div>
+    </div>
+  </div>
+  <div class="mi" id="mi-vista" onclick="toggleMenu('vista')">Vista
+    <div class="dropdown">
+      <div class="ddi" onclick="setView('normal')"><span class="ico">📄</span>Normal</div>
+      <div class="ddi" onclick="setView('outline')"><span class="ico">📝</span>Esquema</div>
+      <div class="ddi" onclick="setView('sorter')"><span class="ico">⊞</span>Clasificador de diapositivas</div>
+      <div class="dd-sep"></div>
+      <div class="ddi" onclick="toggleNotes()"><span class="ico">📋</span>Panel de notas</div>
+      <div class="ddi" onclick="toggleRightPanel()"><span class="ico">⚙</span>Panel de formato</div>
+      <div class="dd-sep"></div>
+      <div class="ddi" onclick="setZoom(75)"><span class="ico">🔍</span>75%</div>
+      <div class="ddi" onclick="setZoom(100)"><span class="ico">🔍</span>100%</div>
+      <div class="ddi" onclick="setZoom(150)"><span class="ico">🔍</span>150%</div>
+    </div>
+  </div>
+</div>
+
+<!-- Ribbon -->
+<div id="ribbon">
+  <div id="ribbon-tabs">
+    <div class="rtab active" onclick="switchTab('inicio',this)">Inicio</div>
+    <div class="rtab" onclick="switchTab('insertar',this)">Insertar</div>
+    <div class="rtab" onclick="switchTab('diseno',this)">Diseño</div>
+    <div class="rtab" onclick="switchTab('transiciones',this)">Transiciones</div>
+    <div class="rtab" onclick="switchTab('animaciones',this)">Animaciones</div>
+    <div class="rtab" onclick="switchTab('presentacion',this)">Presentación</div>
+    <div class="rtab" onclick="switchTab('revisar',this)">Revisar</div>
+    <div class="rtab" onclick="switchTab('vista',this)">Vista</div>
+  </div>
+  <div id="ribbon-body">
+    <!-- Portapapeles -->
+    <div class="rg">
+      <div class="rg-btns">
+        <button class="rb lg" onclick="pasteEl()" title="Pegar"><span class="ico">📋</span>Pegar</button>
+        <div class="rb-col">
+          <button class="rb" onclick="cutEl()">✂ Cortar</button>
+          <button class="rb" onclick="copyEl()">📋 Copiar</button>
+          <button class="rb" onclick="duplicateEl()">⧉ Duplicar</button>
+        </div>
+      </div>
+      <span class="rg-label">Portapapeles</span>
+    </div>
+
+    <!-- Diapositivas -->
+    <div class="rg">
+      <div class="rg-btns">
+        <button class="rb lg" onclick="addSlide()" title="Nueva diapositiva (Ctrl+M)"><span class="ico">➕</span>Nueva diap.</button>
+        <div class="rb-col">
+          <button class="rb" onclick="showLayoutMenu(event)">📐 Diseño ▾</button>
+          <button class="rb" onclick="resetSlide()">↺ Restablecer</button>
+          <button class="rb" onclick="deleteSlide()">🗑 Eliminar</button>
+        </div>
+      </div>
+      <span class="rg-label">Diapositivas</span>
+    </div>
+
+    <!-- Fuente -->
+    <div class="rg">
+      <div class="rg-btns" style="flex-direction:column;gap:3px;align-items:flex-start">
+        <div class="rb-row">
+          <select class="rsel" id="font-name" onchange="applyFont(this.value)" style="width:130px">
+            <option>Calibri</option><option>Arial</option><option>Times New Roman</option>
+            <option>Verdana</option><option>Georgia</option><option>Trebuchet MS</option>
+            <option>Comic Sans MS</option><option>Impact</option><option>Garamond</option>
+            <option>Century Gothic</option><option>Palatino</option><option>Tahoma</option>
+          </select>
+          <select class="rsel" id="font-size" onchange="applyFontSize(this.value)" style="width:48px">
+            <option>12</option><option>14</option><option>18</option><option>20</option>
+            <option>24</option><option>28</option><option>32</option><option>36</option>
+            <option>40</option><option>48</option><option>54</option><option>60</option>
+            <option>72</option><option>96</option>
+          </select>
+          <button class="rb" onclick="changeFontSize(4)">▲</button>
+          <button class="rb" onclick="changeFontSize(-4)">▼</button>
+        </div>
+        <div class="rb-row">
+          <button class="rb" id="btn-b" onclick="toggleBold()"><b>N</b></button>
+          <button class="rb" id="btn-i" onclick="toggleItalic()"><i>K</i></button>
+          <button class="rb" id="btn-u" onclick="toggleUnderline()"><u>S</u></button>
+          <button class="rb" id="btn-s" onclick="toggleStrike()"><s>T</s></button>
+          <button class="rb" onclick="document.getElementById('el-text-color-picker').click()" title="Color de texto">A🎨</button>
+          <button class="rb" onclick="document.getElementById('el-fill-picker').click()" title="Relleno de forma">🎨</button>
+          <button class="rb" onclick="clearTextFormat()" title="Borrar formato">✗</button>
+        </div>
+      </div>
+      <span class="rg-label">Fuente</span>
+    </div>
+
+    <!-- Párrafo -->
+    <div class="rg">
+      <div class="rg-btns" style="flex-direction:column;gap:3px">
+        <div class="rb-row">
+          <button class="rb" id="btn-al" onclick="setTextAlign('left')">☰◂</button>
+          <button class="rb" id="btn-ac" onclick="setTextAlign('center')">☰=</button>
+          <button class="rb" id="btn-ar" onclick="setTextAlign('right')">☰▸</button>
+          <button class="rb" onclick="setTextAlign('justify')">☰☰</button>
+        </div>
+        <div class="rb-row">
+          <button class="rb" onclick="addBullets()">• Lista</button>
+          <button class="rb" onclick="addNumbered()">1. Num.</button>
+          <select class="rsel" id="line-spacing" onchange="applyLineSpacing(this.value)" style="width:56px">
+            <option value="1">1.0</option><option value="1.5" selected>1.5</option><option value="2">2.0</option>
+          </select>
+          <button class="rb" onclick="setVAlign('top')">⬆T</button>
+          <button class="rb" onclick="setVAlign('middle')">⬛T</button>
+          <button class="rb" onclick="setVAlign('bottom')">⬇T</button>
+        </div>
+      </div>
+      <span class="rg-label">Párrafo</span>
+    </div>
+
+    <!-- Dibujo -->
+    <div class="rg">
+      <div class="rg-btns" style="flex-wrap:wrap;max-width:200px;gap:2px">
+        <button class="rb" onclick="addTextBox()" title="Cuadro de texto">T</button>
+        <button class="rb" onclick="insertShapeQuick('rect')" title="Rectángulo">▭</button>
+        <button class="rb" onclick="insertShapeQuick('circle')" title="Círculo">⬭</button>
+        <button class="rb" onclick="insertShapeQuick('triangle')" title="Triángulo">▲</button>
+        <button class="rb" onclick="insertShapeQuick('star')" title="Estrella">★</button>
+        <button class="rb" onclick="insertShapeQuick('arrow')" title="Flecha">➡</button>
+        <button class="rb" onclick="insertShapeQuick('callout')" title="Bocadillo">💬</button>
+        <button class="rb" onclick="showShapeGallery(event)" title="Más formas">⬟ Más ▾</button>
+        <button class="rb" onclick="document.getElementById('el-fill-picker').click()" title="Relleno">🎨 Relleno</button>
+        <button class="rb" onclick="document.getElementById('el-border-picker').click()" title="Contorno">⬜ Contorno</button>
+        <button class="rb" onclick="addShadow()" title="Sombra">◻ Sombra</button>
+        <button class="rb" onclick="applyGlow()" title="Brillo">✨ Brillo</button>
+      </div>
+      <span class="rg-label">Dibujo</span>
+    </div>
+
+    <!-- Ordenar/Alinear -->
+    <div class="rg">
+      <div class="rg-btns rb-col">
+        <button class="rb" onclick="bringForward()">⬆ Traer al frente</button>
+        <button class="rb" onclick="sendBackward()">⬇ Enviar atrás</button>
+        <button class="rb" onclick="alignElCenter()">⬛ Centrar horiz.</button>
+        <button class="rb" onclick="alignElMiddle()">⬛ Centrar vert.</button>
+        <button class="rb" onclick="groupElements()">⊞ Agrupar</button>
+        <button class="rb" onclick="deleteEl()">🗑 Eliminar</button>
+      </div>
+      <span class="rg-label">Organizar</span>
+    </div>
+
+    <!-- Presentar -->
+    <div class="rg">
+      <div class="rg-btns">
+        <button class="rb lg" onclick="startPresentation()" style="background:#c43e1c;color:white;border-color:#c43e1c"><span class="ico">▶</span>Presentar</button>
+        <div class="rb-col">
+          <button class="rb" onclick="startPresentationCurrent()">▶ Desde aquí</button>
+          <button class="rb" onclick="togglePresenterView()">👁 Presentador</button>
+        </div>
+      </div>
+      <span class="rg-label">Presentación</span>
+    </div>
+  </div>
+</div>
+
+<!-- App Body -->
+<div id="app-body">
+  <!-- Slide Panel -->
+  <div id="slide-panel">
+    <div id="slide-panel-header">
+      <span>Diapositivas</span>
+      <button onclick="addSlide()">+ Nueva</button>
+    </div>
+    <div id="slide-thumbs"></div>
+  </div>
+
+  <div id="panel-resize" onmousedown="startPanelResize(event)"></div>
+
+  <!-- Stage + Notes -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    <div id="stage-area" onclick="closeAll()" oncontextmenu="showStageCtx(event)">
+      <div id="slide-canvas-wrap">
+        <div id="slide-canvas" onmousedown="stageMouseDown(event)"></div>
+      </div>
+    </div>
+    <div id="notes-panel">
+      <div id="notes-header">📋 Notas del presentador</div>
+      <textarea id="notes-input" placeholder="Agrega notas para esta diapositiva..."></textarea>
+    </div>
+  </div>
+
+  <!-- Right Panel -->
+  <div id="right-panel">
+    <div id="right-panel-tabs">
+      <div class="rpt active" onclick="switchRightTab('format',this)">Formato</div>
+      <div class="rpt" onclick="switchRightTab('anim',this)">Animación</div>
+      <div class="rpt" onclick="switchRightTab('design',this)">Diseño</div>
+    </div>
+    <div id="right-panel-content">
+      <!-- Format Tab -->
+      <div id="rp-format">
+        <div class="fp-section">
+          <div class="fp-label">Posición y tamaño</div>
+          <div class="fp-row"><label style="font-size:11px;width:14px">X</label><input class="fp-input" id="el-x" type="number" onchange="updateElPos()" placeholder="px"></div>
+          <div class="fp-row"><label style="font-size:11px;width:14px">Y</label><input class="fp-input" id="el-y" type="number" onchange="updateElPos()" placeholder="px"></div>
+          <div class="fp-row"><label style="font-size:11px;width:14px">W</label><input class="fp-input" id="el-w" type="number" onchange="updateElSize()" placeholder="px"></div>
+          <div class="fp-row"><label style="font-size:11px;width:14px">H</label><input class="fp-input" id="el-h" type="number" onchange="updateElSize()" placeholder="px"></div>
+          <div class="fp-row">
+            <label style="font-size:11px;width:30px">Rot.</label>
+            <input class="fp-input" id="el-rot" type="number" onchange="updateElRotation()" placeholder="°">
+          </div>
+        </div>
+        <div class="fp-section">
+          <div class="fp-label">Relleno</div>
+          <div class="fp-row">
+            <input type="color" class="fp-color" id="fill-color-fp" value="#4472c4" onchange="applyElFill(this.value)" style="width:28px;height:22px;opacity:1;position:static;pointer-events:auto">
+            <select class="fp-sel" id="fill-type" onchange="changeFillType(this.value)">
+              <option value="solid">Sólido</option>
+              <option value="gradient">Degradado</option>
+              <option value="none">Sin relleno</option>
+              <option value="transparent">Transparente</option>
+            </select>
+          </div>
+          <div class="fp-row">
+            <label style="font-size:11px">Opacidad</label>
+            <input type="range" id="el-opacity" min="0" max="100" value="100" style="flex:1" oninput="applyElOpacity(this.value)">
+            <span id="opacity-val" style="font-size:10px;width:28px">100%</span>
+          </div>
+        </div>
+        <div class="fp-section">
+          <div class="fp-label">Contorno</div>
+          <div class="fp-row">
+            <input type="color" class="fp-color" id="border-color-fp" value="#2c3e50" onchange="applyElBorder(this.value)" style="width:28px;height:22px;opacity:1;position:static;pointer-events:auto">
+            <select class="fp-sel" id="border-style" onchange="applyBorderStyle(this.value)">
+              <option value="solid">Sólido</option>
+              <option value="dashed">Punteado</option>
+              <option value="dotted">Puntos</option>
+              <option value="none">Ninguno</option>
+            </select>
+          </div>
+          <div class="fp-row">
+            <label style="font-size:11px">Grosor</label>
+            <input type="range" id="border-width" min="0" max="10" value="0" style="flex:1" oninput="applyBorderWidth(this.value)">
+            <span id="bw-val" style="font-size:10px;width:20px">0px</span>
+          </div>
+        </div>
+        <div class="fp-section">
+          <div class="fp-label">Efectos</div>
+          <div class="fp-row" style="flex-wrap:wrap;gap:4px">
+            <button class="fp-btn-ghost" onclick="addShadow()">Sombra</button>
+            <button class="fp-btn-ghost" onclick="applyGlow()">Brillo</button>
+            <button class="fp-btn-ghost" onclick="applyReflection()">Reflexión</button>
+            <button class="fp-btn-ghost" onclick="apply3D()">3D</button>
+          </div>
+        </div>
+        <div class="fp-section">
+          <div class="fp-label">Fondo de diapositiva</div>
+          <div class="fp-row">
+            <input type="color" class="fp-color" id="bg-color-fp" value="#ffffff" onchange="applyBgColor(this.value)" style="width:28px;height:22px;opacity:1;position:static;pointer-events:auto">
+            <button class="fp-btn-ghost" onclick="showThemeGallery(event)" style="flex:1">Temas ▾</button>
+          </div>
+          <button class="fp-btn" onclick="applyBgGradient()">Fondo degradado</button>
+        </div>
+      </div>
+
+      <!-- Animation Tab -->
+      <div id="rp-anim" style="display:none">
+        <div class="fp-section">
+          <div class="fp-label">Entrada</div>
+          <div class="anim-item" onclick="setAnimation('fly-in')">🕊 Volar desde arriba</div>
+          <div class="anim-item" onclick="setAnimation('fade')">🌫 Fundido</div>
+          <div class="anim-item" onclick="setAnimation('bounce')">⬆ Rebote</div>
+          <div class="anim-item" onclick="setAnimation('zoom')">🔍 Zoom</div>
+          <div class="anim-item" onclick="setAnimation('spin')">🌀 Girar</div>
+          <div class="anim-item" onclick="setAnimation('none')">⬜ Sin animación</div>
+        </div>
+        <div class="fp-section">
+          <div class="fp-label">Configuración</div>
+          <div class="fp-row">
+            <label style="font-size:11px">Duración</label>
+            <input class="fp-input" id="anim-duration" type="number" value="0.5" min="0.1" max="5" step="0.1" style="width:60px"> seg
+          </div>
+          <div class="fp-row">
+            <label style="font-size:11px">Retraso</label>
+            <input class="fp-input" id="anim-delay" type="number" value="0" min="0" max="10" step="0.1" style="width:60px"> seg
+          </div>
+          <div class="fp-row">
+            <label style="font-size:11px">Inicio</label>
+            <select class="fp-sel" id="anim-trigger">
+              <option value="click">Al hacer clic</option>
+              <option value="after">Después del anterior</option>
+              <option value="with">Con el anterior</option>
+            </select>
+          </div>
+          <button class="fp-btn" onclick="previewAnimation()">▶ Vista previa</button>
+        </div>
+      </div>
+
+      <!-- Design Tab -->
+      <div id="rp-design" style="display:none">
+        <div class="fp-section">
+          <div class="fp-label">Diseño de diapositiva</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <button class="fp-btn-ghost" onclick="setLayout('title')" style="height:40px;font-size:10px">Título</button>
+            <button class="fp-btn-ghost" onclick="setLayout('content')" style="height:40px;font-size:10px">Contenido</button>
+            <button class="fp-btn-ghost" onclick="setLayout('two-col')" style="height:40px;font-size:10px">2 columnas</button>
+            <button class="fp-btn-ghost" onclick="setLayout('blank')" style="height:40px;font-size:10px">En blanco</button>
+            <button class="fp-btn-ghost" onclick="setLayout('image')" style="height:40px;font-size:10px">Con imagen</button>
+            <button class="fp-btn-ghost" onclick="setLayout('comparison')" style="height:40px;font-size:10px">Comparación</button>
+          </div>
+        </div>
+        <div class="fp-section">
+          <div class="fp-label">Tamaño</div>
+          <div class="fp-row" style="gap:4px">
+            <button class="fp-btn-ghost" onclick="setSlideSize('16:9')">16:9</button>
+            <button class="fp-btn-ghost" onclick="setSlideSize('4:3')">4:3</button>
+            <button class="fp-btn-ghost" onclick="setSlideSize('A4')">A4</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Status Bar -->
+<div id="status-bar">
+  <div class="sbi" id="sb-slide">Diapositiva 1 de 1</div>
+  <div class="sbi" id="sb-theme">Tema: Predeterminado</div>
+  <div class="sbi" id="sb-lang">Español (Colombia)</div>
+  <div class="sbi" id="sb-transition">Transición: Ninguna</div>
+  <div class="sb-right">
+    <div class="sbi" title="Normal" onclick="setView('normal')" style="cursor:pointer">📄</div>
+    <div class="sbi" title="Clasificador" onclick="setView('sorter')" style="cursor:pointer">⊞</div>
+    <div class="sbi" title="Presentar" onclick="startPresentation()" style="cursor:pointer">▶</div>
+    <div class="sbi" style="gap:6px">
+      <button onclick="changeZoom(-10)" style="background:none;border:none;color:white;cursor:pointer">−</button>
+      <input type="range" id="zoom-sb" min="30" max="200" value="100" oninput="setZoom(this.value)" style="width:80px;accent-color:white">
+      <button onclick="changeZoom(10)" style="background:none;border:none;color:white;cursor:pointer">+</button>
+      <span id="zoom-label">100%</span>
+    </div>
+  </div>
+</div>
+
+<!-- Presentation Mode -->
+<div id="present-mode">
+  <div id="present-slide"></div>
+  <div id="present-controls">
+    <button class="pc-btn" onclick="prevSlide()">◀</button>
+    <span id="present-counter">1 / 1</span>
+    <button class="pc-btn" onclick="nextSlide()">▶</button>
+    <button class="pc-btn" onclick="endPresentation()">✕ Terminar</button>
+    <button class="pc-btn" onclick="togglePresentNotes()">📝 Notas</button>
+  </div>
+  <div id="present-notes"></div>
+</div>
+
+<!-- Context Menu -->
+<div id="ctx">
+  <div class="ci" onclick="addSlide();hideCtx()"><span class="cico">➕</span>Nueva diapositiva</div>
+  <div class="ci" onclick="duplicateSlide();hideCtx()"><span class="cico">⧉</span>Duplicar diapositiva</div>
+  <div class="ci" onclick="deleteSlide();hideCtx()"><span class="cico">🗑</span>Eliminar diapositiva</div>
+  <div class="c-sep"></div>
+  <div class="ci" onclick="addTextBox();hideCtx()"><span class="cico">T</span>Agregar texto</div>
+  <div class="ci" onclick="insertImage();hideCtx()"><span class="cico">🖼</span>Insertar imagen</div>
+  <div class="ci" onclick="showShapeGallery(lastCtxEvent);hideCtx()"><span class="cico">⬟</span>Insertar forma</div>
+  <div class="c-sep"></div>
+  <div class="ci" onclick="document.getElementById('bg-color-picker').click();hideCtx()"><span class="cico">🎨</span>Fondo de diapositiva</div>
+  <div class="ci" onclick="showThemeGallery(lastCtxEvent);hideCtx()"><span class="cico">🖌</span>Cambiar tema</div>
+  <div class="c-sep"></div>
+  <div class="ci" onclick="setLayout('title');hideCtx()"><span class="cico">📐</span>Diseño: Título</div>
+  <div class="ci" onclick="setLayout('blank');hideCtx()"><span class="cico">📐</span>Diseño: En blanco</div>
+</div>
+
+<!-- Shape Gallery -->
+<div id="shape-gallery">
+  <h4>Líneas y conectores</h4>
+  <div class="shape-grid">
+    <div class="sg-btn" onclick="insertShapeQuick('line');closeAll()" title="Línea">━</div>
+    <div class="sg-btn" onclick="insertShapeQuick('arrow');closeAll()" title="Flecha">➡</div>
+    <div class="sg-btn" onclick="insertShapeQuick('double-arrow');closeAll()" title="Doble flecha">↔</div>
+  </div>
+  <h4>Formas básicas</h4>
+  <div class="shape-grid">
+    <div class="sg-btn" onclick="insertShapeQuick('rect');closeAll()" title="Rectángulo">▭</div>
+    <div class="sg-btn" onclick="insertShapeQuick('circle');closeAll()" title="Elipse">⬭</div>
+    <div class="sg-btn" onclick="insertShapeQuick('triangle');closeAll()" title="Triángulo">▲</div>
+    <div class="sg-btn" onclick="insertShapeQuick('diamond');closeAll()" title="Rombo">◆</div>
+    <div class="sg-btn" onclick="insertShapeQuick('pentagon');closeAll()" title="Pentágono">⬠</div>
+    <div class="sg-btn" onclick="insertShapeQuick('hexagon');closeAll()" title="Hexágono">⬡</div>
+    <div class="sg-btn" onclick="insertShapeQuick('star');closeAll()" title="Estrella">★</div>
+  </div>
+  <h4>Bocadillos</h4>
+  <div class="shape-grid">
+    <div class="sg-btn" onclick="insertShapeQuick('callout');closeAll()" title="Bocadillo">💬</div>
+    <div class="sg-btn" onclick="insertShapeQuick('callout-rect');closeAll()" title="Bocadillo rectangular">🗨</div>
+  </div>
+  <h4>Flujo de proceso</h4>
+  <div class="shape-grid">
+    <div class="sg-btn" onclick="insertShapeQuick('process');closeAll()" title="Proceso">▭</div>
+    <div class="sg-btn" onclick="insertShapeQuick('decision');closeAll()" title="Decisión">◆</div>
+    <div class="sg-btn" onclick="insertShapeQuick('cylinder');closeAll()" title="Cilindro">🛢</div>
+  </div>
+</div>
+
+<!-- Theme Gallery -->
+<div id="theme-gallery">
+  <h4>Temas de diapositiva</h4>
+  <div class="theme-grid" id="theme-grid"></div>
+</div>
+
+<!-- Table Picker -->
+<div id="table-picker">
+  <div class="tp-grid" id="tp-grid"></div>
+  <div id="tp-label">Tabla 1×1</div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const SLIDE_W = 960, SLIDE_H = 540;
+
+let slides = [];
+let currentSlide = 0;
+let selectedEl = null;
+let clipboard = null;
+let zoom = 100;
+let isDragging = false;
+let isResizing = false;
+let dragStart = {};
+let elIdCounter = 0;
+let lastCtxEvent = null;
+let currentTransition = 'none';
+let presentSlideIndex = 0;
+let autoPlayTimer = null;
+let trackingChanges = false;
+
+const THEMES = [
+  { name: 'Predeterminado', bg: '#ffffff', accent: '#4472c4', text: '#000000', title: '#44546a' },
+  { name: 'Oscuro', bg: '#1e1e2e', accent: '#cba6f7', text: '#cdd6f4', title: '#89b4fa' },
+  { name: 'Naturaleza', bg: '#f0f7ee', accent: '#1b4332', text: '#2d6a4f', title: '#40916c' },
+  { name: 'Sunset', bg: '#fff3e0', accent: '#e65100', text: '#bf360c', title: '#e64a19' },
+  { name: 'Ocean', bg: '#e3f2fd', accent: '#0277bd', text: '#01579b', title: '#0288d1' },
+  { name: 'Royal', bg: '#ede7f6', accent: '#4527a0', text: '#311b92', title: '#512da8' },
+  { name: 'Minimal', bg: '#fafafa', accent: '#212121', text: '#424242', title: '#616161' },
+  { name: 'Rose', bg: '#fce4ec', accent: '#c2185b', text: '#880e4f', title: '#e91e63' },
+];
+
+// ============================================================
+// SLIDE DATA MODEL
+// ============================================================
+function createSlide(layout) {
+  const slide = {
+    id: Date.now() + Math.random(),
+    bg: '#ffffff',
+    bgGradient: null,
+    elements: [],
+    notes: '',
+    transition: 'none',
+    theme: THEMES[0],
+    layout: layout || 'title',
+  };
+  return slide;
+}
+
+function createElement(type, opts) {
+  return {
+    id: ++elIdCounter,
+    type,
+    x: opts.x || 100, y: opts.y || 100,
+    w: opts.w || 300, h: opts.h || 80,
+    rotation: 0,
+    // Text props
+    text: opts.text || '',
+    fontSize: opts.fontSize || 24,
+    fontFamily: opts.fontFamily || 'Calibri',
+    bold: opts.bold || false,
+    italic: opts.italic || false,
+    underline: opts.underline || false,
+    strike: false,
+    align: opts.align || 'center',
+    vAlign: opts.vAlign || 'middle',
+    color: opts.color || '#000000',
+    lineSpacing: 1.5,
+    // Shape props
+    fill: opts.fill || 'transparent',
+    borderColor: opts.borderColor || 'transparent',
+    borderWidth: opts.borderWidth || 0,
+    borderStyle: 'solid',
+    shape: opts.shape || 'rect',
+    opacity: 1,
+    shadow: false,
+    glow: false,
+    animation: 'none',
+    animDuration: 0.5,
+    animDelay: 0,
+    // Image props
+    src: opts.src || null,
+    zIndex: elIdCounter,
+  };
+}
+
+// ============================================================
+// RENDER ENGINE
+// ============================================================
+function renderSlide(slideIdx, target) {
+  const slide = slides[slideIdx];
+  if (!slide) return;
+  const canvas = target || document.getElementById('slide-canvas');
+  canvas.innerHTML = '';
+  canvas.style.background = slide.bgGradient || slide.bg;
+
+  slide.elements.forEach(el => {
+    const div = createElDOM(el, target !== null);
+    canvas.appendChild(div);
+  });
+}
+
+function createElDOM(el, readOnly) {
+  const div = document.createElement('div');
+  div.className = 'slide-el' + (el.id === (selectedEl?.id) ? ' selected' : '');
+  div.id = 'el-' + el.id;
+  div.style.cssText = `
+    left:${el.x}px; top:${el.y}px; width:${el.w}px; height:${el.h}px;
+    z-index:${el.zIndex}; transform:rotate(${el.rotation}deg);
+    opacity:${el.opacity};
+    ${el.shadow ? 'filter:drop-shadow(3px 3px 6px rgba(0,0,0,0.4));' : ''}
+    ${el.glow ? 'box-shadow:0 0 12px rgba(100,150,255,0.7);' : ''}
+  `;
+
+  if (el.type === 'text') {
+    div.style.background = el.fill !== 'transparent' ? el.fill : 'transparent';
+    div.style.border = el.borderWidth ? `${el.borderWidth}px ${el.borderStyle} ${el.borderColor}` : 'none';
+    div.style.borderRadius = '2px';
+
+    const inner = document.createElement('div');
+    inner.style.cssText = `
+      width:100%; height:100%; padding:8px 12px;
+      font-family:${el.fontFamily}, sans-serif;
+      font-size:${el.fontSize}px;
+      font-weight:${el.bold?'bold':'normal'};
+      font-style:${el.italic?'italic':'normal'};
+      text-decoration:${el.underline?'underline':'none'}${el.strike?' line-through':''};
+      text-align:${el.align};
+      color:${el.color};
+      line-height:${el.lineSpacing};
+      display:flex; flex-direction:column;
+      justify-content:${el.vAlign==='top'?'flex-start':el.vAlign==='bottom'?'flex-end':'center'};
+      outline:none; word-wrap:break-word; overflow:hidden; box-sizing:border-box;
+    `;
+    inner.innerHTML = el.text || (readOnly ? '' : '');
+    if (!readOnly) {
+      inner.contentEditable = 'true';
+      inner.ondblclick = (e) => { e.stopPropagation(); inner.focus(); };
+      inner.oninput = () => { el.text = inner.innerHTML; saveState(); };
+      inner.onblur = () => { el.text = inner.innerHTML; };
+      inner.onkeydown = (e) => e.stopPropagation();
+    }
+    div.appendChild(inner);
+  } else if (el.type === 'shape') {
+    div.innerHTML = renderShapeSVG(el);
+    div.style.overflow = 'visible';
+  } else if (el.type === 'image') {
+    const img = document.createElement('img');
+    img.src = el.src;
+    img.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+    img.draggable = false;
+    div.appendChild(img);
+    div.style.border = el.borderWidth ? `${el.borderWidth}px solid ${el.borderColor}` : 'none';
+  } else if (el.type === 'chart') {
+    div.innerHTML = renderChart(el);
+  } else if (el.type === 'table') {
+    div.innerHTML = renderTable(el);
+    div.style.overflow = 'auto';
+  }
+
+  if (!readOnly) {
+    div.onmousedown = (e) => onElMouseDown(e, el);
+    div.oncontextmenu = (e) => onElCtx(e, el);
+  }
+  return div;
+}
+
+function renderShapeSVG(el) {
+  const w = el.w, h = el.h;
+  const fill = el.fill === 'transparent' ? 'transparent' : el.fill;
+  const stroke = el.borderWidth ? el.borderColor : 'none';
+  const sw = el.borderWidth || 0;
+
+  let shape = '';
+  if (el.shape === 'rect' || el.shape === 'process') {
+    shape = `<rect x="${sw/2}" y="${sw/2}" width="${w-sw}" height="${h-sw}" rx="3" ry="3"/>`;
+  } else if (el.shape === 'circle') {
+    shape = `<ellipse cx="${w/2}" cy="${h/2}" rx="${(w-sw)/2}" ry="${(h-sw)/2}"/>`;
+  } else if (el.shape === 'triangle') {
+    shape = `<polygon points="${w/2},${sw} ${w-sw},${h-sw} ${sw},${h-sw}"/>`;
+  } else if (el.shape === 'diamond' || el.shape === 'decision') {
+    shape = `<polygon points="${w/2},${sw} ${w-sw},${h/2} ${w/2},${h-sw} ${sw},${h/2}"/>`;
+  } else if (el.shape === 'star') {
+    const cx=w/2,cy=h/2,r1=Math.min(w,h)/2-sw,r2=r1*0.4;
+    let pts='';
+    for(let i=0;i<10;i++){const a=i*36-90,r=i%2?r2:r1;pts+=`${cx+r*Math.cos(a*Math.PI/180)},${cy+r*Math.sin(a*Math.PI/180)} `;}
+    shape = `<polygon points="${pts.trim()}"/>`;
+  } else if (el.shape === 'pentagon') {
+    const cx=w/2,cy=h/2,r=Math.min(w,h)/2-sw;
+    let pts='';
+    for(let i=0;i<5;i++){const a=i*72-90;pts+=`${cx+r*Math.cos(a*Math.PI/180)},${cy+r*Math.sin(a*Math.PI/180)} `;}
+    shape = `<polygon points="${pts.trim()}"/>`;
+  } else if (el.shape === 'hexagon') {
+    const cx=w/2,cy=h/2,r=Math.min(w,h)/2-sw;
+    let pts='';
+    for(let i=0;i<6;i++){const a=i*60;pts+=`${cx+r*Math.cos(a*Math.PI/180)},${cy+r*Math.sin(a*Math.PI/180)} `;}
+    shape = `<polygon points="${pts.trim()}"/>`;
+  } else if (el.shape === 'arrow') {
+    const ah=h*0.35,aw=w*0.3;
+    shape = `<polygon points="${sw},${h/2-h*0.15} ${w-aw},${h/2-h*0.15} ${w-aw},${sw} ${w-sw},${h/2} ${w-aw},${h-sw} ${w-aw},${h/2+h*0.15} ${sw},${h/2+h*0.15}"/>`;
+  } else if (el.shape === 'callout') {
+    shape = `<path d="M ${sw} ${sw} Q ${sw} ${h*0.7} ${sw} ${h*0.7} L ${w*0.2} ${h*0.7} L ${w*0.1} ${h-sw} L ${w*0.35} ${h*0.7} L ${w-sw} ${h*0.7} Q ${w-sw} ${sw} ${w/2} ${sw} Z"/>`;
+  } else if (el.shape === 'cylinder') {
+    const ry=h*0.15;
+    shape = `<ellipse cx="${w/2}" cy="${ry+sw}" rx="${(w-sw)/2}" ry="${ry}"/>
+    <rect x="${sw/2}" y="${ry+sw}" width="${w-sw}" height="${h-ry*2-sw}"/>
+    <ellipse cx="${w/2}" cy="${h-ry-sw}" rx="${(w-sw)/2}" ry="${ry}"/>`;
+  } else if (el.shape === 'line') {
+    shape = `<line x1="${sw}" y1="${h/2}" x2="${w-sw}" y2="${h/2}" stroke-width="${sw||2}" stroke="${stroke||el.fill||'#333'}"/>`;
+  } else if (el.shape === 'double-arrow') {
+    shape = `<line x1="${sw}" y1="${h/2}" x2="${w-sw}" y2="${h/2}"/>
+    <polygon points="${sw},${h/2} ${sw+12},${h/2-6} ${sw+12},${h/2+6}"/>
+    <polygon points="${w-sw},${h/2} ${w-sw-12},${h/2-6} ${w-sw-12},${h/2+6}"/>`;
+  } else {
+    shape = `<rect x="${sw/2}" y="${sw/2}" width="${w-sw}" height="${h-sw}"/>`;
+  }
+
+  // Text overlay
+  let textOverlay = '';
+  if (el.text) {
+    textOverlay = `<foreignObject x="4" y="4" width="${w-8}" height="${h-8}">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;font-family:${el.fontFamily},sans-serif;font-size:${el.fontSize}px;color:${el.color};font-weight:${el.bold?'bold':'normal'};word-wrap:break-word;overflow:hidden;">${el.text}</div>
+    </foreignObject>`;
+  }
+
+  return `<svg width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
+    <g fill="${fill}" stroke="${stroke}" stroke-width="${sw}" stroke-dasharray="${el.borderStyle==='dashed'?'6,3':el.borderStyle==='dotted'?'2,3':'none'}">
+      ${shape}
+    </g>
+    ${textOverlay}
+  </svg>`;
+}
+
+function renderChart(el) {
+  const data = el.data || [30, 60, 45, 80, 55];
+  const labels = el.labels || ['A','B','C','D','E'];
+  const max = Math.max(...data);
+  const w = el.w - 20, h = el.h - 40;
+  const bw = w / data.length - 8;
+  const colors = ['#4472c4','#ed7d31','#a9d18e','#ffc000','#70ad47'];
+  let bars = '';
+  data.forEach((v, i) => {
+    const bh = (v/max)*h;
+    const x = 10 + i*(bw+8);
+    const y = h - bh;
+    bars += `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" fill="${colors[i%colors.length]}" rx="2"/>`;
+    bars += `<text x="${x+bw/2}" y="${h+14}" text-anchor="middle" font-size="10" fill="#555">${labels[i]}</text>`;
+    bars += `<text x="${x+bw/2}" y="${y-4}" text-anchor="middle" font-size="10" fill="#333">${v}</text>`;
+  });
+  return `<svg width="${el.w}" height="${el.h}" xmlns="http://www.w3.org/2000/svg">
+    <rect width="${el.w}" height="${el.h}" fill="white" stroke="#e0e0e0"/>
+    <text x="${el.w/2}" y="16" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">Gráfico de barras</text>
+    <g transform="translate(10,22)">${bars}</g>
+  </svg>`;
+}
+
+function renderTable(el) {
+  const rows = el.rows || 3, cols = el.cols || 3;
+  const cellW = Math.floor((el.w) / cols);
+  const cellH = Math.floor((el.h) / rows);
+  let html = `<table style="border-collapse:collapse;width:100%;height:100%;font-size:${el.fontSize||14}px">`;
+  for (let r = 0; r < rows; r++) {
+    html += '<tr>';
+    for (let c = 0; c < cols; c++) {
+      const val = (el.tableData && el.tableData[r] && el.tableData[r][c]) || (r===0 ? `Encabezado ${c+1}` : '');
+      const isHeader = r === 0;
+      html += `<td contenteditable="true" style="border:1px solid #aaa;padding:4px 8px;min-width:${cellW}px;height:${cellH}px;
+        background:${isHeader?el.fill||'#4472c4':'white'};color:${isHeader?'white':'#222'};
+        font-weight:${isHeader?'bold':'normal'};text-align:center">${val}</td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</table>';
+  return html;
+}
+
+// ============================================================
+// THUMBNAILS
+// ============================================================
+function renderThumbs() {
+  const container = document.getElementById('slide-thumbs');
+  container.innerHTML = '';
+  slides.forEach((slide, i) => {
+    const wrap = document.createElement('div');
+    wrap.style.position = 'relative';
+
+    const numSpan = document.createElement('span');
+    numSpan.className = 'thumb-number';
+    numSpan.textContent = i + 1;
+    wrap.appendChild(numSpan);
+
+    const thumb = document.createElement('div');
+    thumb.className = 'slide-thumb' + (i === currentSlide ? ' active' : '');
+    thumb.onclick = () => selectSlide(i);
+    thumb.ondragstart = (e) => startThumbDrag(e, i);
+    thumb.ondragover = (e) => e.preventDefault();
+    thumb.ondrop = (e) => dropThumb(e, i);
+    thumb.draggable = true;
+    thumb.oncontextmenu = (e) => { e.preventDefault(); currentSlide = i; showThumbCtx(e); };
+
+    // Mini render
+    const scale = 188 / SLIDE_W;
+    const miniH = SLIDE_H * scale;
+    thumb.style.height = miniH + 'px';
+
+    const inner = document.createElement('div');
+    inner.style.cssText = `transform:scale(${scale});transform-origin:top left;width:${SLIDE_W}px;height:${SLIDE_H}px;background:${slide.bgGradient||slide.bg};pointer-events:none;`;
+
+    // Render elements in mini
+    slide.elements.forEach(el => {
+      const d = createElDOM(el, true);
+      d.style.pointerEvents = 'none';
+      inner.appendChild(d);
+    });
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'thumb-delete';
+    delBtn.innerHTML = '✕';
+    delBtn.onclick = (e) => { e.stopPropagation(); deleteSlideAt(i); };
+
+    thumb.appendChild(inner);
+    thumb.appendChild(delBtn);
+    wrap.appendChild(thumb);
+    container.appendChild(wrap);
+  });
+  document.getElementById('sb-slide').textContent = `Diapositiva ${currentSlide+1} de ${slides.length}`;
+}
+
+// ============================================================
+// SLIDE MANAGEMENT
+// ============================================================
+function addSlide(layout, idx) {
+  const slide = createSlide(layout || 'title');
+  applyLayout(slide, layout || 'content');
+  const insertAt = idx !== undefined ? idx : currentSlide + 1;
+  slides.splice(insertAt, 0, slide);
+  selectSlide(insertAt);
+  saveState();
+}
+
+function deleteSlide() { deleteSlideAt(currentSlide); }
+function deleteSlideAt(i) {
+  if (slides.length <= 1) { alert('Debe haber al menos una diapositiva.'); return; }
+  slides.splice(i, 1);
+  selectSlide(Math.min(i, slides.length - 1));
+  saveState();
+}
+
+function duplicateSlide() {
+  const copy = JSON.parse(JSON.stringify(slides[currentSlide]));
+  copy.id = Date.now();
+  slides.splice(currentSlide + 1, 0, copy);
+  selectSlide(currentSlide + 1);
+  saveState();
+}
+
+function moveSlideUp() {
+  if (currentSlide === 0) return;
+  [slides[currentSlide], slides[currentSlide-1]] = [slides[currentSlide-1], slides[currentSlide]];
+  selectSlide(currentSlide - 1);
+}
+
+function moveSlideDown() {
+  if (currentSlide === slides.length - 1) return;
+  [slides[currentSlide], slides[currentSlide+1]] = [slides[currentSlide+1], slides[currentSlide]];
+  selectSlide(currentSlide + 1);
+}
+
+function selectSlide(i) {
+  currentSlide = Math.max(0, Math.min(slides.length - 1, i));
+  selectedEl = null;
+  renderSlide(currentSlide);
+  renderThumbs();
+  syncNotes();
+  document.getElementById('sb-transition').textContent = `Transición: ${slides[currentSlide].transition || 'Ninguna'}`;
+}
+
+function syncNotes() {
+  const ta = document.getElementById('notes-input');
+  ta.value = slides[currentSlide]?.notes || '';
+  ta.oninput = () => { if (slides[currentSlide]) slides[currentSlide].notes = ta.value; };
+}
+
+// ============================================================
+// LAYOUTS
+// ============================================================
+function applyLayout(slide, layout) {
+  slide.elements = [];
+  slide.layout = layout;
+  const theme = slide.theme || THEMES[0];
+
+  if (layout === 'title') {
+    slide.elements.push(createElement('text', { x:80, y:130, w:800, h:140, text:'Haz clic para añadir título', fontSize:54, bold:true, color:theme.title, align:'center', fill:'transparent' }));
+    slide.elements.push(createElement('text', { x:160, y:300, w:640, h:80, text:'Haz clic para añadir subtítulo', fontSize:28, color:theme.text, align:'center', fill:'transparent' }));
+  } else if (layout === 'content') {
+    slide.elements.push(createElement('text', { x:60, y:30, w:840, h:80, text:'Título de la diapositiva', fontSize:40, bold:true, color:theme.title, align:'left', fill:'transparent' }));
+    slide.elements.push(createElement('text', { x:60, y:130, w:840, h:360, text:'• Punto principal\n• Segundo punto\n• Tercer punto', fontSize:24, color:theme.text, align:'left', vAlign:'top', fill:'transparent' }));
+  } else if (layout === 'two-col') {
+    slide.elements.push(createElement('text', { x:60, y:30, w:840, h:70, text:'Título', fontSize:40, bold:true, color:theme.title, fill:'transparent' }));
+    slide.elements.push(createElement('text', { x:60, y:120, w:400, h:370, text:'Columna izquierda\n• Punto 1\n• Punto 2', fontSize:22, color:theme.text, align:'left', vAlign:'top', fill:'transparent' }));
+    slide.elements.push(createElement('text', { x:500, y:120, w:400, h:370, text:'Columna derecha\n• Punto A\n• Punto B', fontSize:22, color:theme.text, align:'left', vAlign:'top', fill:'transparent' }));
+  } else if (layout === 'blank') {
+    // Empty
+  } else if (layout === 'image') {
+    slide.elements.push(createElement('text', { x:40, y:20, w:880, h:70, text:'Título con imagen', fontSize:40, bold:true, color:theme.title, fill:'transparent' }));
+    const imgPlaceholder = createElement('shape', { x:480, y:100, w:440, h:400, fill:'#e0e0e0', shape:'rect' });
+    imgPlaceholder.text = '🖼 Imagen';
+    slide.elements.push(imgPlaceholder);
+    slide.elements.push(createElement('text', { x:40, y:100, w:420, h:400, text:'Descripción\n• Detalle 1\n• Detalle 2', fontSize:22, color:theme.text, align:'left', vAlign:'top', fill:'transparent' }));
+  } else if (layout === 'comparison') {
+    slide.elements.push(createElement('text', { x:60, y:20, w:840, h:70, text:'Comparación', fontSize:40, bold:true, color:theme.title, fill:'transparent' }));
+    const leftBox = createElement('shape', { x:40, y:100, w:420, h:390, fill: theme.accent, shape:'rect' });
+    leftBox.text = 'Opción A';
+    leftBox.color = 'white';
+    leftBox.bold = true;
+    leftBox.fontSize = 26;
+    slide.elements.push(leftBox);
+    const rightBox = createElement('shape', { x:500, y:100, w:420, h:390, fill:'#ed7d31', shape:'rect' });
+    rightBox.text = 'Opción B';
+    rightBox.color = 'white';
+    rightBox.bold = true;
+    rightBox.fontSize = 26;
+    slide.elements.push(rightBox);
+  }
+}
+
+function setLayout(layout) {
+  if (!confirm('¿Cambiar diseño? Se reorganizarán los elementos.')) return;
+  applyLayout(slides[currentSlide], layout);
+  renderSlide(currentSlide);
+  renderThumbs();
+  closeAll();
+}
+
+function resetSlide() { setLayout(slides[currentSlide].layout || 'content'); }
+
+// ============================================================
+// ELEMENT INTERACTION
+// ============================================================
+function selectEl(el) {
+  selectedEl = el;
+  document.querySelectorAll('.slide-el').forEach(d => d.classList.remove('selected'));
+  const dom = document.getElementById('el-' + el.id);
+  if (dom) dom.classList.add('selected');
+  updateFormatPanel(el);
+}
+
+function deselectAll() {
+  selectedEl = null;
+  document.querySelectorAll('.slide-el').forEach(d => d.classList.remove('selected'));
+  updateFormatPanel(null);
+}
+
+function onElMouseDown(e, el) {
+  e.stopPropagation();
+  if (e.button !== 0) return;
+  selectEl(el);
+
+  const startX = e.clientX, startY = e.clientY;
+  const startElX = el.x, startElY = el.y;
+  const scaleFactor = zoom / 100;
+
+  function onMove(ev) {
+    const dx = (ev.clientX - startX) / scaleFactor;
+    const dy = (ev.clientY - startY) / scaleFactor;
+    el.x = Math.max(0, startElX + dx);
+    el.y = Math.max(0, startElY + dy);
+    const dom = document.getElementById('el-' + el.id);
+    if (dom) { dom.style.left = el.x + 'px'; dom.style.top = el.y + 'px'; }
+    updateFormatPanel(el);
+  }
+  function onUp() {
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+    renderThumbs();
+    saveState();
+  }
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+}
+
+function onElCtx(e, el) {
+  e.preventDefault();
+  e.stopPropagation();
+  selectEl(el);
+  showElCtxMenu(e);
+}
+
+function stageMouseDown(e) {
+  if (e.target === document.getElementById('slide-canvas')) deselectAll();
+}
+
+// ============================================================
+// ELEMENT ACTIONS
+// ============================================================
+function addTextBox() {
+  const el = createElement('text', { x:120, y:150, w:300, h:80, text:'Cuadro de texto', fontSize:24, color:'#222', fill:'transparent', align:'center' });
+  slides[currentSlide].elements.push(el);
+  renderSlide(currentSlide);
+  renderThumbs();
+  selectEl(el);
+  saveState();
+}
+
+function insertShapeQuick(shape) {
+  const colors = { rect:'#4472c4', circle:'#ed7d31', triangle:'#a9d18e', diamond:'#ffc000', star:'#ff5733', arrow:'#2e86ab', callout:'#7b2d8b', hexagon:'#28a745', pentagon:'#20c997', line:'#333', cylinder:'#6c757d', process:'#4472c4', decision:'#ffc000' };
+  const el = createElement('shape', {
+    x:200, y:160, w:shape==='line'?300:200, h:shape==='line'?4:160,
+    fill: colors[shape] || '#4472c4', shape,
+    borderColor: '#2c3e50', borderWidth: 0,
+  });
+  el.color = 'white';
+  el.fontSize = 18;
+  el.bold = true;
+  slides[currentSlide].elements.push(el);
+  renderSlide(currentSlide);
+  renderThumbs();
+  selectEl(el);
+  saveState();
+  closeAll();
+}
+
+function insertImage() {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*';
+  input.onchange = e => {
+    const file = e.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const el = createElement('image', { x:100, y:80, w:400, h:300, src: ev.target.result });
+      slides[currentSlide].elements.push(el);
+      renderSlide(currentSlide); renderThumbs(); selectEl(el); saveState();
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+}
+
+function insertChart() {
+  const el = createElement('chart', { x:80, y:60, w:500, h:380 });
+  el.data = [42, 78, 55, 91, 63, 37];
+  el.labels = ['Ene','Feb','Mar','Abr','May','Jun'];
+  slides[currentSlide].elements.push(el);
+  renderSlide(currentSlide); renderThumbs(); selectEl(el); saveState();
+}
+
+function insertVideoPlaceholder() {
+  const el = createElement('shape', { x:120, y:80, w:500, h:300, fill:'#1a1a1a', shape:'rect' });
+  el.text = '▶ Video\n(Haz doble clic para abrir URL)';
+  el.color = 'white'; el.fontSize = 22;
+  slides[currentSlide].elements.push(el);
+  renderSlide(currentSlide); renderThumbs(); selectEl(el); saveState();
+}
+
+function insertLink() {
+  const url = prompt('URL del hipervínculo:', 'https://');
+  if (!url) return;
+  const el = createElement('text', { x:100, y:200, w:300, h:50, text:`🔗 ${url}`, fontSize:18, color:'#0563c1' });
+  slides[currentSlide].elements.push(el);
+  renderSlide(currentSlide); renderThumbs(); saveState();
+}
+
+function insertIcon() {
+  const icons = ['⭐','🚀','💡','✅','❌','📌','🔑','🎯','💪','🌟','📊','🔧','📱','💻','🌍','❤️','👍','🔥'];
+  const icon = icons[Math.floor(Math.random() * icons.length)];
+  const el = createElement('text', { x:200, y:180, w:120, h:120, text:icon, fontSize:72, align:'center' });
+  slides[currentSlide].elements.push(el);
+  renderSlide(currentSlide); renderThumbs(); selectEl(el); saveState();
+}
+
+function insertWordArt() {
+  const text = prompt('Texto para WordArt:', 'WordArt');
+  if (!text) return;
+  const el = createElement('text', { x:100, y:150, w:500, h:120, text, fontSize:60, bold:true, color:'transparent', fill:'transparent' });
+  el.color = 'transparent';
+  const dom_el = createElement('text', { x:100, y:150, w:500, h:120, text, fontSize:60, bold:true });
+  // Apply gradient text via inline style
+  slides[currentSlide].elements.push(createElement('text', { x:100, y:150, w:600, h:120, text:`<span style="background:linear-gradient(135deg,#f093fb,#f5576c,#4facfe);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:60px;font-weight:900">${text}</span>`, fontSize:60, bold:true, color:'#f093fb' }));
+  renderSlide(currentSlide); renderThumbs(); saveState();
+}
+
+function showTablePicker(e) {
+  const picker = document.getElementById('table-picker');
+  picker.style.display = 'block';
+  picker.style.left = e.clientX + 'px';
+  picker.style.top = e.clientY + 'px';
+  buildTablePicker();
+  e.stopPropagation();
+}
+
+function buildTablePicker() {
+  const grid = document.getElementById('tp-grid');
+  grid.innerHTML = '';
+  for (let r = 1; r <= 8; r++) {
+    for (let c = 1; c <= 10; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'tp-cell';
+      cell.dataset.r = r; cell.dataset.c = c;
+      cell.onmouseover = () => {
+        document.querySelectorAll('.tp-cell').forEach(cc => {
+          cc.classList.toggle('hover', parseInt(cc.dataset.r) <= r && parseInt(cc.dataset.c) <= c);
+        });
+        document.getElementById('tp-label').textContent = `Tabla ${r}×${c}`;
+      };
+      cell.onclick = () => {
+        const el = createElement('table', { x:60, y:80, w:r*120, h:c*50 });
+        el.rows = r; el.cols = c;
+        el.tableData = Array.from({length:r}, (_,ri) => Array.from({length:c}, (_,ci) => ri===0?`Encab. ${ci+1}`:''));
+        el.fill = '#4472c4';
+        slides[currentSlide].elements.push(el);
+        renderSlide(currentSlide); renderThumbs(); saveState();
+        closeAll();
+      };
+      grid.appendChild(cell);
+    }
+  }
+}
+
+// ============================================================
+// FORMAT ELEMENT
+// ============================================================
+function updateFormatPanel(el) {
+  if (!el) {
+    ['el-x','el-y','el-w','el-h','el-rot'].forEach(id => { const i = document.getElementById(id); if(i) i.value=''; });
+    return;
+  }
+  document.getElementById('el-x').value = Math.round(el.x);
+  document.getElementById('el-y').value = Math.round(el.y);
+  document.getElementById('el-w').value = Math.round(el.w);
+  document.getElementById('el-h').value = Math.round(el.h);
+  document.getElementById('el-rot').value = el.rotation || 0;
+  document.getElementById('el-opacity').value = Math.round((el.opacity || 1) * 100);
+  document.getElementById('opacity-val').textContent = Math.round((el.opacity||1)*100) + '%';
+  if (el.fill && el.fill !== 'transparent') document.getElementById('fill-color-fp').value = el.fill.startsWith('#') ? el.fill : '#4472c4';
+  if (el.fontFamily) document.getElementById('font-name').value = el.fontFamily;
+  if (el.fontSize) document.getElementById('font-size').value = el.fontSize;
+}
+
+function updateElPos() {
+  if (!selectedEl) return;
+  selectedEl.x = parseFloat(document.getElementById('el-x').value) || 0;
+  selectedEl.y = parseFloat(document.getElementById('el-y').value) || 0;
+  const dom = document.getElementById('el-' + selectedEl.id);
+  if (dom) { dom.style.left = selectedEl.x + 'px'; dom.style.top = selectedEl.y + 'px'; }
+  renderThumbs();
+}
+
+function updateElSize() {
+  if (!selectedEl) return;
+  selectedEl.w = parseFloat(document.getElementById('el-w').value) || 100;
+  selectedEl.h = parseFloat(document.getElementById('el-h').value) || 50;
+  const dom = document.getElementById('el-' + selectedEl.id);
+  if (dom) { dom.style.width = selectedEl.w + 'px'; dom.style.height = selectedEl.h + 'px'; }
+  renderThumbs();
+}
+
+function updateElRotation() {
+  if (!selectedEl) return;
+  selectedEl.rotation = parseFloat(document.getElementById('el-rot').value) || 0;
+  const dom = document.getElementById('el-' + selectedEl.id);
+  if (dom) dom.style.transform = `rotate(${selectedEl.rotation}deg)`;
+  renderThumbs();
+}
+
+function applyElFill(color) {
+  if (!selectedEl) return;
+  selectedEl.fill = color;
+  document.getElementById('fill-color-fp').value = color;
+  refreshEl();
+}
+
+function applyElTextColor(color) {
+  if (!selectedEl) return;
+  selectedEl.color = color;
+  refreshEl();
+}
+
+function applyElBorder(color) {
+  if (!selectedEl) return;
+  selectedEl.borderColor = color;
+  if (!selectedEl.borderWidth) selectedEl.borderWidth = 2;
+  document.getElementById('border-color-fp').value = color;
+  refreshEl();
+}
+
+function applyElOpacity(val) {
+  if (!selectedEl) return;
+  selectedEl.opacity = val / 100;
+  document.getElementById('opacity-val').textContent = val + '%';
+  const dom = document.getElementById('el-' + selectedEl.id);
+  if (dom) dom.style.opacity = selectedEl.opacity;
+  renderThumbs();
+}
+
+function applyBorderStyle(style) {
+  if (!selectedEl) return;
+  selectedEl.borderStyle = style;
+  if (!selectedEl.borderWidth) selectedEl.borderWidth = 2;
+  refreshEl();
+}
+
+function applyBorderWidth(val) {
+  if (!selectedEl) return;
+  selectedEl.borderWidth = parseInt(val);
+  document.getElementById('bw-val').textContent = val + 'px';
+  refreshEl();
+}
+
+function applyBgColor(color) {
+  slides[currentSlide].bg = color;
+  slides[currentSlide].bgGradient = null;
+  document.getElementById('bg-color-fp').value = color;
+  document.getElementById('slide-canvas').style.background = color;
+  renderThumbs();
+}
+
+function applyBgGradient() {
+  const c1 = '#667eea', c2 = '#764ba2';
+  slides[currentSlide].bgGradient = `linear-gradient(135deg, ${c1}, ${c2})`;
+  document.getElementById('slide-canvas').style.background = slides[currentSlide].bgGradient;
+  renderThumbs();
+}
+
+// Text formatting for selected element
+function applyFont(f) { if(selectedEl){selectedEl.fontFamily=f;refreshEl();} }
+function applyFontSize(s) { if(selectedEl){selectedEl.fontSize=parseInt(s);refreshEl();} }
+function changeFontSize(d) {
+  const sel = document.getElementById('font-size');
+  const nv = Math.max(8, Math.min(200, parseInt(sel.value||24)+d));
+  sel.value = nv;
+  applyFontSize(nv);
+}
+function toggleBold() { if(selectedEl){selectedEl.bold=!selectedEl.bold;document.getElementById('btn-b').classList.toggle('active',selectedEl.bold);refreshEl();} }
+function toggleItalic() { if(selectedEl){selectedEl.italic=!selectedEl.italic;document.getElementById('btn-i').classList.toggle('active',selectedEl.italic);refreshEl();} }
+function toggleUnderline() { if(selectedEl){selectedEl.underline=!selectedEl.underline;document.getElementById('btn-u').classList.toggle('active',selectedEl.underline);refreshEl();} }
+function toggleStrike() { if(selectedEl){selectedEl.strike=!selectedEl.strike;document.getElementById('btn-s').classList.toggle('active',selectedEl.strike);refreshEl();} }
+function clearTextFormat() { if(selectedEl){selectedEl.bold=selectedEl.italic=selectedEl.underline=selectedEl.strike=false;refreshEl();} }
+function setTextAlign(a) { if(selectedEl){selectedEl.align=a;refreshEl();} }
+function setVAlign(a) { if(selectedEl){selectedEl.vAlign=a;refreshEl();} }
+function applyLineSpacing(v) { if(selectedEl){selectedEl.lineSpacing=parseFloat(v);refreshEl();} }
+function addBullets() {
+  if (!selectedEl) { addTextBox(); return; }
+  selectedEl.text = '• Punto 1\n• Punto 2\n• Punto 3';
+  selectedEl.align = 'left'; selectedEl.vAlign = 'top';
+  refreshEl();
+}
+function addNumbered() {
+  if (!selectedEl) { addTextBox(); return; }
+  selectedEl.text = '1. Primer elemento\n2. Segundo elemento\n3. Tercer elemento';
+  selectedEl.align = 'left'; selectedEl.vAlign = 'top';
+  refreshEl();
+}
+
+function addShadow() { if(selectedEl){selectedEl.shadow=!selectedEl.shadow;refreshEl();} }
+function applyGlow() { if(selectedEl){selectedEl.glow=!selectedEl.glow;refreshEl();} }
+function applyReflection() {
+  if (!selectedEl) return;
+  const dom = document.getElementById('el-' + selectedEl.id);
+  if (dom) dom.style.filter = dom.style.filter ? '' : 'drop-shadow(0 10px 6px rgba(0,0,0,0.3))';
+}
+function apply3D() {
+  if (!selectedEl) return;
+  const dom = document.getElementById('el-' + selectedEl.id);
+  if (dom) dom.style.transform = dom.style.transform.includes('perspective') ? `rotate(${selectedEl.rotation}deg)` : `perspective(500px) rotateY(15deg) rotate(${selectedEl.rotation}deg)`;
+}
+
+function bringForward() { if(selectedEl){selectedEl.zIndex=(selectedEl.zIndex||1)+1;refreshEl();} }
+function sendBackward() { if(selectedEl){selectedEl.zIndex=Math.max(1,(selectedEl.zIndex||1)-1);refreshEl();} }
+function alignElCenter() { if(selectedEl){selectedEl.x=(SLIDE_W-selectedEl.w)/2;refreshEl();} }
+function alignElMiddle() { if(selectedEl){selectedEl.y=(SLIDE_H-selectedEl.h)/2;refreshEl();} }
+function groupElements() { alert('Selecciona múltiples elementos (mantén Shift) para agrupar'); }
+
+function deleteEl() {
+  if (!selectedEl) return;
+  const idx = slides[currentSlide].elements.findIndex(e => e.id === selectedEl.id);
+  if (idx >= 0) slides[currentSlide].elements.splice(idx, 1);
+  selectedEl = null;
+  renderSlide(currentSlide);
+  renderThumbs();
+  saveState();
+}
+
+function copyEl() { if (selectedEl) clipboard = JSON.parse(JSON.stringify(selectedEl)); }
+function cutEl() { if (selectedEl) { clipboard = JSON.parse(JSON.stringify(selectedEl)); deleteEl(); } }
+function pasteEl() {
+  if (!clipboard) return;
+  const copy = JSON.parse(JSON.stringify(clipboard));
+  copy.id = ++elIdCounter; copy.x += 20; copy.y += 20;
+  slides[currentSlide].elements.push(copy);
+  renderSlide(currentSlide); renderThumbs(); selectEl(copy); saveState();
+}
+function duplicateEl() { copyEl(); pasteEl(); }
+
+function refreshEl() {
+  if (!selectedEl) return;
+  renderSlide(currentSlide);
+  selectEl(selectedEl);
+  renderThumbs();
+  saveState();
+}
+
+// ============================================================
+// ANIMATIONS
+// ============================================================
+function setAnimation(type) {
+  if (!selectedEl) return;
+  selectedEl.animation = type;
+  document.querySelectorAll('.anim-item').forEach(i => i.classList.remove('active'));
+  event?.target?.classList.add('active');
+  saveState();
+}
+
+function previewAnimation() {
+  if (!selectedEl) return;
+  const dom = document.getElementById('el-' + selectedEl.id);
+  if (!dom) return;
+  const anim = selectedEl.animation;
+  dom.style.animation = 'none';
+  setTimeout(() => {
+    const dur = document.getElementById('anim-duration').value;
+    const del = document.getElementById('anim-delay').value;
+    const animMap = { 'fly-in':'flyIn', 'fade':'fadeIn', 'bounce':'bounceIn', 'zoom':'zoomIn', 'spin':'spin' };
+    const a = animMap[anim];
+    if (a) dom.style.animation = `${a} ${dur}s ${del}s ease both`;
+  }, 50);
+}
+
+// ============================================================
+// TRANSITIONS
+// ============================================================
+function setTransition(type) {
+  slides[currentSlide].transition = type;
+  currentTransition = type;
+  document.getElementById('sb-transition').textContent = `Transición: ${type}`;
+  closeAll();
+}
+
+function applyTransitionAll() {
+  const t = slides[currentSlide].transition;
+  slides.forEach(s => s.transition = t);
+  alert(`Transición "${t}" aplicada a todas las diapositivas.`);
+}
+
+// ============================================================
+// PRESENTATION MODE
+// ============================================================
+function startPresentation() {
+  presentSlideIndex = 0;
+  enterPresentMode();
+}
+
+function startPresentationCurrent() {
+  presentSlideIndex = currentSlide;
+  enterPresentMode();
+}
+
+function enterPresentMode() {
+  const pm = document.getElementById('present-mode');
+  pm.style.display = 'flex';
+  renderPresentSlide();
+  document.addEventListener('keydown', presentKeyHandler);
+}
+
+function renderPresentSlide() {
+  const slide = slides[presentSlideIndex];
+  const ps = document.getElementById('present-slide');
+  ps.innerHTML = '';
+  ps.style.background = slide.bgGradient || slide.bg;
+
+  const scale = Math.min(window.innerWidth / SLIDE_W, window.innerHeight / SLIDE_H);
+  const inner = document.createElement('div');
+  inner.style.cssText = `transform:scale(${scale});transform-origin:top left;width:${SLIDE_W}px;height:${SLIDE_H}px;position:relative;`;
+  slide.elements.forEach(el => {
+    const d = createElDOM(el, true);
+    d.style.pointerEvents = 'none';
+    if (el.animation && el.animation !== 'none') {
+      const animMap = { 'fly-in':'flyIn', 'fade':'fadeIn', 'bounce':'bounceIn', 'zoom':'zoomIn', 'spin':'spin' };
+      const a = animMap[el.animation];
+      if (a) d.style.animation = `${a} ${el.animDuration||0.5}s ${el.animDelay||0}s ease both`;
+    }
+    inner.appendChild(d);
+  });
+  ps.appendChild(inner);
+
+  // Transition effect
+  const trans = slide.transition;
+  if (trans === 'slide') inner.classList.add('slide-enter');
+  else if (trans === 'fade') inner.classList.add('slide-enter-fade');
+  else if (trans === 'zoom') inner.classList.add('slide-enter-zoom');
+
+  document.getElementById('present-counter').textContent = `${presentSlideIndex+1} / ${slides.length}`;
+  document.getElementById('present-notes').textContent = slide.notes || '';
+}
+
+function nextSlide() {
+  if (presentSlideIndex < slides.length - 1) { presentSlideIndex++; renderPresentSlide(); }
+  else endPresentation();
+}
+
+function prevSlide() {
+  if (presentSlideIndex > 0) { presentSlideIndex--; renderPresentSlide(); }
+}
+
+function endPresentation() {
+  document.getElementById('present-mode').style.display = 'none';
+  document.removeEventListener('keydown', presentKeyHandler);
+}
+
+function presentKeyHandler(e) {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') nextSlide();
+  else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+  else if (e.key === 'Escape') endPresentation();
+  else if (e.key === 'f' || e.key === 'F') {
+    const ps = document.getElementById('present-slide');
+    if (ps.requestFullscreen) ps.requestFullscreen();
+  }
+}
+
+function togglePresentNotes() {
+  const n = document.getElementById('present-notes');
+  n.style.display = n.style.display === 'none' ? 'block' : 'none';
+}
+
+function togglePresenterView() {
+  alert('Vista del presentador: Usa una pantalla secundaria para ver tus notas mientras presentas.');
+}
+
+function setAutoPlay() {
+  const secs = parseInt(prompt('Avance automático cada (segundos):', '5'));
+  if (!secs) return;
+  if (autoPlayTimer) clearInterval(autoPlayTimer);
+  autoPlayTimer = setInterval(() => {
+    if (presentSlideIndex < slides.length - 1) nextSlide();
+    else { clearInterval(autoPlayTimer); endPresentation(); }
+  }, secs * 1000);
+  startPresentation();
+}
+
+// ============================================================
+// THEMES
+// ============================================================
+function buildThemeGallery() {
+  const grid = document.getElementById('theme-grid');
+  grid.innerHTML = '';
+  THEMES.forEach(theme => {
+    const btn = document.createElement('div');
+    btn.className = 'tg-btn';
+    btn.title = theme.name;
+    btn.innerHTML = `<div class="tg-preview"><div class="tg-top" style="background:${theme.bg};color:${theme.title}">${theme.name}</div><div class="tg-bottom" style="background:${theme.accent}"></div></div><div class="tg-name">${theme.name}</div>`;
+    btn.onclick = () => { applyTheme(theme); closeAll(); };
+    grid.appendChild(btn);
+  });
+}
+
+function applyTheme(theme) {
+  slides[currentSlide].theme = theme;
+  slides[currentSlide].bg = theme.bg;
+  slides[currentSlide].bgGradient = null;
+  applyLayout(slides[currentSlide], slides[currentSlide].layout || 'content');
+  renderSlide(currentSlide);
+  renderThumbs();
+  document.getElementById('sb-theme').textContent = `Tema: ${theme.name}`;
+  saveState();
+}
+
+function showThemeGallery(e) {
+  e.stopPropagation();
+  buildThemeGallery();
+  const g = document.getElementById('theme-gallery');
+  g.style.display = 'block';
+  g.style.left = Math.min(e.clientX, window.innerWidth - 380) + 'px';
+  g.style.top = Math.min(e.clientY, window.innerHeight - 300) + 'px';
+}
+
+function showShapeGallery(e) {
+  e.stopPropagation();
+  const g = document.getElementById('shape-gallery');
+  g.style.display = 'block';
+  g.style.left = Math.min(e.clientX, window.innerWidth - 300) + 'px';
+  g.style.top = Math.min(e.clientY, window.innerHeight - 300) + 'px';
+}
+
+// ============================================================
+// VIEWS
+// ============================================================
+function setView(mode) {
+  if (mode === 'sorter') {
+    const stage = document.getElementById('stage-area');
+    stage.style.flexWrap = 'wrap';
+    stage.style.justifyContent = 'flex-start';
+    stage.style.alignItems = 'flex-start';
+    stage.innerHTML = '';
+    slides.forEach((slide, i) => {
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'margin:12px;cursor:pointer;position:relative;';
+      const thumb = document.createElement('div');
+      const scale = 0.23;
+      thumb.style.cssText = `width:${SLIDE_W*scale}px;height:${SLIDE_H*scale}px;background:${slide.bg};border:${i===currentSlide?'3px solid #c43e1c':'2px solid #aaa'};box-shadow:2px 2px 6px rgba(0,0,0,0.2);overflow:hidden;`;
+      const inner = document.createElement('div');
+      inner.style.cssText = `transform:scale(${scale});transform-origin:top left;width:${SLIDE_W}px;height:${SLIDE_H}px;pointer-events:none;`;
+      slide.elements.forEach(el => { const d = createElDOM(el, true); d.style.pointerEvents='none'; inner.appendChild(d); });
+      thumb.appendChild(inner);
+      const label = document.createElement('div');
+      label.style.cssText = 'text-align:center;font-size:11px;color:white;margin-top:4px;';
+      label.textContent = `Diapositiva ${i+1}`;
+      wrap.onclick = () => { selectSlide(i); setView('normal'); };
+      wrap.appendChild(thumb);
+      wrap.appendChild(label);
+      stage.appendChild(wrap);
+    });
+    document.getElementById('slide-canvas-wrap').style.display = 'none';
+  } else {
+    const stage = document.getElementById('stage-area');
+    stage.style.flexWrap = '';
+    stage.style.justifyContent = 'flex-start';
+    stage.style.alignItems = 'flex-start';
+    stage.innerHTML = '';
+    stage.appendChild(document.getElementById('slide-canvas-wrap') || createSlideCanvasWrap());
+    document.getElementById('slide-canvas-wrap').style.display = '';
+    renderSlide(currentSlide);
+  }
+}
+
+// ============================================================
+// ZOOM
+// ============================================================
+function setZoom(val) {
+  zoom = parseInt(val);
+  document.getElementById('zoom-sb').value = zoom;
+  document.getElementById('zoom-label').textContent = zoom + '%';
+  const wrap = document.getElementById('slide-canvas-wrap');
+  wrap.style.transform = `scale(${zoom/100})`;
+  wrap.style.transformOrigin = 'top left';
+  wrap.style.marginBottom = (SLIDE_H * zoom/100 - SLIDE_H + 20) + 'px';
+}
+
+function changeZoom(d) { setZoom(Math.max(30, Math.min(200, zoom + d))); }
+
+// ============================================================
+// MENUS
+// ============================================================
+function toggleMenu(name) {
+  document.querySelectorAll('.mi').forEach(m => {
+    if (m.id === `mi-${name}`) m.classList.toggle('open');
+    else m.classList.remove('open');
+  });
+}
+
+function switchTab(tab, el) {
+  document.querySelectorAll('.rtab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function switchRightTab(tab, el) {
+  document.querySelectorAll('.rpt').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  ['format','anim','design'].forEach(t => {
+    const div = document.getElementById('rp-' + t);
+    if (div) div.style.display = t === tab ? '' : 'none';
+  });
+}
+
+function showLayoutMenu(e) {
+  e.stopPropagation();
+  const layouts = ['title','content','two-col','blank','image','comparison'];
+  const menu = document.createElement('div');
+  menu.style.cssText = 'position:fixed;background:white;border:1px solid #ccc;box-shadow:2px 4px 10px rgba(0,0,0,0.2);z-index:3000;padding:4px 0;border-radius:3px;';
+  menu.style.left = e.clientX + 'px';
+  menu.style.top = e.clientY + 'px';
+  layouts.forEach(l => {
+    const div = document.createElement('div');
+    div.style.cssText = 'padding:6px 16px;cursor:pointer;font-size:12px;';
+    div.textContent = { title:'Título', content:'Contenido', 'two-col':'Dos columnas', blank:'En blanco', image:'Imagen', comparison:'Comparación' }[l];
+    div.onmouseover = () => div.style.background = '#fce4dc';
+    div.onmouseleave = () => div.style.background = '';
+    div.onclick = () => { setLayout(l); menu.remove(); };
+    menu.appendChild(div);
+  });
+  document.body.appendChild(menu);
+  setTimeout(() => document.addEventListener('click', () => menu.remove(), { once: true }), 100);
+}
+
+function closeAll() {
+  document.querySelectorAll('.mi').forEach(m => m.classList.remove('open'));
+  document.getElementById('shape-gallery').style.display = 'none';
+  document.getElementById('theme-gallery').style.display = 'none';
+  document.getElementById('table-picker').style.display = 'none';
+  document.getElementById('ctx').style.display = 'none';
+}
+
+function showStageCtx(e) {
+  e.preventDefault();
+  lastCtxEvent = e;
+  const ctx = document.getElementById('ctx');
+  ctx.style.display = 'block';
+  ctx.style.left = Math.min(e.clientX, window.innerWidth - 200) + 'px';
+  ctx.style.top = Math.min(e.clientY, window.innerHeight - 400) + 'px';
+}
+
+function showElCtxMenu(e) {
+  const ctx = document.getElementById('ctx');
+  ctx.style.display = 'block';
+  ctx.style.left = Math.min(e.clientX, window.innerWidth - 200) + 'px';
+  ctx.style.top = Math.min(e.clientY, window.innerHeight - 400) + 'px';
+}
+
+function showThumbCtx(e) { showStageCtx(e); }
+function hideCtx() { document.getElementById('ctx').style.display = 'none'; }
+
+// ============================================================
+// PANEL RESIZE
+// ============================================================
+function startPanelResize(e) {
+  const startX = e.clientX;
+  const startW = document.getElementById('slide-panel').offsetWidth;
+  function onMove(ev) {
+    const newW = Math.max(140, Math.min(350, startW + ev.clientX - startX));
+    document.getElementById('slide-panel').style.width = newW + 'px';
+  }
+  function onUp() { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+}
+
+// ============================================================
+// DRAG & DROP SLIDES
+// ============================================================
+let dragThumbIdx = null;
+function startThumbDrag(e, i) { dragThumbIdx = i; }
+function dropThumb(e, i) {
+  if (dragThumbIdx === null || dragThumbIdx === i) return;
+  const [moved] = slides.splice(dragThumbIdx, 1);
+  slides.splice(i, 0, moved);
+  selectSlide(i);
+  dragThumbIdx = null;
+}
+
+// ============================================================
+// MISC
+// ============================================================
+function toggleNotes() {
+  const p = document.getElementById('notes-panel');
+  p.style.display = p.style.display === 'none' ? 'flex' : 'none';
+}
+
+function toggleRightPanel() {
+  const p = document.getElementById('right-panel');
+  p.style.display = p.style.display === 'none' ? 'flex' : 'none';
+}
+
+function setSlideSize(size) {
+  const canvas = document.getElementById('slide-canvas');
+  if (size === '4:3') { canvas.style.width = '800px'; canvas.style.height = '600px'; }
+  else if (size === 'A4') { canvas.style.width = '794px'; canvas.style.height = '1123px'; }
+  else { canvas.style.width = '960px'; canvas.style.height = '540px'; }
+  renderSlide(currentSlide);
+}
+
+// ============================================================
+// UNDO / HISTORY
+// ============================================================
+let history_stack = [];
+let history_idx = -1;
+
+function saveState() {
+  const state = JSON.stringify({ slides, currentSlide });
+  if (history_idx >= 0 && history_stack[history_idx] === state) return;
+  history_stack = history_stack.slice(0, history_idx + 1);
+  history_stack.push(state);
+  history_idx = history_stack.length - 1;
+  if (history_stack.length > 50) { history_stack.shift(); history_idx--; }
+}
+
+document.addEventListener('keydown', e => {
+  const ctrl = e.ctrlKey || e.metaKey;
+  if (ctrl && e.key === 'z') { undoAction(); e.preventDefault(); }
+  else if (ctrl && e.key === 'y') { redoAction(); e.preventDefault(); }
+  else if (ctrl && e.key === 'm') { addSlide(); e.preventDefault(); }
+  else if (ctrl && e.key === 'd') { duplicateEl(); e.preventDefault(); }
+  else if (ctrl && e.key === 'c') { copyEl(); }
+  else if (ctrl && e.key === 'v') { pasteEl(); }
+  else if (ctrl && e.key === 'x') { cutEl(); }
+  else if (e.key === 'Delete' && selectedEl && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') { deleteEl(); }
+  else if (e.key === 'F5') { e.preventDefault(); startPresentation(); }
+  else if (e.key === 'Escape') { deselectAll(); closeAll(); }
+  else if (e.key === 'ArrowLeft' && selectedEl && !e.target.isContentEditable) { selectedEl.x -= 2; refreshEl(); e.preventDefault(); }
+  else if (e.key === 'ArrowRight' && selectedEl && !e.target.isContentEditable) { selectedEl.x += 2; refreshEl(); e.preventDefault(); }
+  else if (e.key === 'ArrowUp' && selectedEl && !e.target.isContentEditable) { selectedEl.y -= 2; refreshEl(); e.preventDefault(); }
+  else if (e.key === 'ArrowDown' && selectedEl && !e.target.isContentEditable) { selectedEl.y += 2; refreshEl(); e.preventDefault(); }
+});
+
+function undoAction() {
+  if (history_idx <= 0) return;
+  history_idx--;
+  const state = JSON.parse(history_stack[history_idx]);
+  slides = state.slides; currentSlide = state.currentSlide;
+  renderSlide(currentSlide); renderThumbs(); syncNotes();
+}
+
+function redoAction() {
+  if (history_idx >= history_stack.length - 1) return;
+  history_idx++;
+  const state = JSON.parse(history_stack[history_idx]);
+  slides = state.slides; currentSlide = state.currentSlide;
+  renderSlide(currentSlide); renderThumbs(); syncNotes();
+}
+
+// ============================================================
+// SAVE / EXPORT
+// ============================================================
+function savePresentation() {
+  const state = JSON.stringify({ slides, currentSlide });
+  const blob = new Blob([state], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Presentacion1.pptclone';
+  a.click();
+  document.getElementById('doc-name').textContent = 'Presentación1';
+}
+
+function newPresentation() {
+  if (!confirm('¿Crear nueva presentación? Se perderán los cambios no guardados.')) return;
+  slides = [];
+  addSlide('title');
+}
+
+function openFile() {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = '.pptclone,.json';
+  input.onchange = e => {
+    const file = e.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const state = JSON.parse(ev.target.result);
+        slides = state.slides; currentSlide = state.currentSlide;
+        renderSlide(currentSlide); renderThumbs(); syncNotes();
+        document.getElementById('doc-name').textContent = file.name;
+      } catch(err) { alert('Error al abrir el archivo: ' + err.message); }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+function exportHTML() {
+  let html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Presentación</title><style>
+body{margin:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;}
+.slide{width:960px;height:540px;position:relative;background:white;margin:20px auto;box-shadow:0 4px 20px rgba(0,0,0,0.5);}
+.el{position:absolute;box-sizing:border-box;}
+</style></head><body>`;
+  slides.forEach((s, i) => {
+    html += `<div class="slide" style="background:${s.bgGradient||s.bg}">`;
+    s.elements.forEach(el => {
+      html += `<div class="el" style="left:${el.x}px;top:${el.y}px;width:${el.w}px;height:${el.h}px;
+        font-family:${el.fontFamily};font-size:${el.fontSize}px;color:${el.color};
+        font-weight:${el.bold?'bold':'normal'};font-style:${el.italic?'italic':'normal'};
+        text-align:${el.align};display:flex;align-items:${el.vAlign==='top'?'flex-start':el.vAlign==='bottom'?'flex-end':'center'};
+        justify-content:${el.align==='center'?'center':el.align==='right'?'flex-end':'flex-start'};
+        background:${el.fill||'transparent'}">${el.type==='image'?`<img src="${el.src}" style="max-width:100%;max-height:100%">`:(el.text||'')}</div>`;
+    });
+    html += `</div>`;
+  });
+  html += `<script>
+let cur=0;const slides=document.querySelectorAll('.slide');
+slides.forEach((s,i)=>{if(i>0)s.style.display='none';});
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){if(cur<slides.length-1){slides[cur].style.display='none';slides[++cur].style.display='block';}}
+  else if(e.key==='ArrowLeft'){if(cur>0){slides[cur].style.display='none';slides[--cur].style.display='block';}}
+});
+<\/script></body></html>`;
+  const blob = new Blob([html], { type: 'text/html' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'presentacion.html'; a.click();
+}
+
+function printNotes() {
+  const w = window.open('','_blank');
+  let html = '<html><body style="font-family:sans-serif">';
+  slides.forEach((s,i) => {
+    html += `<h3>Diapositiva ${i+1}</h3>`;
+    html += `<div style="width:480px;height:270px;border:1px solid #ccc;background:${s.bg};position:relative;margin-bottom:8px">`;
+    html += `<div style="transform:scale(0.5);transform-origin:top left;width:960px;height:540px;background:${s.bg}">`;
+    s.elements.forEach(el => {
+      if (el.type === 'text') html += `<div style="position:absolute;left:${el.x}px;top:${el.y}px;font-size:${el.fontSize}px;color:${el.color}">${el.text||''}</div>`;
+    });
+    html += '</div></div>';
+    html += `<p><b>Notas:</b> ${s.notes || '(sin notas)'}</p><hr>`;
+  });
+  html += '</body></html>';
+  w.document.write(html);
+  w.print();
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.mi')) document.querySelectorAll('.mi').forEach(m => m.classList.remove('open'));
+  if (!e.target.closest('#shape-gallery') && !e.target.closest('.rb')) document.getElementById('shape-gallery').style.display = 'none';
+  if (!e.target.closest('#theme-gallery')) document.getElementById('theme-gallery').style.display = 'none';
+  if (!e.target.closest('#table-picker')) document.getElementById('table-picker').style.display = 'none';
+  if (!e.target.closest('#ctx') && !e.target.closest('.slide-el')) hideCtx();
+});
+
+window.addEventListener('beforeunload', e => { e.preventDefault(); e.returnValue = ''; });
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  // Create initial slides
+  const slide1 = createSlide('title');
+  slide1.bg = '#ffffff';
+  const theme = THEMES[0];
+  slide1.elements.push(createElement('text', { x:80, y:140, w:800, h:140, text:'Haz clic para añadir título', fontSize:54, bold:true, color:theme.title, align:'center', fill:'transparent' }));
+  slide1.elements.push(createElement('text', { x:160, y:310, w:640, h:70, text:'Subtítulo de la presentación', fontSize:28, color:'#595959', align:'center', fill:'transparent' }));
+  slides.push(slide1);
+
+  const slide2 = createSlide('content');
+  slide2.bg = '#ffffff';
+  applyLayout(slide2, 'content');
+  slides.push(slide2);
+
+  const slide3 = createSlide('two-col');
+  slide3.bg = '#f5f5f5';
+  applyLayout(slide3, 'two-col');
+  slides.push(slide3);
+
+  currentSlide = 0;
+  renderSlide(0);
+  renderThumbs();
+  syncNotes();
+  saveState();
+}
+
+init();
+</script>
+</body>
+</html>
