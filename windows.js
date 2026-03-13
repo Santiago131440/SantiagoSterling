@@ -749,34 +749,34 @@ function loadExplorer(win, folder) {
           <div class="explorer-sidebar">
             <div class="explorer-sidebar-header">Acceso rápido</div>
             <div class="explorer-sidebar-item active" id="expHome">
-              <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75"> Este equipo
+              <i class="fi fi-sr-devices"></i> Este equipo
             </div>
             <div class="explorer-sidebar-item" id="expDocs">
-              <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-En0WuV9h3Cjev3oISjtJqXetnfA18d.png&w=1000&q=75"> Documentos
+              <i class="fi fi-sr-document-folder-gear"></i> Documentos
             </div>
             <div class="explorer-sidebar-item" id="expMusica">
-              <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-En0WuV9h3Cjev3oISjtJqXetnfA18d.png&w=1000&q=75"> Música
+              <i class="fi fi-sr-folder-music"></i> Música
             </div>
             <div class="explorer-sidebar-header" style="margin-top:10px;">Este equipo</div>
             <div class="explorer-sidebar-item">
-              <span style="font-size:16px;">💾</span> Disco (C:)
+              <span style="font-size:16px;"><i class="fi fi-sr-disc-drive"></i></span> Disco (C:)
             </div>
             <div class="explorer-sidebar-item">
-              <span style="font-size:16px;">📀</span> Disco (D:)
+              <span style="font-size:16px;"><i class="fi fi-sr-disc-drive"></i></span> Disco (D:)
             </div>
           </div>
           <div class="explorer-right">
             <div class="explorer-toolbar">
               <div class="explorer-tool-btn" id="expBtnNew">
-                <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-En0WuV9h3Cjev3oISjtJqXetnfA18d.png&w=1000&q=75"> Nuevo
+                <i class="fi fi-sr-add-document"></i> Nuevo
               </div>
               <div class="explorer-tool-sep"></div>
-              <div class="explorer-tool-btn">✂️ Cortar</div>
-              <div class="explorer-tool-btn">📋 Copiar</div>
-              <div class="explorer-tool-btn">📌 Pegar</div>
+              <div class="explorer-tool-btn"><i class="fi fi-sr-scissors"></i> Cortar</div>
+              <div class="explorer-tool-btn"><i class="fi fi-sr-copy-alt"></i> Copiar</div>
+              <div class="explorer-tool-btn"><i class="fi fi-sr-paste"></i> Pegar</div>
               <div class="explorer-tool-sep"></div>
-              <div class="explorer-tool-btn">🗑️ Eliminar</div>
-              <div class="explorer-tool-btn">✏️ Renombrar</div>
+              <div class="explorer-tool-btn"><i class="fi fi-sr-trash-xmark"></i> Eliminar</div>
+              <div class="explorer-tool-btn"><i class="fi fi-sr-text-box-edit"></i> Renombrar</div>
             </div>
             <div class="explorer-address">
               <div class="explorer-nav-btn">&#8592;</div>
