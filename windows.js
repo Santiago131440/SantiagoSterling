@@ -62,6 +62,12 @@ const apps = {
         width: 820, height: 600,
         content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/Super Mario.html" style="width:100%;height:100%;border:none;"></iframe>`
     },
+   excel: {
+        title: "Sterling Math FX",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DHtLao0TXcz7zsJ6bxv2DltThCLwQ8.png&w=1000&q=75",
+        width: 820, height: 600,
+        content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/Sterling Math FX.html" style="width:100%;height:100%;border:none;"></iframe>`
+    },
     "recycle-bin": {
         title: "Papelera de reciclaje",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-lSpzRMqmwGWoV08dHuh6wchQDokHkw.png&w=1000&q=75",
@@ -912,3 +918,4 @@ document.getElementById("searchBtn")?.addEventListener("click", (e) => {
     startMenu.classList.remove("hidden");
     startBtn.classList.add("active");
 });
+
