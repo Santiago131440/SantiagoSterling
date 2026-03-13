@@ -100,10 +100,29 @@ body {
 .title-text { color: var(--text-primary); font-size: 12px; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* Window controls */
-.window-buttons { display: flex; gap: 0; margin-left: 8px; }
-.win-btn {
-  width: 46px; height: 32px; display: flex; align-items: center; justify-content: center;
-  color: var(--text-secondary); cursor: pointer; transition: background 0.1s, color 0.1s; font-size: 11px;
+.window-buttons { display: flex; gap: 0; margin-left: 1px; }
+.win-btn{
+  width:32px;
+  height:32px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:var(--text-secondary);
+  cursor:pointer;
+  transition:background 0.1s, color 0.1s;
+
+  font-size:11px;
+  line-height:1;
+  padding:0;
+  box-sizing:border-box;
+}
+
+.win-btn svg{
+  width:60px;
+  height:60px;
+  display:block;
 }
 .win-btn:hover { background: rgba(255,255,255,0.12); color: white; }
 .win-btn.close:hover { background: #c42b1c; color: white; }
