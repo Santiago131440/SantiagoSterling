@@ -1,8 +1,3 @@
-/* ============================================================
-   WINDOWS 11 SIMULATOR - JavaScript
-   Full system: windows, taskbar, start menu, calendar, panels
-============================================================ */
-
 let activeWindows = {};
 let zCounter = 50;
 let draggingWindow = null;
