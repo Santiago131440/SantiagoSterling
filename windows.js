@@ -27,7 +27,7 @@ const apps = {
     },
     browser: {
         title: "Navegador",
-        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-KBUXl6AhDj2IsoZnozHL39yX1acqa5.png&w=1000&q=75",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75",
         width: 900, height: 620,
         content: `<div style="width:100%;height:100%;display:flex;flex-direction:column;">
             <div style="height:38px;background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;padding:0 10px;gap:8px;">
