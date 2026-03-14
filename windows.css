@@ -114,14 +114,14 @@ body {
   transition:background 0.1s, color 0.1s;
 
   font-size:11px;
-  line-height:1;
+  line-height:0;
   padding:0;
   box-sizing:border-box;
 }
 
 .win-btn svg{
-  width:60px;
-  height:60px;
+  width:12px;
+  height:12px;
   display:block;
 }
 .win-btn:hover { background: rgba(255,255,255,0.12); color: white; }
