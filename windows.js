@@ -992,7 +992,7 @@ function loadStore(win) {
         .s-card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:auto;}
         .s-card-stars{font-size:10px;color:#fbbf24;}
         .s-card-rating{font-size:10px;color:rgba(255,255,255,.4);margin-left:2px;}
-        .s-card-btn{font-size:11px;background:#0078d4;color:#fff;border:none;border-radius:5px;padding:4px 10px;cursor:pointer;font-weight:100;transition:background .12s;}
+        .s-card-btn{font-size:11px;background:#0078d4;color:#fff;border:none;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:100;transition:background .12s;}
         .s-card-btn:hover{background:#006cc1;}
         .s-card-btn.open-state{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
         .store-list{display:flex;flex-direction:column;gap:6px;margin-bottom:20px;}
