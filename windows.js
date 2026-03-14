@@ -25,12 +25,30 @@ const apps = {
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75",
         width: 900, height: 620,
         content: `<div style="width:100%;height:100%;display:flex;flex-direction:column;">
-            <div style="height:38px;background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;padding:0 10px;gap:8px;">
-              <button onclick="document.getElementById('browserFrame').src=document.getElementById('browserFrame').src" style="background:rgba(255,255,255,0.1);border:none;color:white;width:28px;height:28px;border-radius:4px;cursor:pointer;font-size:12px;">↺</button>
-              <div style="flex:1;background:rgba(255,255,255,0.08);border-radius:4px;height:26px;display:flex;align-items:center;padding:0 10px;font-size:12px;color:rgba(255,255,255,0.6);">🔒 bing.com</div>
-            </div>
-            <iframe id="browserFrame" src="https://www.bing.com/" style="flex:1;border:none;"></iframe>
-          </div>`
+  
+  <div style="height:38px;background:rgba(255,255,255,0.05);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;padding:0 10px;gap:8px;">
+
+    <button onclick="reloadFrame()" 
+    style="background:rgba(255,255,255,0.1);border:none;color:white;
+    width:28px;height:28px;border-radius:4px;cursor:pointer;font-size:12px;">↺</button>
+
+    <input id="browserInput"
+    placeholder="Buscar en Google..."
+    onkeydown="if(event.key==='Enter'){searchGoogle()}"
+    style="flex:1;background:rgba(255,255,255,0.08);border:none;
+    border-radius:4px;height:26px;padding:0 10px;
+    font-size:12px;color:white;outline:none;">
+
+  </div>
+
+  <iframe id="browserFrame"
+  src="https://www.google.com/webhp?igu=1"
+  style="flex:1;border:none;"></iframe>
+
+</div>`
+
     },
     notes: {
         title: "Bloc de notas",
@@ -144,6 +162,21 @@ lockScreen.addEventListener("click", () => {
 });
 
 /* ============================================================
+   CONEXIÓN A GOOGLE
+============================================================ */
+
+function searchGoogle(){
+  const q = document.getElementById("browserInput").value
+  document.getElementById("browserFrame").src =
+  "https://www.google.com/search?igu=1&q=" + encodeURIComponent(q)
+}
+
+function reloadFrame(){
+  const frame = document.getElementById("browserFrame")
+  frame.src = frame.src
+}
+
+/* ============================================================
    WINDOW CREATION
 ============================================================ */
 function openApp(appName, extra = null) {
@@ -176,13 +209,13 @@ function openApp(appName, extra = null) {
           </div>
           <div class="window-buttons">
             <div class="win-btn min" title="Minimizar">
-              <svg viewBox="0 0 40 1"><line x1="0" y1="0.5" x2="10" y2="0.5" stroke="currentColor" stroke-width="1"/></svg>
+              <svg viewBox="0 0 10 1"><line x1="0" y1="0.5" x2="10" y2="0.5" stroke="currentColor" stroke-width="1"/></svg>
             </div>
             <div class="win-btn max" title="Maximizar">
-              <svg viewBox="0 0 40 40"><rect x="0.5" y="0.5" width="9" height="9" stroke="currentColor" fill="none" stroke-width="1"/></svg>
+              <svg viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" stroke="currentColor" fill="none" stroke-width="1"/></svg>
             </div>
             <div class="win-btn close" title="Cerrar">
-              <svg viewBox="0 0 40 40"><line x1="0" y1="0" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="0" x2="0" y2="10" stroke="currentColor" stroke-width="1.2"/></svg>
+              <svg viewBox="0 0 10 10"><line x1="0" y1="0" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="0" x2="0" y2="10" stroke="currentColor" stroke-width="1.2"/></svg>
             </div>
           </div>
         </div>
@@ -937,6 +970,3 @@ document.getElementById("searchBtn")?.addEventListener("click", (e) => {
     startMenu.classList.remove("hidden");
     startBtn.classList.add("active");
 });
-
-
-
