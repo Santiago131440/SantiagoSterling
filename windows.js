@@ -20,6 +20,11 @@ const apps = {
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75",
         width: 760, height: 500, type: "system"
     },
+    aplicaciones: {
+        title: "Sterling Store",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-soM5VkrS231RkzTJKdb30Wco5dj6aJ.png&w=500&q=75",
+        width: 880, height: 600, type: "system"
+    },
     browser: {
         title: "Navegador",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75",
@@ -107,7 +112,7 @@ const apps = {
     },
     "recycle-bin": {
         title: "Papelera de reciclaje",
-        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-lSpzRMqmwGWoV08dHuh6wchQDokHkw.png&w=1000&q=75",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hojVo7IEsndSCKEMMylnYGeF4E0HrU.png&w=500&q=75",
         width: 640, height: 420
     }
 };
@@ -138,6 +143,7 @@ const fileSystem = {
         }
     }
 };
+
 
 /* ============================================================
    LOCK SCREEN
@@ -228,6 +234,8 @@ function openApp(appName, extra = null) {
 
     if (appName === "explorer") {
         loadExplorer(win, fileSystem.root);
+    } else if (appName === "aplicaciones") {
+        loadStore(win);
     } else if (appName === "recycle-bin") {
         loadRecycleBin(win);
     } else if (app.type === "notes" || appName.startsWith("notes_")) {
@@ -915,6 +923,246 @@ function loadRecycleBin(win) {
 }
 
 /* ============================================================
+   STORE
+============================================================ */
+function loadStore(win) {
+    const area = win.querySelector(".app-area");
+    area.style.padding = "0";
+    area.style.overflow = "hidden";
+
+    const storeApps = [
+        { id:"player",       name:"Sterling Music Player",    desc:"Reproduce tu música con ecualizador y visualizador de ondas.",         cat:"entertainment", catLabel:"Entretenimiento", rating:4.8, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-j9GfZpCuZEAQwYOTxDIVxReq5y0OHg.png&w=500&q=75",   featured:true },
+        { id:"mix",          name:"Sterling Music Studio",    desc:"Crea y mezcla tus propias pistas en esta estación de trabajo audio.",   cat:"creative",      catLabel:"Creativas",      rating:4.7, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-B2EekBDz0A46XdvgtBjgEAw79EH0Dk.png&w=500&q=75" },
+        { id:"paint",        name:"Sterl-ink Sketching",      desc:"Herramienta de dibujo con capas, pinceles y exportación SVG.",          cat:"creative",      catLabel:"Creativas",      rating:4.6, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75" },
+        { id:"excel",        name:"Sterling Math FX",         desc:"Calculadora científica con gráficas 2D/3D y hojas de cálculo.",         cat:"productivity",  catLabel:"Productividad",  rating:4.9, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DHtLao0TXcz7zsJ6bxv2DltThCLwQ8.png&w=1000&q=75" },
+        { id:"word",         name:"Sterling Letter",          desc:"Procesador de texto con plantillas y exportación PDF.",                  cat:"productivity",  catLabel:"Productividad",  rating:4.7, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-BjimxRD0gb4rZBjr9jbO9LYXmOZJao.png&w=1000&q=75" },
+        { id:"powerpoint",   name:"Sterling Presentation",    desc:"Presentaciones con animaciones y temas profesionales.",                 cat:"productivity",  catLabel:"Productividad",  rating:4.5, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-L8T5N6DbL9jezTcIoss4pIKNG256jy.png&w=1000&q=75" },
+        { id:"notes",        name:"Bloc de Notas",            desc:"Editor de texto ligero con resaltado de sintaxis y modo enfoque.",       cat:"productivity",  catLabel:"Productividad",  rating:4.4, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75" },
+        { id:"airspace",     name:"Captain Sterling",         desc:"Simulación aérea con física realista y niveles progresivos.",            cat:"entertainment", catLabel:"Entretenimiento", rating:4.6, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-yjBpDcYD9IjVGoIg4LnKkMKL1RBris.png&w=500&q=75" },
+        { id:"buscaminas",   name:"Sterling World",           desc:"Aventura de plataformas inspirada en los clásicos del género.",          cat:"entertainment", catLabel:"Entretenimiento", rating:4.8, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-e3kGOJ1Nx9Q68omg5PbnlZh8hFAJkX.png&w=500&q=75" },
+        { id:"browser",      name:"Navegador",                desc:"Navega la web con buscador integrado y modo privado.",                   cat:"web",           catLabel:"Web",             rating:4.5, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75" }
+    ];
+
+    const CATS = [
+        { key:"productivity",  label:"Productividad" },
+        { key:"creative",      label:"Creativas" },
+        { key:"entertainment", label:"Entretenimiento" },
+        { key:"web",           label:"Web" }
+    ];
+
+    let currentTab = "all";
+    let currentSearch = "";
+
+    // ---- inject styles once ----
+    if (!document.getElementById("store-styles")) {
+        const s = document.createElement("style");
+        s.id = "store-styles";
+        s.textContent = `
+        .store-root{display:flex;flex-direction:column;height:100%;background:rgba(18,18,18,0.97);color:#fff;overflow:hidden;}
+        .store-topbar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
+        .store-topbar h1{font-size:14px;font-weight:100;flex:1;letter-spacing:.3px;}
+        .store-topbar h1 span{color:#60cdff;}
+        .store-searchbox{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:5px 10px;width:200px;}
+        .store-searchbox input{background:none;border:none;outline:none;color:#fff;font-size:12px;width:100%;}
+        .store-searchbox input::placeholder{color:rgba(255,255,255,0.35);}
+        .store-tabs{display:flex;gap:2px;padding:8px 16px 0;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;overflow-x:auto;}
+        .store-tabs::-webkit-scrollbar{height:0;}
+        .s-tab{padding:6px 14px;border-radius:6px 6px 0 0;font-size:12px;cursor:pointer;color:rgba(255,255,255,.5);transition:all .15s;white-space:nowrap;border-bottom:2px solid transparent;}
+        .s-tab:hover{color:#fff;background:rgba(255,255,255,.05);}
+        .s-tab.active{color:#fff;border-bottom-color:#0078d4;background:rgba(0,120,212,.1);}
+        .store-body{flex:1;overflow-y:auto;padding:16px;}
+        .store-body::-webkit-scrollbar{width:5px;}
+        .store-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px;}
+        .store-featured{border-radius:20px;background:linear-gradient(135deg,rgba(233, 1, 40, 0.65) 0%,rgba(0,30,70,.9) 100%);border:1px solid rgba(255,255,255,.1);padding:20px 22px;display:flex;align-items:center;gap:18px;margin-bottom:20px;}
+        .store-feat-img{width:62px;height:62px;border-radius:12px;object-fit:contain;background:rgba(255,255,255,.08);padding:4px;flex-shrink:0;}
+        .store-feat-text{flex:1;}
+        .store-feat-badge{font-size:10px;background:rgba(96,205,255,.15);color:#60cdff;border:1px solid rgba(96,205,255,.3);padding:2px 8px;border-radius:10px;margin-bottom:6px;display:inline-block;}
+        .store-feat-text h2{font-size:17px;font-weight:100;margin-bottom:4px;}
+        .store-feat-text p{font-size:12px;color:rgba(255,255,255,.6);line-height:1.5;}
+        .store-get-btn{padding:8px 20px;background:#0078d4;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:100;cursor:pointer;transition:background .15s;flex-shrink:0;}
+        .store-get-btn:hover{background:#006cc1;}
+        .store-get-btn.open-state{background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);cursor:default;}
+        .store-section-lbl{font-size:12px;font-weight:100;color:rgba(255,255,255,.6);margin:0 0 10px;letter-spacing:.4px;text-transform:uppercase;}
+        .store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-bottom:22px;}
+        .s-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;display:flex;flex-direction:column;gap:7px;}
+        .s-card:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);transform:translateY(-2px);}
+        .s-card-icon{width:46px;height:46px;object-fit:contain;border-radius:10px;background:rgba(255,255,255,.06);padding:4px;}
+        .s-card-name{font-size:12px;font-weight:100;line-height:1.3;}
+        .s-card-cat{font-size:10px;color:rgba(255,255,255,.4);}
+        .s-card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:auto;}
+        .s-card-stars{font-size:10px;color:#fbbf24;}
+        .s-card-rating{font-size:10px;color:rgba(255,255,255,.4);margin-left:2px;}
+        .s-card-btn{font-size:11px;background:#0078d4;color:#fff;border:none;border-radius:5px;padding:4px 10px;cursor:pointer;font-weight:100;transition:background .12s;}
+        .s-card-btn:hover{background:#006cc1;}
+        .s-card-btn.open-state{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+        .store-list{display:flex;flex-direction:column;gap:6px;margin-bottom:20px;}
+        .s-list-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .12s;}
+        .s-list-item:hover{background:rgba(255,255,255,.08);}
+        .s-list-icon{width:36px;height:36px;object-fit:contain;border-radius:8px;background:rgba(255,255,255,.06);padding:3px;flex-shrink:0;}
+        .s-list-info{flex:1;}
+        .s-list-name{font-size:13px;font-weight:100;}
+        .s-list-desc{font-size:11px;color:rgba(255,255,255,.45);margin-top:1px;}
+        .s-list-btn{font-size:11px;background:#0078d4;color:#fff;border:none;border-radius:5px;padding:5px 14px;cursor:pointer;font-weight:100;flex-shrink:0;transition:background .12s;}
+        .s-list-btn:hover{background:#006cc1;}
+        .s-list-btn.open-state{background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);}
+        .store-empty{color:rgba(255,255,255,.35);font-size:13px;padding:30px 0;text-align:center;}
+        `;
+        document.head.appendChild(s);
+    }
+
+    // ---- build skeleton ----
+    area.innerHTML = `
+        <div class="store-root">
+          <div class="store-topbar">
+            <h1>Sterling <span>Store</span></h1>
+            <div class="store-searchbox">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <input type="text" placeholder="Explorar aplicaciones..." id="storeSearchInput_${win.dataset.app}">
+            </div>
+          </div>
+          <div class="store-tabs" id="storeTabs_${win.dataset.app}">
+            <div class="s-tab active" data-tab="all">Inicio</div>
+            <div class="s-tab" data-tab="productivity">Productividad</div>
+            <div class="s-tab" data-tab="creative">Creativas</div>
+            <div class="s-tab" data-tab="entertainment">Entretenimiento</div>
+            <div class="s-tab" data-tab="web">Web</div>
+          </div>
+          <div class="store-body" id="storeBody_${win.dataset.app}"></div>
+        </div>
+    `;
+
+    const bodyEl   = area.querySelector(`#storeBody_${win.dataset.app}`);
+    const tabsEl   = area.querySelector(`#storeTabs_${win.dataset.app}`);
+    const searchEl = area.querySelector(`#storeSearchInput_${win.dataset.app}`);
+
+    function stars(r) {
+        const full = Math.floor(r), half = r - full >= 0.5 ? 1 : 0;
+        return "★".repeat(full) + (half ? "½" : "");
+    }
+
+    function isOpen(id) { return !!activeWindows[id]; }
+
+    function render() {
+        const q = currentSearch.toLowerCase();
+        const list = storeApps.filter(a => {
+            const matchCat = currentTab === "all" || a.cat === currentTab;
+            const matchQ   = !q || a.name.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q);
+            return matchCat && matchQ;
+        });
+
+        bodyEl.innerHTML = "";
+
+        // --- search mode: list view ---
+        if (q) {
+            const lbl = document.createElement("div");
+            lbl.className = "store-section-lbl";
+            lbl.textContent = list.length
+                ? `Resultados para "${currentSearch}"`
+                : "";
+            bodyEl.appendChild(lbl);
+
+            if (!list.length) {
+                const empty = document.createElement("div");
+                empty.className = "store-empty";
+                empty.textContent = "No se encontraron aplicaciones.";
+                bodyEl.appendChild(empty);
+                return;
+            }
+
+            const listWrap = document.createElement("div");
+            listWrap.className = "store-list";
+            list.forEach(app => {
+                const open = isOpen(app.id);
+                const item = document.createElement("div");
+                item.className = "s-list-item";
+                item.innerHTML = `
+                    <img class="s-list-icon" src="${app.icon}" alt="${app.name}">
+                    <div class="s-list-info">
+                      <div class="s-list-name">${app.name}</div>
+                      <div class="s-list-desc">${app.desc}</div>
+                    </div>
+                    <button class="s-list-btn${open ? " open-state" : ""}">${open ? "Abrir" : "Obtener"}</button>
+                `;
+                item.querySelector(".s-list-btn").onclick = (e) => { e.stopPropagation(); openApp(app.id); };
+                item.onclick = () => openApp(app.id);
+                listWrap.appendChild(item);
+            });
+            bodyEl.appendChild(listWrap);
+            return;
+        }
+
+        // --- featured banner (only on "all" tab) ---
+        const feat = storeApps.find(a => a.featured);
+        if (currentTab === "all" && feat) {
+            const open = isOpen(feat.id);
+            const banner = document.createElement("div");
+            banner.className = "store-featured";
+            banner.innerHTML = `
+                <img class="store-feat-img" src="${feat.icon}" alt="${feat.name}">
+                <div class="store-feat-text">
+                  <div class="store-feat-badge">⭐ Destacado</div>
+                  <h2>${feat.name}</h2>
+                  <p>${feat.desc}</p>
+                </div>
+                <button class="store-get-btn${open ? " open-state" : ""}">${open ? "Abierto" : "Obtener"}</button>
+            `;
+            banner.querySelector(".store-get-btn").onclick = () => openApp(feat.id);
+            bodyEl.appendChild(banner);
+        }
+
+        // --- grid sections ---
+        const sections = currentTab === "all" ? CATS : [CATS.find(c => c.key === currentTab)].filter(Boolean);
+        sections.forEach(({ key, label }) => {
+            const group = list.filter(a => a.cat === key);
+            if (!group.length) return;
+
+            const lbl = document.createElement("div");
+            lbl.className = "store-section-lbl";
+            lbl.textContent = label;
+            bodyEl.appendChild(lbl);
+
+            const grid = document.createElement("div");
+            grid.className = "store-grid";
+            group.forEach(app => {
+                const open = isOpen(app.id);
+                const card = document.createElement("div");
+                card.className = "s-card";
+                card.innerHTML = `
+                    <img class="s-card-icon" src="${app.icon}" alt="${app.name}">
+                    <div class="s-card-name">${app.name}</div>
+                    <div class="s-card-cat">${app.catLabel}</div>
+                    <div class="s-card-bottom">
+                      <div><span class="s-card-stars">${stars(app.rating)}</span><span class="s-card-rating">${app.rating}</span></div>
+                      <button class="s-card-btn${open ? " open-state" : ""}">${open ? "Abrir" : "Obtener"}</button>
+                    </div>
+                `;
+                card.querySelector(".s-card-btn").onclick = (e) => { e.stopPropagation(); openApp(app.id); };
+                card.onclick = () => openApp(app.id);
+                grid.appendChild(card);
+            });
+            bodyEl.appendChild(grid);
+        });
+    }
+
+    // tab clicks
+    tabsEl.querySelectorAll(".s-tab").forEach(tab => {
+        tab.onclick = () => {
+            tabsEl.querySelectorAll(".s-tab").forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+            currentTab = tab.dataset.tab;
+            currentSearch = "";
+            searchEl.value = "";
+            render();
+        };
+    });
+
+    // search
+    searchEl.oninput = () => { currentSearch = searchEl.value; render(); };
+
+    render();
+}
+
+/* ============================================================
    TOAST NOTIFICATIONS
 ============================================================ */
 function showToast(title, body, icon = "💻") {
@@ -947,11 +1195,9 @@ function showToast(title, body, icon = "💻") {
 window.addEventListener("load", () => {
     const positions = {
         explorer:     { left: 24, top: 20  },
-        browser:      { left: 24, top: 118 },
-        notes:        { left: 24, top: 216 },
-        player:       { left: 24, top: 314 },
-        paint:        { left: 24, top: 412 },
-        "recycle-bin":{ left: 24, top: 510 }
+        browser:      { left: 24, top: 108 },
+        aplicaciones:        { left: 24, top: 206 },
+        "recycle-bin":{ left: 24, top: 300 }
     };
     document.querySelectorAll(".desktop-icon").forEach(icon => {
         const p = positions[icon.dataset.app];
