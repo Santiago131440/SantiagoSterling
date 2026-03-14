@@ -979,7 +979,7 @@ function loadStore(win) {
         .store-feat-badge{font-size:10px;background:rgba(96,205,255,.15);color:#60cdff;border:1px solid rgba(96,205,255,.3);padding:2px 8px;border-radius:10px;margin-bottom:6px;display:inline-block;}
         .store-feat-text h2{font-size:17px;font-weight:100;margin-bottom:4px;}
         .store-feat-text p{font-size:12px;color:rgba(255,255,255,.6);line-height:1.5;}
-        .store-get-btn{padding:8px 20px;background:#0078d4;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:100;cursor:pointer;transition:background .15s;flex-shrink:0;}
+        .store-get-btn{padding:8px 20px;background:#0078d4;color:#fff;border:none;border-radius:60px;font-size:12px;font-weight:100;cursor:pointer;transition:background .15s;flex-shrink:0;}
         .store-get-btn:hover{background:#006cc1;}
         .store-get-btn.open-state{background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);cursor:default;}
         .store-section-lbl{font-size:12px;font-weight:100;color:rgba(255,255,255,.6);margin:0 0 10px;letter-spacing:.4px;text-transform:uppercase;}
