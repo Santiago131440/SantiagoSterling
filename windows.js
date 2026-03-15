@@ -1081,7 +1081,7 @@ function loadStore(win) {
                       <div class="s-list-name">${app.name}</div>
                       <div class="s-list-desc">${app.desc}</div>
                     </div>
-                    <button class="s-list-btn${open ? " open-state" : ""}">${open ? "Abrir" : "Obtener"}</button>
+                    <button class="s-list-btn${open ? " open-state" : ""}">${open ? "Abrir" : "Ver"}</button>
                 `;
                 item.querySelector(".s-list-btn").onclick = (e) => { e.stopPropagation(); openApp(app.id); };
                 item.onclick = () => openApp(app.id);
@@ -1104,7 +1104,7 @@ function loadStore(win) {
                   <h2>${feat.name}</h2>
                   <p>${feat.desc}</p>
                 </div>
-                <button class="store-get-btn${open ? " open-state" : ""}">${open ? "Abierto" : "Obtener"}</button>
+                <button class="store-get-btn${open ? " open-state" : ""}">${open ? "Abierto" : "Ver"}</button>
             `;
             banner.querySelector(".store-get-btn").onclick = () => openApp(feat.id);
             bodyEl.appendChild(banner);
@@ -1133,7 +1133,7 @@ function loadStore(win) {
                     <div class="s-card-cat">${app.catLabel}</div>
                     <div class="s-card-bottom">
                       <div><span class="s-card-stars">${stars(app.rating)}</span><span class="s-card-rating">${app.rating}</span></div>
-                      <button class="s-card-btn${open ? " open-state" : ""}">${open ? "Abrir" : "Obtener"}</button>
+                      <button class="s-card-btn${open ? " open-state" : ""}">${open ? "Abrir" : "Ver"}</button>
                     </div>
                 `;
                 card.querySelector(".s-card-btn").onclick = (e) => { e.stopPropagation(); openApp(app.id); };
