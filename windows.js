@@ -962,7 +962,7 @@ function loadStore(win) {
         .store-topbar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
         .store-topbar h1{font-size:14px;font-weight:100;flex:1;letter-spacing:.3px;}
         .store-topbar h1 span{color:#60cdff;}
-        .store-searchbox{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:5px 10px;width:200px;}
+        .store-searchbox{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:60px;padding:5px 10px;width:200px;}
         .store-searchbox input{background:none;border:none;outline:none;color:#fff;font-size:12px;width:100%;}
         .store-searchbox input::placeholder{color:rgba(255,255,255,0.35);}
         .store-tabs{display:flex;gap:2px;padding:8px 16px 0;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;overflow-x:auto;}
@@ -1002,7 +1002,7 @@ function loadStore(win) {
         .s-list-info{flex:1;}
         .s-list-name{font-size:13px;font-weight:100;}
         .s-list-desc{font-size:11px;color:rgba(255,255,255,.45);margin-top:1px;}
-        .s-list-btn{font-size:11px;background:#0078d4;color:#fff;border:none;border-radius:5px;padding:5px 14px;cursor:pointer;font-weight:100;flex-shrink:0;transition:background .12s;}
+        .s-list-btn{font-size:11px;background:#0078d4;color:#fff;border:none;border-radius:50px;padding:5px 14px;cursor:pointer;font-weight:100;flex-shrink:0;transition:background .12s;}
         .s-list-btn:hover{background:#006cc1;}
         .s-list-btn.open-state{background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);}
         .store-empty{color:rgba(255,255,255,.35);font-size:13px;padding:30px 0;text-align:center;}
