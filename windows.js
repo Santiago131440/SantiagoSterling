@@ -973,7 +973,7 @@ function loadStore(win) {
         .store-body{flex:1;overflow-y:auto;padding:16px;}
         .store-body::-webkit-scrollbar{width:5px;}
         .store-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px;}
-        .store-featured{border-radius:20px;background:linear-gradient(135deg,rgba(233, 1, 40, 0.65) 0%,rgba(0,30,70,.9) 100%);border:1px solid rgba(255,255,255,.1);padding:20px 22px;display:flex;align-items:center;gap:18px;margin-bottom:20px;}
+        .store-featured{border-radius:20px;background:linear-gradient(135deg,rgba(255, 0, 0, 0.77) 0%,rgba(230, 0, 88, 0.73) 100%);border:1px solid rgba(255,255,255,.1);padding:20px 22px;display:flex;align-items:center;gap:18px;margin-bottom:20px;}
         .store-feat-img{width:62px;height:62px;border-radius:12px;object-fit:contain;background:rgba(255,255,255,.08);padding:4px;flex-shrink:0;}
         .store-feat-text{flex:1;}
         .store-feat-badge{font-size:10px;background:rgba(96,205,255,.15);color:#60cdff;border:1px solid rgba(96,205,255,.3);padding:2px 8px;border-radius:10px;margin-bottom:6px;display:inline-block;}
