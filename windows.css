@@ -35,6 +35,8 @@ body {
   background-color: #1a2a3a;
   background-image: url('https://cdn.pixabay.com/photo/2014/07/16/05/18/beach-394503_1280.jpg');
   user-select: none;
+  font-weight: 100;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI';
 }
 
 /* ============================================================ LOCK SCREEN */
