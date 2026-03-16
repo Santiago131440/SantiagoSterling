@@ -3,229 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Repositorio – Santiago Sterling</title>
+<title>Santiago Sterling</title>
 <link rel="stylesheet" href="windows.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/4.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-            <circle cx='50' cy='50' r='50' fill='black'/>
-            <text x='50' y='62' text-anchor='middle' font-size='50' fill='white' font-family='Arial'>S</text>
-          </svg>">
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+    <circle cx='50' cy='50' r='50' fill='black'/>
+    <text x='50' y='62' text-anchor='middle' font-size='50' fill='white' font-family='Arial'>S</text>
+  </svg>">
 </head>
-
 <body>
 
 <!-- ============================================================ LOCK SCREEN -->
 <div id="lockScreen">
   <div class="lock-content">
+    <div class="lock-avatar">
+      <img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar">
+    </div>
     <div class="lock-time" id="lockTime">00:00</div>
-    <div class="lock-date" id="lockDate">jueves, 12 de marzo</div>
-    <br>
-    <br>
-    <p>Santiago Sterling</p>
-    <br>
+    <div class="lock-date" id="lockDate">lunes, 16 de marzo</div>
+    <div class="lock-name">Santiago Sterling</div>
     <div class="lock-hint">
-      <span class="lock-icon"><i class="fi fi-sr-key"></i></span>
-      <span>Haz clic para desbloquear</span>
+      <span class="lock-arrow">↑</span>
+      <span>Desliza hacia arriba para desbloquear</span>
     </div>
   </div>
 </div>
 
-<!-- ============================================================ DESKTOP CONTAINER -->
+<!-- ============================================================ MENU BAR -->
+<div id="menubar">
+  <div class="menubar-left">
+    <div class="menubar-apple" id="appleBtn" title="Menú Apple">&#63743;</div>
+    <div class="menubar-app-name" id="menubarAppName">Finder</div>
+    <div class="menubar-menu-item">Archivo</div>
+    <div class="menubar-menu-item">Edición</div>
+    <div class="menubar-menu-item">Visualización</div>
+    <div class="menubar-menu-item">Ir</div>
+    <div class="menubar-menu-item">Ventana</div>
+    <div class="menubar-menu-item">Ayuda</div>
+  </div>
+  <div class="menubar-right">
+    <div class="menubar-status" id="spotlightMenuBtn" title="Spotlight">
+      <i class="fi fi-sr-issue-loupe"></i>
+    </div>
+    <div class="menubar-status" id="notifBtn" title="Centro de notificaciones">
+      <i class="fi fi-sr-bells"></i>
+    </div>
+    <div class="menubar-status" id="controlCenterBtn" title="Centro de control">
+      <i class="fi fi-sr-apps"></i>
+    </div>
+    <div id="menubar-clock" id="clockArea">
+      <span id="clock-time">00:00</span>&nbsp;&nbsp;<span id="clock-date">lun 16 mar</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ DESKTOP -->
 <div id="desktop-container">
   <div id="desktop1" class="desktop active">
-
-    <!-- Desktop Icons -->
     <div class="desktop-icon" data-app="explorer">
       <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75">
-      <span>Archivos</span>
+      <span>Finder</span>
     </div>
-
     <div class="desktop-icon" data-app="browser">
       <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75">
-      <span>Navegador</span>
+      <span>Safari</span>
     </div>
-
     <div class="desktop-icon" data-app="aplicaciones">
       <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-soM5VkrS231RkzTJKdb30Wco5dj6aJ.png&w=500&q=75">
-      <span>Sterling Store</span>
+      <span>App Store</span>
     </div>
-
     <div class="desktop-icon" data-app="recycle-bin" id="recycleBinIcon">
       <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hojVo7IEsndSCKEMMylnYGeF4E0HrU.png&w=500&q=75">
       <span>Papelera</span>
     </div>
-
   </div>
 </div>
 
 <!-- ============================================================ WINDOWS CONTAINER -->
 <div id="windowsContainer"></div>
 
-<!-- ============================================================ START MENU -->
-<div id="startMenu" class="hidden">
-
-  <div class="start-search-area">
-    <div class="start-search">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      Buscar aplicaciones y archivos
-    </div>
-  </div>
-
-  <div class="start-section-label">Anclado</div>
-
-  <div class="start-apps">
-    <div class="start-app" data-app="explorer">
-      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75">
-      <span>Explorador</span>
-    </div>
-    <div class="start-app" data-app="browser">
-      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75">
-      <span>Navegador</span>
-    </div>
-    <div class="start-app" data-app="notes">
-      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75">
-      <span>Notas</span>
-    </div>
-    <div class="start-app" data-app="player">
-      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-j9GfZpCuZEAQwYOTxDIVxReq5y0OHg.png&w=500&q=75">
-      <span>Sterling Music Player</span>
-    </div>
-    <div class="start-app" data-app="mix">
-      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-B2EekBDz0A46XdvgtBjgEAw79EH0Dk.png&w=500&q=75">
-      <span>Sterling Music Studio</span>
-    </div>
-    <div class="start-app" data-app="paint">
-      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75">
-      <span>Sterl-ink</span>
-    </div>
-    <div class="start-app" data-app="excel">
-      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DHtLao0TXcz7zsJ6bxv2DltThCLwQ8.png&w=1000&q=75">
-      <span>Sterling Math FX</span>
-    </div>
-    <div class="start-app" data-app="word">
-      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-BjimxRD0gb4rZBjr9jbO9LYXmOZJao.png&w=1000&q=75">
-      <span>Sterling Letter</span>
-    </div>
-    <div class="start-app" data-app="powerpoint">
-      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-L8T5N6DbL9jezTcIoss4pIKNG256jy.png&w=1000&q=75">
-      <span>Sterling Presentation</span>
-    </div>
-    <div class="start-app" data-app="airspace">
-      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-yjBpDcYD9IjVGoIg4LnKkMKL1RBris.png&w=500&q=75">
-      <span>Captain Sterling</span>
-    </div>
-    <div class="start-app" data-app="buscaminas">
-      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-e3kGOJ1Nx9Q68omg5PbnlZh8hFAJkX.png&w=500&q=75">
-      <span>Sterling World</span>
-    </div>
-  </div>
-
-  <div class="start-divider"></div>
-  <div class="start-options">
-    <div class="start-option" id="openWallpaperPanel">
-      <i class="fi fi-sr-desktop-wallpaper"></i> Cambiar fondo de escritorio
-    </div>
-    <div class="start-option" id="openDesktopSwitcher">
-      <i class="fi fi-sr-clipboard-user"></i> Ver portafolio
-    </div>
-    <div class="start-option" onclick="window.location.href='proyectos20.html'">
-      <i class="fi fi-sr-spyware"></i> Ver proyectos
-    </div>
-  </div>
-
-  <div class="start-footer">
-    <div class="start-user">
-      <div class="start-avatar">
-        <img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar">
-      </div>
-      <div class="start-user-name">Santiago Sterling</div>
-    </div>
-    <div class="start-footer-actions">
-      <div class="start-footer-btn" title="Configuración"><i class="fi fi-sr-settings-window"></i></div>
-      <div class="start-footer-btn" title="Apagar" onclick="showToast('Sistema','Apagando...')"><i class="fi fi-sr-power"></i></div>
-    </div>
-  </div>
-
+<!-- ============================================================ APPLE MENU -->
+<div id="appleMenu" class="hidden">
+  <div class="mac-menu-item"><i class="fi fi-sr-info"></i> Acerca de este Mac</div>
+  <div class="mac-menu-sep"></div>
+  <div class="mac-menu-item" id="appleMenuWallpaper"><i class="fi fi-sr-desktop-wallpaper"></i> Preferencias del sistema<span class="shortcut">⌘,</span></div>
+  <div class="mac-menu-item"><i class="fi fi-sr-apps"></i> App Store</div>
+  <div class="mac-menu-sep"></div>
+  <div class="mac-menu-item" id="appleMenuMission"><i class="fi fi-sr-grid"></i> Mission Control<span class="shortcut">^↑</span></div>
+  <div class="mac-menu-item" id="appleMenuSpotlight"><i class="fi fi-sr-issue-loupe"></i> Spotlight<span class="shortcut">⌘Space</span></div>
+  <div class="mac-menu-sep"></div>
+  <div class="mac-menu-item"><i class="fi fi-sr-display-arrow-down"></i> Suspender</div>
+  <div class="mac-menu-item"><i class="fi fi-sr-rotate-right"></i> Reiniciar…</div>
+  <div class="mac-menu-item" onclick="showToast('Sistema','Apagando…')"><i class="fi fi-sr-power"></i> Apagar…</div>
+  <div class="mac-menu-sep"></div>
+  <div class="mac-menu-item"><i class="fi fi-sr-user"></i> Bloquear pantalla<span class="shortcut">⌃⌘Q</span></div>
+  <div class="mac-menu-item"><i class="fi fi-sr-arrow-right-from-bracket"></i> Cerrar sesión de Santiago</div>
 </div>
 
-<!-- ============================================================ WIFI PANEL -->
-<div id="wifiPanel" class="sys-panel hidden">
-  <div class="sys-panel-title"><i class="fi fi-sr-wifi"></i> Redes WiFi</div>
-  <div class="wifi-list">
-    <div class="wifi-item">
-      <div class="wifi-item-icon"><i class="fi fi-sr-wifi"></i></div>
-      <div class="wifi-item-info">
-        <div class="wifi-item-name">Sterling 5G</div>
-        <div class="wifi-item-status">Conectado · Segura</div>
-      </div>
-      <div class="wifi-connected-badge">Conectado</div>
+<!-- ============================================================ CONTROL CENTER -->
+<div id="controlCenter" class="hidden">
+  <div class="cc-grid">
+    <div class="cc-tile on" onclick="this.classList.toggle('on')">
+      <div class="cc-tile-icon"><i class="fi fi-sr-wifi"></i></div>
+      <div class="cc-tile-label">Wi-Fi</div>
+      <div class="cc-tile-sub">Sterling 5G</div>
     </div>
-    <div class="wifi-item">
-      <div class="wifi-item-icon"><i class="fi fi-sr-wifi-lock"></i></div>
-      <div class="wifi-item-info">
-        <div class="wifi-item-name">S26 Ultra de Santiago</div>
-        <div class="wifi-item-status">Zona wifi · Segura</div>
-      </div>
+    <div class="cc-tile on" onclick="this.classList.toggle('on')">
+      <div class="cc-tile-icon"><i class="fi fi-sr-people-network-partner"></i></div>
+      <div class="cc-tile-label">Bluetooth</div>
+      <div class="cc-tile-sub">Activado</div>
     </div>
-    <div class="wifi-item">
-      <div class="wifi-item-icon"><i class="fi fi-sr-wifi-lock"></i></div>
-      <div class="wifi-item-info">
-        <div class="wifi-item-name">Familia Sterling</div>
-        <div class="wifi-item-status">Segura · 5 GHz</div>
-      </div>
+    <div class="cc-tile" onclick="this.classList.toggle('on')">
+      <div class="cc-tile-icon"><i class="fi fi-sr-plane-departure"></i></div>
+      <div class="cc-tile-label">Modo avión</div>
+      <div class="cc-tile-sub">Desactivado</div>
     </div>
-    <div class="wifi-item">
-      <div class="wifi-item-icon"><i class="fi fi-sr-wifi-lock"></i></div>
-      <div class="wifi-item-info">
-        <div class="wifi-item-name">iPhone de Santiago</div>
-        <div class="wifi-item-status">Zona wifi</div>
-      </div>
+    <div class="cc-tile on" onclick="this.classList.toggle('on')">
+      <div class="cc-tile-icon"><i class="fi fi-sr-user-forbidden-alt"></i></div>
+      <div class="cc-tile-label">No molestar</div>
+      <div class="cc-tile-sub">Activado</div>
     </div>
+  </div>
+  <div class="cc-wide-tile">
+    <div class="cc-tile-row">
+      <i class="fi fi-sr-volume" style="font-size:16px;color:var(--text-secondary)"></i>
+      <div class="cc-label">Volumen</div>
+    </div>
+    <input type="range" class="cc-slider" min="0" max="100" value="80" id="volSlider">
+  </div>
+  <div class="cc-wide-tile">
+    <div class="cc-tile-row">
+      <i class="fi fi-sr-sun" style="font-size:16px;color:var(--text-secondary)"></i>
+      <div class="cc-label">Brillo</div>
+    </div>
+    <input type="range" class="cc-slider" min="0" max="100" value="70" id="briSlider">
   </div>
 </div>
 
-<!-- ============================================================ VOLUME PANEL -->
-<div id="volumePanel" class="sys-panel hidden">
-  <div class="sys-panel-title"><i class="fi fi-sr-apps"></i> Centro de acciones</div>
-  <div class="quick-tiles">
-    <div class="quick-tile on" onclick="this.classList.toggle('on')">
-      <div class="quick-tile-icon"><i class="fi fi-sr-wifi"></i></div>
-      <div class="quick-tile-label">WiFi</div>
-    </div>
-    <div class="quick-tile on" onclick="this.classList.toggle('on')">
-      <div class="quick-tile-icon"><i class="fi fi-sr-people-network-partner"></i></div>
-      <div class="quick-tile-label">Bluetooth</div>
-    </div>
-    <div class="quick-tile" onclick="this.classList.toggle('on')">
-      <div class="quick-tile-icon"><i class="fi fi-sr-plane-departure"></i></div>
-      <div class="quick-tile-label">Modo Avión</div>
-    </div>
-    <div class="quick-tile on" onclick="this.classList.toggle('on')">
-      <div class="quick-tile-icon"><i class="fi fi-sr-user-forbidden-alt"></i></div>
-      <div class="quick-tile-label">No molestar</div>
-    </div>
-    <div class="quick-tile" onclick="this.classList.toggle('on')">
-      <div class="quick-tile-icon"><i class="fi fi-sr-eco-battery"></i></div>
-      <div class="quick-tile-label">Ahorro</div>
-    </div>
-    <div class="quick-tile on" onclick="this.classList.toggle('on')">
-      <div class="quick-tile-icon"><i class="fi fi-sr-resize"></i></div>
-      <div class="quick-tile-label">Proyectar</div>
-    </div>
+<!-- ============================================================ SPOTLIGHT -->
+<div id="spotlight" class="hidden">
+  <div class="spotlight-input-wrap">
+    <i class="fi fi-sr-issue-loupe"></i>
+    <input type="text" id="spotlightInput" placeholder="Spotlight: Buscar" autocomplete="off">
+    <span class="spotlight-shortcut">⌘Space</span>
   </div>
-  <div class="slider-row">
-    <span><i class="fi fi-sr-volume"></i></span>
-    <input type="range" class="sys-slider" min="0" max="100" value="80" id="volSlider">
-    <span style="font-size:12px;color:var(--text-secondary);width:28px;" id="volLabel">80</span>
+  <div class="spotlight-results hidden" id="spotlightResults"></div>
+</div>
+<div id="spotlightBackdrop" class="hidden" style="position:fixed;inset:0;z-index:99490;"></div>
+
+<!-- ============================================================ NOTIFICATION CENTER -->
+<div id="notifCenter" class="hidden">
+  <div class="notif-date-label" id="notifDateLabel">Hoy</div>
+  <div class="notif-card">
+    <div class="notif-card-header">
+      <img class="notif-card-icon" src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75">
+      <span class="notif-card-app">Finder</span>
+      <span class="notif-card-time">Hace 2m</span>
+    </div>
+    <div class="notif-card-title">Repositorio listo</div>
+    <div class="notif-card-body">El sistema está listo para ser usado. Bienvenido, Santiago.</div>
   </div>
-  <div class="slider-row">
-    <span><i class="fi fi-sr-sun"></i></span>
-    <input type="range" class="sys-slider" min="0" max="100" value="70" id="briSlider">
-    <span style="font-size:12px;color:var(--text-secondary);width:28px;" id="briLabel">70</span>
+  <div class="notif-card">
+    <div class="notif-card-header">
+      <img class="notif-card-icon" src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-soM5VkrS231RkzTJKdb30Wco5dj6aJ.png&w=500&q=75">
+      <span class="notif-card-app">App Store</span>
+      <span class="notif-card-time">Hace 5m</span>
+    </div>
+    <div class="notif-card-title">Actualizaciones disponibles</div>
+    <div class="notif-card-body">3 apps tienen actualizaciones disponibles.</div>
   </div>
 </div>
 
@@ -242,8 +189,8 @@
 
 <!-- ============================================================ WALLPAPER PANEL -->
 <div id="wallpaperPanel" class="hidden">
-  <h2><i class="fi fi-sr-desktop-wallpaper"></i> Fondo de pantalla</h2>
-  <p class="wp-sub">Elige un fondo predeterminado o carga tu propia imagen desde el dispositivo.</p>
+  <h2><i class="fi fi-sr-desktop-wallpaper"></i> Fondo de escritorio</h2>
+  <p class="wp-sub">Elige un fondo predeterminado o carga tu propia imagen.</p>
   <input type="file" id="wallpaperInput" accept="image/*">
   <div id="wallpaperList">
     <img src="https://cdn.pixabay.com/photo/2014/07/16/05/18/beach-394503_1280.jpg">
@@ -258,65 +205,79 @@
 
 <!-- ============================================================ CONTEXT MENU -->
 <ul id="contextMenu" class="hidden">
-  <li id="ctxOpen">
-    <i class="fi fi-sr-folder-open"></i>
-    Abrir
-  </li>
-  <li id="ctxRefresh">
-    <i class="fi fi-sr-refresh"></i>
-    Actualizar
-  </li>
+  <li id="ctxOpen"><i class="fi fi-sr-folder-open"></i> Abrir</li>
+  <li id="ctxNewFolder"><i class="fi fi-sr-folder-add"></i> Nueva carpeta</li>
   <li class="ctx-sep"></li>
-  <li id="ctxRename">
-    <i class="fi fi-sr-text-box-edit"></i>
-    Renombrar
-  </li>
-  <li id="ctxDelete">
-    <i class="fi fi-sr-trash-xmark"></i>
-        Eliminar
-  </li>
+  <li id="ctxGetInfo"><i class="fi fi-sr-info"></i> Obtener información</li>
+  <li id="ctxRename"><i class="fi fi-sr-text-box-edit"></i> Renombrar</li>
+  <li id="ctxDelete"><i class="fi fi-sr-trash-xmark"></i> Mover a papelera</li>
   <li class="ctx-sep"></li>
-  <li id="ctxWallpaper">
-    <i class="fi fi-sr-desktop-wallpaper"></i>
-        Cambiar fondo
-  </li>
+  <li id="ctxWallpaper"><i class="fi fi-sr-desktop-wallpaper"></i> Cambiar fondo de escritorio</li>
 </ul>
 
-<!-- ============================================================ TASKBAR -->
-<div id="taskbar">
-  <div class="taskbar-center">
-
-    <!-- Start Button -->
-    <div id="startButton" data-tooltip="Inicio">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 3h8v9H3V3z" fill="rgba(0,120,215,0.9)"/>
-        <path d="M13 3h8v9h-8V3z" fill="rgba(0,120,215,0.7)"/>
-        <path d="M3 13h8v9H3v-8z" fill="rgba(0,120,215,0.7)"/>
-        <path d="M13 13h8v9h-8v-8z" fill="rgba(0,120,215,0.5)"/>
-      </svg>
-    </div>
-
-    <!-- Search -->
-    <div id="searchBtn" data-tooltip="Buscar">
-      <i class="fi fi-sr-issue-loupe"></i>
-      Buscar
-    </div>
-
-    <!-- Task app buttons -->
-    <div id="taskButtons" class="taskbar-apps"></div>
+<!-- ============================================================ DOCK -->
+<div id="dock">
+  <!-- Pinned apps -->
+  <div class="dock-item" data-app="explorer" title="Finder">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75">
+    <div class="dock-item-label">Finder</div>
+  </div>
+  <div class="dock-item" data-app="browser">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75">
+    <div class="dock-item-label">Safari</div>
+  </div>
+  <div class="dock-item" data-app="notes">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75">
+    <div class="dock-item-label">Notas</div>
+  </div>
+  <div class="dock-item" data-app="player">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-j9GfZpCuZEAQwYOTxDIVxReq5y0OHg.png&w=500&q=75">
+    <div class="dock-item-label">Music</div>
+  </div>
+  <div class="dock-item" data-app="mix">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-B2EekBDz0A46XdvgtBjgEAw79EH0Dk.png&w=500&q=75">
+    <div class="dock-item-label">Music Studio</div>
+  </div>
+  <div class="dock-item" data-app="paint">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75">
+    <div class="dock-item-label">Sterl-ink</div>
+  </div>
+  <div class="dock-item" data-app="excel">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DHtLao0TXcz7zsJ6bxv2DltThCLwQ8.png&w=1000&q=75">
+    <div class="dock-item-label">Math FX</div>
+  </div>
+  <div class="dock-item" data-app="word">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-BjimxRD0gb4rZBjr9jbO9LYXmOZJao.png&w=1000&q=75">
+    <div class="dock-item-label">Letter</div>
+  </div>
+  <div class="dock-item" data-app="powerpoint">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-L8T5N6DbL9jezTcIoss4pIKNG256jy.png&w=1000&q=75">
+    <div class="dock-item-label">Presentation</div>
+  </div>
+  <div class="dock-item" data-app="airspace">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-yjBpDcYD9IjVGoIg4LnKkMKL1RBris.png&w=500&q=75">
+    <div class="dock-item-label">Captain</div>
+  </div>
+  <div class="dock-item" data-app="buscaminas">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-e3kGOJ1Nx9Q68omg5PbnlZh8hFAJkX.png&w=500&q=75">
+    <div class="dock-item-label">Sterling World</div>
+  </div>
+  <div class="dock-item" data-app="aplicaciones">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-soM5VkrS231RkzTJKdb30Wco5dj6aJ.png&w=500&q=75">
+    <div class="dock-item-label">App Store</div>
   </div>
 
-  <!-- System Tray -->
-  <div class="taskbar-right">
-    <div class="tray-group" id="volumeIcon" data-tooltip="Volumen y acceso rápido">
-      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-TY2nnUu2xdWPP6NExiQYrp4LodTAP4.png&w=500&q=75" class="tray-icon">
-      <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-kkjSdXa9hHajV0xbrBlzKVLWwrtpsN.png&w=500&q=75" class="tray-icon" id="wifiIcon" style="cursor:default">
-    </div>
+  <div class="dock-separator"></div>
 
-    <div class="clock-area" id="clockArea" data-tooltip="Calendario">
-      <div id="clock-time">00:00</div>
-      <div id="clock-date">1/1/2026</div>
-    </div>
+  <!-- Running app section (dynamic) -->
+  <div id="dockRunning"></div>
+
+  <div class="dock-separator"></div>
+
+  <!-- Trash -->
+  <div class="dock-item" data-app="recycle-bin">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hojVo7IEsndSCKEMMylnYGeF4E0HrU.png&w=500&q=75">
+    <div class="dock-item-label">Papelera</div>
   </div>
 </div>
 
