@@ -1,3 +1,7 @@
+/* ============================================================
+   macOS-STYLE JAVASCRIPT
+   Santiago Sterling – Repositorio
+============================================================ */
 let activeWindows = {};
 let zCounter = 50;
 let draggingWindow = null;
@@ -16,102 +20,91 @@ let recycleBin = [];
 ============================================================ */
 const apps = {
     explorer: {
-        title: "Explorador de archivos",
+        title: "Finder",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75",
         width: 760, height: 500, type: "system"
     },
     aplicaciones: {
-        title: "Sterling Store",
+        title: "App Store",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-soM5VkrS231RkzTJKdb30Wco5dj6aJ.png&w=500&q=75",
         width: 880, height: 600, type: "system"
     },
     browser: {
-        title: "Navegador",
+        title: "Safari",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75",
-        width: 900, height: 620,
-        content: `<div style="width:100%;height:100%;display:flex;flex-direction:column;">
-  
-  <div style="height:38px;background:rgba(255,255,255,0.05);
-  border-bottom:1px solid rgba(255,255,255,0.08);
-  display:flex;align-items:center;padding:0 10px;gap:8px;">
-
-    <button onclick="reloadFrame()" 
-    style="background:rgba(255,255,255,0.1);border:none;color:white;
-    width:28px;height:28px;border-radius:4px;cursor:pointer;font-size:12px;">↺</button>
-
-    <input id="browserInput"
-    placeholder="Buscar en Google..."
-    onkeydown="if(event.key==='Enter'){searchGoogle()}"
-    style="flex:1;background:rgba(255,255,255,0.08);border:none;
-    border-radius:4px;height:26px;padding:0 10px;
-    font-size:12px;color:white;outline:none;">
-
+        width: 960, height: 640,
+        content: `<div style="width:100%;height:100%;display:flex;flex-direction:column;background:#f5f5f7;">
+  <div style="height:42px;background:rgba(246,246,246,0.95);border-bottom:1px solid rgba(0,0,0,0.08);
+    display:flex;align-items:center;padding:0 14px;gap:8px;">
+    <button onclick="document.getElementById('browserFrame').src=document.getElementById('browserFrame').src"
+      style="background:rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.1);color:#333;
+      width:28px;height:28px;border-radius:7px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;">↺</button>
+    <div style="flex:1;background:rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.1);
+      border-radius:20px;height:28px;display:flex;align-items:center;padding:0 12px;gap:6px;">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.4)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input id="browserInput" placeholder="Buscar o escribir una URL"
+        onkeydown="if(event.key==='Enter'){searchGoogle()}"
+        style="flex:1;background:transparent;border:none;font-size:12px;color:#333;outline:none;">
+    </div>
   </div>
-
-  <iframe id="browserFrame"
-  src="https://www.google.com/webhp?igu=1"
-  style="flex:1;border:none;"></iframe>
-
+  <iframe id="browserFrame" src="https://www.google.com/webhp?igu=1" style="flex:1;border:none;"></iframe>
 </div>`
-
     },
     notes: {
-        title: "Bloc de notas",
+        title: "Notas",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75",
-        width: 560, height: 420,
-        type: "notes",
-        content: ""
+        width: 560, height: 440, type: "notes", content: ""
     },
     player: {
-        title: "Sterling Music Player",
+        title: "Sterling Music",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-j9GfZpCuZEAQwYOTxDIVxReq5y0OHg.png&w=500&q=75",
         width: 800, height: 580,
         content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/Music.html" style="width:100%;height:100%;border:none;"></iframe>`
     },
-   mix: {
+    mix: {
         title: "Sterling Music Studio",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-B2EekBDz0A46XdvgtBjgEAw79EH0Dk.png&w=500&q=75",
         width: 800, height: 580,
         content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/mix.html" style="width:100%;height:100%;border:none;"></iframe>`
     },
     paint: {
-        title: "Sterl-ink Sketching",
+        title: "Sterl-ink",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75",
         width: 820, height: 600,
         content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/ExperienciaLaboral.html" style="width:100%;height:100%;border:none;"></iframe>`
     },
     buscaminas: {
-        title: "Santiago Sterling World",
+        title: "Sterling World",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-e3kGOJ1Nx9Q68omg5PbnlZh8hFAJkX.png&w=500&q=75",
         width: 820, height: 600,
         content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/Super Mario.html" style="width:100%;height:100%;border:none;"></iframe>`
     },
-   excel: {
+    excel: {
         title: "Sterling Math FX",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DHtLao0TXcz7zsJ6bxv2DltThCLwQ8.png&w=1000&q=75",
         width: 820, height: 600,
         content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/Sterling math fx.html" style="width:100%;height:100%;border:none;"></iframe>`
     },
-   word: {
+    word: {
         title: "Sterling Letter",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-BjimxRD0gb4rZBjr9jbO9LYXmOZJao.png&w=1000&q=75",
         width: 820, height: 600,
         content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/Sterling Letter.html" style="width:100%;height:100%;border:none;"></iframe>`
     },
-   powerpoint: {
+    powerpoint: {
         title: "Sterling Presentation",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-L8T5N6DbL9jezTcIoss4pIKNG256jy.png&w=1000&q=75",
         width: 820, height: 600,
         content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/Sterling Presentation.html" style="width:100%;height:100%;border:none;"></iframe>`
     },
-   airspace: {
+    airspace: {
         title: "Captain Sterling",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-yjBpDcYD9IjVGoIg4LnKkMKL1RBris.png&w=500&q=75",
         width: 820, height: 600,
         content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/Buscaminas.html" style="width:100%;height:100%;border:none;"></iframe>`
     },
     "recycle-bin": {
-        title: "Papelera de reciclaje",
+        title: "Papelera",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hojVo7IEsndSCKEMMylnYGeF4E0HrU.png&w=500&q=75",
         width: 640, height: 420
     }
@@ -122,17 +115,13 @@ const apps = {
 ============================================================ */
 const fileSystem = {
     root: {
-        type: "folder", name: "Este equipo",
+        type: "folder", name: "Macintosh HD",
         contents: {
             Documentos: {
                 type: "folder",
                 contents: {
-                    "ReadMe.txt": {
-                        type: "file", app: "notes",
-                        content: `¡Hola! Soy Santiago Sterling\nTecnólogo en análisis y desarrollo de software y tecnólogo en Producción Industrial\n\nSoy un tecnólogo en Gestión de Producción Industrial con más de 8 años de experiencia en plantas de manufactura, y también tecnólogo en Análisis y Desarrollo de Software (SENA).\n\nMi propósito es integrar la eficiencia industrial con la inteligencia tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y generar soluciones escalables.`
-                    },
+                    "ReadMe.txt": { type: "file", app: "notes", content: `¡Hola! Soy Santiago Sterling\nTecnólogo en análisis y desarrollo de software y tecnólogo en Producción Industrial\n\nSoy un tecnólogo en Gestión de Producción Industrial con más de 8 años de experiencia en plantas de manufactura, y también tecnólogo en Análisis y Desarrollo de Software (SENA).\n\nMi propósito es integrar la eficiencia industrial con la inteligencia tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y generar soluciones escalables.` },
                     "Notas.txt": { type: "file", app: "notes", content: "- Comprar pan\n- Revisar proyecto Quantix\n- Enviar report" },
-                    "Buscaminas.html": { type: "file", app: "notes", content: "Tareas pendientes:\n1. Completar interfaz\n2. Revisar errores\n3. Enviar versión final" },
                     "record.txt": { type: "file", app: "notes", content: "Recordatorio:\nNo olvidar hacer backup de todo." },
                     "proyect.txt": { type: "file", app: "notes", content: "# Proyecto IA\nEste es el archivo principal del proyecto." }
                 }
@@ -143,7 +132,6 @@ const fileSystem = {
         }
     }
 };
-
 
 /* ============================================================
    LOCK SCREEN
@@ -160,26 +148,20 @@ setInterval(updateLockClock, 1000);
 
 const lockScreen = document.getElementById("lockScreen");
 lockScreen.addEventListener("click", () => {
+    lockScreen.style.transition = "opacity 0.6s ease";
     lockScreen.style.opacity = "0";
     setTimeout(() => {
         lockScreen.style.display = "none";
-        showToast("Santiago Sterling", "Bienvenido, Soy Santiago Sterling, y este es mi repositorio, el sitio donde dejo todo mi código de las aplicaciones que he creado.");
-    }, 500);
+        showToast("Finder", "Bienvenido, Santiago Sterling. Este es tu repositorio.");
+    }, 600);
 });
 
 /* ============================================================
-   CONEXIÓN A GOOGLE
+   BROWSER HELPERS
 ============================================================ */
-
-function searchGoogle(){
-  const q = document.getElementById("browserInput").value
-  document.getElementById("browserFrame").src =
-  "https://www.google.com/search?igu=1&q=" + encodeURIComponent(q)
-}
-
-function reloadFrame(){
-  const frame = document.getElementById("browserFrame")
-  frame.src = frame.src
+function searchGoogle() {
+    const q = document.getElementById("browserInput")?.value;
+    if (q) document.getElementById("browserFrame").src = "https://www.google.com/search?igu=1&q=" + encodeURIComponent(q);
 }
 
 /* ============================================================
@@ -200,40 +182,32 @@ function openApp(appName, extra = null) {
     win.className = "window";
     win.dataset.app = appName;
 
-    const vw = window.innerWidth, vh = window.innerHeight - 48;
+    const vw = window.innerWidth, vh = window.innerHeight - 80;
     const w = app.width || 640, h = app.height || 480;
-    const left = Math.max(0, Math.min(vw - w, 80 + Math.random() * 120));
-    const top  = Math.max(0, Math.min(vh - h, 60 + Math.random() * 80));
-
+    const left = Math.max(0, Math.min(vw - w, 100 + Math.random() * 100));
+    const top  = Math.max(28, Math.min(vh - h, 50 + Math.random() * 60));
     win.style.cssText = `left:${left}px;top:${top}px;width:${w}px;height:${h}px;z-index:${++zCounter}`;
 
     win.innerHTML = `
         <div class="window-header">
-          <div class="window-title-area">
-            <img class="window-title-icon" src="${app.icon}" alt="">
-            <span class="title-text">${app.title}</span>
+          <div class="mac-buttons">
+            <div class="mac-btn close" title="Cerrar"><span class="btn-symbol">✕</span></div>
+            <div class="mac-btn min" title="Minimizar"><span class="btn-symbol">−</span></div>
+            <div class="mac-btn max" title="Maximizar"><span class="btn-symbol">+</span></div>
           </div>
-          <div class="window-buttons">
-            <div class="win-btn min" title="Minimizar">
-              <svg viewBox="0 0 10 1"><line x1="0" y1="0.5" x2="10" y2="0.5" stroke="currentColor" stroke-width="1"/></svg>
-            </div>
-            <div class="win-btn max" title="Maximizar">
-              <svg viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" stroke="currentColor" fill="none" stroke-width="1"/></svg>
-            </div>
-            <div class="win-btn close" title="Cerrar">
-              <svg viewBox="0 0 10 10"><line x1="0" y1="0" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="0" x2="0" y2="10" stroke="currentColor" stroke-width="1.2"/></svg>
-            </div>
+          <div class="window-title">
+            <img src="${app.icon}" alt="">
+            <span>${app.title}</span>
           </div>
         </div>
         <div class="window-content"><div class="app-area" style="width:100%;height:100%;"></div></div>
     `;
 
     document.getElementById("windowsContainer").appendChild(win);
-
     const area = win.querySelector(".app-area");
 
     if (appName === "explorer") {
-        loadExplorer(win, fileSystem.root);
+        loadFinder(win, fileSystem.root);
     } else if (appName === "aplicaciones") {
         loadStore(win);
     } else if (appName === "recycle-bin") {
@@ -241,16 +215,15 @@ function openApp(appName, extra = null) {
     } else if (app.type === "notes" || appName.startsWith("notes_")) {
         area.innerHTML = `
           <div class="notepad-container">
-            <div class="notepad-menubar">
-              <span class="notepad-menu-item">Archivo</span>
-              <span class="notepad-menu-item">Editar</span>
-              <span class="notepad-menu-item">Ver</span>
+            <div class="notepad-toolbar">
+              <button class="notepad-format-btn" title="Negrita"><b>B</b></button>
+              <button class="notepad-format-btn" title="Cursiva"><i>I</i></button>
+              <button class="notepad-format-btn" title="Subrayado"><u>U</u></button>
             </div>
-            <textarea class="notepad-textarea" spellcheck="false">${extra || app.content || 'Escribe tus notas aquí...'}</textarea>
-            <div class="notepad-statusbar">
-              <span>Lín 1, Col 1</span>
+            <textarea class="notepad-textarea" spellcheck="false" placeholder="Comienza a escribir…">${extra || app.content || ''}</textarea>
+            <div class="notepad-status">
+              <span>Autoguardado</span>
               <span>UTF-8</span>
-              <span>Windows (CRLF)</span>
             </div>
           </div>
         `;
@@ -259,58 +232,40 @@ function openApp(appName, extra = null) {
     }
 
     activeWindows[appName] = { win };
-    addTaskButton(appName);
+    updateDockItem(appName, true);
     makeDraggable(win);
     makeResizable(win);
     focusWindow(win);
+    updateMenubarApp(appName);
 
-    // Window button events
-    win.querySelector(".win-btn.close").onclick = () => closeWindow(win);
-    win.querySelector(".win-btn.min").onclick = () => minimizeWindow(win);
-    win.querySelector(".win-btn.max").onclick = () => toggleMaximize(win);
-
-    // Double-click header to maximize
+    win.querySelector(".mac-btn.close").onclick = (e) => { e.stopPropagation(); closeWindow(win); };
+    win.querySelector(".mac-btn.min").onclick = (e) => { e.stopPropagation(); minimizeWindow(win); };
+    win.querySelector(".mac-btn.max").onclick = (e) => { e.stopPropagation(); toggleMaximize(win); };
     win.querySelector(".window-header").ondblclick = () => toggleMaximize(win);
 }
 
 function openTextFile(content) {
     const id = "notes_" + Date.now();
-    apps[id] = { title: "Archivo de texto", icon: apps.notes.icon, width: 560, height: 400, type: "notes", content };
+    apps[id] = { title: "Texto", icon: apps.notes.icon, width: 560, height: 400, type: "notes", content };
     openApp(id);
 }
 
 /* ============================================================
-   TASKBAR BUTTONS
+   DOCK ACTIVE DOTS
 ============================================================ */
-function addTaskButton(appName) {
-    const app = apps[appName];
-    const btn = document.createElement("div");
-    btn.className = "task-btn active";
-    btn.dataset.app = appName;
-    btn.setAttribute("data-tooltip", app.title);
-    btn.innerHTML = `<img src="${app.icon}" alt="${app.title}">`;
-
-    btn.onclick = () => {
-        const w = activeWindows[appName]?.win;
-        if (!w) return;
-        if (w.style.display === "none") restoreWindow(w);
-        else if (w === getFocusedWindow()) minimizeWindow(w);
-        else focusWindow(w);
-    };
-
-    document.getElementById("taskButtons").appendChild(btn);
-    activeWindows[appName].btn = btn;
+function updateDockItem(appName, open) {
+    document.querySelectorAll(`#dock .dock-item[data-app="${appName}"]`).forEach(item => {
+        if (open) item.classList.add("active");
+        else item.classList.remove("active");
+    });
 }
 
-function getFocusedWindow() {
-    let top = null, topZ = 0;
-    Object.values(activeWindows).forEach(({ win }) => {
-        if (win.style.display !== "none") {
-            const z = parseInt(win.style.zIndex || 0);
-            if (z > topZ) { topZ = z; top = win; }
-        }
-    });
-    return top;
+/* ============================================================
+   MENUBAR APP NAME
+============================================================ */
+function updateMenubarApp(appName) {
+    const el = document.getElementById("menubarAppName");
+    if (el && apps[appName]) el.textContent = apps[appName].title;
 }
 
 /* ============================================================
@@ -320,84 +275,70 @@ function focusWindow(win) {
     document.querySelectorAll(".window").forEach(w => w.classList.remove("focused"));
     win.style.zIndex = ++zCounter;
     win.classList.add("focused");
-    const app = win.dataset.app;
-    if (activeWindows[app]?.btn) {
-        document.querySelectorAll(".task-btn").forEach(b => b.classList.remove("active"));
-        activeWindows[app].btn.classList.add("active");
-    }
+    updateMenubarApp(win.dataset.app);
 }
 
 function closeWindow(win) {
     const app = win.dataset.app;
-    win.style.animation = "none";
-    win.style.transition = "opacity 0.15s, transform 0.15s";
+    win.style.transition = "opacity 0.18s, transform 0.18s";
     win.style.opacity = "0";
-    win.style.transform = "scale(0.95)";
+    win.style.transform = "scale(0.92)";
     setTimeout(() => {
         win.remove();
-        if (activeWindows[app]?.btn) activeWindows[app].btn.remove();
         delete activeWindows[app];
-    }, 150);
+        updateDockItem(app, false);
+    }, 180);
 }
 
 function minimizeWindow(win) {
-    win.style.transition = "opacity 0.18s, transform 0.18s";
-    win.style.opacity = "0";
-    win.style.transform = "scale(0.9) translateY(16px)";
+    win.classList.add("minimizing");
     setTimeout(() => {
+        win.classList.remove("minimizing");
         win.style.display = "none";
-        win.style.opacity = "";
-        win.style.transform = "";
-        win.style.transition = "";
-    }, 180);
-    const app = win.dataset.app;
-    if (activeWindows[app]?.btn) activeWindows[app].btn.classList.remove("active");
+        const app = win.dataset.app;
+        updateDockItem(app, false);
+    }, 400);
 }
 
 function restoreWindow(win) {
     win.style.display = "flex";
     win.style.opacity = "0";
-    win.style.transform = "scale(0.94) translateY(8px)";
+    win.style.transform = "scale(0.9)";
     requestAnimationFrame(() => {
-        win.style.transition = "opacity 0.18s, transform 0.18s";
+        win.style.transition = "opacity 0.2s, transform 0.2s";
         win.style.opacity = "1";
-        win.style.transform = "scale(1) translateY(0)";
-        setTimeout(() => { win.style.transition = ""; }, 200);
+        win.style.transform = "scale(1)";
+        setTimeout(() => { win.style.transition = ""; }, 220);
     });
     focusWindow(win);
+    updateDockItem(win.dataset.app, true);
 }
 
 function toggleMaximize(win) {
-    if (!win.classList.contains("maximized")) {
-        win.dataset.prevLeft = win.style.left;
-        win.dataset.prevTop = win.style.top;
-        win.dataset.prevW = win.style.width;
-        win.dataset.prevH = win.style.height;
-        win.style.transition = "left 0.2s,top 0.2s,width 0.2s,height 0.2s";
-        win.style.left = "0"; win.style.top = "0";
-        win.style.width = "100%"; win.style.height = `calc(100vh - 48px)`;
-        win.classList.add("maximized");
-        // Update max button icon
-        win.querySelector(".win-btn.max").innerHTML = `<svg viewBox="0 0 10 10"><rect x="0" y="2" width="8" height="8" stroke="currentColor" fill="none" stroke-width="1"/><polyline points="2,2 2,0 10,0 10,8 8,8" stroke="currentColor" fill="none" stroke-width="1"/></svg>`;
-    } else {
-        win.style.transition = "left 0.2s,top 0.2s,width 0.2s,height 0.2s";
-        win.style.left = win.dataset.prevLeft;
-        win.style.top = win.dataset.prevTop;
-        win.style.width = win.dataset.prevW;
-        win.style.height = win.dataset.prevH;
+    if (win.classList.contains("maximized")) {
         win.classList.remove("maximized");
-        win.querySelector(".win-btn.max").innerHTML = `<svg viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" stroke="currentColor" fill="none" stroke-width="1"/></svg>`;
-        setTimeout(() => win.style.transition = "", 210);
+        const prev = win._prevGeometry;
+        if (prev) {
+            win.style.left = prev.left; win.style.top = prev.top;
+            win.style.width = prev.width; win.style.height = prev.height;
+        }
+    } else {
+        win._prevGeometry = { left: win.style.left, top: win.style.top, width: win.style.width, height: win.style.height };
+        win.classList.add("maximized");
+        const mh = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--menubar-h')) || 28;
+        win.style.left = "0"; win.style.top = mh + "px";
+        win.style.width = window.innerWidth + "px";
+        win.style.height = (window.innerHeight - mh) + "px";
     }
 }
 
 /* ============================================================
-   DRAG WINDOWS
+   DRAGGING
 ============================================================ */
 function makeDraggable(win) {
     const header = win.querySelector(".window-header");
     header.addEventListener("mousedown", (e) => {
-        if (e.target.closest(".window-buttons")) return;
+        if (e.target.closest(".mac-buttons")) return;
         if (win.classList.contains("maximized")) return;
         draggingWindow = win;
         dragOffset.x = e.clientX - win.offsetLeft;
@@ -409,93 +350,40 @@ function makeDraggable(win) {
 
 document.addEventListener("mousemove", (e) => {
     if (draggingWindow) {
-        const newLeft = e.clientX - dragOffset.x;
-        const newTop  = Math.max(0, e.clientY - dragOffset.y);
-        draggingWindow.style.left = newLeft + "px";
-        draggingWindow.style.top  = newTop + "px";
-        handleSnapIndicator(e.clientX, e.clientY);
+        draggingWindow.style.left = (e.clientX - dragOffset.x) + "px";
+        draggingWindow.style.top  = Math.max(28, e.clientY - dragOffset.y) + "px";
     }
     if (resizingWindow) {
-        const dx = e.clientX - resizeStart.x;
-        const dy = e.clientY - resizeStart.y;
-        if (resizingMode.includes("e")) resizingWindow.style.width  = Math.max(320, resizeStart.w + dx) + "px";
+        const dx = e.clientX - resizeStart.x, dy = e.clientY - resizeStart.y;
+        if (resizingMode.includes("e")) resizingWindow.style.width  = Math.max(300, resizeStart.w + dx) + "px";
         if (resizingMode.includes("s")) resizingWindow.style.height = Math.max(200, resizeStart.h + dy) + "px";
         if (resizingMode.includes("w")) {
-            const newW = Math.max(320, resizeStart.w - dx);
-            resizingWindow.style.width = newW + "px";
-            resizingWindow.style.left  = (resizeStart.left + resizeStart.w - newW) + "px";
+            const nw = Math.max(300, resizeStart.w - dx);
+            resizingWindow.style.width = nw + "px";
+            resizingWindow.style.left = (resizeStart.left + resizeStart.w - nw) + "px";
         }
         if (resizingMode.includes("n")) {
-            const newH = Math.max(200, resizeStart.h - dy);
-            resizingWindow.style.height = newH + "px";
-            resizingWindow.style.top    = (resizeStart.top + resizeStart.h - newH) + "px";
+            const nh = Math.max(200, resizeStart.h - dy);
+            resizingWindow.style.height = nh + "px";
+            resizingWindow.style.top = (resizeStart.top + resizeStart.h - nh) + "px";
         }
     }
     if (draggingIcon) {
-        const newX = e.pageX - draggingIconOffset.x;
-        const newY = e.pageY - draggingIconOffset.y;
-        if (Math.abs(newX - parseInt(draggingIcon.style.left)) > 4 || Math.abs(newY - parseInt(draggingIcon.style.top)) > 4) {
-            iconDragMoved = true;
-        }
-        draggingIcon.style.left = newX + "px";
-        draggingIcon.style.top  = Math.min(newY, window.innerHeight - 100) + "px";
+        const nx = e.pageX - draggingIconOffset.x, ny = e.pageY - draggingIconOffset.y;
+        if (Math.abs(nx - parseInt(draggingIcon.style.left)) > 4 || Math.abs(ny - parseInt(draggingIcon.style.top)) > 4) iconDragMoved = true;
+        draggingIcon.style.left = nx + "px";
+        draggingIcon.style.top  = Math.min(ny, window.innerHeight - 120) + "px";
     }
 });
 
 document.addEventListener("mouseup", () => {
-    if (draggingWindow) {
-        applySnap(draggingWindow);
-        removeSnapIndicator();
-        draggingWindow = null;
-    }
+    draggingWindow = null;
     resizingWindow = null;
-    if (draggingIcon) {
-        draggingIcon.classList.remove("dragging");
-        draggingIcon = null;
-    }
+    if (draggingIcon) { draggingIcon.classList.remove("dragging"); draggingIcon = null; }
 });
 
 /* ============================================================
-   SNAP ASSIST
-============================================================ */
-let snapIndicatorEl = null;
-
-function handleSnapIndicator(x, y) {
-    const vw = window.innerWidth, vh = window.innerHeight - 48;
-    if (x < 8) showSnapIndicator("left");
-    else if (x > vw - 8) showSnapIndicator("right");
-    else if (y < 4) showSnapIndicator("full");
-    else removeSnapIndicator();
-}
-
-function showSnapIndicator(side) {
-    if (!snapIndicatorEl) {
-        snapIndicatorEl = document.createElement("div");
-        snapIndicatorEl.className = "snap-highlight";
-        document.body.appendChild(snapIndicatorEl);
-    }
-    snapIndicatorEl.className = "snap-highlight";
-    if (side === "right") snapIndicatorEl.classList.add("right");
-}
-
-function removeSnapIndicator() {
-    if (snapIndicatorEl) { snapIndicatorEl.remove(); snapIndicatorEl = null; }
-}
-
-function applySnap(win) {
-    const x = parseInt(win.style.left), y = parseInt(win.style.top);
-    const vw = window.innerWidth, vh = window.innerHeight - 48;
-    if (x < 8) {
-        win.style.left = "0"; win.style.top = "0"; win.style.width = "50%"; win.style.height = vh + "px";
-    } else if (x + win.offsetWidth > vw - 8) {
-        win.style.left = "50%"; win.style.top = "0"; win.style.width = "50%"; win.style.height = vh + "px";
-    } else if (y < 4) {
-        toggleMaximize(win);
-    }
-}
-
-/* ============================================================
-   RESIZE WINDOWS
+   RESIZE
 ============================================================ */
 function makeResizable(win) {
     const EDGE = 6;
@@ -504,17 +392,16 @@ function makeResizable(win) {
         const r = win.getBoundingClientRect();
         let mode = "";
         if (e.clientX > r.right - EDGE) mode += "e";
-        if (e.clientX < r.left  + EDGE) mode += "w";
+        if (e.clientX < r.left + EDGE) mode += "w";
         if (e.clientY > r.bottom - EDGE) mode += "s";
-        if (e.clientY < r.top   + EDGE) mode += "n";
+        if (e.clientY < r.top + EDGE) mode += "n";
         win.dataset.resize = mode;
         const cursors = { e:"ew-resize", w:"ew-resize", s:"ns-resize", n:"ns-resize", es:"nwse-resize", wn:"nwse-resize", en:"nesw-resize", ws:"nesw-resize" };
         win.style.cursor = cursors[mode] || "default";
     });
-
     win.addEventListener("mousedown", (e) => {
         const mode = win.dataset.resize;
-        if (!mode || e.target.closest(".window-header") || e.target.closest(".win-btn")) return;
+        if (!mode || e.target.closest(".window-header") || e.target.closest(".mac-btn")) return;
         resizingWindow = win;
         resizingMode = mode;
         resizeStart = { x: e.clientX, y: e.clientY, w: win.offsetWidth, h: win.offsetHeight, left: win.offsetLeft, top: win.offsetTop };
@@ -533,10 +420,46 @@ document.querySelectorAll(".desktop-icon").forEach(icon => {
         iconDragMoved = false;
         icon.classList.add("dragging");
     });
-
-    icon.addEventListener("click", (e) => {
+    icon.addEventListener("click", () => {
         if (!iconDragMoved) openApp(icon.dataset.app);
     });
+});
+
+/* ============================================================
+   DOCK CLICKS
+============================================================ */
+document.querySelectorAll("#dock .dock-item").forEach(item => {
+    item.addEventListener("click", () => {
+        const appName = item.dataset.app;
+        if (!appName) return;
+        if (activeWindows[appName]) {
+            const w = activeWindows[appName].win;
+            if (w.style.display === "none") restoreWindow(w);
+            else if (w === getFocusedWindow()) minimizeWindow(w);
+            else focusWindow(w);
+        } else {
+            openApp(appName);
+        }
+    });
+});
+
+function getFocusedWindow() {
+    let top = null, topZ = 0;
+    Object.values(activeWindows).forEach(({ win }) => {
+        if (win.style.display !== "none") {
+            const z = parseInt(win.style.zIndex || 0);
+            if (z > topZ) { topZ = z; top = win; }
+        }
+    });
+    return top;
+}
+
+/* ============================================================
+   FOCUS ON CLICK INSIDE CONTAINER
+============================================================ */
+document.getElementById("windowsContainer").addEventListener("mousedown", (e) => {
+    const win = e.target.closest(".window");
+    if (win) focusWindow(win);
 });
 
 /* ============================================================
@@ -547,8 +470,8 @@ const ctxMenu = document.getElementById("contextMenu");
 document.addEventListener("contextmenu", (e) => {
     e.preventDefault();
     contextTarget = e.target.closest(".desktop-icon") || null;
-    const menuW = 220, menuH = 200;
-    const x = Math.min(e.pageX, window.innerWidth  - menuW - 8);
+    const menuW = 220, menuH = 220;
+    const x = Math.min(e.pageX, window.innerWidth - menuW - 8);
     const y = Math.min(e.pageY, window.innerHeight - menuH - 8);
     ctxMenu.style.left = x + "px";
     ctxMenu.style.top  = y + "px";
@@ -563,12 +486,17 @@ document.getElementById("ctxOpen").onclick = () => {
     if (contextTarget) openApp(contextTarget.dataset.app);
     ctxMenu.classList.add("hidden");
 };
-
-document.getElementById("ctxRefresh").onclick = () => {
+document.getElementById("ctxNewFolder").onclick = () => {
     ctxMenu.classList.add("hidden");
-    showToast("Escritorio", "Actualizando escritorio...");
+    showToast("Finder", "Nueva carpeta creada en el escritorio.");
 };
-
+document.getElementById("ctxGetInfo").onclick = () => {
+    if (contextTarget) {
+        const app = apps[contextTarget.dataset.app];
+        showToast(app?.title || "Info", "Aplicación del sistema · Santiago Sterling OS");
+    }
+    ctxMenu.classList.add("hidden");
+};
 document.getElementById("ctxRename").onclick = () => {
     if (!contextTarget) return;
     ctxMenu.classList.add("hidden");
@@ -576,18 +504,13 @@ document.getElementById("ctxRename").onclick = () => {
     const old = span.textContent;
     const input = document.createElement("input");
     input.value = old;
-    input.style.cssText = "background:rgba(0,0,0,0.7);color:white;border:1px solid #0078d4;border-radius:2px;font-size:12px;width:72px;text-align:center;outline:none;padding:1px 2px;";
+    input.className = "rename-input";
     span.replaceWith(input);
     input.select();
-    const done = () => {
-        const newSpan = document.createElement("span");
-        newSpan.textContent = input.value || old;
-        input.replaceWith(newSpan);
-    };
+    const done = () => { const ns = document.createElement("span"); ns.textContent = input.value || old; input.replaceWith(ns); };
     input.onblur = done;
     input.onkeydown = (e) => { if (e.key === "Enter") input.blur(); if (e.key === "Escape") { input.value = old; input.blur(); } };
 };
-
 document.getElementById("ctxDelete").onclick = () => {
     if (!contextTarget) return;
     const appName = contextTarget.dataset.app;
@@ -597,124 +520,91 @@ document.getElementById("ctxDelete").onclick = () => {
     contextTarget.style.transform = "scale(0.8)";
     setTimeout(() => contextTarget.remove(), 200);
     ctxMenu.classList.add("hidden");
-    showToast("Papelera", `"${apps[appName]?.title}" enviado a la papelera`);
+    showToast("Papelera", `"${apps[appName]?.title}" movido a Papelera`);
 };
-
 document.getElementById("ctxWallpaper").onclick = () => {
     ctxMenu.classList.add("hidden");
     openPanel("wallpaperPanel");
 };
 
 /* ============================================================
-   WINDOW FOCUS ON CLICK
-============================================================ */
-document.getElementById("windowsContainer").addEventListener("mousedown", (e) => {
-    const win = e.target.closest(".window");
-    if (win) focusWindow(win);
-});
-
-/* ============================================================
-   START MENU
-============================================================ */
-const startBtn = document.getElementById("startButton");
-const startMenu = document.getElementById("startMenu");
-
-startBtn.onclick = (e) => {
-    e.stopPropagation();
-    closeAllPanels();
-    startMenu.classList.toggle("hidden");
-    startBtn.classList.toggle("active", !startMenu.classList.contains("hidden"));
-};
-
-document.querySelectorAll(".start-app").forEach(app => {
-    app.onclick = () => {
-        openApp(app.dataset.app);
-        startMenu.classList.add("hidden");
-        startBtn.classList.remove("active");
-    };
-});
-
-document.getElementById("openWallpaperPanel").onclick = () => {
-    startMenu.classList.add("hidden");
-    startBtn.classList.remove("active");
-    openPanel("wallpaperPanel");
-};
-
-document.getElementById("openDesktopSwitcher").onclick = () => {
-    startMenu.classList.add("hidden");
-    startBtn.classList.remove("active");
-    window.location.href = "index.html";
-};
-
-document.addEventListener("click", (e) => {
-    if (!startMenu.contains(e.target) && !startBtn.contains(e.target)) {
-        startMenu.classList.add("hidden");
-        startBtn.classList.remove("active");
-    }
-});
-
-/* ============================================================
    PANELS SYSTEM
 ============================================================ */
-const panelIds = ["wifiPanel", "volumePanel", "calendarPanel", "wallpaperPanel", "startMenu"];
+const panelIds = ["appleMenu", "controlCenter", "calendarPanel", "wallpaperPanel", "notifCenter", "spotlight"];
 
 function closeAllPanels(except = null) {
     panelIds.forEach(id => {
         if (id !== except) document.getElementById(id)?.classList.add("hidden");
     });
-    startBtn.classList.remove("active");
+    document.getElementById("spotlightBackdrop")?.classList.add("hidden");
 }
 
 function openPanel(id) {
+    const isHidden = document.getElementById(id)?.classList.contains("hidden");
     closeAllPanels(id);
-    const el = document.getElementById(id);
-    if (el) el.classList.toggle("hidden");
+    document.getElementById(id)?.classList.toggle("hidden", !isHidden);
 }
-
-// Volume / Quick settings
-document.getElementById("volumeIcon").onclick = (e) => {
-    e.stopPropagation();
-    closeAllPanels("volumePanel");
-    document.getElementById("volumePanel").classList.toggle("hidden");
-};
-
-// WiFi icon inside tray group triggers wifi panel too
-const wifiIconEl = document.getElementById("wifiIcon");
-if (wifiIconEl) {
-    wifiIconEl.onclick = (e) => {
-        e.stopPropagation();
-        closeAllPanels("wifiPanel");
-        document.getElementById("wifiPanel").classList.toggle("hidden");
-    };
-}
-
-// Clock / Calendar
-document.getElementById("clockArea").onclick = (e) => {
-    e.stopPropagation();
-    closeAllPanels("calendarPanel");
-    document.getElementById("calendarPanel").classList.toggle("hidden");
-};
 
 document.addEventListener("click", (e) => {
-    const isPanel = e.target.closest(".sys-panel, #calendarPanel, #wallpaperPanel");
+    const isPanel = e.target.closest("#appleMenu,#controlCenter,#calendarPanel,#wallpaperPanel,#notifCenter,#spotlight,#appleBtn,#controlCenterBtn,#menubar-clock,#clockArea,#notifBtn,#spotlightMenuBtn");
     if (!isPanel) {
-        document.getElementById("wifiPanel")?.classList.add("hidden");
-        document.getElementById("volumePanel")?.classList.add("hidden");
-        document.getElementById("calendarPanel")?.classList.add("hidden");
+        closeAllPanels();
     }
 });
 
-/* Volume slider */
-const volSlider = document.getElementById("volSlider");
-const volLabel  = document.getElementById("volLabel");
-if (volSlider) {
-    volSlider.oninput = () => { volLabel.textContent = volSlider.value; };
-}
-const briSlider = document.getElementById("briSlider");
-const briLabel  = document.getElementById("briLabel");
-if (briSlider) {
-    briSlider.oninput = () => { briLabel.textContent = briSlider.value; };
-}
+/* Apple Menu */
+document.getElementById("appleBtn").onclick = (e) => { e.stopPropagation(); openPanel("appleMenu"); };
+document.getElementById("appleMenuWallpaper")?.addEventListener("click", () => { closeAllPanels(); openPanel("wallpaperPanel"); });
+document.getElementById("appleMenuSpotlight")?.addEventListener("click", () => { closeAllPanels(); openPanel("spotlight"); document.getElementById("spotlightInput")?.focus(); });
+document.getElementById("appleMenuMission")?.addEventListener("click", () => { closeAllPanels(); showMissionControl(); });
+
+/* Control Center */
+document.getElementById("controlCenterBtn").onclick = (e) => { e.stopPropagation(); openPanel("controlCenter"); };
+
+/* Calendar / Clock */
+const clockArea = document.getElementById("menubar-clock") || document.getElementById("clockArea");
+if (clockArea) clockArea.onclick = (e) => { e.stopPropagation(); openPanel("calendarPanel"); };
+
+/* Notifications */
+document.getElementById("notifBtn").onclick = (e) => { e.stopPropagation(); openPanel("notifCenter"); };
+
+/* Spotlight */
+document.getElementById("spotlightMenuBtn").onclick = (e) => {
+    e.stopPropagation();
+    const hidden = document.getElementById("spotlight").classList.contains("hidden");
+    closeAllPanels("spotlight");
+    document.getElementById("spotlight").classList.toggle("hidden", !hidden);
+    document.getElementById("spotlightBackdrop").classList.toggle("hidden", !hidden);
+    if (!hidden) {} else { document.getElementById("spotlightInput")?.focus(); }
+};
+
+document.getElementById("spotlightBackdrop").onclick = () => {
+    closeAllPanels();
+};
+
+/* Spotlight search */
+const spotlightInput = document.getElementById("spotlightInput");
+const spotlightResults = document.getElementById("spotlightResults");
+
+spotlightInput?.addEventListener("input", () => {
+    const q = spotlightInput.value.toLowerCase().trim();
+    if (!q) { spotlightResults.classList.add("hidden"); return; }
+    const matches = Object.entries(apps).filter(([, app]) => app.title.toLowerCase().includes(q));
+    if (!matches.length) { spotlightResults.classList.add("hidden"); return; }
+    spotlightResults.innerHTML = `<div class="spotlight-section-label">Aplicaciones</div>`;
+    matches.forEach(([key, app]) => {
+        const item = document.createElement("div");
+        item.className = "spotlight-result-item";
+        item.innerHTML = `<img src="${app.icon}" alt=""><div><div class="spotlight-result-name">${app.title}</div><div class="spotlight-result-sub">Aplicación</div></div>`;
+        item.onclick = () => { openApp(key); closeAllPanels(); };
+        spotlightResults.appendChild(item);
+    });
+    spotlightResults.classList.remove("hidden");
+});
+
+spotlightInput?.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeAllPanels();
+});
 
 /* ============================================================
    CLOCK & CALENDAR
@@ -725,15 +615,14 @@ function updateClock() {
     const dateEl = document.getElementById("clock-date");
     const fullEl = document.getElementById("clockFull");
     if (timeEl) timeEl.textContent = now.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
-    if (dateEl) dateEl.textContent = now.toLocaleDateString("es-ES", { day: "2-digit", month: "2-digit", year: "numeric" });
+    if (dateEl) dateEl.textContent = now.toLocaleDateString("es-ES", { weekday: "short", day: "2-digit", month: "short" });
     if (fullEl) fullEl.textContent = now.toLocaleString("es-CO", { weekday:"long", year:"numeric", month:"long", day:"numeric", hour:"2-digit", minute:"2-digit" });
 }
 setInterval(updateClock, 1000);
 updateClock();
 
-let calCurrentDate = new Date();
-let calSelectedDay = null;
-const DAYS = ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"];
+let calCurrentDate = new Date(), calSelectedDay = null;
+const DAYS = ["Lu","Ma","Mi","Ju","Vi","Sá","Do"];
 
 function renderCalendar() {
     const cal = document.getElementById("calendar");
@@ -742,12 +631,7 @@ function renderCalendar() {
     cal.innerHTML = "";
     const year = calCurrentDate.getFullYear(), month = calCurrentDate.getMonth();
     monthYearEl.textContent = calCurrentDate.toLocaleDateString("es-CO", { month:"long", year:"numeric" });
-    DAYS.forEach(d => {
-        const el = document.createElement("div");
-        el.className = "calendar-header";
-        el.textContent = d;
-        cal.appendChild(el);
-    });
+    DAYS.forEach(d => { const el = document.createElement("div"); el.className = "calendar-header"; el.textContent = d; cal.appendChild(el); });
     let firstDay = new Date(year, month, 1).getDay();
     firstDay = firstDay === 0 ? 6 : firstDay - 1;
     for (let i = 0; i < firstDay; i++) cal.appendChild(Object.assign(document.createElement("div"), { className: "calendar-day calendar-muted" }));
@@ -759,11 +643,7 @@ function renderCalendar() {
         el.textContent = d;
         if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) el.classList.add("calendar-today");
         if (d === calSelectedDay) el.classList.add("calendar-selected");
-        el.onclick = () => {
-            document.querySelectorAll(".calendar-day").forEach(x => x.classList.remove("calendar-selected"));
-            el.classList.add("calendar-selected");
-            calSelectedDay = d;
-        };
+        el.onclick = () => { document.querySelectorAll(".calendar-day").forEach(x => x.classList.remove("calendar-selected")); el.classList.add("calendar-selected"); calSelectedDay = d; };
         cal.appendChild(el);
     }
 }
@@ -778,9 +658,7 @@ renderCalendar();
 /* ============================================================
    WALLPAPER
 ============================================================ */
-const wpPanel = document.getElementById("wallpaperPanel");
-
-document.getElementById("closeWallpaperPanel").onclick = () => wpPanel.classList.add("hidden");
+document.getElementById("closeWallpaperPanel").onclick = () => document.getElementById("wallpaperPanel").classList.add("hidden");
 
 document.getElementById("wallpaperInput").onchange = function () {
     const file = this.files[0];
@@ -795,135 +673,110 @@ document.getElementById("wallpaperInput").onchange = function () {
 
 document.querySelectorAll("#wallpaperList img").forEach(img => {
     img.onclick = () => {
-        const url = img.src;
-        document.body.style.backgroundImage = `url('${url}')`;
-        document.getElementById("lockScreen").style.backgroundImage = `url('${url}')`;
+        document.body.style.backgroundImage = `url('${img.src}')`;
         document.querySelectorAll("#wallpaperList img").forEach(i => i.classList.remove("active"));
         img.classList.add("active");
     };
 });
 
 /* ============================================================
-   EXPLORER
+   FINDER (macOS style)
 ============================================================ */
-function loadExplorer(win, folder) {
+function loadFinder(win, folder) {
     const area = win.querySelector(".app-area");
     area.style.padding = "0";
 
     area.innerHTML = `
-        <div class="explorer-container">
-          <div class="explorer-sidebar">
-            <div class="explorer-sidebar-header">Acceso rápido</div>
-            <div class="explorer-sidebar-item active" id="expHome">
-              <i class="fi fi-sr-devices"></i> Este equipo
+        <div class="finder-container">
+          <div class="finder-sidebar">
+            <div class="finder-sidebar-section">
+              <div class="finder-sidebar-label">Favoritos</div>
+              <div class="finder-sidebar-item active" id="findHome">
+                <i class="fi fi-sr-devices"></i> Macintosh HD
+              </div>
+              <div class="finder-sidebar-item" id="findDocs">
+                <i class="fi fi-sr-document-folder-gear"></i> Documentos
+              </div>
+              <div class="finder-sidebar-item" id="findMusica">
+                <i class="fi fi-sr-folder-music"></i> Música
+              </div>
+              <div class="finder-sidebar-item" id="findImg">
+                <i class="fi fi-sr-folder-image"></i> Imágenes
+              </div>
             </div>
-            <div class="explorer-sidebar-item" id="expDocs">
-              <i class="fi fi-sr-document-folder-gear"></i> Documentos
-            </div>
-            <div class="explorer-sidebar-item" id="expMusica">
-              <i class="fi fi-sr-folder-music"></i> Música
-            </div>
-            <div class="explorer-sidebar-header" style="margin-top:10px;">Este equipo</div>
-            <div class="explorer-sidebar-item">
-              <span style="font-size:16px;"><i class="fi fi-sr-disc-drive"></i></span> Disco (C:)
-            </div>
-            <div class="explorer-sidebar-item">
-              <span style="font-size:16px;"><i class="fi fi-sr-disc-drive"></i></span> Disco (D:)
+            <div class="finder-sidebar-section">
+              <div class="finder-sidebar-label">Dispositivos</div>
+              <div class="finder-sidebar-item">
+                <i class="fi fi-sr-disc-drive"></i> Macintosh HD
+              </div>
             </div>
           </div>
-          <div class="explorer-right">
-            <div class="explorer-toolbar">
-              <div class="explorer-tool-btn" id="expBtnNew">
-                <i class="fi fi-sr-add-document"></i> Nuevo
-              </div>
-              <div class="explorer-tool-sep"></div>
-              <div class="explorer-tool-btn"><i class="fi fi-sr-scissors"></i> Cortar</div>
-              <div class="explorer-tool-btn"><i class="fi fi-sr-copy-alt"></i> Copiar</div>
-              <div class="explorer-tool-btn"><i class="fi fi-sr-paste"></i> Pegar</div>
-              <div class="explorer-tool-sep"></div>
-              <div class="explorer-tool-btn"><i class="fi fi-sr-trash-xmark"></i> Eliminar</div>
-              <div class="explorer-tool-btn"><i class="fi fi-sr-text-box-edit"></i> Renombrar</div>
+          <div class="finder-main">
+            <div class="finder-toolbar">
+              <div class="finder-nav-btn" id="findBack">‹</div>
+              <div class="finder-nav-btn" id="findFwd">›</div>
+              <div class="finder-path" id="finderPath"><span class="current">Macintosh HD</span></div>
+              <input class="finder-search" placeholder="Buscar" id="finderSearch">
             </div>
-            <div class="explorer-address">
-              <div class="explorer-nav-btn">&#8592;</div>
-              <div class="explorer-nav-btn">&#8594;</div>
-              <div class="explorer-nav-btn" style="font-size:12px;">&#8593;</div>
-              <div class="explorer-address-bar" id="addressBar">Este equipo</div>
-            </div>
-            <div class="explorer-main" id="explorerMain"></div>
-            <div class="explorer-status" id="explorerStatus">0 elementos</div>
+            <div class="finder-grid" id="finderGrid"></div>
+            <div class="finder-status" id="finderStatus">0 ítems</div>
           </div>
         </div>
     `;
 
-    area.querySelector("#expHome").onclick = () => loadFolder(area.querySelector("#explorerMain"), fileSystem.root, "Este equipo", area);
-    area.querySelector("#expDocs").onclick = () => loadFolder(area.querySelector("#explorerMain"), fileSystem.root.contents["Documentos"], "Documentos", area);
-    area.querySelector("#expMusica").onclick = () => loadFolder(area.querySelector("#explorerMain"), fileSystem.root.contents["Música"], "Música", area);
+    const loadFolder = (node, name) => {
+        const grid = area.querySelector("#finderGrid");
+        const status = area.querySelector("#finderStatus");
+        const pathEl = area.querySelector("#finderPath");
+        grid.innerHTML = "";
+        if (pathEl) pathEl.innerHTML = `<span class="current">${name}</span>`;
+        if (!node || !node.contents) return;
+        const items = Object.entries(node.contents);
+        items.forEach(([itemName, item]) => {
+            const el = document.createElement("div");
+            el.className = "finder-item";
+            const icon = item.type === "folder"
+                ? "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-En0WuV9h3Cjev3oISjtJqXetnfA18d.png&w=1000&q=75"
+                : "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-a3SkroygtTE6lQGs0XbfDco9M3lV7H.png&w=1000&q=75";
+            el.innerHTML = `<img src="${icon}" alt="${itemName}"><span>${itemName}</span>`;
+            if (item.type === "folder") el.ondblclick = () => loadFolder(item, itemName);
+            else el.ondblclick = () => openTextFile(item.content || "");
+            grid.appendChild(el);
+        });
+        if (status) status.textContent = `${items.length} ítems`;
+    };
 
-    loadFolder(area.querySelector("#explorerMain"), folder, "Este equipo", area);
-}
+    area.querySelector("#findHome").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findHome").classList.add("active"); loadFolder(fileSystem.root, "Macintosh HD"); };
+    area.querySelector("#findDocs").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findDocs").classList.add("active"); loadFolder(fileSystem.root.contents["Documentos"], "Documentos"); };
+    area.querySelector("#findMusica").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findMusica").classList.add("active"); loadFolder(fileSystem.root.contents["Música"], "Música"); };
+    area.querySelector("#findImg").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findImg").classList.add("active"); loadFolder(fileSystem.root.contents["Imágenes"], "Imágenes"); };
 
-function loadFolder(main, folder, name, area) {
-    main.innerHTML = "";
-    if (area) {
-        const ab = area.querySelector("#addressBar");
-        if (ab) ab.textContent = name || "Este equipo";
-        // highlight sidebar
-        area.querySelectorAll(".explorer-sidebar-item").forEach(i => i.classList.remove("active"));
-    }
-    if (!folder || !folder.contents) return;
-
-    const items = Object.entries(folder.contents);
-    items.forEach(([itemName, item]) => {
-        const el = document.createElement("div");
-        el.className = item.type === "folder" ? "folder-item" : "file-item";
-        const icon = item.type === "folder"
-            ? "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-En0WuV9h3Cjev3oISjtJqXetnfA18d.png&w=1000&q=75"
-            : "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-a3SkroygtTE6lQGs0XbfDco9M3lV7H.png&w=1000&q=75";
-        el.innerHTML = `<img src="${icon}" alt="${itemName}"><span>${itemName}</span>`;
-        if (item.type === "folder") {
-            el.ondblclick = () => loadFolder(main, item, itemName, area);
-        } else {
-            el.ondblclick = () => openTextFile(item.content || "");
-        }
-        main.appendChild(el);
-    });
-
-    if (area) {
-        const status = area.querySelector("#explorerStatus");
-        if (status) status.textContent = `${items.length} elementos`;
-    }
+    loadFolder(folder, "Macintosh HD");
 }
 
 /* ============================================================
-   RECYCLE BIN
+   RECYCLE BIN (Papelera)
 ============================================================ */
 function loadRecycleBin(win) {
     const area = win.querySelector(".app-area");
     if (recycleBin.length === 0) {
-        area.innerHTML = `<div class="recycle-empty"><div style="font-size:64px;opacity:0.25;">🗑️</div><p>La Papelera de reciclaje está vacía</p></div>`;
+        area.style.display = "flex"; area.style.alignItems = "center"; area.style.justifyContent = "center"; area.style.flexDirection = "column"; area.style.gap = "12px";
+        area.innerHTML = `<div style="font-size:72px;opacity:0.2">🗑️</div><p style="color:#999;font-size:14px;">La Papelera está vacía</p>`;
         return;
     }
-    area.style.padding = "16px";
-    area.style.display = "flex";
-    area.style.flexWrap = "wrap";
-    area.style.gap = "8px";
+    area.style.padding = "16px"; area.style.display = "flex"; area.style.flexWrap = "wrap"; area.style.gap = "8px"; area.style.alignContent = "flex-start";
     recycleBin.forEach(appName => {
         const app = apps[appName];
         if (!app) return;
         const el = document.createElement("div");
-        el.className = "folder-item";
-        el.innerHTML = `<img src="${app.icon}" alt="${app.title}"><span>${app.title}</span>`;
-        el.ondblclick = () => {
-            recycleBin = recycleBin.filter(x => x !== appName);
-            location.reload();
-        };
+        el.className = "finder-item";
+        el.innerHTML = `<img src="${app.icon}" style="width:52px;height:52px;object-fit:contain;"><span style="font-size:11px;">${app.title}</span>`;
         area.appendChild(el);
     });
 }
 
 /* ============================================================
-   STORE
+   APP STORE
 ============================================================ */
 function loadStore(win) {
     const area = win.querySelector(".app-area");
@@ -931,94 +784,32 @@ function loadStore(win) {
     area.style.overflow = "hidden";
 
     const storeApps = [
-        { id:"player",       name:"Sterling Music Player",    desc:"Reproduce tu música con ecualizador y visualizador de ondas.",         cat:"entertainment", catLabel:"Entretenimiento", rating:4.8, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-j9GfZpCuZEAQwYOTxDIVxReq5y0OHg.png&w=500&q=75",   featured:true },
-        { id:"mix",          name:"Sterling Music Studio",    desc:"Crea y mezcla tus propias pistas en esta estación de trabajo audio.",   cat:"creative",      catLabel:"Creativas",      rating:4.7, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-B2EekBDz0A46XdvgtBjgEAw79EH0Dk.png&w=500&q=75" },
-        { id:"paint",        name:"Sterl-ink Sketching",      desc:"Herramienta de dibujo con capas, pinceles y exportación SVG.",          cat:"creative",      catLabel:"Creativas",      rating:4.6, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75" },
-        { id:"excel",        name:"Sterling Math FX",         desc:"Calculadora científica con gráficas 2D/3D y hojas de cálculo.",         cat:"productivity",  catLabel:"Productividad",  rating:4.9, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DHtLao0TXcz7zsJ6bxv2DltThCLwQ8.png&w=1000&q=75" },
-        { id:"word",         name:"Sterling Letter",          desc:"Procesador de texto con plantillas y exportación PDF.",                  cat:"productivity",  catLabel:"Productividad",  rating:4.7, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-BjimxRD0gb4rZBjr9jbO9LYXmOZJao.png&w=1000&q=75" },
-        { id:"powerpoint",   name:"Sterling Presentation",    desc:"Presentaciones con animaciones y temas profesionales.",                 cat:"productivity",  catLabel:"Productividad",  rating:4.5, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-L8T5N6DbL9jezTcIoss4pIKNG256jy.png&w=1000&q=75" },
-        { id:"notes",        name:"Bloc de Notas",            desc:"Editor de texto ligero con resaltado de sintaxis y modo enfoque.",       cat:"productivity",  catLabel:"Productividad",  rating:4.4, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75" },
-        { id:"airspace",     name:"Captain Sterling",         desc:"Simulación aérea con física realista y niveles progresivos.",            cat:"entertainment", catLabel:"Entretenimiento", rating:4.6, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-yjBpDcYD9IjVGoIg4LnKkMKL1RBris.png&w=500&q=75" },
-        { id:"buscaminas",   name:"Sterling World",           desc:"Aventura de plataformas inspirada en los clásicos del género.",          cat:"entertainment", catLabel:"Entretenimiento", rating:4.8, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-e3kGOJ1Nx9Q68omg5PbnlZh8hFAJkX.png&w=500&q=75" },
-        { id:"browser",      name:"Navegador",                desc:"Navega la web con buscador integrado y modo privado.",                   cat:"web",           catLabel:"Web",             rating:4.5, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75" }
+        { id:"player", name:"Sterling Music Player", desc:"Reproductor con ecualizador y visualizador de ondas.", cat:"entertainment", catLabel:"Entretenimiento", rating:4.8, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-j9GfZpCuZEAQwYOTxDIVxReq5y0OHg.png&w=500&q=75", featured:true },
+        { id:"mix",    name:"Sterling Music Studio", desc:"Crea y mezcla tus propias pistas de audio.",           cat:"creative",      catLabel:"Creativas",      rating:4.7, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-B2EekBDz0A46XdvgtBjgEAw79EH0Dk.png&w=500&q=75" },
+        { id:"paint",  name:"Sterl-ink Sketching",  desc:"Herramienta de dibujo con capas y pinceles.",          cat:"creative",      catLabel:"Creativas",      rating:4.6, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75" },
+        { id:"excel",  name:"Sterling Math FX",     desc:"Calculadora científica con gráficas 2D/3D.",            cat:"productivity",  catLabel:"Productividad",  rating:4.9, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DHtLao0TXcz7zsJ6bxv2DltThCLwQ8.png&w=1000&q=75" },
+        { id:"word",   name:"Sterling Letter",      desc:"Procesador de texto con plantillas y PDF.",             cat:"productivity",  catLabel:"Productividad",  rating:4.7, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-BjimxRD0gb4rZBjr9jbO9LYXmOZJao.png&w=1000&q=75" },
+        { id:"powerpoint", name:"Sterling Presentation", desc:"Presentaciones con animaciones profesionales.", cat:"productivity", catLabel:"Productividad", rating:4.5, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-L8T5N6DbL9jezTcIoss4pIKNG256jy.png&w=1000&q=75" },
+        { id:"notes",  name:"Notas",                desc:"Editor de texto con modo enfoque.",                    cat:"productivity",  catLabel:"Productividad",  rating:4.4, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75" },
+        { id:"airspace", name:"Captain Sterling",   desc:"Simulación aérea con física realista.",                cat:"entertainment", catLabel:"Entretenimiento", rating:4.6, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-yjBpDcYD9IjVGoIg4LnKkMKL1RBris.png&w=500&q=75" },
+        { id:"buscaminas", name:"Sterling World",   desc:"Aventura de plataformas clásica.",                     cat:"entertainment", catLabel:"Entretenimiento", rating:4.8, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-e3kGOJ1Nx9Q68omg5PbnlZh8hFAJkX.png&w=500&q=75" },
+        { id:"browser",  name:"Safari",             desc:"Navega la web con buscador integrado.",                cat:"web",           catLabel:"Web",             rating:4.5, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75" }
     ];
 
     const CATS = [
-        { key:"productivity",  label:"Productividad" },
-        { key:"creative",      label:"Creativas" },
-        { key:"entertainment", label:"Entretenimiento" },
-        { key:"web",           label:"Web" }
+        { key:"productivity", label:"Productividad" },
+        { key:"creative",     label:"Creativas" },
+        { key:"entertainment",label:"Entretenimiento" },
+        { key:"web",          label:"Web" }
     ];
 
-    let currentTab = "all";
-    let currentSearch = "";
+    let currentTab = "all", currentSearch = "";
 
-    // ---- inject styles once ----
-    if (!document.getElementById("store-styles")) {
-        const s = document.createElement("style");
-        s.id = "store-styles";
-        s.textContent = `
-        .store-root{display:flex;flex-direction:column;height:100%;background:rgba(18,18,18,0.97);color:#fff;overflow:hidden;}
-        .store-topbar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
-        .store-topbar h1{font-size:14px;font-weight:100;flex:1;letter-spacing:.3px;}
-        .store-topbar h1 span{color:#60cdff;}
-        .store-searchbox{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:60px;padding:5px 10px;width:200px;}
-        .store-searchbox input{background:none;border:none;outline:none;color:#fff;font-size:12px;width:100%;}
-        .store-searchbox input::placeholder{color:rgba(255,255,255,0.35);}
-        .store-tabs{display:flex;gap:2px;padding:8px 16px 0;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;overflow-x:auto;}
-        .store-tabs::-webkit-scrollbar{height:0;}
-        .s-tab{padding:6px 14px;border-radius:6px 6px 0 0;font-size:12px;cursor:pointer;color:rgba(255,255,255,.5);transition:all .15s;white-space:nowrap;border-bottom:2px solid transparent;}
-        .s-tab:hover{color:#fff;background:rgba(255,255,255,.05);}
-        .s-tab.active{color:#fff;border-bottom-color:#0078d4;background:rgba(0,120,212,.1);}
-        .store-body{flex:1;overflow-y:auto;padding:16px;}
-        .store-body::-webkit-scrollbar{width:5px;}
-        .store-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px;}
-        .store-featured{border-radius:20px;background:linear-gradient(135deg,rgb(255, 0, 76) 0%,rgba(82, 120, 247, 0.56) 100%);border:1px solid rgba(255,255,255,.1);padding:20px 22px;display:flex;align-items:center;gap:18px;margin-bottom:20px;}
-        .store-feat-img{width:62px;height:62px;border-radius:12px;object-fit:contain;background:rgba(255,255,255,.08);padding:4px;flex-shrink:0;}
-        .store-feat-text{flex:1;}
-        .store-feat-badge{font-size:10px;background:rgba(96,205,255,.15);color:#60cdff;border:1px solid rgba(96,205,255,.3);padding:2px 8px;border-radius:10px;margin-bottom:6px;display:inline-block;}
-        .store-feat-text h2{font-size:17px;font-weight:100;margin-bottom:4px;}
-        .store-feat-text p{font-size:12px;color:rgba(255,255,255,.6);line-height:1.5;}
-        .store-get-btn{padding:8px 20px;background:#0078d4;color:#fff;border:none;border-radius:60px;font-size:12px;font-weight:100;cursor:pointer;transition:background .15s;flex-shrink:0;}
-        .store-get-btn:hover{background:#006cc1;}
-        .store-get-btn.open-state{background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);cursor:default;}
-        .store-section-lbl{font-size:12px;font-weight:100;color:rgba(255,255,255,.6);margin:0 0 10px;letter-spacing:.4px;text-transform:uppercase;}
-        .store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-bottom:22px;}
-        .s-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;display:flex;flex-direction:column;gap:7px;}
-        .s-card:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);transform:translateY(-2px);}
-        .s-card-icon{width:46px;height:46px;object-fit:contain;border-radius:10px;background:rgba(255,255,255,.06);padding:4px;}
-        .s-card-name{font-size:12px;font-weight:100;line-height:1.3;}
-        .s-card-cat{font-size:10px;color:rgba(255,255,255,.4);}
-        .s-card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:auto;}
-        .s-card-stars{font-size:10px;color:#fbbf24;}
-        .s-card-rating{font-size:10px;color:rgba(255,255,255,.4);margin-left:2px;}
-        .s-card-btn{font-size:11px;background:#0078d4;color:#fff;border:none;border-radius:50px;padding:4px 10px;cursor:pointer;font-weight:100;transition:background .12s;}
-        .s-card-btn:hover{background:#006cc1;}
-        .s-card-btn.open-state{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
-        .store-list{display:flex;flex-direction:column;gap:6px;margin-bottom:20px;}
-        .s-list-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .12s;}
-        .s-list-item:hover{background:rgba(255,255,255,.08);}
-        .s-list-icon{width:36px;height:36px;object-fit:contain;border-radius:8px;background:rgba(255,255,255,.06);padding:3px;flex-shrink:0;}
-        .s-list-info{flex:1;}
-        .s-list-name{font-size:13px;font-weight:100;}
-        .s-list-desc{font-size:11px;color:rgba(255,255,255,.45);margin-top:1px;}
-        .s-list-btn{font-size:11px;background:#0078d4;color:#fff;border:none;border-radius:50px;padding:5px 14px;cursor:pointer;font-weight:100;flex-shrink:0;transition:background .12s;}
-        .s-list-btn:hover{background:#006cc1;}
-        .s-list-btn.open-state{background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);}
-        .store-empty{color:rgba(255,255,255,.35);font-size:13px;padding:30px 0;text-align:center;}
-        `;
-        document.head.appendChild(s);
-    }
-
-    // ---- build skeleton ----
     area.innerHTML = `
-        <div class="store-root">
-          <div class="store-topbar">
-            <h1>Sterling <span>Store</span></h1>
-            <div class="store-searchbox">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-              <input type="text" placeholder="Explorar aplicaciones..." id="storeSearchInput_${win.dataset.app}">
-            </div>
+        <div class="store-container">
+          <div class="store-header">
+            <div class="store-header-title">App Store</div>
+            <input class="store-search" placeholder="🔍 Buscar apps…" id="storeSearch_${win.dataset.app}">
           </div>
           <div class="store-tabs" id="storeTabs_${win.dataset.app}">
             <div class="s-tab active" data-tab="all">Inicio</div>
@@ -1033,57 +824,24 @@ function loadStore(win) {
 
     const bodyEl   = area.querySelector(`#storeBody_${win.dataset.app}`);
     const tabsEl   = area.querySelector(`#storeTabs_${win.dataset.app}`);
-    const searchEl = area.querySelector(`#storeSearchInput_${win.dataset.app}`);
+    const searchEl = area.querySelector(`#storeSearch_${win.dataset.app}`);
 
-    function stars(r) {
-        const full = Math.floor(r), half = r - full >= 0.5 ? 1 : 0;
-        return "★".repeat(full) + (half ? "½" : "");
-    }
-
-    function isOpen(id) { return !!activeWindows[id]; }
+    const stars = r => "★".repeat(Math.floor(r)) + (r % 1 >= 0.5 ? "½" : "");
+    const isOpen = id => !!activeWindows[id];
 
     function render() {
         const q = currentSearch.toLowerCase();
-        const list = storeApps.filter(a => {
-            const matchCat = currentTab === "all" || a.cat === currentTab;
-            const matchQ   = !q || a.name.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q);
-            return matchCat && matchQ;
-        });
-
+        const list = storeApps.filter(a => (currentTab === "all" || a.cat === currentTab) && (!q || a.name.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q)));
         bodyEl.innerHTML = "";
 
-        // --- search mode: list view ---
         if (q) {
-            const lbl = document.createElement("div");
-            lbl.className = "store-section-lbl";
-            lbl.textContent = list.length
-                ? `Resultados para "${currentSearch}"`
-                : "";
-            bodyEl.appendChild(lbl);
-
-            if (!list.length) {
-                const empty = document.createElement("div");
-                empty.className = "store-empty";
-                empty.textContent = "No se encontraron aplicaciones.";
-                bodyEl.appendChild(empty);
-                return;
-            }
-
-            const listWrap = document.createElement("div");
-            listWrap.className = "store-list";
+            if (!list.length) { bodyEl.innerHTML = `<div class="store-empty">No se encontraron apps.</div>`; return; }
+            const listWrap = document.createElement("div"); listWrap.className = "store-list";
             list.forEach(app => {
-                const open = isOpen(app.id);
-                const item = document.createElement("div");
+                const open = isOpen(app.id), item = document.createElement("div");
                 item.className = "s-list-item";
-                item.innerHTML = `
-                    <img class="s-list-icon" src="${app.icon}" alt="${app.name}">
-                    <div class="s-list-info">
-                      <div class="s-list-name">${app.name}</div>
-                      <div class="s-list-desc">${app.desc}</div>
-                    </div>
-                    <button class="s-list-btn${open ? " open-state" : ""}">${open ? "Abrir" : "Ver"}</button>
-                `;
-                item.querySelector(".s-list-btn").onclick = (e) => { e.stopPropagation(); openApp(app.id); };
+                item.innerHTML = `<img class="s-list-icon" src="${app.icon}"><div class="s-list-info"><div class="s-list-name">${app.name}</div><div class="s-list-desc">${app.desc}</div></div><button class="s-card-btn${open?' open-state':''}">${open?'Abrir':'Ver'}</button>`;
+                item.querySelector("button").onclick = e => { e.stopPropagation(); openApp(app.id); };
                 item.onclick = () => openApp(app.id);
                 listWrap.appendChild(item);
             });
@@ -1091,52 +849,28 @@ function loadStore(win) {
             return;
         }
 
-        // --- featured banner (only on "all" tab) ---
-        const feat = storeApps.find(a => a.featured);
-        if (currentTab === "all" && feat) {
-            const open = isOpen(feat.id);
-            const banner = document.createElement("div");
-            banner.className = "store-featured";
-            banner.innerHTML = `
-                <img class="store-feat-img" src="${feat.icon}" alt="${feat.name}">
-                <div class="store-feat-text">
-                  <div class="store-feat-badge">⭐ Destacado</div>
-                  <h2>${feat.name}</h2>
-                  <p>${feat.desc}</p>
-                </div>
-                <button class="store-get-btn${open ? " open-state" : ""}">${open ? "Abierto" : "Ver"}</button>
-            `;
-            banner.querySelector(".store-get-btn").onclick = () => openApp(feat.id);
-            bodyEl.appendChild(banner);
+        if (currentTab === "all") {
+            const feat = storeApps.find(a => a.featured);
+            if (feat) {
+                const open = isOpen(feat.id);
+                const banner = document.createElement("div"); banner.className = "store-featured";
+                banner.innerHTML = `<img class="store-feat-img" src="${feat.icon}"><div class="store-feat-text"><div class="store-feat-badge">⭐ Destacado</div><h2>${feat.name}</h2><p>${feat.desc}</p></div><button class="store-get-btn${open?' open-state':''}">${open?'Abierto':'Ver'}</button>`;
+                banner.querySelector(".store-get-btn").onclick = () => openApp(feat.id);
+                bodyEl.appendChild(banner);
+            }
         }
 
-        // --- grid sections ---
         const sections = currentTab === "all" ? CATS : [CATS.find(c => c.key === currentTab)].filter(Boolean);
         sections.forEach(({ key, label }) => {
             const group = list.filter(a => a.cat === key);
             if (!group.length) return;
-
-            const lbl = document.createElement("div");
-            lbl.className = "store-section-lbl";
-            lbl.textContent = label;
-            bodyEl.appendChild(lbl);
-
-            const grid = document.createElement("div");
-            grid.className = "store-grid";
+            const lbl = document.createElement("div"); lbl.className = "store-section-lbl"; lbl.textContent = label; bodyEl.appendChild(lbl);
+            const grid = document.createElement("div"); grid.className = "store-grid";
             group.forEach(app => {
-                const open = isOpen(app.id);
-                const card = document.createElement("div");
+                const open = isOpen(app.id), card = document.createElement("div");
                 card.className = "s-card";
-                card.innerHTML = `
-                    <img class="s-card-icon" src="${app.icon}" alt="${app.name}">
-                    <div class="s-card-name">${app.name}</div>
-                    <div class="s-card-cat">${app.catLabel}</div>
-                    <div class="s-card-bottom">
-                      <div><span class="s-card-stars">${stars(app.rating)}</span><span class="s-card-rating">${app.rating}</span></div>
-                      <button class="s-card-btn${open ? " open-state" : ""}">${open ? "Abrir" : "Ver"}</button>
-                    </div>
-                `;
-                card.querySelector(".s-card-btn").onclick = (e) => { e.stopPropagation(); openApp(app.id); };
+                card.innerHTML = `<img class="s-card-icon" src="${app.icon}"><div class="s-card-name">${app.name}</div><div class="s-card-cat">${app.catLabel}</div><div class="s-card-bottom"><span><span class="s-card-stars">${stars(app.rating)}</span><span class="s-card-rating">${app.rating}</span></span><button class="s-card-btn${open?' open-state':''}">${open?'Abrir':'Ver'}</button></div>`;
+                card.querySelector(".s-card-btn").onclick = e => { e.stopPropagation(); openApp(app.id); };
                 card.onclick = () => openApp(app.id);
                 grid.appendChild(card);
             });
@@ -1144,49 +878,72 @@ function loadStore(win) {
         });
     }
 
-    // tab clicks
     tabsEl.querySelectorAll(".s-tab").forEach(tab => {
-        tab.onclick = () => {
-            tabsEl.querySelectorAll(".s-tab").forEach(t => t.classList.remove("active"));
-            tab.classList.add("active");
-            currentTab = tab.dataset.tab;
-            currentSearch = "";
-            searchEl.value = "";
-            render();
-        };
+        tab.onclick = () => { tabsEl.querySelectorAll(".s-tab").forEach(t => t.classList.remove("active")); tab.classList.add("active"); currentTab = tab.dataset.tab; currentSearch = ""; searchEl.value = ""; render(); };
     });
-
-    // search
     searchEl.oninput = () => { currentSearch = searchEl.value; render(); };
-
     render();
 }
 
 /* ============================================================
-   TOAST NOTIFICATIONS
+   MISSION CONTROL
 ============================================================ */
-function showToast(title, body, icon = "💻") {
-    const existing = document.querySelector(".win-toast");
+function showMissionControl() {
+    const overlay = document.createElement("div");
+    overlay.id = "missionControlOverlay";
+
+    const openWins = Object.entries(activeWindows).filter(([, { win }]) => win.style.display !== "none");
+
+    if (!openWins.length) {
+        overlay.innerHTML = `<div class="mc-label">Mission Control</div><div style="color:rgba(255,255,255,0.5);font-size:14px;">No hay ventanas abiertas</div>`;
+    } else {
+        overlay.innerHTML = `<div class="mc-label">Mission Control</div><div class="mc-windows" id="mcWindows"></div>`;
+        const mcWin = overlay.querySelector("#mcWindows");
+        openWins.forEach(([appName, { win }]) => {
+            const app = apps[appName];
+            const thumb = document.createElement("div");
+            thumb.className = "mc-thumb";
+            thumb.innerHTML = `
+                <div class="mc-thumb-bar">
+                    <div class="mc-thumb-dots"><div class="mc-thumb-dot" style="background:#ff5f57"></div><div class="mc-thumb-dot" style="background:#ffbd2e"></div><div class="mc-thumb-dot" style="background:#28c840"></div></div>
+                </div>
+                <div class="mc-thumb-body"><img src="${app?.icon || ''}" alt=""></div>
+                <div class="mc-thumb-name">${app?.title || appName}</div>
+            `;
+            thumb.onclick = () => { focusWindow(win); overlay.remove(); };
+            mcWin.appendChild(thumb);
+        });
+    }
+
+    overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+    document.body.appendChild(overlay);
+}
+
+/* ============================================================
+   TOAST NOTIFICATION
+============================================================ */
+function showToast(title, body) {
+    const existing = document.querySelector(".mac-toast");
     if (existing) existing.remove();
+    const app = Object.values(apps).find(a => a.title === title) || Object.values(apps)[0];
     const toast = document.createElement("div");
-    toast.className = "win-toast";
+    toast.className = "mac-toast";
     toast.innerHTML = `
-        <div class="toast-icon">${icon}</div>
+        <img class="toast-app-icon" src="${app?.icon || ''}" alt="">
         <div class="toast-content">
-          <div class="toast-title">${title}</div>
+          <div class="toast-app-name">${title}</div>
           <div class="toast-body">${body}</div>
         </div>
-        <div class="toast-close" onclick="this.closest('.win-toast').remove()">✕</div>
+        <div class="toast-close" onclick="this.closest('.mac-toast').remove()">✕</div>
     `;
     document.body.appendChild(toast);
     setTimeout(() => {
         if (toast.parentNode) {
             toast.style.transition = "opacity 0.3s, transform 0.3s";
-            toast.style.opacity = "0";
-            toast.style.transform = "translateX(20px)";
+            toast.style.opacity = "0"; toast.style.transform = "translateX(340px)";
             setTimeout(() => toast.remove(), 300);
         }
-    }, 4000);
+    }, 5000);
 }
 
 /* ============================================================
@@ -1194,25 +951,36 @@ function showToast(title, body, icon = "💻") {
 ============================================================ */
 window.addEventListener("load", () => {
     const positions = {
-        explorer:     { left: 24, top: 20  },
-        browser:      { left: 24, top: 108 },
-        aplicaciones:        { left: 24, top: 206 },
-        "recycle-bin":{ left: 24, top: 300 }
+        explorer:     { left: 24, top: 30 },
+        browser:      { left: 24, top: 120 },
+        aplicaciones: { left: 24, top: 220 },
+        "recycle-bin":{ left: 24, top: 320 }
     };
     document.querySelectorAll(".desktop-icon").forEach(icon => {
         const p = positions[icon.dataset.app];
         if (p) { icon.style.left = p.left + "px"; icon.style.top = p.top + "px"; }
     });
-
-    // Mark first wallpaper as active
     const firstWp = document.querySelector("#wallpaperList img");
     if (firstWp) firstWp.classList.add("active");
+
+    // Set notif date label
+    const notifLabel = document.getElementById("notifDateLabel");
+    if (notifLabel) notifLabel.textContent = new Date().toLocaleDateString("es-CO", { weekday:"long", day:"numeric", month:"long" });
 });
 
-/* Search button */
-document.getElementById("searchBtn")?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    closeAllPanels("startMenu");
-    startMenu.classList.remove("hidden");
-    startBtn.classList.add("active");
+/* ============================================================
+   KEYBOARD SHORTCUTS
+============================================================ */
+document.addEventListener("keydown", (e) => {
+    // Cmd+Space = Spotlight
+    if ((e.metaKey || e.ctrlKey) && e.code === "Space") {
+        e.preventDefault();
+        const hidden = document.getElementById("spotlight").classList.contains("hidden");
+        closeAllPanels("spotlight");
+        document.getElementById("spotlight").classList.toggle("hidden", !hidden);
+        document.getElementById("spotlightBackdrop").classList.toggle("hidden", !hidden);
+        if (!hidden) {} else { document.getElementById("spotlightInput")?.focus(); }
+    }
+    // Escape to close panels
+    if (e.key === "Escape") closeAllPanels();
 });
