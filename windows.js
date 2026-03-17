@@ -111,6 +111,12 @@ const apps = {
         width: 820, height: 600,
         content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/registro.html" style="width:100%;height:100%;border:none;"></iframe>`
     },
+   suma: {
+        title: "Suma de compras",
+        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-HCwnlHIkzR4wXtkTVAySMqAWigIejw.png&w=500&q=75",
+        width: 820, height: 600,
+        content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/Dashboard3.html" style="width:100%;height:100%;border:none;"></iframe>`
+    },
     "recycle-bin": {
         title: "Papelera",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-hojVo7IEsndSCKEMMylnYGeF4E0HrU.png&w=500&q=75",
