@@ -15,7 +15,7 @@
   --text-muted: rgba(0,0,0,0.35);
   --shadow-win: 0 22px 70px rgba(0,0,0,0.45), 0 4px 16px rgba(0,0,0,0.25);
   --shadow-sm: 0 4px 16px rgba(0,0,0,0.2);
-  --radius-win: 12px;
+  --radius-win: 24px;
   --radius-panel: 14px;
   --font: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Arial', sans-serif;
 }
