@@ -1008,3 +1008,8 @@ document.addEventListener("keydown", (e) => {
     // Escape to close panels
     if (e.key === "Escape") closeAllPanels();
 });
+
+function openAppStore() {
+  // Aquí va tu lógica existente para abrir la App Store
+  document.querySelector('#App Store').style.display = 'block';
+}
