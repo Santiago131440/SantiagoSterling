@@ -122,7 +122,7 @@ body {
 .window {
   position: absolute; min-width: 300px; min-height: 200px;
   display: flex; flex-direction: column;
-  background: rgba(246,246,246,0.92);
+  background: rgba(246,246,246,0.62);
   backdrop-filter: blur(60px) saturate(180%);
   -webkit-backdrop-filter: blur(60px) saturate(180%);
   border-radius: var(--radius-win);
@@ -285,7 +285,7 @@ body {
 /* ============================================================ CONTROL CENTER */
 #controlCenter {
   position: fixed; top: calc(var(--menubar-h) + 6px); right: 8px; width: 320px;
-  background: rgba(240,240,240,0.88);
+  background: rgba(240,240,240,0.18);
   backdrop-filter: blur(60px) saturate(200%);
   -webkit-backdrop-filter: blur(60px) saturate(200%);
   border-radius: var(--radius-panel); border: 1px solid rgba(0,0,0,0.12);
@@ -294,7 +294,7 @@ body {
 }
 .cc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
 .cc-tile {
-  background: rgba(255,255,255,0.8); border-radius: 12px; padding: 10px 12px;
+  background: rgba(255,255,255,0.5); border-radius: 12px; padding: 10px 12px;
   cursor: pointer; transition: background 0.12s; position: relative;
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
@@ -331,7 +331,7 @@ body {
 @keyframes spotlightIn { from{opacity:0;transform:translateX(-50%) scale(0.96)} to{opacity:1;transform:translateX(-50%) scale(1)} }
 
 .spotlight-input-wrap {
-  background: rgba(255,255,255,0.88);
+  background: rgba(255,255,255,0.28);
   backdrop-filter: blur(60px) saturate(200%);
   -webkit-backdrop-filter: blur(60px) saturate(200%);
   border-radius: 16px; border: 1px solid rgba(0,0,0,0.15);
