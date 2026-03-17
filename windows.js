@@ -154,7 +154,7 @@ lockScreen.addEventListener("click", () => {
     lockScreen.style.opacity = "0";
     setTimeout(() => {
         lockScreen.style.display = "none";
-        showToast("Finder", "Bienvenido, Santiago Sterling. Este es tu repositorio.");
+        showToast("Santiago Sterling", "Bienvenido, este es mi repositorio, donde encontraras mis proyectos completos.");
     }, 600);
 });
 
