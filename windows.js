@@ -1,7 +1,3 @@
-/* ============================================================
-   macOS-STYLE JAVASCRIPT
-   Santiago Sterling – Repositorio
-============================================================ */
 let activeWindows = {};
 let zCounter = 50;
 let draggingWindow = null;
