@@ -519,7 +519,7 @@ document.getElementById("ctxNewFolder").onclick = () => {
 document.getElementById("ctxGetInfo").onclick = () => {
     if (contextTarget) {
         const app = apps[contextTarget.dataset.app];
-        showToast(app?.title || "Info", "Aplicación del sistema · Santiago Sterling OS");
+        showToast(app?.title || "Info", "Aplicación del sistema · Repositorio Santiago Sterling, que funciona dentro del entorno, para simular una experiencia de un sistema operativo.");
     }
     ctxMenu.classList.add("hidden");
 };
