@@ -53,9 +53,9 @@ body {
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 .lock-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.lock-time { font-size: 96px; font-weight: 200; line-height: 1; letter-spacing: -4px; text-shadow: 0 2px 30px rgba(0,0,0,0.4); }
-.lock-date { font-size: 18px; font-weight: 300; margin-top: 6px; opacity: 0.9; }
-.lock-name { font-size: 20px; font-weight: 400; margin-top: 28px; }
+.lock-time { font-size: 96px; font-weight: 100; line-height: 1; letter-spacing: -4px; text-shadow: 0 2px 30px rgba(0,0,0,0.4); }
+.lock-date { font-size: 18px; font-weight: 100; margin-top: 6px; opacity: 0.9; }
+.lock-name { font-size: 20px; font-weight: 100; margin-top: 28px; }
 .lock-hint {
   margin-top: 32px; font-size: 13px; opacity: 0.65;
   display: flex; align-items: center; gap: 8px; justify-content: center;
