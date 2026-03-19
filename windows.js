@@ -26,7 +26,7 @@ const apps = {
         width: 880, height: 600, type: "system"
     },
     browser: {
-        title: "Safari",
+        title: "Navegador",
         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75",
         width: 960, height: 640,
         content: `<div style="width:100%;height:100%;display:flex;flex-direction:column;background:#f5f5f7;">
