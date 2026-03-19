@@ -824,7 +824,7 @@ function loadStore(win) {
         { id:"salarios", name:"Salarios Minimos Mundiales",   desc:"Conoce los salarios minimos de cada país.",  cat:"web",          catLabel:"web",              rating:4.9, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-CsdmL6Mu7Mz9dPjZYw1Xq22mkGhekV.png&w=500&q=75" },
         { id:"examen", name:"Examen de software",   desc:"Evalua tu conocimiento en software.",                  cat:"web",          catLabel:"web",              rating:4.9, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-fLBUuECujebAYq2Ctir0tmm4ljvF0b.png&w=500&q=75" },
         { id:"sterlingia", name:"Sterling IA",      desc:"Explora el portafolio con la ayuda de un agente de IA.", cat:"web",        catLabel:"web",              rating:5.0, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-As6MTLYJ6ta7FZgR1G5U6ZUzqfCqvm.png&w=500&q=75" },
-        { id:"browser",  name:"Safari",             desc:"Navega la web con buscador integrado.",                cat:"web",           catLabel:"Web",             rating:4.5, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75" }
+        { id:"browser",  name:"Navegador",             desc:"Navega la web con buscador integrado.",                cat:"web",           catLabel:"Web",             rating:4.5, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75" }
     ];
 
     const CATS = [
