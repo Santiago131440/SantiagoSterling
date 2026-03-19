@@ -22,7 +22,7 @@ const apps = {
     },
     aplicaciones: {
         title: "App Store",
-        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-soM5VkrS231RkzTJKdb30Wco5dj6aJ.png&w=500&q=75",
+        icon: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/icon-1773955846572.png?raw=true",
         width: 880, height: 600, type: "system"
     },
     browser: {
