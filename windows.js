@@ -141,7 +141,7 @@ const apps = {
 ============================================================ */
 const fileSystem = {
     root: {
-        type: "folder", name: "Macintosh HD",
+        type: "folder", name: "Santiago Sterling",
         contents: {
             Documentos: {
                 type: "folder",
@@ -718,7 +718,7 @@ function loadFinder(win, folder) {
             <div class="finder-sidebar-section">
               <div class="finder-sidebar-label">Favoritos</div>
               <div class="finder-sidebar-item active" id="findHome">
-                <i class="fi fi-sr-devices"></i> Macintosh HD
+                <i class="fi fi-sr-devices"></i> Santiago Sterling
               </div>
               <div class="finder-sidebar-item" id="findDocs">
                 <i class="fi fi-sr-document-folder-gear"></i> Documentos
@@ -733,7 +733,7 @@ function loadFinder(win, folder) {
             <div class="finder-sidebar-section">
               <div class="finder-sidebar-label">Dispositivos</div>
               <div class="finder-sidebar-item">
-                <i class="fi fi-sr-disc-drive"></i> Macintosh HD
+                <i class="fi fi-sr-disc-drive"></i> Santiago Sterling
               </div>
             </div>
           </div>
@@ -741,7 +741,7 @@ function loadFinder(win, folder) {
             <div class="finder-toolbar">
               <div class="finder-nav-btn" id="findBack">‹</div>
               <div class="finder-nav-btn" id="findFwd">›</div>
-              <div class="finder-path" id="finderPath"><span class="current">Macintosh HD</span></div>
+              <div class="finder-path" id="finderPath"><span class="current">Santiago Sterling</span></div>
               <input class="finder-search" placeholder="Buscar" id="finderSearch">
             </div>
             <div class="finder-grid" id="finderGrid"></div>
@@ -772,12 +772,12 @@ function loadFinder(win, folder) {
         if (status) status.textContent = `${items.length} ítems`;
     };
 
-    area.querySelector("#findHome").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findHome").classList.add("active"); loadFolder(fileSystem.root, "Macintosh HD"); };
+    area.querySelector("#findHome").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findHome").classList.add("active"); loadFolder(fileSystem.root, "Santiago Sterling"); };
     area.querySelector("#findDocs").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findDocs").classList.add("active"); loadFolder(fileSystem.root.contents["Documentos"], "Documentos"); };
     area.querySelector("#findMusica").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findMusica").classList.add("active"); loadFolder(fileSystem.root.contents["Música"], "Música"); };
     area.querySelector("#findImg").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findImg").classList.add("active"); loadFolder(fileSystem.root.contents["Imágenes"], "Imágenes"); };
 
-    loadFolder(folder, "Macintosh HD");
+    loadFolder(folder, "Santiago Sterling");
 }
 
 /* ============================================================
