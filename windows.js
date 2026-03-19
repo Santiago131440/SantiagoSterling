@@ -840,7 +840,7 @@ function loadStore(win) {
         <div class="store-container">
           <div class="store-header">
             <div class="store-header-title">App Store</div>
-            <input class="store-search" placeholder="🔍 Buscar apps…" id="storeSearch_${win.dataset.app}">
+            <input class="store-search" placeholder="Buscar apps…" id="storeSearch_${win.dataset.app}">
           </div>
           <div class="store-tabs" id="storeTabs_${win.dataset.app}">
             <div class="s-tab active" data-tab="all">Inicio</div>
