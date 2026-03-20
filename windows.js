@@ -1020,3 +1020,152 @@ function openAppStore() {
   // Aquí va tu lógica existente para abrir la App Store
   document.querySelector('#App Store').style.display = 'block';
 }
+/* ============================================================
+   iOS MOBILE LAYER
+   Only activates when window width <= 768px
+============================================================ */
+
+const IOS_APPS = [
+  { id: "sterlingia",   label: "Sterling IA",   icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-As6MTLYJ6ta7FZgR1G5U6ZUzqfCqvm.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/santiago-chat.html" },
+  { id: "player",       label: "Música",        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-j9GfZpCuZEAQwYOTxDIVxReq5y0OHg.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/Music.html" },
+  { id: "paint",        label: "Sterl-ink",     icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75", url: "https://santiago131440.github.io/SantiagoSterling/ExperienciaLaboral.html" },
+  { id: "buscaminas",   label: "Sterling World", icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-e3kGOJ1Nx9Q68omg5PbnlZh8hFAJkX.png&w=500&q=75", url: "https://santiago131440.github.io/SantiagoSterling/Super%20Mario.html" },
+  { id: "excel",        label: "Math FX",       icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DHtLao0TXcz7zsJ6bxv2DltThCLwQ8.png&w=1000&q=75", url: "https://santiago131440.github.io/SantiagoSterling/Sterling%20math%20fx.html" },
+  { id: "word",         label: "Letter",        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-BjimxRD0gb4rZBjr9jbO9LYXmOZJao.png&w=1000&q=75", url: "https://santiago131440.github.io/SantiagoSterling/Sterling%20Letter.html" },
+  { id: "powerpoint",   label: "Slides",        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-L8T5N6DbL9jezTcIoss4pIKNG256jy.png&w=1000&q=75", url: "https://santiago131440.github.io/SantiagoSterling/Sterling%20Presentation.html" },
+  { id: "airspace",     label: "Captain",       icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-yjBpDcYD9IjVGoIg4LnKkMKL1RBris.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/Buscaminas.html" },
+  { id: "salarios",     label: "Salarios",      icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-CsdmL6Mu7Mz9dPjZYw1Xq22mkGhekV.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/Salarios.html" },
+  { id: "video",        label: "Video",         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Eu2Ph2tWRZNcZUBi5acmRTEYlQhMhx.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/Dashboard1.html" },
+  { id: "suma",         label: "Compras",       icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-HCwnlHIkzR4wXtkTVAySMqAWigIejw.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/Dashboard3.html" },
+  { id: "examen",       label: "Examen",        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-fLBUuECujebAYq2Ctir0tmm4ljvF0b.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/registro.html" },
+  { id: "mix",          label: "Music Studio",  icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-B2EekBDz0A46XdvgtBjgEAw79EH0Dk.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/mix.html" },
+  { id: "aplicaciones", label: "App Store",     icon: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/icon-1773955846572.png?raw=true", url: null /* handled specially */ },
+  { id: "browser",      label: "Safari",        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75", url: "https://www.google.com/webhp?igu=1" },
+  { id: "explorer",     label: "Finder",        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75", url: null /* notes view */ },
+  { id: "notes",        label: "Notas",         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75", url: null /* notes view */ },
+];
+
+function isMobile() { return window.innerWidth <= 768; }
+
+/* ---- Status bar clock ---- */
+function updateIosStatusBar() {
+  const el = document.getElementById("iosSbTime");
+  if (!el) return;
+  const now = new Date();
+  el.textContent = now.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
+}
+
+/* ---- Build iOS home screen grid ---- */
+function buildIosGrid() {
+  const grid = document.getElementById("ios-app-grid");
+  if (!grid) return;
+  grid.innerHTML = "";
+  IOS_APPS.forEach((app, i) => {
+    const item = document.createElement("div");
+    item.className = "ios-app-icon";
+    item.style.animationDelay = (i * 0.03) + "s";
+    item.innerHTML = `<img src="${app.icon}" alt="${app.label}"><span>${app.label}</span>`;
+    item.addEventListener("click", () => iosOpenApp(app));
+    grid.appendChild(item);
+  });
+}
+
+/* ---- Open app in iOS fullscreen view ---- */
+function iosOpenApp(app) {
+  const view = document.getElementById("ios-app-view");
+  const frame = document.getElementById("ios-app-frame");
+  const title = document.getElementById("ios-app-title");
+  const backLabel = document.getElementById("ios-app-back-label");
+
+  // Apps with no iframe URL use a simple content view
+  if (!app.url) {
+    if (app.id === "notes" || app.id === "explorer") {
+      iosShowNotesView(app);
+      return;
+    }
+    return;
+  }
+
+  title.textContent = app.label;
+  backLabel.textContent = "Inicio";
+  frame.src = app.url;
+
+  // Remove old iframe content, show iframe
+  frame.style.display = "block";
+  view.classList.remove("closing");
+  view.classList.add("open");
+}
+
+/* ---- Simple Notes view for mobile ---- */
+function iosShowNotesView(app) {
+  const view = document.getElementById("ios-app-view");
+  const frame = document.getElementById("ios-app-frame");
+  const title = document.getElementById("ios-app-title");
+
+  title.textContent = app.label;
+  frame.style.display = "none";
+
+  // Build a simple notes UI inline
+  let notesEl = document.getElementById("ios-notes-inner");
+  if (!notesEl) {
+    notesEl = document.createElement("div");
+    notesEl.id = "ios-notes-inner";
+    notesEl.style.cssText = "flex:1;display:flex;flex-direction:column;background:#fef9e4;overflow:hidden;";
+    notesEl.innerHTML = `
+      <textarea style="flex:1;padding:20px;background:transparent;border:none;resize:none;
+        outline:none;font-size:16px;line-height:1.7;color:#1c1c1e;font-family:inherit;"
+        placeholder="Comienza a escribir…">¡Hola! Soy Santiago Sterling\nTecnólogo en análisis y desarrollo de software.\n\nEncuentra todos mis proyectos aquí.</textarea>
+    `;
+    view.appendChild(notesEl);
+  }
+  notesEl.style.display = "flex";
+
+  view.classList.remove("closing");
+  view.classList.add("open");
+}
+
+/* ---- Back button ---- */
+function iosCloseApp() {
+  const view = document.getElementById("ios-app-view");
+  const frame = document.getElementById("ios-app-frame");
+  const notesEl = document.getElementById("ios-notes-inner");
+
+  view.classList.add("closing");
+  setTimeout(() => {
+    view.classList.remove("open", "closing");
+    frame.src = "";
+    frame.style.display = "block";
+    if (notesEl) notesEl.style.display = "none";
+  }, 280);
+}
+
+/* ---- iOS dock items ---- */
+function bindIosDock() {
+  document.querySelectorAll(".ios-dock-item[data-ios-app]").forEach(item => {
+    item.addEventListener("click", () => {
+      const id = item.dataset.iosApp;
+      const app = IOS_APPS.find(a => a.id === id);
+      if (app) iosOpenApp(app);
+    });
+  });
+}
+
+/* ---- Init iOS layer ---- */
+function initIos() {
+  if (!isMobile()) return;
+
+  updateIosStatusBar();
+  setInterval(updateIosStatusBar, 10000);
+
+  buildIosGrid();
+  bindIosDock();
+
+  const backBtn = document.getElementById("ios-app-back-btn");
+  if (backBtn) backBtn.addEventListener("click", iosCloseApp);
+}
+
+// Run on load and on resize
+window.addEventListener("load", initIos);
+window.addEventListener("resize", () => {
+  if (isMobile()) initIos();
+});
