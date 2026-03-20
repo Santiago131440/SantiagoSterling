@@ -176,7 +176,7 @@ body {
 
 /* Window toolbar (macOS style) */
 .window-toolbar {
-  height: 32px; background: rgba(245,245,245,0.9);F
+  height: 32px; background: rgba(245,245,245,0.9);
   border-bottom: 1px solid rgba(0,0,0,0.08);
   display: flex; align-items: center; padding: 0 12px; gap: 6px; flex-shrink: 0;
 }
@@ -593,3 +593,386 @@ body {
 
 /* Input renaming */
 .rename-input { background: rgba(0,113,227,0.15); color: var(--text-primary); border: 2px solid var(--accent); border-radius: 3px; font-size: 11px; width: 72px; text-align: center; outline: none; padding: 1px 2px; font-family: var(--font); }
+
+/* ============================================================
+   iOS MOBILE STYLES — only active on screens ≤ 768px
+============================================================ */
+@media (max-width: 768px) {
+
+  /* ---- Root overrides ---- */
+  :root {
+    --ios-statusbar-h: 44px;
+    --ios-dock-h: 82px;
+    --ios-home-indicator: 20px;
+  }
+
+  /* ---- Hide macOS-only elements ---- */
+  #menubar,
+  #desktop-container,
+  #windowsContainer,
+  .window,
+  #appleMenu,
+  #missionControlOverlay {
+    display: none !important;
+  }
+
+  /* ---- Body: iOS wallpaper ---- */
+  body {
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* ---- iOS Lock Screen ---- */
+  #lockScreen {
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 0 40px;
+  }
+  #lockScreen::before {
+    background: rgba(0,0,0,0.18);
+    backdrop-filter: blur(0px);
+  }
+  .lock-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+  }
+  .lock-avatar {
+    width: 72px; height: 72px;
+    margin-bottom: 14px;
+  }
+  .lock-time {
+    font-size: 80px;
+    font-weight: 200;
+    letter-spacing: -3px;
+  }
+  .lock-date {
+    font-size: 16px;
+    font-weight: 300;
+    margin-top: 4px;
+  }
+  .lock-name {
+    font-size: 16px;
+    font-weight: 300;
+    margin-top: 20px;
+  }
+  .lock-hint {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 13px;
+    background: rgba(255,255,255,0.18);
+    padding: 10px 28px;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  /* ---- iOS Status Bar ---- */
+  #ios-statusbar {
+    display: flex;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--ios-statusbar-h);
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 9999;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .ios-sb-time { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+  .ios-sb-icons { display: flex; align-items: center; gap: 6px; font-size: 14px; }
+
+  /* ---- iOS Home Screen ---- */
+  #ios-homescreen {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    inset: 0;
+    padding-top: var(--ios-statusbar-h);
+    padding-bottom: calc(var(--ios-dock-h) + var(--ios-home-indicator));
+    z-index: 100;
+  }
+
+  /* App grid */
+  #ios-app-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px 12px;
+    padding: 24px 16px 16px;
+    align-content: start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ios-app-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    animation: iosIconPop 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .ios-app-icon:active { transform: scale(0.88); }
+  @keyframes iosIconPop {
+    from { opacity: 0; transform: scale(0.6); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .ios-app-icon img {
+    width: 60px; height: 60px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+    object-fit: contain;
+    background: rgba(255,255,255,0.15);
+  }
+  .ios-app-icon span {
+    font-size: 11px;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+    text-align: center;
+    font-weight: 500;
+    line-height: 1.2;
+    max-width: 64px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ---- iOS Dock ---- */
+  #ios-dock {
+    display: flex;
+    position: fixed;
+    bottom: calc(var(--ios-home-indicator));
+    left: 16px; right: 16px;
+    height: var(--ios-dock-h);
+    background: rgba(255,255,255,0.22);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border-radius: 28px;
+    border: 1px solid rgba(255,255,255,0.3);
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 14px;
+    z-index: 9500;
+  }
+  .ios-dock-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ios-dock-item:active { transform: scale(0.88); }
+  .ios-dock-item img {
+    width: 54px; height: 54px;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    object-fit: contain;
+    background: rgba(255,255,255,0.1);
+  }
+  .ios-dock-item span {
+    font-size: 10px;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    font-weight: 500;
+  }
+
+  /* ---- iOS Home Indicator ---- */
+  #ios-home-indicator {
+    display: flex;
+    position: fixed;
+    bottom: 6px;
+    left: 50%; transform: translateX(-50%);
+    width: 120px; height: 5px;
+    background: white;
+    border-radius: 3px;
+    opacity: 0.5;
+    z-index: 99999;
+  }
+
+  /* ---- iOS Full-screen App ---- */
+  #ios-app-view {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    inset: 0;
+    z-index: 9900;
+    background: #f2f2f7;
+    animation: iosAppOpen 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  #ios-app-view.open { display: flex; }
+  @keyframes iosAppOpen {
+    from { opacity: 0; transform: scale(0.92) translateY(30px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes iosAppClose {
+    from { opacity: 1; transform: scale(1) translateY(0); }
+    to   { opacity: 0; transform: scale(0.92) translateY(30px); }
+  }
+  #ios-app-view.closing { animation: iosAppClose 0.28s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+
+  /* iOS nav bar inside app */
+  #ios-app-navbar {
+    display: flex;
+    align-items: center;
+    height: calc(var(--ios-statusbar-h) + 12px);
+    padding: 8px 16px 4px;
+    background: rgba(242,242,247,0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid rgba(0,0,0,0.12);
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  #ios-app-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--accent);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 6px 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #ios-app-back-btn:active { opacity: 0.6; }
+  #ios-app-title {
+    flex: 1;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    color: #1c1c1e;
+    margin-right: 60px;
+  }
+  #ios-app-frame {
+    flex: 1;
+    border: none;
+    width: 100%;
+  }
+
+  /* ---- iOS Spotlight ---- */
+  #spotlight {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    transform: none !important;
+    padding: 16px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 99500;
+    padding-top: calc(var(--ios-statusbar-h) + 12px);
+  }
+  .spotlight-input-wrap {
+    height: 44px;
+    border-radius: 14px;
+    padding: 0 16px;
+  }
+  #spotlightInput { font-size: 16px !important; }
+
+  /* ---- iOS Control Center ---- */
+  #controlCenter {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    border-radius: 20px 20px 0 0 !important;
+    padding: 20px 16px 40px !important;
+    animation: iosSlideUp 0.3s cubic-bezier(0.25,0.46,0.45,0.94) !important;
+  }
+  @keyframes iosSlideUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+
+  /* ---- iOS Notification Center ---- */
+  #notifCenter {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-height: 60vh !important;
+    border-radius: 0 0 20px 20px !important;
+    padding-top: calc(var(--ios-statusbar-h) + 10px) !important;
+    animation: iosSlideDown 0.3s cubic-bezier(0.25,0.46,0.45,0.94) !important;
+  }
+  @keyframes iosSlideDown {
+    from { transform: translateY(-100%); }
+    to   { transform: translateY(0); }
+  }
+
+  /* ---- Toast position ---- */
+  .mac-toast {
+    top: calc(var(--ios-statusbar-h) + 4px) !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    border-radius: 20px !important;
+  }
+
+  /* ---- Wallpaper panel ---- */
+  #wallpaperPanel {
+    position: fixed !important;
+    top: auto !important; bottom: 0 !important;
+    left: 0 !important; right: 0 !important;
+    width: 100% !important;
+    transform: none !important;
+    border-radius: 20px 20px 0 0 !important;
+    padding-bottom: 40px !important;
+  }
+
+  /* ---- Calendar Panel ---- */
+  #calendarPanel {
+    position: fixed !important;
+    top: auto !important; bottom: 0 !important;
+    left: 0 !important; right: 0 !important;
+    width: 100% !important;
+    border-radius: 20px 20px 0 0 !important;
+    padding-bottom: 40px !important;
+    animation: iosSlideUp 0.3s cubic-bezier(0.25,0.46,0.45,0.94) !important;
+  }
+
+  /* ---- Context Menu: iOS action sheet ---- */
+  #contextMenu {
+    position: fixed !important;
+    bottom: calc(var(--ios-dock-h) + 30px) !important;
+    left: 16px !important; right: 16px !important;
+    width: auto !important;
+    border-radius: 14px !important;
+    animation: iosSlideUp 0.22s ease !important;
+  }
+  #contextMenu li {
+    padding: 12px 16px !important;
+    font-size: 16px !important;
+    border-radius: 0 !important;
+    border-bottom: 0.5px solid rgba(0,0,0,0.08);
+  }
+  #contextMenu li:last-child { border-bottom: none; }
+
+  /* ---- Hide the old desktop dock on mobile ---- */
+  #dock { display: none !important; }
+
+  /* ---- Wallpaper input ---- */
+  #wallpaperPanel input[type="file"] { font-size: 15px; }
+
+}
+
+/* On larger screens, hide mobile-only elements */
+@media (min-width: 769px) {
+  #ios-statusbar,
+  #ios-homescreen,
+  #ios-dock,
+  #ios-home-indicator,
+  #ios-app-view {
+    display: none !important;
+  }
+}
