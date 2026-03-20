@@ -594,385 +594,740 @@ body {
 /* Input renaming */
 .rename-input { background: rgba(0,113,227,0.15); color: var(--text-primary); border: 2px solid var(--accent); border-radius: 3px; font-size: 11px; width: 72px; text-align: center; outline: none; padding: 1px 2px; font-family: var(--font); }
 
-/* ============================================================
-   iOS MOBILE STYLES — only active on screens ≤ 768px
-============================================================ */
+
+/* ================================================================
+   iOS MOBILE — Full iPhone-style experience (≤768px only)
+================================================================ */
 @media (max-width: 768px) {
 
-  /* ---- Root overrides ---- */
+  /* ---------- CSS Variables ---------- */
   :root {
-    --ios-statusbar-h: 44px;
-    --ios-dock-h: 82px;
-    --ios-home-indicator: 20px;
+    --sb: 50px;           /* status bar height */
+    --dock-h: 90px;       /* dock height */
+    --ind-h: 28px;        /* home indicator */
+    --ios-blue: #007aff;
+    --ios-green: #34c759;
+    --ios-red: #ff3b30;
+    --ios-orange: #ff9500;
+    --ios-purple: #af52de;
+    --ios-teal: #5ac8fa;
+    --ios-gray: #8e8e93;
+    --ios-bg: #f2f2f7;
+    --ios-card: rgba(255,255,255,0.85);
   }
 
-  /* ---- Hide macOS-only elements ---- */
-  #menubar,
-  #desktop-container,
-  #windowsContainer,
-  .window,
-  #appleMenu,
-  #missionControlOverlay {
-    display: none !important;
-  }
+  /* ---------- Hide all macOS UI ---------- */
+  #menubar, #desktop-container, #windowsContainer,
+  .window, #appleMenu, #missionControlOverlay, #dock,
+  #controlCenter, #notifCenter, #calendarPanel,
+  #wallpaperPanel, #spotlightBackdrop, #spotlight,
+  #contextMenu { display: none !important; }
 
-  /* ---- Body: iOS wallpaper ---- */
-  body {
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
-  }
+  body { overflow: hidden; background-size: cover; background-position: center; }
 
-  /* ---- iOS Lock Screen ---- */
+  /* ================================================================
+     LOCK SCREEN — iPhone style
+  ================================================================ */
   #lockScreen {
     flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-    padding: 0 0 40px;
+    padding: var(--sb) 0 calc(var(--ind-h) + 20px);
+    backdrop-filter: blur(0px);
+    cursor: default;
   }
   #lockScreen::before {
-    background: rgba(0,0,0,0.18);
+    background: rgba(0,0,0,0.1);
     backdrop-filter: blur(0px);
   }
   .lock-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 80px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0;
+    margin-top: 30px;
   }
-  .lock-avatar {
-    width: 72px; height: 72px;
-    margin-bottom: 14px;
-  }
+  .lock-avatar { width: 76px; height: 76px; margin-bottom: 16px; }
   .lock-time {
-    font-size: 80px;
-    font-weight: 200;
-    letter-spacing: -3px;
+    font-size: 88px; font-weight: 100;
+    letter-spacing: -4px; line-height: 1;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
   }
-  .lock-date {
-    font-size: 16px;
-    font-weight: 300;
-    margin-top: 4px;
+  .lock-date { font-size: 17px; font-weight: 300; margin-top: 4px; opacity: 0.9; }
+  .lock-name { font-size: 15px; font-weight: 300; margin-top: 16px; opacity: 0.8; }
+
+  /* Lock screen widgets area */
+  #lock-widgets {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 12px;
+    width: 100%; padding: 0 20px;
   }
-  .lock-name {
-    font-size: 16px;
-    font-weight: 300;
-    margin-top: 20px;
+  .lock-widget {
+    width: 100%;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 16px 18px;
+    color: white;
   }
+  .lock-widget-weather {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .lw-city { font-size: 13px; font-weight: 400; opacity: 0.85; }
+  .lw-temp { font-size: 40px; font-weight: 200; letter-spacing: -1px; }
+  .lw-condition { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+  .lw-icon { font-size: 44px; }
+
+  .lock-widget-calendar {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .lw-cal-day { font-size: 46px; font-weight: 200; letter-spacing: -2px; line-height: 1; }
+  .lw-cal-info { display: flex; flex-direction: column; gap: 2px; }
+  .lw-cal-month { font-size: 13px; font-weight: 600; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
+  .lw-cal-event { font-size: 12px; opacity: 0.75; }
+
   .lock-hint {
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0;
     font-size: 13px;
-    background: rgba(255,255,255,0.18);
-    padding: 10px 28px;
+    background: rgba(255,255,255,0.15);
+    padding: 10px 32px;
     border-radius: 30px;
     border: 1px solid rgba(255,255,255,0.3);
+    letter-spacing: 0.2px;
   }
 
-  /* ---- iOS Status Bar ---- */
+  /* ================================================================
+     STATUS BAR
+  ================================================================ */
   #ios-statusbar {
-    display: flex;
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: var(--ios-statusbar-h);
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    z-index: 9999;
-    color: white;
-    font-size: 15px;
-    font-weight: 600;
+    display: flex !important;
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--sb);
+    align-items: center; justify-content: space-between;
+    padding: 10px 20px 0;
+    z-index: 99990; color: white;
+    pointer-events: none;
   }
   .ios-sb-time { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
-  .ios-sb-icons { display: flex; align-items: center; gap: 6px; font-size: 14px; }
+  .ios-sb-right { display: flex; align-items: center; gap: 5px; }
+  .ios-sb-right svg { width: 16px; height: 12px; }
+  .ios-battery { display: flex; align-items: center; gap: 2px; font-size: 13px; font-weight: 600; }
 
-  /* ---- iOS Home Screen ---- */
+  /* ================================================================
+     HOME SCREEN
+  ================================================================ */
   #ios-homescreen {
-    display: flex;
-    flex-direction: column;
+    display: block !important;
     position: fixed;
     inset: 0;
-    padding-top: var(--ios-statusbar-h);
-    padding-bottom: calc(var(--ios-dock-h) + var(--ios-home-indicator));
-    z-index: 100;
+    z-index: 200;
+    overflow: hidden;
   }
 
-  /* App grid */
-  #ios-app-grid {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 28px 12px;
-    padding: 24px 16px 16px;
-    align-content: start;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+  /* Page scroller (swipe pages) */
+  #ios-pages-scroll {
+    position: absolute;
+    top: var(--sb); bottom: calc(var(--dock-h) + var(--ind-h) - 4px);
+    left: 0; right: 0;
+    overflow: hidden;
   }
-  .ios-app-icon {
+  #ios-pages-inner {
+    display: flex;
+    height: 100%;
+    transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .ios-page {
+    min-width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    animation: iosIconPop 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  .ios-app-icon:active { transform: scale(0.88); }
-  @keyframes iosIconPop {
-    from { opacity: 0; transform: scale(0.6); }
-    to   { opacity: 1; transform: scale(1); }
-  }
-  .ios-app-icon img {
-    width: 60px; height: 60px;
-    border-radius: 14px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
-    object-fit: contain;
-    background: rgba(255,255,255,0.15);
-  }
-  .ios-app-icon span {
-    font-size: 11px;
-    color: white;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.7);
-    text-align: center;
-    font-weight: 500;
-    line-height: 1.2;
-    max-width: 64px;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    flex-shrink: 0;
   }
 
-  /* ---- iOS Dock ---- */
+  /* Widget area (page 0 top) */
+  #ios-widget-area {
+    padding: 12px 16px 8px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  /* Widget cards */
+  .ios-widget {
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    background: var(--ios-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ios-widget:active { transform: scale(0.97); }
+  .ios-widget-row { display: flex; gap: 10px; }
+  .ios-widget-row .ios-widget { flex: 1; }
+
+  /* Weather Widget */
+  .ios-widget-weather {
+    background: linear-gradient(160deg, #1a6fd8 0%, #3a9bd5 60%, #87ceeb 100%);
+    color: white; padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .iw-city { font-size: 13px; font-weight: 500; opacity: 0.9; }
+  .iw-temp { font-size: 48px; font-weight: 200; letter-spacing: -2px; line-height: 1; }
+  .iw-cond { font-size: 13px; opacity: 0.85; }
+  .iw-hilo { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+  .iw-forecast {
+    display: flex; justify-content: space-between;
+    margin-top: 10px; padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.25);
+  }
+  .iw-fc-item { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 11px; opacity: 0.85; }
+
+  /* Calendar Widget */
+  .ios-widget-cal {
+    background: white; padding: 14px 16px;
+    display: flex; flex-direction: column;
+  }
+  .iwc-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .iwc-month { font-size: 12px; font-weight: 700; color: var(--ios-red); text-transform: uppercase; letter-spacing: 0.5px; }
+  .iwc-day-big { font-size: 36px; font-weight: 300; color: #1c1c1e; line-height: 1; }
+  .iwc-event { font-size: 12px; color: var(--ios-gray); margin-top: 2px; }
+
+  /* Battery / Clock widgets (small) */
+  .ios-widget-clock {
+    background: #1c1c1e; color: white;
+    padding: 14px; display: flex;
+    flex-direction: column; justify-content: space-between;
+    min-height: 80px;
+  }
+  .iwclock-label { font-size: 11px; opacity: 0.6; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .iwclock-time { font-size: 28px; font-weight: 200; letter-spacing: -1px; }
+  .iwclock-zone { font-size: 10px; opacity: 0.5; margin-top: 2px; }
+
+  .ios-widget-battery {
+    background: #1c1c1e; color: white;
+    padding: 14px; display: flex;
+    flex-direction: column; justify-content: space-between;
+    min-height: 80px;
+  }
+  .iwbat-label { font-size: 11px; opacity: 0.6; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .iwbat-pct { font-size: 28px; font-weight: 200; }
+  .iwbat-bar { height: 6px; background: rgba(255,255,255,0.15); border-radius: 3px; margin-top: 4px; overflow: hidden; }
+  .iwbat-fill { height: 100%; background: var(--ios-green); border-radius: 3px; }
+
+  /* App Grid */
+  .ios-app-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px 8px;
+    padding: 8px 16px 12px;
+    flex: 1;
+  }
+  .ios-app-icon {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 5px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.1s;
+  }
+  .ios-app-icon:active { transform: scale(0.85); }
+  .ios-app-icon img {
+    width: 62px; height: 62px;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+    object-fit: cover;
+  }
+  /* Native iOS app icons — colored backgrounds */
+  .ios-app-icon .ios-native-icon {
+    width: 62px; height: 62px;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+  }
+  .ios-app-icon span {
+    font-size: 11px; color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.75);
+    text-align: center; font-weight: 500;
+    max-width: 70px; line-height: 1.2;
+    word-break: break-word;
+  }
+
+  /* Page dots */
+  #ios-page-dots {
+    position: absolute;
+    bottom: calc(var(--dock-h) + var(--ind-h) + 4px);
+    left: 0; right: 0;
+    display: flex; justify-content: center; gap: 6px;
+    z-index: 220;
+  }
+  .ios-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .ios-dot.active { background: white; transform: scale(1.1); }
+
+  /* ================================================================
+     DOCK
+  ================================================================ */
   #ios-dock {
-    display: flex;
+    display: flex !important;
     position: fixed;
-    bottom: calc(var(--ios-home-indicator));
-    left: 16px; right: 16px;
-    height: var(--ios-dock-h);
-    background: rgba(255,255,255,0.22);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
-    border-radius: 28px;
-    border: 1px solid rgba(255,255,255,0.3);
-    align-items: center;
-    justify-content: space-around;
-    padding: 0 14px;
+    bottom: var(--ind-h);
+    left: 14px; right: 14px;
+    height: var(--dock-h);
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border-radius: 26px;
+    border: 1px solid rgba(255,255,255,0.35);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    align-items: center; justify-content: space-around;
+    padding: 0 10px;
     z-index: 9500;
   }
   .ios-dock-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 4px;
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+    transition: transform 0.1s;
   }
-  .ios-dock-item:active { transform: scale(0.88); }
-  .ios-dock-item img {
-    width: 54px; height: 54px;
+  .ios-dock-item:active { transform: scale(0.85); }
+  .ios-dock-item img, .ios-dock-item .ios-native-icon {
+    width: 56px; height: 56px;
     border-radius: 14px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-    object-fit: contain;
-    background: rgba(255,255,255,0.1);
+    object-fit: cover;
   }
-  .ios-dock-item span {
-    font-size: 10px;
-    color: white;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-    font-weight: 500;
+  .ios-dock-item .ios-native-icon {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
   }
 
-  /* ---- iOS Home Indicator ---- */
+  /* ================================================================
+     HOME INDICATOR
+  ================================================================ */
   #ios-home-indicator {
-    display: flex;
+    display: block !important;
     position: fixed;
-    bottom: 6px;
-    left: 50%; transform: translateX(-50%);
-    width: 120px; height: 5px;
-    background: white;
-    border-radius: 3px;
-    opacity: 0.5;
-    z-index: 99999;
+    bottom: 8px; left: 50%; transform: translateX(-50%);
+    width: 130px; height: 5px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 3px; z-index: 99999;
   }
 
-  /* ---- iOS Full-screen App ---- */
+  /* ================================================================
+     APP FULLSCREEN VIEW
+  ================================================================ */
   #ios-app-view {
-    display: none;
-    flex-direction: column;
-    position: fixed;
-    inset: 0;
-    z-index: 9900;
+    display: none; flex-direction: column;
+    position: fixed; inset: 0;
+    z-index: 19000;
     background: #f2f2f7;
-    animation: iosAppOpen 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
   }
-  #ios-app-view.open { display: flex; }
+  #ios-app-view.open {
+    display: flex;
+    animation: iosAppOpen 0.38s cubic-bezier(0.22,1,0.36,1);
+  }
+  #ios-app-view.closing {
+    animation: iosAppClose 0.3s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+  }
   @keyframes iosAppOpen {
-    from { opacity: 0; transform: scale(0.92) translateY(30px); }
+    from { opacity: 0; transform: scale(0.88) translateY(40px); }
     to   { opacity: 1; transform: scale(1) translateY(0); }
   }
   @keyframes iosAppClose {
-    from { opacity: 1; transform: scale(1) translateY(0); }
-    to   { opacity: 0; transform: scale(0.92) translateY(30px); }
+    from { opacity: 1; transform: scale(1); }
+    to   { opacity: 0; transform: scale(0.88) translateY(40px); }
   }
-  #ios-app-view.closing { animation: iosAppClose 0.28s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
 
-  /* iOS nav bar inside app */
+  /* App navbar */
   #ios-app-navbar {
-    display: flex;
-    align-items: center;
-    height: calc(var(--ios-statusbar-h) + 12px);
-    padding: 8px 16px 4px;
-    background: rgba(242,242,247,0.9);
+    display: flex; align-items: flex-end;
+    padding: 0 16px 10px;
+    padding-top: calc(var(--sb) - 4px);
+    background: rgba(242,242,247,0.92);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 0.5px solid rgba(0,0,0,0.12);
-    flex-shrink: 0;
-    z-index: 1;
+    border-bottom: 0.5px solid rgba(0,0,0,0.15);
+    flex-shrink: 0; gap: 8px; min-height: calc(var(--sb) + 44px);
   }
   #ios-app-back-btn {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    color: var(--accent);
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    padding: 6px 0;
+    display: flex; align-items: center; gap: 3px;
+    color: var(--ios-blue); font-size: 17px; font-weight: 400;
+    cursor: pointer; padding: 6px 0; min-width: 70px;
     -webkit-tap-highlight-color: transparent;
   }
-  #ios-app-back-btn:active { opacity: 0.6; }
+  #ios-app-back-btn:active { opacity: 0.5; }
   #ios-app-title {
-    flex: 1;
-    text-align: center;
-    font-size: 17px;
-    font-weight: 600;
-    color: #1c1c1e;
-    margin-right: 60px;
+    flex: 1; text-align: center;
+    font-size: 17px; font-weight: 600; color: #1c1c1e;
   }
-  #ios-app-frame {
-    flex: 1;
-    border: none;
-    width: 100%;
+  .ios-navbar-spacer { min-width: 70px; }
+
+  #ios-app-frame { flex: 1; border: none; width: 100%; background: white; }
+
+  /* Native app view (non-iframe) */
+  #ios-native-view {
+    flex: 1; overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* ---- iOS Spotlight ---- */
-  #spotlight {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-    transform: none !important;
-    padding: 16px;
+  /* ================================================================
+     NATIVE iOS APPS — internal content
+  ================================================================ */
+
+  /* --- Phone App --- */
+  .phone-app { background: #1c1c1e; color: white; min-height: 100%; display: flex; flex-direction: column; }
+  .phone-display {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 20px 20px;
+  }
+  .phone-number { font-size: 46px; font-weight: 200; letter-spacing: 2px; min-height: 56px; }
+  .phone-name { font-size: 16px; color: rgba(255,255,255,0.6); margin-top: 6px; }
+  .phone-keypad {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 14px; padding: 0 30px 20px;
+  }
+  .phone-key {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 72px; border-radius: 50%; background: rgba(255,255,255,0.12);
+    cursor: pointer; transition: background 0.1s; -webkit-tap-highlight-color: transparent;
+    font-size: 28px; font-weight: 300; color: white;
+  }
+  .phone-key sub { font-size: 10px; opacity: 0.6; letter-spacing: 2px; margin-top: -4px; }
+  .phone-key:active { background: rgba(255,255,255,0.25); }
+  .phone-actions {
+    display: flex; justify-content: space-around; align-items: center;
+    padding: 0 30px 40px;
+  }
+  .phone-btn {
+    width: 72px; height: 72px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; cursor: pointer; -webkit-tap-highlight-color: transparent;
+    transition: opacity 0.1s;
+  }
+  .phone-btn:active { opacity: 0.7; }
+  .phone-btn.call { background: var(--ios-green); }
+  .phone-btn.del { background: rgba(255,255,255,0.12); font-size: 20px; }
+
+  /* --- Messages App --- */
+  .msgs-app { background: white; min-height: 100%; display: flex; flex-direction: column; }
+  .msgs-search {
+    padding: 10px 16px;
+    background: #f2f2f7;
+    border-bottom: 0.5px solid rgba(0,0,0,0.12);
+  }
+  .msgs-search input {
+    width: 100%; padding: 8px 12px;
+    background: white; border: none; border-radius: 10px;
+    font-size: 16px; outline: none; color: #1c1c1e;
+  }
+  .msgs-list { flex: 1; overflow-y: auto; }
+  .msgs-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 16px; border-bottom: 0.5px solid rgba(0,0,0,0.08);
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .msgs-item:active { background: rgba(0,0,0,0.04); }
+  .msgs-avatar {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--ios-blue); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: white; font-weight: 600;
+  }
+  .msgs-content { flex: 1; min-width: 0; }
+  .msgs-name { font-size: 16px; font-weight: 600; color: #1c1c1e; }
+  .msgs-preview { font-size: 14px; color: var(--ios-gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+  .msgs-time { font-size: 13px; color: var(--ios-gray); flex-shrink: 0; }
+
+  /* Chat view */
+  .msgs-chat-bg { background: #f2f2f7; min-height: 100%; display: flex; flex-direction: column; }
+  .msgs-bubbles { flex: 1; overflow-y: auto; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+  .msg-bubble {
+    max-width: 75%; padding: 10px 14px;
+    border-radius: 18px; font-size: 15px; line-height: 1.4;
+  }
+  .msg-bubble.out { background: var(--ios-blue); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+  .msg-bubble.in  { background: white; color: #1c1c1e; align-self: flex-start; border-bottom-left-radius: 4px; }
+  .msgs-input-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px calc(10px + var(--ind-h));
+    background: rgba(242,242,247,0.95);
+    border-top: 0.5px solid rgba(0,0,0,0.12);
+    backdrop-filter: blur(10px);
+  }
+  .msgs-input {
+    flex: 1; border: 1.5px solid rgba(0,0,0,0.18); border-radius: 20px;
+    padding: 8px 14px; font-size: 16px; outline: none; background: white;
+    color: #1c1c1e; max-height: 100px;
+  }
+  .msgs-send {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--ios-blue); border: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: white; font-size: 16px; flex-shrink: 0;
+  }
+  .msgs-send:active { opacity: 0.7; }
+
+  /* --- Camera App --- */
+  .camera-app {
+    background: black; min-height: 100%; display: flex; flex-direction: column;
+    align-items: center; justify-content: space-between; padding-bottom: 40px;
+  }
+  .camera-viewfinder {
+    width: 100%; flex: 1;
+    background: #0a0a0a; display: flex; align-items: center; justify-content: center;
+    font-size: 60px; color: rgba(255,255,255,0.15);
+    position: relative; overflow: hidden;
+  }
+  .camera-grid-h, .camera-grid-v {
+    position: absolute; background: rgba(255,255,255,0.15);
+  }
+  .camera-grid-h { height: 1px; width: 100%; }
+  .camera-grid-h:nth-child(1) { top: 33.3%; }
+  .camera-grid-h:nth-child(2) { top: 66.6%; }
+  .camera-grid-v { width: 1px; height: 100%; }
+  .camera-grid-v:nth-child(3) { left: 33.3%; }
+  .camera-grid-v:nth-child(4) { left: 66.6%; }
+  .camera-controls {
+    display: flex; align-items: center; justify-content: space-around;
+    width: 100%; padding: 20px 30px 0;
+  }
+  .camera-thumb {
+    width: 52px; height: 52px; border-radius: 10px;
+    background: rgba(255,255,255,0.1); border: 2px solid white;
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+  }
+  .camera-shutter {
+    width: 80px; height: 80px; border-radius: 50%; background: white;
+    border: 4px solid rgba(255,255,255,0.5);
+    cursor: pointer; transition: transform 0.1s; box-shadow: 0 0 0 3px rgba(255,255,255,0.2);
+  }
+  .camera-shutter:active { transform: scale(0.9); background: #e0e0e0; }
+  .camera-flip {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; color: white; cursor: pointer;
+  }
+  .camera-modes { display: flex; gap: 20px; padding-top: 16px; }
+  .camera-mode { color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 500; cursor: pointer; }
+  .camera-mode.active { color: #ffd700; }
+
+  /* --- Photos App --- */
+  .photos-app { background: white; min-height: 100%; }
+  .photos-grid-label {
+    font-size: 20px; font-weight: 700; padding: 16px 16px 8px; color: #1c1c1e;
+  }
+  .photos-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; padding: 0 2px 2px;
+  }
+  .photo-cell {
+    aspect-ratio: 1; overflow: hidden;
+    background: #e0e0e0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: rgba(0,0,0,0.2);
+    cursor: pointer;
+  }
+  .photo-cell img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* --- Settings App --- */
+  .settings-app { background: var(--ios-bg); min-height: 100%; }
+  .settings-section { margin: 22px 16px 0; }
+  .settings-section-label { font-size: 13px; color: var(--ios-gray); margin-bottom: 6px; padding: 0 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .settings-group {
+    background: white; border-radius: 12px; overflow: hidden;
+  }
+  .settings-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 16px; border-bottom: 0.5px solid rgba(0,0,0,0.08);
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .settings-item:last-child { border-bottom: none; }
+  .settings-item:active { background: rgba(0,0,0,0.04); }
+  .settings-icon {
+    width: 30px; height: 30px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .settings-label { flex: 1; font-size: 16px; color: #1c1c1e; }
+  .settings-value { font-size: 15px; color: var(--ios-gray); }
+  .settings-arrow { color: var(--ios-gray); font-size: 13px; opacity: 0.5; }
+  .settings-toggle {
+    width: 52px; height: 31px; border-radius: 16px;
+    background: var(--ios-green); position: relative; flex-shrink: 0;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .settings-toggle.off { background: rgba(0,0,0,0.15); }
+  .settings-toggle::after {
+    content: ''; position: absolute; top: 2px; left: 2px;
+    width: 27px; height: 27px; border-radius: 50%; background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    transition: transform 0.2s;
+  }
+  .settings-toggle.off::after { transform: translateX(0); }
+  .settings-toggle:not(.off)::after { transform: translateX(21px); }
+
+  /* --- Safari Browser App --- */
+  .safari-app { background: #f2f2f7; min-height: 100%; display: flex; flex-direction: column; }
+  .safari-toolbar {
+    padding: 8px 12px;
+    background: rgba(242,242,247,0.95);
+    border-bottom: 0.5px solid rgba(0,0,0,0.12);
+    display: flex; gap: 8px; align-items: center;
+  }
+  .safari-bar {
+    flex: 1; background: rgba(0,0,0,0.06); border-radius: 12px;
+    display: flex; align-items: center; gap: 8px; padding: 8px 12px;
+  }
+  .safari-url-text { flex: 1; font-size: 15px; color: #1c1c1e; outline: none; border: none; background: transparent; }
+  .safari-frame { flex: 1; border: none; width: 100%; }
+  .safari-nav { display: flex; gap: 20px; padding: 8px 20px 12px; }
+  .safari-nav-btn { color: var(--ios-blue); font-size: 20px; cursor: pointer; opacity: 0.7; -webkit-tap-highlight-color: transparent; }
+  .safari-nav-btn.disabled { opacity: 0.3; pointer-events: none; }
+
+  /* --- Maps App --- */
+  .maps-app { background: #c8d8d0; min-height: 100%; position: relative; display: flex; flex-direction: column; }
+  .maps-bg {
+    flex: 1; background: linear-gradient(180deg, #d4e8d4 0%, #c8d4c0 40%, #a8b890 70%, #8ca870 100%);
+    position: relative; overflow: hidden; min-height: 300px;
+  }
+  .maps-road { position: absolute; background: white; opacity: 0.8; }
+  .maps-road.h { height: 4px; width: 120%; left: -10%; border-radius: 2px; }
+  .maps-road.v { width: 4px; height: 120%; top: -10%; border-radius: 2px; }
+  .maps-pin { position: absolute; font-size: 32px; transform: translate(-50%, -100%); }
+  .maps-search-bar {
+    position: absolute; top: 12px; left: 12px; right: 12px;
+    background: white; border-radius: 14px;
+    padding: 12px 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .maps-search-icon { color: var(--ios-gray); font-size: 14px; }
+  .maps-search-input { flex: 1; border: none; outline: none; font-size: 16px; color: #1c1c1e; }
+  .maps-actions {
+    display: flex; gap: 10px; padding: 12px 16px;
+    background: white; border-top: 0.5px solid rgba(0,0,0,0.1);
+  }
+  .maps-btn {
+    flex: 1; padding: 12px; border-radius: 12px;
+    background: var(--ios-bg); border: none;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    font-size: 12px; color: var(--ios-blue); cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .maps-btn-icon { font-size: 20px; }
+
+  /* ================================================================
+     CONTROL CENTER (swipe down right)
+  ================================================================ */
+  #ios-control-center {
+    display: none; flex-direction: column;
+    position: fixed; inset: 0; z-index: 29000;
     background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    z-index: 99500;
-    padding-top: calc(var(--ios-statusbar-h) + 12px);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    padding: var(--sb) 16px calc(var(--ind-h) + 10px);
+    animation: iosSlideDown 0.35s cubic-bezier(0.22,1,0.36,1);
   }
-  .spotlight-input-wrap {
-    height: 44px;
-    border-radius: 14px;
-    padding: 0 16px;
-  }
-  #spotlightInput { font-size: 16px !important; }
+  #ios-control-center.open { display: flex; }
+  @keyframes iosSlideDown { from { opacity:0; transform: translateY(-20px); } to { opacity:1; transform: translateY(0); } }
 
-  /* ---- iOS Control Center ---- */
-  #controlCenter {
-    position: fixed !important;
-    top: auto !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-    border-radius: 20px 20px 0 0 !important;
-    padding: 20px 16px 40px !important;
-    animation: iosSlideUp 0.3s cubic-bezier(0.25,0.46,0.45,0.94) !important;
+  .cc-ios-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-bottom: 12px;
   }
-  @keyframes iosSlideUp {
-    from { transform: translateY(100%); }
-    to   { transform: translateY(0); }
+  .cc-ios-wide { grid-column: 1 / -1; }
+  .cc-ios-tile {
+    background: rgba(255,255,255,0.25); border-radius: 16px;
+    padding: 14px; cursor: pointer;
+    -webkit-tap-highlight-color: transparent; transition: background 0.1s;
   }
-
-  /* ---- iOS Notification Center ---- */
-  #notifCenter {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-    max-height: 60vh !important;
-    border-radius: 0 0 20px 20px !important;
-    padding-top: calc(var(--ios-statusbar-h) + 10px) !important;
-    animation: iosSlideDown 0.3s cubic-bezier(0.25,0.46,0.45,0.94) !important;
-  }
-  @keyframes iosSlideDown {
-    from { transform: translateY(-100%); }
-    to   { transform: translateY(0); }
+  .cc-ios-tile.on { background: rgba(255,255,255,0.85); }
+  .cc-ios-tile:active { background: rgba(255,255,255,0.4); }
+  .cc-ios-icon { font-size: 22px; margin-bottom: 6px; }
+  .cc-ios-label { font-size: 12px; font-weight: 600; color: white; }
+  .cc-ios-tile.on .cc-ios-label { color: #1c1c1e; }
+  .cc-ios-slider-wrap { padding: 14px 16px; background: rgba(255,255,255,0.2); border-radius: 16px; }
+  .cc-ios-slider-label { font-size: 13px; font-weight: 600; color: white; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .cc-ios-slider { width: 100%; -webkit-appearance: none; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.3); outline: none; }
+  .cc-ios-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: white; box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+  .cc-ios-close {
+    margin-top: 12px; text-align: center; color: rgba(255,255,255,0.7);
+    font-size: 14px; font-weight: 500; padding: 12px; cursor: pointer;
   }
 
-  /* ---- Toast position ---- */
+  /* ================================================================
+     NOTIFICATION CENTER (swipe down left)
+  ================================================================ */
+  #ios-notif-center {
+    display: none; flex-direction: column;
+    position: fixed; inset: 0; z-index: 29000;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    padding: var(--sb) 16px;
+    overflow-y: auto;
+    animation: iosSlideDown 0.35s cubic-bezier(0.22,1,0.36,1);
+  }
+  #ios-notif-center.open { display: flex; }
+  .nc-header {
+    font-size: 28px; font-weight: 700; color: white;
+    padding: 16px 0 20px; letter-spacing: -0.5px;
+  }
+  .nc-date { font-size: 15px; color: rgba(255,255,255,0.7); font-weight: 400; display: block; }
+  .nc-section-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.5px; margin: 12px 0 8px; }
+  .nc-notif {
+    background: rgba(255,255,255,0.2); border-radius: 16px;
+    padding: 14px 16px; margin-bottom: 8px;
+    backdrop-filter: blur(10px);
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .nc-notif:active { background: rgba(255,255,255,0.3); }
+  .nc-notif-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .nc-notif-icon { width: 20px; height: 20px; border-radius: 5px; object-fit: contain; }
+  .nc-notif-app { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.3px; }
+  .nc-notif-time { margin-left: auto; font-size: 12px; color: rgba(255,255,255,0.6); }
+  .nc-notif-title { font-size: 15px; font-weight: 600; color: white; margin-bottom: 2px; }
+  .nc-notif-body { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.4; }
+  .nc-close {
+    text-align: center; color: rgba(255,255,255,0.7);
+    font-size: 14px; padding: 16px; cursor: pointer;
+  }
+
+  /* Toast */
   .mac-toast {
-    top: calc(var(--ios-statusbar-h) + 4px) !important;
-    left: 12px !important;
-    right: 12px !important;
-    width: auto !important;
-    border-radius: 20px !important;
-  }
-
-  /* ---- Wallpaper panel ---- */
-  #wallpaperPanel {
-    position: fixed !important;
-    top: auto !important; bottom: 0 !important;
-    left: 0 !important; right: 0 !important;
-    width: 100% !important;
-    transform: none !important;
-    border-radius: 20px 20px 0 0 !important;
-    padding-bottom: 40px !important;
-  }
-
-  /* ---- Calendar Panel ---- */
-  #calendarPanel {
-    position: fixed !important;
-    top: auto !important; bottom: 0 !important;
-    left: 0 !important; right: 0 !important;
-    width: 100% !important;
-    border-radius: 20px 20px 0 0 !important;
-    padding-bottom: 40px !important;
-    animation: iosSlideUp 0.3s cubic-bezier(0.25,0.46,0.45,0.94) !important;
-  }
-
-  /* ---- Context Menu: iOS action sheet ---- */
-  #contextMenu {
-    position: fixed !important;
-    bottom: calc(var(--ios-dock-h) + 30px) !important;
-    left: 16px !important; right: 16px !important;
-    width: auto !important;
-    border-radius: 14px !important;
-    animation: iosSlideUp 0.22s ease !important;
-  }
-  #contextMenu li {
+    top: calc(var(--sb) + 4px) !important;
+    left: 12px !important; right: 12px !important;
+    width: auto !important; border-radius: 20px !important;
     padding: 12px 16px !important;
-    font-size: 16px !important;
-    border-radius: 0 !important;
-    border-bottom: 0.5px solid rgba(0,0,0,0.08);
   }
-  #contextMenu li:last-child { border-bottom: none; }
 
-  /* ---- Hide the old desktop dock on mobile ---- */
-  #dock { display: none !important; }
-
-  /* ---- Wallpaper input ---- */
-  #wallpaperPanel input[type="file"] { font-size: 15px; }
+  /* ================================================================
+     GESTURE HINT OVERLAY
+  ================================================================ */
+  #ios-swipe-hint {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--sb);
+    z-index: 28000;
+    display: none;
+  }
+  #ios-swipe-hint.active { display: block; }
+  .ios-swipe-zone-left { position: absolute; top: 0; left: 0; width: 50%; height: 100%; }
+  .ios-swipe-zone-right { position: absolute; top: 0; right: 0; width: 50%; height: 100%; }
 
 }
 
-/* On larger screens, hide mobile-only elements */
+/* ---- Desktop: hide all iOS elements ---- */
 @media (min-width: 769px) {
-  #ios-statusbar,
-  #ios-homescreen,
-  #ios-dock,
-  #ios-home-indicator,
-  #ios-app-view {
-    display: none !important;
-  }
+  #ios-statusbar, #ios-homescreen, #ios-dock,
+  #ios-home-indicator, #ios-app-view,
+  #ios-control-center, #ios-notif-center,
+  #ios-swipe-hint, #lock-widgets { display: none !important; }
 }
