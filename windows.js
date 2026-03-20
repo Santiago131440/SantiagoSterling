@@ -647,7 +647,7 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-let calCurrentDate = new Date(), calSelectedDay = null;
+let calCurrentDate = new Date(), calSelectedDayIOS = null;
 const DAYS = ["Lu","Ma","Mi","Ju","Vi","Sá","Do"];
 
 function renderCalendar() {
@@ -668,8 +668,8 @@ function renderCalendar() {
         el.className = "calendar-day";
         el.textContent = d;
         if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) el.classList.add("calendar-today");
-        if (d === calSelectedDay) el.classList.add("calendar-selected");
-        el.onclick = () => { document.querySelectorAll(".calendar-day").forEach(x => x.classList.remove("calendar-selected")); el.classList.add("calendar-selected"); calSelectedDay = d; };
+        if (d === calSelectedDayIOS) el.classList.add("calendar-selected");
+        el.onclick = () => { document.querySelectorAll(".calendar-day").forEach(x => x.classList.remove("calendar-selected")); el.classList.add("calendar-selected"); calSelectedDayIOS = d; };
         cal.appendChild(el);
     }
 }
@@ -1027,17 +1027,25 @@ function openAppStore() {
 
 function isMobile() { return window.innerWidth <= 768; }
 
-/* ---- App definitions: page 0 (8 apps) and page 1 (rest) ---- */
+/* ---- App definitions: page 0 (widgets), page 1 (native), page 2 (sterling) ---- */
 const IOS_NATIVE_APPS = [
-  // Native iPhone apps
-  { id:"phone",    label:"Teléfono",  native:true, nativeType:"phone",    bg:"linear-gradient(145deg,#34c759,#28a745)", emoji:"📞" },
-  { id:"messages", label:"Mensajes",  native:true, nativeType:"messages", bg:"linear-gradient(145deg,#34c759,#1aad1a)", emoji:"💬" },
-  { id:"camera",   label:"Cámara",    native:true, nativeType:"camera",   bg:"linear-gradient(145deg,#6c6c70,#3a3a3c)", emoji:"📷" },
-  { id:"photos",   label:"Fotos",     native:true, nativeType:"photos",   bg:"linear-gradient(145deg,#ff9500,#ff6b00)",  emoji:"🌅" },
-  { id:"maps",     label:"Mapas",     native:true, nativeType:"maps",     bg:"linear-gradient(145deg,#34c759,#5ac8fa)",  emoji:"🗺️" },
-  { id:"settings", label:"Ajustes",   native:true, nativeType:"settings", bg:"linear-gradient(145deg,#8e8e93,#636366)", emoji:"⚙️" },
-  { id:"notes",    label:"Notas",     native:true, nativeType:"notes-ios",bg:"linear-gradient(145deg,#ffd60a,#ff9f0a)", emoji:"📝" },
-  { id:"clock",    label:"Reloj",     native:true, nativeType:"clock",    bg:"linear-gradient(145deg,#1c1c1e,#3a3a3c)", emoji:"🕐" },
+  // Native iPhone apps - page 1
+  { id:"phone",      label:"Teléfono",   native:true, nativeType:"phone",     bg:"linear-gradient(145deg,#34c759,#28a745)", emoji:"📞" },
+  { id:"messages",   label:"Mensajes",   native:true, nativeType:"messages",  bg:"linear-gradient(145deg,#34c759,#1aad1a)", emoji:"💬" },
+  { id:"camera",     label:"Cámara",     native:true, nativeType:"camera",    bg:"linear-gradient(145deg,#6c6c70,#3a3a3c)", emoji:"📷" },
+  { id:"photos",     label:"Fotos",      native:true, nativeType:"photos",    bg:"linear-gradient(145deg,#ff9500,#ff6b00)",  emoji:"🌅" },
+  { id:"maps",       label:"Mapas",      native:true, nativeType:"maps",      bg:"linear-gradient(145deg,#34c759,#5ac8fa)",  emoji:"🗺️" },
+  { id:"settings",   label:"Ajustes",    native:true, nativeType:"settings",  bg:"linear-gradient(145deg,#8e8e93,#636366)", emoji:"⚙️" },
+  { id:"notes",      label:"Notas",      native:true, nativeType:"notes-ios", bg:"linear-gradient(145deg,#ffd60a,#ff9f0a)", emoji:"📝" },
+  { id:"clock",      label:"Reloj",      native:true, nativeType:"clock",     bg:"linear-gradient(145deg,#1c1c1e,#3a3a3c)", emoji:"🕐" },
+  { id:"calendar",   label:"Calendario", native:true, nativeType:"calendar",  bg:"linear-gradient(145deg,#ff3b30,#ff6b30)", emoji:"📅" },
+  { id:"calculator", label:"Calculadora",native:true, nativeType:"calculator",bg:"linear-gradient(145deg,#1c1c1e,#2c2c2e)", emoji:"🧮" },
+  { id:"health",     label:"Salud",      native:true, nativeType:"health",    bg:"linear-gradient(145deg,#ff2d55,#ff6b81)", emoji:"❤️" },
+  { id:"weather",    label:"Clima",      native:true, nativeType:"weather-app",bg:"linear-gradient(145deg,#1a6fd8,#3a9bd5)",emoji:"⛅" },
+  { id:"wallet",     label:"Wallet",     native:true, nativeType:"wallet",    bg:"linear-gradient(145deg,#000,#1c1c1e)", emoji:"💳" },
+  { id:"music-native",label:"Música",    native:true, nativeType:"music-native",bg:"linear-gradient(145deg,#fc3c44,#fd6f5a)",emoji:"🎵"},
+  { id:"contacts",   label:"Contactos",  native:true, nativeType:"contacts",  bg:"linear-gradient(145deg,#8e8e93,#636366)", emoji:"👤" },
+  { id:"podcasts",   label:"Podcasts",   native:true, nativeType:"podcasts",  bg:"linear-gradient(145deg,#b05dfb,#8944c4)", emoji:"🎙️" },
 ];
 const IOS_STERLING_APPS = [
   // Santiago's apps via iframe
@@ -1103,12 +1111,15 @@ function makeAppIconEl(appDef, delay) {
 function iosBuildGrids() {
   const g0 = document.getElementById("ios-grid-p0");
   const g1 = document.getElementById("ios-grid-p1");
-  if (!g0 || !g1) return;
-  g0.innerHTML = ""; g1.innerHTML = "";
-  // Page 0: native iOS apps (8)
-  IOS_NATIVE_APPS.forEach((app, i) => g0.appendChild(makeAppIconEl(app, i * 0.04)));
-  // Page 1: Sterling apps
-  IOS_STERLING_APPS.forEach((app, i) => g1.appendChild(makeAppIconEl(app, i * 0.04)));
+  const g2 = document.getElementById("ios-grid-p2");
+  if (!g0 || !g1 || !g2) return;
+  g0.innerHTML = ""; g1.innerHTML = ""; g2.innerHTML = "";
+  // Page 0: first 8 native apps shown below widgets
+  IOS_NATIVE_APPS.slice(0,8).forEach((app, i) => g0.appendChild(makeAppIconEl(app, i * 0.04)));
+  // Page 1: all native apps
+  IOS_NATIVE_APPS.forEach((app, i) => g1.appendChild(makeAppIconEl(app, i * 0.03)));
+  // Page 2: Sterling apps
+  IOS_STERLING_APPS.forEach((app, i) => g2.appendChild(makeAppIconEl(app, i * 0.03)));
 }
 
 /* ---- Bind dock items ---- */
@@ -1135,20 +1146,39 @@ function iosGoToPage(p) {
   document.querySelectorAll(".ios-dot").forEach((d, i) => d.classList.toggle("active", i === iosCurrentPage));
 }
 
-/* ---- Swipe between pages ---- */
+/* ---- Swipe between pages (touch + mouse) ---- */
 function iosSetupPageSwipe() {
   const scroll = document.getElementById("ios-pages-scroll");
   if (!scroll) return;
-  let startX = 0, startY = 0;
-  scroll.addEventListener("touchstart", e => { startX = e.touches[0].clientX; startY = e.touches[0].clientY; }, { passive: true });
+  let startX = 0, startY = 0, isDragging = false;
+
+  // Touch
+  scroll.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+    isDragging = true;
+  }, { passive: true });
   scroll.addEventListener("touchend", e => {
+    if (!isDragging) return; isDragging = false;
     const dx = e.changedTouches[0].clientX - startX;
     const dy = Math.abs(e.changedTouches[0].clientY - startY);
-    if (Math.abs(dx) > 50 && dy < 60) {
+    if (Math.abs(dx) > 40 && dy < 80) {
       if (dx < 0) iosGoToPage(iosCurrentPage + 1);
       else iosGoToPage(iosCurrentPage - 1);
     }
   }, { passive: true });
+
+  // Mouse (desktop preview)
+  scroll.addEventListener("mousedown", e => { startX = e.clientX; startY = e.clientY; isDragging = true; });
+  scroll.addEventListener("mouseup", e => {
+    if (!isDragging) return; isDragging = false;
+    const dx = e.clientX - startX;
+    const dy = Math.abs(e.clientY - startY);
+    if (Math.abs(dx) > 40 && dy < 80) {
+      if (dx < 0) iosGoToPage(iosCurrentPage + 1);
+      else iosGoToPage(iosCurrentPage - 1);
+    }
+  });
+  scroll.addEventListener("mouseleave", () => isDragging = false);
 }
 
 /* ---- Open iframe app ---- */
@@ -1178,8 +1208,11 @@ function iosOpenNativeApp(app) {
   view.classList.remove("closing");
   view.classList.add("open");
   // Post-render hooks
-  if (app.nativeType === "phone") setupPhoneApp();
-  if (app.nativeType === "messages") setupMessagesApp();
+  if (app.nativeType === "phone")         setupPhoneApp();
+  if (app.nativeType === "messages")      setupMessagesApp();
+  if (app.nativeType === "calendar")      setupCalendarApp();
+  if (app.nativeType === "calculator")    setupCalculatorApp();
+  if (app.nativeType === "music-native")  setupMusicNativeApp();
 }
 
 /* ---- Close app ---- */
@@ -1198,14 +1231,22 @@ function iosCloseApp() {
 ================================================================ */
 function buildNativeApp(type) {
   switch(type) {
-    case "phone":    return buildPhone();
-    case "messages": return buildMessages();
-    case "camera":   return buildCamera();
-    case "photos":   return buildPhotos();
-    case "maps":     return buildMaps();
-    case "settings": return buildSettings();
-    case "notes-ios":return buildNotesIOS();
-    case "clock":    return buildClock();
+    case "phone":       return buildPhone();
+    case "messages":    return buildMessages();
+    case "camera":      return buildCamera();
+    case "photos":      return buildPhotos();
+    case "maps":        return buildMaps();
+    case "settings":    return buildSettings();
+    case "notes-ios":   return buildNotesIOS();
+    case "clock":       return buildClock();
+    case "calendar":    return buildCalendarApp();
+    case "calculator":  return buildCalculator();
+    case "health":      return buildHealth();
+    case "weather-app": return buildWeatherApp();
+    case "wallet":      return buildWallet();
+    case "music-native":return buildMusicNative();
+    case "contacts":    return buildContacts();
+    case "podcasts":    return buildPodcasts();
     default: return `<div style="padding:40px;text-align:center;color:#666;">App en construcción</div>`;
   }
 }
@@ -1506,6 +1547,450 @@ function buildClock() {
   </div>`;
 }
 
+/* ---- Calendar App ---- */
+let calAppDate = new Date();
+calSelectedDayIOS = new Date().getDate(); // reuse existing global
+const calEvents = {
+  [new Date().getDate()]: [
+    { title:"Reunión de equipo", time:"10:00 AM", color:"#007aff" },
+    { title:"Revisión del portafolio", time:"3:00 PM", color:"#ff2d55" },
+  ],
+  [(new Date().getDate() + 2) % 28 + 1]: [
+    { title:"Entrega proyecto Quantix", time:"9:00 AM", color:"#34c759" },
+  ],
+  [(new Date().getDate() + 5) % 28 + 1]: [
+    { title:"Conferencia IA", time:"6:00 PM", color:"#5856d6" },
+  ],
+};
+
+function buildCalendarApp() {
+  const now = new Date();
+  const year = calAppDate.getFullYear();
+  const month = calAppDate.getMonth();
+  const monthNames = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+  const dayNames = ["Do","Lu","Ma","Mi","Ju","Vi","Sa"];
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+  const isCurrentMonth = (today.getFullYear() === year && today.getMonth() === month);
+
+  let daysHTML = "";
+  // Empty cells before first day
+  for (let i = 0; i < firstDay; i++) {
+    const prevDate = new Date(year, month, -firstDay + i + 1).getDate();
+    daysHTML += `<div class="cal-native-day other-month">${prevDate}</div>`;
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const isToday = isCurrentMonth && d === today.getDate();
+    const isSel = d === calSelectedDayIOS && isCurrentMonth;
+    const hasEv = calEvents[d] && calEvents[d].length > 0;
+    daysHTML += `<div class="cal-native-day${isToday?' today':''}${isSel&&!isToday?' selected':''}${hasEv?' has-event':''}" onclick="calSelectDay(${d})">${d}</div>`;
+  }
+
+  // Events for selected day
+  const evs = calEvents[calSelectedDayIOS] || [];
+  const evDate = new Date(year, month, calSelectedDayIOS);
+  const dayLabel = evDate.toLocaleDateString("es-ES", { weekday:"long", day:"numeric", month:"long" });
+
+  return `<div class="cal-native-app">
+    <div class="cal-native-header">
+      <div class="cal-native-month-nav">
+        <button class="cal-native-nav-btn" onclick="calChangeMonth(-1)">‹</button>
+        <div class="cal-native-month-title">${monthNames[month]} ${year}</div>
+        <button class="cal-native-nav-btn" onclick="calChangeMonth(1)">›</button>
+      </div>
+      <div class="cal-native-weekdays">
+        ${dayNames.map(d=>`<div>${d}</div>`).join("")}
+      </div>
+    </div>
+    <div class="cal-native-grid" style="padding:4px 12px 8px;">${daysHTML}</div>
+    <div class="cal-native-events">
+      <div class="cal-events-date-label">${dayLabel.charAt(0).toUpperCase()+dayLabel.slice(1)}</div>
+      ${evs.length ? evs.map(ev=>`
+        <div class="cal-event-item">
+          <div class="cal-event-color" style="background:${ev.color}"></div>
+          <div>
+            <div class="cal-event-title">${ev.title}</div>
+            <div class="cal-event-time">${ev.time}</div>
+          </div>
+        </div>`).join("") : `<div class="cal-no-events">Sin eventos este día</div>`}
+    </div>
+  </div>`;
+}
+
+function setupCalendarApp() {
+  window.calSelectDay = (d) => {
+    calSelectedDayIOS = d;
+    const nv = document.getElementById("ios-native-view");
+    if (nv) nv.innerHTML = buildCalendarApp();
+    setupCalendarApp();
+  };
+  window.calChangeMonth = (delta) => {
+    calAppDate = new Date(calAppDate.getFullYear(), calAppDate.getMonth() + delta, 1);
+    const nv = document.getElementById("ios-native-view");
+    if (nv) nv.innerHTML = buildCalendarApp();
+    setupCalendarApp();
+  };
+}
+
+/* ---- Calculator App ---- */
+let calcExpr = "", calcResult = "0", calcJustEval = false;
+function buildCalculator() {
+  return `<div class="calc-app">
+    <div class="calc-display">
+      <div class="calc-expr" id="calc-expr">${calcExpr}</div>
+      <div class="calc-result" id="calc-result">${calcResult}</div>
+    </div>
+    <div class="calc-keypad">
+      <div class="calc-key gray" onclick="calcInput('AC')">AC</div>
+      <div class="calc-key gray" onclick="calcInput('+/-')">+/-</div>
+      <div class="calc-key gray" onclick="calcInput('%')">%</div>
+      <div class="calc-key orange" onclick="calcInput('÷')">÷</div>
+      <div class="calc-key dark" onclick="calcInput('7')">7</div>
+      <div class="calc-key dark" onclick="calcInput('8')">8</div>
+      <div class="calc-key dark" onclick="calcInput('9')">9</div>
+      <div class="calc-key orange" onclick="calcInput('×')">×</div>
+      <div class="calc-key dark" onclick="calcInput('4')">4</div>
+      <div class="calc-key dark" onclick="calcInput('5')">5</div>
+      <div class="calc-key dark" onclick="calcInput('6')">6</div>
+      <div class="calc-key orange" onclick="calcInput('−')">−</div>
+      <div class="calc-key dark" onclick="calcInput('1')">1</div>
+      <div class="calc-key dark" onclick="calcInput('2')">2</div>
+      <div class="calc-key dark" onclick="calcInput('3')">3</div>
+      <div class="calc-key orange" onclick="calcInput('+')">+</div>
+      <div class="calc-key dark wide" onclick="calcInput('0')" style="grid-column:span 2;aspect-ratio:auto;padding:0 26px;justify-content:flex-start;">0</div>
+      <div class="calc-key dark" onclick="calcInput('.')">.</div>
+      <div class="calc-key orange" onclick="calcInput('=')">=</div>
+    </div>
+  </div>`;
+}
+function setupCalculatorApp() {
+  window.calcInput = (key) => {
+    const exprEl = document.getElementById("calc-expr");
+    const resultEl = document.getElementById("calc-result");
+    if (!exprEl || !resultEl) return;
+    if (key === "AC") { calcExpr = ""; calcResult = "0"; calcJustEval = false; }
+    else if (key === "=") {
+      try {
+        calcExpr = calcResult;
+        const expr = calcExpr.replace(/÷/g,"/").replace(/×/g,"*").replace(/−/g,"-");
+        const r = Function('"use strict";return (' + expr + ')')();
+        calcResult = parseFloat(r.toFixed(10)).toString();
+        calcExpr = ""; calcJustEval = true;
+      } catch(e) { calcResult = "Error"; }
+    } else if (key === "+/-") {
+      calcResult = (parseFloat(calcResult) * -1).toString();
+    } else if (key === "%") {
+      calcResult = (parseFloat(calcResult) / 100).toString();
+    } else if (["÷","×","−","+"].includes(key)) {
+      if (calcJustEval) { calcExpr = calcResult + " " + key + " "; calcResult = ""; calcJustEval = false; }
+      else { calcExpr += (calcResult||"") + " " + key + " "; calcResult = ""; }
+    } else if (key === ".") {
+      if (!calcResult.includes(".")) calcResult += (calcResult ? "" : "0") + ".";
+    } else {
+      if (calcJustEval) { calcResult = key; calcJustEval = false; }
+      else calcResult = (calcResult === "0" ? "" : calcResult) + key;
+    }
+    if (exprEl) exprEl.textContent = calcExpr;
+    if (resultEl) resultEl.textContent = calcResult || "0";
+  };
+}
+
+/* ---- Health App ---- */
+function buildHealth() {
+  return `<div class="health-app">
+    <div class="health-header">
+      <div class="health-title">Salud</div>
+      <div class="health-subtitle">${new Date().toLocaleDateString("es-ES", {weekday:"long",day:"numeric",month:"long"})}</div>
+    </div>
+    <div style="overflow-y:auto;padding-bottom:40px;">
+      <div class="health-section">
+        <div class="health-section-label">Resumen del día</div>
+        <div class="health-card">
+          <div class="health-icon">🚶</div>
+          <div class="health-card-content">
+            <div class="health-card-label">Pasos</div>
+            <div class="health-card-value">8,234 <span class="health-card-unit">pasos</span></div>
+            <div class="health-bar"><div class="health-bar-fill" style="width:70%;background:#ff2d55;"></div></div>
+          </div>
+        </div>
+        <div class="health-card">
+          <div class="health-icon">🔥</div>
+          <div class="health-card-content">
+            <div class="health-card-label">Calorías activas</div>
+            <div class="health-card-value">420 <span class="health-card-unit">kcal</span></div>
+            <div class="health-bar"><div class="health-bar-fill" style="width:60%;background:#ff9500;"></div></div>
+          </div>
+        </div>
+        <div class="health-card">
+          <div class="health-icon">❤️</div>
+          <div class="health-card-content">
+            <div class="health-card-label">Frecuencia cardíaca</div>
+            <div class="health-card-value">72 <span class="health-card-unit">bpm</span></div>
+            <div class="health-bar"><div class="health-bar-fill" style="width:55%;background:#ff2d55;"></div></div>
+          </div>
+        </div>
+        <div class="health-card">
+          <div class="health-icon">🛌</div>
+          <div class="health-card-content">
+            <div class="health-card-label">Sueño</div>
+            <div class="health-card-value">7h 32m <span class="health-card-unit"></span></div>
+            <div class="health-bar"><div class="health-bar-fill" style="width:80%;background:#5856d6;"></div></div>
+          </div>
+        </div>
+        <div class="health-card">
+          <div class="health-icon">💧</div>
+          <div class="health-card-content">
+            <div class="health-card-label">Agua</div>
+            <div class="health-card-value">1.4 <span class="health-card-unit">litros</span></div>
+            <div class="health-bar"><div class="health-bar-fill" style="width:45%;background:#5ac8fa;"></div></div>
+          </div>
+        </div>
+        <div class="health-card">
+          <div class="health-icon">🏃</div>
+          <div class="health-card-content">
+            <div class="health-card-label">Distancia</div>
+            <div class="health-card-value">5.8 <span class="health-card-unit">km</span></div>
+            <div class="health-bar"><div class="health-bar-fill" style="width:50%;background:#34c759;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---- Weather Full App ---- */
+function buildWeatherApp() {
+  const hours = ["Ahora","1pm","2pm","3pm","4pm","5pm","6pm","7pm","8pm"];
+  const temps  = [26,27,27,28,28,26,24,23,22];
+  const emojis = ["⛅","⛅","☀️","☀️","🌤","⛅","🌦","🌦","🌙"];
+  return `<div style="background:linear-gradient(180deg,#1a6fd8 0%,#3a9bd5 60%,#87ceeb 100%);min-height:100%;color:white;padding:20px 20px 40px;overflow-y:auto;">
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-size:14px;opacity:0.85;margin-bottom:4px;">📍 Cali, Colombia</div>
+      <div style="font-size:76px;font-weight:100;letter-spacing:-3px;line-height:1;">26°</div>
+      <div style="font-size:20px;font-weight:300;margin:4px 0;">Parcialmente nublado</div>
+      <div style="font-size:15px;opacity:0.8;">Máx: 29° · Mín: 21°</div>
+    </div>
+    <!-- Hourly forecast -->
+    <div style="background:rgba(255,255,255,0.15);border-radius:18px;padding:14px;margin-bottom:14px;">
+      <div style="font-size:12px;font-weight:600;opacity:0.75;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">PRONÓSTICO POR HORA</div>
+      <div style="display:flex;gap:14px;overflow-x:auto;padding-bottom:4px;">
+        ${hours.map((h,i)=>`<div style="display:flex;flex-direction:column;align-items:center;gap:5px;min-width:44px;">
+          <div style="font-size:11px;opacity:0.8;">${h}</div>
+          <div style="font-size:20px;">${emojis[i]}</div>
+          <div style="font-size:15px;font-weight:500;">${temps[i]}°</div>
+        </div>`).join("")}
+      </div>
+    </div>
+    <!-- 5-day forecast -->
+    <div style="background:rgba(255,255,255,0.15);border-radius:18px;padding:14px;margin-bottom:14px;">
+      <div style="font-size:12px;font-weight:600;opacity:0.75;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">PRÓXIMOS 5 DÍAS</div>
+      ${[["Hoy","⛅",29,21],["Martes","🌤",30,22],["Miércoles","🌦",25,20],["Jueves","☀️",31,23],["Viernes","⛅",28,21]].map(([d,e,hi,lo])=>`
+        <div style="display:flex;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.1);">
+          <div style="flex:1;font-size:16px;">${d}</div>
+          <div style="font-size:22px;margin-right:12px;">${e}</div>
+          <div style="font-size:15px;opacity:0.7;margin-right:8px;">${lo}°</div>
+          <div style="font-size:15px;font-weight:600;">${hi}°</div>
+        </div>`).join("")}
+    </div>
+    <!-- UV / Humidity -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:rgba(255,255,255,0.15);border-radius:18px;padding:14px;">
+        <div style="font-size:11px;opacity:0.7;text-transform:uppercase;letter-spacing:0.5px;">UV</div>
+        <div style="font-size:32px;font-weight:200;">6</div>
+        <div style="font-size:13px;opacity:0.8;">Alto</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.15);border-radius:18px;padding:14px;">
+        <div style="font-size:11px;opacity:0.7;text-transform:uppercase;letter-spacing:0.5px;">Humedad</div>
+        <div style="font-size:32px;font-weight:200;">74%</div>
+        <div style="font-size:13px;opacity:0.8;">Moderada</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.15);border-radius:18px;padding:14px;">
+        <div style="font-size:11px;opacity:0.7;text-transform:uppercase;letter-spacing:0.5px;">Viento</div>
+        <div style="font-size:32px;font-weight:200;">12</div>
+        <div style="font-size:13px;opacity:0.8;">km/h NE</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.15);border-radius:18px;padding:14px;">
+        <div style="font-size:11px;opacity:0.7;text-transform:uppercase;letter-spacing:0.5px;">Sensación</div>
+        <div style="font-size:32px;font-weight:200;">28°</div>
+        <div style="font-size:13px;opacity:0.8;">Cálido</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---- Wallet App ---- */
+function buildWallet() {
+  return `<div style="background:#1c1c1e;min-height:100%;color:white;padding:20px 16px 40px;overflow-y:auto;">
+    <div style="font-size:28px;font-weight:700;margin-bottom:20px;">Wallet</div>
+    <!-- Cards -->
+    <div style="display:flex;flex-direction:column;gap:(-40px);">
+      <div style="background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);border-radius:20px;padding:24px;margin-bottom:-60px;box-shadow:0 10px 30px rgba(0,0,0,0.5);position:relative;z-index:3;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div style="font-size:14px;opacity:0.7;">Visa</div>
+          <div style="font-size:24px;">💳</div>
+        </div>
+        <div style="font-size:18px;letter-spacing:4px;margin:24px 0 12px;font-weight:300;">•••• •••• •••• 4832</div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;opacity:0.7;">
+          <div>SANTIAGO STERLING</div>
+          <div>12/26</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(135deg,#f7971e,#ffd200);border-radius:20px;padding:24px;margin-bottom:-60px;box-shadow:0 10px 30px rgba(0,0,0,0.4);position:relative;z-index:2;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div style="font-size:14px;opacity:0.7;color:#333;">Mastercard</div>
+          <div style="font-size:24px;">💳</div>
+        </div>
+        <div style="font-size:18px;letter-spacing:4px;margin:24px 0 12px;font-weight:300;color:#333;">•••• •••• •••• 7741</div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;opacity:0.7;color:#333;">
+          <div>SANTIAGO STERLING</div>
+          <div>08/27</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(135deg,#11998e,#38ef7d);border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,0.4);position:relative;z-index:1;margin-top:80px;">
+        <div style="font-size:14px;opacity:0.8;color:#1c1c1e;">Apple Cash</div>
+        <div style="font-size:36px;font-weight:200;margin:12px 0;color:#1c1c1e;">$248.50</div>
+        <div style="font-size:12px;opacity:0.7;color:#1c1c1e;">Disponible</div>
+      </div>
+    </div>
+    <div style="margin-top:24px;background:#2c2c2e;border-radius:16px;overflow:hidden;">
+      ${[["Transferencia","Hace 2h","+ $50.00","#34c759"],["Compra App Store","Ayer","- $4.99","#ff3b30"],["Pago de servicio","Hace 3 días","- $28.000","#ff9500"]].map(([t,d,a,c])=>`
+        <div style="padding:14px 16px;border-bottom:0.5px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:12px;">
+          <div style="flex:1;">
+            <div style="font-size:15px;">${t}</div>
+            <div style="font-size:12px;opacity:0.5;margin-top:2px;">${d}</div>
+          </div>
+          <div style="font-size:16px;font-weight:600;color:${c};">${a}</div>
+        </div>`).join("")}
+    </div>
+  </div>`;
+}
+
+/* ---- Music Native App ---- */
+let musicPlaying = false;
+function buildMusicNative() {
+  return `<div style="background:#1c1c1e;min-height:100%;color:white;display:flex;flex-direction:column;align-items:center;padding:30px 24px 40px;gap:20px;">
+    <div style="font-size:16px;font-weight:600;opacity:0.6;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Sterling Music</div>
+    <div style="width:200px;height:200px;border-radius:24px;background:linear-gradient(135deg,#ff6b35,#f7c948,#ff2d55);display:flex;align-items:center;justify-content:center;font-size:72px;box-shadow:0 20px 60px rgba(255,45,85,0.4);">🎵</div>
+    <div style="text-align:center;">
+      <div style="font-size:22px;font-weight:700;margin-bottom:4px;">Sterling Mix Vol. 1</div>
+      <div style="font-size:16px;opacity:0.6;">Santiago Sterling</div>
+    </div>
+    <div style="width:100%;">
+      <div style="height:3px;background:rgba(255,255,255,0.15);border-radius:2px;margin-bottom:6px;position:relative;">
+        <div id="music-progress-bar" style="height:100%;width:35%;background:white;border-radius:2px;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;opacity:0.5;">
+        <span id="music-current-time">1:24</span><span>3:58</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:32px;">
+      <div style="font-size:28px;cursor:pointer;opacity:0.7;" onclick="showToast('Música','⏮ Anterior')">⏮</div>
+      <div id="music-play-btn" style="width:64px;height:64px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;font-size:28px;color:#1c1c1e;cursor:pointer;" onclick="musicToggleNative()">▶</div>
+      <div style="font-size:28px;cursor:pointer;opacity:0.7;" onclick="showToast('Música','⏭ Siguiente')">⏭</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;width:100%;padding:0 8px;">
+      <div style="font-size:22px;cursor:pointer;opacity:0.6;" onclick="showToast('Música','🔀 Aleatorio')">🔀</div>
+      <div style="font-size:22px;cursor:pointer;opacity:0.6;" onclick="showToast('Música','🔁 Repetir')">🔁</div>
+    </div>
+    <div style="width:100%;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:14px;opacity:0.5;">🔈</span>
+        <div style="flex:1;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;">
+          <div style="width:70%;height:100%;background:white;border-radius:2px;"></div>
+        </div>
+        <span style="font-size:14px;opacity:0.5;">🔊</span>
+      </div>
+    </div>
+  </div>`;
+}
+function setupMusicNativeApp() {
+  let musicProgress = 35;
+  let seconds = 84;
+  let playing = false;
+  let interval = null;
+  window.musicToggleNative = () => {
+    playing = !playing;
+    const btn = document.getElementById("music-play-btn");
+    if (btn) btn.textContent = playing ? "⏸" : "▶";
+    if (playing) {
+      interval = setInterval(() => {
+        seconds = Math.min(seconds + 1, 238);
+        musicProgress = (seconds / 238) * 100;
+        const bar = document.getElementById("music-progress-bar");
+        const timeEl = document.getElementById("music-current-time");
+        if (bar) bar.style.width = musicProgress + "%";
+        if (timeEl) timeEl.textContent = `${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,"0")}`;
+        if (seconds >= 238) { clearInterval(interval); playing = false; if(btn) btn.textContent = "▶"; }
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+  };
+}
+
+/* ---- Contacts App ---- */
+function buildContacts() {
+  const contacts = [
+    { name:"Andrés M.", role:"Cliente", color:"#007aff", emoji:"A" },
+    { name:"Carlos P.", role:"Desarrollador", color:"#5856d6", emoji:"C" },
+    { name:"Laura S.", role:"Diseñadora", color:"#ff2d55", emoji:"L" },
+    { name:"María T.", role:"Gerente", color:"#ff9500", emoji:"M" },
+    { name:"Pedro V.", role:"DevOps", color:"#34c759", emoji:"P" },
+    { name:"Sofía R.", role:"Analista", color:"#af52de", emoji:"S" },
+    { name:"Tomás G.", role:"UX Designer", color:"#5ac8fa", emoji:"T" },
+    { name:"Valeria H.", role:"PM", color:"#ff3b30", emoji:"V" },
+  ];
+  return `<div style="background:#f2f2f7;min-height:100%;">
+    <div style="padding:14px 16px 8px;background:white;border-bottom:0.5px solid rgba(0,0,0,0.1);">
+      <div style="background:#e5e5ea;border-radius:10px;padding:8px 12px;display:flex;align-items:center;gap:8px;">
+        <span style="opacity:0.5;">🔍</span>
+        <span style="font-size:16px;color:#8e8e93;">Buscar</span>
+      </div>
+    </div>
+    <div style="padding:8px 0;">
+      ${contacts.map(c=>`
+        <div style="display:flex;align-items:center;gap:14px;padding:12px 16px;background:white;border-bottom:0.5px solid rgba(0,0,0,0.06);cursor:pointer;" onclick="showToast('Contactos','📞 Llamando a ${c.name}…')">
+          <div style="width:46px;height:46px;border-radius:50%;background:${c.color};display:flex;align-items:center;justify-content:center;color:white;font-size:18px;font-weight:600;flex-shrink:0;">${c.emoji}</div>
+          <div>
+            <div style="font-size:16px;font-weight:500;color:#1c1c1e;">${c.name}</div>
+            <div style="font-size:13px;color:#8e8e93;">${c.role}</div>
+          </div>
+          <div style="margin-left:auto;color:#007aff;font-size:20px;">›</div>
+        </div>`).join("")}
+    </div>
+  </div>`;
+}
+
+/* ---- Podcasts App ---- */
+function buildPodcasts() {
+  const shows = [
+    { title:"Tech & IA Hoy", ep:"Ep. 142: El futuro del software", time:"48 min", emoji:"🎙️", color:"#b05dfb" },
+    { title:"Industria 4.0", ep:"Ep. 88: Automatización en Colombia", time:"35 min", emoji:"🏭", color:"#ff9500" },
+    { title:"Dev Stories", ep:"Ep. 201: Del sector industrial al código", time:"62 min", emoji:"💻", color:"#007aff" },
+    { title:"Data Science CO", ep:"Ep. 57: Machine Learning en producción", time:"44 min", emoji:"📊", color:"#34c759" },
+  ];
+  return `<div style="background:#1c1c1e;min-height:100%;color:white;">
+    <div style="padding:16px 16px 8px;">
+      <div style="font-size:28px;font-weight:700;margin-bottom:4px;">Podcasts</div>
+      <div style="font-size:14px;opacity:0.5;">Para ti</div>
+    </div>
+    <div style="padding:0 16px;">
+      ${shows.map(s=>`
+        <div style="display:flex;gap:14px;padding:14px 0;border-bottom:0.5px solid rgba(255,255,255,0.07);cursor:pointer;align-items:center;" onclick="showToast('Podcasts','▶ Reproduciendo: ${s.title}')">
+          <div style="width:56px;height:56px;border-radius:12px;background:${s.color};display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">${s.emoji}</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;opacity:0.6;margin-bottom:2px;">${s.title}</div>
+            <div style="font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.ep}</div>
+            <div style="font-size:12px;opacity:0.5;margin-top:2px;">${s.time}</div>
+          </div>
+          <div style="font-size:22px;color:${s.color};flex-shrink:0;">▶</div>
+        </div>`).join("")}
+    </div>
+  </div>`;
+}
+
 /* ================================================================
    CONTROL CENTER & NOTIFICATION CENTER
 ================================================================ */
@@ -1559,7 +2044,7 @@ function initIosMobile() {
   if (!isMobile()) return;
 
   iosUpdateClock();
-  setInterval(iosUpdateClock, 15000);
+  setInterval(iosUpdateClock, 10000);
   iosUpdateWidgetDates();
   iosBuildGrids();
   iosBindDock();
@@ -1588,10 +2073,96 @@ function initIosMobile() {
   document.getElementById("ios-zone-right")?.addEventListener("click", iosOpenControlCenter);
   document.getElementById("ios-swipe-hint")?.classList.add("active");
 
-  // Widget: weather tap
+  // Widget: weather tap → open weather app
   document.getElementById("iw-weather")?.addEventListener("click", () => {
-    showToast("Clima", "⛅ Cali: 26°C — Parcialmente nublado");
+    const app = IOS_NATIVE_APPS.find(a => a.id === "weather");
+    if (app) iosOpenNativeApp(app);
   });
+
+  // Widget: calendar tap → open calendar app
+  document.getElementById("iw-calendar-widget")?.addEventListener("click", () => {
+    const app = IOS_NATIVE_APPS.find(a => a.id === "calendar");
+    if (app) iosOpenNativeApp(app);
+  });
+
+  // Widget: activity tap → open health app
+  document.getElementById("iw-activity")?.addEventListener("click", () => {
+    const app = IOS_NATIVE_APPS.find(a => a.id === "health");
+    if (app) iosOpenNativeApp(app);
+  });
+
+  // Widget: music tap → open music app
+  document.getElementById("iw-music")?.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("iwm-btn") && !e.target.classList.contains("iwm-play")) {
+      const app = IOS_NATIVE_APPS.find(a => a.id === "music-native");
+      if (app) iosOpenNativeApp(app);
+    }
+  });
+
+  // iOS Search overlay
+  const searchOverlay = document.getElementById("ios-search-overlay");
+  const searchInput = document.getElementById("ios-search-input");
+  const searchResults = document.getElementById("ios-search-results");
+  const searchCancel = document.getElementById("ios-search-cancel");
+
+  const allApps = [...IOS_NATIVE_APPS, ...IOS_STERLING_APPS];
+
+  function iosOpenSearch() {
+    iosCloseAllPanels();
+    if (searchOverlay) { searchOverlay.classList.add("open"); setTimeout(()=>searchInput?.focus(),100); }
+  }
+  function iosCloseSearch() {
+    searchOverlay?.classList.remove("open");
+    if (searchInput) { searchInput.value = ""; }
+    if (searchResults) searchResults.innerHTML = "";
+  }
+
+  searchCancel?.addEventListener("click", iosCloseSearch);
+  searchInput?.addEventListener("input", () => {
+    const q = searchInput.value.toLowerCase().trim();
+    if (!q) { searchResults.innerHTML = ""; return; }
+    const found = allApps.filter(a => a.label.toLowerCase().includes(q));
+    searchResults.innerHTML = found.length ? found.map(a => `
+      <div class="ios-search-result" onclick="iosSearchOpen('${a.id}')">
+        <div class="ios-search-result-icon">${a.emoji || "📱"}</div>
+        <div>
+          <div class="ios-search-result-label">${a.label}</div>
+          <div class="ios-search-result-sub">${a.native ? "App nativa" : "App Sterling"}</div>
+        </div>
+      </div>`).join("") : `<div style="color:rgba(255,255,255,0.5);text-align:center;padding:20px;font-size:15px;">Sin resultados para "${searchInput.value}"</div>`;
+  });
+
+  window.iosSearchOpen = (id) => {
+    iosCloseSearch();
+    setTimeout(() => {
+      const native = IOS_NATIVE_APPS.find(a => a.id === id);
+      if (native) { iosOpenNativeApp(native); return; }
+      const sterling = IOS_STERLING_APPS.find(a => a.id === id);
+      if (sterling) iosOpenIframeApp(sterling);
+    }, 200);
+  };
+
+  // Pull-down from homescreen = open search
+  const pagesScroll = document.getElementById("ios-pages-scroll");
+  let pullStartY = 0, pullStartPage = 0;
+  pagesScroll?.addEventListener("touchstart", e => {
+    pullStartY = e.touches[0].clientY;
+    pullStartPage = iosCurrentPage;
+  }, { passive: true });
+  pagesScroll?.addEventListener("touchend", e => {
+    const dy = e.changedTouches[0].clientY - pullStartY;
+    // Swipe down on page 0 = open search
+    if (pullStartPage === 0 && dy > 70) iosOpenSearch();
+  }, { passive: true });
+
+  // Music widget play/pause
+  window.iosMusicToggle = () => {
+    const btn = document.getElementById("iwm-play-btn");
+    if (!btn) return;
+    const playing = btn.textContent === "⏸";
+    btn.textContent = playing ? "▶" : "⏸";
+    showToast("Música", playing ? "⏸ Pausado" : "▶ Reproduciendo: Sterling Mix");
+  };
 
   // Lock screen date widget
   const lwDay = document.getElementById("lw-cal-day");
@@ -1604,6 +2175,13 @@ function initIosMobile() {
       lwMonth.textContent = months[now.getMonth()];
     }
   }
+
+  // Battery simulation (fake)
+  let batteryPct = 87;
+  const battPct = document.getElementById("iwbat-pct");
+  const battFill = document.getElementById("iwbat-fill");
+  if (battPct) battPct.textContent = batteryPct + "%";
+  if (battFill) battFill.style.width = batteryPct + "%";
 }
 
 window.addEventListener("load", initIosMobile);
