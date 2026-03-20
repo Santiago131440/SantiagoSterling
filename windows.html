@@ -272,10 +272,10 @@
 <div id="ios-statusbar">
   <span class="ios-sb-time" id="iosSbTime">9:41</span>
   <div class="ios-sb-right">
-    <svg viewBox="0 0 17 12" fill="white" opacity="0.9"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity="0.3"/></svg>
-    <svg viewBox="0 0 16 12" fill="white" opacity="0.9" width="16" height="12"><path d="M8 2.4C5.2 2.4 2.7 3.6 1 5.6L0 4.4C2 2.1 4.9 0.6 8 0.6s6 1.5 8 3.8l-1 1.2C13.3 3.6 10.8 2.4 8 2.4z"/><path d="M8 5.2c-1.9 0-3.6.8-4.8 2.1L2 6.1C3.5 4.5 5.6 3.4 8 3.4s4.5 1.1 6 2.7l-1.2 1.2C11.6 6 9.9 5.2 8 5.2z"/><circle cx="8" cy="10" r="2"/></svg>
+    <i class="fi fi-sr-signal-alt-1"></i>
+    <i class="fi fi-sr-wifi"></i>
     <div class="ios-battery">
-      <svg viewBox="0 0 25 12" fill="white" width="25" height="12"><rect x="0" y="1" width="22" height="10" rx="2.5" stroke="white" stroke-width="1" fill="none" opacity="0.7"/><rect x="22.5" y="4" width="2" height="4" rx="1" fill="white" opacity="0.7"/><rect x="1.5" y="2.5" width="17" height="7" rx="1.5" fill="white"/></svg>
+      <i class="fi fi-sr-battery-full"></i>
     </div>
   </div>
 </div>
@@ -304,12 +304,12 @@
           </div>
           <!-- Calendar + Clock row -->
           <div class="ios-widget-row">
-            <div class="ios-widget ios-widget-cal">
+            <div class="ios-widget ios-widget-cal" id="iw-calendar-widget">
               <div class="iwc-header">
                 <div class="iwc-month" id="iwc-month">MAR</div>
               </div>
               <div class="iwc-day-big" id="iwc-day">19</div>
-              <div class="iwc-event">📅 No hay eventos hoy</div>
+              <div class="iwc-event" id="iwc-event-text">📅 No hay eventos hoy</div>
             </div>
             <div style="display:flex;flex-direction:column;gap:10px;flex:1;">
               <div class="ios-widget ios-widget-clock" style="flex:1;">
@@ -319,8 +319,38 @@
               </div>
               <div class="ios-widget ios-widget-battery" style="flex:1;">
                 <div class="iwbat-label">Batería</div>
-                <div class="iwbat-pct">87%</div>
-                <div class="iwbat-bar"><div class="iwbat-fill" style="width:87%"></div></div>
+                <div class="iwbat-pct" id="iwbat-pct">87%</div>
+                <div class="iwbat-bar"><div class="iwbat-fill" id="iwbat-fill" style="width:87%"></div></div>
+              </div>
+            </div>
+          </div>
+          <!-- Activity + Music row -->
+          <div class="ios-widget-row">
+            <div class="ios-widget ios-widget-activity" style="flex:1;" id="iw-activity">
+              <div class="iwa-label">Actividad</div>
+              <div class="iwa-rings">
+                <svg width="64" height="64" viewBox="0 0 64 64">
+                  <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,0,90,0.2)" stroke-width="6"/>
+                  <circle cx="32" cy="32" r="26" fill="none" stroke="#ff2d55" stroke-width="6" stroke-dasharray="163.4" stroke-dashoffset="49" stroke-linecap="round" transform="rotate(-90 32 32)"/>
+                  <circle cx="32" cy="32" r="19" fill="none" stroke="rgba(92,214,92,0.2)" stroke-width="6"/>
+                  <circle cx="32" cy="32" r="19" fill="none" stroke="#30d158" stroke-width="6" stroke-dasharray="119.4" stroke-dashoffset="31" stroke-linecap="round" transform="rotate(-90 32 32)"/>
+                  <circle cx="32" cy="32" r="12" fill="none" stroke="rgba(0,191,255,0.2)" stroke-width="5"/>
+                  <circle cx="32" cy="32" r="12" fill="none" stroke="#00bfff" stroke-width="5" stroke-dasharray="75.4" stroke-dashoffset="18" stroke-linecap="round" transform="rotate(-90 32 32)"/>
+                </svg>
+              </div>
+              <div class="iwa-stat">🔥 420 kcal</div>
+              <div class="iwa-stat">🚶 8.2k pasos</div>
+            </div>
+            <div class="ios-widget ios-widget-music" style="flex:1.4;" id="iw-music">
+              <div class="iwm-art">🎵</div>
+              <div class="iwm-info">
+                <div class="iwm-title">Sterling Mix</div>
+                <div class="iwm-artist">Santiago Sterling</div>
+              </div>
+              <div class="iwm-controls">
+                <span class="iwm-btn" onclick="showToast('Música','⏮ Anterior')">⏮</span>
+                <span class="iwm-btn iwm-play" id="iwm-play-btn" onclick="iosMusicToggle()">▶</span>
+                <span class="iwm-btn" onclick="showToast('Música','⏭ Siguiente')">⏭</span>
               </div>
             </div>
           </div>
@@ -328,9 +358,15 @@
         <!-- App grid page 0 -->
         <div class="ios-app-grid" id="ios-grid-p0"></div>
       </div>
-      <!-- Page 1: More apps -->
+      <!-- Page 1: Native apps full grid -->
       <div class="ios-page" id="ios-page-1">
-        <div class="ios-app-grid" id="ios-grid-p1" style="padding-top:20px;"></div>
+        <div class="ios-page-title">Apps</div>
+        <div class="ios-app-grid" id="ios-grid-p1" style="padding-top:16px;"></div>
+      </div>
+      <!-- Page 2: Sterling apps -->
+      <div class="ios-page" id="ios-page-2">
+        <div class="ios-page-title">Sterling Apps</div>
+        <div class="ios-app-grid" id="ios-grid-p2" style="padding-top:16px;"></div>
       </div>
     </div>
   </div>
@@ -338,7 +374,18 @@
   <div id="ios-page-dots">
     <div class="ios-dot active"></div>
     <div class="ios-dot"></div>
+    <div class="ios-dot"></div>
   </div>
+</div>
+
+<!-- ============================================================ iOS SEARCH OVERLAY -->
+<div id="ios-search-overlay">
+  <div class="ios-search-bar">
+    <span style="color:rgba(255,255,255,0.7);font-size:16px;">🔍</span>
+    <input type="text" id="ios-search-input" placeholder="Buscar" autocomplete="off">
+    <span class="ios-search-cancel" id="ios-search-cancel">Cancelar</span>
+  </div>
+  <div class="ios-search-results" id="ios-search-results"></div>
 </div>
 
 <!-- ============================================================ iOS DOCK -->
