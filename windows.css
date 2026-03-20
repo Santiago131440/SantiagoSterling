@@ -1309,6 +1309,178 @@ body {
     padding: 12px 16px !important;
   }
 
+  /* Page title (page 1, 2) */
+  .ios-page-title {
+    color: white; font-size: 13px; font-weight: 600;
+    text-align: center; text-transform: uppercase; letter-spacing: 1px;
+    opacity: 0.7; padding: 12px 0 4px;
+  }
+
+  /* ---- Activity Widget ---- */
+  .ios-widget-activity {
+    background: #1c1c1e; color: white;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .iwa-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.6; }
+  .iwa-rings { display: flex; justify-content: center; margin: 4px 0; }
+  .iwa-stat { font-size: 11px; opacity: 0.85; }
+
+  /* ---- Music Widget ---- */
+  .ios-widget-music {
+    background: linear-gradient(160deg, #1c1c1e 0%, #2c2c2e 100%);
+    color: white; padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .iwm-art { font-size: 28px; }
+  .iwm-info { flex: 1; }
+  .iwm-title { font-size: 13px; font-weight: 600; }
+  .iwm-artist { font-size: 11px; opacity: 0.6; }
+  .iwm-controls { display: flex; justify-content: space-between; align-items: center; }
+  .iwm-btn { font-size: 16px; cursor: pointer; opacity: 0.8; -webkit-tap-highlight-color: transparent; }
+  .iwm-btn:active { opacity: 0.4; }
+  .iwm-play { font-size: 20px; opacity: 1; }
+
+  /* ---- Full Calendar Native App ---- */
+  .cal-native-app {
+    background: #fff; min-height: 100%; display: flex; flex-direction: column;
+  }
+  .cal-native-header {
+    background: white;
+    padding: 12px 16px 8px;
+    border-bottom: 0.5px solid rgba(0,0,0,0.1);
+  }
+  .cal-native-month-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .cal-native-month-title {
+    font-size: 20px; font-weight: 700; color: #1c1c1e;
+  }
+  .cal-native-nav-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(0,0,0,0.06); border: none;
+    font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: var(--ios-blue);
+  }
+  .cal-native-weekdays {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    text-align: center; font-size: 12px; font-weight: 600;
+    color: rgba(0,0,0,0.45); padding-bottom: 4px;
+  }
+  .cal-native-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 2px; padding: 0 4px 8px;
+  }
+  .cal-native-day {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    font-size: 15px; border-radius: 50%; cursor: pointer; position: relative;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cal-native-day:active { background: rgba(0,0,0,0.05); }
+  .cal-native-day.today {
+    background: var(--ios-red) !important; color: white; font-weight: 700;
+  }
+  .cal-native-day.selected { background: var(--ios-blue); color: white; }
+  .cal-native-day.other-month { color: rgba(0,0,0,0.2); }
+  .cal-native-day.has-event::after {
+    content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
+    width: 5px; height: 5px; border-radius: 50%; background: var(--ios-blue);
+  }
+  .cal-native-day.today.has-event::after { background: white; }
+  .cal-native-events {
+    flex: 1; overflow-y: auto; padding: 12px 16px;
+    background: #f2f2f7;
+  }
+  .cal-events-date-label {
+    font-size: 14px; font-weight: 700; color: #1c1c1e;
+    margin-bottom: 8px;
+  }
+  .cal-event-item {
+    background: white; border-radius: 12px;
+    padding: 12px 14px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+  .cal-event-color { width: 4px; height: 36px; border-radius: 2px; flex-shrink: 0; }
+  .cal-event-title { font-size: 15px; font-weight: 600; color: #1c1c1e; }
+  .cal-event-time { font-size: 13px; color: var(--ios-gray); }
+  .cal-no-events { text-align: center; color: var(--ios-gray); font-size: 15px; padding: 24px 0; }
+
+  /* ---- Calculator Native App ---- */
+  .calc-app { background: #1c1c1e; min-height: 100%; display: flex; flex-direction: column; padding-bottom: 20px; }
+  .calc-display {
+    flex: 1; display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 20px 20px; min-height: 140px;
+  }
+  .calc-expr { font-size: 20px; color: rgba(255,255,255,0.4); text-align: right; min-height: 28px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .calc-result { font-size: 72px; font-weight: 200; color: white; text-align: right; line-height: 1; letter-spacing: -3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .calc-keypad {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 10px; padding: 0 10px;
+  }
+  .calc-key {
+    aspect-ratio: 1; border-radius: 50%; border: none; cursor: pointer;
+    font-size: 24px; font-weight: 400; color: white;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.1s; -webkit-tap-highlight-color: transparent;
+  }
+  .calc-key.wide { border-radius: 32px; aspect-ratio: auto; padding: 0 26px; }
+  .calc-key:active { opacity: 0.6; }
+  .calc-key.gray { background: #636366; }
+  .calc-key.dark { background: #333335; }
+  .calc-key.orange { background: #ff9f0a; }
+
+  /* ---- Health Native App ---- */
+  .health-app { background: #f2f2f7; min-height: 100%; }
+  .health-header { padding: 16px 16px 8px; }
+  .health-title { font-size: 28px; font-weight: 700; color: #1c1c1e; }
+  .health-subtitle { font-size: 14px; color: var(--ios-gray); margin-top: 2px; }
+  .health-section { margin: 0 16px 20px; }
+  .health-section-label { font-size: 13px; font-weight: 600; color: var(--ios-gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .health-card {
+    background: white; border-radius: 14px; padding: 14px 16px;
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .health-icon { font-size: 28px; }
+  .health-card-content { flex: 1; }
+  .health-card-label { font-size: 13px; color: var(--ios-gray); }
+  .health-card-value { font-size: 22px; font-weight: 700; color: #1c1c1e; }
+  .health-card-unit { font-size: 13px; color: var(--ios-gray); }
+  .health-bar { height: 4px; background: #e0e0e0; border-radius: 2px; margin-top: 6px; }
+  .health-bar-fill { height: 100%; border-radius: 2px; }
+
+  /* ---- Search / Spotlight for iOS ---- */
+  #ios-search-overlay {
+    display: none; position: fixed; inset: 0; z-index: 50000;
+    background: rgba(0,0,0,0.4); backdrop-filter: blur(20px);
+    flex-direction: column; padding: calc(var(--sb) + 8px) 16px 0;
+  }
+  #ios-search-overlay.open { display: flex; animation: iosSlideDown 0.3s cubic-bezier(0.22,1,0.36,1); }
+  .ios-search-bar {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.2); border-radius: 14px;
+    padding: 10px 14px; margin-bottom: 12px;
+  }
+  .ios-search-bar input {
+    flex: 1; background: transparent; border: none; outline: none;
+    font-size: 17px; color: white; caret-color: white;
+  }
+  .ios-search-bar input::placeholder { color: rgba(255,255,255,0.6); }
+  .ios-search-cancel { color: white; font-size: 16px; cursor: pointer; white-space: nowrap; }
+  .ios-search-results { flex: 1; overflow-y: auto; }
+  .ios-search-result {
+    background: rgba(255,255,255,0.18); border-radius: 14px;
+    padding: 14px 16px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .ios-search-result:active { background: rgba(255,255,255,0.28); }
+  .ios-search-result-icon { font-size: 28px; }
+  .ios-search-result-label { font-size: 16px; font-weight: 500; color: white; }
+  .ios-search-result-sub { font-size: 13px; color: rgba(255,255,255,0.6); }
+
   /* ================================================================
      GESTURE HINT OVERLAY
   ================================================================ */
