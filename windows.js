@@ -1020,152 +1020,590 @@ function openAppStore() {
   // Aquí va tu lógica existente para abrir la App Store
   document.querySelector('#App Store').style.display = 'block';
 }
-/* ============================================================
-   iOS MOBILE LAYER
-   Only activates when window width <= 768px
-============================================================ */
 
-const IOS_APPS = [
-  { id: "sterlingia",   label: "Sterling IA",   icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-As6MTLYJ6ta7FZgR1G5U6ZUzqfCqvm.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/santiago-chat.html" },
-  { id: "player",       label: "Música",        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-j9GfZpCuZEAQwYOTxDIVxReq5y0OHg.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/Music.html" },
-  { id: "paint",        label: "Sterl-ink",     icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75", url: "https://santiago131440.github.io/SantiagoSterling/ExperienciaLaboral.html" },
-  { id: "buscaminas",   label: "Sterling World", icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-e3kGOJ1Nx9Q68omg5PbnlZh8hFAJkX.png&w=500&q=75", url: "https://santiago131440.github.io/SantiagoSterling/Super%20Mario.html" },
-  { id: "excel",        label: "Math FX",       icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DHtLao0TXcz7zsJ6bxv2DltThCLwQ8.png&w=1000&q=75", url: "https://santiago131440.github.io/SantiagoSterling/Sterling%20math%20fx.html" },
-  { id: "word",         label: "Letter",        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-BjimxRD0gb4rZBjr9jbO9LYXmOZJao.png&w=1000&q=75", url: "https://santiago131440.github.io/SantiagoSterling/Sterling%20Letter.html" },
-  { id: "powerpoint",   label: "Slides",        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-L8T5N6DbL9jezTcIoss4pIKNG256jy.png&w=1000&q=75", url: "https://santiago131440.github.io/SantiagoSterling/Sterling%20Presentation.html" },
-  { id: "airspace",     label: "Captain",       icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-yjBpDcYD9IjVGoIg4LnKkMKL1RBris.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/Buscaminas.html" },
-  { id: "salarios",     label: "Salarios",      icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-CsdmL6Mu7Mz9dPjZYw1Xq22mkGhekV.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/Salarios.html" },
-  { id: "video",        label: "Video",         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Eu2Ph2tWRZNcZUBi5acmRTEYlQhMhx.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/Dashboard1.html" },
-  { id: "suma",         label: "Compras",       icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-HCwnlHIkzR4wXtkTVAySMqAWigIejw.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/Dashboard3.html" },
-  { id: "examen",       label: "Examen",        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-fLBUuECujebAYq2Ctir0tmm4ljvF0b.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/registro.html" },
-  { id: "mix",          label: "Music Studio",  icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-B2EekBDz0A46XdvgtBjgEAw79EH0Dk.png&w=500&q=75",  url: "https://santiago131440.github.io/SantiagoSterling/mix.html" },
-  { id: "aplicaciones", label: "App Store",     icon: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/icon-1773955846572.png?raw=true", url: null /* handled specially */ },
-  { id: "browser",      label: "Safari",        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75", url: "https://www.google.com/webhp?igu=1" },
-  { id: "explorer",     label: "Finder",        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75", url: null /* notes view */ },
-  { id: "notes",        label: "Notas",         icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75", url: null /* notes view */ },
-];
+/* ================================================================
+   iOS MOBILE — Complete iPhone-style experience
+================================================================ */
 
 function isMobile() { return window.innerWidth <= 768; }
 
+/* ---- App definitions: page 0 (8 apps) and page 1 (rest) ---- */
+const IOS_NATIVE_APPS = [
+  // Native iPhone apps
+  { id:"phone",    label:"Teléfono",  native:true, nativeType:"phone",    bg:"linear-gradient(145deg,#34c759,#28a745)", emoji:"📞" },
+  { id:"messages", label:"Mensajes",  native:true, nativeType:"messages", bg:"linear-gradient(145deg,#34c759,#1aad1a)", emoji:"💬" },
+  { id:"camera",   label:"Cámara",    native:true, nativeType:"camera",   bg:"linear-gradient(145deg,#6c6c70,#3a3a3c)", emoji:"📷" },
+  { id:"photos",   label:"Fotos",     native:true, nativeType:"photos",   bg:"linear-gradient(145deg,#ff9500,#ff6b00)",  emoji:"🌅" },
+  { id:"maps",     label:"Mapas",     native:true, nativeType:"maps",     bg:"linear-gradient(145deg,#34c759,#5ac8fa)",  emoji:"🗺️" },
+  { id:"settings", label:"Ajustes",   native:true, nativeType:"settings", bg:"linear-gradient(145deg,#8e8e93,#636366)", emoji:"⚙️" },
+  { id:"notes",    label:"Notas",     native:true, nativeType:"notes-ios",bg:"linear-gradient(145deg,#ffd60a,#ff9f0a)", emoji:"📝" },
+  { id:"clock",    label:"Reloj",     native:true, nativeType:"clock",    bg:"linear-gradient(145deg,#1c1c1e,#3a3a3c)", emoji:"🕐" },
+];
+const IOS_STERLING_APPS = [
+  // Santiago's apps via iframe
+  { id:"sterlingia",  label:"Sterling IA",   img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-As6MTLYJ6ta7FZgR1G5U6ZUzqfCqvm.png&w=500&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/santiago-chat.html" },
+  { id:"player",      label:"Música",        img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-j9GfZpCuZEAQwYOTxDIVxReq5y0OHg.png&w=500&q=75",   url:"https://santiago131440.github.io/SantiagoSterling/Music.html" },
+  { id:"paint",       label:"Sterl-ink",     img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/ExperienciaLaboral.html" },
+  { id:"buscaminas",  label:"Sterling World", img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-e3kGOJ1Nx9Q68omg5PbnlZh8hFAJkX.png&w=500&q=75", url:"https://santiago131440.github.io/SantiagoSterling/Super%20Mario.html" },
+  { id:"explorer",    label:"Finder",        img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/" },
+  { id:"aplicaciones",label:"App Store",     img:"https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/icon-1773955846572.png?raw=true", url:"https://santiago131440.github.io/SantiagoSterling/proyectoApp.html" },
+  { id:"excel",       label:"Math FX",       img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DHtLao0TXcz7zsJ6bxv2DltThCLwQ8.png&w=1000&q=75", url:"https://santiago131440.github.io/SantiagoSterling/Sterling%20math%20fx.html" },
+  { id:"word",        label:"Letter",        img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-BjimxRD0gb4rZBjr9jbO9LYXmOZJao.png&w=1000&q=75", url:"https://santiago131440.github.io/SantiagoSterling/Sterling%20Letter.html" },
+  { id:"powerpoint",  label:"Slides",        img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-L8T5N6DbL9jezTcIoss4pIKNG256jy.png&w=1000&q=75", url:"https://santiago131440.github.io/SantiagoSterling/Sterling%20Presentation.html" },
+  { id:"salarios",    label:"Salarios",      img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-CsdmL6Mu7Mz9dPjZYw1Xq22mkGhekV.png&w=500&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/Salarios.html" },
+  { id:"video",       label:"Video",         img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Eu2Ph2tWRZNcZUBi5acmRTEYlQhMhx.png&w=500&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/Dashboard1.html" },
+  { id:"suma",        label:"Compras",       img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-HCwnlHIkzR4wXtkTVAySMqAWigIejw.png&w=500&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/Dashboard3.html" },
+  { id:"mix",         label:"Music Studio",  img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-B2EekBDz0A46XdvgtBjgEAw79EH0Dk.png&w=500&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/mix.html" },
+  { id:"airspace",    label:"Captain",       img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-yjBpDcYD9IjVGoIg4LnKkMKL1RBris.png&w=500&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/Buscaminas.html" },
+  { id:"examen",      label:"Examen",        img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-fLBUuECujebAYq2Ctir0tmm4ljvF0b.png&w=500&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/registro.html" },
+  { id:"browser",     label:"Safari",        img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75",  url:"https://www.google.com/webhp?igu=1" },
+];
+
 /* ---- Status bar clock ---- */
-function updateIosStatusBar() {
-  const el = document.getElementById("iosSbTime");
-  if (!el) return;
+function iosUpdateClock() {
   const now = new Date();
-  el.textContent = now.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
+  const t = now.toLocaleTimeString("es-ES", { hour:"2-digit", minute:"2-digit" });
+  const el = document.getElementById("iosSbTime");
+  if (el) el.textContent = t;
+  const wc = document.getElementById("iwclock-time");
+  if (wc) wc.textContent = t;
 }
 
-/* ---- Build iOS home screen grid ---- */
-function buildIosGrid() {
-  const grid = document.getElementById("ios-app-grid");
-  if (!grid) return;
-  grid.innerHTML = "";
-  IOS_APPS.forEach((app, i) => {
-    const item = document.createElement("div");
-    item.className = "ios-app-icon";
-    item.style.animationDelay = (i * 0.03) + "s";
-    item.innerHTML = `<img src="${app.icon}" alt="${app.label}"><span>${app.label}</span>`;
-    item.addEventListener("click", () => iosOpenApp(app));
-    grid.appendChild(item);
-  });
+/* ---- Widget dates ---- */
+function iosUpdateWidgetDates() {
+  const now = new Date();
+  const months = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
+  const monthsFull = ["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"];
+  const d = now.getDate();
+  const m = now.getMonth();
+  const el1 = document.getElementById("iwc-month"); if(el1) el1.textContent = months[m];
+  const el2 = document.getElementById("iwc-day"); if(el2) el2.textContent = d;
+  const el3 = document.getElementById("lw-cal-day"); if(el3) el3.textContent = d;
+  const el4 = document.getElementById("lw-cal-month"); if(el4) el4.textContent = monthsFull[m];
+  const el5 = document.getElementById("nc-date-label");
+  if(el5) el5.textContent = now.toLocaleDateString("es-ES", { weekday:"long", day:"numeric", month:"long" });
 }
 
-/* ---- Open app in iOS fullscreen view ---- */
-function iosOpenApp(app) {
-  const view = document.getElementById("ios-app-view");
-  const frame = document.getElementById("ios-app-frame");
-  const title = document.getElementById("ios-app-title");
-  const backLabel = document.getElementById("ios-app-back-label");
-
-  // Apps with no iframe URL use a simple content view
-  if (!app.url) {
-    if (app.id === "notes" || app.id === "explorer") {
-      iosShowNotesView(app);
-      return;
-    }
-    return;
+/* ---- Build app icon element ---- */
+function makeAppIconEl(appDef, delay) {
+  const div = document.createElement("div");
+  div.className = "ios-app-icon";
+  div.style.animationDelay = delay + "s";
+  if (appDef.native) {
+    div.innerHTML = `<div class="ios-native-icon" style="background:${appDef.bg};">${appDef.emoji}</div><span>${appDef.label}</span>`;
+    div.addEventListener("click", () => iosOpenNativeApp(appDef));
+  } else {
+    div.innerHTML = `<img src="${appDef.img}" alt="${appDef.label}"><span>${appDef.label}</span>`;
+    div.addEventListener("click", () => iosOpenIframeApp(appDef));
   }
-
-  title.textContent = app.label;
-  backLabel.textContent = "Inicio";
-  frame.src = app.url;
-
-  // Remove old iframe content, show iframe
-  frame.style.display = "block";
-  view.classList.remove("closing");
-  view.classList.add("open");
+  return div;
 }
 
-/* ---- Simple Notes view for mobile ---- */
-function iosShowNotesView(app) {
-  const view = document.getElementById("ios-app-view");
-  const frame = document.getElementById("ios-app-frame");
-  const title = document.getElementById("ios-app-title");
-
-  title.textContent = app.label;
-  frame.style.display = "none";
-
-  // Build a simple notes UI inline
-  let notesEl = document.getElementById("ios-notes-inner");
-  if (!notesEl) {
-    notesEl = document.createElement("div");
-    notesEl.id = "ios-notes-inner";
-    notesEl.style.cssText = "flex:1;display:flex;flex-direction:column;background:#fef9e4;overflow:hidden;";
-    notesEl.innerHTML = `
-      <textarea style="flex:1;padding:20px;background:transparent;border:none;resize:none;
-        outline:none;font-size:16px;line-height:1.7;color:#1c1c1e;font-family:inherit;"
-        placeholder="Comienza a escribir…">¡Hola! Soy Santiago Sterling\nTecnólogo en análisis y desarrollo de software.\n\nEncuentra todos mis proyectos aquí.</textarea>
-    `;
-    view.appendChild(notesEl);
-  }
-  notesEl.style.display = "flex";
-
-  view.classList.remove("closing");
-  view.classList.add("open");
+/* ---- Populate grids ---- */
+function iosBuildGrids() {
+  const g0 = document.getElementById("ios-grid-p0");
+  const g1 = document.getElementById("ios-grid-p1");
+  if (!g0 || !g1) return;
+  g0.innerHTML = ""; g1.innerHTML = "";
+  // Page 0: native iOS apps (8)
+  IOS_NATIVE_APPS.forEach((app, i) => g0.appendChild(makeAppIconEl(app, i * 0.04)));
+  // Page 1: Sterling apps
+  IOS_STERLING_APPS.forEach((app, i) => g1.appendChild(makeAppIconEl(app, i * 0.04)));
 }
 
-/* ---- Back button ---- */
-function iosCloseApp() {
-  const view = document.getElementById("ios-app-view");
-  const frame = document.getElementById("ios-app-frame");
-  const notesEl = document.getElementById("ios-notes-inner");
-
-  view.classList.add("closing");
-  setTimeout(() => {
-    view.classList.remove("open", "closing");
-    frame.src = "";
-    frame.style.display = "block";
-    if (notesEl) notesEl.style.display = "none";
-  }, 280);
-}
-
-/* ---- iOS dock items ---- */
-function bindIosDock() {
-  document.querySelectorAll(".ios-dock-item[data-ios-app]").forEach(item => {
+/* ---- Bind dock items ---- */
+function iosBindDock() {
+  document.querySelectorAll("#ios-dock .ios-dock-item[data-ios-app]").forEach(item => {
     item.addEventListener("click", () => {
       const id = item.dataset.iosApp;
-      const app = IOS_APPS.find(a => a.id === id);
-      if (app) iosOpenApp(app);
+      const native = IOS_NATIVE_APPS.find(a => a.id === id);
+      if (native) { iosOpenNativeApp(native); return; }
+      const sterling = IOS_STERLING_APPS.find(a => a.id === id);
+      if (sterling) iosOpenIframeApp(sterling);
     });
   });
 }
 
-/* ---- Init iOS layer ---- */
-function initIos() {
-  if (!isMobile()) return;
-
-  updateIosStatusBar();
-  setInterval(updateIosStatusBar, 10000);
-
-  buildIosGrid();
-  bindIosDock();
-
-  const backBtn = document.getElementById("ios-app-back-btn");
-  if (backBtn) backBtn.addEventListener("click", iosCloseApp);
+/* ---- Page switching ---- */
+let iosCurrentPage = 0;
+function iosGoToPage(p) {
+  const inner = document.getElementById("ios-pages-inner");
+  if (!inner) return;
+  const pages = inner.querySelectorAll(".ios-page");
+  iosCurrentPage = Math.max(0, Math.min(p, pages.length - 1));
+  inner.style.transform = `translateX(-${iosCurrentPage * 100}%)`;
+  document.querySelectorAll(".ios-dot").forEach((d, i) => d.classList.toggle("active", i === iosCurrentPage));
 }
 
-// Run on load and on resize
-window.addEventListener("load", initIos);
-window.addEventListener("resize", () => {
-  if (isMobile()) initIos();
-});
+/* ---- Swipe between pages ---- */
+function iosSetupPageSwipe() {
+  const scroll = document.getElementById("ios-pages-scroll");
+  if (!scroll) return;
+  let startX = 0, startY = 0;
+  scroll.addEventListener("touchstart", e => { startX = e.touches[0].clientX; startY = e.touches[0].clientY; }, { passive: true });
+  scroll.addEventListener("touchend", e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = Math.abs(e.changedTouches[0].clientY - startY);
+    if (Math.abs(dx) > 50 && dy < 60) {
+      if (dx < 0) iosGoToPage(iosCurrentPage + 1);
+      else iosGoToPage(iosCurrentPage - 1);
+    }
+  }, { passive: true });
+}
+
+/* ---- Open iframe app ---- */
+function iosOpenIframeApp(app) {
+  const view = document.getElementById("ios-app-view");
+  const frame = document.getElementById("ios-app-frame");
+  const nativeView = document.getElementById("ios-native-view");
+  document.getElementById("ios-app-title").textContent = app.label;
+  nativeView.style.display = "none";
+  nativeView.innerHTML = "";
+  frame.style.display = "block";
+  frame.src = app.url;
+  view.classList.remove("closing");
+  view.classList.add("open");
+}
+
+/* ---- Open native app ---- */
+function iosOpenNativeApp(app) {
+  const view = document.getElementById("ios-app-view");
+  const frame = document.getElementById("ios-app-frame");
+  const nativeView = document.getElementById("ios-native-view");
+  document.getElementById("ios-app-title").textContent = app.label;
+  frame.style.display = "none";
+  frame.src = "";
+  nativeView.style.display = "block";
+  nativeView.innerHTML = buildNativeApp(app.nativeType);
+  view.classList.remove("closing");
+  view.classList.add("open");
+  // Post-render hooks
+  if (app.nativeType === "phone") setupPhoneApp();
+  if (app.nativeType === "messages") setupMessagesApp();
+}
+
+/* ---- Close app ---- */
+function iosCloseApp() {
+  const view = document.getElementById("ios-app-view");
+  view.classList.add("closing");
+  setTimeout(() => {
+    view.classList.remove("open", "closing");
+    document.getElementById("ios-app-frame").src = "";
+    document.getElementById("ios-native-view").innerHTML = "";
+  }, 300);
+}
+
+/* ================================================================
+   NATIVE APP BUILDERS
+================================================================ */
+function buildNativeApp(type) {
+  switch(type) {
+    case "phone":    return buildPhone();
+    case "messages": return buildMessages();
+    case "camera":   return buildCamera();
+    case "photos":   return buildPhotos();
+    case "maps":     return buildMaps();
+    case "settings": return buildSettings();
+    case "notes-ios":return buildNotesIOS();
+    case "clock":    return buildClock();
+    default: return `<div style="padding:40px;text-align:center;color:#666;">App en construcción</div>`;
+  }
+}
+
+/* ---- Phone ---- */
+function buildPhone() {
+  return `<div class="phone-app">
+    <div class="phone-display">
+      <div class="phone-number" id="phone-number"></div>
+      <div class="phone-name" id="phone-name">Marcador</div>
+    </div>
+    <div class="phone-keypad">
+      ${[["1",""],["2","ABC"],["3","DEF"],["4","GHI"],["5","JKL"],["6","MNO"],
+         ["7","PQRS"],["8","TUV"],["9","WXYZ"],["*",""],["0","+"],["#",""]]
+        .map(([n,l])=>`<div class="phone-key" onclick="phoneKey('${n}')">${n}<sub>${l}</sub></div>`).join("")}
+    </div>
+    <div class="phone-actions">
+      <div class="phone-btn del" onclick="phoneDel()">⌫</div>
+      <div class="phone-btn call" onclick="phoneCall()">📞</div>
+    </div>
+  </div>`;
+}
+function setupPhoneApp() {
+  window.phoneKey = (k) => {
+    const el = document.getElementById("phone-number");
+    if (!el) return;
+    if (el.textContent.length < 14) el.textContent += k;
+    document.getElementById("phone-name").textContent = "Marcador";
+  };
+  window.phoneDel = () => {
+    const el = document.getElementById("phone-number");
+    if (!el) return;
+    el.textContent = el.textContent.slice(0, -1);
+  };
+  window.phoneCall = () => {
+    const n = document.getElementById("phone-number")?.textContent;
+    document.getElementById("phone-name").textContent = n ? "Llamando…" : "Ingresa un número";
+    setTimeout(() => { const el = document.getElementById("phone-name"); if(el && el.textContent === "Llamando…") el.textContent = "Marcador"; }, 2500);
+  };
+}
+
+/* ---- Messages ---- */
+let iosMsgCurrentChat = null;
+const iosMsgContacts = [
+  { name:"Andrés M.", avatar:"A", color:"#007aff", msgs:[{out:false,text:"¡Hola Santiago! Vi tu portafolio."},{out:true,text:"¡Gracias! Me alegra que te haya gustado."},{out:false,text:"¿Podemos hablar de un proyecto?"}] },
+  { name:"Laura S.", avatar:"L", color:"#ff2d55", msgs:[{out:true,text:"Hola Laura, ¿cómo estás?"},{out:false,text:"¡Muy bien! Enviándote el brief ya."}] },
+  { name:"Carlos P.", avatar:"C", color:"#5856d6", msgs:[{out:false,text:"¿Terminaste el módulo de IA?"},{out:true,text:"Sí, acabo de subir los cambios al repo."}] },
+  { name:"María T.", avatar:"M", color:"#ff9500", msgs:[{out:false,text:"Sterling, tu app de música está increíble."},{out:true,text:"¡Gracias! Fue un proyecto divertido."}] },
+];
+function buildMessages() {
+  if (iosMsgCurrentChat !== null) return buildChat(iosMsgContacts[iosMsgCurrentChat]);
+  return `<div class="msgs-app">
+    <div class="msgs-search"><input placeholder="🔍  Buscar" readonly></div>
+    <div class="msgs-list">
+      ${iosMsgContacts.map((c,i) => `
+        <div class="msgs-item" onclick="iosOpenChat(${i})">
+          <div class="msgs-avatar" style="background:${c.color}">${c.avatar}</div>
+          <div class="msgs-content">
+            <div class="msgs-name">${c.name}</div>
+            <div class="msgs-preview">${c.msgs[c.msgs.length-1].text}</div>
+          </div>
+          <div class="msgs-time">Ahora</div>
+        </div>`).join("")}
+    </div>
+  </div>`;
+}
+function buildChat(c) {
+  return `<div class="msgs-chat-bg">
+    <div class="msgs-bubbles" id="msgs-bubbles">
+      ${c.msgs.map(m=>`<div class="msg-bubble ${m.out?'out':'in'}">${m.text}</div>`).join("")}
+    </div>
+    <div class="msgs-input-bar">
+      <input class="msgs-input" id="msgs-input" placeholder="iMessage" type="text" 
+        onkeydown="if(event.key==='Enter')iosSendMsg()">
+      <button class="msgs-send" onclick="iosSendMsg()">↑</button>
+    </div>
+  </div>`;
+}
+function setupMessagesApp() {
+  window.iosOpenChat = (i) => {
+    iosMsgCurrentChat = i;
+    document.getElementById("ios-app-title").textContent = iosMsgContacts[i].name;
+    document.getElementById("ios-app-back-label").textContent = "Mensajes";
+    const nv = document.getElementById("ios-native-view");
+    nv.innerHTML = buildChat(iosMsgContacts[i]);
+    const bubbles = document.getElementById("msgs-bubbles");
+    if (bubbles) bubbles.scrollTop = 99999;
+  };
+  window.iosSendMsg = () => {
+    const input = document.getElementById("msgs-input");
+    if (!input || !input.value.trim()) return;
+    const c = iosMsgContacts[iosMsgCurrentChat];
+    c.msgs.push({ out:true, text:input.value.trim() });
+    input.value = "";
+    const nv = document.getElementById("ios-native-view");
+    nv.innerHTML = buildChat(c);
+    const bubbles = document.getElementById("msgs-bubbles");
+    if (bubbles) bubbles.scrollTop = 99999;
+    // Auto-reply
+    setTimeout(() => {
+      c.msgs.push({ out:false, text:"¡Interesante! Cuéntame más 😊" });
+      nv.innerHTML = buildChat(c);
+      const b2 = document.getElementById("msgs-bubbles");
+      if (b2) b2.scrollTop = 99999;
+    }, 1500);
+  };
+}
+
+/* ---- Camera ---- */
+function buildCamera() {
+  return `<div class="camera-app" style="background:#000;color:white;min-height:100%;display:flex;flex-direction:column;">
+    <div class="camera-viewfinder" style="flex:1;">
+      <div class="camera-grid-h"></div><div class="camera-grid-h"></div>
+      <div class="camera-grid-v"></div><div class="camera-grid-v"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+        <div style="font-size:48px;opacity:0.2;">📷</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);">Cámara no disponible en web</div>
+      </div>
+    </div>
+    <div class="camera-modes">
+      <span class="camera-mode">FOTO</span>
+      <span class="camera-mode active">VIDEO</span>
+      <span class="camera-mode">RETRATO</span>
+    </div>
+    <div class="camera-controls">
+      <div class="camera-thumb">🖼️</div>
+      <div class="camera-shutter" onclick="showToast('Cámara','📸 ¡Foto tomada!')"></div>
+      <div class="camera-flip" onclick="showToast('Cámara','🔄 Cámara girada')">🔄</div>
+    </div>
+  </div>`;
+}
+
+/* ---- Photos ---- */
+function buildPhotos() {
+  const photos = [
+    "https://avatars.githubusercontent.com/u/98182135?v=4",
+    "https://512pixels.net/wp-content/uploads/2025/06/26-Tahoe-Light-6K-thumb.jpeg",
+    "https://512pixels.net/wp-content/uploads/2025/06/26-Tahoe-Dark-6K-thumb.jpeg",
+    "https://512pixels.net/wp-content/uploads/2025/08/26-Tahoe-Beach-Dawn-thumb.jpeg",
+    "https://512pixels.net/wp-content/uploads/2025/08/26-Tahoe-Beach-Day-thumb.jpeg",
+    "https://512pixels.net/wp-content/uploads/2025/08/26-Tahoe-Beach-Dusk-thumb.jpeg",
+  ];
+  return `<div class="photos-app">
+    <div class="photos-grid-label">Biblioteca</div>
+    <div class="photos-grid">
+      ${photos.map(p=>`<div class="photo-cell"><img src="${p}" loading="lazy"></div>`).join("")}
+      ${Array(6).fill(0).map((_,i)=>`<div class="photo-cell" style="background:hsl(${i*40},30%,75%)"></div>`).join("")}
+    </div>
+  </div>`;
+}
+
+/* ---- Maps ---- */
+function buildMaps() {
+  return `<div class="maps-app">
+    <div class="maps-bg">
+      <div class="maps-road h" style="top:40%"></div>
+      <div class="maps-road h" style="top:65%"></div>
+      <div class="maps-road v" style="left:35%"></div>
+      <div class="maps-road v" style="left:65%"></div>
+      <div class="maps-pin" style="top:38%;left:50%;">📍</div>
+      <div class="maps-search-bar">
+        <span class="maps-search-icon">🔍</span>
+        <input class="maps-search-input" placeholder="Buscar en Mapas…" readonly value="Cali, Valle del Cauca">
+      </div>
+    </div>
+    <div class="maps-actions">
+      <button class="maps-btn"><div class="maps-btn-icon">🚗</div>Conducir</button>
+      <button class="maps-btn"><div class="maps-btn-icon">🚶</div>Caminar</button>
+      <button class="maps-btn"><div class="maps-btn-icon">🚌</div>Tránsito</button>
+      <button class="maps-btn" onclick="showToast('Mapas','📍 Ubicación guardada')"><div class="maps-btn-icon">⭐</div>Guardar</button>
+    </div>
+  </div>`;
+}
+
+/* ---- Settings ---- */
+function buildSettings() {
+  const items = [
+    { icon:"🔔", bg:"#ff3b30", label:"Notificaciones", val:"" },
+    { icon:"🔊", bg:"#ff3b30", label:"Sonidos", val:"" },
+    { icon:"🌙", bg:"#5856d6", label:"Modo enfoque", val:"No molestar", toggle:false },
+    { icon:"⏱", bg:"#ff9500", label:"Tiempo de pantalla", val:"" },
+  ];
+  const items2 = [
+    { icon:"📶", bg:"#0071e3", label:"Wi-Fi", val:"Sterling 5G", toggle:true },
+    { icon:"🔵", bg:"#0071e3", label:"Bluetooth", val:"Activado", toggle:true },
+    { icon:"✈️", bg:"#8e8e93", label:"Modo avión", val:"", toggle:false },
+  ];
+  const items3 = [
+    { icon:"🎨", bg:"#007aff", label:"Fondo de pantalla", val:"" },
+    { icon:"💡", bg:"#636366", label:"Pantalla y brillo", val:"" },
+    { icon:"🔒", bg:"#8e8e93", label:"Face ID y código", val:"" },
+    { icon:"🔋", bg:"#34c759", label:"Batería", val:"87%" },
+  ];
+  function renderGroup(items) {
+    return `<div class="settings-group">${items.map(item=>`
+      <div class="settings-item">
+        <div class="settings-icon" style="background:${item.bg}">${item.icon}</div>
+        <div class="settings-label">${item.label}</div>
+        ${item.val ? `<div class="settings-value">${item.val}</div>` : ''}
+        ${item.toggle !== undefined
+          ? `<div class="settings-toggle ${item.toggle?'':'off'}" onclick="this.classList.toggle('off')"></div>`
+          : `<div class="settings-arrow">›</div>`}
+      </div>`).join("")}</div>`;
+  }
+  return `<div class="settings-app" style="padding-bottom:40px;">
+    <div style="padding:20px 16px 12px;display:flex;align-items:center;gap:14px;background:#f2f2f7;">
+      <img src="https://avatars.githubusercontent.com/u/98182135?v=4" style="width:56px;height:56px;border-radius:50%;object-fit:cover;">
+      <div>
+        <div style="font-size:18px;font-weight:600;color:#1c1c1e;">Santiago Sterling</div>
+        <div style="font-size:13px;color:#007aff;">iCloud, App Store y más</div>
+      </div>
+    </div>
+    <div class="settings-section"><div class="settings-section-label">General</div>${renderGroup(items)}</div>
+    <div class="settings-section"><div class="settings-section-label">Conectividad</div>${renderGroup(items2)}</div>
+    <div class="settings-section"><div class="settings-section-label">Pantalla</div>${renderGroup(items3)}</div>
+  </div>`;
+}
+
+/* ---- Notes ---- */
+function buildNotesIOS() {
+  return `<div style="background:#fef9e4;min-height:100%;display:flex;flex-direction:column;">
+    <div style="padding:12px 16px 8px;border-bottom:0.5px solid rgba(0,0,0,0.1);display:flex;gap:8px;background:rgba(254,249,228,0.9);">
+      <button style="padding:6px 12px;background:rgba(0,0,0,0.08);border:none;border-radius:8px;font-size:14px;cursor:pointer;">B</button>
+      <button style="padding:6px 12px;background:rgba(0,0,0,0.08);border:none;border-radius:8px;font-size:14px;font-style:italic;cursor:pointer;">I</button>
+      <button style="padding:6px 12px;background:rgba(0,0,0,0.08);border:none;border-radius:8px;font-size:14px;text-decoration:underline;cursor:pointer;">U</button>
+      <button style="padding:6px 12px;background:rgba(0,0,0,0.08);border:none;border-radius:8px;font-size:14px;cursor:pointer;">✓ Lista</button>
+    </div>
+    <textarea style="flex:1;padding:20px;background:transparent;border:none;resize:none;outline:none;font-size:16px;line-height:1.75;color:#1c1c1e;font-family:inherit;min-height:400px;"
+      placeholder="Nota nueva…">¡Hola! Soy Santiago Sterling 👋
+
+Tecnólogo en Análisis y Desarrollo de Software y en Gestión de Producción Industrial.
+
+Mi propósito es integrar la eficiencia industrial con la inteligencia tecnológica.
+
+• 8+ años en manufactura
+• Desarrollador Full-Stack
+• IA y Automatización
+</textarea>
+  </div>`;
+}
+
+/* ---- Clock ---- */
+function buildClock() {
+  const now = new Date();
+  const h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
+  const hDeg = (h % 12) * 30 + m * 0.5;
+  const mDeg = m * 6;
+  const sDeg = s * 6;
+  const worldClocks = [
+    { city:"Cali", tz:"America/Bogota", offset:-5 },
+    { city:"Nueva York", tz:"America/New_York", offset:-4 },
+    { city:"Madrid", tz:"Europe/Madrid", offset:2 },
+    { city:"Tokio", tz:"Asia/Tokyo", offset:9 },
+  ];
+  function cityTime(offset) {
+    const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+    const ct = new Date(utc + offset * 3600000);
+    return ct.toLocaleTimeString("es-ES", { hour:"2-digit", minute:"2-digit" });
+  }
+  return `<div style="background:#1c1c1e;min-height:100%;color:white;display:flex;flex-direction:column;">
+    <!-- Analog clock -->
+    <div style="display:flex;justify-content:center;padding:30px 0 20px;">
+      <svg width="200" height="200" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="96" fill="#2c2c2e" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+        ${[0,30,60,90,120,150,180,210,240,270,300,330].map((deg,i)=>{
+          const r=i%3===0?80:85, x1=100+r*Math.sin(deg*Math.PI/180), y1=100-r*Math.cos(deg*Math.PI/180);
+          const x2=100+92*Math.sin(deg*Math.PI/180), y2=100-92*Math.cos(deg*Math.PI/180);
+          return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(255,255,255,${i%3===0?0.6:0.3})" stroke-width="${i%3===0?2:1}" stroke-linecap="round"/>`;
+        }).join("")}
+        <!-- Hour hand -->
+        <line x1="100" y1="100" x2="${100+55*Math.sin(hDeg*Math.PI/180)}" y2="${100-55*Math.cos(hDeg*Math.PI/180)}" stroke="white" stroke-width="5" stroke-linecap="round"/>
+        <!-- Minute hand -->
+        <line x1="100" y1="100" x2="${100+75*Math.sin(mDeg*Math.PI/180)}" y2="${100-75*Math.cos(mDeg*Math.PI/180)}" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <!-- Second hand -->
+        <line x1="100" y1="100" x2="${100+80*Math.sin(sDeg*Math.PI/180)}" y2="${100-80*Math.cos(sDeg*Math.PI/180)}" stroke="#ff3b30" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="100" cy="100" r="5" fill="#ff3b30"/>
+      </svg>
+    </div>
+    <!-- World clocks -->
+    <div style="flex:1;overflow-y:auto;">
+      <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.5);padding:8px 16px;text-transform:uppercase;letter-spacing:0.5px;">Hora mundial</div>
+      ${worldClocks.map(c=>`
+        <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:0.5px solid rgba(255,255,255,0.08);">
+          <div>
+            <div style="font-size:16px;font-weight:500;">${c.city}</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.5);">UTC${c.offset>=0?'+':''}${c.offset}</div>
+          </div>
+          <div style="margin-left:auto;font-size:32px;font-weight:200;letter-spacing:-1px;">${cityTime(c.offset)}</div>
+        </div>`).join("")}
+    </div>
+    <!-- Alarm button -->
+    <div style="padding:16px;text-align:center;">
+      <button onclick="showToast('Reloj','⏰ Alarma configurada para las 7:00')" 
+        style="background:#ff3b30;color:white;border:none;border-radius:14px;padding:14px 32px;font-size:16px;font-weight:600;cursor:pointer;width:100%;">
+        + Nueva alarma
+      </button>
+    </div>
+  </div>`;
+}
+
+/* ================================================================
+   CONTROL CENTER & NOTIFICATION CENTER
+================================================================ */
+function iosOpenControlCenter() {
+  const cc = document.getElementById("ios-control-center");
+  const nc = document.getElementById("ios-notif-center");
+  if (nc) nc.classList.remove("open");
+  if (cc) cc.classList.toggle("open");
+}
+function iosOpenNotifCenter() {
+  const cc = document.getElementById("ios-control-center");
+  const nc = document.getElementById("ios-notif-center");
+  if (cc) cc.classList.remove("open");
+  if (nc) nc.classList.toggle("open");
+}
+function iosCloseAllPanels() {
+  document.getElementById("ios-control-center")?.classList.remove("open");
+  document.getElementById("ios-notif-center")?.classList.remove("open");
+}
+
+/* ================================================================
+   SWIPE DOWN GESTURE — status bar area
+================================================================ */
+function iosSetupSwipeGesture() {
+  let touchStartY = 0, touchStartX = 0;
+  document.addEventListener("touchstart", e => {
+    touchStartY = e.touches[0].clientY;
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  document.addEventListener("touchend", e => {
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    // Only if starting near top (status bar area)
+    if (touchStartY < 60 && dy > 50 && Math.abs(dx) < 60) {
+      const midScreen = window.innerWidth / 2;
+      if (touchStartX > midScreen) iosOpenControlCenter();
+      else iosOpenNotifCenter();
+    }
+    // Swipe up from bottom = close app / go home
+    if (touchStartY > window.innerHeight - 60 && dy < -60) {
+      const view = document.getElementById("ios-app-view");
+      if (view && view.classList.contains("open")) iosCloseApp();
+    }
+  }, { passive: true });
+}
+
+/* ================================================================
+   INIT
+================================================================ */
+function initIosMobile() {
+  if (!isMobile()) return;
+
+  iosUpdateClock();
+  setInterval(iosUpdateClock, 15000);
+  iosUpdateWidgetDates();
+  iosBuildGrids();
+  iosBindDock();
+  iosSetupPageSwipe();
+  iosSetupSwipeGesture();
+
+  // Back button
+  document.getElementById("ios-app-back-btn")?.addEventListener("click", () => {
+    if (iosMsgCurrentChat !== null) {
+      iosMsgCurrentChat = null;
+      document.getElementById("ios-app-title").textContent = "Mensajes";
+      document.getElementById("ios-app-back-label").textContent = "Inicio";
+      document.getElementById("ios-native-view").innerHTML = buildMessages();
+      setupMessagesApp();
+    } else {
+      iosCloseApp();
+    }
+  });
+
+  // Control center / notif center buttons
+  document.getElementById("cc-close-btn")?.addEventListener("click", iosCloseAllPanels);
+  document.getElementById("nc-close-btn")?.addEventListener("click", iosCloseAllPanels);
+
+  // Status bar zones (tap)
+  document.getElementById("ios-zone-left")?.addEventListener("click", iosOpenNotifCenter);
+  document.getElementById("ios-zone-right")?.addEventListener("click", iosOpenControlCenter);
+  document.getElementById("ios-swipe-hint")?.classList.add("active");
+
+  // Widget: weather tap
+  document.getElementById("iw-weather")?.addEventListener("click", () => {
+    showToast("Clima", "⛅ Cali: 26°C — Parcialmente nublado");
+  });
+
+  // Lock screen date widget
+  const lwDay = document.getElementById("lw-cal-day");
+  const lwMonth = document.getElementById("lw-cal-month");
+  if (lwDay || lwMonth) {
+    const now = new Date();
+    if (lwDay) lwDay.textContent = now.getDate();
+    if (lwMonth) {
+      const months = ["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"];
+      lwMonth.textContent = months[now.getMonth()];
+    }
+  }
+}
+
+window.addEventListener("load", initIosMobile);
