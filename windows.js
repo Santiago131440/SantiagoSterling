@@ -727,7 +727,7 @@ function loadFinder(win, folder) {
                 <i class="fi fi-sr-folder-music"></i> Música
               </div>
               <div class="finder-sidebar-item" id="findImg">
-                <i class="fi fi-sr-folder-image"></i> Imágenes
+                <i class="fi fi-sr-folder-camera"></i> Imágenes
               </div>
             </div>
             <div class="finder-sidebar-section">
