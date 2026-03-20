@@ -246,8 +246,8 @@
         </div>
         <div class="action-btns">
             <div class="mBtn action-btn btn-green" id="mRun" style="background:#4caf50;border-color:#2e7d32">RUN</div>
-            <div class="mBtn action-btn" id="mJump" style="background:#e53935;border-color:#c00">JUMP</div>
             <div class="mBtn action-btn" id="mFire" style="background:#e5b635;border-color:rgb(204, 184, 0)">Fire</div>
+            <div class="mBtn action-btn" id="mJump" style="background:#e53935;border-color:#c00">JUMP</div>
         </div>
     </div>
 </div>
@@ -450,9 +450,9 @@ function setupMobile() {
         el.addEventListener('touchend', e => { e.preventDefault(); keys[key]=false; }, {passive:false});
     };
     mb('mLeft','left'); mb('mRight','right');
-    mb('mJump','jump', ()=>{ jumpPressed=true; });
     mb('mRun','run');
     mb('mFire','fire');
+    mb('mJump','jump', ()=>{ jumpPressed=true; });
 }
 setupMobile();
 
