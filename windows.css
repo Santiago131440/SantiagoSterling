@@ -108,7 +108,7 @@ body {
 /* ============================================================ DESKTOP ICONS */
 .desktop-icon {
   width: 80px; text-align: center; padding: 8px 4px;
-  border-radius: 8px; position: absolute; cursor: default;
+  border-radius: 12px; position: absolute; cursor: default;
   transition: background 0.12s; display: flex; flex-direction: column; align-items: center; gap: 4px;
 }
 .desktop-icon img { width: 56px; height: 56px; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35)); transition: transform 0.12s; }
