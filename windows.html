@@ -24,9 +24,27 @@
     <div class="lock-time" id="lockTime">00:00</div>
     <div class="lock-date" id="lockDate">lunes, 16 de marzo</div>
     <div class="lock-name">Santiago Sterling</div>
-    <div class="lock-hint">
-      <span>Haz clic en cualquier parte para desbloquear</span>
+  </div>
+  <!-- iOS lock screen widgets (only shown mobile) -->
+  <div id="lock-widgets">
+    <div class="lock-widget lock-widget-weather">
+      <div>
+        <div class="lw-city">📍 Cali</div>
+        <div class="lw-temp">26°</div>
+        <div class="lw-condition">Parcialmente nublado</div>
+      </div>
+      <div class="lw-icon">⛅</div>
     </div>
+    <div class="lock-widget lock-widget-calendar">
+      <div class="lw-cal-day" id="lw-cal-day">19</div>
+      <div class="lw-cal-info">
+        <div class="lw-cal-month" id="lw-cal-month">MARZO</div>
+        <div class="lw-cal-event">Sin eventos hoy</div>
+      </div>
+    </div>
+  </div>
+  <div class="lock-hint">
+    <span>Toca para desbloquear</span>
   </div>
 </div>
 
@@ -253,44 +271,96 @@
 <!-- ============================================================ iOS STATUS BAR -->
 <div id="ios-statusbar">
   <span class="ios-sb-time" id="iosSbTime">9:41</span>
-  <div class="ios-sb-icons">
-    <i class="fi fi-sr-signal-alt" style="font-size:12px"></i>
-    <i class="fi fi-sr-wifi" style="font-size:12px"></i>
-    <i class="fi fi-sr-battery-full" style="font-size:12px"></i>
+  <div class="ios-sb-right">
+    <svg viewBox="0 0 17 12" fill="white" opacity="0.9"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity="0.3"/></svg>
+    <svg viewBox="0 0 16 12" fill="white" opacity="0.9" width="16" height="12"><path d="M8 2.4C5.2 2.4 2.7 3.6 1 5.6L0 4.4C2 2.1 4.9 0.6 8 0.6s6 1.5 8 3.8l-1 1.2C13.3 3.6 10.8 2.4 8 2.4z"/><path d="M8 5.2c-1.9 0-3.6.8-4.8 2.1L2 6.1C3.5 4.5 5.6 3.4 8 3.4s4.5 1.1 6 2.7l-1.2 1.2C11.6 6 9.9 5.2 8 5.2z"/><circle cx="8" cy="10" r="2"/></svg>
+    <div class="ios-battery">
+      <svg viewBox="0 0 25 12" fill="white" width="25" height="12"><rect x="0" y="1" width="22" height="10" rx="2.5" stroke="white" stroke-width="1" fill="none" opacity="0.7"/><rect x="22.5" y="4" width="2" height="4" rx="1" fill="white" opacity="0.7"/><rect x="1.5" y="2.5" width="17" height="7" rx="1.5" fill="white"/></svg>
+    </div>
   </div>
 </div>
 
 <!-- ============================================================ iOS HOME SCREEN -->
 <div id="ios-homescreen">
-  <div id="ios-app-grid">
-    <!-- Apps are injected by JS -->
+  <!-- Pages scroll container -->
+  <div id="ios-pages-scroll">
+    <div id="ios-pages-inner">
+      <!-- Page 0: Widgets + Apps row 1 -->
+      <div class="ios-page" id="ios-page-0">
+        <div id="ios-widget-area">
+          <!-- Weather widget -->
+          <div class="ios-widget ios-widget-weather" id="iw-weather">
+            <div class="iw-city">📍 Cali, Colombia</div>
+            <div class="iw-temp" id="iw-temp">26°</div>
+            <div class="iw-cond" id="iw-cond">Parcialmente nublado</div>
+            <div class="iw-hilo">↑29° ↓21°</div>
+            <div class="iw-forecast">
+              <div class="iw-fc-item"><span>Hoy</span><span>⛅</span><span>26°</span></div>
+              <div class="iw-fc-item"><span>Mar</span><span>🌤</span><span>28°</span></div>
+              <div class="iw-fc-item"><span>Mié</span><span>🌦</span><span>24°</span></div>
+              <div class="iw-fc-item"><span>Jue</span><span>☀️</span><span>29°</span></div>
+              <div class="iw-fc-item"><span>Vie</span><span>⛅</span><span>27°</span></div>
+            </div>
+          </div>
+          <!-- Calendar + Clock row -->
+          <div class="ios-widget-row">
+            <div class="ios-widget ios-widget-cal">
+              <div class="iwc-header">
+                <div class="iwc-month" id="iwc-month">MAR</div>
+              </div>
+              <div class="iwc-day-big" id="iwc-day">19</div>
+              <div class="iwc-event">📅 No hay eventos hoy</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;flex:1;">
+              <div class="ios-widget ios-widget-clock" style="flex:1;">
+                <div class="iwclock-label">Hora local</div>
+                <div class="iwclock-time" id="iwclock-time">9:41</div>
+                <div class="iwclock-zone">Colombia (COT)</div>
+              </div>
+              <div class="ios-widget ios-widget-battery" style="flex:1;">
+                <div class="iwbat-label">Batería</div>
+                <div class="iwbat-pct">87%</div>
+                <div class="iwbat-bar"><div class="iwbat-fill" style="width:87%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- App grid page 0 -->
+        <div class="ios-app-grid" id="ios-grid-p0"></div>
+      </div>
+      <!-- Page 1: More apps -->
+      <div class="ios-page" id="ios-page-1">
+        <div class="ios-app-grid" id="ios-grid-p1" style="padding-top:20px;"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Page dots -->
+  <div id="ios-page-dots">
+    <div class="ios-dot active"></div>
+    <div class="ios-dot"></div>
   </div>
 </div>
 
 <!-- ============================================================ iOS DOCK -->
 <div id="ios-dock">
-  <div class="ios-dock-item" data-ios-app="explorer">
-    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75">
-    <span>Finder</span>
+  <div class="ios-dock-item" data-ios-app="phone">
+    <div class="ios-native-icon" style="background:linear-gradient(145deg,#34c759,#28a745);">📞</div>
   </div>
   <div class="ios-dock-item" data-ios-app="browser">
     <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75">
-    <span>Safari</span>
   </div>
-  <div class="ios-dock-item" data-ios-app="notes">
-    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75">
-    <span>Notas</span>
+  <div class="ios-dock-item" data-ios-app="messages">
+    <div class="ios-native-icon" style="background:linear-gradient(145deg,#34c759,#25d366);">💬</div>
   </div>
   <div class="ios-dock-item" data-ios-app="sterlingia">
     <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-As6MTLYJ6ta7FZgR1G5U6ZUzqfCqvm.png&w=500&q=75">
-    <span>Sterling IA</span>
   </div>
 </div>
 
 <!-- ============================================================ iOS HOME INDICATOR -->
 <div id="ios-home-indicator"></div>
 
-<!-- ============================================================ iOS APP FULL-SCREEN VIEW -->
+<!-- ============================================================ iOS APP FULLSCREEN VIEW -->
 <div id="ios-app-view">
   <div id="ios-app-navbar">
     <div id="ios-app-back-btn">
@@ -298,8 +368,98 @@
       <span id="ios-app-back-label">Inicio</span>
     </div>
     <div id="ios-app-title">App</div>
+    <div class="ios-navbar-spacer"></div>
   </div>
-  <iframe id="ios-app-frame" src="" allowfullscreen></iframe>
+  <iframe id="ios-app-frame" src="" allowfullscreen style="display:none;"></iframe>
+  <div id="ios-native-view"></div>
+</div>
+
+<!-- ============================================================ iOS CONTROL CENTER -->
+<div id="ios-control-center">
+  <div class="cc-ios-grid">
+    <div class="cc-ios-tile on" id="cc-wifi" onclick="this.classList.toggle('on')">
+      <div class="cc-ios-icon">📶</div>
+      <div class="cc-ios-label">Wi-Fi</div>
+    </div>
+    <div class="cc-ios-tile on" id="cc-bt" onclick="this.classList.toggle('on')">
+      <div class="cc-ios-icon">🔵</div>
+      <div class="cc-ios-label">Bluetooth</div>
+    </div>
+    <div class="cc-ios-tile" id="cc-airplane" onclick="this.classList.toggle('on')">
+      <div class="cc-ios-icon">✈️</div>
+      <div class="cc-ios-label">Avión</div>
+    </div>
+    <div class="cc-ios-tile on" id="cc-dnd" onclick="this.classList.toggle('on')">
+      <div class="cc-ios-icon">🌙</div>
+      <div class="cc-ios-label">No molestar</div>
+    </div>
+    <div class="cc-ios-tile cc-ios-wide" id="cc-dark" onclick="this.classList.toggle('on')">
+      <div class="cc-ios-icon">🌓</div>
+      <div class="cc-ios-label">Modo oscuro</div>
+    </div>
+  </div>
+  <div class="cc-ios-slider-wrap">
+    <div class="cc-ios-slider-label">🔆 Brillo</div>
+    <input type="range" class="cc-ios-slider" min="0" max="100" value="75">
+  </div>
+  <div class="cc-ios-slider-wrap" style="margin-top:10px;">
+    <div class="cc-ios-slider-label">🔊 Volumen</div>
+    <input type="range" class="cc-ios-slider" min="0" max="100" value="60">
+  </div>
+  <div class="cc-ios-close" id="cc-close-btn">✕ &nbsp;Cerrar</div>
+</div>
+
+<!-- ============================================================ iOS NOTIFICATION CENTER -->
+<div id="ios-notif-center">
+  <div class="nc-header">
+    Notificaciones
+    <span class="nc-date" id="nc-date-label"></span>
+  </div>
+  <div class="nc-section-label">Recientes</div>
+  <div class="nc-notif">
+    <div class="nc-notif-header">
+      <img class="nc-notif-icon" src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75">
+      <span class="nc-notif-app">Finder</span>
+      <span class="nc-notif-time">Hace 2m</span>
+    </div>
+    <div class="nc-notif-title">Repositorio listo</div>
+    <div class="nc-notif-body">El sistema está listo. Bienvenido, Santiago.</div>
+  </div>
+  <div class="nc-notif">
+    <div class="nc-notif-header">
+      <div class="nc-notif-icon" style="background:#34c759;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;">💬</div>
+      <span class="nc-notif-app">Mensajes</span>
+      <span class="nc-notif-time">Hace 5m</span>
+    </div>
+    <div class="nc-notif-title">Nuevo mensaje</div>
+    <div class="nc-notif-body">¡Hola Santiago! Revisé tu portafolio y quedé impresionado.</div>
+  </div>
+  <div class="nc-notif">
+    <div class="nc-notif-header">
+      <img class="nc-notif-icon" src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/icon-1773955846572.png?raw=true">
+      <span class="nc-notif-app">App Store</span>
+      <span class="nc-notif-time">Hace 1h</span>
+    </div>
+    <div class="nc-notif-title">3 actualizaciones disponibles</div>
+    <div class="nc-notif-body">Sterling IA, Finder y Notas tienen actualizaciones.</div>
+  </div>
+  <div class="nc-section-label">Anteriores</div>
+  <div class="nc-notif">
+    <div class="nc-notif-header">
+      <div class="nc-notif-icon" style="background:#007aff;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;">⚙️</div>
+      <span class="nc-notif-app">Sistema</span>
+      <span class="nc-notif-time">Ayer</span>
+    </div>
+    <div class="nc-notif-title">Actualización completada</div>
+    <div class="nc-notif-body">iOS 18.3 instalado exitosamente.</div>
+  </div>
+  <div class="nc-close" id="nc-close-btn">✕ &nbsp;Cerrar</div>
+</div>
+
+<!-- ============================================================ GESTURE CAPTURE (status bar) -->
+<div id="ios-swipe-hint">
+  <div class="ios-swipe-zone-left" id="ios-zone-left" title="Centro de notificaciones"></div>
+  <div class="ios-swipe-zone-right" id="ios-zone-right" title="Centro de control"></div>
 </div>
 
 <script src="windows.js"></script>
