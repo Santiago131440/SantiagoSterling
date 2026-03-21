@@ -513,7 +513,54 @@ document.getElementById("ctxOpen").onclick = () => {
 };
 document.getElementById("ctxNewFolder").onclick = () => {
     ctxMenu.classList.add("hidden");
-    showToast("Finder", "Nueva carpeta creada en el escritorio.");
+    const modal = document.createElement("div");
+    modal.className = "finder-modal";
+    modal.style.cssText = "position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:999999;";
+    const backdrop = document.createElement("div");
+    backdrop.className = "finder-modal-backdrop";
+    modal.innerHTML = `
+      <h3>Nueva carpeta en el escritorio</h3>
+      <input type="text" id="deskFolderInput" value="Nueva carpeta" placeholder="Nombre de carpeta" autocomplete="off">
+      <div class="finder-modal-btns">
+        <button class="finder-modal-btn cancel" id="deskFolderCancel">Cancelar</button>
+        <button class="finder-modal-btn ok" id="deskFolderOk">Crear</button>
+      </div>
+    `;
+    backdrop.appendChild(modal);
+    document.body.appendChild(backdrop);
+    const input = modal.querySelector("#deskFolderInput");
+    input.focus(); input.select();
+    const confirm = () => {
+        const name = input.value.trim();
+        backdrop.remove();
+        if (!name) return;
+        // Add to desktop
+        const desktop = document.getElementById("desktop1");
+        const existing = desktop.querySelectorAll(".desktop-icon");
+        const positions = Array.from(existing).map(el => ({ left: parseInt(el.style.left), top: parseInt(el.style.top) }));
+        let top = 30;
+        positions.forEach(p => { if (Math.abs(p.left - 24) < 80) top = Math.max(top, p.top + 100); });
+        const icon = document.createElement("div");
+        icon.className = "desktop-icon";
+        icon.dataset.app = "folder_" + Date.now();
+        icon.style.cssText = `left:24px;top:${top}px;`;
+        icon.innerHTML = `<img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-En0WuV9h3Cjev3oISjtJqXetnfA18d.png&w=1000&q=75"><span>${name}</span>`;
+        icon.addEventListener("mousedown", (e) => {
+            draggingIcon = icon;
+            draggingIconOffset.x = e.offsetX;
+            draggingIconOffset.y = e.offsetY;
+            iconDragMoved = false;
+            icon.classList.add("dragging");
+        });
+        icon.addEventListener("click", () => { if (!iconDragMoved) showToast("Finder", `Carpeta "${name}"`); });
+        icon.addEventListener("contextmenu", (e) => { e.preventDefault(); contextTarget = icon; const menuW=220,menuH=220; ctxMenu.style.left=Math.min(e.pageX,window.innerWidth-menuW-8)+"px"; ctxMenu.style.top=Math.min(e.pageY,window.innerHeight-menuH-8)+"px"; ctxMenu.classList.remove("hidden"); });
+        desktop.appendChild(icon);
+        showToast("Finder", `Carpeta "${name}" creada en el escritorio`);
+    };
+    modal.querySelector("#deskFolderOk").onclick = confirm;
+    modal.querySelector("#deskFolderCancel").onclick = () => backdrop.remove();
+    input.onkeydown = (e) => { if (e.key === "Enter") confirm(); if (e.key === "Escape") backdrop.remove(); };
+    backdrop.onclick = (e) => { if (e.target === backdrop) backdrop.remove(); };
 };
 document.getElementById("ctxGetInfo").onclick = () => {
     if (contextTarget) {
@@ -614,16 +661,61 @@ const spotlightResults = document.getElementById("spotlightResults");
 spotlightInput?.addEventListener("input", () => {
     const q = spotlightInput.value.toLowerCase().trim();
     if (!q) { spotlightResults.classList.add("hidden"); return; }
-    const matches = Object.entries(apps).filter(([, app]) => app.title.toLowerCase().includes(q));
-    if (!matches.length) { spotlightResults.classList.add("hidden"); return; }
-    spotlightResults.innerHTML = `<div class="spotlight-section-label">Aplicaciones</div>`;
-    matches.forEach(([key, app]) => {
-        const item = document.createElement("div");
-        item.className = "spotlight-result-item";
-        item.innerHTML = `<img src="${app.icon}" alt=""><div><div class="spotlight-result-name">${app.title}</div><div class="spotlight-result-sub">Aplicación</div></div>`;
-        item.onclick = () => { openApp(key); closeAllPanels(); };
-        spotlightResults.appendChild(item);
-    });
+
+    const appMatches = Object.entries(apps).filter(([, app]) => app.title.toLowerCase().includes(q));
+
+    // Search files in the filesystem
+    const fileMatches = [];
+    function searchNode(node, path) {
+        if (!node || !node.contents) return;
+        Object.entries(node.contents).forEach(([name, item]) => {
+            if (name.toLowerCase().includes(q) ||
+                (item.content && item.content.toLowerCase().includes(q))) {
+                fileMatches.push({ name, item, path });
+            }
+            if (item.type === "folder") searchNode(item, path + "/" + name);
+        });
+    }
+    searchNode(fileSystem.root, "Santiago Sterling");
+
+    if (!appMatches.length && !fileMatches.length) { spotlightResults.classList.add("hidden"); return; }
+
+    spotlightResults.innerHTML = "";
+
+    if (appMatches.length) {
+        const lbl = document.createElement("div");
+        lbl.className = "spotlight-section-label";
+        lbl.textContent = "Aplicaciones";
+        spotlightResults.appendChild(lbl);
+        appMatches.forEach(([key, app]) => {
+            const item = document.createElement("div");
+            item.className = "spotlight-result-item";
+            item.innerHTML = `<img src="${app.icon}" alt=""><div><div class="spotlight-result-name">${app.title}</div><div class="spotlight-result-sub">Aplicación</div></div>`;
+            item.onclick = () => { openApp(key); closeAllPanels(); };
+            spotlightResults.appendChild(item);
+        });
+    }
+
+    if (fileMatches.length) {
+        const lbl = document.createElement("div");
+        lbl.className = "spotlight-section-label";
+        lbl.textContent = "Archivos y Carpetas";
+        spotlightResults.appendChild(lbl);
+        fileMatches.slice(0, 6).forEach(({ name, item, path }) => {
+            const el = document.createElement("div");
+            el.className = "spotlight-result-item";
+            const icon = item.type === "folder"
+                ? "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-En0WuV9h3Cjev3oISjtJqXetnfA18d.png&w=1000&q=75"
+                : "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-a3SkroygtTE6lQGs0XbfDco9M3lV7H.png&w=1000&q=75";
+            el.innerHTML = `<img src="${icon}" alt=""><div><div class="spotlight-result-name">${name}</div><div class="spotlight-result-sub">${path}</div></div>`;
+            el.onclick = () => {
+                openApp("explorer");
+                closeAllPanels();
+            };
+            spotlightResults.appendChild(el);
+        });
+    }
+
     spotlightResults.classList.remove("hidden");
 });
 
@@ -707,84 +799,545 @@ document.querySelectorAll("#wallpaperList img").forEach(img => {
 /* ============================================================
    FINDER (macOS style)
 ============================================================ */
-function loadFinder(win, folder) {
+function loadFinder(win, startFolder) {
     const area = win.querySelector(".app-area");
     area.style.padding = "0";
 
+    const FOLDER_ICON = "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-En0WuV9h3Cjev3oISjtJqXetnfA18d.png&w=1000&q=75";
+    const FILE_ICON   = "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-a3SkroygtTE6lQGs0XbfDco9M3lV7H.png&w=1000&q=75";
+
+    // Navigation history
+    let history = [{ node: fileSystem.root, name: "Santiago Sterling", path: ["Santiago Sterling"] }];
+    let historyIdx = 0;
+    let viewMode = "grid"; // "grid" | "list"
+    let selectedItem = null;
+    let activeFolderCtxMenu = null;
+
     area.innerHTML = `
-        <div class="finder-container">
-          <div class="finder-sidebar">
-            <div class="finder-sidebar-section">
-              <div class="finder-sidebar-label">Favoritos</div>
-              <div class="finder-sidebar-item active" id="findHome">
-                <i class="fi fi-sr-devices"></i> Santiago Sterling
-              </div>
-              <div class="finder-sidebar-item" id="findDocs">
-                <i class="fi fi-sr-document-folder-gear"></i> Documentos
-              </div>
-              <div class="finder-sidebar-item" id="findMusica">
-                <i class="fi fi-sr-folder-music"></i> Música
-              </div>
-              <div class="finder-sidebar-item" id="findImg">
-                <i class="fi fi-sr-images"></i> Imágenes
-              </div>
-              <div class="finder-sidebar-item" id="findVideo">
-                <i class="fi fi-sr-photo-video"></i> Videos
-              </div>
-            </div>
-            <div class="finder-sidebar-section">
-              <div class="finder-sidebar-label">Dispositivos</div>
-              <div class="finder-sidebar-item">
-                <i class="fi fi-sr-disc-drive"></i> Santiago Sterling
-              </div><br>
-              <div class="finder-sidebar-label">localizaciones</div>
-              <div class="finder-sidebar-item">
-                <i class="fi fi-sr-network-cloud"></i> Sterling Drive
-              </div>
-            </div>
+      <div class="finder-container">
+        <div class="finder-sidebar">
+          <div class="finder-sidebar-section">
+            <div class="finder-sidebar-label">Favoritos</div>
+            <div class="finder-sidebar-item active" data-nav="home"><i class="fi fi-sr-devices"></i> Santiago Sterling</div>
+            <div class="finder-sidebar-item" data-nav="docs"><i class="fi fi-sr-document-folder-gear"></i> Documentos</div>
+            <div class="finder-sidebar-item" data-nav="music"><i class="fi fi-sr-folder-music"></i> Música</div>
+            <div class="finder-sidebar-item" data-nav="img"><i class="fi fi-sr-images"></i> Imágenes</div>
+            <div class="finder-sidebar-item" data-nav="video"><i class="fi fi-sr-photo-video"></i> Videos</div>
           </div>
-          <div class="finder-main">
-            <div class="finder-toolbar">
-              <div class="finder-nav-btn" id="findBack">‹</div>
-              <div class="finder-nav-btn" id="findFwd">›</div>
-              <div class="finder-path" id="finderPath"><span class="current">Santiago Sterling</span></div>
-              <input class="finder-search" placeholder="Buscar" id="finderSearch">
-            </div>
-            <div class="finder-grid" id="finderGrid"></div>
-            <div class="finder-status" id="finderStatus">0 ítems</div>
+          <div class="finder-sidebar-section">
+            <div class="finder-sidebar-label">Dispositivos</div>
+            <div class="finder-sidebar-item"><i class="fi fi-sr-disc-drive"></i> Santiago Sterling</div>
+            <div class="finder-sidebar-label" style="margin-top:6px;">Localizaciones</div>
+            <div class="finder-sidebar-item"><i class="fi fi-sr-network-cloud"></i> Sterling Drive</div>
+          </div>
+          <div class="finder-sidebar-section">
+            <div class="finder-sidebar-label">Etiquetas</div>
+            <div class="finder-tag-row"><div class="finder-tag-dot" style="background:#ff3b30"></div> Rojo</div>
+            <div class="finder-tag-row"><div class="finder-tag-dot" style="background:#ff9500"></div> Naranja</div>
+            <div class="finder-tag-row"><div class="finder-tag-dot" style="background:#34c759"></div> Verde</div>
+            <div class="finder-tag-row"><div class="finder-tag-dot" style="background:#0071e3"></div> Azul</div>
           </div>
         </div>
+        <div class="finder-main">
+          <div class="finder-toolbar">
+            <div class="finder-nav-btn disabled" id="fnBack" title="Atrás">‹</div>
+            <div class="finder-nav-btn disabled" id="fnFwd" title="Adelante">›</div>
+            <div class="finder-breadcrumb" id="fnBreadcrumb"></div>
+            <div class="finder-toolbar-actions">
+              <button class="finder-action-btn" id="fnNewFolder" title="Nueva carpeta"><i class="fi fi-sr-folder-add"></i> Carpeta</button>
+              <button class="finder-action-btn" id="fnNewFile" title="Nuevo archivo de texto"><i class="fi fi-sr-file-add"></i> Archivo</button>
+              <div class="finder-view-toggle">
+                <div class="finder-view-btn active" id="fnViewGrid" title="Íconos">⊞</div>
+                <div class="finder-view-btn" id="fnViewList" title="Lista">☰</div>
+              </div>
+              <div class="finder-search-wrap">
+                <span class="finder-search-icon">🔍</span>
+                <input class="finder-search" placeholder="Buscar" id="fnSearch" autocomplete="off">
+              </div>
+            </div>
+          </div>
+          <div id="fnListHeader" class="finder-list-header" style="display:none;">
+            <img style="width:22px;height:22px;opacity:0"> 
+            <span class="finder-list-col-name">Nombre</span>
+            <span class="finder-list-col-date finder-list-meta">Fecha modificación</span>
+            <span class="finder-list-col-kind finder-list-meta">Tipo</span>
+            <span class="finder-list-col-size finder-list-meta">Tamaño</span>
+          </div>
+          <div class="finder-grid" id="fnGrid"></div>
+          <div class="finder-status" id="fnStatus">0 ítems</div>
+        </div>
+      </div>
     `;
 
-    const loadFolder = (node, name) => {
-        const grid = area.querySelector("#finderGrid");
-        const status = area.querySelector("#finderStatus");
-        const pathEl = area.querySelector("#finderPath");
-        grid.innerHTML = "";
-        if (pathEl) pathEl.innerHTML = `<span class="current">${name}</span>`;
-        if (!node || !node.contents) return;
-        const items = Object.entries(node.contents);
-        items.forEach(([itemName, item]) => {
-            const el = document.createElement("div");
-            el.className = "finder-item";
-            const icon = item.type === "folder"
-                ? "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-En0WuV9h3Cjev3oISjtJqXetnfA18d.png&w=1000&q=75"
-                : "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-a3SkroygtTE6lQGs0XbfDco9M3lV7H.png&w=1000&q=75";
-            el.innerHTML = `<img src="${icon}" alt="${itemName}"><span>${itemName}</span>`;
-            if (item.type === "folder") el.ondblclick = () => loadFolder(item, itemName);
-            else el.ondblclick = () => openTextFile(item.content || "");
-            grid.appendChild(el);
+    // ---- helpers ----
+    const nav = () => history[historyIdx];
+    const grid = () => area.querySelector("#fnGrid");
+    const status = () => area.querySelector("#fnStatus");
+    const breadcrumb = () => area.querySelector("#fnBreadcrumb");
+    const listHeader = () => area.querySelector("#fnListHeader");
+
+    function updateNav() {
+        const back = area.querySelector("#fnBack");
+        const fwd = area.querySelector("#fnFwd");
+        back.classList.toggle("disabled", historyIdx === 0);
+        fwd.classList.toggle("disabled", historyIdx === history.length - 1);
+    }
+
+    function renderBreadcrumb() {
+        const path = nav().path;
+        breadcrumb().innerHTML = path.map((seg, i) =>
+            `<span class="bc-item${i === path.length - 1 ? " last" : ""}" data-idx="${i}">${seg}</span>` +
+            (i < path.length - 1 ? `<span class="bc-sep">›</span>` : "")
+        ).join("");
+        breadcrumb().querySelectorAll(".bc-item:not(.last)").forEach(el => {
+            el.onclick = () => {
+                const idx = parseInt(el.dataset.idx);
+                // navigate up to that path level
+                let node = fileSystem.root;
+                for (let k = 1; k <= idx; k++) {
+                    const seg = path[k];
+                    if (node.contents && node.contents[seg]) node = node.contents[seg];
+                }
+                navigate(node, path[idx], path.slice(0, idx + 1));
+            };
         });
-        if (status) status.textContent = `${items.length} ítems`;
+    }
+
+    function navigate(node, name, path, pushHistory = true) {
+        if (pushHistory) {
+            history = history.slice(0, historyIdx + 1);
+            history.push({ node, name, path: path || [...nav().path, name] });
+            historyIdx = history.length - 1;
+        }
+        updateNav();
+        renderBreadcrumb();
+        render();
+        // update sidebar
+        const mapping = { "Santiago Sterling": "home", "Documentos": "docs", "Música": "music", "Imágenes": "img", "Videos": "video" };
+        area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active"));
+        const key = mapping[name];
+        if (key) area.querySelector(`[data-nav="${key}"]`)?.classList.add("active");
+    }
+
+    function getFileSize(item) {
+        if (item.type === "folder") {
+            const count = Object.keys(item.contents || {}).length;
+            return `${count} ítem${count !== 1 ? "s" : ""}`;
+        }
+        const content = item.content || "";
+        const bytes = new Blob([content]).size;
+        return bytes < 1024 ? `${bytes} B` : `${(bytes/1024).toFixed(1)} KB`;
+    }
+
+    function render(searchQuery = "") {
+        const g = grid();
+        g.innerHTML = "";
+        const node = nav().node;
+        if (!node || !node.contents) return;
+
+        const allItems = Object.entries(node.contents);
+        const filtered = searchQuery
+            ? allItems.filter(([n]) => n.toLowerCase().includes(searchQuery.toLowerCase()))
+            : allItems;
+
+        // Sort: folders first, then files
+        filtered.sort(([an, a], [bn, b]) => {
+            if (a.type !== b.type) return a.type === "folder" ? -1 : 1;
+            return an.localeCompare(bn, "es");
+        });
+
+        if (viewMode === "list") {
+            g.classList.add("list-view");
+            listHeader().style.display = "flex";
+        } else {
+            g.classList.remove("list-view");
+            listHeader().style.display = "none";
+        }
+
+        if (filtered.length === 0) {
+            g.innerHTML = `<div style="padding:40px;text-align:center;color:var(--text-muted);font-size:13px;grid-column:1/-1;">
+              ${searchQuery ? `Sin resultados para "<strong>${searchQuery}</strong>"` : "Esta carpeta está vacía"}
+            </div>`;
+        } else {
+            filtered.forEach(([itemName, item]) => {
+                const el = document.createElement("div");
+                const icon = item.type === "folder" ? FOLDER_ICON : FILE_ICON;
+                const tagColor = item.tag || "";
+
+                if (viewMode === "list") {
+                    el.className = "finder-item list-item";
+                    el.innerHTML = `
+                      <img src="${icon}" alt="${itemName}">
+                      <span class="finder-list-col-name">${itemName}</span>
+                      <span class="finder-list-col-date finder-list-meta">${item.modified || "Hoy"}</span>
+                      <span class="finder-list-col-kind finder-list-meta">${item.type === "folder" ? "Carpeta" : "Texto"}</span>
+                      <span class="finder-list-col-size finder-list-meta">${getFileSize(item)}</span>
+                    `;
+                } else {
+                    el.className = "finder-item";
+                    el.innerHTML = `
+                      <img src="${icon}" alt="${itemName}">
+                      <span>${itemName}</span>
+                      ${tagColor ? `<div class="item-tag-dot" style="background:${tagColor}"></div>` : ""}
+                    `;
+                }
+
+                // Click to select
+                el.onclick = (e) => {
+                    e.stopPropagation();
+                    area.querySelectorAll(".finder-item").forEach(i => i.classList.remove("selected"));
+                    el.classList.add("selected");
+                    selectedItem = { name: itemName, item, el };
+                };
+
+                // Double-click to open
+                el.ondblclick = () => {
+                    if (item.type === "folder") {
+                        navigate(item, itemName, [...nav().path, itemName]);
+                    } else {
+                        if (item.app && item.app !== "notes") {
+                            openApp(item.app);
+                        } else {
+                            openFinderFileEditor(itemName, item, nav().node);
+                        }
+                    }
+                };
+
+                // Right-click context menu
+                el.addEventListener("contextmenu", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    area.querySelectorAll(".finder-item").forEach(i => i.classList.remove("selected"));
+                    el.classList.add("selected");
+                    selectedItem = { name: itemName, item, el };
+                    showFinderCtxMenu(e, itemName, item, nav().node);
+                });
+
+                g.appendChild(el);
+            });
+        }
+
+        const total = filtered.length;
+        status().textContent = searchQuery
+            ? `${total} resultado${total !== 1 ? "s" : ""} de "${searchQuery}"`
+            : `${total} ítem${total !== 1 ? "s" : ""}`;
+    }
+
+    // ---- Context menu inside Finder ----
+    function showFinderCtxMenu(e, itemName, item, parentNode) {
+        removeFinderCtxMenu();
+        const menu = document.createElement("ul");
+        menu.className = "finder-ctx-menu";
+        const isFolder = item.type === "folder";
+        menu.innerHTML = `
+          <li id="fctx-open"><i class="fi fi-sr-${isFolder ? "folder-open" : "file"}"></i> ${isFolder ? "Abrir carpeta" : "Abrir"}</li>
+          ${!isFolder ? `<li id="fctx-edit"><i class="fi fi-sr-edit"></i> Editar contenido</li>` : ""}
+          ${!isFolder ? `<li id="fctx-ql"><i class="fi fi-sr-eye"></i> Vista rápida</li>` : ""}
+          <li class="ctx-sep"></li>
+          <li id="fctx-rename"><i class="fi fi-sr-text-box-edit"></i> Renombrar</li>
+          <li id="fctx-dup"><i class="fi fi-sr-copy-alt"></i> Duplicar</li>
+          <li class="ctx-sep"></li>
+          <li id="fctx-tag-red"><i class="fi fi-sr-circle" style="color:#ff3b30"></i> Etiqueta Roja</li>
+          <li id="fctx-tag-blue"><i class="fi fi-sr-circle" style="color:#0071e3"></i> Etiqueta Azul</li>
+          <li id="fctx-tag-green"><i class="fi fi-sr-circle" style="color:#34c759"></i> Etiqueta Verde</li>
+          <li id="fctx-tag-none"><i class="fi fi-sr-circle"></i> Sin etiqueta</li>
+          <li class="ctx-sep"></li>
+          <li id="fctx-info"><i class="fi fi-sr-info"></i> Obtener información</li>
+          <li id="fctx-delete" style="color:#ff3b30;"><i class="fi fi-sr-trash-xmark" style="color:#ff3b30"></i> Mover a papelera</li>
+        `;
+        const menuW = 220, menuH = 320;
+        const x = Math.min(e.pageX, window.innerWidth - menuW - 8);
+        const y = Math.min(e.pageY, window.innerHeight - menuH - 8);
+        menu.style.left = x + "px"; menu.style.top = y + "px";
+        document.body.appendChild(menu);
+        activeFolderCtxMenu = menu;
+
+        menu.querySelector("#fctx-open")?.addEventListener("click", () => {
+            removeFinderCtxMenu();
+            if (isFolder) navigate(item, itemName, [...nav().path, itemName]);
+            else openFinderFileEditor(itemName, item, parentNode);
+        });
+        menu.querySelector("#fctx-edit")?.addEventListener("click", () => {
+            removeFinderCtxMenu();
+            openFinderFileEditor(itemName, item, parentNode);
+        });
+        menu.querySelector("#fctx-ql")?.addEventListener("click", () => {
+            removeFinderCtxMenu();
+            showQuickLook(itemName, item);
+        });
+        menu.querySelector("#fctx-rename")?.addEventListener("click", () => {
+            removeFinderCtxMenu();
+            showFinderModal("Renombrar", itemName, (newName) => {
+                if (!newName || newName === itemName) return;
+                if (parentNode.contents[newName]) { showToast("Finder", `Ya existe "${newName}" en esta carpeta.`); return; }
+                parentNode.contents[newName] = { ...parentNode.contents[itemName] };
+                delete parentNode.contents[itemName];
+                item.modified = "Ahora";
+                render(area.querySelector("#fnSearch").value);
+                showToast("Finder", `Renombrado a "${newName}"`);
+            }, itemName);
+        });
+        menu.querySelector("#fctx-dup")?.addEventListener("click", () => {
+            removeFinderCtxMenu();
+            let newName = itemName.replace(/(\.[^.]+)?$/, " copia$1");
+            let counter = 2;
+            while (parentNode.contents[newName]) {
+                newName = itemName.replace(/(\.[^.]+)?$/, ` copia ${counter++}$1`);
+            }
+            parentNode.contents[newName] = JSON.parse(JSON.stringify(item));
+            parentNode.contents[newName].modified = "Ahora";
+            render(area.querySelector("#fnSearch").value);
+            showToast("Finder", `Duplicado como "${newName}"`);
+        });
+        ["red","blue","green"].forEach(color => {
+            const colorMap = { red: "#ff3b30", blue: "#0071e3", green: "#34c759" };
+            menu.querySelector(`#fctx-tag-${color}`)?.addEventListener("click", () => {
+                removeFinderCtxMenu();
+                item.tag = colorMap[color];
+                render(area.querySelector("#fnSearch").value);
+            });
+        });
+        menu.querySelector("#fctx-tag-none")?.addEventListener("click", () => {
+            removeFinderCtxMenu();
+            delete item.tag;
+            render(area.querySelector("#fnSearch").value);
+        });
+        menu.querySelector("#fctx-info")?.addEventListener("click", () => {
+            removeFinderCtxMenu();
+            const size = getFileSize(item);
+            showToast("Finder", `"${itemName}" · ${isFolder ? "Carpeta" : "Archivo de texto"} · ${size}`);
+        });
+        menu.querySelector("#fctx-delete")?.addEventListener("click", () => {
+            removeFinderCtxMenu();
+            delete parentNode.contents[itemName];
+            recycleBin.push(itemName);
+            render(area.querySelector("#fnSearch").value);
+            showToast("Papelera", `"${itemName}" movido a Papelera`);
+        });
+
+        setTimeout(() => document.addEventListener("click", removeFinderCtxMenu, { once: true }), 10);
+    }
+
+    function removeFinderCtxMenu() {
+        if (activeFolderCtxMenu) { activeFolderCtxMenu.remove(); activeFolderCtxMenu = null; }
+    }
+
+    // ---- Grid right-click (empty area) ----
+    grid().addEventListener("contextmenu", (e) => {
+        if (e.target.closest(".finder-item")) return;
+        e.preventDefault();
+        removeFinderCtxMenu();
+        const menu = document.createElement("ul");
+        menu.className = "finder-ctx-menu";
+        menu.innerHTML = `
+          <li id="fctx-new-folder"><i class="fi fi-sr-folder-add"></i> Nueva carpeta</li>
+          <li id="fctx-new-file"><i class="fi fi-sr-file-add"></i> Nuevo archivo de texto</li>
+          <li class="ctx-sep"></li>
+          <li id="fctx-view-grid"><i class="fi fi-sr-apps"></i> Ver como íconos</li>
+          <li id="fctx-view-list"><i class="fi fi-sr-list"></i> Ver como lista</li>
+        `;
+        const menuW = 220, menuH = 180;
+        const x = Math.min(e.pageX, window.innerWidth - menuW - 8);
+        const y = Math.min(e.pageY, window.innerHeight - menuH - 8);
+        menu.style.left = x + "px"; menu.style.top = y + "px";
+        document.body.appendChild(menu);
+        activeFolderCtxMenu = menu;
+        menu.querySelector("#fctx-new-folder").onclick = () => { removeFinderCtxMenu(); createNewFolder(); };
+        menu.querySelector("#fctx-new-file").onclick = () => { removeFinderCtxMenu(); createNewFile(); };
+        menu.querySelector("#fctx-view-grid").onclick = () => { removeFinderCtxMenu(); setView("grid"); };
+        menu.querySelector("#fctx-view-list").onclick = () => { removeFinderCtxMenu(); setView("list"); };
+        setTimeout(() => document.addEventListener("click", removeFinderCtxMenu, { once: true }), 10);
+    });
+
+    // ---- Deselect on empty click ----
+    grid().addEventListener("click", (e) => {
+        if (!e.target.closest(".finder-item")) {
+            area.querySelectorAll(".finder-item").forEach(i => i.classList.remove("selected"));
+            selectedItem = null;
+        }
+    });
+
+    // ---- Quick Look ----
+    function showQuickLook(name, item) {
+        const existing = document.getElementById("quickLookOverlay");
+        if (existing) existing.remove();
+        const overlay = document.createElement("div");
+        overlay.id = "quickLookOverlay";
+        const isFolder = item.type === "folder";
+        const content = isFolder
+            ? `<div class="ql-folder-preview">
+                <img src="${FOLDER_ICON}">
+                <div class="ql-folder-info">${Object.keys(item.contents || {}).length} ítems en esta carpeta</div>
+               </div>`
+            : `<div class="ql-text">${(item.content || "(archivo vacío)").replace(/</g, "&lt;")}</div>`;
+        overlay.innerHTML = `
+          <div id="quickLookPanel">
+            <div class="ql-header">
+              <img src="${isFolder ? FOLDER_ICON : FILE_ICON}" style="width:20px;height:20px;object-fit:contain;">
+              <span class="ql-title">${name}</span>
+              <button class="ql-close" id="qlCloseBtn">✕</button>
+            </div>
+            <div class="ql-body">${content}</div>
+          </div>
+        `;
+        document.body.appendChild(overlay);
+        overlay.addEventListener("click", (e) => { if (e.target === overlay) overlay.remove(); });
+        overlay.querySelector("#qlCloseBtn").onclick = () => overlay.remove();
+    }
+
+    // ---- Open file editor ----
+    function openFinderFileEditor(fileName, item, parentNode) {
+        const id = "notes_finder_" + Date.now();
+        apps[id] = {
+            title: fileName,
+            icon: FILE_ICON,
+            width: 580, height: 480,
+            type: "notes",
+            content: item.content || ""
+        };
+        // When window opens, save back on content change
+        openApp(id);
+        setTimeout(() => {
+            const w = activeWindows[id]?.win;
+            if (!w) return;
+            const ta = w.querySelector(".notepad-textarea");
+            if (ta) {
+                ta.addEventListener("input", () => {
+                    item.content = ta.value;
+                    item.modified = "Ahora";
+                });
+            }
+        }, 100);
+    }
+
+    // ---- New folder ----
+    function createNewFolder() {
+        showFinderModal("Nueva carpeta", "", (name) => {
+            if (!name) return;
+            const node = nav().node;
+            if (node.contents[name]) { showToast("Finder", `Ya existe "${name}" en esta carpeta.`); return; }
+            node.contents[name] = { type: "folder", contents: {}, modified: "Ahora" };
+            render(area.querySelector("#fnSearch").value);
+            showToast("Finder", `Carpeta "${name}" creada`);
+        }, "Nueva carpeta");
+    }
+
+    // ---- New file ----
+    function createNewFile() {
+        showFinderModal("Nuevo archivo", "", (name) => {
+            if (!name) return;
+            const finalName = name.includes(".") ? name : name + ".txt";
+            const node = nav().node;
+            if (node.contents[finalName]) { showToast("Finder", `Ya existe "${finalName}".`); return; }
+            node.contents[finalName] = { type: "file", app: "notes", content: "", modified: "Ahora" };
+            render(area.querySelector("#fnSearch").value);
+            showToast("Finder", `Archivo "${finalName}" creado`);
+        }, "archivo.txt");
+    }
+
+    // ---- Modal for new / rename ----
+    function showFinderModal(title, value, callback, placeholder = "") {
+        const backdrop = document.createElement("div");
+        backdrop.className = "finder-modal-backdrop";
+        const modal = document.createElement("div");
+        modal.className = "finder-modal";
+        modal.innerHTML = `
+          <h3>${title}</h3>
+          <input type="text" id="finderModalInput" value="${value}" placeholder="${placeholder}" autocomplete="off">
+          <div class="finder-modal-btns">
+            <button class="finder-modal-btn cancel" id="fmCancel">Cancelar</button>
+            <button class="finder-modal-btn ok" id="fmOk">OK</button>
+          </div>
+        `;
+        backdrop.appendChild(modal);
+        document.body.appendChild(backdrop);
+        const input = modal.querySelector("#finderModalInput");
+        input.focus(); input.select();
+        const confirm = () => { const val = input.value.trim(); backdrop.remove(); callback(val); };
+        modal.querySelector("#fmOk").onclick = confirm;
+        modal.querySelector("#fmCancel").onclick = () => backdrop.remove();
+        input.onkeydown = (e) => { if (e.key === "Enter") confirm(); if (e.key === "Escape") backdrop.remove(); };
+        backdrop.onclick = (e) => { if (e.target === backdrop) backdrop.remove(); };
+    }
+
+    // ---- View mode ----
+    function setView(mode) {
+        viewMode = mode;
+        area.querySelector("#fnViewGrid").classList.toggle("active", mode === "grid");
+        area.querySelector("#fnViewList").classList.toggle("active", mode === "list");
+        render(area.querySelector("#fnSearch").value);
+    }
+
+    // ---- Sidebar navigation ----
+    const sidebarMap = {
+        home:  { node: fileSystem.root, name: "Santiago Sterling", path: ["Santiago Sterling"] },
+        docs:  { node: fileSystem.root.contents["Documentos"], name: "Documentos", path: ["Santiago Sterling", "Documentos"] },
+        music: { node: fileSystem.root.contents["Música"], name: "Música", path: ["Santiago Sterling", "Música"] },
+        img:   { node: fileSystem.root.contents["Imágenes"], name: "Imágenes", path: ["Santiago Sterling", "Imágenes"] },
+        video: { node: fileSystem.root.contents["Videos"], name: "Videos", path: ["Santiago Sterling", "Videos"] },
+    };
+    area.querySelectorAll(".finder-sidebar-item[data-nav]").forEach(item => {
+        item.onclick = () => {
+            const key = item.dataset.nav;
+            const dest = sidebarMap[key];
+            if (!dest) return;
+            area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active"));
+            item.classList.add("active");
+            navigate(dest.node, dest.name, dest.path);
+        };
+    });
+
+    // ---- Back / Forward ----
+    area.querySelector("#fnBack").onclick = () => {
+        if (historyIdx > 0) { historyIdx--; updateNav(); renderBreadcrumb(); render(); }
+    };
+    area.querySelector("#fnFwd").onclick = () => {
+        if (historyIdx < history.length - 1) { historyIdx++; updateNav(); renderBreadcrumb(); render(); }
     };
 
-    area.querySelector("#findHome").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findHome").classList.add("active"); loadFolder(fileSystem.root, "Santiago Sterling"); };
-    area.querySelector("#findDocs").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findDocs").classList.add("active"); loadFolder(fileSystem.root.contents["Documentos"], "Documentos"); };
-    area.querySelector("#findMusica").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findMusica").classList.add("active"); loadFolder(fileSystem.root.contents["Música"], "Música"); };
-    area.querySelector("#findImg").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findImg").classList.add("active"); loadFolder(fileSystem.root.contents["Imágenes"], "Imágenes"); };
-    area.querySelector("#findVideo").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findVideo").classList.add("active"); loadFolder(fileSystem.root.contents["Videos"], "Videos"); };
+    // ---- New folder / file buttons ----
+    area.querySelector("#fnNewFolder").onclick = createNewFolder;
+    area.querySelector("#fnNewFile").onclick = createNewFile;
 
-    loadFolder(folder, "Santiago Sterling");
+    // ---- View toggle buttons ----
+    area.querySelector("#fnViewGrid").onclick = () => setView("grid");
+    area.querySelector("#fnViewList").onclick = () => setView("list");
+
+    // ---- Search ----
+    area.querySelector("#fnSearch").addEventListener("input", (e) => {
+        render(e.target.value);
+    });
+
+    // ---- Keyboard shortcuts ----
+    win.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && !e.target.closest("input, textarea")) {
+            if (historyIdx > 0) { historyIdx--; updateNav(); renderBreadcrumb(); render(); }
+        }
+        if ((e.metaKey || e.ctrlKey) && e.key === "f") {
+            e.preventDefault(); area.querySelector("#fnSearch")?.focus();
+        }
+        if (e.key === "Escape") {
+            area.querySelector("#fnSearch").value = "";
+            render();
+        }
+        if (e.key === " " && selectedItem && !e.target.closest("input")) {
+            e.preventDefault();
+            showQuickLook(selectedItem.name, selectedItem.item);
+        }
+        if ((e.key === "Delete" || e.key === "Backspace") && selectedItem && e.shiftKey) {
+            delete nav().node.contents[selectedItem.name];
+            recycleBin.push(selectedItem.name);
+            selectedItem = null;
+            render(area.querySelector("#fnSearch").value);
+        }
+    });
+
+    // ---- Initial render ----
+    history = [{ node: startFolder || fileSystem.root, name: "Santiago Sterling", path: ["Santiago Sterling"] }];
+    historyIdx = 0;
+    updateNav();
+    renderBreadcrumb();
+    render();
 }
 
 /* ============================================================
