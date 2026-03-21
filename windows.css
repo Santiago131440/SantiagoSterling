@@ -218,7 +218,7 @@ body {
   border-bottom: 2px solid rgba(0,0,0,0.4);
 }
 
-/* ============================================================ DOCK — Tahoe liquid glass */
+/* ============================================================ DOCK — Tahoe liquid glass + auto-hide */
 #dock {
   position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
   height: 72px; padding: 8px 16px;
@@ -231,7 +231,64 @@ body {
   border-bottom-color: rgba(255,255,255,0.2);
   box-shadow: 0 10px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.7), 0 0 0 0.5px rgba(0,0,0,0.08);
   z-index: 9800;
+  transition: opacity 0.35s cubic-bezier(0.4,0,0.2,1),
+              transform 0.35s cubic-bezier(0.4,0,0.2,1),
+              bottom 0.35s cubic-bezier(0.4,0,0.2,1);
 }
+
+/* Hidden state — slides below screen edge */
+#dock.dock-hidden {
+  opacity: 0;
+  transform: translateX(-50%) translateY(110%);
+  pointer-events: none;
+}
+
+/* Peeking state — triggered by the ghost button or hovering the zone */
+#dock.dock-peek {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: all;
+}
+
+/* Ghost trigger button */
+#dockGhostBtn {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 6px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 4px 4px 0 0;
+  border: 1px solid rgba(255,255,255,0.28);
+  border-bottom: none;
+  backdrop-filter: blur(10px);
+  z-index: 9799;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s, height 0.2s, background 0.2s;
+  display: none;
+}
+#dockGhostBtn.visible {
+  display: block;
+  opacity: 0.55;
+}
+#dockGhostBtn:hover {
+  opacity: 1;
+  height: 10px;
+  background: rgba(255,255,255,0.35);
+}
+/* Hover zone at bottom to peek the dock */
+#dockHoverZone {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  z-index: 9798;
+  display: none;
+}
+#dockHoverZone.active { display: block; }
 
 .dock-item {
   position: relative;
