@@ -1299,7 +1299,7 @@ const iosMsgContacts = [
 function buildMessages() {
   if (iosMsgCurrentChat !== null) return buildChat(iosMsgContacts[iosMsgCurrentChat]);
   return `<div class="msgs-app">
-    <div class="msgs-search"><input placeholder="🔍  Buscar" readonly></div>
+    <div class="msgs-search"><input placeholder="<i class="fi fi-sr-evidence"></i> Buscar" readonly></div>
     <div class="msgs-list">
       ${iosMsgContacts.map((c,i) => `
         <div class="msgs-item" onclick="iosOpenChat(${i})">
@@ -1347,7 +1347,7 @@ function setupMessagesApp() {
     if (bubbles) bubbles.scrollTop = 99999;
     // Auto-reply
     setTimeout(() => {
-      c.msgs.push({ out:false, text:"¡Interesante! Cuéntame más 😊" });
+      c.msgs.push({ out:false, text:"¡Interesante! Cuéntame más <i class="fi fi-sr-face-beam-hand-over-mouth"></i>" });
       nv.innerHTML = buildChat(c);
       const b2 = document.getElementById("msgs-bubbles");
       if (b2) b2.scrollTop = 99999;
@@ -1362,7 +1362,7 @@ function buildCamera() {
       <div class="camera-grid-h"></div><div class="camera-grid-h"></div>
       <div class="camera-grid-v"></div><div class="camera-grid-v"></div>
       <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
-        <div style="font-size:48px;opacity:0.2;">📷</div>
+        <div style="font-size:48px;opacity:0.2;"></div>
         <div style="font-size:13px;color:rgba(255,255,255,0.4);">Cámara no disponible en web</div>
       </div>
     </div>
@@ -1372,9 +1372,9 @@ function buildCamera() {
       <span class="camera-mode">RETRATO</span>
     </div>
     <div class="camera-controls">
-      <div class="camera-thumb">🖼️</div>
-      <div class="camera-shutter" onclick="showToast('Cámara','📸 ¡Foto tomada!')"></div>
-      <div class="camera-flip" onclick="showToast('Cámara','🔄 Cámara girada')">🔄</div>
+      <div class="camera-thumb"><i class="fi fi-sr-gallery"></i></div>
+      <div class="camera-shutter" onclick="showToast('Cámara','<i class="fi fi-sr-camera-viewfinder"></i> ¡Foto tomada!')"></div>
+      <div class="camera-flip" onclick="showToast('Cámara','<i class="fi fi-sr-rotate-square"></i> Cámara girada')"><i class="fi fi-sr-rotate-square"></i></div>
     </div>
   </div>`;
 }
@@ -1406,17 +1406,17 @@ function buildMaps() {
       <div class="maps-road h" style="top:65%"></div>
       <div class="maps-road v" style="left:35%"></div>
       <div class="maps-road v" style="left:65%"></div>
-      <div class="maps-pin" style="top:38%;left:50%;">📍</div>
+      <div class="maps-pin" style="top:38%;left:50%;"><i class="fi fi-sr-road-map-pin"></i></div>
       <div class="maps-search-bar">
-        <span class="maps-search-icon">🔍</span>
+        <span class="maps-search-icon"><i class="fi fi-sr-global-research"></i></span>
         <input class="maps-search-input" placeholder="Buscar en Mapas…" readonly value="Cali, Valle del Cauca">
       </div>
     </div>
     <div class="maps-actions">
-      <button class="maps-btn"><div class="maps-btn-icon">🚗</div>Conducir</button>
-      <button class="maps-btn"><div class="maps-btn-icon">🚶</div>Caminar</button>
-      <button class="maps-btn"><div class="maps-btn-icon">🚌</div>Tránsito</button>
-      <button class="maps-btn" onclick="showToast('Mapas','📍 Ubicación guardada')"><div class="maps-btn-icon">⭐</div>Guardar</button>
+      <button class="maps-btn"><div class="maps-btn-icon"><i class="fi fi-sr-car-side"></i></div>Conducir</button>
+      <button class="maps-btn"><div class="maps-btn-icon"><i class="fi fi-sr-walking"></i></div>Caminar</button>
+      <button class="maps-btn"><div class="maps-btn-icon"><i class="fi fi-sr-car-bus"></i></div>Tránsito</button>
+      <button class="maps-btn" onclick="showToast('Mapas','<i class="fi fi-sr-road-map-pin"></i> Ubicación guardada')"><div class="maps-btn-icon"><i class="fi fi-sr-wishlist-star"></i></div>Guardar</button>
     </div>
   </div>`;
 }
