@@ -178,7 +178,6 @@ lockScreen.addEventListener("click", () => {
     lockScreen.style.opacity = "0";
     setTimeout(() => {
         lockScreen.style.display = "none";
-        showToast("Santiago Sterling", "Bienvenido.");
     }, 600);
 });
 
@@ -727,13 +726,20 @@ function loadFinder(win, folder) {
                 <i class="fi fi-sr-folder-music"></i> Música
               </div>
               <div class="finder-sidebar-item" id="findImg">
-                <i class="fi fi-sr-folder-image"></i> Imágenes
+                <i class="fi fi-sr-images"></i> Imágenes
+              </div>
+              <div class="finder-sidebar-item" id="findVideo">
+                <i class="fi fi-sr-photo-video"></i> Videos
               </div>
             </div>
             <div class="finder-sidebar-section">
               <div class="finder-sidebar-label">Dispositivos</div>
               <div class="finder-sidebar-item">
                 <i class="fi fi-sr-disc-drive"></i> Santiago Sterling
+              </div><br>
+              <div class="finder-sidebar-label">localizaciones</div>
+              <div class="finder-sidebar-item">
+                <i class="fi fi-sr-network-cloud"></i> Sterling Drive
               </div>
             </div>
           </div>
@@ -776,6 +782,7 @@ function loadFinder(win, folder) {
     area.querySelector("#findDocs").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findDocs").classList.add("active"); loadFolder(fileSystem.root.contents["Documentos"], "Documentos"); };
     area.querySelector("#findMusica").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findMusica").classList.add("active"); loadFolder(fileSystem.root.contents["Música"], "Música"); };
     area.querySelector("#findImg").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findImg").classList.add("active"); loadFolder(fileSystem.root.contents["Imágenes"], "Imágenes"); };
+    area.querySelector("#findVideo").onclick = () => { area.querySelectorAll(".finder-sidebar-item").forEach(i => i.classList.remove("active")); area.querySelector("#findVideo").classList.add("active"); loadFolder(fileSystem.root.contents["Videos"], "Videos"); };
 
     loadFolder(folder, "Santiago Sterling");
 }
