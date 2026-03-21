@@ -118,33 +118,41 @@ body {
 .desktop-icon.selected { background: rgba(0,113,227,0.3); outline: 1px solid rgba(0,113,227,0.6); }
 .desktop-icon.dragging { opacity: 0.6; }
 
-/* ============================================================ WINDOWS */
+/* ============================================================ WINDOWS — Tahoe Enhanced */
 .window {
   position: absolute; min-width: 300px; min-height: 200px;
   display: flex; flex-direction: column;
-  background: rgba(246,246,246,0.62);
-  backdrop-filter: blur(60px) saturate(180%);
-  -webkit-backdrop-filter: blur(60px) saturate(180%);
+  background: rgba(246,246,246,0.75);
+  backdrop-filter: blur(70px) saturate(200%) brightness(1.05);
+  -webkit-backdrop-filter: blur(70px) saturate(200%) brightness(1.05);
   border-radius: var(--radius-win);
-  border: 1px solid rgba(0,0,0,0.18);
-  box-shadow: var(--shadow-win);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-bottom-color: rgba(0,0,0,0.15);
+  box-shadow: var(--shadow-win), inset 0 1px 0 rgba(255,255,255,0.8);
   animation: macWinOpen 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   overflow: hidden;
 }
-.window.focused { box-shadow: 0 28px 80px rgba(0,0,0,0.55), 0 4px 20px rgba(0,0,0,0.3); }
+.window.focused {
+  box-shadow: 0 32px 90px rgba(0,0,0,0.5), 0 4px 20px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.8);
+  border-color: rgba(255,255,255,0.65);
+}
 .window.minimizing {
   animation: macWinMinimize 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
-@keyframes macWinOpen { from{opacity:0;transform:scale(0.85)} to{opacity:1;transform:scale(1)} }
+@keyframes macWinOpen { from{opacity:0;transform:scale(0.88) translateY(6px)} to{opacity:1;transform:scale(1) translateY(0)} }
 @keyframes macWinMinimize { from{opacity:1;transform:scale(1)} to{opacity:0;transform:scale(0.5) translateY(200px)} }
 
-/* Title bar */
+/* Title bar — Tahoe */
 .window-header {
-  height: 38px; padding: 0 14px;
+  height: 40px; padding: 0 14px;
   display: flex; align-items: center;
-  background: rgba(235,235,235,0.95);
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  background: rgba(238,238,242,0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
   cursor: grab; flex-shrink: 0; position: relative;
+}
+.window:not(.focused) .window-header {
+  background: rgba(242,242,247,0.85);
 }
 .window-header:active { cursor: grabbing; }
 .window-title {
@@ -210,17 +218,18 @@ body {
   border-bottom: 2px solid rgba(0,0,0,0.4);
 }
 
-/* ============================================================ DOCK */
+/* ============================================================ DOCK — Tahoe liquid glass */
 #dock {
-  position: fixed; bottom: 8px; left: 50%; transform: translateX(-50%);
-  height: 70px; padding: 6px 14px;
+  position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
+  height: 72px; padding: 8px 16px;
   display: flex; align-items: flex-end; gap: 6px;
-  background: rgba(255,255,255,0.28);
-  backdrop-filter: blur(30px) saturate(200%);
-  -webkit-backdrop-filter: blur(30px) saturate(200%);
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.45);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.22);
+  backdrop-filter: blur(40px) saturate(220%) brightness(1.08);
+  -webkit-backdrop-filter: blur(40px) saturate(220%) brightness(1.08);
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.55);
+  border-bottom-color: rgba(255,255,255,0.2);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.7), 0 0 0 0.5px rgba(0,0,0,0.08);
   z-index: 9800;
 }
 
@@ -471,45 +480,213 @@ body {
 .toast-close { color: var(--text-muted); cursor: pointer; font-size: 14px; flex-shrink: 0; padding: 2px; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; transition: background 0.1s; }
 .toast-close:hover { background: rgba(0,0,0,0.08); }
 
-/* ============================================================ FINDER CONTENT */
+/* ============================================================ FINDER CONTENT — macOS Tahoe Enhanced */
 .finder-container { display: flex; height: 100%; }
 .finder-sidebar {
-  width: 180px; flex-shrink: 0;
-  background: rgba(236,236,236,0.7);
-  border-right: 1px solid rgba(0,0,0,0.08);
-  padding: 12px 0; overflow-y: auto;
+  width: 196px; flex-shrink: 0;
+  background: rgba(228,228,232,0.72);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(0,0,0,0.07);
+  padding: 10px 0; overflow-y: auto;
 }
-.finder-sidebar-section { padding: 0 8px 8px; }
-.finder-sidebar-label { font-size: 11px; font-weight: 700; color: var(--text-muted); padding: 4px 8px 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.finder-sidebar-section { padding: 0 6px 6px; }
+.finder-sidebar-label { font-size: 10.5px; font-weight: 700; color: var(--text-muted); padding: 8px 10px 3px; text-transform: uppercase; letter-spacing: 0.6px; }
 .finder-sidebar-item {
-  display: flex; align-items: center; gap: 8px; padding: 5px 10px;
-  border-radius: 6px; cursor: pointer; font-size: 13px; color: var(--text-primary);
-  transition: background 0.08s;
+  display: flex; align-items: center; gap: 7px; padding: 5px 10px;
+  border-radius: 8px; cursor: pointer; font-size: 13px; color: var(--text-primary);
+  transition: background 0.08s; position: relative;
 }
 .finder-sidebar-item:hover { background: rgba(0,0,0,0.06); }
 .finder-sidebar-item.active { background: var(--accent); color: white; }
-.finder-sidebar-item i { font-size: 14px; width: 16px; text-align: center; }
+.finder-sidebar-item i { font-size: 13px; width: 16px; text-align: center; flex-shrink: 0; }
+.finder-sidebar-tag { width: 10px; height: 10px; border-radius: 50%; margin-left: auto; flex-shrink: 0; }
+
 .finder-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 .finder-toolbar {
-  height: 38px; background: rgba(245,245,245,0.8); border-bottom: 1px solid rgba(0,0,0,0.08);
-  display: flex; align-items: center; padding: 0 14px; gap: 8px; flex-shrink: 0;
+  height: 42px; background: rgba(245,245,245,0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  display: flex; align-items: center; padding: 0 12px; gap: 6px; flex-shrink: 0;
 }
 .finder-nav-btn {
-  width: 24px; height: 24px; border-radius: 5px; display: flex; align-items: center; justify-content: center;
-  cursor: pointer; font-size: 14px; color: var(--text-secondary); transition: background 0.1s;
+  width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 15px; font-weight: 600; color: var(--text-secondary); transition: background 0.1s;
 }
 .finder-nav-btn:hover { background: rgba(0,0,0,0.08); }
-.finder-path { font-size: 13px; color: var(--text-secondary); flex: 1; display: flex; align-items: center; gap: 4px; }
-.finder-path span { color: var(--text-secondary); }
-.finder-path span.current { color: var(--text-primary); font-weight: 500; }
-.finder-search { height: 22px; padding: 0 10px; background: rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; font-size: 12px; color: var(--text-primary); outline: none; font-family: var(--font); }
-.finder-grid { flex: 1; overflow-y: auto; padding: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; align-content: start; }
-.finder-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 4px; border-radius: 12px; cursor: default; transition: background 0.1s; }
+.finder-nav-btn:disabled, .finder-nav-btn.disabled { opacity: 0.3; pointer-events: none; }
+
+.finder-breadcrumb { font-size: 13px; color: var(--text-secondary); flex: 1; display: flex; align-items: center; gap: 4px; overflow: hidden; }
+.finder-breadcrumb .bc-sep { opacity: 0.4; font-size: 11px; }
+.finder-breadcrumb .bc-item { cursor: pointer; border-radius: 4px; padding: 2px 5px; transition: background 0.1s; white-space: nowrap; }
+.finder-breadcrumb .bc-item:hover { background: rgba(0,0,0,0.07); }
+.finder-breadcrumb .bc-item.last { color: var(--text-primary); font-weight: 500; cursor: default; }
+.finder-breadcrumb .bc-item.last:hover { background: transparent; }
+
+.finder-toolbar-actions { display: flex; align-items: center; gap: 4px; }
+.finder-action-btn {
+  height: 26px; padding: 0 10px; border-radius: 6px;
+  background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.1);
+  font-size: 11.5px; color: var(--text-primary); cursor: pointer;
+  display: flex; align-items: center; gap: 5px; transition: background 0.1s;
+  font-family: var(--font); white-space: nowrap;
+}
+.finder-action-btn:hover { background: rgba(0,0,0,0.1); }
+.finder-action-btn.accent { background: var(--accent); color: white; border-color: transparent; }
+.finder-action-btn.accent:hover { background: var(--accent-hover); }
+
+.finder-view-toggle { display: flex; background: rgba(0,0,0,0.07); border-radius: 6px; overflow: hidden; border: 1px solid rgba(0,0,0,0.1); }
+.finder-view-btn { width: 28px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; color: var(--text-secondary); transition: background 0.1s; }
+.finder-view-btn.active { background: white; color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.finder-view-btn:hover:not(.active) { background: rgba(0,0,0,0.05); }
+
+.finder-search-wrap { position: relative; }
+.finder-search {
+  height: 24px; padding: 0 10px 0 26px;
+  background: rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 16px; font-size: 12px; color: var(--text-primary);
+  outline: none; font-family: var(--font); width: 160px;
+  transition: width 0.2s, background 0.1s;
+}
+.finder-search:focus { width: 200px; background: white; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(0,113,227,0.2); }
+.finder-search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 11px; color: var(--text-muted); pointer-events: none; }
+
+/* Icon grid view */
+.finder-grid {
+  flex: 1; overflow-y: auto; padding: 16px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 8px; align-content: start;
+}
+.finder-grid.list-view {
+  display: flex; flex-direction: column; gap: 0; padding: 0;
+  grid-template-columns: unset;
+}
+
+.finder-item {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 10px 6px; border-radius: 12px; cursor: default;
+  transition: background 0.1s; position: relative; user-select: none;
+}
 .finder-item:hover { background: rgba(0,0,0,0.06); }
-.finder-item.selected { background: rgba(0,113,227,0.15); }
-.finder-item img { width: 52px; height: 52px; object-fit: contain; }
-.finder-item span { font-size: 11px; text-align: center; color: var(--text-primary); word-break: break-word; line-height: 1.3; }
-.finder-status { height: 22px; background: rgba(245,245,245,0.8); border-top: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text-muted); }
+.finder-item.selected { background: rgba(0,113,227,0.18); outline: 2px solid rgba(0,113,227,0.3); }
+.finder-item img { width: 52px; height: 52px; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.12)); transition: transform 0.15s; }
+.finder-item:hover img { transform: scale(1.04); }
+.finder-item span { font-size: 11px; text-align: center; color: var(--text-primary); word-break: break-word; line-height: 1.3; max-width: 82px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.finder-item .item-tag-dot { width: 8px; height: 8px; border-radius: 50%; margin: 2px auto 0; }
+
+/* List view items */
+.finder-item.list-item {
+  flex-direction: row; align-items: center; gap: 10px;
+  padding: 5px 16px; border-radius: 0; border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.finder-item.list-item img { width: 22px; height: 22px; }
+.finder-item.list-item span { text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; max-width: none; }
+.finder-item.list-item:hover { background: rgba(0,0,0,0.05); border-radius: 0; }
+.finder-item.list-item.selected { background: var(--accent); outline: none; }
+.finder-item.list-item.selected span { color: white; }
+
+.finder-list-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 4px 16px; background: rgba(245,245,245,0.9);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  font-size: 11px; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.3px; flex-shrink: 0;
+}
+.finder-list-col-name { flex: 1; }
+.finder-list-col-date { width: 120px; }
+.finder-list-col-size { width: 70px; text-align: right; }
+.finder-list-col-kind { width: 80px; }
+
+.finder-list-meta { color: var(--text-muted); font-size: 11px; white-space: nowrap; }
+.finder-item.list-item .finder-list-col-date { width: 120px; }
+.finder-item.list-item .finder-list-col-size { width: 70px; text-align: right; }
+.finder-item.list-item .finder-list-col-kind { width: 80px; }
+
+.finder-status {
+  height: 24px; background: rgba(245,245,245,0.85);
+  border-top: 1px solid rgba(0,0,0,0.07);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--text-muted); gap: 12px;
+}
+
+/* Finder context menu (inside window) */
+.finder-ctx-menu {
+  position: fixed;
+  background: rgba(248,248,248,0.95);
+  backdrop-filter: blur(40px) saturate(200%);
+  border-radius: 10px; border: 1px solid rgba(0,0,0,0.13);
+  padding: 5px; min-width: 200px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+  z-index: 999999; list-style: none; color: var(--text-primary);
+  animation: macMenuOpen 0.12s ease;
+}
+.finder-ctx-menu li {
+  padding: 6px 12px; cursor: pointer; font-size: 13px;
+  border-radius: 6px; display: flex; align-items: center;
+  gap: 10px; transition: background 0.08s;
+}
+.finder-ctx-menu li:hover { background: var(--accent); color: white; }
+.finder-ctx-menu .ctx-sep { height: 1px; background: rgba(0,0,0,0.1); margin: 4px; padding: 0; cursor: default; pointer-events: none; }
+.finder-ctx-menu li i { font-size: 13px; width: 16px; text-align: center; }
+
+/* Quick Look */
+#quickLookOverlay {
+  position: fixed; inset: 0; z-index: 99990;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(16px);
+  display: flex; align-items: center; justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+#quickLookPanel {
+  background: rgba(30,30,34,0.97); color: white;
+  border-radius: 16px; border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+  min-width: 480px; max-width: 700px; max-height: 80vh;
+  display: flex; flex-direction: column; overflow: hidden;
+  animation: macWinOpen 0.25s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.ql-header {
+  height: 44px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; padding: 0 16px; gap: 12px; flex-shrink: 0;
+}
+.ql-title { font-size: 14px; font-weight: 600; flex: 1; opacity: 0.9; }
+.ql-close { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.1); border: none; color: white; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: background 0.1s; }
+.ql-close:hover { background: rgba(255,255,255,0.2); }
+.ql-body { flex: 1; overflow-y: auto; padding: 24px; }
+.ql-text { font-size: 14px; line-height: 1.7; white-space: pre-wrap; font-family: 'SF Mono', 'Menlo', monospace; color: rgba(255,255,255,0.85); }
+.ql-folder-preview { display: flex; align-items: center; flex-direction: column; gap: 12px; padding: 40px 0; }
+.ql-folder-preview img { width: 80px; height: 80px; filter: drop-shadow(0 4px 20px rgba(0,0,0,0.4)); }
+.ql-folder-info { font-size: 13px; opacity: 0.6; text-align: center; line-height: 1.6; }
+
+/* New Folder / Rename modal */
+.finder-modal-backdrop {
+  position: fixed; inset: 0; z-index: 99990; background: transparent;
+}
+.finder-modal {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  background: rgba(248,248,248,0.96); backdrop-filter: blur(60px) saturate(200%);
+  border-radius: 14px; border: 1px solid rgba(0,0,0,0.14);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35); z-index: 99991;
+  padding: 24px 24px 20px; min-width: 320px; color: var(--text-primary);
+  animation: macMenuOpen 0.2s ease;
+}
+.finder-modal h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+.finder-modal input {
+  width: 100%; height: 34px; padding: 0 12px;
+  background: white; border: 1.5px solid rgba(0,0,0,0.2);
+  border-radius: 8px; font-size: 14px; outline: none; color: var(--text-primary);
+  font-family: var(--font); transition: border-color 0.1s;
+}
+.finder-modal input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,113,227,0.15); }
+.finder-modal-btns { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+.finder-modal-btn { height: 32px; padding: 0 16px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid rgba(0,0,0,0.15); font-family: var(--font); transition: background 0.1s; }
+.finder-modal-btn.cancel { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+.finder-modal-btn.cancel:hover { background: rgba(0,0,0,0.1); }
+.finder-modal-btn.ok { background: var(--accent); color: white; border-color: transparent; }
+.finder-modal-btn.ok:hover { background: var(--accent-hover); }
+
+/* Tags row in sidebar */
+.finder-tag-row { display: flex; align-items: center; gap: 8px; padding: 4px 10px; border-radius: 8px; cursor: pointer; font-size: 13px; color: var(--text-primary); transition: background 0.08s; }
+.finder-tag-row:hover { background: rgba(0,0,0,0.06); }
+.finder-tag-dot { width: 13px; height: 13px; border-radius: 50%; flex-shrink: 0; }
 
 /* ============================================================ NOTES */
 .notepad-container { display: flex; flex-direction: column; height: 100%; background: #fef9e4; }
