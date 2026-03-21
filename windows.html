@@ -53,12 +53,101 @@
   <div class="menubar-left">
     <div class="menubar-apple" id="appleBtn" title="Menú Apple"><i class="fi fi-sr-employee-man"></i></div>
     <div class="menubar-app-name" id="menubarAppName">Finder</div>
-    <div class="menubar-menu-item">Archivo</div>
-    <div class="menubar-menu-item">Edición</div>
-    <div class="menubar-menu-item">Visualización</div>
-    <div class="menubar-menu-item">Ir</div>
-    <div class="menubar-menu-item">Ventana</div>
-    <div class="menubar-menu-item">Ayuda</div>
+
+    <!-- Archivo -->
+    <div class="menubar-menu-item mb-dropdown-trigger" data-menu="mbMenuArchivo">Archivo
+      <ul class="mb-dropdown" id="mbMenuArchivo">
+        <li data-action="newFolder"><i class="fi fi-sr-folder-add"></i> Nueva carpeta <span class="mb-shortcut">⌘N</span></li>
+        <li data-action="newFile"><i class="fi fi-sr-file-add"></i> Nuevo archivo de texto</li>
+        <li data-action="newWindow"><i class="fi fi-sr-window-restore"></i> Nueva ventana Finder <span class="mb-shortcut">⌘⌥N</span></li>
+        <li class="mb-sep"></li>
+        <li data-action="openFinder"><i class="fi fi-sr-folder-open"></i> Abrir Finder <span class="mb-shortcut">⌘O</span></li>
+        <li data-action="openBrowser"><i class="fi fi-sr-globe"></i> Abrir Navegador</li>
+        <li data-action="openNotes"><i class="fi fi-sr-memo-pad"></i> Abrir Notas</li>
+        <li class="mb-sep"></li>
+        <li data-action="closeWindow"><i class="fi fi-sr-cross-circle"></i> Cerrar ventana <span class="mb-shortcut">⌘W</span></li>
+        <li data-action="closeAll"><i class="fi fi-sr-cross"></i> Cerrar todo</li>
+        <li class="mb-sep"></li>
+        <li data-action="wallpaper"><i class="fi fi-sr-desktop-wallpaper"></i> Fondo de pantalla…</li>
+      </ul>
+    </div>
+
+    <!-- Edición -->
+    <div class="menubar-menu-item mb-dropdown-trigger" data-menu="mbMenuEdicion">Edición
+      <ul class="mb-dropdown" id="mbMenuEdicion">
+        <li data-action="undo"><i class="fi fi-sr-undo"></i> Deshacer <span class="mb-shortcut">⌘Z</span></li>
+        <li data-action="redo"><i class="fi fi-sr-redo"></i> Rehacer <span class="mb-shortcut">⌘⇧Z</span></li>
+        <li class="mb-sep"></li>
+        <li data-action="cut"><i class="fi fi-sr-scissors"></i> Cortar <span class="mb-shortcut">⌘X</span></li>
+        <li data-action="copy"><i class="fi fi-sr-copy-alt"></i> Copiar <span class="mb-shortcut">⌘C</span></li>
+        <li data-action="paste"><i class="fi fi-sr-clipboard"></i> Pegar <span class="mb-shortcut">⌘V</span></li>
+        <li class="mb-sep"></li>
+        <li data-action="selectAll"><i class="fi fi-sr-select-all"></i> Seleccionar todo <span class="mb-shortcut">⌘A</span></li>
+        <li class="mb-sep"></li>
+        <li data-action="search"><i class="fi fi-sr-issue-loupe"></i> Buscar… <span class="mb-shortcut">⌘F</span></li>
+      </ul>
+    </div>
+
+    <!-- Visualización -->
+    <div class="menubar-menu-item mb-dropdown-trigger" data-menu="mbMenuVista">Visualización
+      <ul class="mb-dropdown" id="mbMenuVista">
+        <li data-action="viewIcons"><i class="fi fi-sr-apps"></i> Como íconos <span class="mb-shortcut">⌘1</span></li>
+        <li data-action="viewList"><i class="fi fi-sr-list"></i> Como lista <span class="mb-shortcut">⌘2</span></li>
+        <li class="mb-sep"></li>
+        <li data-action="sortName"><i class="fi fi-sr-sort-alpha-down"></i> Ordenar por nombre</li>
+        <li data-action="sortDate"><i class="fi fi-sr-calendar"></i> Ordenar por fecha</li>
+        <li data-action="sortKind"><i class="fi fi-sr-category"></i> Ordenar por tipo</li>
+        <li class="mb-sep"></li>
+        <li data-action="showHideSidebar"><i class="fi fi-sr-sidebar"></i> Ocultar/Mostrar barra lateral</li>
+        <li data-action="missionControl"><i class="fi fi-sr-grid"></i> Mission Control <span class="mb-shortcut">^↑</span></li>
+      </ul>
+    </div>
+
+    <!-- Ir -->
+    <div class="menubar-menu-item mb-dropdown-trigger" data-menu="mbMenuIr">Ir
+      <ul class="mb-dropdown" id="mbMenuIr">
+        <li data-action="goBack"><i class="fi fi-sr-arrow-left"></i> Atrás <span class="mb-shortcut">⌘[</span></li>
+        <li data-action="goForward"><i class="fi fi-sr-arrow-right"></i> Adelante <span class="mb-shortcut">⌘]</span></li>
+        <li class="mb-sep"></li>
+        <li data-action="goHome"><i class="fi fi-sr-home"></i> Inicio <span class="mb-shortcut">⌘⇧H</span></li>
+        <li data-action="goDocs"><i class="fi fi-sr-document-folder-gear"></i> Documentos <span class="mb-shortcut">⌘⇧O</span></li>
+        <li data-action="goImgs"><i class="fi fi-sr-images"></i> Imágenes <span class="mb-shortcut">⌘⇧P</span></li>
+        <li data-action="goMusic"><i class="fi fi-sr-folder-music"></i> Música</li>
+        <li data-action="goVideos"><i class="fi fi-sr-photo-video"></i> Videos</li>
+        <li class="mb-sep"></li>
+        <li data-action="openImageViewer"><i class="fi fi-sr-picture"></i> Visor de imágenes</li>
+        <li class="mb-sep"></li>
+        <li data-action="goPortfolio"><i class="fi fi-sr-business-growth"></i> Ir a Portafolio</li>
+        <li data-action="goProjects"><i class="fi fi-sr-user"></i> Ir a Proyectos</li>
+      </ul>
+    </div>
+
+    <!-- Ventana -->
+    <div class="menubar-menu-item mb-dropdown-trigger" data-menu="mbMenuVentana">Ventana
+      <ul class="mb-dropdown" id="mbMenuVentana">
+        <li data-action="minimizeWin"><i class="fi fi-sr-window-minimize"></i> Minimizar <span class="mb-shortcut">⌘M</span></li>
+        <li data-action="maximizeWin"><i class="fi fi-sr-expand"></i> Maximizar / Zoom</li>
+        <li data-action="closeWindow"><i class="fi fi-sr-cross-circle"></i> Cerrar <span class="mb-shortcut">⌘W</span></li>
+        <li class="mb-sep"></li>
+        <li data-action="bringAllFront"><i class="fi fi-sr-layers"></i> Traer todo al frente</li>
+        <li class="mb-sep"></li>
+        <div class="mb-section-label">Abiertas</div>
+        <div id="mbOpenWindows"></div>
+      </ul>
+    </div>
+
+    <!-- Ayuda -->
+    <div class="menubar-menu-item mb-dropdown-trigger" data-menu="mbMenuAyuda">Ayuda
+      <ul class="mb-dropdown" id="mbMenuAyuda">
+        <li data-action="helpSearch"><i class="fi fi-sr-issue-loupe"></i> Buscar en ayuda…</li>
+        <li class="mb-sep"></li>
+        <li data-action="helpSpotlight"><i class="fi fi-sr-issue-loupe"></i> Spotlight <span class="mb-shortcut">⌘Space</span></li>
+        <li data-action="helpAbout"><i class="fi fi-sr-info"></i> Acerca de Sterling OS</li>
+        <li class="mb-sep"></li>
+        <li data-action="helpGithub"><i class="fi fi-sr-code-branch"></i> Repositorio GitHub</li>
+        <li data-action="helpPortfolio"><i class="fi fi-sr-briefcase"></i> Portafolio web</li>
+      </ul>
+    </div>
   </div>
   <div class="menubar-right">
     <div class="menubar-status" id="spotlightMenuBtn" title="Spotlight">
@@ -246,6 +335,10 @@
   <div class="dock-item" data-app="notes">
     <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-zGyBqZLV8MGRs1NxccwHoHjQc5XtsK.png&w=1000&q=75">
     <div class="dock-item-label">Notas</div>
+  </div>
+  <div class="dock-item" data-app="imageviewer">
+    <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75">
+    <div class="dock-item-label">Fotos</div>
   </div>
   <div class="dock-item" data-app="sterlingia">
     <img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-As6MTLYJ6ta7FZgR1G5U6ZUzqfCqvm.png&w=500&q=75">
