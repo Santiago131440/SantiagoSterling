@@ -43,7 +43,7 @@ body {
 }
 #lockScreen::before {
   content: ''; position: absolute; inset: 0;
-  background: rgba(0,0,0,0.25); backdrop-filter: blur(2px);
+  background: rgba(0,0,0,0.25); backdrop-filter: blur(8px);
 }
 .lock-content { position: relative; text-align: center; color: white; animation: lockFadeIn 1s ease; }
 .lock-avatar {
@@ -93,7 +93,7 @@ body {
 .menubar-status {
   display: flex; align-items: center; gap: 4px;
   padding: 0 8px; height: var(--menubar-h); cursor: pointer;
-  border-radius: 4px; transition: background 0.1s; font-size: 12px; font-weight: 400;
+  border-radius: 40px; transition: background 0.1s; font-size: 12px; font-weight: 400;
 }
 .menubar-status:hover { background: rgba(0,0,0,0.08); }
 .menubar-status i { font-size: 13px; }
