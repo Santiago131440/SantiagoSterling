@@ -857,7 +857,7 @@ document.querySelectorAll(".mb-dropdown").forEach(menu => {
             bringAllFront: () => { Object.values(activeWindows).forEach(({ win }) => { if (win.style.display === "none") restoreWindow(win); }); },
             helpSearch:    () => { openPanel("spotlight"); document.getElementById("spotlightInput")?.focus(); },
             helpSpotlight: () => { openPanel("spotlight"); document.getElementById("spotlightInput")?.focus(); },
-            helpAbout:     () => showToast("Sterling OS", "Sterling OS Tahoe · Santiago Sterling · v2.0"),
+            helpAbout:     () => showToast("Repositorio Santiago Sterling", "Este repositorio surge para mostrar desarrollos de aplicaciones integradas a un sistema general, el cuál, simula que las aloja como si fuesen nativas, para crear la experiencia de navegar dentro de un sistema operativo."),
             helpGithub:    () => openApp("browser"),
             helpPortfolio: () => window.location.href = "index.html",
         };
