@@ -1905,3 +1905,473 @@ body {
   #ios-control-center, #ios-notif-center,
   #ios-swipe-hint, #lock-widgets { display: none !important; }
 }
+/* ============================================================
+   ENHANCED ANIMATIONS & OS FEATURES — ADDON
+============================================================ */
+
+/* ── Window open animation (more dramatic) ── */
+@keyframes macWinOpen {
+  0%   { opacity:0; transform:scale(0.82) translateY(18px); filter:blur(4px); }
+  60%  { opacity:1; filter:blur(0); }
+  80%  { transform:scale(1.015) translateY(-2px); }
+  100% { transform:scale(1) translateY(0); }
+}
+
+/* ── Window close animation ── */
+@keyframes macWinClose {
+  0%   { opacity:1; transform:scale(1); filter:blur(0); }
+  100% { opacity:0; transform:scale(0.78) translateY(12px); filter:blur(6px); }
+}
+.window.closing {
+  animation: macWinClose 0.28s cubic-bezier(0.4,0,1,1) forwards;
+  pointer-events: none;
+}
+
+/* ── Minimize-to-dock: genie effect simulation ── */
+@keyframes genieMinimize {
+  0%   { opacity:1; transform:scale(1) translateY(0) scaleX(1); transform-origin:bottom center; filter:blur(0); }
+  40%  { transform:scale(0.7,1.05) translateY(60px) scaleX(0.9); filter:blur(1px); }
+  70%  { transform:scale(0.4,0.6) translateY(180px) scaleX(0.6); filter:blur(3px); }
+  100% { opacity:0; transform:scale(0.08,0.05) translateY(400px) scaleX(0.1); filter:blur(8px); }
+}
+.window.minimizing {
+  animation: genieMinimize 0.42s cubic-bezier(0.4,0,0.8,1) forwards !important;
+  pointer-events: none;
+}
+
+/* ── Restore from dock animation ── */
+@keyframes genieRestore {
+  0%   { opacity:0; transform:scale(0.08,0.05) translateY(400px) scaleX(0.1); filter:blur(8px); }
+  30%  { opacity:1; transform:scale(0.4,0.6) translateY(180px) scaleX(0.6); filter:blur(3px); }
+  65%  { transform:scale(0.75,1.04) translateY(30px) scaleX(0.92); filter:blur(1px); }
+  85%  { transform:scale(1.02,0.98) translateY(-4px); filter:blur(0); }
+  100% { transform:scale(1) translateY(0) scaleX(1); filter:blur(0); }
+}
+.window.restoring {
+  animation: genieRestore 0.44s cubic-bezier(0.2,0,0.2,1) forwards;
+}
+
+/* ── Minimized app thumbnail in dock ── */
+.dock-minimized-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.dock-minimized-thumb {
+  width: 52px;
+  height: 38px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+  background: #1c1c1e;
+  position: relative;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+  transform-origin: bottom center;
+}
+.dock-minimized-thumb canvas,
+.dock-minimized-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.dock-minimized-thumb .thumb-app-icon {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.8));
+}
+.dock-minimized-item:hover .dock-minimized-thumb {
+  transform: scale(1.35) translateY(-10px);
+}
+.dock-minimized-item .dock-item-label {
+  bottom: 70px;
+}
+.dock-minimized-item:hover .dock-item-label {
+  opacity: 1;
+}
+.dock-minimized-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 14px;
+  height: 14px;
+  background: #ff3b30;
+  border-radius: 50%;
+  border: 1.5px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7px;
+  font-weight: 700;
+  color: white;
+  line-height: 1;
+}
+
+/* ── Focus ring animation on window appear ── */
+.window.focused {
+  box-shadow: 0 32px 90px rgba(0,0,0,0.5), 0 4px 20px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+/* ── Window shake (error) ── */
+@keyframes windowShake {
+  0%,100% { transform:translateX(0); }
+  15%  { transform:translateX(-8px); }
+  30%  { transform:translateX(8px); }
+  45%  { transform:translateX(-5px); }
+  60%  { transform:translateX(5px); }
+  75%  { transform:translateX(-3px); }
+  90%  { transform:translateX(3px); }
+}
+.window.shaking { animation: windowShake 0.45s cubic-bezier(0.36,0.07,0.19,0.97); }
+
+/* ── Spotlight open animation enhanced ── */
+@keyframes spotlightIn {
+  from { opacity:0; transform:translateX(-50%) scale(0.92) translateY(-10px); filter:blur(6px); }
+  to   { opacity:1; transform:translateX(-50%) scale(1) translateY(0); filter:blur(0); }
+}
+
+/* ── Ripple effect on desktop click ── */
+.desktop-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  transform: scale(0);
+  pointer-events: none;
+  animation: rippleExpand 0.5s ease-out forwards;
+}
+@keyframes rippleExpand {
+  to { transform:scale(4); opacity:0; }
+}
+
+/* ── Toast popup enhanced ── */
+@keyframes toastSlideIn {
+  from { transform:translateX(380px) scale(0.94); opacity:0; filter:blur(4px); }
+  60%  { transform:translateX(-8px) scale(1.01); opacity:1; filter:blur(0); }
+  to   { transform:translateX(0) scale(1); opacity:1; }
+}
+@keyframes toastSlideOut {
+  from { transform:translateX(0) scale(1); opacity:1; }
+  to   { transform:translateX(380px) scale(0.94); opacity:0; filter:blur(3px); }
+}
+.mac-toast.hiding {
+  animation: toastSlideOut 0.3s cubic-bezier(0.4,0,1,1) forwards;
+}
+
+/* ── Dock bounce on app open ── */
+@keyframes dockBounce {
+  0%   { transform:scale(1) translateY(0); }
+  20%  { transform:scale(1.22,0.88) translateY(0); }
+  40%  { transform:scale(0.92,1.15) translateY(-18px); }
+  60%  { transform:scale(1.08,0.94) translateY(0); }
+  80%  { transform:scale(0.98,1.04) translateY(-6px); }
+  100% { transform:scale(1) translateY(0); }
+}
+.dock-item.bouncing img,
+.dock-minimized-item.bouncing .dock-minimized-thumb {
+  animation: dockBounce 0.7s cubic-bezier(0.36,0.07,0.19,0.97);
+}
+
+/* ── Mission Control ── */
+#missionControl {
+  position: fixed;
+  inset: 0;
+  z-index: 99700;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  display: none;
+  padding: 60px 40px 100px;
+  animation: missionIn 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+  overflow: hidden;
+}
+#missionControl.active { display: flex; flex-wrap: wrap; gap: 16px; align-content: start; justify-content: center; }
+@keyframes missionIn {
+  from { opacity:0; transform:scale(1.04); }
+  to   { opacity:1; transform:scale(1); }
+}
+.mc-thumb {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  background: rgba(30,30,34,0.9);
+  flex-shrink: 0;
+}
+.mc-thumb:hover {
+  border-color: rgba(255,255,255,0.7);
+  transform: scale(1.04) translateY(-4px);
+  box-shadow: 0 16px 50px rgba(0,0,0,0.7);
+}
+.mc-thumb-inner {
+  width: 260px;
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+}
+.mc-thumb-inner iframe {
+  width: 200%;
+  height: 200%;
+  border: none;
+  transform: scale(0.5);
+  transform-origin: top left;
+  pointer-events: none;
+}
+.mc-thumb-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 20px 10px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mc-thumb-label img { width: 16px; height: 16px; object-fit: contain; }
+.mc-close-btn {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 20px; height: 20px;
+  background: #ff3b30;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  transition: transform 0.1s;
+}
+.mc-thumb:hover .mc-close-btn { display: flex; }
+.mc-close-btn:hover { transform: scale(1.15); }
+#missionControl .mc-label-top {
+  position: absolute;
+  top: 16px; left: 0; right: 0;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.7;
+  letter-spacing: 0.3px;
+}
+#missionControl .mc-desktop-strip {
+  position: absolute;
+  bottom: 14px; left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+.mc-desktop-btn {
+  width: 60px; height: 40px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 8px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: white;
+  font-weight: 600;
+  transition: background 0.12s, border-color 0.12s;
+  backdrop-filter: blur(8px);
+}
+.mc-desktop-btn:hover { background: rgba(255,255,255,0.28); border-color: rgba(255,255,255,0.6); }
+.mc-desktop-btn.active-desk { background: rgba(255,255,255,0.35); border-color: white; }
+.mc-desktop-btn span { font-size: 9px; opacity: 0.7; }
+
+/* ── Fast-user-switch animation ── */
+@keyframes desktopSwitch {
+  0%   { opacity:1; transform:scale(1); }
+  30%  { opacity:0; transform:scale(0.96) translateX(-30px); }
+  70%  { opacity:0; transform:scale(0.96) translateX(30px); }
+  100% { opacity:1; transform:scale(1) translateX(0); }
+}
+.desktop-container.switching {
+  animation: desktopSwitch 0.4s ease;
+}
+
+/* ── OS Boot / Login animation ── */
+#bootScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+#bootScreen.hidden { display: none; }
+@keyframes bootFadeOut {
+  0%   { opacity:1; }
+  80%  { opacity:1; }
+  100% { opacity:0; }
+}
+.boot-logo {
+  font-size: 80px;
+  margin-bottom: 32px;
+  animation: bootLogoPulse 1.5s ease-in-out infinite;
+}
+@keyframes bootLogoPulse {
+  0%,100% { opacity:0.85; transform:scale(1); }
+  50%      { opacity:1; transform:scale(1.04); }
+}
+.boot-spinner {
+  width: 28px; height: 28px;
+  border: 2.5px solid rgba(255,255,255,0.2);
+  border-top-color: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  animation: spin 0.85s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* ── Window snap zones ── */
+.snap-zone-indicator {
+  position: fixed;
+  border: 2px dashed rgba(0,113,227,0.5);
+  background: rgba(0,113,227,0.06);
+  border-radius: 12px;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  z-index: 9000;
+  display: none;
+}
+.snap-zone-indicator.visible { display: block; animation: snapZonePulse 1s ease-in-out infinite; }
+@keyframes snapZonePulse {
+  0%,100% { border-color:rgba(0,113,227,0.5); background:rgba(0,113,227,0.06); }
+  50%      { border-color:rgba(0,113,227,0.8); background:rgba(0,113,227,0.12); }
+}
+
+/* ── Cursor ripple on drag start ── */
+.window-header:active { cursor: grabbing; }
+.window.dragging-active {
+  box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 8px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.8);
+  transform: scale(1.005);
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+/* ── Dock section label for minimized ── */
+.dock-min-sep {
+  width: 1px;
+  height: 40px;
+  background: rgba(0,0,0,0.18);
+  margin: 0 4px;
+  align-self: center;
+}
+
+/* ── Startup chime visual ── */
+#startupChime {
+  position: fixed;
+  inset: 0;
+  z-index: 999998;
+  background: radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.15) 0%, transparent 70%), #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+}
+#startupChime.active {
+  animation: chimeFlash 2s ease-out forwards;
+}
+@keyframes chimeFlash {
+  0%   { opacity:0; }
+  5%   { opacity:1; }
+  20%  { opacity:0.6; }
+  100% { opacity:0; }
+}
+
+/* ── Window focus pulse ── */
+@keyframes focusPulse {
+  0%   { box-shadow: 0 32px 90px rgba(0,0,0,0.5), 0 0 0 3px rgba(0,113,227,0.4); }
+  100% { box-shadow: 0 32px 90px rgba(0,0,0,0.5), 0 0 0 0px rgba(0,113,227,0); }
+}
+.window.focus-pulse {
+  animation: focusPulse 0.6s ease-out;
+}
+
+/* ── Hot corner glow ── */
+.hot-corner {
+  position: fixed;
+  width: 40px; height: 40px;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: all;
+  cursor: default;
+}
+.hot-corner:hover { opacity: 0.001; } /* invisible but clickable */
+#hotCornerTL { top: 0; left: 0; }
+#hotCornerTR { top: 0; right: 0; }
+#hotCornerBL { bottom: 0; left: 0; }
+#hotCornerBR { bottom: 0; right: 0; }
+
+/* ── OS-style loading bar (for app launch) ── */
+.app-loading-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: rgba(0,113,227,0.15);
+  border-radius: 0 0 24px 24px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.app-loading-bar::after {
+  content: '';
+  position: absolute;
+  left: -50%;
+  top: 0; bottom: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: loadingBarSlide 1.2s ease-in-out infinite;
+}
+@keyframes loadingBarSlide {
+  0%   { left: -50%; }
+  100% { left: 150%; }
+}
+.window.loading .app-loading-bar { display: block; }
+
+/* ── Enhanced desktop icon selection ── */
+.desktop-icon.selected {
+  background: rgba(0,113,227,0.28);
+  outline: 1.5px solid rgba(0,113,227,0.55);
+}
+@keyframes iconAppear {
+  from { opacity:0; transform:scale(0.7); }
+  to   { opacity:1; transform:scale(1); }
+}
+.desktop-icon {
+  animation: iconAppear 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both;
+}
+
+/* ── Cursor trail effect ── */
+.cursor-trail {
+  position: fixed;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  pointer-events: none;
+  z-index: 999999;
+  transform: translate(-50%,-50%);
+  transition: opacity 0.4s;
+  mix-blend-mode: difference;
+}
+
