@@ -1189,6 +1189,8 @@ body {
   .ios-widget-cal {
     background: white; padding: 14px 16px;
     display: flex; flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .iwc-header {
     display: flex; align-items: center; justify-content: space-between;
