@@ -17,17 +17,17 @@ let recycleBin = [];
 const apps = {
     explorer: {
         title: "Finder",
-        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75",
+        icon: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Archivos.png?raw=true",
         width: 760, height: 500, type: "system"
     },
     aplicaciones: {
         title: "App Store",
-        icon: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/icon-1773955846572.png?raw=true",
+        icon: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/App%20Store.png?raw=true",
         width: 880, height: 600, type: "system"
     },
     browser: {
         title: "Navegador",
-        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75",
+        icon: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Navegador.png?raw=true",
         width: 960, height: 640,
         content: `<div style="width:100%;height:100%;display:flex;flex-direction:column;background:#f5f5f7;">
   <div style="height:42px;background:rgba(246,246,246,0.95);border-bottom:1px solid rgba(0,0,0,0.08);
@@ -53,7 +53,7 @@ const apps = {
     },
     player: {
         title: "Sterling Music",
-        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-j9GfZpCuZEAQwYOTxDIVxReq5y0OHg.png&w=500&q=75",
+        icon: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/M%C3%BAsica.png?raw=true",
         width: 800, height: 580,
         content: `<iframe src="https://santiago131440.github.io/SantiagoSterling/Music.html" style="width:100%;height:100%;border:none;"></iframe>`
     },
@@ -1893,7 +1893,7 @@ function loadRecycleBin(win) {
     const area = win.querySelector(".app-area");
     if (recycleBin.length === 0) {
         area.style.display = "flex"; area.style.alignItems = "center"; area.style.justifyContent = "center"; area.style.flexDirection = "column"; area.style.gap = "12px";
-        area.innerHTML = `<div style="font-size:72px;opacity:0.2">🗑️</div><p style="color:#999;font-size:14px;">La Papelera está vacía</p>`;
+        area.innerHTML = `<div style="font-size:72px;opacity:0.2"><i class="fi fi-sr-trash-empty"></i></div><p style="color:#999;font-size:14px;">La Papelera está vacía</p>`;
         return;
     }
     area.style.padding = "16px"; area.style.display = "flex"; area.style.flexWrap = "wrap"; area.style.gap = "8px"; area.style.alignContent = "flex-start";
@@ -1916,7 +1916,7 @@ function loadStore(win) {
     area.style.overflow = "hidden";
 
     const storeApps = [
-        { id:"player", name:"Sterling Music Player", desc:"Reproductor con ecualizador y visualizador de ondas.", cat:"entertainment", catLabel:"Entretenimiento", rating:4.8, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-j9GfZpCuZEAQwYOTxDIVxReq5y0OHg.png&w=500&q=75", featured:true },
+        { id:"player", name:"Sterling Music Player", desc:"Reproductor con ecualizador y visualizador de ondas.", cat:"entertainment", catLabel:"Entretenimiento", rating:4.8, icon:"https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/M%C3%BAsica.png?raw=true", featured:true },
         { id:"mix",    name:"Sterling Music Studio", desc:"Crea y mezcla tus propias pistas de audio.",           cat:"creative",      catLabel:"Creativas",      rating:4.7, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-B2EekBDz0A46XdvgtBjgEAw79EH0Dk.png&w=500&q=75" },
         { id:"paint",  name:"Sterl-ink Sketching",  desc:"Herramienta de dibujo con capas y pinceles.",          cat:"creative",      catLabel:"Creativas",      rating:4.6, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75" },
         { id:"excel",  name:"Sterling Math FX",     desc:"Calculadora científica con gráficas 2D/3D.",            cat:"productivity",  catLabel:"Productividad",  rating:4.9, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DHtLao0TXcz7zsJ6bxv2DltThCLwQ8.png&w=1000&q=75" },
@@ -1930,7 +1930,7 @@ function loadStore(win) {
         { id:"salarios", name:"Salarios Minimos Mundiales",   desc:"Conoce los salarios minimos de cada país.",  cat:"web",          catLabel:"web",              rating:4.9, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-CsdmL6Mu7Mz9dPjZYw1Xq22mkGhekV.png&w=500&q=75" },
         { id:"examen", name:"Examen de software",   desc:"Evalua tu conocimiento en software.",                  cat:"web",          catLabel:"web",              rating:4.9, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-fLBUuECujebAYq2Ctir0tmm4ljvF0b.png&w=500&q=75" },
         { id:"sterlingia", name:"Sterling IA",      desc:"Explora el portafolio con la ayuda de un agente de IA.", cat:"web",        catLabel:"web",              rating:5.0, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-As6MTLYJ6ta7FZgR1G5U6ZUzqfCqvm.png&w=500&q=75" },
-        { id:"browser",  name:"Navegador",             desc:"Navega la web con buscador integrado.",                cat:"web",           catLabel:"Web",             rating:4.5, icon:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75" }
+        { id:"browser",  name:"Navegador",             desc:"Navega la web con buscador integrado.",                cat:"web",           catLabel:"Web",             rating:4.5, icon:"https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Navegador.png?raw=true" }
     ];
 
     const CATS = [
@@ -2156,10 +2156,10 @@ const IOS_NATIVE_APPS = [
 const IOS_STERLING_APPS = [
   // Santiago's apps via iframe
   { id:"sterlingia",  label:"Sterling IA",   img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-As6MTLYJ6ta7FZgR1G5U6ZUzqfCqvm.png&w=500&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/santiago-chat.html" },
-  { id:"player",      label:"Música",        img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-j9GfZpCuZEAQwYOTxDIVxReq5y0OHg.png&w=500&q=75",   url:"https://santiago131440.github.io/SantiagoSterling/Music.html" },
+  { id:"player",      label:"Música",        img:"https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/M%C3%BAsica.png?raw=true",   url:"https://santiago131440.github.io/SantiagoSterling/Music.html" },
   { id:"paint",       label:"Sterl-ink",     img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DPM2VMQ9vdZ4HcXLRwCFZ7FK5Fn7Bx.png&w=1000&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/ExperienciaLaboral.html" },
   { id:"buscaminas",  label:"Sterling World", img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-e3kGOJ1Nx9Q68omg5PbnlZh8hFAJkX.png&w=500&q=75", url:"https://santiago131440.github.io/SantiagoSterling/Super%20Mario.html" },
-  { id:"explorer",    label:"Finder",        img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-0QeQPgJUNilwfLLC5l1AnfScdu7OC2.png&w=1000&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/" },
+  { id:"explorer",    label:"Finder",        img:"https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Archivos.png?raw=true",  url:"https://santiago131440.github.io/SantiagoSterling/" },
   { id:"aplicaciones",label:"App Store",     img:"https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/icon-1773955846572.png?raw=true", url:"https://santiago131440.github.io/SantiagoSterling/proyectoApp.html" },
   { id:"excel",       label:"Math FX",       img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-DHtLao0TXcz7zsJ6bxv2DltThCLwQ8.png&w=1000&q=75", url:"https://santiago131440.github.io/SantiagoSterling/Sterling%20math%20fx.html" },
   { id:"word",        label:"Letter",        img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-BjimxRD0gb4rZBjr9jbO9LYXmOZJao.png&w=1000&q=75", url:"https://santiago131440.github.io/SantiagoSterling/Sterling%20Letter.html" },
@@ -2170,7 +2170,7 @@ const IOS_STERLING_APPS = [
   { id:"mix",         label:"Music Studio",  img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-B2EekBDz0A46XdvgtBjgEAw79EH0Dk.png&w=500&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/mix.html" },
   { id:"airspace",    label:"Captain",       img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-yjBpDcYD9IjVGoIg4LnKkMKL1RBris.png&w=500&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/Buscaminas.html" },
   { id:"examen",      label:"Examen",        img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-fLBUuECujebAYq2Ctir0tmm4ljvF0b.png&w=500&q=75",  url:"https://santiago131440.github.io/SantiagoSterling/registro.html" },
-  { id:"browser",     label:"Safari",        img:"https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-Ed2YpW2egEie9u5OJL1FT5V4ERUOL5.png&w=1000&q=75",  url:"https://www.google.com/webhp?igu=1" },
+  { id:"browser",     label:"Safari",        img:"https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Navegador.png?raw=true",  url:"https://www.google.com/webhp?igu=1" },
 ];
 
 /* ---- Status bar clock ---- */
