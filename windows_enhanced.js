@@ -1,10 +1,3 @@
-/* ================================================================
-   STERLING OS — ENHANCED FEATURES ADDON
-   Adds: dock thumbnails on minimize, genie effect, mission control,
-   hot corners, window snap zones, startup animation, cursor effects,
-   and many more immersive OS interactions.
-================================================================ */
-
 /* ── Override closeWindow with animated version ── */
 const _origCloseWindow = window.closeWindow;
 window.closeWindow = function(win) {
