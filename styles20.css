@@ -1160,3 +1160,491 @@ img[alt="Astronaut UX"] {
     background-position: 240px 240px;
   }
 }
+/* ============================================================
+   FAN DECK – EXPERIENCIA PROFESIONAL
+   Premium stacked-card fan layout with modal expansion
+   ============================================================ */
+
+/* Section wrapper */
+.exp-section {
+  overflow: visible;
+}
+
+.fan-deck-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 40px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding-bottom: 20px;
+}
+
+/* The stacked deck */
+.fan-deck {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  perspective: 1200px;
+}
+
+/* Individual fan card */
+.fan-card {
+  position: absolute;
+  width: 100%;
+  height: 490px;
+  border-radius: 24px;
+  cursor: pointer;
+  transform-origin: center bottom;
+  transition:
+    transform 0.52s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.4s ease,
+    opacity 0.35s ease;
+  will-change: transform;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.13), 0 1.5px 4px rgba(0,0,0,0.07);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fan card inner layout */
+.fan-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cover image area */
+.fan-card-cover {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: #e5e7eb;
+}
+
+.fan-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.fan-card:hover .fan-card-cover img {
+  transform: scale(1.04);
+}
+
+.fan-card-cover-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.35) 100%);
+  pointer-events: none;
+}
+
+/* Floating logo ring */
+.fan-card-logo-ring {
+  position: absolute;
+  top: 164px;
+  left: 22px;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  background: #f1f5f9;
+  z-index: 2;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fan-card:hover .fan-card-logo-ring {
+  transform: scale(1.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+}
+
+.fan-card-logo-ring img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Card body text */
+.fan-card-body {
+  padding: 44px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.fan-card-badge {
+  display: inline-block;
+  width: fit-content;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.fan-card-company {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+.fan-card-role {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+.fan-card-dates {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+.fan-dot {
+  color: #cbd5e1;
+}
+
+/* Expand button */
+.fan-expand-btn {
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0f172a;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.fan-expand-btn:hover {
+  background: #0f172a;
+  color: #fff;
+  border-color: #0f172a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ---- FAN STACKING POSITIONS ---- */
+/* Active (top) card */
+.fan-card.fan-active {
+  transform: translateY(0) rotate(0deg);
+  z-index: 10;
+  opacity: 1;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.09);
+}
+
+/* Fanned background cards */
+.fan-card.fan-behind-1 {
+  transform: translateY(14px) rotate(2.5deg);
+  z-index: 9;
+  opacity: 0.88;
+}
+.fan-card.fan-behind-2 {
+  transform: translateY(26px) rotate(5deg);
+  z-index: 8;
+  opacity: 0.72;
+}
+.fan-card.fan-behind-3 {
+  transform: translateY(36px) rotate(7deg);
+  z-index: 7;
+  opacity: 0.55;
+}
+.fan-card.fan-behind-4 {
+  transform: translateY(44px) rotate(8.5deg);
+  z-index: 6;
+  opacity: 0.38;
+}
+.fan-card.fan-behind-5 {
+  transform: translateY(50px) rotate(10deg);
+  z-index: 5;
+  opacity: 0.22;
+}
+
+/* Hover lift on active card */
+.fan-card.fan-active:hover {
+  transform: translateY(-8px) rotate(0deg);
+  box-shadow: 0 36px 80px rgba(0,0,0,0.2), 0 8px 24px rgba(0,0,0,0.1);
+}
+
+/* Navigation dots */
+.fan-nav-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.fan-dot-btn {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: #cbd5e1;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s ease, transform 0.25s ease, width 0.25s ease;
+  outline: none;
+}
+
+.fan-dot-btn.active {
+  background: #0f172a;
+  width: 22px;
+  border-radius: 4px;
+}
+
+/* Hint text */
+.fan-hint {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   EXPERIENCE MODAL
+   ============================================================ */
+.exp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.exp-modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.exp-modal-box {
+  background: #fff;
+  border-radius: 28px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow: hidden;
+  overflow-y: auto;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.12);
+  transform: scale(0.92) translateY(24px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  scrollbar-width: thin;
+  scrollbar-color: #e2e8f0 transparent;
+}
+
+.exp-modal-overlay.open .exp-modal-box {
+  transform: scale(1) translateY(0);
+}
+
+/* Cover full bleed */
+.exp-modal-cover {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #e5e7eb;
+}
+
+.exp-modal-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.exp-modal-cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.45) 100%);
+}
+
+/* Close button */
+.exp-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(8px);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  transition: background 0.2s, transform 0.2s;
+  z-index: 2;
+}
+
+.exp-modal-close:hover {
+  background: #fff;
+  transform: scale(1.1);
+}
+
+/* Modal content area */
+.exp-modal-content {
+  padding: 0 24px 28px;
+  position: relative;
+}
+
+/* Logo ring in modal */
+.exp-modal-logo-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+  background: #f1f5f9;
+  margin-top: -40px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.exp-modal-logo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Modal info */
+.exp-modal-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.exp-modal-company {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+
+.exp-modal-role {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+.exp-modal-dates {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.exp-modal-dates::before {
+  content: '📅';
+  font-size: 0.8rem;
+}
+
+.exp-modal-divider {
+  height: 1px;
+  background: #f1f5f9;
+  margin: 18px 0;
+}
+
+.exp-modal-desc {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: #334155;
+}
+
+/* ============================================================
+   RESPONSIVE – tablet & desktop expand the card
+   ============================================================ */
+@media (min-width: 640px) {
+  .fan-deck-wrapper {
+    max-width: 520px;
+  }
+  .fan-deck {
+    height: 540px;
+  }
+  .fan-card {
+    height: 510px;
+  }
+  .fan-card-cover {
+    height: 220px;
+  }
+  .fan-card-logo-ring {
+    top: 184px;
+    width: 80px;
+    height: 80px;
+  }
+  .fan-card-body {
+    padding: 50px 28px 24px;
+  }
+  .fan-card-company {
+    font-size: 1.4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fan-deck-wrapper {
+    max-width: 600px;
+  }
+  .fan-deck {
+    height: 560px;
+  }
+  .fan-card {
+    height: 530px;
+  }
+  .fan-card-cover {
+    height: 240px;
+  }
+  .fan-card-logo-ring {
+    top: 200px;
+    width: 88px;
+    height: 88px;
+  }
+}
