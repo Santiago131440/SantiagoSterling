@@ -27,6 +27,8 @@ body{
   color: #000000;
   padding: 0px;
   font-weight: 100;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 /* Reset element focus for accessibility */
@@ -1167,19 +1169,22 @@ img[alt="Astronaut UX"] {
 
 /* Section wrapper */
 .exp-section {
-  overflow: visible;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .fan-deck-wrapper {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: min(480px, calc(100vw - 32px));
   margin: 40px auto 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px;
-  padding-bottom: 20px;
+  padding: 0 16px 20px;
+  box-sizing: border-box;
 }
 
 /* The stacked deck */
@@ -1188,6 +1193,7 @@ img[alt="Astronaut UX"] {
   width: 100%;
   height: 520px;
   perspective: 1200px;
+  box-sizing: border-box;
 }
 
 /* Individual fan card */
@@ -1208,6 +1214,7 @@ img[alt="Astronaut UX"] {
   box-shadow: 0 8px 32px rgba(0,0,0,0.13), 0 1.5px 4px rgba(0,0,0,0.07);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
 /* Fan card inner layout */
@@ -1360,36 +1367,36 @@ img[alt="Astronaut UX"] {
   box-shadow: 0 24px 64px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.09);
 }
 
-/* Fanned background cards */
+/* Fanned background cards – small angles to stay within viewport */
 .fan-card.fan-behind-1 {
-  transform: translateY(14px) rotate(2.5deg);
+  transform: translateY(12px) rotate(1.8deg);
   z-index: 9;
   opacity: 0.88;
 }
 .fan-card.fan-behind-2 {
-  transform: translateY(26px) rotate(5deg);
+  transform: translateY(22px) rotate(3.5deg);
   z-index: 8;
   opacity: 0.72;
 }
 .fan-card.fan-behind-3 {
-  transform: translateY(36px) rotate(7deg);
+  transform: translateY(30px) rotate(5deg);
   z-index: 7;
   opacity: 0.55;
 }
 .fan-card.fan-behind-4 {
-  transform: translateY(44px) rotate(8.5deg);
+  transform: translateY(36px) rotate(6.2deg);
   z-index: 6;
   opacity: 0.38;
 }
 .fan-card.fan-behind-5 {
-  transform: translateY(50px) rotate(10deg);
+  transform: translateY(40px) rotate(7.2deg);
   z-index: 5;
   opacity: 0.22;
 }
 
 /* Hover lift on active card */
 .fan-card.fan-active:hover {
-  transform: translateY(-8px) rotate(0deg);
+  transform: translateY(-6px) rotate(0deg);
   box-shadow: 0 36px 80px rgba(0,0,0,0.2), 0 8px 24px rgba(0,0,0,0.1);
 }
 
@@ -1601,50 +1608,113 @@ img[alt="Astronaut UX"] {
 }
 
 /* ============================================================
-   RESPONSIVE – tablet & desktop expand the card
+   RESPONSIVE – viewport-safe sizing at every breakpoint
    ============================================================ */
-@media (min-width: 640px) {
+
+/* Base mobile-first: already defined above. Extra safety for very small screens */
+@media (max-width: 380px) {
   .fan-deck-wrapper {
-    max-width: 520px;
+    padding: 0 8px 20px;
   }
   .fan-deck {
-    height: 540px;
+    height: 480px;
   }
   .fan-card {
-    height: 510px;
+    height: 450px;
+    border-radius: 18px;
   }
   .fan-card-cover {
-    height: 220px;
+    height: 170px;
   }
   .fan-card-logo-ring {
-    top: 184px;
-    width: 80px;
-    height: 80px;
+    top: 136px;
+    width: 60px;
+    height: 60px;
   }
   .fan-card-body {
-    padding: 50px 28px 24px;
+    padding: 36px 16px 16px;
+  }
+  .fan-card-company {
+    font-size: 1.1rem;
+  }
+  .fan-card-role {
+    font-size: 0.8rem;
+  }
+}
+
+/* Tablet (≥ 640px) */
+@media (min-width: 640px) {
+  .fan-deck-wrapper {
+    max-width: min(520px, calc(100vw - 48px));
+    padding: 0 12px 20px;
+  }
+  .fan-deck {
+    height: 530px;
+  }
+  .fan-card {
+    height: 500px;
+  }
+  .fan-card-cover {
+    height: 215px;
+  }
+  .fan-card-logo-ring {
+    top: 178px;
+    width: 76px;
+    height: 76px;
+  }
+  .fan-card-body {
+    padding: 46px 24px 22px;
+  }
+  .fan-card-company {
+    font-size: 1.35rem;
+  }
+}
+
+/* Desktop (≥ 1024px) */
+@media (min-width: 1024px) {
+  .fan-deck-wrapper {
+    max-width: min(560px, calc(100vw - 64px));
+    padding: 0 0 20px;
+  }
+  .fan-deck {
+    height: 550px;
+  }
+  .fan-card {
+    height: 520px;
+  }
+  .fan-card-cover {
+    height: 230px;
+  }
+  .fan-card-logo-ring {
+    top: 192px;
+    width: 82px;
+    height: 82px;
+  }
+  .fan-card-body {
+    padding: 50px 26px 24px;
   }
   .fan-card-company {
     font-size: 1.4rem;
   }
 }
 
-@media (min-width: 1024px) {
-  .fan-deck-wrapper {
-    max-width: 600px;
+/* Modal responsive fix */
+@media (max-width: 480px) {
+  .exp-modal-overlay {
+    padding: 8px;
+    align-items: flex-end;
   }
-  .fan-deck {
-    height: 560px;
+  .exp-modal-box {
+    border-radius: 24px 24px 16px 16px;
+    max-height: 92vh;
   }
-  .fan-card {
-    height: 530px;
+  .exp-modal-cover {
+    height: 180px;
   }
-  .fan-card-cover {
-    height: 240px;
+  .exp-modal-company {
+    font-size: 1.3rem;
   }
-  .fan-card-logo-ring {
-    top: 200px;
-    width: 88px;
-    height: 88px;
+  .exp-modal-content {
+    padding: 0 18px 24px;
   }
 }
