@@ -417,228 +417,259 @@
 <hr>
 
     <!-------------------------------------------- EXPERIENCIA PROFESIONAL ---------------------------------------------->
-    <section id="experiencia" class="mt-16">
+    <section id="experiencia" class="exp-section mt-16 pb-16">
       <div class="flex items-center justify-center text-center">
         <h2 class="text-5xl text-center justify-center sm:text-6xl lg:text-7xl mb-4 titulosSterlingNegro-text">Experiencia Profesional</h2>
       </div>
       <br>
-<p class="titulosSterlingNegro-text1 text-center justify-center text-xl">Desarrollada en entornos desafiantes y estrátegicos.</p>
+      <p class="titulosSterlingNegro-text1 text-center justify-center text-xl">Desarrollada en entornos desafiantes y estratégicos.</p>
       <br>
-      <div id="projectsGrid" class="mt-3 grid md:grid-cols-2 lg:grid-cols-3 gap-4 rounded-2xl backdrop-blur-md p-4">
-        <!-- project cards (repetitive rich markup for length + SEO) -->
-<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
-  <!-- Barra superior estilo MacOS -->
-  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
-    <div class="flex gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Cosmoagro S.A."></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Cosmoagro S.A."></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Cosmoagro S.A."></span>
-    </div>
-    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
-      <span class="text-stone-200">--</span>Cosmoagro S.A.
-    </h3>
-  </div>
-  <!-- Contenedor de imagen principal con avatar -->
-  <div class="relative p-0">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_cover.jpg?raw=true" 
-         alt="Portada Cosmoagro" 
-         class="w-full h-full object-cover shadow-sm">
-    <!-- Avatar flotante -->
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_logo.jpg?raw=true" alt="Perfil Cosmoagro" class="mt-2 w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
-  <!-- Contenido de la ventana -->
-  <div class="mt-8 p-2"> <!-- mt-8 deja espacio para el avatar -->
-    <h4 class="text-lg text-emerald-500">Analista de producción</h4>
-    <p class="text-sm text-slate-700 mt-1">Optimizar procesos, analizar indicadores y mejorar eficiencia operativa, garantizando calidad, continuidad y control en la planta.</p>
-    <footer class="bg-black/10 rounded-full">
-      <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
-        <div class="flex justify-start items-center gap-2 text-left w-full">
-          <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Inicio: 2024/12/10</span>
-          <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Actualidad</span>
+
+      <!-- FAN DECK CONTAINER -->
+      <div class="fan-deck-wrapper">
+        <div class="fan-deck" id="fanDeck">
+
+          <!-- CARD 1 – Cosmoagro S.A. -->
+          <div class="fan-card" data-index="0"
+               data-company="Cosmoagro S.A."
+               data-role="Analista de Producción"
+               data-start="Dic 2024"
+               data-end="Actualidad"
+               data-desc="Optimizar procesos, analizar indicadores y mejorar eficiencia operativa, garantizando calidad, continuidad y control en la planta de producción."
+               data-color="#10b981"
+               data-cover="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_cover.jpg?raw=true"
+               data-logo="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_logo.jpg?raw=true">
+            <div class="fan-card-inner">
+              <div class="fan-card-cover">
+                <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_cover.jpg?raw=true" alt="Cosmoagro cover" loading="lazy">
+                <div class="fan-card-cover-gradient"></div>
+              </div>
+              <div class="fan-card-logo-ring">
+                <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_logo.jpg?raw=true" alt="Cosmoagro logo">
+              </div>
+              <div class="fan-card-body">
+                <div class="fan-card-badge" style="background:#10b981">Actualidad</div>
+                <h3 class="fan-card-company">Cosmoagro S.A.</h3>
+                <p class="fan-card-role">Analista de Producción</p>
+                <div class="fan-card-dates">
+                  <span>Dic 2024</span><span class="fan-dot">·</span><span>Presente</span>
+                </div>
+                <button class="fan-expand-btn" aria-label="Ver detalles">
+                  <span>Ver más</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M17 7H7v10"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2 – Coca Cola Femsa -->
+          <div class="fan-card" data-index="1"
+               data-company="Coca-Cola Femsa"
+               data-role="Técnico Analista"
+               data-start="Jul 2023"
+               data-end="Jun 2024"
+               data-desc="Enfocado en el control de procesos, mejora continua y gestión eficiente para impulsar la productividad y el cumplimiento de la calidad del producto."
+               data-color="#ef4444"
+               data-cover="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_cover.jpg?raw=true"
+               data-logo="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_logo.jpg?raw=true">
+            <div class="fan-card-inner">
+              <div class="fan-card-cover">
+                <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_cover.jpg?raw=true" alt="Coca Cola cover" loading="lazy">
+                <div class="fan-card-cover-gradient"></div>
+              </div>
+              <div class="fan-card-logo-ring">
+                <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_logo.jpg?raw=true" alt="Coca Cola logo">
+              </div>
+              <div class="fan-card-body">
+                <div class="fan-card-badge" style="background:#ef4444">1 año</div>
+                <h3 class="fan-card-company">Coca-Cola Femsa</h3>
+                <p class="fan-card-role">Técnico Analista</p>
+                <div class="fan-card-dates">
+                  <span>Jul 2023</span><span class="fan-dot">·</span><span>Jun 2024</span>
+                </div>
+                <button class="fan-expand-btn" aria-label="Ver detalles">
+                  <span>Ver más</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M17 7H7v10"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 3 – Cadena S.A. -->
+          <div class="fan-card" data-index="2"
+               data-company="Cadena S.A."
+               data-role="Supervisor de Producción"
+               data-start="Ene 2020"
+               data-end="Feb 2023"
+               data-desc="Lideré equipos de producción asegurando el cumplimiento del plan, optimizando procesos y garantizando calidad, seguridad y eficiencia operativa en planta."
+               data-color="#f59e0b"
+               data-cover="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_cover.jpg?raw=true"
+               data-logo="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_logo.jpg?raw=true">
+            <div class="fan-card-inner">
+              <div class="fan-card-cover">
+                <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_cover.jpg?raw=true" alt="Cadena SA cover" loading="lazy">
+                <div class="fan-card-cover-gradient"></div>
+              </div>
+              <div class="fan-card-logo-ring">
+                <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_logo.jpg?raw=true" alt="Cadena SA logo">
+              </div>
+              <div class="fan-card-body">
+                <div class="fan-card-badge" style="background:#f59e0b">3 años</div>
+                <h3 class="fan-card-company">Cadena S.A.</h3>
+                <p class="fan-card-role">Supervisor de Producción</p>
+                <div class="fan-card-dates">
+                  <span>Ene 2020</span><span class="fan-dot">·</span><span>Feb 2023</span>
+                </div>
+                <button class="fan-expand-btn" aria-label="Ver detalles">
+                  <span>Ver más</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M17 7H7v10"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 4 – Postobón S.A. -->
+          <div class="fan-card" data-index="3"
+               data-company="Postobón S.A."
+               data-role="Analista de Producción"
+               data-start="Mar 2019"
+               data-end="Ago 2019"
+               data-desc="Orientado a optimizar flujos de trabajo, reducir desperdicios y asegurar operaciones eficientes mediante análisis de datos y metodologías de mejora continua."
+               data-color="#06b6d4"
+               data-cover="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_cover.jpg?raw=true"
+               data-logo="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_logo.jpg?raw=true">
+            <div class="fan-card-inner">
+              <div class="fan-card-cover">
+                <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_cover.jpg?raw=true" alt="Postobón cover" loading="lazy">
+                <div class="fan-card-cover-gradient"></div>
+              </div>
+              <div class="fan-card-logo-ring">
+                <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_logo.jpg?raw=true" alt="Postobón logo">
+              </div>
+              <div class="fan-card-body">
+                <div class="fan-card-badge" style="background:#06b6d4">5 meses</div>
+                <h3 class="fan-card-company">Postobón S.A.</h3>
+                <p class="fan-card-role">Analista de Producción</p>
+                <div class="fan-card-dates">
+                  <span>Mar 2019</span><span class="fan-dot">·</span><span>Ago 2019</span>
+                </div>
+                <button class="fan-expand-btn" aria-label="Ver detalles">
+                  <span>Ver más</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M17 7H7v10"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 5 – Laboratorios OSA -->
+          <div class="fan-card" data-index="4"
+               data-company="Laboratorios OSA S.A.S"
+               data-role="Analista de Producción"
+               data-start="Jun 2018"
+               data-end="Mar 2019"
+               data-desc="Gestión de indicadores y optimización de procesos productivos para mantener operaciones estables, eficientes y de alta calidad orientadas al cliente."
+               data-color="#ec4899"
+               data-cover="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_cover.jpg?raw=true"
+               data-logo="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_logo.jpg?raw=true">
+            <div class="fan-card-inner">
+              <div class="fan-card-cover">
+                <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_cover.jpg?raw=true" alt="Laboratorios OSA cover" loading="lazy">
+                <div class="fan-card-cover-gradient"></div>
+              </div>
+              <div class="fan-card-logo-ring">
+                <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_logo.jpg?raw=true" alt="Laboratorios OSA logo">
+              </div>
+              <div class="fan-card-body">
+                <div class="fan-card-badge" style="background:#ec4899">9 meses</div>
+                <h3 class="fan-card-company">Laboratorios OSA</h3>
+                <p class="fan-card-role">Analista de Producción</p>
+                <div class="fan-card-dates">
+                  <span>Jun 2018</span><span class="fan-dot">·</span><span>Mar 2019</span>
+                </div>
+                <button class="fan-expand-btn" aria-label="Ver detalles">
+                  <span>Ver más</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M17 7H7v10"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 6 – Smurfit Westrock -->
+          <div class="fan-card" data-index="5"
+               data-company="Smurfit Westrock S.A."
+               data-role="Incremento de Producción"
+               data-start="Mar 2017"
+               data-end="Mar 2018"
+               data-desc="Impulsar el aumento de producción mediante seguimiento en planta, control de tiempos, apoyo a operarios y mejora de la eficiencia en cada etapa del proceso productivo."
+               data-color="#8b5cf6"
+               data-cover="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_cover.jpg?raw=true"
+               data-logo="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_logo.jpg?raw=true">
+            <div class="fan-card-inner">
+              <div class="fan-card-cover">
+                <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_cover.jpg?raw=true" alt="Smurfit Westrock cover" loading="lazy">
+                <div class="fan-card-cover-gradient"></div>
+              </div>
+              <div class="fan-card-logo-ring">
+                <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_logo.jpg?raw=true" alt="Smurfit Westrock logo">
+              </div>
+              <div class="fan-card-body">
+                <div class="fan-card-badge" style="background:#8b5cf6">1 año</div>
+                <h3 class="fan-card-company">Smurfit Westrock</h3>
+                <p class="fan-card-role">Incremento de Producción</p>
+                <div class="fan-card-dates">
+                  <span>Mar 2017</span><span class="fan-dot">·</span><span>Mar 2018</span>
+                </div>
+                <button class="fan-expand-btn" aria-label="Ver detalles">
+                  <span>Ver más</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M17 7H7v10"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /fan-deck -->
+
+        <!-- Navigation dots -->
+        <div class="fan-nav-dots" id="fanDots">
+          <button class="fan-dot-btn active" data-target="0" aria-label="Cosmoagro"></button>
+          <button class="fan-dot-btn" data-target="1" aria-label="Coca-Cola Femsa"></button>
+          <button class="fan-dot-btn" data-target="2" aria-label="Cadena SA"></button>
+          <button class="fan-dot-btn" data-target="3" aria-label="Postobón"></button>
+          <button class="fan-dot-btn" data-target="4" aria-label="Laboratorios OSA"></button>
+          <button class="fan-dot-btn" data-target="5" aria-label="Smurfit Westrock"></button>
+        </div>
+
+        <p class="fan-hint">Toca o haz clic en una tarjeta para explorar · Desliza para navegar</p>
+      </div><!-- /fan-deck-wrapper -->
+
+      <!-- EXPERIENCE DETAIL MODAL -->
+      <div id="expModal" class="exp-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="exp-modal-box">
+          <!-- Cover image full bleed -->
+          <div class="exp-modal-cover">
+            <img id="expModalCover" src="" alt="">
+            <div class="exp-modal-cover-overlay"></div>
+            <button id="expModalClose" class="exp-modal-close" aria-label="Cerrar">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <!-- Logo + info -->
+          <div class="exp-modal-content">
+            <div class="exp-modal-logo-wrap">
+              <img id="expModalLogo" src="" alt="">
+            </div>
+            <div class="exp-modal-info">
+              <span id="expModalBadge" class="exp-modal-badge"></span>
+              <h2 id="expModalCompany" class="exp-modal-company"></h2>
+              <p id="expModalRole" class="exp-modal-role"></p>
+              <div id="expModalDates" class="exp-modal-dates"></div>
+              <div class="exp-modal-divider"></div>
+              <p id="expModalDesc" class="exp-modal-desc"></p>
+            </div>
+          </div>
         </div>
       </div>
-    </footer>
-  </div>
-</article>
 
-
-<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
-  <!-- Barra superior estilo MacOS -->
-  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
-    <div class="flex gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Coca Cola Femsa"></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Coca Cola Femsa"></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Coca Cola Femsa"></span>
-    </div>
-    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
-      <span class="text-stone-200">--</span>Coca Cola Femsa
-    </h3>
-  </div>
-  <!-- Contenedor de imagen principal con avatar -->
-  <div class="relative p-0">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_cover.jpg?raw=true" 
-         alt="Portada Coca Cola" 
-         class="w-full h-full object-cover shadow-sm">
-    <!-- Avatar flotante -->
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_logo.jpg?raw=true" alt="Perfil Coca Cola" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
-  <!-- Contenido de la ventana -->
-  <div class="mt-8 p-2"> <!-- mt-8 deja espacio para el avatar -->
-    <h4 class="text-lg text-rose-500">Técnico Analista</h4>
-    <p class="text-sm text-slate-700 mt-1">Enfocado en el control de procesos, mejora continua y gestión eficiente para impulsar la productividad, así mismo el cumplimiento de la calidad del producto.</p>
-    <footer class="bg-black/10 rounded-full">
-    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
-      <div class="flex justify-start items-center gap-2 text-left w-full">
-      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Inicio: 2023/07/07</span>
-      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Fin: 2024/06/07</span>
-      </div>
-          </div>
-    </footer>
-  </div>
-</article>
-
-<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
-  
-  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
-    <div class="flex gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Cadena S.A."></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Cadena S.A."></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Cadena S.A."></span>
-    </div>
-    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
-      <span class="text-stone-200">--</span>Cadena S.A.
-    </h3>
-  </div>
-
-  <div class="relative p-0">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_cover.jpg?raw=true" 
-         alt="Portada Cadena" 
-         class="w-full h-full object-cover shadow-sm">
-    
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_logo.jpg?raw=true" alt="Perfil Cadena" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
-  
-  <div class="mt-8 p-2">
-    <h4 class="text-lg text-amber-500">Supervisor de Producción</h4>
-    <p class="text-sm text-slate-700 mt-1">Experiencia liderando equipos, asegurando el cumplimiento del plan, optimizando procesos y garantizando calidad, seguridad y eficiencia operativa.</p>
-    <footer class="bg-black/10 rounded-full">     
-    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
-      <div class="flex justify-start items-center gap-2 text-left w-full">
-      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Inicio: 2020/01/20</span>
-      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Fin: 2023/02/17</span>
-      </div>
-    </div>
-    </footer>
-  </div>
-</article>
-
-<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
-  <!-- Barra superior estilo MacOS -->
-  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
-    <div class="flex gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Postobón S.A."></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Postobón S.A."></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Postobón S.A."></span>
-    </div>
-    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
-      <span class="text-stone-200">--</span>Postobón S.A.
-    </h3>
-  </div>
-  
-  <div class="relative p-0">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_cover.jpg?raw=true" 
-         alt="Portada Postobón" 
-         class="w-full h-full object-cover shadow-sm">
-    
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_logo.jpg?raw=true" alt="Perfil Postobón" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
- 
-  <div class="mt-8 p-2">
-    <h4 class="text-lg text-cyan-500">Analista de producción</h4>
-    <p class="text-sm text-slate-700 mt-1">Orientado a optimizar flujos de trabajo, reducir desperdicios y asegurar operaciones eficientes mediante análisis de datos y mejora continua.</p>
-
-    <footer class="bg-black/10 rounded-full">     
-    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
-      <div class="flex justify-start items-center gap-2 text-left w-full">
-      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Inicio: 2019/03/08</span>
-      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Fin: 2019/08/06</span>
-      </div>
-    </div>
-    </footer>
-  </div>
-</article>
-
-        
-<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
-  <!-- Barra superior estilo MacOS -->
-  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
-    <div class="flex gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Laboratorios OSA S.A.S"></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Laboratorios OSA S.A.S"></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Laboratorios OSA S.A.S"></span>
-    </div>
-    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
-      <span class="text-stone-200">--</span>Laboratorios OSA S.A.S
-    </h3>
-  </div>
-  <!-- Contenedor de imagen principal con avatar -->
-  <div class="relative p-0">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_cover.jpg?raw=true" 
-         alt="Portada Laboratorios OSA" 
-         class="w-full h-full object-cover shadow-sm">
-    <!-- Avatar flotante -->
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_logo.jpg?raw=true" alt="Perfil Laboratorios OSA" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
-  <!-- Contenido de la ventana -->
-  <div class="mt-8 p-2">
-    <h4 class="text-lg text-rose-500">Analista de producción</h4>
-    <p class="text-sm text-slate-700 mt-1">Gestión de indicadores y optimización de procesos productivos para mantener operaciones estables, eficientes y de alta calidad para los clientes.</p>
-
-    <footer class="bg-black/10 rounded-full">     
-    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
-      <div class="flex justify-start items-center gap-2 text-left w-full">
-      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Inicio: 2018/06/16</span>
-      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Fin: 2019/03/06</span>
-      </div>
-    </div>
-    </footer>
-  </div>
-</article>
-
-<article class="projectCard relative p-0 rounded-2xl bg-white/10 border border-white/30 shadow-xl" style="backdrop-filter: blur(12px);">
-  <!-- Barra superior estilo MacOS -->
-  <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
-    <div class="flex gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Smurfit Westrock S.A."></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Smurfit Westrock S.A."></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Smurfit Westrock S.A."></span>
-    </div>
-    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
-      <span class="text-stone-200">--</span>Smurfit Westrock S.A.
-    </h3>
-  </div>
-  <!-- Contenedor de imagen principal con avatar -->
-  <div class="relative p-0">
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_cover.jpg?raw=true" 
-         alt="Portada Smurfit Westrock" 
-         class="w-full h-full object-cover">
-    <!-- Avatar flotante -->
-    <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_logo.jpg?raw=true" alt="Perfil Smurfit Westrock" class="w-24 h-24 rounded-full border-2 border-white shadow-lg absolute -bottom-9 left-4 transform transition duration-300 ease-in-out hover:scale-125 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
-  <!-- Contenido de la ventana -->
-  <div class="mt-8 p-2"> <!-- mt-8 deja espacio para el avatar -->
-    <h4 class="text-lg text-rose-500">Incremento de producción</h4>
-    <p class="text-sm text-slate-700 mt-1">Impulsar el aumento de producción mediante seguimiento en planta, control de tiempos, apoyo a los operarios y mejora de la eficiencia en cada etapa del proceso.</p>
-
-    <footer class="bg-black/10 rounded-full">     
-    <div class="mt-3 flex items-center justify-end gap-3 px-1 py-1">
-      <div class="flex justify-start items-center gap-2 text-left w-full">
-      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Inicio: 2017/03/24</span>
-      <span class="text-xs px-4 py-2 rounded-full bg-stone-100 text-black/70">Fin: 2018/03/24</span>
-      </div>
-    </div>
-    </footer>
-  </div>
-</article>
-        <br>
-        <br>
-        <br>
-
-      </div>
     </section>
 
     <!---------------------------------------- DESARROLLOS E INNOVACIONES ---------------------------------------------------------------->
@@ -1099,9 +1130,7 @@
     <!-- CTA -->
     <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
 
-      <a
-        href="mailto:santisterling@gmail.com"
-        class=" text-center px-3 py-1 rounded-full text-sm font-medium transition-all bg-[#007AFF] text-white hover:border-[#007AFF] inline-block text-center cursor-pointer">
+      <a href="/cdn-cgi/l/email-protection#90e3f1fee4f9e3e4f5e2fcf9fef7d0f7fdf1f9fcbef3fffd" class=" text-center px-3 py-1 rounded-full text-sm font-medium transition-all bg-[#007AFF] text-white hover:border-[#007AFF] inline-block text-center cursor-pointer">
         <span class="text-lg whitespace-nowrap titulosSterling-text2">Contactar por email</span>
         <span class="text-lg">→</span>
       </a>
@@ -1173,7 +1202,7 @@
     </div>
   </div>
 
-  <script src="script20.js" defer></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script20.js" defer></script>
 
   
       <!-- MODAL MAC OS -->
@@ -1199,27 +1228,3 @@
         src=""
         alt=""
         class="w-full h-64 object-cover rounded-xl shadow"
-      />
-      <p id="modalText" class="text-slate-600 text-sm leading-relaxed"></p>
-    </div>
-  </div>
-</div>
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
