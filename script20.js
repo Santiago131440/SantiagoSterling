@@ -798,3 +798,154 @@ Proyectos destacados:
 
 })();
 
+/* ============================================================
+   FAN DECK – EXPERIENCIA PROFESIONAL
+   ============================================================ */
+(function () {
+  const deck   = document.getElementById('fanDeck');
+  const dotsEl = document.getElementById('fanDots');
+  if (!deck) return;
+
+  const cards  = Array.from(deck.querySelectorAll('.fan-card'));
+  const dots   = dotsEl ? Array.from(dotsEl.querySelectorAll('.fan-dot-btn')) : [];
+  const TOTAL  = cards.length;
+  let active   = 0;
+
+  // Classes per position
+  const posClasses = [
+    'fan-active',
+    'fan-behind-1',
+    'fan-behind-2',
+    'fan-behind-3',
+    'fan-behind-4',
+    'fan-behind-5',
+  ];
+
+  function applyLayout(activeIndex) {
+    cards.forEach((card, i) => {
+      // Remove all position classes
+      posClasses.forEach(c => card.classList.remove(c));
+
+      // Distance from active, wrapping around
+      const distance = (i - activeIndex + TOTAL) % TOTAL;
+      const cls = posClasses[Math.min(distance, posClasses.length - 1)];
+      card.classList.add(cls);
+    });
+
+    // Dots
+    dots.forEach((d, i) => d.classList.toggle('active', i === activeIndex));
+    active = activeIndex;
+  }
+
+  // Advance to next card (cycle)
+  function next() {
+    applyLayout((active + 1) % TOTAL);
+  }
+
+  // Init
+  applyLayout(0);
+
+  // Click on background cards → bring to front
+  cards.forEach((card, i) => {
+    card.addEventListener('click', function (e) {
+      // If it's already active, open modal via the expand button
+      if (card.classList.contains('fan-active')) return;
+      e.stopPropagation();
+      applyLayout(i);
+    });
+  });
+
+  // Expand button opens modal
+  deck.addEventListener('click', function (e) {
+    const btn = e.target.closest('.fan-expand-btn');
+    if (!btn) return;
+    const card = btn.closest('.fan-card');
+    if (!card || !card.classList.contains('fan-active')) return;
+    openExpModal(card);
+  });
+
+  // Dot navigation
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => applyLayout(i));
+  });
+
+  // Swipe / drag on deck
+  let touchStartX = 0;
+  let touchStartY = 0;
+  deck.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  deck.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      if (dx < 0) {
+        applyLayout((active + 1) % TOTAL);
+      } else {
+        applyLayout((active - 1 + TOTAL) % TOTAL);
+      }
+    }
+  }, { passive: true });
+
+  // Mouse drag
+  let mouseStartX = 0;
+  let dragging = false;
+  deck.addEventListener('mousedown', e => {
+    mouseStartX = e.clientX;
+    dragging = true;
+  });
+  deck.addEventListener('mouseup', e => {
+    if (!dragging) return;
+    dragging = false;
+    const dx = e.clientX - mouseStartX;
+    if (Math.abs(dx) > 50) {
+      if (dx < 0) applyLayout((active + 1) % TOTAL);
+      else         applyLayout((active - 1 + TOTAL) % TOTAL);
+    }
+  });
+
+  /* ---------- MODAL ---------- */
+  const overlay    = document.getElementById('expModal');
+  const closeBtn   = document.getElementById('expModalClose');
+  const coverImg   = document.getElementById('expModalCover');
+  const logoImg    = document.getElementById('expModalLogo');
+  const badge      = document.getElementById('expModalBadge');
+  const company    = document.getElementById('expModalCompany');
+  const role       = document.getElementById('expModalRole');
+  const dates      = document.getElementById('expModalDates');
+  const desc       = document.getElementById('expModalDesc');
+
+  function openExpModal(card) {
+    if (!overlay) return;
+    coverImg.src        = card.dataset.cover  || '';
+    logoImg.src         = card.dataset.logo   || '';
+    badge.textContent   = card.dataset.role   || '';
+    badge.style.background = card.dataset.color || '#0f172a';
+    company.textContent = card.dataset.company || '';
+    role.textContent    = card.dataset.role    || '';
+    dates.textContent   = `${card.dataset.start || ''} — ${card.dataset.end || ''}`;
+    desc.textContent    = card.dataset.desc    || '';
+
+    overlay.setAttribute('aria-hidden', 'false');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeExpModal() {
+    if (!overlay) return;
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  if (closeBtn)  closeBtn.addEventListener('click', closeExpModal);
+  if (overlay)   overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeExpModal();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeExpModal();
+  });
+
+})();
