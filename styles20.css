@@ -53,10 +53,9 @@ body{
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: transform .18s ease, box-shadow .18s ease;
-  box-shadow: 0 8px 30px rgba(212,175,55,0.12);
+  transition: transform .18s ease;
 }
-.button-primary:hover{ transform: translateY(-4px); box-shadow: 0 12px 40px rgba(212,175,55,0.18); }
+.button-primary:hover{ transform: translateY(-4px); }
 
 /* Fancy underline for headings */
 .fancy-underline{
@@ -81,10 +80,9 @@ body{
   padding:0.4rem 0.6rem;
   border-radius:999px;
   background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
-  transition: transform .25s cubic-bezier(.2,.9,.2,1), box-shadow .25s;
+  transition: transform .25s cubic-bezier(.2,.9,.2,1);
 }
-.badge-animate:hover{ transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,0.6); }
+.badge-animate:hover{ transform: translateY(-4px);}
 
 /* Reveal animations used by JS */
 .reveal{
@@ -272,8 +270,8 @@ body{
   max-width: 860px;
   background: rgba(255,255,255,.75);
   backdrop-filter: blur(24px);
-  border-radius: 18px;
-  box-shadow: 0 5px 10px rgba(0,0,0,.25);
+  border-radius: 28px;
+  border: solid 1px #d3d2d2;
   overflow: hidden;
 }
 
@@ -368,7 +366,7 @@ body{
   background: rgba(255,255,255,.85);
   backdrop-filter: blur(28px);
   border-radius: 18px;
-  box-shadow: 0 40px 100px rgba(0,0,0,.4);
+  border: solid 1px #d3d3d3;
   animation: scaleIn .35s ease;
 }
 
@@ -558,7 +556,6 @@ body{
       border: 6px solid #000000;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
     }
 
     .phone::before {
@@ -674,7 +671,6 @@ body{
   padding: .6rem .9rem;
   font-size: .8rem;
   font-weight: 100;
-  box-shadow: 0 10px 25px rgba(0,0,0,.12);
   white-space: nowrap;
 }
 
@@ -1200,22 +1196,17 @@ img[alt="Astronaut UX"] {
   position: absolute;
   width: 100%;
   height: 530px;
-  border-radius: 12px;
+  border-radius: 22px;
+  border: solid 1px #d1d1d1;
   cursor: pointer;
   transform-origin: center bottom;
   transition:
     transform 0.52s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.4s ease,
     opacity 0.35s ease;
   will-change: transform;
   overflow: hidden;
   background: #f5f5f7;
   /* macOS-style layered shadow */
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.08),
-    0 4px 8px rgba(0,0,0,0.06),
-    0 12px 32px rgba(0,0,0,0.10),
-    0 32px 64px rgba(0,0,0,0.06);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
@@ -1265,9 +1256,9 @@ img[alt="Astronaut UX"] {
   transition: filter 0.15s ease;
 }
 
-.mac-dot-red    { background: #ff5f57; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.12); }
-.mac-dot-yellow { background: #febc2e; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.10); }
-.mac-dot-green  { background: #28c840; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.10); }
+.mac-dot-red    { background: #ff5f57;}
+.mac-dot-yellow { background: #febc2e;}
+.mac-dot-green  { background: #28c840;}
 
 .fan-card:hover .mac-dot-red    { filter: brightness(1.08); }
 .fan-card:hover .mac-dot-yellow { filter: brightness(1.08); }
@@ -1279,7 +1270,7 @@ img[alt="Astronaut UX"] {
   left: 50%;
   transform: translateX(-50%);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 100;
   color: #1d1d1f;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -1300,7 +1291,7 @@ img[alt="Astronaut UX"] {
   display: inline-block;
   width: fit-content;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 100;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #fff;
@@ -1312,15 +1303,14 @@ img[alt="Astronaut UX"] {
 .fan-card-cover {
   position: relative;
   width: 100%;
-  height: 290px;
-  flex-shrink: 0;
+  height: 90px;
   overflow: hidden;
   background: #d1d1d6;
 }
 
 .fan-card-cover img {
   width: 100%;
-  height: 100%;
+  height: 30%;
   object-fit: cover;
   object-position: center 30%;
   transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -1331,17 +1321,6 @@ img[alt="Astronaut UX"] {
   transform: scale(1.03);
 }
 
-.fan-card-cover-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 55%,
-    rgba(0,0,0,0.55) 100%
-  );
-  pointer-events: none;
-}
-
 /* Floating logo ring – inside cover, bottom-left */
 .fan-card-logo-ring {
   position: absolute;
@@ -1349,18 +1328,12 @@ img[alt="Astronaut UX"] {
   left: 16px;
   width: 56px;
   height: 56px;
-  border-radius: 14px;
+  border-radius: 60px;
   overflow: hidden;
   border: 2px solid rgba(255,255,255,0.9);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.22);
   background: #fff;
   z-index: 2;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.fan-card.fan-active:hover .fan-card-logo-ring {
-  transform: scale(1.08);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.28);
+  transition: transform 0.3s ease;
 }
 
 .fan-card-logo-ring img {
@@ -1371,7 +1344,7 @@ img[alt="Astronaut UX"] {
 
 /* ---- Card body ---- */
 .fan-card-body {
-  padding: 14px 18px 16px;
+  padding: 1px 2px 2px;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -1381,7 +1354,7 @@ img[alt="Astronaut UX"] {
 
 .fan-card-company {
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 300;
   color: #1d1d1f;
   letter-spacing: -0.02em;
   line-height: 1.25;
@@ -1389,7 +1362,7 @@ img[alt="Astronaut UX"] {
 
 .fan-card-role {
   font-size: 0.8rem;
-  font-weight: 400;
+  font-weight: 100;
   color: #6e6e73;
   line-height: 1.45;
 }
@@ -1399,14 +1372,9 @@ img[alt="Astronaut UX"] {
   align-items: center;
   gap: 5px;
   font-size: 0.74rem;
-  font-weight: 500;
+  font-weight: 100;
   color: #8e8e93;
   margin-top: 3px;
-}
-
-.fan-card-dates svg {
-  color: #aeaeb2;
-  flex-shrink: 0;
 }
 
 .fan-dot {
@@ -1444,10 +1412,6 @@ img[alt="Astronaut UX"] {
   transform: translateY(0) rotate(0deg);
   z-index: 10;
   opacity: 1;
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.07),
-    0 8px 24px rgba(0,0,0,0.12),
-    0 28px 72px rgba(0,0,0,0.14);
 }
 
 .fan-card.fan-behind-1 {
@@ -1478,10 +1442,6 @@ img[alt="Astronaut UX"] {
 
 .fan-card.fan-active:hover {
   transform: translateY(-6px) rotate(0deg);
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.07),
-    0 16px 40px rgba(0,0,0,0.14),
-    0 48px 96px rgba(0,0,0,0.12);
 }
 
 /* Navigation dots */
@@ -1551,10 +1511,6 @@ img[alt="Astronaut UX"] {
   max-height: 88vh;
   overflow: hidden;
   overflow-y: auto;
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.1),
-    0 32px 80px rgba(0,0,0,0.38),
-    0 8px 24px rgba(0,0,0,0.16);
   transform: scale(0.94) translateY(20px);
   transition: transform 0.38s cubic-bezier(0.34, 1.3, 0.64, 1);
   scrollbar-width: thin;
@@ -1569,7 +1525,7 @@ img[alt="Astronaut UX"] {
 .exp-modal-cover {
   position: relative;
   width: 100%;
-  height: 240px;
+  height: 24px;
   overflow: hidden;
   flex-shrink: 0;
   background: #d1d1d6;
@@ -1604,7 +1560,6 @@ img[alt="Astronaut UX"] {
   justify-content: center;
   cursor: pointer;
   color: #1d1d1f;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
   transition: background 0.18s, transform 0.18s;
   z-index: 2;
 }
@@ -1626,7 +1581,6 @@ img[alt="Astronaut UX"] {
   border-radius: 18px;
   overflow: hidden;
   border: 3px solid #fff;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.14);
   background: #fff;
   margin-top: -36px;
   margin-bottom: 14px;
