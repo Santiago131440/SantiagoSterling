@@ -740,7 +740,7 @@ Proyectos destacados:
           '<div style="' +
             'width:72px;height:72px;border-radius:18px;' +
             'overflow:hidden;background:#f4f4f4;' +
-            'box-shadow:0 4px 14px rgba(0,0,0,.1);' +
+            'box-shadow:0 4px 1px rgba(0,0,0,.1);' +
             'transition:transform .2s, box-shadow .2s;' +
             'display:flex;align-items:center;justify-content:center;' +
           '" ' +
