@@ -150,7 +150,7 @@
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   // ==================================================================================
-  // REVEAL ON SCROLL
+  // MOSTRAR AL HACER SCROLL
   // ==================================================================================
   const reveals = $$(".reveal, section, .projectCard, .card-3d, .testimonial");
   const observer = new IntersectionObserver((entries) => {
@@ -164,7 +164,7 @@
 
   reveals.forEach(el => observer.observe(el));
 
-  // Programmatic reveal para project cards
+  // Mostrar tarjetas de proyectos de forma programada
   $$(".projectCard").forEach((c, idx) => {
     c.style.transitionDelay = `${idx * 60}ms`;
     c.classList.add("reveal");
@@ -252,12 +252,23 @@ Ubicación: Cali, Colombia
 Contacto: santisterling@gmail.com
 
 Resumen:
-Tecnólogo en Análisis y Desarrollo de Software y en Gestión de Producción Industrial, con más de ocho años de experiencia en plantas de manufactura. Mi perfil combina la eficiencia industrial con la innovación tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y crear soluciones escalables. Cuento con formación en frontend y backend (HTML, CSS, JavaScript, React, Node.js, Python, Django, entre otros) y en metodologías industriales como Lean Manufacturing, Kaizen y control de inventarios. Me interesa especializarme en inteligencia artificial aplicada a la industria y en el desarrollo de soluciones que integren la Industria 4.0 con tecnologías digitales inteligentes.
+Tecnólogo en Análisis y Desarrollo de Software y en Gestión de Producción Industrial, con más de ocho años de experiencia en plantas de manufactura. Mi perfil combina la eficiencia industrial con la innovación tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y crear soluciones escalables. Cuento con formación en frontend y backend (HTML, CSS, JavaScript, React, Node.js, Python, Django, PostgreSQL, entre otros) y en metodologías industriales como Lean Manufacturing, Kaizen y control de inventarios. Me interesa especializarme en inteligencia artificial aplicada a la industria y en el desarrollo de soluciones que integren la Industria 4.0 con tecnologías digitales inteligentes.
 
 Habilidades:
-- React, Next.js, Tailwind
-- Figma, Prototipado
-- Accessibilidad
+- HTML, CSS, JavaScript, Python, Django, React, NodeJS, NextJS, Tailwind, PostgreSQL, MySQL.
+- Figma, Photoshop, Illustrator, Excel Avanzado, Macros, Visual Basic 6.0, Power BI, Power Query.
+- Capacidad para desarrollar software funcional y mantenible (Programación orientada a objetos (POO) Estructuras de datos, Algoritmos básicos, Manejo de errores, Modularización del código).
+- Análisis de requerimientos (Levantamiento de necesidades del cliente o usuario, interpretación de requerimientos funcionales y no funcionales, elaboración de casos de uso, modelado de procesos).
+- Tecnologías y herramientas relacionadas, Diseño responsive Manipulación del DOM (UML (Diagramas de casos de uso, clases y secuencia), Historias de usuario, Diagramas de flujo).
+- Diseño de interfaces llamativas y fáciles de interpretar para el usuario, diseño de imagenes, diseño de bases de datos.
+- APIs REST, Autenticación básica.
+
+Conocimientos:
+
+- Diseño de bases de datos relacionales
+- Normalización
+- Consultas SQL
+- CRUD (Create, Read, Update, Delete)
 
 Proyectos destacados:
 - Sterling Music Player
