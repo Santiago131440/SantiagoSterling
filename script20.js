@@ -247,9 +247,12 @@
 
   function generateSimpleCV() {
     return `CV - Santiago Sterling
-Rol: Desarrollador de software
-Ubicación: Cali, Colombia
-Contacto: santisterling@gmail.com
+Nombre Completo: Santiago Sterling Rivas.
+Estudio: Tecnólogo en análisis y desarrollo de software, Tecnólogo en gestión de la producción industrial.
+Correo electrónico: santisterling@gmail.com.
+Ubicación: Cali, Colombia.
+LinkedIn: www.linkedin.com/in/santisterling.
+Portafolio: https://santiago131440.github.io/SantiagoSterling/
 
 Resumen:
 Tecnólogo en Análisis y Desarrollo de Software y en Gestión de Producción Industrial, con más de ocho años de experiencia en plantas de manufactura. Mi perfil combina la eficiencia industrial con la innovación tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y crear soluciones escalables. Cuento con formación en frontend y backend (HTML, CSS, JavaScript, React, Node.js, Python, Django, PostgreSQL, entre otros) y en metodologías industriales como Lean Manufacturing, Kaizen y control de inventarios. Me interesa especializarme en inteligencia artificial aplicada a la industria y en el desarrollo de soluciones que integren la Industria 4.0 con tecnologías digitales inteligentes.
@@ -264,11 +267,10 @@ Habilidades:
 - APIs REST, Autenticación básica.
 
 Conocimientos:
-
-- Diseño de bases de datos relacionales
-- Normalización
-- Consultas SQL
-- CRUD (Create, Read, Update, Delete)
+- Diseño de bases de datos relacionales.
+- Normalización.
+- Consultas SQL.
+- CRUD (Create, Read, Update, Delete).
 
 Proyectos destacados:
 - Sterling Music Player
