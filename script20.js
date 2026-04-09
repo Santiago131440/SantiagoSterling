@@ -247,7 +247,9 @@
 
   function generateSimpleCV() {
     return `CV - Santiago Sterling
+    
 Nombre Completo: Santiago Sterling Rivas.
+
 Estudio: Tecnólogo en análisis y desarrollo de software, Tecnólogo en gestión de la producción industrial.
 Correo electrónico: santisterling@gmail.com.
 Ubicación: Cali, Colombia.
@@ -255,7 +257,7 @@ LinkedIn: www.linkedin.com/in/santisterling.
 Portafolio: https://santiago131440.github.io/SantiagoSterling/
 
 Resumen:
-Tecnólogo en Análisis y Desarrollo de Software y en Gestión de Producción Industrial, con más de ocho años de experiencia en plantas de manufactura. Mi perfil combina la eficiencia industrial con la innovación tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y crear soluciones escalables. Cuento con formación en frontend y backend (HTML, CSS, JavaScript, React, Node.js, Python, Django, PostgreSQL, entre otros) y en metodologías industriales como Lean Manufacturing, Kaizen y control de inventarios. Me interesa especializarme en inteligencia artificial aplicada a la industria y en el desarrollo de soluciones que integren la Industria 4.0 con tecnologías digitales inteligentes.
+Tecnólogo en Análisis y Desarrollo de Software y en Gestión de Producción Industrial, con más de ocho años de experiencia en plantas de manufactura. Mi perfil combina la eficiencia industrial con la innovación tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y crear soluciones escalables. Cuento con formación en frontend y backend (HTML, CSS, JavaScript, React, Node.js, Python, Django, PostgreSQL, entre otros) y en metodologías industriales como Lean Manufacturing, Kaizen, TPM, 5´S, Análisis de datos, informes corporativos y control de inventarios. Me interesa especializarme en inteligencia artificial aplicada a la industria y en el desarrollo de soluciones que integren la Industria 4.0 con tecnologías digitales inteligentes.
 
 Habilidades:
 - HTML, CSS, JavaScript, Python, Django, React, NodeJS, NextJS, Tailwind, PostgreSQL, MySQL.
@@ -271,6 +273,8 @@ Conocimientos:
 - Normalización.
 - Consultas SQL.
 - CRUD (Create, Read, Update, Delete).
+- Metodologías industriales para optimización de recursos.
+- Metodologías para trabajo eficiente en entornos corporativos en crecimiento.
 
 Proyectos destacados:
 - Sterling Music Player
