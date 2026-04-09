@@ -715,7 +715,7 @@ Proyectos destacados:
         { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20gitbranch.jpg?raw=true',    label: 'Git' },
         { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20WordPress.jpg?raw=true',    label: 'WordPress' },
         { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Excel.jpg?raw=true',        label: 'Excel Avanzado' },
-        { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/1051px-Adobe_Photoshop_CC_icon.svg.png', label: 'Photoshop' },
+        { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/960px-Adobe_Photoshop_CC_icon.svg.png?_=20200616073617', label: 'Photoshop' },
         { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Adobe_Illustrator_CC_icon.svg/2048px-Adobe_Illustrator_CC_icon.svg.png', label: 'Illustrator' },
         { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Power%20BI.jpg?raw=true',   label: 'Power BI' },
         { img: 'https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20DAX.jpg?raw=true',          label: 'DAX' }
