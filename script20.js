@@ -815,154 +815,339 @@ Proyectos destacados:
 
 })();
 
-/* ============================================================
-   FAN DECK – EXPERIENCIA PROFESIONAL
-   ============================================================ */
-(function () {
-  const deck   = document.getElementById('fanDeck');
-  const dotsEl = document.getElementById('fanDots');
-  if (!deck) return;
 
-  const cards  = Array.from(deck.querySelectorAll('.fan-card'));
-  const dots   = dotsEl ? Array.from(dotsEl.querySelectorAll('.fan-dot-btn')) : [];
-  const TOTAL  = cards.length;
-  let active   = 0;
+//FAN-DECK FAN CARD PARTE
+/**
+ * ==================== EXPERIENCIA INTERACTIVIDAD ====================
+ * Script opcional para agregar funcionalidades interactivas a las tarjetas
+ * de experiencia profesional.
+ * 
+ * Funcionalidades:
+ * - Click en tarjeta para expandir/mostrar modal
+ * - Hover effects mejorados
+ * - Animaciones de entrada
+ * - Gestión de estados
+ */
 
-  // Classes per position
-  const posClasses = [
-    'fan-active',
-    'fan-behind-1',
-    'fan-behind-2',
-    'fan-behind-3',
-    'fan-behind-4',
-    'fan-behind-5',
-  ];
+// ==================== MODAL DE EXPERIENCIA ====================
 
-  function applyLayout(activeIndex) {
-    cards.forEach((card, i) => {
-      // Remove all position classes
-      posClasses.forEach(c => card.classList.remove(c));
-
-      // Distance from active, wrapping around
-      const distance = (i - activeIndex + TOTAL) % TOTAL;
-      const cls = posClasses[Math.min(distance, posClasses.length - 1)];
-      card.classList.add(cls);
-    });
-
-    // Dots
-    dots.forEach((d, i) => d.classList.toggle('active', i === activeIndex));
-    active = activeIndex;
+class ExperienceModal {
+  constructor() {
+    this.modal = null;
+    this.isOpen = false;
+    this.init();
   }
 
-  // Advance to next card (cycle)
-  function next() {
-    applyLayout((active + 1) % TOTAL);
+  /**
+   * Inicializa el modal y los event listeners
+   */
+  init() {
+    this.createModal();
+    this.attachCardListeners();
+    this.setupCloseHandlers();
   }
 
-  // Init
-  applyLayout(0);
+  /**
+   * Crea el elemento modal si no existe
+   */
+  createModal() {
+    if (document.getElementById('experienceModal')) {
+      this.modal = document.getElementById('experienceModal');
+      return;
+    }
 
-  // Click on background cards → bring to front
-  cards.forEach((card, i) => {
-    card.addEventListener('click', function (e) {
-      // If it's already active, open modal via the expand button
-      if (card.classList.contains('fan-active')) return;
-      e.stopPropagation();
-      applyLayout(i);
+    this.modal = document.createElement('div');
+    this.modal.id = 'experienceModal';
+    this.modal.className = 'experience-modal';
+    this.modal.innerHTML = `
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <h2 id="modalCompanyName" class="modal-title">Experiencia</h2>
+            <p id="modalDuration" class="modal-duration">Período</p>
+          </div>
+          <button class="modal-close" aria-label="Cerrar modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="modal-logo-cover">
+            <img id="modalCover" src="" alt="Portada experiencia" class="modal-cover-image">
+            <div class="modal-logo-wrapper">
+              <img id="modalLogo" src="" alt="Logo empresa" class="modal-logo">
+            </div>
+          </div>
+
+          <div class="modal-details">
+            <div class="detail-section">
+              <h3 id="modalRole" class="detail-role">Rol</h3>
+              <p id="modalDescription" class="detail-description">Descripción</p>
+            </div>
+
+            <div class="detail-section">
+              <h4 class="detail-subtitle">Responsabilidades</h4>
+              <ul id="modalResponsibilities" class="responsibility-list">
+                <li>Gestión de procesos</li>
+                <li>Análisis de datos</li>
+                <li>Optimización operativa</li>
+              </ul>
+            </div>
+
+            <div class="detail-section">
+              <h4 class="detail-subtitle">Logros</h4>
+              <ul id="modalAchievements" class="achievement-list">
+                <li>Mejora continua</li>
+                <li>Control de calidad</li>
+                <li>Eficiencia operativa</li>
+              </ul>
+            </div>
+
+            <div class="detail-section">
+              <h4 class="detail-subtitle">Habilidades Aplicadas</h4>
+              <div id="modalSkills" class="skills-tags">
+                <span class="skill-tag">Análisis</span>
+                <span class="skill-tag">Liderazgo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="modal-action-btn secondary" onclick="experienceModal.close()">
+            Cerrar
+          </button>
+          <button class="modal-action-btn primary">
+            Ver LinkedIn
+          </button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(this.modal);
+  }
+
+  /**
+   * Adjunta listeners a las tarjetas
+   */
+  attachCardListeners() {
+    const cards = document.querySelectorAll('.experiencia-card');
+    
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => this.handleCardClick(e, card));
+      
+      // Agregar efecto focus para accesibilidad
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.handleCardClick(e, card);
+        }
+      });
     });
-  });
+  }
 
-  // Expand button opens modal
-  deck.addEventListener('click', function (e) {
-    const btn = e.target.closest('.fan-expand-btn');
-    if (!btn) return;
-    const card = btn.closest('.fan-card');
-    if (!card || !card.classList.contains('fan-active')) return;
-    openExpModal(card);
-  });
+  /**
+   * Maneja el click en una tarjeta
+   */
+  handleCardClick(e, card) {
+    // Evitar si es click en botón
+    if (e.target.closest('.card-button')) return;
 
-  // Dot navigation
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => applyLayout(i));
-  });
+    const data = this.extractCardData(card);
+    this.open(data);
+  }
 
-  // Swipe / drag on deck
-  let touchStartX = 0;
-  let touchStartY = 0;
-  deck.addEventListener('touchstart', e => {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-  }, { passive: true });
+  /**
+   * Extrae datos de la tarjeta
+   */
+  extractCardData(card) {
+    return {
+      company: card.querySelector('.card-company')?.textContent || 'Empresa',
+      role: card.querySelector('.card-role')?.textContent || 'Rol',
+      description: card.querySelector('.card-description')?.textContent || 'Descripción',
+      duration: card.getAttribute('data-duration') || 'Período',
+      cover: card.querySelector('.cover-image')?.src || '',
+      logo: card.querySelector('.card-logo')?.src || '',
+      badge: card.querySelector('.card-status-badge')?.textContent || '',
+    };
+  }
 
-  deck.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const dy = e.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
-      if (dx < 0) {
-        applyLayout((active + 1) % TOTAL);
-      } else {
-        applyLayout((active - 1 + TOTAL) % TOTAL);
-      }
-    }
-  }, { passive: true });
+  /**
+   * Abre el modal con los datos
+   */
+  open(data) {
+    document.getElementById('modalCompanyName').textContent = data.company;
+    document.getElementById('modalRole').textContent = data.role;
+    document.getElementById('modalDescription').textContent = data.description;
+    document.getElementById('modalDuration').textContent = data.duration;
+    document.getElementById('modalCover').src = data.cover;
+    document.getElementById('modalLogo').src = data.logo;
 
-  // Mouse drag
-  let mouseStartX = 0;
-  let dragging = false;
-  deck.addEventListener('mousedown', e => {
-    mouseStartX = e.clientX;
-    dragging = true;
-  });
-  deck.addEventListener('mouseup', e => {
-    if (!dragging) return;
-    dragging = false;
-    const dx = e.clientX - mouseStartX;
-    if (Math.abs(dx) > 50) {
-      if (dx < 0) applyLayout((active + 1) % TOTAL);
-      else         applyLayout((active - 1 + TOTAL) % TOTAL);
-    }
-  });
-
-  /* ---------- MODAL ---------- */
-  const overlay    = document.getElementById('expModal');
-  const closeBtn   = document.getElementById('expModalClose');
-  const coverImg   = document.getElementById('expModalCover');
-  const logoImg    = document.getElementById('expModalLogo');
-  const badge      = document.getElementById('expModalBadge');
-  const company    = document.getElementById('expModalCompany');
-  const role       = document.getElementById('expModalRole');
-  const dates      = document.getElementById('expModalDates');
-  const desc       = document.getElementById('expModalDesc');
-
-  function openExpModal(card) {
-    if (!overlay) return;
-    coverImg.src        = card.dataset.cover  || '';
-    logoImg.src         = card.dataset.logo   || '';
-    badge.textContent   = card.dataset.role   || '';
-    badge.style.background = card.dataset.color || '#0f172a';
-    company.textContent = card.dataset.company || '';
-    role.textContent    = card.dataset.role    || '';
-    dates.textContent   = `${card.dataset.start || ''} — ${card.dataset.end || ''}`;
-    desc.textContent    = card.dataset.desc    || '';
-
-    overlay.setAttribute('aria-hidden', 'false');
-    overlay.classList.add('open');
+    this.modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    this.isOpen = true;
+
+    // Animación de entrada
+    this.modal.querySelector('.modal-content').style.animation = 'modalSlideUp 0.4s ease-out';
   }
 
-  function closeExpModal() {
-    if (!overlay) return;
-    overlay.classList.remove('open');
-    overlay.setAttribute('aria-hidden', 'true');
+  /**
+   * Cierra el modal
+   */
+  close() {
+    this.modal.classList.remove('active');
     document.body.style.overflow = '';
+    this.isOpen = false;
   }
 
-  if (closeBtn)  closeBtn.addEventListener('click', closeExpModal);
-  if (overlay)   overlay.addEventListener('click', e => {
-    if (e.target === overlay) closeExpModal();
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeExpModal();
-  });
+  /**
+   * Configura handlers para cerrar el modal
+   */
+  setupCloseHandlers() {
+    const closeBtn = this.modal.querySelector('.modal-close');
+    const overlay = this.modal.querySelector('.modal-overlay');
+    
+    closeBtn.addEventListener('click', () => this.close());
+    overlay.addEventListener('click', () => this.close());
+    
+    // Cerrar con ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.isOpen) {
+        this.close();
+      }
+    });
+  }
+}
 
-})();
+// Inicializar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    window.experienceModal = new ExperienceModal();
+  });
+} else {
+  window.experienceModal = new ExperienceModal();
+}
+
+// ==================== ANIMACIONES DE ENTRADA ====================
+
+/**
+ * Animar tarjetas cuando entran en viewport
+ */
+function setupCardAnimations() {
+  const cards = document.querySelectorAll('.experiencia-card');
+  
+  // Usar Intersection Observer si está disponible
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.animation = `cardFadeInUp 0.6s ease-out ${index * 0.1}s both`;
+          }, 100);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    cards.forEach(card => observer.observe(card));
+  }
+}
+
+// Ejecutar cuando esté listo
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setupCardAnimations);
+} else {
+  setupCardAnimations();
+}
+
+// ==================== EFECTOS HOVER AVANZADOS ====================
+
+/**
+ * Agregar efectos hover mejorados con seguimiento del mouse
+ */
+function setupAdvancedHoverEffects() {
+  const cards = document.querySelectorAll('.experiencia-card');
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Crear efecto de luz siguiendo el mouse (opcional)
+      const angle = Math.atan2(y - rect.height / 2, x - rect.width / 2);
+      card.style.setProperty('--mouse-angle', `${angle}rad`);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.setProperty('--mouse-angle', '0rad');
+    });
+  });
+}
+
+setupAdvancedHoverEffects();
+
+// ==================== UTILIDADES ====================
+
+/**
+ * Función para agregar clase activa a tarjeta
+ */
+function setActiveCard(index) {
+  const cards = document.querySelectorAll('.experiencia-card');
+  cards.forEach((card, i) => {
+    if (i === index) {
+      card.classList.add('active');
+    } else {
+      card.classList.remove('active');
+    }
+  });
+}
+
+/**
+ * Función para actualizar datos del modal dinámicamente
+ */
+function updateModalData(data) {
+  if (window.experienceModal) {
+    window.experienceModal.open(data);
+  }
+}
+
+/**
+ * Exportar para uso externo
+ */
+window.ExperienceModule = {
+  modal: null,
+  
+  init() {
+    this.modal = window.experienceModal;
+  },
+
+  open(data) {
+    if (this.modal) {
+      this.modal.open(data);
+    }
+  },
+
+  close() {
+    if (this.modal) {
+      this.modal.close();
+    }
+  },
+
+  setActiveCard,
+  updateModalData
+};
+
+// Inicializar módulo
+if (document.readyState !== 'loading') {
+  window.ExperienceModule.init();
+} else {
+  document.addEventListener('DOMContentLoaded', () => {
+    window.ExperienceModule.init();
+  });
+}
+
+console.log('✨ Experience Module initialized');
+console.log('Usa window.ExperienceModule para interactuar con las tarjetas');
