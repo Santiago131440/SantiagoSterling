@@ -30,7 +30,7 @@ a{text-decoration:none;color:inherit}
 h1{font-size:clamp(48px,6.4vw,82px);line-height:.98;letter-spacing:-.065em;max-width:800px}
 .lead{font-size:20px;color:var(--muted);max-width:620px;margin:28px 0 34px}
 .actions{display:flex;gap:12px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 21px;border-radius:999px;font-weight:700;font-size:14px;transition:.25s;border:1px solid var(--line)}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 21px;border-radius:999px;font-weight:700;font-size:14px;transition:.25s;border:1px solid var(--line)}
 .btn.primary{background:var(--dark);color:#fff;border-color:var(--dark)}
 .btn.secondary{background:#fff}
 .btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(0,0,0,.10)}
