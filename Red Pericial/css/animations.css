@@ -1,0 +1,97 @@
+/* ==========================================================================
+   Animaciones — solo transform y opacity.
+   Se activan únicamente cuando <html> tiene la clase .motion-ok
+   (añadida si el usuario NO pidió reducir movimiento y la configuración
+   RP_CONFIG.animations está activa).
+   ========================================================================== */
+
+@keyframes cue {
+  0% { transform: translateY(-100%); }
+  55% { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes lamp-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.14; }
+  50% { transform: scale(1.35); opacity: 0.24; }
+}
+
+@keyframes beam-sweep {
+  from { transform: rotate(-6deg); }
+  to { transform: rotate(7deg); }
+}
+
+@keyframes rise-soft {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes rise {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---- Reveal al hacer scroll ---- */
+.motion-ok [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.motion-ok [data-reveal="fade"] { transform: none; }
+.motion-ok [data-reveal="scale"] { transform: scale(0.96); }
+.motion-ok [data-reveal].is-visible { opacity: 1; transform: none; }
+
+/* ---- Entrada del hero ---- */
+.motion-ok .hero__title .line > span { transform: translateY(105%); }
+.motion-ok .hero__eyebrow,
+.motion-ok .hero__lead,
+.motion-ok .hero__actions,
+.motion-ok .hero__foot { opacity: 0; }
+.motion-ok .hero__lighthouse,
+.motion-ok .hero__canvas { opacity: 0; }
+
+.motion-ok.is-loaded .hero__title .line > span { animation: rise 1100ms var(--ease-out) forwards; }
+.motion-ok.is-loaded .hero__title .line:nth-child(2) > span { animation-delay: 110ms; }
+.motion-ok.is-loaded .hero__eyebrow { animation: fade-up 900ms var(--ease-out) 60ms forwards; }
+.motion-ok.is-loaded .hero__lead { animation: fade-up 900ms var(--ease-out) 380ms forwards; }
+.motion-ok.is-loaded .hero__actions { animation: fade-up 900ms var(--ease-out) 500ms forwards; }
+.motion-ok.is-loaded .hero__foot { animation: fade-in 900ms var(--ease-out) 800ms forwards; }
+.motion-ok.is-loaded .hero__canvas { animation: fade-in 1800ms var(--ease-out) 200ms forwards; }
+.motion-ok.is-loaded .hero__lighthouse { animation: rise-soft 1600ms var(--ease-out) 150ms forwards; }
+
+/* ---- Metodología: foco del paso activo ---- */
+.motion-ok .method__step { transition: opacity var(--transition-normal); }
+
+/* ---- Movimiento reducido ---- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .scroll-cue__line::after { animation: none; transform: none; }
+}
+
+:root:not(.motion-ok) .editorial-band .media img { transform: none; }
