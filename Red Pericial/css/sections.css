@@ -1,0 +1,335 @@
+/* ==========================================================================
+   Secciones / escenas narrativas
+   ========================================================================== */
+
+/* ---- HERO ---- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding-top: var(--header-h);
+  overflow: clip;
+  isolation: isolate;
+}
+
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  -webkit-mask-image: radial-gradient(120% 90% at 70% 40%, #000 35%, transparent 85%);
+  mask-image: radial-gradient(120% 90% at 70% 40%, #000 35%, transparent 85%);
+}
+
+/* Faro del hero: ilustración lineal + horizonte. El haz se dibuja en canvas. */
+.hero__lighthouse {
+  position: absolute;
+  z-index: -1;
+  top: calc(var(--header-h) + 3vh);
+  right: 7vw;
+  height: 33vh;
+  height: 33svh;
+  aspect-ratio: 200 / 520;
+  color: var(--color-text);
+  pointer-events: none;
+}
+.hero__lighthouse .lighthouse { width: 100%; height: 100%; overflow: visible; }
+.hero__horizon {
+  position: absolute;
+  right: -40vw;
+  bottom: 5.8%;
+  width: 240vw;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--rgb-text), 0.22) 35%, rgba(var(--rgb-text), 0.22) 80%, transparent);
+}
+.hero__horizon::after {
+  content: "";
+  position: absolute;
+  inset: 10px 18% auto 30%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--rgb-text), 0.1), transparent);
+}
+
+/* Ilustración del faro (compartida hero/footer) */
+.lighthouse .lh-lines { opacity: 0.62; }
+.lighthouse .lh-band { fill: currentColor; opacity: 0.08; }
+.lighthouse .lh-lamp { fill: var(--color-accent); }
+.lighthouse .lh-halo {
+  fill: var(--color-accent);
+  opacity: 0.14;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.motion-ok .lighthouse .lh-halo { animation: lamp-pulse 4.8s var(--ease-in-out) infinite; }
+
+.hero__inner {
+  align-self: end;
+  padding-top: 38vh;
+  padding-bottom: var(--spacing-lg);
+}
+
+.hero__title { margin-block: var(--spacing-md) var(--spacing-md); }
+.hero__title .line { display: block; overflow: hidden; padding-bottom: 0.06em; }
+.hero__title .line > span { display: inline-block; }
+.hero__title .line:last-child > span { color: var(--color-muted); }
+
+.hero__lead { max-width: 34ch; color: var(--color-text-soft); }
+.hero__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: var(--spacing-lg); }
+
+.hero__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  font-size: var(--fs-xs);
+  color: var(--color-muted);
+}
+.hero__facts { display: none; list-style: none; padding: 0; gap: var(--spacing-lg); }
+.hero__facts li { display: flex; align-items: center; gap: 0.5rem; }
+.hero__facts li::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--color-accent); }
+
+.scroll-cue { display: inline-flex; align-items: center; gap: 0.75rem; min-height: 44px; }
+.scroll-cue__line { position: relative; width: 1px; height: 36px; background: var(--color-line-strong); overflow: hidden; }
+.scroll-cue__line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-text);
+  transform: translateY(-100%);
+  animation: cue 2.2s var(--ease-in-out) infinite;
+}
+
+/* ---- IDENTIDAD ---- */
+.statement {
+  font-size: var(--fs-statement);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.15;
+  max-width: 24ch;
+  margin-top: var(--spacing-lg);
+}
+.statement .word { opacity: var(--o, 1); transition: opacity 120ms linear; }
+.statement .hl { color: var(--color-accent); text-shadow: 0 0 32px rgba(var(--rgb-accent), 0.35); }
+
+.pillars {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-2xl);
+}
+.pillar { display: grid; gap: 0.6rem; padding-top: var(--spacing-md); border-top: 1px solid var(--color-line); }
+.pillar__num { font-size: var(--fs-xs); color: var(--color-accent); font-weight: var(--fw-semibold); font-variant-numeric: tabular-nums; }
+.pillar p { color: var(--color-muted); }
+
+.editorial-band {
+  margin-top: var(--section-space);
+}
+.editorial-band .media {
+  aspect-ratio: 4 / 3;
+}
+.editorial-band .media img { transform: scale(1.12); }
+.editorial-band figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  padding-top: var(--spacing-sm);
+  font-size: var(--fs-xs);
+  color: var(--color-muted);
+}
+
+/* ---- Haz de luz de fondo (motivo del faro) ----
+   Cono cónico que nace en la esquina superior derecha, como si el faro
+   estuviera justo fuera de cuadro. */
+.scene-dark,
+.page-hero,
+.cta-band { position: relative; overflow: clip; isolation: isolate; }
+
+.scene-dark::before,
+.page-hero::before,
+.cta-band::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 220%;
+  height: 220%;
+  z-index: -1;
+  pointer-events: none;
+  transform-origin: 100% 0;
+  background: conic-gradient(
+    from 222deg at 100% 0%,
+    transparent 0deg,
+    rgba(var(--rgb-beam), calc(var(--beam-alpha) * 0.6)) 5deg,
+    rgba(var(--rgb-beam), var(--beam-alpha)) 9deg,
+    rgba(var(--rgb-beam), calc(var(--beam-alpha) * 0.6)) 13deg,
+    transparent 19deg
+  );
+  -webkit-mask-image: radial-gradient(circle at 100% 0%, #000 0%, transparent 48%);
+  mask-image: radial-gradient(circle at 100% 0%, #000 0%, transparent 48%);
+}
+.cta-band::before {
+  right: auto;
+  left: 0;
+  transform-origin: 0 0;
+  background: conic-gradient(
+    from 119deg at 0% 0%,
+    transparent 0deg,
+    rgba(var(--rgb-beam), calc(var(--beam-alpha) * 0.6)) 5deg,
+    rgba(var(--rgb-beam), var(--beam-alpha)) 9deg,
+    rgba(var(--rgb-beam), calc(var(--beam-alpha) * 0.6)) 13deg,
+    transparent 19deg
+  );
+  -webkit-mask-image: radial-gradient(circle at 0% 0%, #000 0%, transparent 48%);
+  mask-image: radial-gradient(circle at 0% 0%, #000 0%, transparent 48%);
+}
+.motion-ok .scene-dark::before { animation: beam-sweep 14s var(--ease-in-out) infinite alternate; }
+
+/* ---- PROBLEMA (escena oscura) ---- */
+.scene-dark {
+  --color-text: var(--color-inverse-text);
+  --color-muted: var(--color-inverse-muted);
+  --color-line: rgba(245, 245, 247, 0.12);
+  --rgb-text: 245, 245, 247;
+  --rgb-beam: 170, 190, 255;
+  --beam-alpha: 0.11;
+  background: var(--color-inverse-bg);
+  color: var(--color-inverse-text);
+}
+:root:not([data-theme="dark"]) .scene-dark { --color-accent: #8aa6ff; }
+
+.problem__title { font-size: var(--fs-h1); max-width: 17ch; margin-top: var(--spacing-md); }
+.problem__title span { color: var(--color-muted); }
+
+.problem__list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-2xl);
+  counter-reset: p;
+}
+.problem__item { display: grid; gap: 0.6rem; padding-top: var(--spacing-md); border-top: 1px solid var(--color-line); }
+.problem__item h3 { font-size: var(--fs-h4); }
+.problem__item p { color: var(--color-muted); font-size: var(--fs-sm); }
+
+/* ---- PROPUESTA DE VALOR ---- */
+.value__grid { display: grid; gap: var(--spacing-xl); }
+.value__title { font-size: var(--fs-h1); max-width: 12ch; }
+.value__title span { display: block; color: var(--color-muted); }
+.value__list { list-style: none; padding: 0; display: grid; gap: var(--spacing-lg); }
+.value__list li { display: grid; grid-template-columns: 2.5rem 1fr; gap: var(--spacing-sm); }
+.value__list svg { width: 22px; height: 22px; color: var(--color-accent); margin-top: 0.25rem; }
+.value__list h3 { font-size: var(--fs-h4); margin-bottom: 0.4rem; }
+.value__list p { color: var(--color-muted); font-size: var(--fs-sm); }
+
+/* ---- SERVICIOS (horizontal storytelling) ---- */
+.services-h { padding-block: var(--section-space); position: relative; }
+.services-h__head {
+  display: grid;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+.services-h__head h2 { max-width: 14ch; }
+.services-h__meta { display: flex; align-items: center; gap: var(--spacing-md); justify-content: space-between; flex-wrap: wrap; }
+.services-h__counter { font-size: var(--fs-xs); color: var(--color-muted); font-variant-numeric: tabular-nums; }
+
+.services-h__track {
+  list-style: none;
+  display: grid;
+  gap: var(--spacing-xl);
+  padding-inline: var(--gutter);
+}
+
+.service-panel { display: grid; gap: var(--spacing-md); align-content: start; }
+.service-panel__media {
+  aspect-ratio: 4 / 3;
+  margin-inline: calc(var(--gutter) * -1);
+}
+.service-panel__media img { transition: transform var(--transition-slow); }
+.service-panel:hover .service-panel__media img { transform: scale(1.04); }
+.service-panel__num { font-size: var(--fs-xs); color: var(--color-muted); font-variant-numeric: tabular-nums; display: flex; gap: 0.75rem; align-items: center; }
+.service-panel h3 { font-size: var(--fs-h3); }
+.service-panel__summary { color: var(--color-text-soft); }
+.service-panel__benefit { font-size: var(--fs-sm); color: var(--color-muted); padding-left: 0.9rem; border-left: 2px solid var(--color-accent); }
+
+/* ---- EXPERIENCIA / INDICADORES ---- */
+.stats__grid { display: grid; gap: var(--spacing-lg); border-top: 1px solid var(--color-line); }
+.stat { display: flex; flex-direction: column-reverse; gap: 0.5rem; padding-top: var(--spacing-md); }
+.stat dd {
+  margin: 0;
+  font-size: clamp(3.5rem, 2rem + 6vw, 7.5rem);
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  font-variant-numeric: tabular-nums;
+}
+.stat dd .unit { color: var(--color-accent); }
+.stat dt { font-size: var(--fs-eyebrow); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--color-muted); font-weight: var(--fw-semibold); }
+.stats__note { margin-top: var(--spacing-lg); font-size: var(--fs-xs); color: var(--color-muted); display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+
+/* ---- METODOLOGÍA ---- */
+.method { display: grid; gap: var(--spacing-lg); }
+.method__stage { display: none; }
+.method__steps { list-style: none; padding: 0; display: grid; }
+.method__step {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: var(--spacing-sm);
+  padding-block: var(--spacing-lg);
+  border-top: 1px solid var(--color-line);
+}
+.method__num { font-size: var(--fs-sm); color: var(--color-accent); font-weight: var(--fw-semibold); font-variant-numeric: tabular-nums; padding-top: 0.35rem; }
+.method__step h3 { font-size: var(--fs-h3); margin-bottom: 0.6rem; }
+.method__step p { color: var(--color-muted); max-width: 46ch; }
+.method__step ul { margin-top: var(--spacing-sm); padding-left: 1.1em; color: var(--color-text-soft); font-size: var(--fs-sm); }
+
+/* ---- CONFIANZA ---- */
+.trust__grid { display: grid; gap: var(--spacing-2xl); }
+.commitments { list-style: none; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--color-line); }
+.commitments li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--color-line);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.015em;
+}
+.commitments li span { font-size: var(--fs-xs); color: var(--color-muted); font-weight: var(--fw-regular); letter-spacing: 0; align-self: center; text-align: right; }
+
+/* ---- CONTACTO ---- */
+.contact__grid { display: grid; gap: var(--spacing-2xl); }
+.contact__title { font-size: var(--fs-h1); max-width: 10ch; margin-block: var(--spacing-md); }
+.contact__aside { display: grid; gap: var(--spacing-lg); align-content: start; }
+
+/* ---- PÁGINAS INTERNAS ---- */
+.split { display: grid; gap: var(--spacing-xl); }
+.split__label { position: relative; }
+
+.cases { list-style: none; padding: 0; display: grid; border-top: 1px solid var(--color-line); }
+.case { display: grid; gap: var(--spacing-md); padding-block: var(--spacing-lg); border-bottom: 1px solid var(--color-line); }
+.case__head { display: flex; gap: 1rem; align-items: baseline; flex-wrap: wrap; }
+.case__head h3 { font-size: var(--fs-h3); }
+.case dl { display: grid; gap: var(--spacing-md); grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
+.case dt { font-size: var(--fs-eyebrow); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--color-muted); font-weight: var(--fw-semibold); }
+.case dd { margin: 0.35rem 0 0; color: var(--color-text-soft); font-size: var(--fs-sm); }
+
+.article-header { padding-top: calc(var(--header-h) + clamp(3rem, 2rem + 5vw, 7rem)); }
+.article-header h1 { font-size: var(--fs-h1); max-width: 18ch; margin-block: var(--spacing-md); }
+.article-media { aspect-ratio: 16 / 9; margin-block: var(--spacing-xl); }
+.article-body { padding-bottom: var(--section-space); }
+
+.legal-note {
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--color-accent-soft);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--spacing-lg);
+}

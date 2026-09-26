@@ -1,0 +1,163 @@
+/* ==========================================================================
+   Red Pericial — Design tokens
+   Único punto de verdad del sistema visual. Modifique aquí colores,
+   tipografía, espaciado, radios y tiempos de transición.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Color (tema claro) ---- */
+  --color-background: #fbfbfd;
+  --color-surface: #f2f2f5;
+  --color-surface-2: #e8e8ed;
+  --color-elevated: #ffffff;
+  --color-text: #0b0b0f;
+  --color-text-soft: #2b2c33;
+  --color-muted: #5d5e66;
+  --color-line: rgba(11, 11, 15, 0.1);
+  --color-line-strong: rgba(11, 11, 15, 0.2);
+  --color-accent: #1d4ed8;
+  --color-accent-hover: #1a44bf;
+  --color-accent-soft: rgba(29, 78, 216, 0.08);
+  --color-on-accent: #ffffff;
+  --color-success: #15803d;
+  --color-danger: #b42318;
+
+  /* Escena invertida (bloque "Problema") */
+  --color-inverse-bg: #0b0b0f;
+  --color-inverse-text: #f5f5f7;
+  --color-inverse-muted: #a1a1aa;
+
+  /* Canales RGB para canvas y transparencias */
+  --rgb-text: 11, 11, 15;
+  --rgb-accent: 29, 78, 216;
+
+  /* Haz de luz del faro (motivo de marca) */
+  --rgb-beam: 29, 78, 216;
+  --beam-alpha: 0.07;
+
+  /* Vidrio (navbar) */
+  --glass-bg: rgba(251, 251, 253, 0.72);
+  --glass-line: rgba(11, 11, 15, 0.06);
+
+  /* ---- Tipografía ---- */
+  --font-primary: "Inter Var", "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "SF Pro Text", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --fs-display: clamp(3.25rem, 1.2rem + 8.8vw, 7.5rem);
+  --fs-h1: clamp(2.5rem, 1.4rem + 4.6vw, 5.5rem);
+  --fs-h2: clamp(2rem, 1.25rem + 3.1vw, 4rem);
+  --fs-h3: clamp(1.375rem, 1.1rem + 1vw, 2rem);
+  --fs-h4: clamp(1.125rem, 1rem + 0.4vw, 1.3125rem);
+  --fs-statement: clamp(1.75rem, 1rem + 3vw, 3.5rem);
+  --fs-lead: clamp(1.125rem, 1rem + 0.45vw, 1.375rem);
+  --fs-body: 1.0625rem;
+  --fs-sm: 0.9375rem;
+  --fs-xs: 0.8125rem;
+  --fs-eyebrow: 0.75rem;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --lh-tight: 1.04;
+  --lh-snug: 1.2;
+  --lh-body: 1.65;
+
+  --tracking-tight: -0.035em;
+  --tracking-snug: -0.02em;
+  --tracking-wide: 0.14em;
+
+  /* ---- Espaciado (base 4px) ---- */
+  --spacing-2xs: 0.25rem;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2.5rem;
+  --spacing-xl: 4rem;
+  --spacing-2xl: 6rem;
+  --spacing-3xl: 9rem;
+  --section-space: clamp(5rem, 3rem + 8vw, 10rem);
+
+  --gutter: clamp(1.25rem, 0.5rem + 3.4vw, 4rem);
+  --container: 1320px;
+  --container-narrow: 860px;
+
+  /* ---- Radios ---- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  /* ---- Movimiento ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --transition-fast: 180ms var(--ease-out);
+  --transition-normal: 420ms var(--ease-out);
+  --transition-slow: 900ms var(--ease-out);
+
+  /* ---- Capas y medidas ---- */
+  --header-h: 64px;
+  --z-header: 100;
+  --z-menu: 95;
+  --z-progress: 110;
+  --z-skip: 200;
+}
+
+/* ---- Tema oscuro explícito ---- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-background: #0a0a0c;
+  --color-surface: #131316;
+  --color-surface-2: #1c1c21;
+  --color-elevated: #17171b;
+  --color-text: #f5f5f7;
+  --color-text-soft: #d4d4d8;
+  --color-muted: #a1a1aa;
+  --color-line: rgba(245, 245, 247, 0.1);
+  --color-line-strong: rgba(245, 245, 247, 0.2);
+  --color-accent: #7c9bff;
+  --color-accent-hover: #9bb3ff;
+  --color-accent-soft: rgba(124, 155, 255, 0.12);
+  --color-on-accent: #0a0a0c;
+  --color-success: #4ade80;
+  --color-danger: #ff8a80;
+  --color-inverse-bg: #141418;
+  --color-inverse-text: #f5f5f7;
+  --color-inverse-muted: #a1a1aa;
+  --rgb-text: 245, 245, 247;
+  --rgb-accent: 124, 155, 255;
+  --rgb-beam: 170, 190, 255;
+  --beam-alpha: 0.085;
+  --glass-bg: rgba(10, 10, 12, 0.66);
+  --glass-line: rgba(245, 245, 247, 0.08);
+}
+
+/* ---- Respaldo sin JavaScript: seguir al sistema ---- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --color-background: #0a0a0c;
+    --color-surface: #131316;
+    --color-surface-2: #1c1c21;
+    --color-elevated: #17171b;
+    --color-text: #f5f5f7;
+    --color-text-soft: #d4d4d8;
+    --color-muted: #a1a1aa;
+    --color-line: rgba(245, 245, 247, 0.1);
+    --color-line-strong: rgba(245, 245, 247, 0.2);
+    --color-accent: #7c9bff;
+    --color-accent-hover: #9bb3ff;
+    --color-accent-soft: rgba(124, 155, 255, 0.12);
+    --color-on-accent: #0a0a0c;
+    --color-inverse-bg: #141418;
+    --rgb-text: 245, 245, 247;
+    --rgb-accent: 124, 155, 255;
+    --rgb-beam: 170, 190, 255;
+    --beam-alpha: 0.085;
+    --glass-bg: rgba(10, 10, 12, 0.66);
+    --glass-line: rgba(245, 245, 247, 0.08);
+  }
+}
