@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://redpericial.example/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://redpericial.example/pages/nosotros.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://redpericial.example/pages/servicios.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://redpericial.example/pages/areas.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://redpericial.example/pages/equipo.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://redpericial.example/pages/metodologia.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://redpericial.example/pages/experiencia.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://redpericial.example/pages/blog.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://redpericial.example/pages/faq.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://redpericial.example/pages/contacto.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://redpericial.example/legal/privacidad.html</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://redpericial.example/legal/tratamiento-datos.html</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://redpericial.example/legal/terminos.html</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
+</urlset>
