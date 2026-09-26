@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" width="1600" height="1200" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="bg5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#17181d"/><stop offset="1" stop-color="#08080a"/></linearGradient>
+<radialGradient id="gl5" cx="0.3" cy="0.7" r="0.6"><stop offset="0" stop-color="#3b5bdb" stop-opacity=".38"/><stop offset=".55" stop-color="#1d4ed8" stop-opacity=".08"/><stop offset="1" stop-color="#1d4ed8" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1600" height="1200" fill="url(#bg5)"/>
+<rect width="1600" height="1200" fill="url(#gl5)"/>
+<path d="M99.2 1080.0 V336.0 A60.8 60.8 0 0 1 220.8 336.0 V1080.0" fill="none" stroke="#fff" stroke-opacity="0.13"/><path d="M259.2 1080.0 V336.0 A60.8 60.8 0 0 1 380.8 336.0 V1080.0" fill="none" stroke="#fff" stroke-opacity="0.18"/><path d="M419.2 1080.0 V336.0 A60.8 60.8 0 0 1 540.8 336.0 V1080.0" fill="none" stroke="#fff" stroke-opacity="0.24"/><path d="M579.2 1080.0 V336.0 A60.8 60.8 0 0 1 700.8 336.0 V1080.0" fill="none" stroke="#fff" stroke-opacity="0.29"/><path d="M739.2 1080.0 V336.0 A60.8 60.8 0 0 1 860.8 336.0 V1080.0" fill="none" stroke="#fff" stroke-opacity="0.35"/><path d="M899.2 1080.0 V336.0 A60.8 60.8 0 0 1 1020.8 336.0 V1080.0" fill="none" stroke="#fff" stroke-opacity="0.29"/><path d="M1059.2 1080.0 V336.0 A60.8 60.8 0 0 1 1180.8 336.0 V1080.0" fill="none" stroke="#fff" stroke-opacity="0.24"/><path d="M1219.2 1080.0 V336.0 A60.8 60.8 0 0 1 1340.8 336.0 V1080.0" fill="none" stroke="#fff" stroke-opacity="0.18"/><path d="M1379.2 1080.0 V336.0 A60.8 60.8 0 0 1 1500.8 336.0 V1080.0" fill="none" stroke="#fff" stroke-opacity="0.13"/><line x1="0" y1="1080.0" x2="1600" y2="1080.0" stroke="#7c9bff" stroke-opacity=".7"/>
+</svg>
