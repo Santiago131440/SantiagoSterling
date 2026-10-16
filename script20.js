@@ -1673,4 +1673,68 @@ Proyectos destacados:
   }
 
   window.experienceModal = new ExperienceModal();
+
+  /* Experiencia: tarjeta única + fila de logos. Al pasar o enfocar un logo
+     la tarjeta muestra esa empresa; al hacer clic se abre su ventana. */
+  (function initExpStage() {
+    const stage = $("#expStage");
+    if (!stage) return;
+    const cards = $$(".experiencia-card");
+    const hero = $(".exp-hero", stage);
+    const img = $(".exp-hero-img", stage);
+    const roleEl = $(".exp-hero-role", stage);
+    const companyEl = $(".exp-hero-company", stage);
+    const datesEl = $(".exp-hero-dates", stage);
+    const btns = $$(".exp-logo-btn", stage);
+    const canHover = window.matchMedia("(hover: hover)").matches;
+    let active = 0;
+    let token = 0;
+
+    const accentOf = (card) => getComputedStyle(card).getPropertyValue("--accent-color").trim() || "#0071e3";
+
+    const show = (i) => {
+      const card = cards[i];
+      if (!card || i === active) return;
+      active = i;
+      btns.forEach((b, j) => b.classList.toggle("is-active", j === i));
+
+      const role = $(".card-role", card)?.textContent.trim() || "";
+      const company = card.dataset.company || "";
+      const src = $(".cover-image", card)?.src || "";
+      const apply = () => {
+        img.src = src;
+        roleEl.textContent = role;
+        companyEl.textContent = company;
+        datesEl.textContent = card.dataset.duration || "";
+        hero.setAttribute("aria-label", `Ver detalles: ${role} en ${company}`);
+        stage.style.setProperty("--exp-accent", accentOf(card));
+        hero.classList.remove("is-fading");
+      };
+      if (reducedMotion) return apply();
+
+      const t = ++token;
+      hero.classList.add("is-fading");
+      const pre = new Image();
+      pre.src = src;
+      const ready = pre.decode ? pre.decode().catch(() => {}) : Promise.resolve();
+      Promise.all([ready, new Promise((r) => setTimeout(r, 220))]).then(() => {
+        if (t === token) apply();
+      });
+    };
+
+    const open = (i) => window.experienceModal?.open(i);
+
+    btns.forEach((b) => {
+      const i = Number(b.dataset.index);
+      b.addEventListener("click", () => { show(i); open(i); });
+      b.addEventListener("focus", () => show(i));
+      if (canHover) b.addEventListener("pointerenter", () => show(i));
+    });
+    hero.addEventListener("click", () => open(active));
+
+    stage.style.setProperty("--exp-accent", accentOf(cards[0]));
+    // Precarga discreta de las demás portadas para que el cambio sea inmediato
+    const preload = () => cards.forEach((c) => { const s = $(".cover-image", c)?.src; if (s) new Image().src = s; });
+    ("requestIdleCallback" in window) ? requestIdleCallback(preload) : setTimeout(preload, 1500);
+  })();
 })();
