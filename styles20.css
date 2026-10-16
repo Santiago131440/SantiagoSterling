@@ -3099,3 +3099,85 @@ html.lg-refract .site .mobile-menu {
 @media (prefers-reduced-motion: reduce) {
   .exp-hero, .exp-hero-img, .exp-logo-ring, .exp-hero-caption, .exp-hero-badge { transition: none; }
 }
+
+
+/* ==========================================================================
+   VISIÓN · ASTRONAUTA GUIADO POR EL SCROLL
+   ========================================================================== */
+.astro-flyer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 800; /* bajo la navegación (900) y las ventanas modales */
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.28));
+}
+.astro-flyer.is-hidden { visibility: hidden; }
+/* Mientras vuela, el original reserva su espacio sin verse ni flotar */
+.astronaut.is-docked { visibility: hidden; animation: none; }
+
+
+/* ==========================================================================
+   DESARROLLOS · FONDO QUE BAJA DESDE LA TARJETA "9+ AÑOS"
+   ========================================================================== */
+/* Capa dentro de la sección: detrás de su contenido, por encima de Experiencia */
+.dev-backdrop {
+  position: absolute;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: #000 center / cover no-repeat;
+  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.5);
+  will-change: left, top, width, height;
+}
+/* Velo oscuro que aparece al llegar, igual al de la sección */
+.dev-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: var(--dev-scrim, 0);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.55) 50%, rgba(0, 0, 0, 0.82) 100%);
+}
+.dev-backdrop.is-hidden { visibility: hidden; }
+/* Mientras la imagen viaja, la sección muestra solo el negro de base */
+.section.dev-section.is-bg-flying { background-image: none; }
+
+/* La tarjeta "9+" queda sobre la imagen (su texto siempre visible) */
+.summary-card .summary-stat { position: relative; z-index: 1; }
+.summary-stat.stat-photo-host { position: relative; z-index: 1; transition: background 0.35s var(--ease), box-shadow 0.35s var(--ease), transform 0.6s var(--ease); }
+.summary-stat.stat-photo-host.is-photo {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.5));
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.summary-stat.is-photo .stat-number {
+  background: linear-gradient(135deg, #ffffff 0%, #cfe8ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.summary-stat.is-photo .stat-label { color: rgba(255, 255, 255, 0.88); }
+.summary-stat .stat-label { transition: color 0.35s var(--ease); }
+
+/* Cifras: vidrio más claro para que la fotografía se vea mejor */
+.summary-card .summary-stat {
+  --lg-blur: blur(6px) saturate(150%);
+}
+.summary-card .summary-stat.is-photo {
+  --lg-blur: blur(1.5px) saturate(120%);
+  -webkit-backdrop-filter: var(--lg-blur);
+  backdrop-filter: var(--lg-blur);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.38));
+}
+.summary-stat.is-photo .stat-number,
+.summary-stat.is-photo .stat-label { text-shadow: none; filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.45)); }
+/* Con la foto, la tarjeta no se eleva al pasar el cursor (la imagen queda alineada) */
+.summary-card .summary-stat.is-photo:hover { transform: none; }
+
+/* Cifras: queda solo la tarjeta "9+", centrada con su tamaño original */
+.summary-card { grid-template-columns: minmax(0, 242px); justify-content: center; }
+@media (max-width: 560px) {
+  .summary-card { grid-template-columns: minmax(0, 1fr); }
+}
