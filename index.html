@@ -211,8 +211,48 @@
     </header>
   </div>
 
-  <div class="gallery gallery--exp reveal">
-    <div class="gallery-track experiencia-track" id="expCarousel" role="group" aria-label="Experiencia profesional por empresa">
+  <div class="container container--wide">
+    <div class="exp-stage reveal" id="expStage">
+      <button type="button" class="exp-hero" aria-label="Ver detalles: Analista de Producción en Cosmoagro S.A.">
+        <img class="exp-hero-img" src="https://cdn.pixabay.com/photo/2020/03/07/17/16/rapeseeds-4910374_1280.jpg" alt="" decoding="async">
+        <span class="exp-hero-scrim" aria-hidden="true"></span>
+        <span class="exp-hero-caption">
+          <span class="exp-hero-role">Analista de Producción</span>
+          <span class="exp-hero-company">Cosmoagro S.A.</span>
+        </span>
+        <span class="exp-hero-badge"><span class="exp-hero-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9"/></svg></span><span class="exp-hero-dates">Dic 2024 – Presente</span></span>
+      </button>
+      <ul class="exp-logos" role="list" aria-label="Empresas: selecciona una para ver el detalle">
+        <li><button type="button" class="exp-logo-btn is-active" data-index="0" aria-label="Ver experiencia en Cosmoagro S.A.">
+          <span class="exp-logo-ring"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_logo.jpg?raw=true" alt="" loading="lazy" decoding="async"></span>
+          <span class="exp-logo-name">Cosmoagro<br>S.A.</span>
+        </button></li>
+        <li><button type="button" class="exp-logo-btn" data-index="1" aria-label="Ver experiencia en Coca-Cola FEMSA">
+          <span class="exp-logo-ring"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_logo.jpg?raw=true" alt="" loading="lazy" decoding="async"></span>
+          <span class="exp-logo-name">Coca-Cola<br>FEMSA</span>
+        </button></li>
+        <li><button type="button" class="exp-logo-btn" data-index="2" aria-label="Ver experiencia en Cadena S.A.">
+          <span class="exp-logo-ring"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_logo.jpg?raw=true" alt="" loading="lazy" decoding="async"></span>
+          <span class="exp-logo-name">Cadena<br>S.A.</span>
+        </button></li>
+        <li><button type="button" class="exp-logo-btn" data-index="3" aria-label="Ver experiencia en Postobón S.A.">
+          <span class="exp-logo-ring"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_logo.jpg?raw=true" alt="" loading="lazy" decoding="async"></span>
+          <span class="exp-logo-name">Postobón<br>S.A.</span>
+        </button></li>
+        <li><button type="button" class="exp-logo-btn" data-index="4" aria-label="Ver experiencia en Laboratorios OSA">
+          <span class="exp-logo-ring"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_logo.jpg?raw=true" alt="" loading="lazy" decoding="async"></span>
+          <span class="exp-logo-name">Laboratorios<br>OSA</span>
+        </button></li>
+        <li><button type="button" class="exp-logo-btn" data-index="5" aria-label="Ver experiencia en Smurfit Westrock">
+          <span class="exp-logo-ring"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_logo.jpg?raw=true" alt="" loading="lazy" decoding="async"></span>
+          <span class="exp-logo-name">Smurfit<br>Westrock</span>
+        </button></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Fuente de datos de la ventana de detalle (no visible) -->
+    <div class="exp-source" id="expCarousel" hidden>
 
       <article class="experiencia-card grupo-1" tabindex="0" role="button" aria-label="Ver detalles: Analista de Producción en Cosmoagro S.A." data-company="Cosmoagro S.A." data-duration="Dic 2024 – Presente">
         <img src="https://cdn.pixabay.com/photo/2020/03/07/17/16/rapeseeds-4910374_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
@@ -319,11 +359,6 @@
         </div>
       </article>
     </div>
-    <div class="gallery-controls">
-      <button type="button" class="paddle" data-dir="-1" aria-label="Experiencia anterior" aria-controls="expCarousel"><svg aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
-      <button type="button" class="paddle" data-dir="1" aria-label="Experiencia siguiente" aria-controls="expCarousel"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
-    </div>
-  </div>
 
   <div class="container container--wide">
     <div class="summary-card">
