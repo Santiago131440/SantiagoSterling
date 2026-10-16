@@ -422,6 +422,158 @@
   })();
 
   /* ==========================================================================
+     VISIÓN: ASTRONAUTA GUIADO POR EL SCROLL
+     Parte pequeño junto al cuadro "Datos" (Competencias) y, a medida que se
+     baja, vuela y crece hasta su lugar en Visión académica. Todo depende de la
+     posición del scroll: al subir, regresa al cuadro. Se usa una copia fija
+     (fuera del overflow de las secciones); al aterrizar se muestra el original.
+     ========================================================================== */
+  (function initAstronautFlight() {
+    const chip = $(".chip-box");
+    const astro = $(".vision-section .astronaut");
+    if (!chip || !astro) return;
+
+    const flyer = astro.cloneNode(false);
+    flyer.className = "astro-flyer";
+    flyer.removeAttribute("loading");
+    flyer.alt = "";
+    flyer.setAttribute("aria-hidden", "true");
+    document.body.appendChild(flyer);
+    document.documentElement.classList.add("astro-flight-on");
+
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const ease = (t) => t * t * (3 - 2 * t); // suavizado (smoothstep)
+    let landed = null;
+    let width = 0;
+    let queued = false;
+
+    const setLanded = (on) => {
+      if (on === landed) return;
+      landed = on;
+      // Al aterrizar, el original retoma su flotación desde 0 (sin saltos)
+      astro.classList.toggle("is-docked", !on);
+      flyer.classList.toggle("is-hidden", on);
+    };
+
+    const update = () => {
+      queued = false;
+      const vh = window.innerHeight;
+      const c = chip.getBoundingClientRect();
+      const a = astro.getBoundingClientRect();
+      if (!a.width) return;
+
+      // Inicio: el cuadro "Datos" en la zona media-baja de la pantalla.
+      // Fin: el astronauta centrado en pantalla en su sección.
+      const startAt = c.top + c.height / 2 - vh * 0.62;
+      const endAt = a.top + a.height / 2 - vh * 0.5;
+      const span = Math.max(1, endAt - startAt);
+      const p = clamp(-startAt / span, 0, 1);
+
+      if (p >= 1) return setLanded(true);
+      setLanded(false);
+      const t = ease(p);
+
+      // Tamaño pequeño en función del cuadro; posición a su lado izquierdo
+      const small = Math.min(c.height * 0.85, a.width);
+      const sx = Math.max(small / 2 + 6, c.left - small * 0.42);
+      const sy = c.top + c.height * 0.28;
+      const ex = a.left + a.width / 2;
+      const ey = a.top + a.height / 2;
+
+      const size = lerp(small, a.width, t);
+      const x = lerp(sx, ex, t);
+      // Arco suave: el vuelo se eleva un poco a mitad de camino
+      const y = lerp(sy, ey, t) - Math.sin(t * Math.PI) * Math.min(vh * 0.12, 120);
+      const rot = lerp(-16, 0, t) + Math.sin(t * Math.PI) * 10;
+
+      if (a.width !== width) { width = a.width; flyer.style.width = `${width}px`; }
+      const k = size / width;
+      flyer.style.transform =
+        `translate3d(${x - width / 2}px, ${y - a.height / 2}px, 0) scale(${k}) rotate(${rot}deg)`;
+    };
+
+    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request);
+    astro.addEventListener("load", request);
+    if ("ResizeObserver" in window) new ResizeObserver(request).observe(document.body);
+    update();
+  })();
+
+  /* ==========================================================================
+     DESARROLLOS: FONDO QUE BAJA DESDE LA TARJETA "9+ AÑOS"
+     La fotografía de Desarrollos empieza como fondo de la tarjeta de cifras y,
+     con el scroll, baja y crece hasta cubrir toda la sección. Al subir, vuelve.
+     La capa vive dentro de la sección (posición absoluta): se desplaza con la
+     página sin retrasos y queda detrás del contenido de Desarrollos.
+     ========================================================================== */
+  (function initDevBackdropFlight() {
+    const section = $(".dev-section");
+    const card = $(".summary-stat");
+    if (!section || !card) return;
+    const bg = section.style.getPropertyValue("--bg-image").trim();
+    if (!bg) return;
+
+    const layer = document.createElement("div");
+    layer.className = "dev-backdrop";
+    layer.setAttribute("aria-hidden", "true");
+    layer.style.backgroundImage = bg;
+    section.appendChild(layer);
+    card.classList.add("stat-photo-host");
+
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    let state = "";
+    let queued = false;
+
+    const setState = (next) => {
+      if (next === state) return;
+      state = next;
+      section.classList.toggle("is-bg-flying", next !== "landed");
+      layer.classList.toggle("is-hidden", next === "landed");
+    };
+
+    const update = () => {
+      queued = false;
+      const vh = window.innerHeight;
+      const s = section.getBoundingClientRect();
+      const c = card.getBoundingClientRect();
+      if (!s.width || !c.width) return;
+
+      // Inicio: la tarjeta a media pantalla. Fin: la sección llega arriba.
+      const startAt = c.top + c.height / 2 - vh * 0.55; // ≤ 0 → empieza
+      const endAt = s.top;                               // ≤ 0 → aterriza
+      const span = Math.max(240, endAt - startAt);
+      const p = clamp(-startAt / span, 0, 1);
+
+      if (p >= 1) { card.classList.remove("is-photo"); return setState("landed"); }
+      setState("flying");
+      const t = ease(p);
+      card.classList.toggle("is-photo", p < 0.1);
+
+      const radius = parseFloat(getComputedStyle(card).borderTopLeftRadius) || 24;
+      layer.style.left = `${lerp(c.left - s.left, 0, t)}px`;
+      layer.style.top = `${lerp(c.top - s.top, 0, t)}px`;
+      layer.style.width = `${lerp(c.width, s.width, t)}px`;
+      layer.style.height = `${lerp(c.height, s.height, t)}px`;
+      layer.style.borderRadius = `${lerp(radius, 0, t)}px`;
+      layer.style.setProperty("--dev-scrim", t.toFixed(3));
+    };
+
+    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request);
+    if ("ResizeObserver" in window) new ResizeObserver(request).observe(document.body);
+    // Mientras la tarjeta anima su entrada, la imagen la acompaña cuadro a cuadro
+    let moving = false;
+    const follow = () => { update(); if (moving) requestAnimationFrame(follow); };
+    card.addEventListener("transitionrun", () => { if (!moving) { moving = true; follow(); } });
+    card.addEventListener("transitionend", () => { moving = false; request(); });
+    card.addEventListener("transitioncancel", () => { moving = false; request(); });
+    update();
+  })();
+
+  /* ==========================================================================
      HERO: VIDEO DE FONDO
      Aparece con un fundido cuando empieza a reproducirse, se pausa fuera de
      pantalla y con la pestaña oculta, respeta "reducir movimiento" y ofrece
