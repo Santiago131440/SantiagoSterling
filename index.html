@@ -1,1287 +1,547 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Santiago Sterling - Tecnólogo en análisis y desarrollo de software</title>
-  <meta name="description" content="Portafolio profesional enfocado en UX, frontend y diseño de productos digitales.">
-  <meta name="keywords" content="portafolio, frontend, backend, API, software, server, servidores, linux, UI, UX, diseñador, desarrollador">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-            <circle cx='50' cy='50' r='50' fill='black'/>
-            <text x='50' y='62' text-anchor='middle' font-size='50' fill='white' font-family='Arial'>S</text>
-          </svg>">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Santiago Sterling · Software, datos y producción industrial</title>
+  <meta name="description" content="Portafolio de Santiago Sterling: desarrollo de software, análisis de datos, Business Intelligence y automatización aplicados a la producción industrial.">
+  <meta name="author" content="Santiago Sterling">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://santiago131440.github.io/SantiagoSterling/">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="light">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://santiago131440.github.io/SantiagoSterling/">
+  <meta property="og:title" content="Santiago Sterling · Portafolio">
+  <meta property="og:description" content="Software, análisis de datos y automatización aplicados a la producción industrial.">
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/98182135?v=4">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Santiago Sterling · Portafolio">
+  <meta name="twitter:description" content="Software, análisis de datos y automatización aplicados a la producción industrial.">
+  <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/98182135?v=4">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='black'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-size='50' font-weight='600' fill='white' font-family='Inter, Arial, sans-serif'%3ES%3C/text%3E%3C/svg%3E">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles20.css">
-  <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/98182135?v=4">
-  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
-  <meta name="description" content="Portafolio profesional de Santiago Sterling - Desarrollador Full Stack especializado en Excel VBA, JavaScript, React y soluciones web innovadoras.">
-    <meta name="keywords" content="desarrollo web, VBA, Excel, JavaScript, React, Node.js, Python, portafolio, Santiago Sterling, desarrollador full stack">
-    <meta name="author" content="Santiago Sterling">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://santiago-sterling.com/">
-    <meta property="og:title" content="Santiago Sterling - Portafolio de Proyectos">
-    <meta property="og:description" content="Desarrollador Full Stack apasionado por crear soluciones tecnológicas innovadoras">
-    <meta property="og:image" content="https://avatars.githubusercontent.com/u/98182135?v=4">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://santiago-sterling.com/">
-    <meta property="twitter:title" content="Santiago Sterling - Portafolio de Proyectos">
-    <meta property="twitter:description" content="Desarrollador Full Stack apasionado por crear soluciones tecnológicas innovadoras">
-    <meta property="twitter:image" content="https://avatars.githubusercontent.com/u/98182135?v=4">
-
+  <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
 
+<body class="site">
 
-<body class="w-full min-h-screen text-slate-100 antialiased leading-relaxed">
-<!-- NAVBAR -->
-<nav class="apple-nav w-full border-b border-black/10">
-  <div class="apple-nav-inner max-w-7xl mx-auto px-1 py-1 flex items-center justify-between">
+<a class="skip-link" href="#main">Saltar al contenido</a>
 
-    <!-- Nombre + Avatar -->
-    <a href="#" class="flex items-center gap-3">
-      <span class="w-8 h-8 rounded-full overflow-hidden border border-black/10">
-        <img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="Avatar" class="w-full h-full object-cover"/>
-      </span>
-      <span class="text-lg whitespace-nowrap titulosSterlingNegro-text1">
-        Santiago Sterling
-      </span>
+<!-- Iconos reutilizables -->
+<svg class="svg-sprite" aria-hidden="true" focusable="false">
+  <!-- Refracción Liquid Glass (backdrop-filter en Chromium) -->
+  <filter id="lg-refract" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.008 0.014" numOctaves="2" seed="11" result="noise"/>
+    <feGaussianBlur in="noise" stdDeviation="2.5" result="soft"/>
+    <feDisplacementMap in="SourceGraphic" in2="soft" scale="22" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <symbol id="i-folder" viewBox="0 0 68 56">
+    <path d="M4 10a6 6 0 0 1 6-6h14.3a6 6 0 0 1 4.6 2.2L32 10h26a6 6 0 0 1 6 6v4H4z" fill="#3a8ee6"/>
+    <rect x="4" y="15" width="60" height="37" rx="6" fill="#62adf5"/>
+    <rect x="4" y="15" width="60" height="4" rx="2" fill="#86c2fa"/>
+  </symbol>
+  <symbol id="i-doc" viewBox="0 0 22 28">
+    <path d="M3 1h11l7 7v16a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3z" fill="currentColor" opacity=".14"/>
+    <path d="M14 1v5a2 2 0 0 0 2 2h5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M3 1h11l7 7v16a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M5 14h11M5 18h11M5 22h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"/></symbol>
+  <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m14.5 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9.5 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<!-- NAVEGACIÓN -->
+<header class="global-nav" id="globalNav">
+  <nav class="nav-inner" aria-label="Principal">
+    <a href="#top" class="nav-brand">
+      <img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="" width="28" height="28">
+      <span>Santiago Sterling</span>
     </a>
 
-    <!-- Menu desktop -->
-    <div class="hidden md:flex items-center gap-3 text-gray-500 font-thin">
-      <a href="#sobremi" class="text-center px-3 py-1 rounded-full hover:text-sm hover:font-semibold transition-all hover:bg-white/70 hover:text-gray-900 inline-block cursor-pointer">Sobre mi</a>
-      <a href="#estudio" class="text-center px-3 py-1 rounded-full hover:text-sm hover:font-semibold transition-all hover:bg-white/70 hover:text-gray-900 inline-block cursor-pointer">Formación</a>
-      <a href="#experiencia" class="text-center px-3 py-1 rounded-full text-sm hover:font-semibold transition-all hover:bg-white/70 hover:text-gray-900 inline-block cursor-pointer">Experiencia</a>
-      <a href="#desarrollo" class="text-center px-3 py-1 rounded-full text-sm hover:font-semibold transition-all hover:bg-white/70 hover:text-gray-900 inline-block cursor-pointer">Desarrollos</a>
-      <a href="#competencia" class="text-center px-3 py-1 rounded-full text-sm hover:font-semibold transition-all hover:bg-white/70 hover:text-gray-900 inline-block cursor-pointer">Competencias</a>
-      <a href="#estrategia" class="text-center px-3 py-1 rounded-full text-sm hover:font-semibold transition-all hover:bg-white/70 hover:text-gray-900 inline-block cursor-pointer">Estrategias</a>
-      <a href="#contacto" class="border border-black/30 text-center px-3 py-1 rounded-full text-sm transition-all hover:bg-[#007AFF] hover:text-white hover:border-[#007AFF] inline-block cursor-pointer">Contacto</a>
+    <ul class="nav-links" role="list">
+      <li><a href="#sobremi" class="nav-link">Sobre mí</a></li>
+      <li><a href="#estudio" class="nav-link">Formación</a></li>
+      <li><a href="#experiencia" class="nav-link">Experiencia</a></li>
+      <li><a href="#desarrollo" class="nav-link">Desarrollos</a></li>
+      <li><a href="#competencia" class="nav-link">Competencias</a></li>
+      <li><a href="#estrategia" class="nav-link">Estrategias</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="#contacto" class="btn btn--primary btn--sm nav-cta">Contacto</a>
+      <button type="button" class="icon-btn menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menú">
+        <span class="menu-icon" aria-hidden="true"><span></span><span></span></span>
+      </button>
     </div>
+    <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+  </nav>
 
-    <!-- Botón hamburguesa (+) -->
-    <button id="menu-toggle" class="md:hidden card-btn" aria-label="Abrir menú"><i class="fi fi-sr-add"></i></button>
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <ul role="list">
+      <li><a href="#sobremi" style="--i:0">Sobre mí</a></li>
+      <li><a href="#estudio" style="--i:1">Formación</a></li>
+      <li><a href="#experiencia" style="--i:2">Experiencia</a></li>
+      <li><a href="#desarrollo" style="--i:3">Desarrollos</a></li>
+      <li><a href="#competencia" style="--i:4">Competencias</a></li>
+      <li><a href="#estrategia" style="--i:5">Estrategias</a></li>
+      <li><a href="#contacto" style="--i:6">Contacto</a></li>
+    </ul>
+    <ul class="mobile-menu-secondary" role="list">
+      <li><a href="proyectoApp.html" style="--i:7">Proyectos</a></li>
+    </ul>
+  </div>
+</header>
 
+<main id="main">
+
+<!-- HERO: video a pantalla completa con titular centrado -->
+<section class="hero on-dark" id="top" aria-labelledby="heroTitle">
+  <div class="hero-media" aria-hidden="true">
+    <!-- Coloca tu video como "hero.mp4" junto a index.html (1920×1080, 10–20 s, sin audio, idealmente < 8 MB).
+         Si no carga, se muestra un fondo degradado animado. -->
+    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" disablepictureinpicture>
+      <source src="hero.webm" type="video/webm">
+      <source src="hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero-scrim"></div>
   </div>
 
-  <!-- Menu mobile -->
-  <div
-    id="mobile-menu"
-    class="md:hidden hidden px-6 pt-6 pb-6 text-gray-700 flex-col gap-4"
-  >
-    <a href="#sobremi" class="py-2 border-b border-black/5">Sobre mi</a>
-    <a href="#estudio" class="py-2 border-b border-black/5">Formación</a>
-    <a href="#experiencia" class="py-2 border-b border-black/5">Experiencia</a>
-    <a href="#desarrollo" class="py-2 border-b border-black/5">Desarrollos</a>
-    <a href="#competencia" class="py-2 border-b border-black/5">Competencias</a>
-    <a href="#estrategia" class="py-2 border-b border-black/5">Estrategias</a>
-    <a href="#contacto" class="py-2">Contacto</a>
+  <div class="container hero-content">
+    <h1 class="hero-title reveal" id="heroTitle">
+      <span class="hero-line">¡Hola!, soy</span>
+      <span class="hero-line"><span class="hero-mark" aria-hidden="true">S</span>Santiago Sterling</span>
+    </h1>
+    <p class="hero-sub reveal" style="--delay:.1s">Impulso el crecimiento digital con software, datos y automatización aplicados a la producción industrial.</p>
+
+    <div class="hero-actions reveal" style="--delay:.18s">
+      <a href="proyectoApp.html" class="btn btn--primary btn--lg magnetic">Ver proyectos</a>
+    </div>
+    <p class="hero-lines reveal" style="--delay:.24s">
+      <span>Tecnólogo en Análisis y Desarrollo de Software</span>
+      <span>Tecnólogo en Gestión de la Producción Industrial</span>
+    </p>
+    <p class="hero-links reveal" style="--delay:.3s">
+      <a href="#" id="downloadCV" class="text-link">Descargar CV</a>
+    </p>
   </div>
 
-</nav>
+  <a href="#sobremi" class="hero-scroll" aria-label="Ir a Sobre mí"><span aria-hidden="true"></span></a>
 
-<!-- HERO -->
-<section class="hero">
-  <h1 class="px-2 py-2 tracking-tight text-black">
-           <span class="font-bold font-thin text-2xl titulosSterlingNegro-text1"> ¡Hola!, soy</span><br> <span class="bg-gradient-to-r from-yellow-300 via-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent font-bold">Santiago Sterling</span> <br><span class="font-bold titulosSterlingNegro-text1"> e impulso el crecimiento digital</span>.
-          </h1>
-  <div class="creative">Tecnólogo en Software</div>
+  <button type="button" class="hero-video-toggle" id="heroVideoToggle" aria-pressed="false" aria-label="Pausar video de fondo" hidden>
+    <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+    <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
+  </button>
+</section>
 
-  <div class="mockups">
-    <div class="phone left">
-      <div class="screen">
-        <video src="https://cdn.pixabay.com/video/2025/12/22/323793_large.mp4" autoplay muted loop playsinline></video>
-      </div>
-    </div>
+<!-- SOBRE MÍ -->
+<section id="sobremi" class="section tone-light" aria-labelledby="sobremiTitle">
+  <div class="container">
+    <header class="section-head reveal">
+      <h2 class="section-title" id="sobremiTitle">Sobre mí</h2>
+      <p class="statement">Conoce cómo transformo ideas en soluciones digitales de alto impacto, <span>creando software sólido, escalable y diseñado para crecer.</span></p>
+      <p class="section-lead">Tecnólogo en Análisis y Desarrollo de Software y Tecnólogo en Gestión de la Producción Industrial con 9 años de experiencia en manufactura, enfocado en optimización de procesos mediante tecnología, automatización y análisis de datos, con interés en inteligencia artificial e Industria 4.0.</p>
+    </header>
 
-    <div class="phone center">
-      <div class="screen">
-        <video src="https://cdn.pixabay.com/video/2020/10/19/52823-471089056_large.mp4" autoplay muted loop playsinline></video>
-      </div>
-    </div>
-
-    <div class="phone right">
-      <div class="screen">
-        <video src="https://cdn.pixabay.com/video/2024/05/25/213648_large.mp4" autoplay muted loop playsinline></video>
-      </div>
+    <div class="about-grid">
+      <article class="tile reveal">
+        <h3 class="tile-title">Proceso</h3>
+        <p>Experiencia en <strong>gestión de producción,</strong> control de inventarios y mejora continua.</p>
+      </article>
+      <article class="tile reveal" style="--delay:.08s">
+        <h3 class="tile-title">Objetivo</h3>
+        <p>Colaborar en proyectos que <strong>combinen automatización,</strong> analítica y desarrollo web.</p>
+      </article>
+      <article class="tile reveal" style="--delay:.16s">
+        <h3 class="tile-title">Información clave</h3>
+        <dl class="info-list">
+          <div><dt>Ubicación</dt><dd>Cali, Colombia</dd></div>
+          <div><dt>Estudios</dt><dd>Tecnólogo en análisis y desarrollo de software. Tecnólogo en gestión de la producción industrial.</dd></div>
+          <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/santisterling/" target="_blank" rel="noopener" class="text-link">linkedin.com/in/santisterling</a></dd></div>
+        </dl>
+      </article>
     </div>
   </div>
 </section>
-      
-          <br>
 
-           <div class="flex justify-center w-full mb-20">
-            <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1 mx-auto text-center">
-              <a href="proyectoApp.html" class="active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
-                    Proyectos
-                  </a>
-              <a href="windows.html" class="active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
-                    Repositorio
-                  </a>
-              <a href="Red Pericial/index.html" class="active text-center px-5 py-1 rounded-full text-sm font-medium transition-all hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer">
-                    Red Pericial
-                  </a>
-              <a id="downloadCV" href="#" class="px-5 py-1 rounded-full text-sm text-center text-white bg-black/30 hover:bg-white/10 backdrop-blur-sm transition">Read.Me</a>
-             </div>
-          </div>
-        </div>
-      </section>
-    </main>
+<!-- FORMACIÓN ACADÉMICA -->
+<section id="estudio" class="section tone-dark" aria-labelledby="estudioTitle">
+  <div class="container container--narrow">
+    <header class="section-head reveal">
+      <h2 class="section-title" id="estudioTitle">Formación académica</h2>
+      <p class="section-lead">Títulos, diplomado y cursos agrupados por categoría. Abre una carpeta para ver su contenido.</p>
+    </header>
 
-  </div>
-</div>
-
-    <!------------------------------- SOBRE MI -------------------------------------->
-        <section id="sobremi"
-  class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-black/5 py-24">
-
-  <!----------------------------- Patrón de puntos animado --------------------------------------->
-  <div class="absolute inset-0 z-[1] pointer-events-none dot-pattern"></div>
-
-  <div class="max-w-7xl mx-auto px-6">
-
-    <!-- TITULAR -->
-    <div class="text-center mb-20">
-      <div class="text-center mb-2 fade-in">
-    <h1 class="text-5xl sm:text-6xl lg:text-7xl mb-4 titulosSterlingNegro-text">
-      Sobre mi
-    </h1>
-  </div>
-  <br>
-  <br>
-
-      <h1
-        class="py-4 px-14 text-2xl md:text-5xl font-medium leading-tight bg-gradient-to-r from-indigo-400 via-blue-500 to-teal-400 bg-clip-text text-transparent">
-        Conoce cómo transformo ideas en soluciones digitales de alto impacto, <br class="hidden md:block" />
-        <span class="titulosSterlingNegro-text1">creando software sólido, escalable y diseñado para crecer.</span>
-      </h1>
-
-      <p class="mt-6 text-gray-500 max-w-3xl mx-auto text-lg">
-        Tecnólogo en Análisis y desarrollo de software y Tecnólogo en Gestión de la Producción Industrial con más de 8 años de experiencia en manufactura, enfocado en optimización de procesos mediante tecnología, automatización y análisis de datos, con interés en inteligencia artificial e Industria 4.0.
-      </p>
-    </div>
-
-    <!-- TARJETA PRINCIPAL -->
-    <div
-      class="relative rounded-[32px] border border-gray-200 bg-white/80 backdrop-blur-xl shadow-[0_25px_60px_-20px_rgba(0,0,0,0.15)] p-10 md:p-14">
-
-      <div class="grid md:grid-cols-2 gap-2 items-center">
-
-        <!-- TEXTO -->
-        <div>
-          <h2 class="text-xl md:text-xl font-semibold mb-6 text-gray-900">
-            Proceso
-          </h2>
-
-          <p class="text-gray-500 text-lg mb-10">
-            Experiencia en <strong>gestión de producción,</strong> control de inventarios y mejora continua.
-          </p>
-
-          <h2 class="text-xl md:text-xl font-semibold mb-6 text-gray-900">
-            Objetivo
-          </h2>
-
-          <p class="text-gray-500 text-lg mb-10">
-            Colaborar en proyectos que <strong>combinen automatización,</strong> analítica y desarrollo web.
-          </p>
-        </div>
-
-        <!-- FRASE DECORATIVA -->
-        <div class="relative flex justify-center md:justify-end">
-          <div
-            class="px-6 py-4 rounded-lg border border-gray-200 bg-white shadow-lg text-gray-700 text-sm bg-gradient-to-r from-indigo-400/10 to-teal-400/10">
-            
-            <span class="titulosSterlingNegro-text1 font-medium">Información clave</span><br>
-            Ubicación: Cali, Colombia.<br>
-
-            Estudio: Tecnólogo en análisis y desarrollo de software, Tecnólogo en gestión de la producción industrial.<br>
-
-            LinkedIn: www.linkedin.com/in/santisterling
-          </div>
-        </div>
-
+    <div class="finder reveal">
+      <div class="finder-bar">
+        <span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span>
+        <h3 class="finder-title">Categorías académicas</h3>
       </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-        <br>
-        <br>
-        <br>
-
-    <!------------------------------------------ FORMACIÓN ACADÉMICA ------------------------------------------------------>
- <section id="estudio" class="mt-1">
-
-  <!-- TÍTULO -->
-  <div class="text-center mb-2 fade-in">
-    <h1 class="text-5xl sm:text-6xl lg:text-7xl mb-4 titulosSterlingNegro-text">
-      Formación académica
-    </h1>
-  </div>
-  <br>
-
-<section class="mac-section">
-
-  <!-- Finder Panel -->
-  <div class="finder-window">
-      <div class="flex items-center px-3 py-2 bg-gradient-to-br from-stone-200 via-stone-200 to-stone-200 rounded-t-2xl border-b border-white/30">
-    <div class="flex gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full" data-title="Cosmoagro S.A."></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full" data-title="Cosmoagro S.A."></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full" data-title="Cosmoagro S.A."></span>
-    </div>
-    <h3 class="font-semibold text-lg text-slate-700 justify-center items-center">
-      <span class="text-stone-200">--</span>Categorías académicas
-    </h3>
-  </div>
-
-    <div class="finder-content">
-      <ul class="file-list">
-        <li onclick="openModal(
-                'Formación tecnológica',
-                `
-                      - 📄 Tecnología en análisis y desarrollo de software.
-                          Institución: Servicio Nacional de Aprendizaje (SENA)
-                          Estado: En curso.
-                          
-
-                      - 📄 Tecnología en gestión de la producción industrial.
-                          Institución: Servicio Nacional de Aprendizaje (SENA)
-                          Estado: Culminado.
-                          Certificación: 25 Noviembre 2016
-                `
-              )">
-
-          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
-          <span class="name text-sm">Formación tecnológica</span>
-          <span class="date text-sm">2 archivos</span>
-        </li>
-
-        <li onclick="openModal('Platzi - Backend/Lógica de programación',
-                `
-                      - 📄 Curso de Programación Orientada a Objetos (POO)
-                      - 📄 Curso Básico de Programación
-                      - 📄 Curso Básico de Algoritmos y Pensamiento Lógico
-                `
-              )">
-          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
-          <span class="name text-sm">Platzi - Backend</span>
-          <span class="date text-sm">3 archivos</span>
-        </li>
-
-        <li onclick="openModal('Platzi - DevOps / Cloud',
-                `
-                      - 📄 Curso de Introducción al Despliegue de Aplicaciones
-                      - 📄 Curso de Introducción a AWS: Cómputo, Almacenamiento y Bases de Datos
-                `
-              )">
-          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
-          <span class="name text-sm">Platzi - DevOps / Cloud</span>
-          <span class="date text-sm">2 archivos</span>
-        </li>
-
-        <li onclick="openModal('Platzi - Frontend',
-                `
-                      - 📄 Curso de Frontend Developer
-                      - 📄 Curso Práctico de Frontend Developer
-                      - 📄 Curso Definitivo de HTML y CSS
-                      - 📄 Curso Práctico de HTML y CSS
-                      - 📄 Curso Práctico de Maquetación en CSS
-                      - 📄 Curso Profesional de CSS Grid Layout
-                      - 📄 Curso de Responsive Design: Maquetación Mobile First
-                      - 📄 Curso Básico de Tailwind 2 y 3
-                      - 📄 Curso de Diseño para Developers
-                      - 📄 Curso de Manipulación del DOM
-                      - 📄 Curso de Next.js
-                `
-              )">
-          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
-          <span class="name text-sm">Platzi - Frontend</span>
-          <span class="date text-sm">11 archivos</span>
-        </li>
-
-        <li onclick="openModal('Platzi - Herramientas de Desarrollo',
-                `
-                      - 📄 Curso Profesional de Git y GitHub
-                      - 📄 Curso de Introducción a la Terminal y Línea de Comandos
-                `
-              )">
-          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
-          <span class="name text-sm">Platzi - Herramientas de Desarrollo</span>
-          <span class="date text-sm">2 archivos</span>
-        </li>
-
-        <li onclick="openModal('Platzi - Javascript',
-                `
-                      - 📄 Curso Básico de JavaScript
-                      - 📄 Curso Práctico de JavaScript
-                      - 📄 Curso de Asincronismo con JavaScript
-                `
-              )">
-          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75 " alt="Folder"/></span>
-          <span class="name text-sm">Platzi - Javascript</span>
-          <span class="date text-sm">3 archivos</span>
-        </li>
-
-        <li onclick="openModal('Cursos cortos del SENA',
-                `
-                      - 📄 Calidad en el desarrollo de software - Abril, 2022
-                      - 📄 Metodología de la programación de sistemas informáticos - Mayo, 2022
-                      - 📄 Modelos de calidad de software - Septiembre, 2023
-                      - 📄 Procesos para software de calidad - Diciembre, 2024
-                      - 📄 Aplicación del marco de trabajo Scrum para proyectos de desarrollo de software - Marzo, 2025
-                      - 📄 Manejo de pruebas de software - Marzo, 2025
-                      - 📄 Variables y estructuras de control en Python - Julio, 2025
-                `
-              )">
-          <span class="icon"><img src="https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-6TJq3TblGrgJLKvMLFj3N2YcDEXG2A.png&w=500&q=75" alt="Folder"/></span>
-          <span class="name text-sm">SENA - Cursos cortos</span>
-          <span class="date text-sm"> 7 archivos</span>
-        </li>
-
-        <li onclick="openModal('Platzi - Bases de datos',
-                `
-                      - 📄 Curso de Fundamentos de Bases de Datos
-                `
-              )">
-          <span class="icon"><img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284038_1280.png" alt="Folder"/></span>
-          <span class="name text-sm">Platzi - Bases de datos</span>
-          <span class="date text-sm">1 archivo</span>
-        </li>
-
-        <li onclick="openModal('Platzi - Ingeniería de Software',
-                `
-                      - 📄 Fundamentos de Ingeniería de Software
-                `
-              )">
-          <span class="icon"><img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284038_1280.png" alt="Folder"/></span>
-          <span class="name text-sm">Platzi - Ingeniería de Software</span>
-          <span class="date text-sm">1 archivo</span>
-        </li>
-
-        <li onclick="openModal(
-                'Educación media',
-                `
-                      - 📄 Bachiller técnico en informatica.
-                          Institución: Institución Educativa Ana Josefa Morales Duque.
-                          Estado: Culminado.
-                          Certificación: 25 Noviembre 2011
-                `
-              )">
-          <span class="icon"><img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284038_1280.png" alt="Folder"/></span>
-          <span class="name text-sm">Educación media</span>
-          <span class="date text-sm">1 archivo</span>
-        </li>
+      <ul class="finder-list" role="list">
+        <li><button type="button" class="finder-item" data-folder="tecnologica"><svg class="folder-icon" aria-hidden="true"><use href="#i-folder"/></svg><span class="finder-name">Formación tecnológica</span><span class="finder-count">2 archivos</span></button></li>
+        <li><button type="button" class="finder-item" data-folder="diplomado"><svg class="folder-icon" aria-hidden="true"><use href="#i-folder"/></svg><span class="finder-name">Diplomado</span><span class="finder-count">1 archivo</span></button></li>
+        <li><button type="button" class="finder-item" data-folder="backend"><svg class="folder-icon" aria-hidden="true"><use href="#i-folder"/></svg><span class="finder-name">Platzi · Backend</span><span class="finder-count">3 archivos</span></button></li>
+        <li><button type="button" class="finder-item" data-folder="devops"><svg class="folder-icon" aria-hidden="true"><use href="#i-folder"/></svg><span class="finder-name">Platzi · DevOps y Cloud</span><span class="finder-count">2 archivos</span></button></li>
+        <li><button type="button" class="finder-item" data-folder="frontend"><svg class="folder-icon" aria-hidden="true"><use href="#i-folder"/></svg><span class="finder-name">Platzi · Frontend</span><span class="finder-count">11 archivos</span></button></li>
+        <li><button type="button" class="finder-item" data-folder="herramientas"><svg class="folder-icon" aria-hidden="true"><use href="#i-folder"/></svg><span class="finder-name">Platzi · Herramientas de desarrollo</span><span class="finder-count">2 archivos</span></button></li>
+        <li><button type="button" class="finder-item" data-folder="javascript"><svg class="folder-icon" aria-hidden="true"><use href="#i-folder"/></svg><span class="finder-name">Platzi · JavaScript</span><span class="finder-count">3 archivos</span></button></li>
+        <li><button type="button" class="finder-item" data-folder="sena"><svg class="folder-icon" aria-hidden="true"><use href="#i-folder"/></svg><span class="finder-name">SENA · Cursos cortos</span><span class="finder-count">7 archivos</span></button></li>
+        <li><button type="button" class="finder-item" data-folder="bd"><svg class="folder-icon" aria-hidden="true"><use href="#i-folder"/></svg><span class="finder-name">Platzi · Bases de datos</span><span class="finder-count">1 archivo</span></button></li>
+        <li><button type="button" class="finder-item" data-folder="ingenieria"><svg class="folder-icon" aria-hidden="true"><use href="#i-folder"/></svg><span class="finder-name">Platzi · Ingeniería de software</span><span class="finder-count">1 archivo</span></button></li>
+        <li><button type="button" class="finder-item" data-folder="media"><svg class="folder-icon" aria-hidden="true"><use href="#i-folder"/></svg><span class="finder-name">Educación media</span><span class="finder-count">1 archivo</span></button></li>
       </ul>
     </div>
   </div>
+</section>
 
-  <!-- Modal macOS -->
-  <div class="mac-modal" id="macModal">
-    <div class="modal-window">
-      <div class="modal-titlebar">
-        <div class="controls">
-          <span class="c red" onclick="closeModal()"></span>
-          <span class="c yellow"></span>
-          <span class="c green"></span>
-        </div>
-        <span class="title" id="modalTitle"></span>
-      </div>
-
-      <div class="modal-body">
-        <p id="modalContent"></p>
-      </div>
-    </div>
+<!-- EXPERIENCIA PROFESIONAL -->
+<section id="experiencia" class="section tone-light" aria-labelledby="experienciaTitle">
+  <div class="container container--wide">
+    <header class="section-head reveal">
+      <h2 class="section-title" id="experienciaTitle">Experiencia profesional</h2>
+      <p class="section-lead">Nueve años en plantas de producción de seis empresas líderes, de la línea de llenado al tablero de indicadores.</p>
+    </header>
   </div>
 
-</section>
+  <div class="gallery gallery--exp reveal">
+    <div class="gallery-track experiencia-track" id="expCarousel" role="group" aria-label="Experiencia profesional por empresa">
 
-
-</section>
-
-<br>
-<br>
-<br>
-<br>
-
-<hr>
-<!-- ==================== EXPERIENCIA PROFESIONAL MEJORADA ==================== -->
-<section id="experiencia" class="experiencia-section py-20 md:py-32">
-  
-  <!-- Fondo decorativo animado -->
-  <div class="experiencia-bg-decoration"></div>
-
-  <div class="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-    
-    <!-- ENCABEZADO -->
-    <div class="text-center mb-16 md:mb-24">
-      <h2 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 titulosSterlingNegro-text">
-        Experiencia Profesional
-      </h2>
-      <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto font-light">
-        Trayectoria desarrollada en entornos desafiantes con empresas líderes a nivel nacional
-      </p>
-    </div>
-
-    <!-- GRID DE TARJETAS PREMIUM -->
-    <div class="experiencia-grid">
-      
-      <!-- TARJETA 1: Cosmoagro S.A. -->
-      <div class="experiencia-card grupo-1" data-company="Cosmoagro S.A." data-duration="Dic 2024 - Presente">
-        <div class="card-header">
-          <div class="card-status-badge active">Activo</div>
-        </div>
-        
-        <div class="card-cover">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_cover.jpg?raw=true" 
-               alt="Cosmoagro cover" class="cover-image">
-          <div class="cover-overlay"></div>
-          <div class="card-logo-container">
-            <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_logo.jpg?raw=true" 
-                 alt="Cosmoagro logo" class="card-logo">
-          </div>
-        </div>
-
-        <div class="card-content">
+      <article class="experiencia-card grupo-1" tabindex="0" role="button" aria-label="Ver detalles: Analista de Producción en Cosmoagro S.A." data-company="Cosmoagro S.A." data-duration="Dic 2024 – Presente">
+        <img src="https://cdn.pixabay.com/photo/2020/03/07/17/16/rapeseeds-4910374_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
+        <div class="card-scrim" aria-hidden="true"></div>
+        <div class="card-top">
           <h3 class="card-role">Analista de Producción</h3>
           <p class="card-company">Cosmoagro S.A.</p>
-          <p class="card-description">
-            Optimización de procesos, análisis de indicadores KPI y mejora continua de eficiencia operativa. Garantizando calidad, continuidad y control en la planta de producción.
-          </p>
-          
-          <div class="card-meta">
-            <span class="meta-item">
-              <span class="meta-icon">📅</span>
-              <span>Dic 2024 - Presente</span>
-            </span>
-            <span class="meta-item">
-              <span class="meta-icon">🎯</span>
-              <span>Producción</span>
-            </span>
-          </div>
-
-          <button class="card-button" aria-label="Ver detalles">
-            <span>Ver más</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- TARJETA 2: Coca-Cola Femsa -->
-      <div class="experiencia-card grupo-2">
-        <div class="card-header">
-          <div class="card-status-badge duration">1 año</div>
-        </div>
-        
-        <div class="card-cover">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_cover.jpg?raw=true" 
-               alt="Coca-Cola Femsa cover" class="cover-image">
-          <div class="cover-overlay"></div>
-          <div class="card-logo-container">
-            <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_logo.jpg?raw=true" 
-                 alt="Coca-Cola logo" class="card-logo">
+          <div class="card-eyebrow-row">
+            <span class="card-status-badge"><span class="status-dot" aria-hidden="true"></span>Cargo actual</span>
           </div>
         </div>
+        <div class="card-bottom">
+          <p class="card-description" hidden>Optimización de procesos, análisis de indicadores KPI y mejora continua de eficiencia operativa. Garantizando calidad, continuidad y control en la planta de producción.</p>
+          <div class="card-footer">
+            <span class="card-logo-container"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cosmoagro_logo.jpg?raw=true" alt="" class="card-logo" loading="lazy" decoding="async"></span>
+            <span class="card-meta"><span class="meta-dates">Dic 2024 – Presente</span><span class="meta-duration">Más de 1 año</span></span>
+            <span class="card-plus" aria-hidden="true"><svg><use href="#i-plus"/></svg></span>
+          </div>
+        </div>
+      </article>
 
-        <div class="card-content">
+      <article class="experiencia-card grupo-2" tabindex="0" role="button" aria-label="Ver detalles: Técnico Analista en Coca-Cola FEMSA" data-company="Coca-Cola FEMSA" data-duration="Jul 2023 – Jun 2024">
+        <img src="https://cdn.pixabay.com/photo/2015/07/27/15/19/coca-cola-862690_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
+        <div class="card-scrim" aria-hidden="true"></div>
+        <div class="card-top">
           <h3 class="card-role">Técnico Analista</h3>
-          <p class="card-company">Coca-Cola Femsa</p>
-          <p class="card-description">
-            Control de procesos, mejora continua y gestión eficiente para impulsar productividad y cumplimiento de calidad del producto.
-          </p>
-          
-          <div class="card-meta">
-            <span class="meta-item">
-              <span class="meta-icon">📅</span>
-              <span>Jul 2023 - Jun 2024</span>
-            </span>
-            <span class="meta-item">
-              <span class="meta-icon">🎯</span>
-              <span>Bebidas</span>
-            </span>
-          </div>
-
-          <button class="card-button">
-            <span>Ver más</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
+          <p class="card-company">Coca-Cola FEMSA</p>
         </div>
-      </div>
-
-      <!-- TARJETA 3: Cadena S.A. -->
-      <div class="experiencia-card grupo-3">
-        <div class="card-header">
-          <div class="card-status-badge duration">3 años</div>
-        </div>
-        
-        <div class="card-cover">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_cover.jpg?raw=true" 
-               alt="Cadena SA cover" class="cover-image">
-          <div class="cover-overlay"></div>
-          <div class="card-logo-container">
-            <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_logo.jpg?raw=true" 
-                 alt="Cadena SA logo" class="card-logo">
+        <div class="card-bottom">
+          <p class="card-description" hidden>Control de procesos, mejora continua y gestión eficiente para impulsar productividad y cumplimiento de calidad del producto.</p>
+          <div class="card-footer">
+            <span class="card-logo-container"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/coca_cola_femsa_logo.jpg?raw=true" alt="" class="card-logo" loading="lazy" decoding="async"></span>
+            <span class="card-meta"><span class="meta-dates">Jul 2023 – Jun 2024</span><span class="meta-duration">1 año</span></span>
+            <span class="card-plus" aria-hidden="true"><svg><use href="#i-plus"/></svg></span>
           </div>
         </div>
+      </article>
 
-        <div class="card-content">
+      <article class="experiencia-card grupo-3" tabindex="0" role="button" aria-label="Ver detalles: Supervisor de Producción en Cadena S.A." data-company="Cadena S.A." data-duration="Ene 2020 – Feb 2023">
+        <img src="https://cdn.pixabay.com/photo/2016/06/16/12/59/thread-counters-1461287_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
+        <div class="card-scrim" aria-hidden="true"></div>
+        <div class="card-top">
           <h3 class="card-role">Supervisor de Producción</h3>
           <p class="card-company">Cadena S.A.</p>
-          <p class="card-description">
-            Liderazgo de equipos de producción, asegurando cumplimiento del plan. Optimización de procesos con énfasis en calidad, seguridad y eficiencia.
-          </p>
-          
-          <div class="card-meta">
-            <span class="meta-item">
-              <span class="meta-icon">📅</span>
-              <span>Ene 2020 - Feb 2023</span>
-            </span>
-            <span class="meta-item">
-              <span class="meta-icon">🎯</span>
-              <span>Manufactura</span>
-            </span>
-          </div>
-
-          <button class="card-button">
-            <span>Ver más</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
         </div>
-      </div>
-
-      <!-- TARJETA 4: Postobón S.A. -->
-      <div class="experiencia-card grupo-4">
-        <div class="card-header">
-          <div class="card-status-badge duration">5 meses</div>
-        </div>
-        
-        <div class="card-cover">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_cover.jpg?raw=true" 
-               alt="Postobón cover" class="cover-image">
-          <div class="cover-overlay"></div>
-          <div class="card-logo-container">
-            <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_logo.jpg?raw=true" 
-                 alt="Postobón logo" class="card-logo">
+        <div class="card-bottom">
+          <p class="card-description" hidden>Liderazgo de equipos de producción, asegurando cumplimiento del plan. Optimización de procesos con énfasis en calidad, seguridad y eficiencia.</p>
+          <div class="card-footer">
+            <span class="card-logo-container"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/cadena_sa_logo.jpg?raw=true" alt="" class="card-logo" loading="lazy" decoding="async"></span>
+            <span class="card-meta"><span class="meta-dates">Ene 2020 – Feb 2023</span><span class="meta-duration">3 años</span></span>
+            <span class="card-plus" aria-hidden="true"><svg><use href="#i-plus"/></svg></span>
           </div>
         </div>
+      </article>
 
-        <div class="card-content">
+      <article class="experiencia-card grupo-4" tabindex="0" role="button" aria-label="Ver detalles: Analista de Producción en Postobón S.A." data-company="Postobón S.A." data-duration="Mar 2019 – Ago 2019">
+        <img src="https://cdn.pixabay.com/photo/2022/02/15/00/40/lemonade-7014122_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
+        <div class="card-scrim" aria-hidden="true"></div>
+        <div class="card-top">
           <h3 class="card-role">Analista de Producción</h3>
           <p class="card-company">Postobón S.A.</p>
-          <p class="card-description">
-            Optimización de flujos de trabajo, reducción de desperdicios y operaciones eficientes mediante análisis de datos y metodologías.
-          </p>
-          
-          <div class="card-meta">
-            <span class="meta-item">
-              <span class="meta-icon">📅</span>
-              <span>Mar 2019 - Ago 2019</span>
-            </span>
-            <span class="meta-item">
-              <span class="meta-icon">🎯</span>
-              <span>Bebidas</span>
-            </span>
-          </div>
-
-          <button class="card-button">
-            <span>Ver más</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
         </div>
-      </div>
-
-      <!-- TARJETA 5: Laboratorios OSA -->
-      <div class="experiencia-card grupo-5">
-        <div class="card-header">
-          <div class="card-status-badge duration">9 meses</div>
-        </div>
-        
-        <div class="card-cover">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_cover.jpg?raw=true" 
-               alt="Laboratorios OSA cover" class="cover-image">
-          <div class="cover-overlay"></div>
-          <div class="card-logo-container">
-            <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_logo.jpg?raw=true" 
-                 alt="Laboratorios OSA logo" class="card-logo">
+        <div class="card-bottom">
+          <p class="card-description" hidden>Optimización de flujos de trabajo, reducción de desperdicios y operaciones eficientes mediante análisis de datos y metodologías.</p>
+          <div class="card-footer">
+            <span class="card-logo-container"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/postobon_sa_logo.jpg?raw=true" alt="" class="card-logo" loading="lazy" decoding="async"></span>
+            <span class="card-meta"><span class="meta-dates">Mar 2019 – Ago 2019</span><span class="meta-duration">5 meses</span></span>
+            <span class="card-plus" aria-hidden="true"><svg><use href="#i-plus"/></svg></span>
           </div>
         </div>
+      </article>
 
-        <div class="card-content">
+      <article class="experiencia-card grupo-5" tabindex="0" role="button" aria-label="Ver detalles: Analista de Producción en Laboratorios OSA" data-company="Laboratorios OSA S.A.S" data-duration="Jun 2018 – Mar 2019">
+        <img src="https://cdn.pixabay.com/photo/2020/10/02/09/01/tablets-5620566_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
+        <div class="card-scrim" aria-hidden="true"></div>
+        <div class="card-top">
           <h3 class="card-role">Analista de Producción</h3>
           <p class="card-company">Laboratorios OSA S.A.S</p>
-          <p class="card-description">
-            Gestión de indicadores y optimización de procesos productivos manteniendo operaciones estables, eficientes y de alta calidad.
-          </p>
-          
-          <div class="card-meta">
-            <span class="meta-item">
-              <span class="meta-icon">📅</span>
-              <span>Jun 2018 - Mar 2019</span>
-            </span>
-            <span class="meta-item">
-              <span class="meta-icon">🎯</span>
-              <span>Farmacéutica</span>
-            </span>
-          </div>
-
-          <button class="card-button">
-            <span>Ver más</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
         </div>
-      </div>
-
-      <!-- TARJETA 6: Smurfit Westrock -->
-      <div class="experiencia-card grupo-6">
-        <div class="card-header">
-          <div class="card-status-badge duration">1 año</div>
-        </div>
-        
-        <div class="card-cover">
-          <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_cover.jpg?raw=true" 
-               alt="Smurfit Westrock cover" class="cover-image">
-          <div class="cover-overlay"></div>
-          <div class="card-logo-container">
-            <img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_logo.jpg?raw=true" 
-                 alt="Smurfit Westrock logo" class="card-logo">
+        <div class="card-bottom">
+          <p class="card-description" hidden>Gestión de indicadores y optimización de procesos productivos manteniendo operaciones estables, eficientes y de alta calidad.</p>
+          <div class="card-footer">
+            <span class="card-logo-container"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/laboratorios_osa_logo.jpg?raw=true" alt="" class="card-logo" loading="lazy" decoding="async"></span>
+            <span class="card-meta"><span class="meta-dates">Jun 2018 – Mar 2019</span><span class="meta-duration">9 meses</span></span>
+            <span class="card-plus" aria-hidden="true"><svg><use href="#i-plus"/></svg></span>
           </div>
         </div>
+      </article>
 
-        <div class="card-content">
-          <h3 class="card-role">Especialista en Producción</h3>
+      <article class="experiencia-card grupo-6" tabindex="0" role="button" aria-label="Ver detalles: Especialista en Producción en Smurfit Westrock" data-company="Smurfit Westrock S.A." data-duration="Mar 2017 – Mar 2018">
+        <img src="https://cdn.pixabay.com/photo/2013/09/14/18/41/colorful-182220_1280.jpg" class="cover-image" loading="lazy" decoding="async">
+        <div class="card-scrim" aria-hidden="true"></div>
+        <div class="card-top">
+          <h3 class="card-role">Incremento de Producción</h3>
           <p class="card-company">Smurfit Westrock S.A.</p>
-          <p class="card-description">
-            Impulsar aumento de producción mediante seguimiento en planta, control de tiempos y mejora de eficiencia en cada etapa.
-          </p>
-          
-          <div class="card-meta">
-            <span class="meta-item">
-              <span class="meta-icon">📅</span>
-              <span>Mar 2017 - Mar 2018</span>
-            </span>
-            <span class="meta-item">
-              <span class="meta-icon">🎯</span>
-              <span>Papel y Cartón</span>
-            </span>
+        </div>
+        <div class="card-bottom">
+          <p class="card-description" hidden>Impulsar aumento de producción mediante seguimiento en planta, control de tiempos y mejora de eficiencia en cada etapa.</p>
+          <div class="card-footer">
+            <span class="card-logo-container"><img src="https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/smurfit_kappa_group_logo.jpg?raw=true" alt="" class="card-logo" loading="lazy" decoding="async"></span>
+            <span class="card-meta"><span class="meta-dates">Mar 2017 – Mar 2018</span><span class="meta-duration">1 año</span></span>
+            <span class="card-plus" aria-hidden="true"><svg><use href="#i-plus"/></svg></span>
           </div>
-
-          <button class="card-button">
-            <span>Ver más</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
         </div>
-      </div>
-
+      </article>
     </div>
-
-    <!-- RESUMEN DE EXPERIENCIA -->
-    <div class="experiencia-summary mt-20 md:mt-32">
-      <div class="summary-card">
-        <div class="summary-stat">
-          <div class="stat-number">8+</div>
-          <div class="stat-label">Años de experiencia</div>
-        </div>
-        <div class="summary-stat">
-          <div class="stat-number">6</div>
-          <div class="stat-label">Empresas líderes</div>
-        </div>
-        <div class="summary-stat">
-          <div class="stat-number">100%</div>
-          <div class="stat-label">Compromiso</div>
-        </div>
-      </div>
+    <div class="gallery-controls">
+      <button type="button" class="paddle" data-dir="-1" aria-label="Experiencia anterior" aria-controls="expCarousel"><svg aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+      <button type="button" class="paddle" data-dir="1" aria-label="Experiencia siguiente" aria-controls="expCarousel"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
     </div>
+  </div>
 
+  <div class="container container--wide">
+    <div class="summary-card">
+      <div class="summary-stat reveal"><div class="stat-number">9+</div><div class="stat-label">Años de experiencia</div></div>
+      <div class="summary-stat reveal" style="--delay:.08s"><div class="stat-number">6</div><div class="stat-label">Empresas líderes</div></div>
+      <div class="summary-stat reveal" style="--delay:.16s"><div class="stat-number">5</div><div class="stat-label">Sectores industriales</div></div>
+    </div>
   </div>
 </section>
 
-    <!---------------------------------------- DESARROLLOS E INNOVACIONES ---------------------------------------------------------------->
-     <section id="desarrollo"
-  class="mt-4 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20 bg-cover bg-center bg-no-repeat"
-  style="background-image: linear-gradient(to bottom,
-        rgba(12, 12, 12, 0.062),
-        rgba(0, 0, 0, 0.062),
-        rgba(0, 0, 0, 0.062)
-        ), url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Mar%2010,%202026,%2008_00_26%20PM.jpg?raw=true');">
-  
-  <!-- Overlay para mejorar la lectura -->
-  <div class="absolute inset-0 bg-black/50 rounded-5xl"></div>
-  <div class="w-full max-w-4xl mx-auto py-16">
-  <br>
-  <div class="relative z-10">
-    <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl mb-4 titulosSterling-text">Desarrollos e innovaciones</h2>
-  <br>
-<p class="titulosSterling-text1 text-center justify-center text-xl">Mis proyectos desarrollados en mi trayectoria.</p>
-    <br>
-      <div class="flex justify-center mb-20">
-          <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
-
-            <a class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer titulosSterling-text1" onclick="openModal('Aviso de Confidencialidad y Protección de Datos',
-                `
-                Declaración de Confidencialidad y Uso de la Información:<br><br>
-
-                La información presentada en este proyecto, correspondiente exclusivamente a los datos recopilados dentro del marco de los ejercicios y desarrollos realizados, es de carácter ficticio y se emplea únicamente con fines académicos, demostrativos y técnicos. En consecuencia, no se utilizan, almacenan ni divulgan datos reales, personales o de naturaleza confidencial.<br><br>
-                
-                El desarrollo del proyecto se fundamenta en principios de ética, privacidad, confidencialidad y protección de la propiedad intelectual, garantizando un tratamiento responsable de la información y el cumplimiento de la normativa aplicable, en particular la Ley 1581 de 2012 y el Decreto 1377 de 2013 de la República de Colombia, relacionados con la protección de datos personales, así como el Reglamento General de Protección de Datos (GDPR – Reglamento (UE) 2016/679).
-                
-                De igual manera, el proyecto se acoge a las disposiciones de la Ley 23 de 1982 y la Decisión Andina 351 de 1993 en materia de derechos de autor y propiedad intelectual, reafirmando su compromiso con el uso legítimo, ético y responsable de la información y de los activos intelectuales involucrados.<br><br>
-                <br><br>
-                Santiago Sterling<br><br>
-                Tecnólogo en Análisis y Desarrollo de Software | Desarrollador de Software
-                `
-              )"> Ver protección de datos </a>
-            
-  
-          </div>
-        
+<!-- DESARROLLOS E INNOVACIONES -->
+<section id="desarrollo" class="section section--dark dev-section on-dark tone-dark" aria-labelledby="desarrolloTitle"
+  style="--bg-image: url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/ChatGPT%20Image%20Mar%2010,%202026,%2008_00_26%20PM.jpg?raw=true');">
+  <div class="container container--narrow">
+    <header class="section-head reveal">
+      <h2 class="section-title" id="desarrolloTitle">Desarrollos e innovaciones</h2>
+      <p class="section-lead">Mis proyectos desarrollados en mi trayectoria.</p>
+      <div class="dev-notice">
+        <button type="button" class="btn btn--glass btn--sm" data-open-notice>Ver protección de datos</button>
       </div>
-    <article 
-  class="web-preview-card relative p-0 bg-white/10 backdrop-blur-xl rounded-2xl overflow-hidden cursor-pointer border border-white/20 transition-all duration-500 hover:shadow-2xl hover:scale-[1.02]"
-  onclick="expandWebPreview(this)"
-  data-url="https://santiago131440.github.io/SantiagoSterling/proyectoApp.html"
->
-  <!-- Barra superior estilo macOS -->
-  <header class="flex items-center justify-between px-4 py-3 bg-white/20 border-b border-white/20">
-    <div class="flex items-center gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full"></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-    </div>
-    <div class="text-xs text-slate-200 truncate">
-      Proyectos destacados
-    </div>
-    <div class="w-12"></div>
-  </header>
-  <!-- Contenedor principal -->
-  <div class="relative h-[260px] lg:h-[300px] bg-black">
-    <!-- Overlay preview -->
-    <div class="absolute inset-0 z-10 flex items-center justify-center bg-black/40 backdrop-blur-sm opacity-0 hover:opacity-100 transition">
-      <span class="px-4 py-2 text-sm text-white bg-black/60 rounded-full border border-white/20">
-        Ver todos los proyectos de software
-      </span>
-    </div>
-    <!-- IFRAME vista previa -->
-    <iframe
-      src="https://santiago131440.github.io/SantiagoSterling/proyectoApp.html"
-      class="w-full h-full scale-[1.0] origin-top cursor-pointer"
-      loading="lazy"
-    ></iframe>
-  </div>
-</article>
+    </header>
 
-<br>
-<br>
-
-<article 
-  class="web-preview-card relative p-0 bg-white/10 backdrop-blur-xl rounded-2xl cursor-pointer overflow-hidden border border-white/20 transition-all duration-500 hover:shadow-2xl hover:scale-[1.02]"
-  onclick="expandWebPreview(this)"
-  data-url="https://santiago131440.github.io/SantiagoSterling/windows.html"
->
-  <!-- Barra superior estilo macOS -->
-  <header class="flex items-center justify-between px-4 py-3 bg-white/20 border-b border-white/20">
-    <div class="flex items-center gap-2">
-      <span class="w-3 h-3 bg-red-500 rounded-full"></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+    <div class="preview-list">
+      <article class="preview-card reveal">
+        <div class="preview-bar">
+          <span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="preview-label">Proyectos destacados</span>
+        </div>
+        <div class="preview-frame">
+          <iframe src="proyectoApp.html" title="Vista previa de proyectos" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+          <div class="preview-hint" aria-hidden="true"><span>Ver todos los proyectos de software</span></div>
+        </div>
+        <a href="proyectoApp.html" class="preview-link"><span class="sr-only">Abrir proyectos destacados</span></a>
+      </article>
     </div>
-    <div class="text-xs text-slate-200 truncate">
-      Repositorio
+
+    <div class="dev-links reveal">
+      <a href="proyectos20.html" class="btn btn--glass">Ver proyectos de software</a>
     </div>
-    <div class="w-12"></div>
-  </header>
-  <!-- Contenedor principal -->
-  <div class="relative h-[260px] lg:h-[300px] bg-black">
-    <!-- Overlay preview -->
-    <div class="absolute inset-0 z-10 flex items-center justify-center bg-black/40 backdrop-blur-sm opacity-0 hover:opacity-100 transition">
-      <span class="px-4 py-2 text-sm text-white bg-black/60 rounded-full border border-white/20">
-        Ver repositorio
-      </span>
-    </div>
-    <!-- IFRAME vista previa -->
-    <iframe
-      src="https://santiago131440.github.io/SantiagoSterling/windows.html"
-      class="w-full h-full scale-[1.0] origin-top cursor-pointer pointer-events-none"
-      loading="lazy"
-    ></iframe>
-  </div>
-</article>
-    <br>
-    <br>
-    <br>
-    <br>
-
-  <div class="flex justify-center mb-20">
-  <div class="backdrop-blur-xl bg-black/20 border border-white/30 shadow-lg rounded-full px-0 py-0 flex gap-1">
-
-      <a href="proyectos20.html" class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer titulosSterling-text1">
-        Ver proyectos de software
-      </a>
-
-      <a href="windows.html" class="filter-btn active px-5 py-1 rounded-full text-sm font-medium transition-all text-white hover:bg-white/70 hover:text-gray-900 inline-block text-center cursor-pointer titulosSterling-text1">
-        Ver repositorio
-      </a>
-  </div>
   </div>
 </section>
-<br>
-<br>
-<br>
 
+<!-- COMPETENCIAS METODOLÓGICAS -->
+<section id="competencia" class="section tone-graphite" aria-labelledby="competenciaTitle">
+  <div class="container">
+    <header class="section-head reveal">
+      <h2 class="section-title" id="competenciaTitle">Competencias metodológicas</h2>
+      <p class="section-lead">Herramientas que uso para la creación de mis proyectos.</p>
+    </header>
+  </div>
 
-    <!-- COMPETENCIAS METODOLOGICAS -->
-
-<!-- COMPETENCIAS METODOLOGICAS -->
-<section id="competencia" class="mt-16 w-full flex flex-col justify-center items-center mx-auto">
-  <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl mb-4 titulosSterlingNegro-text">
-    Competencias metodológicas
-  </h2>
-  <p class="titulosSterlingNegro-text1 text-xl">Herramientas que uso para la creación de mis proyectos.</p>
-
-  <div class="carousel-wrapper">
-    <div class="carousel" id="carousel">
-
-      <!-- Card 1 -->
-      <div class="card"
-           style="background-image:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Lenguajes%20de%20programaci%C3%B3n.jpg?raw=true');"
-           onclick="abrirModalSterling('lenguajes')">
-        <div class="card-content">
-          <h1 class="text-lg">Lenguajes de programación</h1>
-          <button class="card-btn"><i class="fi fi-sr-add"></i></button>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="card"
-           style="background-image:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Frameworks.jpg?raw=true');"
-           onclick="abrirModalSterling('herramientas')">
-        <div class="card-content">
-          <h1 class="text-2xl">Herramientas</h1>
-          <button class="card-btn"><i class="fi fi-sr-add"></i></button>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="card"
-           style="background-image:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Habilidades.jpg?raw=true');"
-           onclick="abrirModalSterling('extras')">
-        <div class="card-content">
-          <h1 class="text-lg">Habilidades extra</h1>
-          <button class="card-btn"><i class="fi fi-sr-add"></i></button>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="card"
-           style="background-image:url('https://cdn.pixabay.com/photo/2021/10/01/16/21/eris-6672934_960_720.jpg');"
-           onclick="abrirModalSterling('interpersonal')">
-        <div class="card-content">
-          <h1 class="text-lg">Inteligencia Interpersonal</h1>
-          <button class="card-btn"><i class="fi fi-sr-add"></i></button>
-        </div>
-      </div>
-
+  <div class="gallery reveal">
+    <div class="gallery-track" id="carousel" role="group" aria-label="Categorías de competencias">
+      <button type="button" class="gallery-card" data-category="lenguajes" style="--img:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Lenguajes%20de%20programaci%C3%B3n.jpg?raw=true')">
+        <span class="gallery-title">Lenguajes de programación</span>
+        <span class="card-plus" aria-hidden="true"><svg><use href="#i-plus"/></svg></span>
+      </button>
+      <button type="button" class="gallery-card" data-category="herramientas" style="--img:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Frameworks.jpg?raw=true')">
+        <span class="gallery-title">Herramientas</span>
+        <span class="card-plus" aria-hidden="true"><svg><use href="#i-plus"/></svg></span>
+      </button>
+      <button type="button" class="gallery-card" data-category="extras" style="--img:url('https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Habilidades.jpg?raw=true')">
+        <span class="gallery-title">Habilidades extra</span>
+        <span class="card-plus" aria-hidden="true"><svg><use href="#i-plus"/></svg></span>
+      </button>
+      <button type="button" class="gallery-card" data-category="interpersonal" style="--img:url('https://cdn.pixabay.com/photo/2021/10/01/16/21/eris-6672934_960_720.jpg')">
+        <span class="gallery-title">Inteligencia interpersonal</span>
+        <span class="card-plus" aria-hidden="true"><svg><use href="#i-plus"/></svg></span>
+      </button>
+    </div>
+    <div class="gallery-controls">
+      <button type="button" class="paddle" data-dir="-1" aria-label="Categoría anterior" aria-controls="carousel"><svg aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+      <button type="button" class="paddle" data-dir="1" aria-label="Categoría siguiente" aria-controls="carousel"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
     </div>
   </div>
-  <br>
-  <p class="fan-hint">Toca o haz clic en una tarjeta para explorar · Desliza para navegar</p>
-  <br>
-  
 
   <div class="container">
-    <div class="chip-stats">
-      <div class="chip-icon">
-        <div class="chip-box">
-          <div class="chip-name">Datos</div>
-        </div>
-      </div>
+    <div class="chip-stats reveal">
+      <div class="chip-box" aria-hidden="true">Datos</div>
       <div class="stats-grid">
         <div class="stat">
           <div class="stat-label">Aprendizaje</div>
-          <div class="stat-value blue">10x</div>
-          <div class="stat-description">en constante<br>aprendizaje</div>
+          <div class="stat-value">10x</div>
+          <div class="stat-description">en constante aprendizaje</div>
         </div>
         <div class="stat">
           <div class="stat-label">Adaptación</div>
-          <div class="stat-value blue">Alto</div>
-          <div class="stat-description">aprendo<br>fácil nuevas<br>tecnologías</div>
+          <div class="stat-value">Alto</div>
+          <div class="stat-description">aprendo fácil nuevas tecnologías</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- VISIÓN ACADÉMICA -->
+<section class="section vision-section tone-dark" aria-labelledby="visionTitle">
+  <img src="https://cdn.pixabay.com/photo/2020/03/09/21/31/moon-4917183_1280.png" class="vision-moon" alt="" aria-hidden="true" loading="lazy" decoding="async">
+  <div class="container">
+    <header class="section-head reveal">
+      <h2 class="section-title" id="visionTitle">Visión académica</h2>
+      <p class="section-lead">Mi visión es explorar nuevos horizontes digitales.</p>
+    </header>
 
-<!-- ============================================================
-     MODAL STERLING — completamente aislado
-     ============================================================ -->
-
-<div id="modalSterling" aria-hidden="true"
-     style="
-       display: none;
-       position: fixed;
-       inset: 0;
-       z-index: 9999;
-       align-items: center;
-       justify-content: center;
-       background: rgba(0,0,0,0.55);
-       backdrop-filter: blur(8px);
-       -webkit-backdrop-filter: blur(8px);
-       padding: 1rem;
-     ">
-
-  <!-- Ventana -->
-  <div id="modalSterling-window"
-       style="
-         width: 100%;
-         max-width: 680px;
-         background: #ffffff;
-         border-radius: 20px;
-         overflow: hidden;
-         box-shadow: 0 32px 80px rgba(0,0,0,0.35);
-         transform: scale(0.92) translateY(16px);
-         opacity: 0;
-         transition: transform 0.28s cubic-bezier(.34,1.56,.64,1), opacity 0.22s ease;
-       ">
-
-    <!-- Barra macOS -->
-    <div style="
-           display: flex;
-           align-items: center;
-           gap: 8px;
-           padding: 12px 16px;
-           background: #e8e8e8;
-           border-bottom: 1px solid rgba(0,0,0,0.08);
-         ">
-      <span onclick="cerrarModalSterling()"
-            style="
-              width:13px; height:13px;
-              background:#ff5f57; border-radius:50%;
-              cursor:pointer; display:inline-block;
-              transition: filter .15s;
-            "
-            onmouseover="this.style.filter='brightness(.8)'"
-            onmouseout="this.style.filter='brightness(1)'"></span>
-      <span style="width:13px;height:13px;background:#febc2e;border-radius:50%;display:inline-block;"></span>
-      <span style="width:13px;height:13px;background:#28c840;border-radius:50%;display:inline-block;"></span>
-      <span id="modalSterling-titulo"
-            style="margin-left:10px; font-weight:600; font-size:14px; color:#444;"></span>
+    <div class="visual reveal">
+      <img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284041_1280.png" alt="Astronauta flotando en el espacio" class="astronaut" loading="lazy" decoding="async" width="1280" height="1280">
+      <div class="tags-wrap">
+        <p class="tag left-top">Fundamentos científicos y algorítmicos<span>Sustentos técnicos sólidos.</span></p>
+        <p class="tag left-mid">Ingeniería de software y arquitectura<span>Comprensión profunda de metodologías.</span></p>
+        <p class="tag right-top">Aprendizaje continuo e investigación<span>Capacidad académica para innovar.</span></p>
+        <p class="tag right-mid">Ética, impacto y pensamiento sistémico<span>Impacto social del software.</span></p>
+      </div>
     </div>
 
-    <!-- Cuadrícula de iconos -->
-    <div id="modalSterling-grid"
-         style="
-           display: grid;
-           grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-           gap: 20px;
-           padding: 28px 24px 32px;
-           max-height: 70vh;
-           overflow-y: auto;
-         ">
-      <!-- Los iconos se inyectan por JS -->
+    <div class="vision-actions reveal">
+      <button type="button" class="btn btn--primary" data-launch-orbit>En órbita</button>
+      <span class="vision-status">Lanzamiento en curso</span>
     </div>
   </div>
-</div>
-  </section>
-    <br>
-    <br>
-    <br>
-    <br>
 
-   <section class="hero" style="position: relative; overflow: hidden;">
-    <!-- Imagen de fondo a la izquierda -->
-    <img 
-      src="https://cdn.pixabay.com/photo/2020/03/09/21/31/moon-4917183_1280.png" 
-      class="hero-img"
-      alt="Fondo izquierda"
-      style="
-        position: absolute;
-        left: 10%;
-        top: 105%;
-        transform: translateY(-50%);
-        height: 100%;
-        width: auto;
-        object-fit: contain;
-        z-index: 0;
-        pointer-events: none;
-        opacity: 0.85;
-      "
-    />
-
-    <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl mb-4 titulosSterlingNegro-text"
-        style="position: relative; z-index: 1;">
-    Visión Académica
-  </h2>
-  <p class="titulosSterlingNegro-text1 text-xl" style="position: relative; z-index: 1;">Mi visión es explorar nuevos horizontes digitales.</p>
-    <div class="visual" style="position: relative; z-index: 1;">
-      <!-- Imagen principal -->
-      <img src="https://cdn.pixabay.com/photo/2024/12/22/09/22/ai-generated-9284041_1280.png"
-           alt="Astronaut UX">
-      <!-- Floating labels -->
-      <div class="tag left-top text-black">
-        Fundamentos Científicos y Algorítmicos
-        <span>Sustentos técnicos sólidos.</span>
-      </div>
-      <div class="tag left-mid text-black">
-        Ingeniería de Software y Arquitectura
-        <span>Comprensión profunda de metodologías.</span>
-      </div>
-      <div class="tag right-top text-black">
-        Aprendizaje Continuo e Investigación Tecnológica
-        <span>Capacidad académica para innovar.</span>
-      </div>
-      <div class="tag right-mid text-black">
-        Ética, Impacto y Pensamiento Sistémico
-        <span>Impacto social del software.</span>
-      </div>
+  <div id="orbit-overlay" aria-hidden="true">
+    <svg class="rocket" viewBox="0 0 64 96" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round">
+      <path d="M32 4c11 10 16 24 16 40v18H16V44C16 28 21 14 32 4z"/>
+      <circle cx="32" cy="36" r="6"/>
+      <path d="M16 50 6 64v10l10-6M48 50l10 14v10l-10-6M24 62v10M40 62v10M32 62v18"/>
+    </svg>
+    <div class="code-stream">
+      <span>Hola mundo</span><br>
+      <span>f(x)=x²+2x+1</span><br>
+      <span>∫₀∞ e⁻ˣ dx</span><br>
+      <span>for i in range(10):</span><br>
+      <span>print("Orbit")</span><br>
+      <span>λ = np.linalg.eig(A)</span><br>
+      <span>Desarrollando competencias para crear software robusto y escalable.</span><br>
+      <span>Internauta cósmico</span>
     </div>
-    <div class="actions" style="position: relative; z-index: 1;">
-      <a class="button primary px-5 py-2" onclick="launchOrbit()">En órbita</a>
-      <a class="button secondary px-5 py-2">Lanzamiento en curso</a>
-    </div>
-    <!-- OVERLAY FULLSCREEN -->
-    <div id="orbit-overlay">
-      <div class="rocket">🛸</div>
-      <div class="code-stream">
-        <span>Hola mundo</span>
-        <span>f(x)=x²+2x+1</span>
-        <span>∫₀∞ e⁻ˣ dx</span>
-        <span>for i in range(10):</span>
-        <span>print("Orbit")</span>
-        <span>λ = np.linalg.eig(A)</span>
-        <span>Desarrollando competencias para crear software robusto y escalable.</span>
-        <span>Internauta cósmico</span>
-      </div>
-    </div>
-</section>
-
-    <!-- BLOG PREVIEW -->
-  <section id="estrategia"
-          class="mt-4 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-20"
-          style="--bg-color: linear-gradient(#0c0c0c,#000000,#000000);background: var(--bg-color);">
-        <br>
-        <br>
-        <br>
-  <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl mb-4 titulosSterling-text">
-    Estrategias de éxito
-  </h2>
-  <br>
-  <br>
-  <br>
-  <br>
-
- <div class="container flex justify-center items-center min-h-screen px-5 md:px-10">
-    <div class="w-full max-w-4xl mx-auto py-16">
-
-        <div class="content-grid">
-            <div>
-                <h1 class="text-3xl titulosSterling-text">Estrategia de excelencia técnica con enfoque en negocio</h1>
-            </div>
-            <div>
-                <p class="description text-white/50">
-                    Soy un desarrollador que no solo escribe código, sino que resuelve problemas reales del negocio mediante soluciones técnicas sólidas y medibles.
-                </p>
-            </div>
-        </div>
-
-        <div class="content-grid">
-            <div>
-                <h1 class="text-3xl titulosSterling-text">Estrategia de innovación continua y aprendizaje dirigido</h1>
-            </div>
-            <div>
-                <p class="description text-white/50">
-                    Me mantengo permanentemente relevante en un sector de rápida evolución, enfocando el aprendizaje en tecnologías con aplicación real.
-                </p>
-            </div>
-        </div>
-
-        <div class="content-grid">
-            <div>
-                <h1 class="text-3xl titulosSterling-text">Estrategia de posicionamiento profesional y liderazgo técnico</h1>
-            </div>
-            <div>
-                <p class="description text-white/50">
-                   Construir una reputación sólida como referente técnico confiable dentro y fuera de la organización.
-                </p>
-            </div>
-        </div>
-    </div>
-
   </div>
 </section>
 
-    <br>
-    <br>
-     <br>
-    <br>
-     <br>
-    <br>
-<!-- CONTACT -->
-       <h2 class="text-5xl sm:text-6xl text-center items-center justify-center lg:text-7xl mb-4 titulosSterlingNegro-text">
-        Contacto
-      </h2>
-      <section
-  id="contacto"
-  class="relative mt-24 max-w-5xl mx-auto px-6 sm:px-14 py-14
-         rounded-[22px]
-         bg-white/85 backdrop-blur-2xl
-         border border-black/10
-         shadow-[0_6px_10px_-60px_rgba(0,0,0,0.35)]
-         overflow-hidden
-         group"
->
-
-  <!----------------------------- Patrón de puntos animado --------------------------------------->
-  <div class="absolute inset-0 z-[1] pointer-events-none dot-pattern"></div>
-
-<!-- Luz ambiental animada -->
-  <div class="absolute -top-32 -left-32 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-  <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-500/20 rounded-full blur-[120px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-
-  <!-- Fondo -->
-  <div class="absolute inset-0 z-0">
-    <img
-      src="https://plus.unsplash.com/premium_photo-1755843842269-b1c80e7e34ba?q=80&w=869&auto=format&fit=crop"
-      alt="Fondo contacto"
-      class="w-full h-full object-cover scale-110"
-    />
-    <div class="absolute inset-0 bg-gradient-to-b from-white/90 via-white/75 to-white/95 backdrop-blur-md"></div>
-  </div>
-
-
-  <!-- Contenido -->
-  <div class="relative z-10 max-w-xl animate-fade-in">
-    <!-- Título -->
-    <h2 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-gray-900">
-      Conectemos ideas
-    </h2>
-
-    <!-- Texto -->
-    <p class="mt-5 text-base leading-relaxed text-gray-600">
-      Estoy abierto a nuevas oportunidades profesionales, colaboraciones y proyectos
-      donde la tecnología y el diseño aporten valor real.
-    </p>
-
-    <!-- CTA -->
-    <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-
-      <a href="/cdn-cgi/l/email-protection#90e3f1fee4f9e3e4f5e2fcf9fef7d0f7fdf1f9fcbef3fffd" class=" text-center px-3 py-1 rounded-full text-sm font-medium transition-all bg-[#007AFF] text-white hover:border-[#007AFF] inline-block text-center cursor-pointer">
-        <span class="text-lg whitespace-nowrap titulosSterling-text2">Contactar por email</span>
-        <span class="text-lg">→</span>
-      </a>
+<!-- ESTRATEGIAS -->
+<section id="estrategia" class="section tone-light" aria-labelledby="estrategiaTitle">
+  <div class="container">
+    <header class="section-head reveal">
+      <h2 class="section-title" id="estrategiaTitle">Estrategias de éxito</h2>
+    </header>
+    <div class="strategy-list">
+      <div class="strategy reveal">
+        <h3>Estrategia de excelencia técnica con enfoque en negocio</h3>
+        <p>Soy un desarrollador que no solo escribe código, sino que resuelve problemas reales del negocio mediante soluciones técnicas sólidas y medibles.</p>
+      </div>
+      <div class="strategy reveal">
+        <h3>Estrategia de innovación continua y aprendizaje dirigido</h3>
+        <p>Me mantengo permanentemente relevante en un sector de rápida evolución, enfocando el aprendizaje en tecnologías con aplicación real.</p>
+      </div>
+      <div class="strategy reveal">
+        <h3>Estrategia de posicionamiento profesional y liderazgo técnico</h3>
+        <p>Construir una reputación sólida como referente técnico confiable dentro y fuera de la organización.</p>
+      </div>
     </div>
-    <br>
-    <br>
-    <span class="text-sm text-gray-500">
-        Respuesta rápida (A más tardar 8 horas después del envío del correo.).
-      </span>
-
   </div>
 </section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="section tone-dark" aria-labelledby="contactoTitle">
+  <div class="container container--narrow">
+    <header class="section-head reveal">
+      <h2 class="section-title" id="contactoTitle">Contacto</h2>
+    </header>
+    <div class="contact-card reveal">
+      <h3>Conectemos ideas</h3>
+      <p>Estoy abierto a nuevas oportunidades profesionales, colaboraciones y proyectos donde la tecnología y el diseño aporten valor real.</p>
+      <div class="contact-actions">
+        <a href="mailto:santisterling@gmail.com?subject=Contacto%20desde%20tu%20portafolio" class="btn btn--primary magnetic">Escribirme por email</a>
+        <a href="https://www.linkedin.com/in/santisterling/" target="_blank" rel="noopener" class="btn btn--secondary">Ver LinkedIn</a>
+      </div>
+      <p class="contact-note">Respondo en un máximo de 8 horas.</p>
+    </div>
+  </div>
+</section>
+
+</main>
 
 <!-- FOOTER -->
-<footer class="mt-24 bg-white border-t border-gray">
-  <div class="max-w-6xl mx-auto px-6 py-10 text-center">
-    
-    <!-- Nombre -->
-    <p class="text-xl text-gray-900 tracking-wide leading-tight">
-      Santiago Sterling
-    </p>
-
-    <!-- Rol -->
-    <p class="mt-1 text-sm text-gray-500">
-      Desarrollador de software
-    </p>
-
-    <!-- Redes sociales -->
-    <div class="mt-6 flex justify-center space-x-6">
-      
-      <!-- GitHub -->
-      <a href="https://github.com/Santiago131440" aria-label="GitHub" class="text-gray-400 hover:text-gray-900 transition">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.54 2.87 8.39 6.84 9.75.5.09.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0112 6.84c.85 0 1.71.12 2.51.35 1.9-1.32 2.74-1.05 2.74-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9 0 1.38-.01 2.49-.01 2.83 0 .27.18.59.69.49A10.02 10.02 0 0022 12.26C22 6.58 17.52 2 12 2z"/>
-        </svg>
-      </a>
-
-      <!-- LinkedIn -->
-      <a href="https://www.linkedin.com/in/santiago-sterling-0a02a116a/" aria-label="LinkedIn" class="text-gray-400 hover:text-gray-900 transition">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.8v2.1h.05c.53-1 1.83-2.1 3.77-2.1 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7.8c0-1.86-.03-4.26-2.6-4.26-2.6 0-3 2.03-3 4.12V24h-4V8.5z"/>
-        </svg>
-      </a>
-
-      <!-- Reddit -->
-      <a href="#" aria-label="Reddit" class="text-gray-400 hover:text-gray-900 transition">
-        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-label="Discord">
-          <path d="M20.3 4.1A19.8 19.8 0 0 0 15.8 3c-.2.4-.4.9-.5 1.3a18.3 18.3 0 0 0-6.6 0c-.1-.4-.3-.9-.5-1.3-1.6.3-3.1.8-4.5 1.6C.8 9.1-.2 13.6.3 18c1.7 1.3 3.7 2.2 5.8 2.8.5-.7.9-1.4 1.3-2.2-.7-.3-1.4-.6-2-1 .2-.1.4-.3.6-.4 3.8 1.8 7.9 1.8 11.7 0 .2.2.4.3.6.4-.6.4-1.3.7-2 1 .4.8.8 1.5 1.3 2.2 2.1-.6 4.1-1.5 5.8-2.8.6-4.9-.9-9.4-3.7-13.9zM8.5 14.6c-.8 0-1.5-.7-1.5-1.6 0-.9.7-1.6 1.5-1.6.8 0 1.5.7 1.5 1.6 0 .9-.7 1.6-1.5 1.6zm7 0c-.8 0-1.5-.7-1.5-1.6 0-.9.7-1.6 1.5-1.6.8 0 1.5.7 1.5 1.6 0 .9-.7 1.6-1.5 1.6z"/>
-        </svg>
-
-      </a>
+<footer class="site-footer tone-light">
+  <div class="container container--wide">
+    <div class="footer-top">
+      <div>
+        <p class="footer-name">Santiago Sterling</p>
+        <p class="footer-tagline">Desarrollo de software, análisis de datos y producción industrial.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Secciones">
+        <ul role="list">
+          <li><a href="#sobremi">Sobre mí</a></li>
+          <li><a href="#estudio">Formación</a></li>
+          <li><a href="#experiencia">Experiencia</a></li>
+          <li><a href="#desarrollo">Desarrollos</a></li>
+          <li><a href="#competencia">Competencias</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
     </div>
-
-    <!-- Copyright -->
-    <p class="mt-8 text-xs text-gray-400">
-      © <span id="year"></span> Santiago Sterling.
-    </p>
+    <div class="footer-bottom">
+      <p>© <span id="year"></span> Santiago Sterling.</p>
+      <div class="socials">
+        <a href="https://github.com/Santiago131440" target="_blank" rel="noopener" aria-label="GitHub" class="icon-btn">
+          <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.54 2.87 8.39 6.84 9.75.5.09.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 6.84c.85 0 1.71.12 2.51.35 1.9-1.32 2.74-1.05 2.74-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9 0 1.38-.01 2.49-.01 2.83 0 .27.18.59.69.49A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/santisterling/" target="_blank" rel="noopener" aria-label="LinkedIn" class="icon-btn">
+          <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.8v2.1h.05c.53-1 1.83-2.1 3.77-2.1 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7.8c0-1.86-.03-4.26-2.6-4.26-2.6 0-3 2.03-3 4.12V24h-4V8.5z"/></svg>
+        </a>
+        <a href="mailto:santisterling@gmail.com" aria-label="Email" class="icon-btn">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        </a>
+      </div>
+    </div>
   </div>
 </footer>
 
-  <!-- PROJECT MODAL -->
-  <div id="projectModal" aria-hidden="true" class="fixed inset-0 hidden items-center justify-center z-50 bg-black/60">
-    <div class="bg-slate-900 rounded-2xl w-11/12 max-w-4xl p-6">
-      <div class="flex items-start justify-between">
-        <h3 id="modalTitle" class="text-xl font-semibold text-black">Proyecto</h3>
-        <button id="closeModal" class="p-2 rounded bg-white/5">Cerrar</button>
-      </div>
-      <div id="modalBody" class="mt-4 text-slate-200">Detalles...</div>
-    </div>
-  </div>
-
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script20.js" defer></script>
-
-  
-      <!-- MODAL MAC OS -->
-<div
-  id="macModal"
-  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm"
->
-  <div
-    class="w-[90%] max-w-3xl rounded-2xl bg-white shadow-2xl overflow-hidden animate-scaleIn"
-  >
-    <!-- Barra superior Mac -->
-    <div class="flex items-center gap-2 px-4 py-2 bg-stone-200">
-      <span id="closeModal" class="w-3 h-3 bg-red-500 rounded-full cursor-pointer"></span>
-      <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
-      <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-      <h3 id="modalTitle" class="ml-4 font-semibold text-slate-700"></h3>
-    </div>
-
-    <!-- Contenido -->
-    <div class="p-5 space-y-4">
-      <img
-        id="modalImage"
-        src=""
-        alt=""
-        class="w-full h-64 object-cover rounded-xl shadow"
+<script src="script20.js" defer></script>
+</body>
+</html>
