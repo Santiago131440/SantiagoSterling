@@ -1,2260 +1,4151 @@
-(() => {
-  "use strict";
-
-  /* ==========================================================================
-     CONFIGURACIÓN Y UTILIDADES
-     ========================================================================== */
-  const LINKEDIN_URL = "https://www.linkedin.com/in/santisterling/";
-  const $ = (sel, ctx = document) => ctx.querySelector(sel);
-  const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
-  // Suavizado independiente de los FPS
-  const damp = (a, b, lambda, dt) => a + (b - a) * (1 - Math.exp(-lambda * dt));
-
-  const DEVICON = "https://cdn.jsdelivr.net/npm/devicon@2.16.0/icons/";
-
-  // Bloqueo de scroll con contador para que varios diálogos no se pisen
-  let scrollLocks = 0;
-  const lockScroll = () => {
-    if (scrollLocks++ === 0) document.body.style.overflow = "hidden";
-  };
-  const unlockScroll = () => {
-    scrollLocks = Math.max(0, scrollLocks - 1);
-    if (scrollLocks === 0) document.body.style.overflow = "";
-  };
-
-  // Quita la indentación del HTML a textos multilínea
-  const dedent = (text) =>
-    String(text)
-      .split("\n")
-      .map((line) => line.trim())
-      .join("\n")
-      .replace(/\n{3,}/g, "\n\n")
-      .trim();
-
-  const el = (tag, className, text) => {
-    const node = document.createElement(tag);
-    if (className) node.className = className;
-    if (text != null) node.textContent = text;
-    return node;
-  };
-
-  /* ==========================================================================
-     PILA DE DIÁLOGOS: ESC cierra el superior y el foco queda atrapado en él
-     ========================================================================== */
-  const dialogStack = [];
-  const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
-
-  const pushDialog = (container, close) => dialogStack.push({ container, close });
-  const popDialog = (container) => {
-    const i = dialogStack.findIndex((d) => d.container === container);
-    if (i > -1) dialogStack.splice(i, 1);
-  };
-
-  document.addEventListener("keydown", (e) => {
-    const top = dialogStack[dialogStack.length - 1];
-    if (!top) return;
-    if (e.key === "Escape") {
-      e.preventDefault();
-      top.close();
-      return;
-    }
-    if (e.key !== "Tab") return;
-    const items = $$(FOCUSABLE, top.container).filter((n) => n.offsetParent !== null);
-    if (!items.length) {
-      e.preventDefault();
-      return;
-    }
-    const first = items[0];
-    const last = items[items.length - 1];
-    if (e.shiftKey && (document.activeElement === first || !top.container.contains(document.activeElement))) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  });
-
-  /* ==========================================================================
-     ACTIVACIÓN POR TECLADO de elementos con role="button" que no son <button>
-     ========================================================================== */
-  document.addEventListener("keydown", (e) => {
-    if (e.key !== "Enter" && e.key !== " ") return;
-    const target = e.target.closest('[role="button"]:not(button), [role="link"]:not(a)');
-    if (!target || target !== e.target) return;
-    e.preventDefault();
-    target.click();
-  });
-
-  /* ==========================================================================
-     NAVEGACIÓN GLOBAL
-     ========================================================================== */
-  (function initGlobalNav() {
-    const nav = $("#globalNav");
-    const toggle = $("#menuToggle");
-    const menu = $("#mobileMenu");
-    if (!nav) return;
-
-    // La cápsula de vidrio se vuelve oscura sobre secciones oscuras (como en Tahoe)
-    const zones = $$("main > section, .site-footer");
-    const isDark = (s) => /\b(tone-dark|tone-graphite|hero|dev-section)\b/.test(s.className);
-    const onScroll = () => {
-      nav.classList.toggle("is-scrolled", window.scrollY > 8);
-      const probe = (nav.querySelector(".nav-inner") || nav).getBoundingClientRect();
-      const y = probe.top + probe.height / 2;
-      const zone = zones.find((s) => {
-        const r = s.getBoundingClientRect();
-        return r.top <= y && r.bottom > y;
-      });
-      nav.classList.toggle("is-on-dark", !!zone && isDark(zone));
-    };
-    onScroll();
-    window.addEventListener("scroll", () => requestAnimationFrame(onScroll), { passive: true });
-
-    // Menú móvil a pantalla completa
-    if (toggle && menu) {
-      let open = false;
-      let hideTimer;
-
-      const close = (restoreFocus = true) => {
-        if (!open) return;
-        open = false;
-        clearTimeout(hideTimer);
-        toggle.setAttribute("aria-expanded", "false");
-        toggle.setAttribute("aria-label", "Abrir menú");
-        menu.classList.remove("is-open");
-        nav.classList.remove("menu-open");
-        popDialog(nav);
-        unlockScroll();
-        hideTimer = setTimeout(() => { menu.hidden = true; }, reducedMotion ? 0 : 400);
-        if (restoreFocus) toggle.focus();
-      };
-
-      const openMenu = () => {
-        open = true;
-        clearTimeout(hideTimer);
-        menu.hidden = false;
-        toggle.setAttribute("aria-expanded", "true");
-        toggle.setAttribute("aria-label", "Cerrar menú");
-        nav.classList.add("menu-open");
-        requestAnimationFrame(() => requestAnimationFrame(() => menu.classList.add("is-open")));
-        pushDialog(nav, () => close());
-        lockScroll();
-      };
-
-      toggle.addEventListener("click", () => (open ? close() : openMenu()));
-      $$("a", menu).forEach((link) => link.addEventListener("click", () => close(false)));
-      window.addEventListener("resize", () => {
-        if (open && window.innerWidth >= 1024) close(false);
-      }, { passive: true });
-    }
-
-    // Indicador de sección activa
-    const links = $$(".nav-link");
-    const sections = links
-      .map((link) => document.getElementById(link.hash.slice(1)))
-      .filter(Boolean);
-    if (!sections.length || !("IntersectionObserver" in window)) return;
-
-    const setActive = (id) => {
-      links.forEach((link) => {
-        if (link.hash === `#${id}`) link.setAttribute("aria-current", "location");
-        else link.removeAttribute("aria-current");
-      });
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
-    sections.forEach((s) => observer.observe(s));
-
-    // Por encima de la primera sección no hay ninguna activa
-    const hero = $("#top");
-    if (hero) {
-      new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActive(""); },
-        { rootMargin: "-45% 0px -50% 0px" }
-      ).observe(hero);
-    }
-  })();
-
-  /* Navbar heredado (otras páginas con #menu-toggle / #mobile-menu) */
-  (function initLegacyNavbar() {
-    const toggle = $("#menu-toggle");
-    const menu = $("#mobile-menu");
-    if (!toggle || !menu) return;
-    let isOpen = false;
-    const setOpen = (state) => {
-      isOpen = state;
-      toggle.setAttribute("aria-expanded", String(state));
-      menu.classList.toggle("hidden", !state);
-      menu.classList.toggle("flex", state);
-    };
-    toggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      setOpen(!isOpen);
-    });
-    $$("a", menu).forEach((a) => a.addEventListener("click", () => setOpen(false)));
-  })();
-
-  /* ==========================================================================
-     REVELADO AL ENTRAR EN PANTALLA (.reveal → .visible)
-     ========================================================================== */
-  (function initReveal() {
-    const items = $$(".reveal");
-    if (!items.length) return;
-
-    // Al terminar la entrada se retira .reveal: así la tarjeta queda libre para
-    // inclinarse, flotar o moverse sin heredar la transición lenta de 0.9 s.
-    const settle = (node) => {
-      node.classList.add("is-inview");
-      if (reducedMotion) return;
-      const done = () => node.classList.remove("reveal", "visible");
-      const delay = parseFloat(getComputedStyle(node).transitionDelay) || 0;
-      setTimeout(done, 950 + delay * 1000);
-    };
-
-    if (reducedMotion || !("IntersectionObserver" in window)) {
-      items.forEach((item) => { item.classList.add("visible"); settle(item); });
-      return;
-    }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("visible");
-          settle(entry.target);
-          observer.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-    );
-    items.forEach((item) => observer.observe(item));
-  })();
-
-  /* ==========================================================================
-     PROGRESO DE LECTURA (barra bajo la navegación)
-     ========================================================================== */
-  (function initScrollProgress() {
-    const bar = $("#scrollProgress");
-    if (!bar) return;
-    let queued = false;
-    const update = () => {
-      queued = false;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      bar.style.transform = `scaleX(${max > 0 ? clamp(window.scrollY / max, 0, 1) : 0})`;
-    };
-    window.addEventListener("scroll", () => {
-      if (!queued) { queued = true; requestAnimationFrame(update); }
-    }, { passive: true });
-    update();
-  })();
-
-  /* ==========================================================================
-     SOBRE MÍ: la segunda parte de la frase se ilumina palabra a palabra
-     ========================================================================== */
-  (function initStatement() {
-    const target = $(".statement span");
-    if (!target) return;
-    const words = target.textContent.trim().split(/\s+/);
-    target.replaceChildren(...words.flatMap((word, i) => {
-      const w = el("span", "w", word);
-      return i < words.length - 1 ? [w, document.createTextNode(" ")] : [w];
-    }));
-    const nodes = $$(".w", target);
-    if (reducedMotion) { nodes.forEach((n) => n.classList.add("is-lit")); return; }
-
-    let queued = false;
-    const update = () => {
-      queued = false;
-      const r = target.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // Empieza cuando la frase entra por abajo y termina hacia el centro
-      const progress = clamp((vh * 0.88 - r.top) / (vh * 0.5), 0, 1);
-      const lit = Math.round(progress * nodes.length);
-      nodes.forEach((n, i) => n.classList.toggle("is-lit", i < lit));
-    };
-    window.addEventListener("scroll", () => {
-      if (!queued) { queued = true; requestAnimationFrame(update); }
-    }, { passive: true });
-    update();
-  })();
-
-  /* ==========================================================================
-     CIFRAS QUE CUENTAN AL ENTRAR EN PANTALLA (9+, 6, 5, 10x)
-     ========================================================================== */
-  (function initCounters() {
-    const items = $$(".stat-number, .stat-value").filter((n) => /^\d/.test(n.textContent.trim()));
-    if (!items.length || reducedMotion || !("IntersectionObserver" in window)) return;
-
-    const run = (node) => {
-      const final = node.textContent.trim();
-      const [, num, suffix] = final.match(/^(\d+)(.*)$/);
-      const to = Number(num);
-      const counter = el("span", null, "0" + suffix);
-      counter.setAttribute("aria-hidden", "true");
-      node.replaceChildren(counter, el("span", "sr-only", final));
-      const start = performance.now();
-      const duration = 1400 + to * 20;
-      const tick = (now) => {
-        const t = clamp((now - start) / duration, 0, 1);
-        const eased = 1 - Math.pow(2, -10 * t); // easeOutExpo
-        counter.textContent = Math.round(eased * to) + suffix;
-        if (t < 1) requestAnimationFrame(tick);
-        else counter.textContent = final;
-      };
-      requestAnimationFrame(tick);
-    };
-
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        io.unobserve(entry.target);
-        run(entry.target);
-      });
-    }, { threshold: 0.6 });
-    items.forEach((n) => io.observe(n));
-  })();
-
-  /* ==========================================================================
-     LUZ QUE SIGUE AL CURSOR en superficies
-     ========================================================================== */
-  (function initSpotlight() {
-    if (!finePointer) return;
-    const surfaces = $$(".summary-stat, .finder, .contact-card, .site .nav-inner");
-    surfaces.forEach((node) => {
-      node.classList.add("spotlight");
-      node.addEventListener("pointermove", (e) => {
-        const r = node.getBoundingClientRect();
-        node.style.setProperty("--mx", `${e.clientX - r.left}px`);
-        node.style.setProperty("--my", `${e.clientY - r.top}px`);
-      });
-    });
-  })();
-
-  /* ==========================================================================
-     INCLINACIÓN 3D con reflejo (experiencia, galería y vistas previas)
-     ========================================================================== */
-  (function initTilt() {
-    if (!finePointer || reducedMotion) return;
-    const cards = $$(".experiencia-card"); // Competencias y Desarrollos quedan fijas
-    const MAX = 6; // grados
-
-    cards.forEach((card) => {
-      card.classList.add("tilt");
-      const shine = el("span", "tilt-shine");
-      shine.setAttribute("aria-hidden", "true");
-      card.appendChild(shine);
-      let frame = 0;
-
-      card.addEventListener("pointermove", (e) => {
-        cancelAnimationFrame(frame);
-        frame = requestAnimationFrame(() => {
-          const r = card.getBoundingClientRect();
-          const x = (e.clientX - r.left) / r.width;   // 0..1
-          const y = (e.clientY - r.top) / r.height;   // 0..1
-          card.classList.add("is-tilting");
-          card.style.setProperty("--ry", `${(x - 0.5) * MAX * 2}deg`);
-          card.style.setProperty("--rx", `${(0.5 - y) * MAX * 2}deg`);
-          card.style.setProperty("--px", (x - 0.5) * 2);
-          card.style.setProperty("--py", (y - 0.5) * 2);
-          card.style.setProperty("--mx", `${x * 100}%`);
-          card.style.setProperty("--my", `${y * 100}%`);
-        });
-      });
-      card.addEventListener("pointerleave", () => {
-        cancelAnimationFrame(frame);
-        card.classList.remove("is-tilting");
-        ["--rx", "--ry", "--px", "--py"].forEach((v) => card.style.removeProperty(v));
-      });
-    });
-  })();
-
-  /* ==========================================================================
-     BOTONES MAGNÉTICOS
-     ========================================================================== */
-  (function initMagnetic() {
-    if (!finePointer || reducedMotion) return;
-    $$(".magnetic").forEach((btn) => {
-      btn.addEventListener("pointermove", (e) => {
-        const r = btn.getBoundingClientRect();
-        btn.style.setProperty("--tx", `${(e.clientX - r.left - r.width / 2) * 0.22}px`);
-        btn.style.setProperty("--ty", `${(e.clientY - r.top - r.height / 2) * 0.3}px`);
-      });
-      btn.addEventListener("pointerleave", () => {
-        btn.style.removeProperty("--tx");
-        btn.style.removeProperty("--ty");
-      });
-    });
-  })();
-
-  /* ==========================================================================
-     DETALLES: índice para cascadas y parallax de la luna
-     ========================================================================== */
-  $$(".finder-list li").forEach((li, i) => li.style.setProperty("--i", i));
-
-  (function initMoonParallax() {
-    const section = $(".vision-section");
-    const moon = $(".vision-moon");
-    if (!section || !moon || reducedMotion) return;
-    let queued = false;
-    const update = () => {
-      queued = false;
-      const r = section.getBoundingClientRect();
-      const vh = window.innerHeight;
-      if (r.bottom < 0 || r.top > vh) return;
-      const p = clamp((vh - r.top) / (vh + r.height), 0, 1); // 0 entra · 1 sale
-      moon.style.setProperty("--moon-y", `${(0.5 - p) * 140}px`);
-      moon.style.setProperty("--moon-r", `${(p - 0.5) * 10}deg`);
-    };
-    window.addEventListener("scroll", () => {
-      if (!queued) { queued = true; requestAnimationFrame(update); }
-    }, { passive: true });
-    update();
-  })();
-
-  /* ==========================================================================
-     VISIÓN: ASTRONAUTA GUIADO POR EL SCROLL
-     Parte pequeño junto al cuadro "Datos" (Competencias) y, a medida que se
-     baja, vuela y crece hasta su lugar en Visión académica. Todo depende de la
-     posición del scroll: al subir, regresa al cuadro. Se usa una copia fija
-     (fuera del overflow de las secciones); al aterrizar se muestra el original.
-     ========================================================================== */
-  (function initAstronautFlight() {
-    const chip = $(".chip-box");
-    const astro = $(".vision-section .astronaut");
-    if (!chip || !astro) return;
-
-    const flyer = astro.cloneNode(false);
-    flyer.className = "astro-flyer";
-    flyer.removeAttribute("loading");
-    flyer.alt = "";
-    flyer.setAttribute("aria-hidden", "true");
-    document.body.appendChild(flyer);
-    document.documentElement.classList.add("astro-flight-on");
-
-    const lerp = (a, b, t) => a + (b - a) * t;
-    const ease = (t) => t * t * (3 - 2 * t); // suavizado (smoothstep)
-    let landed = null;
-    let width = 0;
-    let queued = false;
-
-    const setLanded = (on) => {
-      if (on === landed) return;
-      landed = on;
-      // Al aterrizar, el original retoma su flotación desde 0 (sin saltos)
-      astro.classList.toggle("is-docked", !on);
-      flyer.classList.toggle("is-hidden", on);
-    };
-
-    const update = () => {
-      queued = false;
-      const vh = window.innerHeight;
-      const c = chip.getBoundingClientRect();
-      const a = astro.getBoundingClientRect();
-      if (!a.width) return;
-
-      // Inicio: el cuadro "Datos" en la zona media-baja de la pantalla.
-      // Fin: el astronauta centrado en pantalla en su sección.
-      const startAt = c.top + c.height / 2 - vh * 0.62;
-      const endAt = a.top + a.height / 2 - vh * 0.5;
-      const span = Math.max(1, endAt - startAt);
-      const p = clamp(-startAt / span, 0, 1);
-
-      if (p >= 1) return setLanded(true);
-      setLanded(false);
-      const t = ease(p);
-
-      // Tamaño pequeño en función del cuadro; posición a su lado izquierdo
-      const small = Math.min(c.height * 0.85, a.width);
-      const sx = Math.max(small / 2 + 6, c.left - small * 0.42);
-      const sy = c.top + c.height * 0.28;
-      const ex = a.left + a.width / 2;
-      const ey = a.top + a.height / 2;
-
-      const size = lerp(small, a.width, t);
-      const x = lerp(sx, ex, t);
-      // Arco suave: el vuelo se eleva un poco a mitad de camino
-      const y = lerp(sy, ey, t) - Math.sin(t * Math.PI) * Math.min(vh * 0.12, 120);
-      const rot = lerp(-16, 0, t) + Math.sin(t * Math.PI) * 10;
-
-      if (a.width !== width) { width = a.width; flyer.style.width = `${width}px`; }
-      const k = size / width;
-      flyer.style.transform =
-        `translate3d(${x - width / 2}px, ${y - a.height / 2}px, 0) scale(${k}) rotate(${rot}deg)`;
-    };
-
-    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
-    window.addEventListener("scroll", request, { passive: true });
-    window.addEventListener("resize", request);
-    astro.addEventListener("load", request);
-    if ("ResizeObserver" in window) new ResizeObserver(request).observe(document.body);
-    update();
-  })();
-
-  /* ==========================================================================
-     DESARROLLOS: FONDO QUE BAJA DESDE LA TARJETA "9+ AÑOS"
-     La fotografía de Desarrollos empieza como fondo de la tarjeta de cifras y,
-     con el scroll, baja y crece hasta cubrir toda la sección. Al subir, vuelve.
-     La capa vive dentro de la sección (posición absoluta): se desplaza con la
-     página sin retrasos y queda detrás del contenido de Desarrollos.
-     ========================================================================== */
-  (function initDevBackdropFlight() {
-    const section = $(".dev-section");
-    const card = $(".summary-stat");
-    if (!section || !card) return;
-    const bg = section.style.getPropertyValue("--bg-image").trim();
-    if (!bg) return;
-
-    const layer = document.createElement("div");
-    layer.className = "dev-backdrop";
-    layer.setAttribute("aria-hidden", "true");
-    layer.style.backgroundImage = bg;
-    section.appendChild(layer);
-    card.classList.add("stat-photo-host");
-
-    const lerp = (a, b, t) => a + (b - a) * t;
-    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-    let state = "";
-    let queued = false;
-
-    const setState = (next) => {
-      if (next === state) return;
-      state = next;
-      section.classList.toggle("is-bg-flying", next !== "landed");
-      layer.classList.toggle("is-hidden", next === "landed");
-    };
-
-    const update = () => {
-      queued = false;
-      const vh = window.innerHeight;
-      const s = section.getBoundingClientRect();
-      const c = card.getBoundingClientRect();
-      if (!s.width || !c.width) return;
-
-      // Inicio: la tarjeta a media pantalla. Fin: la sección llega arriba.
-      const startAt = c.top + c.height / 2 - vh * 0.55; // ≤ 0 → empieza
-      const endAt = s.top;                               // ≤ 0 → aterriza
-      const span = Math.max(240, endAt - startAt);
-      const p = clamp(-startAt / span, 0, 1);
-
-      if (p >= 1) { card.classList.remove("is-photo"); return setState("landed"); }
-      setState("flying");
-      const t = ease(p);
-      card.classList.toggle("is-photo", p < 0.1);
-
-      const radius = parseFloat(getComputedStyle(card).borderTopLeftRadius) || 24;
-      layer.style.left = `${lerp(c.left - s.left, 0, t)}px`;
-      layer.style.top = `${lerp(c.top - s.top, 0, t)}px`;
-      layer.style.width = `${lerp(c.width, s.width, t)}px`;
-      layer.style.height = `${lerp(c.height, s.height, t)}px`;
-      layer.style.borderRadius = `${lerp(radius, 0, t)}px`;
-      layer.style.setProperty("--dev-scrim", t.toFixed(3));
-    };
-
-    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
-    window.addEventListener("scroll", request, { passive: true });
-    window.addEventListener("resize", request);
-    if ("ResizeObserver" in window) new ResizeObserver(request).observe(document.body);
-    // Mientras la tarjeta anima su entrada, la imagen la acompaña cuadro a cuadro
-    let moving = false;
-    const follow = () => { update(); if (moving) requestAnimationFrame(follow); };
-    card.addEventListener("transitionrun", () => { if (!moving) { moving = true; follow(); } });
-    card.addEventListener("transitionend", () => { moving = false; request(); });
-    card.addEventListener("transitioncancel", () => { moving = false; request(); });
-    update();
-  })();
-
-  /* ==========================================================================
-     FORMACIÓN: DEL DESORDEN AL ORDEN
-     Las carpetas empiezan regadas e inclinadas, como un escritorio
-     desordenado; con el scroll cada una vuela a su lugar en la ventana.
-     Al subir, se vuelven a desordenar.
-     ========================================================================== */
-  (function initFinderChaos() {
-    const win = $("#estudio .finder");
-    if (!win) return;
-    const items = $$(".finder-list > li", win);
-    if (!items.length) return;
-    win.classList.add("chaos");
-
-    // Posiciones "desordenadas" fijas (semilla) para que siempre se vea igual
-    let seed = 1611;
-    const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
-    const scatter = items.map((li, i) => {
-      const side = i % 2 ? 1 : -1;
-      return {
-        fx: side * (0.18 + rnd() * 0.32),        // fracción del ancho de la ventana
-        fy: (rnd() - 0.5) * 2,                    // -1 a 1
-        rot: (rnd() - 0.5) * 50,                  // grados
-        sc: 0.86 + rnd() * 0.2,
-        lag: rnd() * 0.22                          // unas llegan antes que otras
-      };
-    });
-
-    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2); // arranque y llegada suaves
-    let queued = false;
-
-    const update = () => {
-      queued = false;
-      const vh = window.innerHeight;
-      const r = win.getBoundingClientRect();
-      const w = win.offsetWidth;
-      const listTop = r.top;
-      // 0 cuando la ventana asoma (95% de la pantalla); 1 cuando su borde llega a 15%
-      const p = clamp((vh * 0.95 - listTop) / (vh * 0.8), 0, 1);
-      const amp = Math.min(vh * 0.32, 300);
-
-      items.forEach((li, i) => {
-        const c = scatter[i];
-        const t = ease(clamp((p - c.lag) / (1 - 0.22), 0, 1));
-        const k = 1 - t; // 1 = desordenada, 0 = en su lugar
-        if (k < 0.001) { li.style.transform = ""; li.classList.remove("is-loose"); return; }
-        li.classList.add("is-loose");
-        li.style.transform =
-          `translate3d(${(c.fx * w * k).toFixed(1)}px, ${(c.fy * amp * k).toFixed(1)}px, 0) ` +
-          `rotate(${(c.rot * k).toFixed(2)}deg) scale(${(1 + (c.sc - 1) * k).toFixed(3)})`;
-      });
-      win.classList.toggle("is-tidy", p >= 1);
-    };
-
-    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
-    window.addEventListener("scroll", request, { passive: true });
-    window.addEventListener("resize", request);
-    update();
-  })();
-
-  /* ==========================================================================
-     NAVEGACIÓN: EL NOMBRE CAMBIA AL DE LA SECCIÓN ACTUAL
-     En el Hero (y el pie de página) se muestra "Santiago Sterling"; en cada
-     sección, su título. Cambia con un giro suave: el texto anterior sube y el
-     nuevo entra desde abajo. Funciona en PC y en celular.
-     ========================================================================== */
-  (function initNavSectionLabel() {
-    const nav = $("#globalNav");
-    const box = $(".nav-label", nav || document);
-    if (!nav || !box) return;
-    const NAME = "Santiago Sterling";
-
-    const zones = $$("main > section, .site-footer").map((el) => {
-      const titleId = el.getAttribute("aria-labelledby") || "";
-      const title = titleId && el.id !== "top" ? document.getElementById(titleId) : null;
-      return { el, full: title ? title.textContent.trim() : "" };
-    });
-
-    let currentText = NAME;
-    let cur = $(".nav-label-text", box);
-    const show = (text) => {
-      if (text === currentText) return;
-      currentText = text;
-      nav.classList.toggle("is-name", text === NAME);
-      if (reducedMotion) { cur.textContent = text; return; }
-      const next = document.createElement("span");
-      next.className = "nav-label-text is-entering";
-      next.textContent = text;
-      box.appendChild(next);
-      const old = cur;
-      cur = next;
-      requestAnimationFrame(() => {
-        old.classList.remove("is-current");
-        old.classList.add("is-leaving");
-        next.classList.remove("is-entering");
-        next.classList.add("is-current");
-      });
-      setTimeout(() => old.remove(), 600);
-    };
-
-    let queued = false;
-    const update = () => {
-      queued = false;
-      const probe = (nav.querySelector(".nav-inner") || nav).getBoundingClientRect();
-      const y = probe.bottom + 24; // justo debajo de la barra
-      const z = zones.find(({ el }) => {
-        const r = el.getBoundingClientRect();
-        return r.top <= y && r.bottom > y;
-      });
-      const label = z && z.full ? z.full : NAME;
-      show(label);
-    };
-    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
-    window.addEventListener("scroll", request, { passive: true });
-    window.addEventListener("resize", request);
-    nav.classList.add("is-name");
-    update();
-  })();
-
-  /* ==========================================================================
-     SOBRE MÍ: ELEMENTOS NEUMÓRFICOS
-     Al entrar en pantalla el anillo se llena y los interruptores se encienden
-     uno a uno. Los interruptores también se pueden activar con clic.
-     ========================================================================== */
-  (function initNeuWidgets() {
-    const grid = $("#sobremi .about-grid");
-    if (!grid) return;
-    const switches = $$(".neu-switch", grid);
-    switches.forEach((sw) => sw.addEventListener("click", () => {
-      sw.setAttribute("aria-checked", String(sw.getAttribute("aria-checked") !== "true"));
-    }));
-    const turnOn = () => {
-      grid.classList.add("is-live");
-      switches.forEach((sw, i) => setTimeout(() => sw.setAttribute("aria-checked", "true"), reducedMotion ? 0 : 500 + i * 320));
-    };
-    if (!("IntersectionObserver" in window)) return turnOn();
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { turnOn(); io.disconnect(); }
-    }, { threshold: 0.35 });
-    io.observe(grid);
-  })();
-
-  /* ==========================================================================
-     CONTACTO: LA TABLET SE LEVANTA Y SE ENCIENDE
-     Con el scroll: empieza acostada y apagada; se levanta hasta quedar de
-     frente; al final la pantalla se enciende (destello central + fondo) y
-     aparece la información. Al subir, se apaga y vuelve a acostarse.
-     ========================================================================== */
-  (function initTabletLift() {
-    const scene = $("#tabletScene");
-    if (!scene) return;
-    const tablet = $(".tablet", scene);
-    let queued = false;
-    let isOn = null;
-    const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-    const update = () => {
-      queued = false;
-      const vh = window.innerHeight;
-      const r = scene.getBoundingClientRect();
-      // 0 cuando la tablet asoma por abajo; 1 cuando su borde superior llega a ~18 %
-      const p = clamp((vh - r.top) / (vh * 0.82), 0, 1);
-      const lift = 1 - easeInOut(clamp((p - 0.12) / 0.55, 0, 1)); // 1 acostada → 0 de frente
-      const on = clamp((p - 0.64) / 0.24, 0, 1);                  // 0 apagada → 1 encendida
-      const flash = Math.max(0, 1 - Math.abs(on - 0.18) / 0.18); // destello al encender
-      scene.style.setProperty("--lift", lift.toFixed(4));
-      scene.style.setProperty("--on", on.toFixed(4));
-      scene.style.setProperty("--flash", flash.toFixed(4));
-      const next = p >= 0.9;
-      if (next !== isOn) { isOn = next; tablet.classList.toggle("is-on", next); }
-    };
-    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
-    window.addEventListener("scroll", request, { passive: true });
-    window.addEventListener("resize", request);
-    // Con teclado: si se enfoca un botón, la pantalla se muestra encendida
-    tablet.addEventListener("focusin", () => tablet.classList.add("is-on"));
-    update();
-  })();
-
-  /* ==========================================================================
-     DESARROLLOS: UN MAC SE ACERCA Y LA APP SE ABRE HASTA PANTALLA COMPLETA
-     Todo guiado por el scroll (y reversible):
-       1) el monitor se acerca y se endereza
-       2) el ícono de Quantix rebota en el Dock (la app arranca)
-       3) la ventana sale del ícono y crece hasta llenar la pantalla del Mac
-          (se detiene en el borde de la pantalla simulada, sin pantalla completa)
-     ========================================================================== */
-  (function initMacApp() {
-    const wrap = $("#macScroll");
-    if (!wrap) return;
-    const display = $("#macDisplay", wrap);
-    const screen = $("#macScreen", wrap);
-    const app = $("#macApp", wrap);
-    const icon = $("#macDockApp", wrap);
-    const menubar = $(".mac-menubar", wrap);
-    const dock = $(".mac-dock", wrap);
-    const bar = $(".mac-app-bar", wrap);
-    const clock = $("#macClock", wrap);
-
-    const tick = () => {
-      if (clock) clock.textContent = new Date().toLocaleTimeString("es", { hour: "2-digit", minute: "2-digit" });
-    };
-    tick();
-    setInterval(tick, 30000);
-
-    const lerp = (a, b, t) => a + (b - a) * t;
-    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-    let queued = false;
-    let full = null;
-
-    const update = () => {
-      queued = false;
-      const vh = window.innerHeight;
-      const vw = window.innerWidth;
-      const r = wrap.getBoundingClientRect();
-      const p = clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
-
-      const a = ease(clamp(p / 0.34, 0, 1));             // acercamiento
-      const d = clamp((p - 0.34) / 0.14, 0, 1);           // rebote del ícono
-      const o = ease(clamp((p - 0.46) / 0.46, 0, 1));     // apertura hasta llenar la pantalla del Mac
-      const f = 0;                                        // sin pantalla completa
-
-      // Tamaños reales (sin transform)
-      const sw = screen.offsetWidth;
-      const sh = screen.offsetHeight;
-      const bz = (display.offsetWidth - sw) / 2;
-      const sFull = Math.max(vw / sw, vh / sh) * 1.002;
-
-      const s = lerp(0.6, 1, a) * lerp(1, sFull, f);
-      const ty = lerp(vh * 0.16, 0, a);
-      const rx = lerp(16, 0, a);
-      // En pantallas verticales, al llegar a pantalla completa se encuadra el formulario (≈76 % del ancho)
-      let tx = 0;
-      if (vw < vh) {
-        const wide = sw * s;
-        tx = -Math.min((0.76 - 0.5) * wide, Math.max(0, (wide - vw) / 2)) * f;
-      }
-      display.style.transform =
-        `translate(-50%, -50%) translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) rotateX(${rx.toFixed(2)}deg) scale(${s.toFixed(4)})`;
-      display.style.borderRadius = `${lerp(bz * 2.2, 0, f)}px`;
-
-      // Rebote del ícono (dos saltos) y punto de "app abierta"
-      const hop = Math.abs(Math.sin(d * Math.PI * 2)) * (1 - d * 0.35);
-      icon.style.transform = `translateY(${(-hop * 0.9).toFixed(3)}em)`;
-      icon.style.setProperty("--running", d > 0.05 ? "1" : "0");
-
-      // La ventana sale del ícono del Dock
-      const ix = icon.offsetLeft + dock.offsetLeft - dock.offsetWidth / 2 + icon.offsetWidth / 2; // centro x relativo a la pantalla
-      const iy = dock.offsetTop + icon.offsetTop + icon.offsetHeight / 2;
-      const fromX = ix - sw / 2;
-      const fromY = iy - sh / 2;
-      const k0 = icon.offsetWidth / sw;
-      const sx = lerp(k0, 1, o);
-      const sy = lerp(icon.offsetHeight / sh, 1, Math.pow(o, 0.8));
-      app.style.transform =
-        `translate(${lerp(fromX, 0, o).toFixed(1)}px, ${lerp(fromY, 0, o).toFixed(1)}px) scale(${sx.toFixed(4)}, ${sy.toFixed(4)})`;
-      app.style.opacity = String(clamp(o / 0.12, 0, 1));
-      app.style.borderRadius = `${lerp(bz * 0.6, 0, f)}px`;
-
-      // Barra del sistema, Dock y barra de la ventana desaparecen al ir a pantalla completa
-      dock.style.opacity = String(1 - clamp((o - 0.55) / 0.35, 0, 1));
-      menubar.style.opacity = String(1 - o);
-      bar.style.opacity = String(1 - f);
-
-      // Botón "Abrir" justo debajo de la base del monitor
-      const standEl = $(".mac-stand", wrap);
-      const openBtn = $("#macOpen", wrap);
-      if (standEl && openBtn) {
-        const sb = standEl.getBoundingClientRect().bottom - wrap.querySelector(".mac-sticky").getBoundingClientRect().top;
-        openBtn.style.top = `${Math.min(vh - openBtn.offsetHeight - 12, sb + 18).toFixed(0)}px`;
-        openBtn.style.bottom = "auto";
-      }
-
-      const isFull = o >= 0.98;
-      if (isFull !== full) { full = isFull; wrap.classList.toggle("is-full", isFull); }
-    };
-
-    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
-    window.addEventListener("scroll", request, { passive: true });
-    window.addEventListener("resize", request);
-    update();
-  })();
-
-  /* ==========================================================================
-     COMPETENCIAS: LAS TARJETAS CRECEN AL ENTRAR Y SE ACHICAN EN LOS BORDES
-     El tamaño depende de cuánto de cada tarjeta se ve en pantalla: completa
-     = 100 %; al acercarse a un borde se va reduciendo. Funciona con los
-     botones de navegación, con el deslizamiento en móvil y al redimensionar.
-     ========================================================================== */
-  (function initGalleryScale() {
-    const track = $("#carousel");
-    if (!track) return;
-    const cards = $$(".gallery-card", track);
-    if (!cards.length) return;
-    const MIN = 0.82;               // tamaño mínimo en el borde
-    const ease = (t) => 1 - Math.pow(1 - t, 2);
-    let queued = false;
-
-    const update = () => {
-      queued = false;
-      const view = track.getBoundingClientRect();
-      const left = Math.max(view.left, 0);
-      const right = Math.min(view.right, window.innerWidth);
-      cards.forEach((card) => {
-        // Medición sin la escala actual: posición de diseño de la tarjeta
-        const x = card.offsetLeft - track.scrollLeft + view.left;
-        const w = card.offsetWidth;
-        const visible = clamp(Math.min(x + w, right) - Math.max(x, left), 0, w) / w; // 0..1
-        const t = ease(visible);
-        const scale = MIN + (1 - MIN) * t;
-        // Se encoge hacia el lado que queda dentro de la pantalla
-        const center = x + w / 2;
-        const origin = center < (left + right) / 2 ? "100% 50%" : "0% 50%";
-        card.style.transformOrigin = visible >= 0.999 ? "50% 50%" : origin;
-        card.style.transform = `scale(${scale.toFixed(4)})`;
-        card.style.opacity = (0.45 + 0.55 * t).toFixed(3);
-      });
-    };
-
-    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
-    track.addEventListener("scroll", request, { passive: true });
-    window.addEventListener("resize", request);
-    if ("ResizeObserver" in window) new ResizeObserver(request).observe(track);
-    update();
-  })();
-
-  /* ==========================================================================
-     HERO: VIDEO DE FONDO
-     Aparece con un fundido cuando empieza a reproducirse, se pausa fuera de
-     pantalla y con la pestaña oculta, respeta "reducir movimiento" y ofrece
-     un botón de pausa (WCAG 2.2.2). Si el archivo no carga, queda el degradado.
-     ========================================================================== */
-  (function initHeroVideo() {
-    const hero = $("#top");
-    const video = $("#heroVideo");
-    const toggle = $("#heroVideoToggle");
-    if (!hero || !video) return;
-
-    let userPaused = reducedMotion;
-    let inView = true;
-
-    const fail = () => {
-      hero.classList.add("hero--no-video");
-      if (toggle) toggle.hidden = true;
-    };
-    // El error se dispara en el último <source> cuando ninguno sirve
-    const sources = $$("source", video);
-    sources[sources.length - 1]?.addEventListener("error", fail);
-    video.addEventListener("error", fail);
-
-    video.addEventListener("playing", () => {
-      hero.classList.add("is-video-ready");
-      if (toggle) toggle.hidden = false;
-    }, { once: true });
-
-    const sync = () => {
-      const shouldPlay = !userPaused && inView && !document.hidden;
-      if (shouldPlay && video.paused) video.play().catch(() => {});
-      if (!shouldPlay && !video.paused) video.pause();
-      if (toggle) {
-        toggle.setAttribute("aria-pressed", String(userPaused));
-        toggle.setAttribute("aria-label", userPaused ? "Reproducir video de fondo" : "Pausar video de fondo");
-      }
-    };
-
-    if (reducedMotion) {
-      video.removeAttribute("autoplay");
-      video.pause();
-      // Muestra el primer cuadro como imagen fija
-      video.addEventListener("loadeddata", () => {
-        hero.classList.add("is-video-ready");
-        if (toggle) toggle.hidden = false;
-      }, { once: true });
-    }
-
-    toggle?.addEventListener("click", () => {
-      userPaused = !userPaused;
-      sync();
-    });
-
-    new IntersectionObserver(([entry]) => {
-      inView = entry.isIntersecting;
-      sync();
-    }, { threshold: 0.05 }).observe(hero);
-    document.addEventListener("visibilitychange", sync);
-    sync();
-  })();
-
-  /* Liquid Glass: la refracción del fondo con filtro SVG solo se renderiza
-     bien en navegadores Chromium; los demás conservan el desenfoque. */
-  (function initLiquidGlass() {
-    const brands = navigator.userAgentData?.brands || [];
-    const chromium = brands.some((b) => /Chromium|Google Chrome|Microsoft Edge/.test(b.brand));
-    if (chromium && !reducedMotion) document.documentElement.classList.add("lg-refract");
-  })();
-
-  /* ==========================================================================
-     BARRA DE DESPLAZAMIENTO SUPERPUESTA (macOS Tahoe)
-     Sustituye la barra nativa de la página solo con mouse/trackpad.
-     El desplazamiento sigue siendo nativo (rueda, teclado, táctil);
-     la barra solo lo refleja y permite arrastrar o saltar por páginas.
-     ========================================================================== */
-  (function initOverlayScrollbar() {
-    if (!finePointer) return;
-    const root = document.documentElement;
-    root.classList.add("has-overlay-scroll");
-
-    const rail = el("div", "os-rail");
-    rail.setAttribute("aria-hidden", "true");
-    const thumb = el("div", "os-thumb");
-    rail.appendChild(thumb);
-    document.body.appendChild(rail);
-
-    let hideTimer = 0;
-    let dragging = false;
-    let startY = 0;
-    let startScroll = 0;
-
-    const metrics = () => {
-      const railH = rail.clientHeight;
-      const docH = root.scrollHeight;
-      const vh = window.innerHeight;
-      const th = Math.max(36, railH * (vh / docH));
-      return { maxTop: Math.max(1, railH - th), maxScroll: docH - vh, th };
-    };
-
-    const update = () => {
-      const m = metrics();
-      rail.hidden = m.maxScroll <= 0;
-      if (rail.hidden) return;
-      thumb.style.height = `${m.th}px`;
-      thumb.style.transform = `translateY(${(clamp(window.scrollY / m.maxScroll, 0, 1) * m.maxTop).toFixed(1)}px)`;
-    };
-
-    const show = () => {
-      rail.classList.add("is-visible");
-      clearTimeout(hideTimer);
-      hideTimer = setTimeout(() => {
-        if (!dragging) rail.classList.remove("is-visible");
-      }, 1000);
-    };
-
-    window.addEventListener("scroll", () => { requestAnimationFrame(update); show(); }, { passive: true });
-    window.addEventListener("resize", () => requestAnimationFrame(update), { passive: true });
-    if ("ResizeObserver" in window) new ResizeObserver(() => requestAnimationFrame(update)).observe(document.body);
-
-    // Arrastrar el pulgar
-    thumb.addEventListener("pointerdown", (e) => {
-      e.preventDefault();
-      dragging = true;
-      startY = e.clientY;
-      startScroll = window.scrollY;
-      thumb.setPointerCapture(e.pointerId);
-      rail.classList.add("is-dragging");
-      root.style.scrollBehavior = "auto";
-    });
-    thumb.addEventListener("pointermove", (e) => {
-      if (!dragging) return;
-      const m = metrics();
-      window.scrollTo(0, startScroll + (e.clientY - startY) * (m.maxScroll / m.maxTop));
-    });
-    const endDrag = () => {
-      if (!dragging) return;
-      dragging = false;
-      rail.classList.remove("is-dragging");
-      root.style.scrollBehavior = "";
-      show();
-    };
-    thumb.addEventListener("pointerup", endDrag);
-    thumb.addEventListener("pointercancel", endDrag);
-
-    // Clic en la pista: avanza o retrocede una pantalla
-    rail.addEventListener("pointerdown", (e) => {
-      if (e.target !== rail) return;
-      const r = thumb.getBoundingClientRect();
-      window.scrollBy({ top: (e.clientY < r.top ? -1 : 1) * window.innerHeight * 0.9, behavior: reducedMotion ? "auto" : "smooth" });
-    });
-
-    update();
-  })();
-
-  /* Zonas internas: la barra fina se muestra mientras se desplazan */
-  (function initInnerScrollbars() {
-    const timers = new WeakMap();
-    document.addEventListener("scroll", (e) => {
-      const t = e.target;
-      if (!(t instanceof Element)) return;
-      t.classList.add("is-scrolling");
-      clearTimeout(timers.get(t));
-      timers.set(t, setTimeout(() => t.classList.remove("is-scrolling"), 900));
-    }, { capture: true, passive: true });
-  })();
-
-  /* Año del footer */
-  const yearEl = $("#year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-  /* ==========================================================================
-     DESCARGA DE CV (TXT)
-     ========================================================================== */
-  $$("#downloadCV, #downloadCV2").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const url = URL.createObjectURL(new Blob([generateSimpleCV()], { type: "text/plain;charset=utf-8" }));
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `CV-Santiago-Sterling-${new Date().getFullYear()}.txt`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    });
-  });
-
-  function generateSimpleCV() {
-    return `CV - Santiago Sterling
-
-Nombre completo: Santiago Sterling Rivas.
-Estudio: Tecnólogo en análisis y desarrollo de software, Tecnólogo en gestión de la producción industrial, Diplomado en Gerencia de Producción.
-Correo electrónico: santisterling@gmail.com
-Ubicación: Cali, Colombia.
-LinkedIn: ${LINKEDIN_URL}
-Portafolio: https://santiago131440.github.io/SantiagoSterling/
-
-Resumen:
-Tecnólogo en Análisis y Desarrollo de Software y en Gestión de la Producción Industrial, con 9 años de experiencia en plantas de manufactura. Mi perfil combina la eficiencia industrial con la innovación tecnológica, aplicando desarrollo de software, automatización y análisis de datos para optimizar procesos y crear soluciones escalables. Cuento con formación en frontend y backend (HTML, CSS, JavaScript, React, Node.js, Python, Django, PostgreSQL, entre otros) y en metodologías industriales como Lean Manufacturing, Kaizen, TPM y 5S, además de análisis de datos, informes corporativos y control de inventarios. Me interesa especializarme en inteligencia artificial aplicada a la industria y en soluciones que integren la Industria 4.0 con tecnologías digitales inteligentes.
-
-Habilidades:
-- HTML, CSS, JavaScript, Python, Django, React, Node.js, Next.js, Tailwind, PostgreSQL, MySQL.
-- Excel avanzado, macros (VBA), Power BI, Power Query, DAX, Figma, Photoshop, Illustrator.
-- Desarrollo de software funcional y mantenible: programación orientada a objetos (POO), estructuras de datos, algoritmos, manejo de errores y modularización.
-- Análisis de requerimientos: levantamiento de necesidades, requerimientos funcionales y no funcionales, casos de uso y modelado de procesos.
-- Modelado: UML (casos de uso, clases y secuencia), historias de usuario y diagramas de flujo.
-- Diseño responsive, manipulación del DOM y diseño de interfaces claras para el usuario.
-- APIs REST y autenticación básica.
-
-Conocimientos:
-- Diseño de bases de datos relacionales, normalización, consultas SQL y CRUD.
-- Metodologías industriales para optimización de recursos.
-- Metodologías de trabajo eficiente en entornos corporativos en crecimiento.
-
-Proyectos destacados:
-- Sterling Music Player
-- Restaurante La Kolina
-`;
+/* ==========================================================================
+   01 TOKENS
+   ========================================================================== */
+:root {
+  color-scheme: light;
+
+  /* Tipografía */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --fs-hero: clamp(2.5rem, 1.6rem + 4.6vw, 5.25rem);
+  --fs-h2: clamp(2.25rem, 1.6rem + 3.2vw, 4rem);
+  --fs-h3: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  --fs-statement: clamp(1.625rem, 1.1rem + 2.4vw, 3rem);
+  --fs-lead: clamp(1.0625rem, 0.98rem + 0.45vw, 1.3125rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+  --fs-xs: 0.75rem;
+
+  /* Espaciado (escala de 4) */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
+  --section-y: clamp(80px, 10vw, 160px);
+  --gutter: clamp(20px, 5vw, 48px);
+  --container: 1120px;
+  --container-wide: 1280px;
+  --container-narrow: 880px;
+
+  /* Radios y sombras */
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 28px;
+  --r-pill: 980px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.05), 0 18px 40px -16px rgba(0, 0, 0, 0.22);
+  --shadow-lg: 0 30px 80px -20px rgba(0, 0, 0, 0.35);
+
+  /* Movimiento */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.2s;
+  --dur: 0.4s;
+  --dur-slow: 0.8s;
+
+  /* Navegación */
+  --nav-h: 52px;
+
+  /* Color · tema claro */
+  --bg: #ffffff;
+  --bg-alt: #f5f5f7;
+  --surface: #ffffff;
+  --surface-2: #fbfbfd;
+  --surface-glass: rgba(255, 255, 255, 0.72);
+  --text: #1d1d1f;
+  --text-2: #6e6e73;
+  --text-3: #86868b;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.16);
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --accent-soft: rgba(0, 113, 227, 0.1);
+  --link: #0071e3;
+  --focus: #0071e3;
+  --overlay: rgba(0, 0, 0, 0.4);
+  --finder-bar: #ececee;
+  --name-gradient: linear-gradient(95deg, #f5b74a 0%, #f2762e 45%, #e5446d 100%);
+
+  --title-fill: linear-gradient(180deg, #1d1d1f 0%, #1d1d1f 100%);
+  --word-dim: #c7c7cc;
+  --tile-bg: #f5f5f7;
+  --mono-filter: none;
+  --spot: rgba(0, 113, 227, 0.07);
+  --edge: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Sitio en modo claro únicamente. Las secciones oscuras redefinen los
+   tokens de forma local, así todo su contenido hereda la paleta correcta. */
+.tone-dark,
+.tone-graphite,
+.hero {
+  color-scheme: dark;
+  --bg: #000000;
+  --surface-glass: rgba(22, 22, 23, 0.72);
+  --text: #f5f5f7;
+  --text-2: #a1a1a6;
+  --text-3: #86868b;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --accent-soft: rgba(0, 113, 227, 0.16);
+  --link: #0071e3;
+  --focus: #0077ed;
+  --finder-bar: #2a2a2d;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 18px 40px -16px rgba(0, 0, 0, 0.7);
+  --title-fill: linear-gradient(110deg, #ffffff 30%, #d8d8dd 62%, #8e8e93 110%);
+  --word-dim: #3a3a3c;
+  --tile-bg: #2c2c2e;
+  --spot: rgba(255, 255, 255, 0.075);
+  --edge: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  color: var(--text);
+}
+
+/* ==========================================================================
+   02 BASE
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+}
+
+/* Base neutra (otras páginas que comparten este CSS) */
+body {
+  font-family: var(--font-sans);
+  background: #ffffff;
+  color: #1d1d1f;
+  overflow-x: hidden;
+}
+
+/* Base del portafolio: usa los tokens de tema */
+body.site {
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  letter-spacing: -0.011em;
+  transition: background-color var(--dur) ease, color var(--dur) ease;
+}
+
+img, video, svg, iframe { display: block; max-width: 100%; }
+img, video { height: auto; }
+button, input, select, textarea, optgroup { font: inherit; color: inherit; }
+button { background: none; border: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+ul[role="list"], ol[role="list"] { list-style: none; }
+
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 2000;
+  padding: 10px 16px;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+  color: #fff;
+  font-size: var(--fs-small);
+  font-weight: 100;
+  transform: translateY(-150%);
+  transition: transform var(--dur-fast) var(--ease);
+}
+.skip-link:focus-visible { transform: none; }
+
+.svg-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ==========================================================================
+   03 LAYOUT
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.container--wide { max-width: calc(var(--container-wide) + var(--gutter) * 2); }
+.container--narrow { max-width: calc(var(--container-narrow) + var(--gutter) * 2); }
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+}
+.section--alt { background: var(--bg-alt); }
+
+/* Tonos alternos: blanco, negro y gris grafito (Competencias).
+   Redefinen las superficies internas para que las tarjetas contrasten. */
+.section.tone-light {
+  background: #ffffff;
+  --surface: #f5f5f7;
+  --bg-alt: #ececf0;
+}
+.section.tone-dark {
+  background: #000000;
+  --surface: #1c1c1e;
+  --bg-alt: #2c2c2e;
+}
+.section.tone-graphite {
+  background: #1c1c1e;
+  --surface: #2c2c2e;
+  --bg-alt: #3a3a3c;
+}
+/* Desarrollos conserva su fotografía de fondo */
+.section.dev-section { background: #000 var(--bg-image) center / cover no-repeat; }
+.section--dark {
+  background: #000;
+  color: #f5f5f7;
+  color-scheme: dark;
+}
+
+.section-head {
+  max-width: 900px;
+  margin: 0 auto var(--s-8);
+  text-align: center;
+}
+
+/* ==========================================================================
+   04 TIPOGRAFÍA
+   ========================================================================== */
+.section-title {
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.032em;
+  text-wrap: balance;
+  background: var(--title-fill);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  padding-bottom: 0.04em;
+}
+.section--dark,
+.hero { --title-fill: linear-gradient(110deg, #ffffff 30%, #d8d8dd 62%, #8e8e93 110%); }
+
+.section-lead {
+  margin-top: var(--s-4);
+  font-size: var(--fs-lead);
+  font-weight: 300;
+  line-height: 1.45;
+  letter-spacing: -0.014em;
+  color: var(--text-2);
+  text-wrap: pretty;
+}
+.section--dark .section-lead { color: #a1a1a6; }
+
+/* ==========================================================================
+   05 BOTONES Y ENLACES
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-body);
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition:
+    background-color var(--dur-fast) ease,
+    color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease,
+    transform var(--dur-fast) var(--ease);
+}
+.btn:active { transform: scale(0.97); }
+
+.btn--primary { background: var(--accent); color: #fff; }
+.btn--primary:hover { background: var(--accent-hover); }
+
+.btn--secondary {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.btn--secondary:hover { background: var(--accent); color: #fff; }
+
+/* Variante para fondos oscuros */
+.btn--glass {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+.btn--glass:hover { background: rgba(255, 255, 255, 0.24); }
+
+.btn--sm { min-height: 32px; padding: 0 14px; font-size: var(--fs-small); }
+
+.text-link {
+  color: var(--link);
+  font-weight: 500;
+  text-underline-offset: 3px;
+}
+.text-link:hover { text-decoration: underline; }
+.section--dark .text-link,
+.on-dark .text-link { color: #0071e3; }
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--text);
+  transition: background-color var(--dur-fast) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.icon-btn:hover { background: var(--border); }
+.icon-btn svg { width: 18px; height: 18px; }
+
+/* Botón "+" circular de vidrio (tarjetas fotográficas) */
+.card-plus {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    transform 0.6s var(--ease);
+}
+.card-plus svg { width: 18px; height: 18px; }
+
+/* ==========================================================================
+   06 NAVEGACIÓN
+   ========================================================================== */
+.global-nav {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: var(--surface-glass);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid transparent;
+  padding-top: env(safe-area-inset-top);
+  transition: border-color var(--dur) ease, background-color var(--dur) ease;
+}
+.global-nav.is-scrolled { border-bottom-color: var(--border); }
+
+/* Progreso de lectura */
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  pointer-events: none;
+}
+.scroll-progress span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #0071e3, #bf5af2 55%, #ff375f);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  height: var(--nav-h);
+  max-width: calc(var(--container-wide) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: max(var(--gutter), env(safe-area-inset-left));
+}
+
+.nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.nav-brand img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-inline: auto;
+}
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  opacity: 0.78;
+  transition: opacity var(--dur-fast) ease;
+}
+.nav-link:hover,
+.nav-link[aria-current="location"] { opacity: 1; }
+/* Indicador de sección activa */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 9px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--dur) var(--ease);
+}
+.nav-link[aria-current="location"]::after { transform: scaleX(1); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+}
+
+.menu-toggle { display: none; }
+.menu-icon {
+  position: relative;
+  width: 18px;
+  height: 12px;
+}
+.menu-icon span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform var(--dur) var(--ease), top var(--dur) var(--ease);
+}
+.menu-icon span:first-child { top: 2px; }
+.menu-icon span:last-child { top: 9px; }
+.menu-toggle[aria-expanded="true"] .menu-icon span:first-child { top: 5.5px; transform: rotate(45deg); }
+.menu-toggle[aria-expanded="true"] .menu-icon span:last-child { top: 5.5px; transform: rotate(-45deg); }
+
+/* Panel móvil a pantalla completa */
+.mobile-menu {
+  position: fixed;
+  inset: calc(var(--nav-h) + env(safe-area-inset-top)) 0 0 0;
+  z-index: 899;
+  padding: var(--s-5) max(var(--gutter), env(safe-area-inset-left)) calc(var(--s-7) + env(safe-area-inset-bottom));
+  background: var(--bg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.mobile-menu.is-open { opacity: 1; transform: none; }
+.mobile-menu ul { display: flex; flex-direction: column; }
+.mobile-menu a {
+  display: block;
+  padding: 10px 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), color var(--dur-fast) ease;
+  transition-delay: calc(var(--i, 0) * 30ms + 60ms);
+}
+.mobile-menu.is-open a { opacity: 1; transform: none; }
+.mobile-menu a:hover { color: var(--accent); }
+.mobile-menu .mobile-menu-secondary {
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--border);
+}
+.mobile-menu .mobile-menu-secondary a {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: var(--text-2);
+  padding: 8px 0;
+}
+
+@media (max-width: 1023px) {
+  .nav-links,
+  .nav-cta { display: none; }
+  .menu-toggle { display: inline-grid; }
+  .nav-actions { margin-left: auto; }
+}
+
+/* ==========================================================================
+   07 HERO · VIDEO DE FONDO
+   Video a sangre completa con velo para legibilidad. Mientras el video
+   carga (o si falta) se ve un degradado animado.
+   ========================================================================== */
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: calc(100svh - var(--nav-h));
+  min-height: max(560px, calc(100svh - var(--nav-h)));
+  padding-block: clamp(72px, 10vw, 128px);
+  overflow: hidden;
+  text-align: center;
+  color: #fff;
+  background: #000;
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  /* Respaldo: aurora lenta en azules y violetas */
+  background:
+    radial-gradient(60% 50% at 20% 25%, rgba(0, 113, 227, 0.35), transparent 70%),
+    radial-gradient(55% 45% at 80% 30%, rgba(191, 90, 242, 0.28), transparent 70%),
+    radial-gradient(70% 60% at 50% 100%, rgba(48, 209, 160, 0.18), transparent 70%),
+    #000;
+  background-size: 160% 160%;
+  animation: heroAurora 18s ease-in-out infinite alternate;
+}
+@keyframes heroAurora {
+  from { background-position: 0% 0%; }
+  to   { background-position: 100% 100%; }
+}
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 1.4s ease, transform 2.4s var(--ease);
+}
+.hero.is-video-ready .hero-video { opacity: 1; transform: scale(1); }
+.hero.is-video-ready .hero-media { animation: none; }
+.hero--no-video .hero-video { display: none; }
+
+/* Velo: oscurece arriba y abajo y deja respirar el centro */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 70% at 50% 45%, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.2) 35%, rgba(0, 0, 0, 0.25) 65%, rgba(0, 0, 0, 0.85) 100%);
+}
+
+.hero-content { position: relative; }
+
+.hero-title {
+  font-size: clamp(2.75rem, 1.5rem + 5vw, 5.75rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.048em;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35);
+}
+.hero-line { display: block; }
+/* Monograma: círculo blanco con la inicial */
+.hero-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 1.56em;
+  height: 1.56em;
+  margin-right: 0.22em;
+  border-radius: 50%;
+  vertical-align: 0.06em;
+  font-size: 0.5em;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  text-shadow: none;
+  background: #fff;
+  color: #000;
+}
+.hero-sub {
+  max-width: 36rem;
+  margin: var(--s-4) auto 0;
+  font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.3125rem);
+  line-height: 1.4;
+  letter-spacing: -0.016em;
+  text-wrap: balance;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(28px, 4vw, 44px);
+}
+.btn--lg { min-height: 48px; padding: 0 26px; font-size: 1.0625rem; }
+.hero-lines {
+  display: grid;
+  gap: 4px;
+  margin-top: var(--s-5);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-1) var(--s-5);
+  margin-top: var(--s-3);
+  font-size: var(--fs-small);
+}
+.hero-links a { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* Indicador de desplazamiento */
+.hero-scroll {
+  position: absolute;
+  left: 50%;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  transform: translateX(-50%);
+}
+.hero-scroll span {
+  position: relative;
+  width: 24px;
+  height: 38px;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+}
+.hero-scroll span::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 3px;
+  height: 7px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: #fff;
+  animation: scrollCue 2s var(--ease) infinite;
+}
+@keyframes scrollCue {
+  0%   { opacity: 0; transform: translateY(-3px); }
+  30%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(12px); }
+}
+
+/* Pausa / reproducción del video */
+.hero-video-toggle {
+  position: absolute;
+  right: max(var(--gutter), env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  transition: background-color var(--dur-fast) ease, transform var(--dur-fast) var(--ease);
+}
+.hero-video-toggle[hidden] { display: none; }
+.hero-video-toggle:hover { background: rgba(255, 255, 255, 0.24); }
+.hero-video-toggle:active { transform: scale(0.94); }
+.hero-video-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.hero-video-toggle .i-play { display: none; fill: currentColor; stroke-width: 1.5; }
+.hero-video-toggle[aria-pressed="true"] .i-play { display: block; }
+.hero-video-toggle[aria-pressed="true"] .i-pause { display: none; }
+
+@media (max-width: 480px) {
+  .hero-lines { font-size: 0.9375rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-media { animation: none; }
+  .hero-video { transform: none; }
+  .hero-scroll span::after { animation: none; opacity: 1; }
+}
+/* ==========================================================================
+   08 SOBRE MÍ
+   ========================================================================== */
+.statement {
+  margin-top: var(--s-6);
+  font-size: var(--fs-statement);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.032em;
+  text-wrap: balance;
+  background: linear-gradient(100deg, #818cf8 0%, #3b82f6 45%, #2dd4bf 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.statement span {
+  background: none;
+  -webkit-text-fill-color: var(--text);
+  color: var(--text);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-4);
+}
+
+.tile {
+  padding: clamp(24px, 3vw, 40px);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--edge), var(--shadow-sm);
+  transition: transform 0.6s var(--ease);
+}
+@media (hover: hover) { .tile:hover { transform: translateY(-4px); } }
+.tile-title {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+.tile p {
+  margin-top: var(--s-3);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.tile p strong { color: var(--text); font-weight: 600; }
+
+.info-list { margin-top: var(--s-4); display: grid; gap: var(--s-3); }
+.info-list div { display: grid; gap: 2px; }
+.info-list dt {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--text-3);
+}
+.info-list dd { font-size: 0.9375rem; line-height: 1.45; }
+
+@media (max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   09 FORMACIÓN: FINDER + MODAL macOS
+   ========================================================================== */
+.finder {
+  border-radius: var(--r-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.finder-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  height: 48px;
+  padding: 0 var(--s-4);
+  background: var(--finder-bar);
+  border-bottom: 1px solid var(--border);
+}
+.traffic { display: inline-flex; gap: 8px; }
+.traffic i,
+.traffic button {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.traffic > :nth-child(1) { background: #ff5f57; }
+.traffic > :nth-child(2) { background: #febc2e; }
+.traffic > :nth-child(3) { background: #28c840; }
+.traffic button { position: relative; }
+/* Área táctil de 44px sin agrandar el punto */
+.traffic button::after { content: ""; position: absolute; inset: -16px; }
+.traffic button:hover { filter: brightness(0.85); }
+
+.finder-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.finder-list { padding: var(--s-2); }
+.finder-item {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  align-items: center;
+  gap: var(--s-3);
+  width: 100%;
+  min-height: 52px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-align: left;
+  transition: background-color var(--dur-fast) ease;
+}
+.finder-item:hover { background: var(--bg-alt); }
+.finder-item:focus-visible { background: var(--accent); color: #fff; outline: none; }
+.finder-item:focus-visible .finder-count { color: rgba(255, 255, 255, 0.8); }
+.folder-icon { width: 34px; height: 28px; }
+.finder-name { font-size: 0.9375rem; font-weight: 500; }
+.finder-count {
+  font-size: var(--fs-small);
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .finder-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--s-1);
+    padding: var(--s-3);
   }
-
-  /* ==========================================================================
-     VENTANAS macOS TAHOE (Formación, aviso de datos y Competencias)
-     Mismo lenguaje visual que la ventana de Experiencia. Tres modos:
-     · switch: la barra lateral cambia la página (carpetas, categorías)
-     · scroll: la barra lateral salta a secciones de una sola página
-     · plain : sin barra lateral (contenido suelto vía openModal)
-     ========================================================================== */
-  const mwSvg = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
-  const MW_TRAFFIC = `
-    <button type="button" class="tl tl-close" data-mw="close" aria-label="Cerrar ventana">${mwSvg('<path d="M8 8l8 8M16 8l-8 8"/>')}</button>
-    <button type="button" class="tl tl-min" data-mw="min" aria-label="Minimizar ventana">${mwSvg('<path d="M7 12h10"/>')}</button>
-    <button type="button" class="tl tl-zoom" data-mw="zoom" aria-label="Ampliar ventana" aria-pressed="false">${mwSvg('<path d="M8 15V8h7M16 9v7H9"/>')}</button>`;
-
-  class MacWindow {
-    constructor(id) {
-      this.id = id;
-      this.cfg = null;
-      this.mode = "plain";
-      this.key = null;
-      this.isOpen = false;
-      this.returnFocus = null;
-      this.build();
-      this.bind();
-    }
-
-    build() {
-      const root = document.createElement("div");
-      root.id = this.id;
-      root.className = "experience-modal mw-generic";
-      root.setAttribute("aria-hidden", "true");
-      root.innerHTML = `
-        <div class="modal-overlay" data-mw="close"></div>
-        <div class="modal-content mac-window" role="dialog" aria-modal="true" aria-labelledby="${this.id}-title" tabindex="-1">
-          <aside class="mw-sidebar">
-            <div class="mw-traffic">${MW_TRAFFIC}</div>
-            <div class="mw-identity">
-              <div class="mw-app-icon" aria-hidden="true"></div>
-              <div class="mw-identity-text"><p class="modal-title"></p><p class="modal-duration"></p></div>
-            </div>
-            <p class="mw-sidebar-label"></p>
-            <nav class="mw-nav"></nav>
-            <p class="mw-sidebar-foot"></p>
-          </aside>
-          <div class="mw-main">
-            <header class="mw-toolbar">
-              <div class="mw-traffic mw-traffic--toolbar">${MW_TRAFFIC}</div>
-              <div class="mw-capsule mw-history">
-                <button type="button" class="mw-icon-btn" data-step="-1" aria-label="Anterior">${mwSvg('<path d="m14.5 5-7 7 7 7"/>')}</button>
-                <span class="mw-sep" aria-hidden="true"></span>
-                <button type="button" class="mw-icon-btn" data-step="1" aria-label="Siguiente">${mwSvg('<path d="m9.5 5 7 7-7 7"/>')}</button>
-              </div>
-              <p class="mw-toolbar-title" aria-hidden="true"></p>
-            </header>
-            <div class="modal-body">
-              <div class="mw-page">
-                <header class="mw-page-head">
-                  <p class="mw-page-eyebrow"></p>
-                  <h2 class="mw-page-title" id="${this.id}-title"></h2>
-                  <p class="mw-page-sub"></p>
-                </header>
-                <div class="mw-page-content"></div>
-              </div>
-            </div>
-            <footer class="mw-pathbar" aria-hidden="true"></footer>
-          </div>
-        </div>`;
-      document.body.appendChild(root);
-      this.root = root;
-      this.win = $(".mac-window", root);
-      this.body = $(".modal-body", root);
-      this.nav = $(".mw-nav", root);
-    }
-
-    bind() {
-      this.root.addEventListener("click", (e) => {
-        const action = e.target.closest("[data-mw]")?.dataset.mw;
-        if (action === "close") return this.close();
-        if (action === "min") return this.minimize();
-        if (action === "zoom") return this.toggleZoom();
-        const step = e.target.closest("[data-step]");
-        if (step) return this.step(Number(step.dataset.step));
-        const item = e.target.closest(".mw-nav-item");
-        if (!item) return;
-        if (this.mode === "switch") this.show(item.dataset.key);
-        else {
-          const target = $(`[data-section="${item.dataset.key}"]`, this.body);
-          if (target) this.body.scrollTo({ top: target.offsetTop - 64, behavior: reducedMotion ? "auto" : "smooth" });
-        }
-      });
-      this.root.addEventListener("keydown", (e) => {
-        if (this.mode !== "switch" || (e.key !== "ArrowLeft" && e.key !== "ArrowRight")) return;
-        if (e.target.closest(".mw-nav")) return;
-        this.step(e.key === "ArrowRight" ? 1 : -1);
-      });
-      this.body.addEventListener("scroll", () => requestAnimationFrame(() => this.sync()), { passive: true });
-    }
-
-    open(cfg) {
-      this.cfg = cfg;
-      const items = cfg.items || [];
-      this.mode = items.length ? cfg.mode || "switch" : "plain";
-      this.win.classList.toggle("mw-plain", this.mode === "plain");
-      this.win.style.setProperty("--mw-accent", cfg.accent || "#0071e3");
-
-      const icon = $(".mw-app-icon", this.root);
-      icon.className = `mw-app-icon ${cfg.iconClass || ""}`.trim();
-      icon.innerHTML = cfg.icon || "";
-      $(".mw-identity .modal-title", this.root).textContent = cfg.title || "";
-      $(".mw-identity .modal-duration", this.root).textContent = cfg.subtitle || "";
-      $(".mw-sidebar-label", this.root).textContent = cfg.label || "";
-      $(".mw-sidebar-foot", this.root).textContent = cfg.foot || "";
-      this.nav.setAttribute("aria-label", cfg.label || "Secciones");
-      this.nav.replaceChildren(
-        ...items.map((it) => {
-          const b = el("button", "mw-nav-item");
-          b.type = "button";
-          b.dataset.key = it.key;
-          b.innerHTML = `${it.icon || ""}<span></span>`;
-          b.lastElementChild.textContent = it.label;
-          return b;
-        })
-      );
-      $(".mw-history", this.root).hidden = !(this.mode === "switch" && items.length > 1);
-      this.nav.scrollLeft = 0;
-
-      if (this.mode === "switch") this.show(cfg.initial || items[0].key, false);
-      else this.render(cfg.page(), false);
-
-      if (!this.isOpen) {
-        this.returnFocus = document.activeElement;
-        this.isOpen = true;
-        this.win.classList.remove("is-minimizing");
-        this.root.classList.add("active");
-        this.root.setAttribute("aria-hidden", "false");
-        pushDialog(this.win, () => this.close());
-        lockScroll();
-      }
-      this.win.focus();
-    }
-
-    show(key, animate = true) {
-      this.key = key;
-      this.render(this.cfg.page(key), animate);
-    }
-
-    step(dir) {
-      const items = this.cfg?.items || [];
-      if (this.mode !== "switch" || items.length < 2) return;
-      const i = items.findIndex((it) => it.key === this.key);
-      this.show(items[(i + dir + items.length) % items.length].key);
-    }
-
-    render(page, animate) {
-      $(".mw-page-eyebrow", this.root).textContent = page.eyebrow || "";
-      $(".mw-page-title", this.root).textContent = page.title || "";
-      $(".mw-page-sub", this.root).textContent = page.sub || "";
-      $(".mw-toolbar-title", this.root).textContent = page.title || "";
-      const content = $(".mw-page-content", this.root);
-      if (page.content instanceof Node) content.replaceChildren(page.content);
-      else content.replaceChildren(el("p", "modal-text", dedent(page.content || "")));
-      const path = $(".mw-pathbar", this.root);
-      path.replaceChildren();
-      (page.path || [page.title]).forEach((part, i) => {
-        if (i) path.appendChild(document.createElement("i"));
-        path.appendChild(el("span", "", part));
-      });
-      this.body.scrollTop = 0;
-      if (animate && !reducedMotion) {
-        this.body.classList.remove("is-switching");
-        void this.body.offsetWidth;
-        this.body.classList.add("is-switching");
-      }
-      this.sync();
-    }
-
-    sync() {
-      const top = this.body.scrollTop;
-      this.win.classList.toggle("is-scrolled", top > 8);
-      let current = this.key;
-      if (this.mode === "scroll") {
-        const sections = $$("[data-section]", this.body);
-        current = sections[0]?.dataset.section;
-        sections.forEach((s) => { if (s.offsetTop - 120 <= top) current = s.dataset.section; });
-        if (top + this.body.clientHeight >= this.body.scrollHeight - 4) current = sections[sections.length - 1]?.dataset.section || current;
-      }
-      $$(".mw-nav-item", this.nav).forEach((b) => {
-        const on = b.dataset.key === current;
-        b.classList.toggle("is-active", on);
-        if (on) {
-          b.setAttribute("aria-current", "true");
-          if (this.mode === "switch") b.scrollIntoView({ block: "nearest", inline: "nearest" });
-        } else b.removeAttribute("aria-current");
-      });
-    }
-
-    toggleZoom() {
-      const on = this.win.classList.toggle("is-zoomed");
-      $$('[data-mw="zoom"]', this.root).forEach((z) => {
-        z.setAttribute("aria-pressed", String(on));
-        z.setAttribute("aria-label", on ? "Restaurar tamaño de la ventana" : "Ampliar ventana");
-      });
-    }
-
-    minimize() {
-      if (reducedMotion) return this.close();
-      this.win.classList.add("is-minimizing");
-      setTimeout(() => this.close(), 420);
-    }
-
-    close() {
-      if (!this.isOpen) return;
-      this.isOpen = false;
-      this.root.classList.remove("active");
-      this.root.setAttribute("aria-hidden", "true");
-      popDialog(this.win);
-      unlockScroll();
-      this.returnFocus?.focus?.();
-      setTimeout(() => {
-        this.win.classList.remove("is-minimizing");
-        if (this.win.classList.contains("is-zoomed")) this.toggleZoom();
-      }, 320);
-    }
+  .finder-item {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: var(--s-2);
+    padding: 12px 4px;
+    text-align: center;
   }
+  .folder-icon { width: 56px; height: 46px; }
+  .finder-name { font-size: 0.75rem; line-height: 1.25; }
+  .finder-count { display: none; }
+}
 
-  const finderWindow = new MacWindow("finderWindow");
-  const skillsWindow = new MacWindow("skillsWindow");
+/* Modal macOS (Formación y avisos) */
+.mac-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+  background: var(--overlay);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.mac-modal.is-open { display: flex; animation: fadeIn var(--dur) ease; }
 
-  /* API pública conservada: openModal(título, contenido) · closeModal() */
-  window.openModal = function (title, content) {
-    finderWindow.open({ page: () => ({ title, content, path: [title] }) });
-  };
-  window.closeModal = () => finderWindow.close();
+.mac-modal .modal-window {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  max-height: min(85vh, 760px);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: scaleIn var(--dur) var(--ease);
+}
+.mac-modal .modal-titlebar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 48px;
+  padding: 0 var(--s-4);
+  background: var(--finder-bar);
+  border-bottom: 1px solid var(--border);
+}
+.mac-modal .title {
+  position: absolute;
+  left: 84px;
+  right: 84px;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mac-modal .modal-body {
+  padding: var(--s-6);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.modal-text {
+  white-space: pre-line;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--text-2);
+}
 
-  /* ==========================================================================
-     FORMACIÓN: contenido de cada carpeta
-     ========================================================================== */
-  const FORMACION = {
-    tecnologica: {
-      title: "Formación tecnológica",
-      items: [
-        { name: "Tecnología en análisis y desarrollo de software", meta: ["Servicio Nacional de Aprendizaje (SENA)", "Estado: en curso"] },
-        { name: "Tecnología en gestión de la producción industrial", meta: ["Servicio Nacional de Aprendizaje (SENA)", "Estado: culminado", "Certificación: 25 de noviembre de 2016"] }
-      ]
-    },
-    diplomado: {
-      title: "Diplomado",
-      items: [
-        { name: "Diplomado en Gerencia de Producción", meta: ["Servicio Nacional de Aprendizaje (SENA)", "Estado: culminado"] }
-      ]
-    },
-    backend: {
-      title: "Platzi · Backend y lógica de programación",
-      items: [
-        { name: "Curso de Programación Orientada a Objetos (POO)" },
-        { name: "Curso Básico de Programación" },
-        { name: "Curso Básico de Algoritmos y Pensamiento Lógico" }
-      ]
-    },
-    devops: {
-      title: "Platzi · DevOps y Cloud",
-      items: [
-        { name: "Curso de Introducción al Despliegue de Aplicaciones" },
-        { name: "Curso de Introducción a AWS: Cómputo, Almacenamiento y Bases de Datos" }
-      ]
-    },
-    frontend: {
-      title: "Platzi · Frontend",
-      items: [
-        { name: "Curso de Frontend Developer" },
-        { name: "Curso Práctico de Frontend Developer" },
-        { name: "Curso Definitivo de HTML y CSS" },
-        { name: "Curso Práctico de HTML y CSS" },
-        { name: "Curso Práctico de Maquetación en CSS" },
-        { name: "Curso Profesional de CSS Grid Layout" },
-        { name: "Curso de Responsive Design: Maquetación Mobile First" },
-        { name: "Curso Básico de Tailwind 2 y 3" },
-        { name: "Curso de Diseño para Developers" },
-        { name: "Curso de Manipulación del DOM" },
-        { name: "Curso de Next.js" }
-      ]
-    },
-    herramientas: {
-      title: "Platzi · Herramientas de desarrollo",
-      items: [
-        { name: "Curso Profesional de Git y GitHub" },
-        { name: "Curso de Introducción a la Terminal y Línea de Comandos" }
-      ]
-    },
-    javascript: {
-      title: "Platzi · JavaScript",
-      items: [
-        { name: "Curso Básico de JavaScript" },
-        { name: "Curso Práctico de JavaScript" },
-        { name: "Curso de Asincronismo con JavaScript" }
-      ]
-    },
-    sena: {
-      title: "SENA · Cursos cortos",
-      items: [
-        { name: "Calidad en el desarrollo de software", meta: ["Abril 2022"] },
-        { name: "Metodología de la programación de sistemas informáticos", meta: ["Mayo 2022"] },
-        { name: "Modelos de calidad de software", meta: ["Septiembre 2023"] },
-        { name: "Procesos para software de calidad", meta: ["Diciembre 2024"] },
-        { name: "Aplicación del marco de trabajo Scrum para proyectos de desarrollo de software", meta: ["Marzo 2025"] },
-        { name: "Manejo de pruebas de software", meta: ["Marzo 2025"] },
-        { name: "Variables y estructuras de control en Python", meta: ["Julio 2025"] }
-      ]
-    },
-    bd: {
-      title: "Platzi · Bases de datos",
-      items: [{ name: "Curso de Fundamentos de Bases de Datos" }]
-    },
-    ingenieria: {
-      title: "Platzi · Ingeniería de software",
-      items: [{ name: "Fundamentos de Ingeniería de Software" }]
-    },
-    media: {
-      title: "Educación media",
-      items: [
-        { name: "Bachiller técnico en informática", meta: ["Institución Educativa Ana Josefa Morales Duque", "Estado: culminado", "Certificación: 25 de noviembre de 2011"] }
-      ]
-    }
-  };
+.doc-list { display: grid; gap: var(--s-2); }
+.doc-item {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: var(--s-3);
+  align-items: start;
+  padding: var(--s-3);
+  border-radius: var(--r-sm);
+  background: var(--bg-alt);
+}
+.doc-icon { width: 22px; height: 28px; color: var(--accent); }
+.doc-name { font-size: 0.9375rem; font-weight: 600; line-height: 1.35; }
+.doc-meta { margin-top: 2px; font-size: var(--fs-small); color: var(--text-2); line-height: 1.5; }
 
-  const SVG_NS = "http://www.w3.org/2000/svg";
-  const docIcon = () => {
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("class", "doc-icon");
-    svg.setAttribute("aria-hidden", "true");
-    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", "#i-doc");
-    svg.appendChild(use);
-    return svg;
-  };
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
 
-  function buildFolder(folder) {
-    const list = el("ul", "mw-group mw-docs");
-    list.setAttribute("role", "list");
-    folder.items.forEach(({ name, meta = [] }) => {
-      const item = el("li", "mw-doc");
-      const text = el("div");
-      text.appendChild(el("p", "doc-name", name));
-      if (meta.length) text.appendChild(el("p", "doc-meta", meta.join(" · ")));
-      item.append(docIcon(), text);
-      list.appendChild(item);
-    });
-    return list;
+/* ==========================================================================
+   10 EXPERIENCIA
+   ========================================================================== */
+/* Carrusel horizontal: reutiliza .gallery / .gallery-track de Competencias */
+.gallery-track.experiencia-track {
+  grid-auto-columns: min(84vw, 400px);
+  gap: 20px;
+  /* espacio para la sombra y la elevación al pasar el cursor */
+  padding-block: 12px 44px;
+}
+@media (min-width: 1024px) { .gallery-track.experiencia-track { gap: 24px; } }
+
+.grupo-1 { --accent-color: #34d399; }
+.grupo-2 { --accent-color: #ff6b6b; }
+.grupo-3 { --accent-color: #fbbf24; }
+.grupo-4 { --accent-color: #22d3ee; }
+.grupo-5 { --accent-color: #f472b6; }
+.grupo-6 { --accent-color: #a78bfa; }
+
+.experiencia-card {
+  --radius: var(--r-lg);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  min-height: 460px;
+  padding: 28px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  color: #fff;
+  text-align: left;
+  background: #1d1d1f;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  scroll-snap-align: start;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 18px 40px -18px rgba(0, 0, 0, 0.35);
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift, 0px));
+  transition: transform 0.7s var(--ease), box-shadow 0.6s var(--ease);
+}
+.experiencia-card:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: var(--radius); }
+.experiencia-card:active { --lift: -2px; }
+
+.experiencia-card .cover-image {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  transform: scale(1.01);
+  transition: transform 1.4s var(--ease);
+}
+.card-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(0, 0, 0, 0.68) 0%,
+    rgba(0, 0, 0, 0.32) 22%,
+    rgba(0, 0, 0, 0.08) 42%,
+    rgba(0, 0, 0, 0.12) 52%,
+    rgba(0, 0, 0, 0.6) 72%,
+    rgba(0, 0, 0, 0.92) 100%);
+}
+
+.card-top { display: flex; flex-direction: column; gap: 6px; }
+.card-eyebrow-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+.card-eyebrow { font-size: 0.875rem; font-weight: 600; color: var(--accent-color, #fff); }
+.experiencia-card .card-role {
+  max-width: 16ch;
+  font-size: clamp(1.5rem, 1.15rem + 0.9vw, 1.875rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.028em;
+  text-wrap: balance;
+}
+.experiencia-card .card-company {
+  font-size: 1.0625rem;
+  letter-spacing: -0.015em;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.card-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  padding: 6px 12px 6px 10px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #30d158;
+  animation: statusPulse 2.4s ease-out infinite;
+}
+@keyframes statusPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.6); }
+  70%  { box-shadow: 0 0 0 7px rgba(48, 209, 88, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(48, 209, 88, 0); }
+}
+
+.card-bottom { display: flex; flex-direction: column; gap: 20px; }
+.experiencia-card .card-description {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.86);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+.card-logo-container {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35), 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+.card-logo { width: 100%; height: 100%; object-fit: cover; }
+.card-meta { display: flex; flex-direction: column; flex: 1; min-width: 0; line-height: 1.3; }
+.meta-dates { font-size: 0.8125rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+.meta-duration { font-size: 0.8125rem; color: rgba(255, 255, 255, 0.66); }
+
+@media (hover: hover) {
+  .experiencia-card:hover {
+    --lift: -6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06),
+      0 34px 64px -24px color-mix(in srgb, var(--accent-color, #000) 55%, rgba(0, 0, 0, 0.45));
   }
-
-  const FOLDER_ICON = '<svg class="mw-folder" viewBox="0 0 68 56" aria-hidden="true"><use href="#i-folder"/></svg>';
-  const filesLabel = (n) => `${n} ${n === 1 ? "archivo" : "archivos"}`;
-
-  function openFormacion(key) {
-    const keys = Object.keys(FORMACION);
-    const total = keys.reduce((sum, k) => sum + FORMACION[k].items.length, 0);
-    finderWindow.open({
-      icon: FOLDER_ICON,
-      iconClass: "is-bare",
-      title: "Formación académica",
-      subtitle: `${keys.length} carpetas`,
-      label: "Carpetas",
-      foot: `${total} documentos en total`,
-      items: keys.map((k) => ({ key: k, label: FORMACION[k].title, icon: FOLDER_ICON })),
-      initial: key,
-      page: (k) => ({
-        eyebrow: "Carpeta",
-        title: FORMACION[k].title,
-        sub: filesLabel(FORMACION[k].items.length),
-        content: buildFolder(FORMACION[k]),
-        path: ["Formación académica", FORMACION[k].title]
-      })
-    });
+  .experiencia-card:hover .cover-image {
+    transform: scale(1.1) translate(calc(var(--px, 0) * -10px), calc(var(--py, 0) * -10px));
   }
+}
+.experiencia-card:hover .card-plus,
+.experiencia-card:focus-visible .card-plus,
+.gallery-card:hover .card-plus,
+.gallery-card:focus-visible .card-plus {
+  color: #1d1d1f;
+  background: #fff;
+  border-color: #fff;
+  transform: rotate(90deg);
+}
 
-  $$(".finder-item[data-folder]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      if (FORMACION[btn.dataset.folder]) openFormacion(btn.dataset.folder);
-    });
-  });
+@media (max-width: 639px) {
+  .experiencia-card { --radius: 24px; aspect-ratio: auto; min-height: 480px; padding: 24px; }
+}
+@media (max-width: 380px) {
+  .experiencia-card { min-height: 440px; padding: 20px; }
+  .card-eyebrow-row { flex-wrap: wrap; }
+}
 
-  /* Aviso de protección de datos: una página con secciones */
-  const NOTICE_SECTIONS = [
-    {
-      key: "confidencialidad",
-      label: "Confidencialidad",
-      icon: mwSvg('<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/>'),
-      title: "Confidencialidad y uso de la información",
-      text: "La información presentada en este proyecto, correspondiente exclusivamente a los datos recopilados dentro del marco de los ejercicios y desarrollos realizados, es de carácter ficticio y se emplea únicamente con fines académicos, demostrativos y técnicos. En consecuencia, no se utilizan, almacenan ni divulgan datos reales, personales o de naturaleza confidencial."
-    },
-    {
-      key: "datos",
-      label: "Protección de datos",
-      icon: mwSvg('<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/>'),
-      title: "Protección de datos personales",
-      text: "El desarrollo del proyecto se fundamenta en principios de ética, privacidad, confidencialidad y protección de la propiedad intelectual, garantizando un tratamiento responsable de la información y el cumplimiento de la normativa aplicable, en particular la Ley 1581 de 2012 y el Decreto 1377 de 2013 de la República de Colombia, relacionados con la protección de datos personales, así como el Reglamento General de Protección de Datos (GDPR – Reglamento (UE) 2016/679)."
-    },
-    {
-      key: "autor",
-      label: "Propiedad intelectual",
-      icon: mwSvg('<circle cx="12" cy="12" r="8.5"/><path d="M14.8 9.6a3.6 3.6 0 1 0 0 4.8"/>'),
-      title: "Derechos de autor y propiedad intelectual",
-      text: "De igual manera, el proyecto se acoge a las disposiciones de la Ley 23 de 1982 y la Decisión Andina 351 de 1993 en materia de derechos de autor y propiedad intelectual, reafirmando su compromiso con el uso legítimo, ético y responsable de la información y de los activos intelectuales involucrados."
-    }
-  ];
+/* Cifras de resumen */
+.summary-card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-4);
+  max-width: 760px;
+  margin: var(--s-9) auto 0;
+}
+.summary-stat {
+  padding: var(--s-6) var(--s-5);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+.stat-number {
+  font-size: clamp(2.5rem, 1.8rem + 3vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(135deg, #0071e3 0%, #0071e3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.summary-stat .stat-label {
+  margin-top: var(--s-2);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-2);
+}
+@media (max-width: 560px) {
+  .summary-card { grid-template-columns: 1fr; margin-top: var(--s-8); }
+}
 
-  function buildNotice() {
-    const wrap = el("div", "mw-notes");
-    NOTICE_SECTIONS.forEach((s) => {
-      const card = el("section", "mw-note");
-      card.dataset.section = s.key;
-      card.append(el("h3", "", s.title), el("p", "", s.text));
-      wrap.appendChild(card);
-    });
-    const sign = el("p", "mw-signature");
-    sign.append(el("strong", "", "Santiago Sterling"), el("span", "", "Tecnólogo en Análisis y Desarrollo de Software"));
-    wrap.appendChild(sign);
-    return wrap;
+/* ==========================================================================
+   11 DESARROLLOS E INNOVACIONES
+   ========================================================================== */
+.dev-section {
+  isolation: isolate;
+  background: #000 var(--bg-image) center / cover no-repeat;
+}
+.dev-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.55) 50%, rgba(0, 0, 0, 0.82) 100%);
+}
+.dev-section .section-title { color: #f5f5f7; }
+
+.dev-notice { display: flex; justify-content: center; margin-top: var(--s-5); }
+
+.preview-list { display: grid; gap: var(--s-6); }
+
+.preview-card {
+  position: relative;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--dur-slow) var(--ease), border-color var(--dur) ease;
+}
+.preview-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  height: 40px;
+  padding: 0 var(--s-4);
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.preview-bar .traffic i { width: 11px; height: 11px; }
+.preview-label { font-size: var(--fs-xs); color: rgba(255, 255, 255, 0.75); }
+.preview-bar::after { content: ""; width: 49px; }
+
+.preview-frame {
+  position: relative;
+  height: clamp(240px, 32vw, 340px);
+  background: #0b0b0c;
+}
+.preview-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  pointer-events: none;
+}
+.preview-hint {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity var(--dur) ease;
+}
+.preview-hint span {
+  padding: 10px 18px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+/* Enlace que cubre toda la tarjeta (los iframes no pueden ir dentro de <a>) */
+.preview-link { position: absolute; inset: 0; z-index: 2; border-radius: inherit; }
+.preview-link:focus-visible { outline-offset: -3px; }
+.preview-card:hover { transform: translateY(-4px); border-color: rgba(255, 255, 255, 0.3); }
+.preview-card:hover .preview-hint,
+.preview-card:focus-within .preview-hint { opacity: 1; }
+
+.dev-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-3);
+  margin-top: var(--s-8);
+}
+
+/* ==========================================================================
+   12 COMPETENCIAS: GALERÍA + MODAL DE ICONOS + CIFRAS
+   ========================================================================== */
+.gallery { position: relative; }
+.gallery-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(78%, 720px);
+  gap: var(--s-4);
+  padding-inline: max(var(--gutter), calc((100vw - var(--container-wide)) / 2));
+  scroll-padding-inline: max(var(--gutter), calc((100vw - var(--container-wide)) / 2));
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.gallery-track::-webkit-scrollbar { display: none; }
+
+.gallery-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-4);
+  height: clamp(420px, 62vh, 640px);
+  padding: clamp(24px, 3vw, 40px);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  color: #fff;
+  text-align: left;
+  background: #1d1d1f var(--img) center / cover no-repeat;
+  scroll-snap-align: start;
+  -webkit-tap-highlight-color: transparent;
+}
+.gallery-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.1) 50%, transparent 70%);
+}
+.gallery-card:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; border-radius: var(--r-lg); }
+.gallery-title {
+  font-size: clamp(1.625rem, 1.2rem + 1.6vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.gallery-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--s-3);
+  max-width: calc(var(--container-wide) + var(--gutter) * 2);
+  margin: var(--s-5) auto 0;
+  padding-inline: var(--gutter);
+}
+.paddle {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--text);
+  background: var(--border);
+  transition: background-color var(--dur-fast) ease, opacity var(--dur-fast) ease;
+}
+.paddle:hover:not(:disabled) { background: var(--border-strong); }
+.paddle:disabled { opacity: 0.35; cursor: default; }
+.paddle svg { width: 18px; height: 18px; }
+
+/* Bloque "Datos" */
+.chip-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(32px, 6vw, 72px);
+  max-width: 760px;
+  margin: var(--s-9) auto 0;
+  padding-top: var(--s-7);
+  border-top: 1px solid var(--border);
+}
+.chip-box {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  border-radius: 22px;
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  background: var(--surface);
+  box-shadow: var(--edge);
+}
+.chip-box::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  padding: 3px;
+  border-radius: 25px;
+  background: conic-gradient(from var(--ring-angle), #0071e3, #bf5af2, #ff375f, #ff9f0a, #30d158, #0071e3);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: ringSpin 6s linear infinite;
+}
+@property --ring-angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes ringSpin { to { --ring-angle: 360deg; } }
+.stats-grid { display: flex; gap: clamp(32px, 6vw, 64px); }
+.stat .stat-label { font-size: var(--fs-small); font-weight: 500; color: var(--text-2); }
+.stat-value {
+  margin: 2px 0 4px;
+  font-size: clamp(2.75rem, 2rem + 3vw, 3.75rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  background: linear-gradient(90deg, var(--accent), var(--text));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.stat-description { font-size: 0.9375rem; line-height: 1.4; color: var(--text-2); max-width: 16ch; }
+
+@media (max-width: 560px) {
+  .chip-stats { flex-direction: column; text-align: center; gap: var(--s-6); }
+  .stat-description { margin-inline: auto; }
+}
+
+/* Modal de iconos de competencias */
+#modalSterling {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: var(--overlay);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+#modalSterling.is-open { display: flex; }
+#modalSterling-window {
+  width: 100%;
+  max-width: 680px;
+  border-radius: var(--r-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.96) translateY(8px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+#modalSterling.is-visible #modalSterling-window { opacity: 1; transform: none; }
+/* Los diálogos reciben el foco por código: el contorno sobraría en la ventana completa */
+#modalSterling-window:focus-visible,
+.mac-modal .modal-window:focus-visible,
+.experience-modal .modal-content:focus-visible { outline: none; }
+.ms-titlebar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 var(--s-4);
+  background: var(--finder-bar);
+  border-bottom: 1px solid var(--border);
+}
+#modalSterling-titulo {
+  position: absolute;
+  left: 84px;
+  right: 84px;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-2);
+}
+#modalSterling-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: var(--s-5);
+  max-height: 70vh;
+  padding: var(--s-6) var(--s-5);
+  overflow-y: auto;
+}
+.ms-item { display: flex; flex-direction: column; align-items: center; gap: var(--s-2); }
+.ms-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, 0.08), transparent 60%),
+    var(--tile-bg);
+  border: 1px solid var(--border);
+  box-shadow: var(--edge), var(--shadow-sm);
+  overflow: hidden;
+  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease), border-color 0.45s ease;
+}
+.ms-icon.is-light { background: #f5f5f7; }
+.ms-icon img { width: 44px; height: 44px; object-fit: contain; border-radius: 10px; }
+.ms-icon.is-mono img { filter: var(--mono-filter); }
+.ms-icon.is-light img { filter: none; }
+@media (hover: hover) {
+  .ms-item:hover .ms-icon {
+    transform: translateY(-4px) scale(1.05);
+    border-color: color-mix(in srgb, var(--brand, #0071e3) 55%, transparent);
+    box-shadow: var(--edge), 0 16px 32px -14px color-mix(in srgb, var(--brand, #0071e3) 75%, transparent);
   }
+}
+#modalSterling.is-visible .ms-item { animation: msPop 0.55s var(--ease) both; animation-delay: calc(var(--i, 0) * 35ms + 90ms); }
+@keyframes msPop { from { opacity: 0; transform: translateY(12px) scale(0.92); } }
+.ms-label { font-size: var(--fs-xs); font-weight: 500; color: var(--text-2); text-align: center; line-height: 1.3; }
 
-  function openNotice() {
-    finderWindow.open({
-      mode: "scroll",
-      icon: mwSvg('<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/>'),
-      iconClass: "is-shield",
-      title: "Aviso legal",
-      subtitle: "Protección de datos",
-      label: "Secciones",
-      foot: "Datos ficticios con fines académicos",
-      items: NOTICE_SECTIONS.map(({ key, label, icon }) => ({ key, label, icon })),
-      page: () => ({
-        eyebrow: "Declaración",
-        title: "Confidencialidad y protección de datos",
-        sub: "Aplica a los proyectos y demostraciones de este portafolio.",
-        content: buildNotice(),
-        path: ["Desarrollos", "Aviso de protección de datos"]
-      })
-    });
+/* ==========================================================================
+   13 VISIÓN ACADÉMICA
+   ========================================================================== */
+.vision-section { overflow: hidden; text-align: center; }
+.vision-moon {
+  position: absolute;
+  left: 50%;
+  bottom: -38%;
+  z-index: 0;
+  width: min(1100px, 140vw);
+  max-width: none;
+  transform: translateX(-50%) translateY(var(--moon-y, 0px)) rotate(var(--moon-r, 0deg));
+  opacity: 0.55;
+  pointer-events: none;
+  will-change: transform;
+}
+.vision-section .container { position: relative; z-index: 1; }
+
+.visual {
+  position: relative;
+  max-width: 460px;
+  margin: var(--s-6) auto 0;
+}
+.astronaut { width: 100%; animation: floatAstronaut 7s ease-in-out infinite; }
+@keyframes floatAstronaut {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-24px); }
+}
+
+.tag {
+  position: absolute;
+  width: max-content;
+  max-width: 230px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  text-align: left;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text);
+  background: var(--surface-glass);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+.tag span { display: block; margin-top: 2px; font-size: var(--fs-xs); font-weight: 400; color: var(--text-2); }
+.tag.left-top  { top: 14%; right: 84%; }
+.tag.left-mid  { top: 46%; right: 90%; }
+.tag.right-top { top: 22%; left: 84%; }
+.tag.right-mid { top: 54%; left: 88%; }
+
+.vision-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-4);
+  margin-top: var(--s-6);
+}
+.vision-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-small);
+  color: var(--text-2);
+}
+.vision-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+@media (max-width: 1100px) {
+  .visual { max-width: 680px; }
+  .astronaut { max-width: 340px; margin-inline: auto; }
+  .tags-wrap {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-3);
+    max-width: 640px;
+    margin: var(--s-5) auto 0;
   }
-  $$("[data-open-notice]").forEach((btn) => btn.addEventListener("click", openNotice));
+  .tag { position: static; width: auto; max-width: none; }
+}
+@media (max-width: 520px) {
+  .tags-wrap { grid-template-columns: 1fr; }
+}
 
-  /* ==========================================================================
-     VENTANAS AUXILIARES APPLE UI (usadas en otras páginas)
-     ========================================================================== */
-  ["", "2", "3", "4"].forEach((suffix) => {
-    const id = `appleUI${suffix}`;
-    window[`openAppleUI${suffix}`] = () => {
-      const node = document.getElementById(id);
-      if (!node || !node.classList.contains("hidden")) return;
-      node.classList.remove("hidden");
-      lockScroll();
-    };
-    window[`closeAppleUI${suffix}`] = () => {
-      const node = document.getElementById(id);
-      if (!node || node.classList.contains("hidden")) return;
-      node.classList.add("hidden");
-      unlockScroll();
-    };
-  });
+/* Overlay "En órbita" */
+#orbit-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 120%, #10182b 0%, #000 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur) ease;
+}
+#orbit-overlay.active { opacity: 1; pointer-events: all; }
+#orbit-overlay.fade-out { opacity: 0; transition: opacity 1s ease; }
+.rocket {
+  position: absolute;
+  bottom: -12%;
+  width: 72px;
+  color: #f5f5f7;
+}
+#orbit-overlay.active .rocket { animation: launch 2s var(--ease-in-out) forwards; }
+@keyframes launch {
+  0%   { transform: translateY(0); }
+  75%  { transform: translateY(-80vh); opacity: 1; }
+  100% { transform: translateY(-95vh) scale(0.7); opacity: 0; }
+}
+.code-stream {
+  position: absolute;
+  padding: 0 24px;
+  opacity: 0;
+  color: #30d158;
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.8;
+  text-align: center;
+}
+#orbit-overlay.active .code-stream { animation: fadeIn 1s ease 1.8s forwards; }
 
-  /* ==========================================================================
-     LANZAMIENTO EN ÓRBITA
-     ========================================================================== */
-  let orbitRunning = false;
-  window.launchOrbit = function () {
-    const overlay = document.getElementById("orbit-overlay");
-    if (!overlay || orbitRunning) return;
-    orbitRunning = true;
-    overlay.classList.remove("active", "fade-out");
-    void overlay.offsetWidth; // reinicia las animaciones CSS
-    overlay.classList.add("active");
+/* ==========================================================================
+   14 ESTRATEGIAS
+   ========================================================================== */
+.strategy-list { max-width: 960px; margin-inline: auto; }
+.strategy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: var(--s-6);
+  padding-block: var(--s-7);
+  border-top: 1px solid var(--border);
+}
+.strategy:last-child { border-bottom: 1px solid var(--border); }
+.strategy h3 {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  text-wrap: balance;
+}
+.strategy p {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+@media (max-width: 760px) {
+  .strategy { grid-template-columns: 1fr; gap: var(--s-3); padding-block: var(--s-6); }
+}
 
-    const total = reducedMotion ? 1500 : 5000;
-    setTimeout(() => overlay.classList.add("fade-out"), total - 1000);
-    setTimeout(() => {
-      overlay.classList.remove("active", "fade-out");
-      orbitRunning = false;
-    }, total);
-  };
-  $$("[data-launch-orbit]").forEach((btn) => btn.addEventListener("click", window.launchOrbit));
+/* ==========================================================================
+   15 CONTACTO
+   ========================================================================== */
+.contact-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: clamp(32px, 6vw, 72px);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+.contact-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(60% 70% at 15% 0%, rgba(0, 113, 227, 0.14), transparent 70%),
+    radial-gradient(60% 70% at 85% 0%, rgba(168, 85, 247, 0.12), transparent 70%);
+  pointer-events: none;
+}
+.contact-card h3 {
+  font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+.contact-card p { max-width: 34rem; margin: var(--s-4) auto 0; color: var(--text-2); font-size: var(--fs-lead); line-height: 1.45; }
+.contact-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-3); margin-top: var(--s-6); }
+.contact-card .contact-note { margin-top: var(--s-5); font-size: var(--fs-small); color: var(--text-3); }
 
-  /* ==========================================================================
-     VISOR DE IMÁGENES (usado en otras páginas)
-     ========================================================================== */
-  let images = [];
-  let currentImageIndex = 0;
-  let imageModalOpen = false;
+/* ==========================================================================
+   16 FOOTER
+   ========================================================================== */
+.site-footer {
+  padding: var(--s-8) 0 calc(var(--s-7) + env(safe-area-inset-bottom));
+  background: #f5f5f7;
+  font-size: var(--fs-small);
+  color: var(--text-2);
+}
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-6);
+  padding-bottom: var(--s-6);
+  border-bottom: 1px solid var(--border);
+}
+.footer-name { font-size: 1.0625rem; font-weight: 600; color: var(--text); letter-spacing: -0.02em; }
+.footer-tagline { margin-top: 4px; }
+.footer-nav ul { display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-5); }
+.footer-nav a { display: inline-block; padding: 6px 0; transition: color var(--dur-fast) ease; }
+.footer-nav a:hover { color: var(--text); }
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-top: var(--s-5);
+}
+.socials { display: flex; gap: var(--s-1); }
+.socials a { color: var(--text-2); }
+.socials a:hover { color: var(--text); }
 
-  window.openImageModal = function (imageArray, startIndex = 0) {
-    images = imageArray;
-    currentImageIndex = startIndex;
-    if (!imageModalOpen) {
-      imageModalOpen = true;
-      lockScroll();
-      document.addEventListener("keydown", handleImageKeys);
-    }
-    renderImageModal();
-  };
+/* ==========================================================================
+   17 VENTANAS macOS TAHOE: Experiencia, Formación, aviso y Competencias (las construye script20.js)
+   Vidrio líquido: ventana translúcida con esquinas amplias, barra lateral
+   flotante, cápsulas de vidrio en la barra de herramientas, borde de
+   desplazamiento difuminado y semáforo funcional.
+   ========================================================================== */
+.experience-modal {
+  --glass: rgba(246, 246, 249, 0.72);
+  --glass-strong: rgba(255, 255, 255, 0.62);
+  --glass-line: rgba(255, 255, 255, 0.75);
+  --hairline: rgba(0, 0, 0, 0.08);
+  --mw-text: #1d1d1f;
+  --mw-text-2: #6e6e73;
+  --mw-accent: #0071e3;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  color: var(--mw-text);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+.experience-modal.active { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity 0.3s ease; }
+.experience-modal .modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 15, 20, 0.28);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
 
-  function renderImageModal() {
-    document.getElementById("imageModal")?.remove();
-    const img = images[currentImageIndex];
-    if (!img) return;
-    const isFirst = currentImageIndex === 0;
-    const isLast = currentImageIndex === images.length - 1;
+/* --- Ventana --- */
+.mac-window {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  width: min(980px, 100%);
+  height: min(680px, calc(100svh - 48px));
+  padding: 8px;
+  border-radius: 26px;
+  background: var(--glass);
+  backdrop-filter: blur(48px) saturate(190%);
+  -webkit-backdrop-filter: blur(48px) saturate(190%);
+  box-shadow:
+    inset 0 0 0 1px var(--glass-line),
+    0 0 0 0.5px rgba(0, 0, 0, 0.18),
+    0 22px 70px -10px rgba(0, 0, 0, 0.35),
+    0 8px 24px -8px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  transform-origin: 50% 100%;
+  transition:
+    width 0.55s var(--ease),
+    height 0.55s var(--ease),
+    border-radius 0.55s var(--ease),
+    transform 0.42s cubic-bezier(0.55, 0, 0.75, 0.2),
+    opacity 0.42s ease;
+}
+.mac-window:focus-visible { outline: none; }
+.experience-modal.active .mac-window { animation: mwOpen 0.5s cubic-bezier(0.2, 0.9, 0.25, 1.05); }
+@keyframes mwOpen {
+  from { opacity: 0; transform: translateY(18px) scale(0.94); filter: blur(6px); }
+  to   { opacity: 1; transform: none; filter: none; }
+}
+/* Ampliar (botón verde) */
+.mac-window.is-zoomed {
+  width: calc(100vw - 24px);
+  height: calc(100svh - 24px);
+  border-radius: 22px;
+}
+/* Minimizar (botón amarillo): se encoge hacia abajo */
+.mac-window.is-minimizing {
+  transform: translateY(46vh) scale(0.08, 0.04);
+  opacity: 0;
+}
 
-    const modal = document.createElement("div");
-    modal.id = "imageModal";
-    modal.setAttribute("role", "dialog");
-    modal.setAttribute("aria-modal", "true");
-    modal.className = "fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm";
-    modal.innerHTML = `
-      <div class="relative max-w-7xl w-full h-full flex items-center justify-center p-4">
-        <button type="button" data-action="close" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all backdrop-blur-sm z-10" aria-label="Cerrar">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-        <button type="button" data-action="prev" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all ${isFirst ? "opacity-50 cursor-not-allowed" : ""}" ${isFirst ? "disabled" : ""} aria-label="Imagen anterior">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-        </button>
-        <img class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain">
-        <button type="button" data-action="next" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all ${isLast ? "opacity-50 cursor-not-allowed" : ""}" ${isLast ? "disabled" : ""} aria-label="Imagen siguiente">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </button>
-        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 px-4 py-2 rounded-lg">
-          <p class="text-slate-300 text-sm">${currentImageIndex + 1} / ${images.length}<span class="hidden md:inline"> · Usa ← → para navegar</span> · ESC para cerrar</p>
-        </div>
-      </div>`;
-    const imgEl = $("img", modal);
-    imgEl.src = img.src;
-    imgEl.alt = img.alt || "";
-    modal.addEventListener("click", (e) => {
-      const action = e.target.closest("[data-action]")?.dataset.action;
-      if (action === "close" || e.target === modal || e.target === modal.firstElementChild) window.closeImageModal();
-      else if (action === "prev") window.previousImage();
-      else if (action === "next") window.nextImage();
-    });
-    document.body.appendChild(modal);
+/* --- Barra lateral flotante de vidrio --- */
+.mw-sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 16px 12px 14px;
+  border-radius: 19px;
+  background: var(--glass-strong);
+  box-shadow: inset 0 0 0 1px var(--glass-line), 0 1px 3px rgba(0, 0, 0, 0.06), 0 10px 30px -14px rgba(0, 0, 0, 0.18);
+  overflow-y: auto;
+}
+
+/* Semáforo */
+.mw-traffic { display: flex; gap: 9px; padding: 2px 6px 0; }
+.tl {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.18);
+  transition: filter var(--dur-fast) ease;
+}
+.tl::after { content: ""; position: absolute; inset: -6px; }
+.tl-close { background: #ff5f57; }
+.tl-min   { background: #febc2e; }
+.tl-zoom  { background: #28c840; }
+.tl svg {
+  width: 10px;
+  height: 10px;
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.55);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.tl-zoom svg { stroke-width: 2; }
+.mw-traffic:hover .tl svg,
+.mw-traffic:focus-within .tl svg { opacity: 1; }
+.tl:active { filter: brightness(0.85); }
+.tl:focus-visible { outline: 2px solid var(--mw-accent); outline-offset: 2px; border-radius: 50%; }
+/* Ventana sin foco del sistema: semáforo gris cuando el puntero sale */
+@media (hover: hover) {
+  .mac-window:not(:hover):not(:focus-within) .tl { background: #d4d4d8; box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.1); }
+}
+
+/* Identidad de la empresa */
+.mw-identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 4px 18px;
+}
+.mac-window .modal-logo-wrapper {
+  position: static;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: #fff;
+  border: 0;
+  overflow: hidden;
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.12), 0 4px 12px -4px rgba(0, 0, 0, 0.25);
+}
+.mac-window .modal-logo-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+.mw-identity-text { min-width: 0; }
+.mac-window .modal-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+.mac-window .modal-duration {
+  margin-top: 2px;
+  font-size: 0.75rem;
+  color: var(--mw-text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.mw-sidebar-label {
+  padding: 0 10px 6px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: rgba(60, 60, 67, 0.55);
+}
+.mw-nav { display: grid; gap: 2px; }
+.mw-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 34px;
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--mw-text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.mw-nav-item[hidden] { display: none; }
+.mw-nav-item svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: var(--mw-accent);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mw-nav-item:hover { background: rgba(0, 0, 0, 0.05); }
+.mw-nav-item.is-active { background: rgba(0, 0, 0, 0.075); font-weight: 600; }
+.mw-nav-item:focus-visible { outline: 2px solid var(--mw-accent); outline-offset: -2px; border-radius: 10px; }
+.mw-sidebar-foot {
+  margin-top: auto;
+  padding: 12px 10px 0;
+  font-size: 0.6875rem;
+  color: rgba(60, 60, 67, 0.55);
+}
+
+/* --- Área de contenido --- */
+.mw-main {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+  border-radius: 19px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+}
+
+/* Barra de herramientas flotante sobre el contenido */
+.mw-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  pointer-events: none;
+}
+.mw-toolbar > * { pointer-events: auto; }
+/* Borde de desplazamiento: el contenido se difumina bajo la barra */
+.mw-main::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  height: 76px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  -webkit-mask-image: linear-gradient(180deg, #000 45%, transparent);
+  mask-image: linear-gradient(180deg, #000 45%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.mac-window.is-scrolled .mw-main::before { opacity: 1; }
+
+.mw-capsule {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 0 0 0.5px rgba(0, 0, 0, 0.12),
+    0 6px 16px -6px rgba(0, 0, 0, 0.22);
+}
+.mw-sep { width: 1px; height: 16px; background: rgba(0, 0, 0, 0.12); }
+.mw-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 30px;
+  border-radius: 999px;
+  color: var(--mw-text);
+  transition: background-color 0.2s ease;
+}
+.mw-icon-btn:hover { background: rgba(0, 0, 0, 0.06); }
+.mw-icon-btn svg,
+.mw-capsule-link svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mw-capsule-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px 0 10px;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--mw-accent);
+  transition: background-color 0.2s ease;
+}
+.mw-capsule-link:hover { background: rgba(0, 113, 227, 0.1); }
+.mw-icon-btn:focus-visible,
+.mw-capsule-link:focus-visible { outline: 2px solid var(--mw-accent); outline-offset: 1px; border-radius: 999px; }
+.mw-toolbar-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.3s ease, transform 0.3s var(--ease);
+}
+.mac-window.is-scrolled .mw-toolbar-title { opacity: 1; transform: none; }
+
+/* Cuerpo desplazable */
+.mac-window .modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.mac-window .modal-body.is-switching { animation: mwSwitch 0.45s var(--ease); }
+@keyframes mwSwitch { from { opacity: 0; transform: translateY(8px); } }
+
+.mac-window .modal-logo-cover {
+  position: relative;
+  height: 250px;
+  margin: 8px 8px 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #e8e8ed;
+}
+.mac-window .modal-logo-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 40%, transparent 65%, rgba(0, 0, 0, 0.35));
+}
+.mac-window .modal-cover-image { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+.mw-cover-badge {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px 6px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+.mw-cover-badge::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--exp-accent, #0071e3);
+}
+.mw-cover-badge:empty { display: none; }
+
+.mac-window .modal-details { padding: 24px clamp(18px, 3vw, 32px) 32px; }
+.mac-window .detail-section { margin-bottom: 28px; }
+.mac-window .detail-section:last-child { margin-bottom: 0; }
+.mac-window .detail-section[hidden] { display: none; }
+.mac-window .detail-role {
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+.mac-window .detail-description {
+  margin-top: 10px;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--mw-text-2);
+}
+.mac-window .detail-subtitle {
+  margin: 0 0 8px 14px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--mw-text-2);
+}
+
+/* Lista agrupada estilo Ajustes del Sistema */
+.mw-group {
+  list-style: none;
+  border-radius: 14px;
+  background: rgba(118, 118, 128, 0.07);
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+.mw-group li {
+  position: relative;
+  padding: 12px 16px 12px 42px;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--mw-text);
+}
+.mw-group li + li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 42px;
+  right: 0;
+  height: 0.5px;
+  background: rgba(0, 0, 0, 0.12);
+}
+.mw-group li::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M4 7.2l2 2 4-4.4' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat,
+    var(--mw-accent);
+}
+.achievement-list.mw-group li::before { background-color: #30d158; }
+
+.mac-window .skills-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.mac-window .skill-tag {
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--mw-text);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 0 0.5px rgba(0, 0, 0, 0.12), 0 2px 6px -2px rgba(0, 0, 0, 0.12);
+}
+
+/* Barra de ruta (Finder) */
+.mw-pathbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  min-width: 0;
+  height: 30px;
+  padding: 0 16px;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.08);
+  font-size: 0.6875rem;
+  color: var(--mw-text-2);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.mw-pathbar span { overflow: hidden; text-overflow: ellipsis; }
+.mw-pathbar span:last-child { color: var(--mw-text); font-weight: 500; }
+.mw-pathbar i {
+  flex-shrink: 0;
+  width: 5px;
+  height: 5px;
+  border-top: 1.2px solid currentColor;
+  border-right: 1.2px solid currentColor;
+  transform: rotate(45deg);
+  opacity: 0.6;
+}
+
+/* --- Tableta y móvil: la barra lateral pasa arriba como cabecera --- */
+@media (max-width: 760px) {
+  .experience-modal { padding: 0; align-items: flex-end; }
+  .mac-window,
+  .mac-window.is-zoomed {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    width: 100%;
+    height: 94svh;
+    padding: 6px;
+    border-radius: 26px 26px 0 0;
   }
-
-  window.nextImage = function () {
-    if (currentImageIndex < images.length - 1) {
-      currentImageIndex++;
-      renderImageModal();
-    }
-  };
-  window.previousImage = function () {
-    if (currentImageIndex > 0) {
-      currentImageIndex--;
-      renderImageModal();
-    }
-  };
-  window.closeImageModal = function () {
-    document.getElementById("imageModal")?.remove();
-    if (!imageModalOpen) return;
-    imageModalOpen = false;
-    unlockScroll();
-    document.removeEventListener("keydown", handleImageKeys);
-  };
-  function handleImageKeys(e) {
-    if (e.key === "ArrowRight") window.nextImage();
-    else if (e.key === "ArrowLeft") window.previousImage();
-    else if (e.key === "Escape") window.closeImageModal();
+  .experience-modal.active .mac-window { animation: mwSheet 0.5s cubic-bezier(0.2, 0.9, 0.25, 1); }
+  @keyframes mwSheet { from { transform: translateY(40%); opacity: 0; } }
+  .tl-zoom { display: none; }
+  .mw-sidebar {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 12px 14px;
+    padding: 14px 12px 10px;
+    overflow: visible;
   }
-
-  /* Compatibilidad: vistas previas antiguas con data-url */
-  window.expandWebPreview = function (element) {
-    const url = element?.getAttribute("data-url");
-    if (url) window.location.href = url;
-  };
-
-  /* ==========================================================================
-     COMPETENCIAS: GALERÍA CON CONTROLES
-     ========================================================================== */
-  // Carruseles horizontales (Experiencia y Competencias): deslizar en móvil,
-  // botones anterior/siguiente en PC. Cada .gallery controla solo su pista.
-  (function initGalleries() {
-    $$(".gallery").forEach((gallery) => {
-      const track = $(".gallery-track", gallery);
-      const paddles = $$(".paddle", gallery);
-      if (!track || !paddles.length) return;
-
-      const step = () => {
-        const card = track.firstElementChild;
-        if (!card) return track.clientWidth;
-        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-        return card.getBoundingClientRect().width + gap;
-      };
-
-      const update = () => {
-        const max = track.scrollWidth - track.clientWidth - 2;
-        paddles.forEach((p) => {
-          const dir = Number(p.dataset.dir);
-          p.disabled = dir < 0 ? track.scrollLeft <= 2 : track.scrollLeft >= max;
-        });
-      };
-
-      paddles.forEach((p) =>
-        p.addEventListener("click", () => {
-          track.scrollBy({ left: Number(p.dataset.dir) * step(), behavior: reducedMotion ? "auto" : "smooth" });
-        })
-      );
-      track.addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });
-      window.addEventListener("resize", update, { passive: true });
-      update();
-    });
-  })();
-
-  /* ==========================================================================
-     COMPETENCIAS: MODAL DE ICONOS
-     ========================================================================== */
-  // icon: ruta dentro de Devicon · img: URL propia · brand: color de marca (brillo al pasar el cursor)
-  // mono: logos oscuros que se invierten en modo oscuro · tile "light": fondo claro para íconos a color sobre blanco
-  const CATEGORIAS = {
-    lenguajes: {
-      titulo: "Lenguajes de programación",
-      tipo: "Lenguaje",
-      items: [
-        { icon: "javascript/javascript-original.svg", label: "JavaScript", brand: "#f7df1e" },
-        { icon: "typescript/typescript-original.svg", label: "TypeScript", brand: "#3178c6" },
-        { icon: "python/python-original.svg", label: "Python", brand: "#3776ab" },
-        { icon: "csharp/csharp-original.svg", label: "C#", brand: "#9b4f96" },
-        { icon: "microsoftsqlserver/microsoftsqlserver-plain.svg", label: "SQL", brand: "#cc2927" },
-        { icon: "visualbasic/visualbasic-original.svg", label: "Visual Basic", brand: "#5c2d91" }
-      ]
-    },
-    herramientas: {
-      titulo: "Herramientas",
-      tipo: "Herramienta",
-      items: [
-        { icon: "html5/html5-original.svg", label: "HTML", brand: "#e34f26" },
-        { icon: "css3/css3-original.svg", label: "CSS", brand: "#1572b6" },
-        { icon: "tailwindcss/tailwindcss-original.svg", label: "Tailwind", brand: "#38bdf8" },
-        { icon: "react/react-original.svg", label: "React", brand: "#61dafb" },
-        { icon: "nextjs/nextjs-original.svg", label: "Next.js", brand: "#ffffff" },
-        { icon: "vuejs/vuejs-original.svg", label: "Vue", brand: "#42b883" },
-        { icon: "angular/angular-original.svg", label: "Angular", brand: "#dd0031" },
-        { icon: "nodejs/nodejs-original.svg", label: "Node.js", brand: "#5fa04e" },
-        { icon: "django/django-plain.svg", label: "Django", brand: "#44b78b", mono: true },
-        { icon: "fastapi/fastapi-original.svg", label: "FastAPI", brand: "#009688" },
-        { icon: "dotnetcore/dotnetcore-original.svg", label: ".NET", brand: "#512bd4" },
-        { icon: "postgresql/postgresql-original.svg", label: "PostgreSQL", brand: "#4169e1" },
-        { icon: "mysql/mysql-original.svg", label: "MySQL", brand: "#4479a1" },
-        { icon: "docker/docker-original.svg", label: "Docker", brand: "#2496ed" }
-      ]
-    },
-    extras: {
-      titulo: "Habilidades extra",
-      tipo: "Habilidad",
-      items: [
-        { icon: "github/github-original.svg", label: "GitHub", brand: "#ffffff", mono: true },
-        { icon: "git/git-original.svg", label: "Git", brand: "#f05032" },
-        { icon: "wordpress/wordpress-plain.svg", label: "WordPress", brand: "#21759b", mono: true },
-        { img: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Excel.jpg?raw=true", label: "Excel avanzado", brand: "#217346" },
-        { icon: "photoshop/photoshop-original.svg", label: "Photoshop", brand: "#31a8ff" },
-        { icon: "illustrator/illustrator-plain.svg", label: "Illustrator", brand: "#ff9a00" },
-        { img: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20Power%20BI.jpg?raw=true", label: "Power BI", brand: "#f2c811" },
-        { img: "https://github.com/Santiago131440/Imagenes-Comparaci-n-de-datos/blob/main/Logo%20de%20DAX.jpg?raw=true", label: "DAX", brand: "#f2c811" }
-      ]
-    },
-    interpersonal: {
-      titulo: "Inteligencia interpersonal",
-      tile: "light",
-      items: [
-        { img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXrPUwJ6tW0KozNRbo0cRYNbdoiH5wln83Dg&s", label: "Trabajo en equipo" },
-        { img: "https://images.seeklogo.com/logo-png/42/2/scrum-logo-png_seeklogo-428358.png", label: "Scrum" },
-        { img: "https://w7.pngwing.com/pngs/921/147/png-transparent-public-relations-communication-organization-marketing-logo-las-service-industry-marketing-plan.png", label: "Comunicación" },
-        { img: "https://cdn-icons-png.flaticon.com/512/860/860430.png", label: "Liderazgo" },
-        { img: "https://cdn-icons-png.freepik.com/512/17772/17772810.png", label: "Responsabilidad" },
-        { img: "https://cdn-icons-png.flaticon.com/512/5526/5526196.png", label: "Pensamiento crítico" },
-        { img: "https://cdn-icons-png.freepik.com/512/1838/1838332.png", label: "Resolución de problemas" },
-        { img: "https://cdn-icons-png.freepik.com/256/12316/12316790.png", label: "Adaptabilidad" },
-        { img: "https://cdn-icons-png.freepik.com/512/18290/18290950.png", label: "Atención al detalle" }
-      ]
-    }
-  };
-  const logoSrc = (item) => (item.icon ? DEVICON + item.icon : item.img);
-
-  function buildIconItem(item, i, tile) {
-    const node = el("div", "ms-item");
-    node.style.setProperty("--i", i);
-    if (item.brand) node.style.setProperty("--brand", item.brand);
-    const icon = el("div", "ms-icon");
-    if (tile === "light") icon.classList.add("is-light");
-    if (item.mono) icon.classList.add("is-mono");
-    const image = document.createElement("img");
-    image.src = logoSrc(item);
-    image.alt = "";
-    image.loading = "lazy";
-    // Si el ícono remoto falla, se muestra la inicial en lugar de una imagen rota
-    image.addEventListener("error", () => icon.replaceChildren(el("span", "ms-fallback", item.label.charAt(0))), { once: true });
-    icon.appendChild(image);
-    node.append(icon, el("span", "ms-label", item.label));
-    return node;
+  .mw-traffic { grid-column: 1; grid-row: 1; padding: 0 2px; }
+  .mw-identity { grid-column: 2; grid-row: 1; margin: 0; }
+  .mac-window .modal-logo-wrapper { width: 36px; height: 36px; border-radius: 10px; }
+  .mw-sidebar-label,
+  .mw-sidebar-foot { display: none; }
+  .mw-nav {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-inline: -4px;
+    padding-inline: 4px;
   }
-
-  const SKILL_ICONS = {
-    lenguajes: mwSvg('<path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>'),
-    herramientas: mwSvg('<path d="M14.7 6.3a4 4 0 0 0-5.4 5.3L4 16.9 7.1 20l5.3-5.3a4 4 0 0 0 5.3-5.4l-2.4 2.4-2.6-.6-.6-2.6z"/>'),
-    extras: mwSvg('<path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2"/><circle cx="12" cy="12" r="2.5"/>'),
-    interpersonal: mwSvg('<circle cx="9" cy="8.5" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9.5" r="2.4"/><path d="M15.5 14.2A4.5 4.5 0 0 1 21 18.5"/>')
-  };
-
-  window.abrirModalSterling = function (categoria) {
-    if (!CATEGORIAS[categoria]) return;
-    const keys = Object.keys(CATEGORIAS);
-    const total = keys.reduce((sum, k) => sum + CATEGORIAS[k].items.length, 0);
-    skillsWindow.open({
-      icon: mwSvg('<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>'),
-      iconClass: "is-grid",
-      title: "Competencias",
-      subtitle: "Metodológicas",
-      label: "Categorías",
-      foot: `${total} herramientas y habilidades`,
-      items: keys.map((k) => ({ key: k, label: CATEGORIAS[k].titulo, icon: SKILL_ICONS[k] || "" })),
-      initial: categoria,
-      page: (k) => {
-        const data = CATEGORIAS[k];
-        const grid = el("div", "mw-app-grid");
-        grid.append(...data.items.map((item, i) => buildIconItem(item, i, data.tile)));
-        return {
-          eyebrow: "Categoría",
-          title: data.titulo,
-          sub: `${data.items.length} elementos`,
-          content: grid,
-          path: ["Competencias", data.titulo]
-        };
-      }
-    });
-  };
-  window.cerrarModalSterling = () => skillsWindow.close();
-
-  $$(".gallery-card[data-category]").forEach((card) =>
-    card.addEventListener("click", () => window.abrirModalSterling(card.dataset.category))
-  );
-
-  /* ==========================================================================
-     EXPERIENCIA: MODAL CON DATOS POR EMPRESA
-     Completa "achievements" con resultados medibles; si un arreglo queda
-     vacío, esa sección se oculta automáticamente.
-     ========================================================================== */
-  const EXPERIENCE_DETAILS = {
-    "Cosmoagro S.A.": {
-      responsibilities: [
-        "Seguimiento y análisis de indicadores KPI de producción",
-        "Optimización de procesos y mejora continua de la eficiencia operativa",
-        "Control de calidad y continuidad de la operación en planta"
-      ],
-      achievements: [],
-      skills: ["Análisis de KPI", "Mejora continua", "Control de producción", "Análisis de datos"]
-    },
-    "Coca-Cola FEMSA": {
-      responsibilities: [
-        "Control de procesos productivos",
-        "Mejora continua y gestión eficiente de la operación",
-        "Seguimiento del cumplimiento de calidad del producto"
-      ],
-      achievements: [],
-      skills: ["Control de procesos", "Calidad", "Mejora continua", "Productividad"]
-    },
-    "Cadena S.A.": {
-      responsibilities: [
-        "Liderazgo de equipos de producción",
-        "Aseguramiento del cumplimiento del plan de producción",
-        "Optimización de procesos con énfasis en calidad, seguridad y eficiencia"
-      ],
-      achievements: [],
-      skills: ["Liderazgo", "Planeación de producción", "Seguridad industrial", "Calidad"]
-    },
-    "Postobón S.A.": {
-      responsibilities: [
-        "Optimización de flujos de trabajo",
-        "Reducción de desperdicios en el proceso",
-        "Análisis de datos operativos para la toma de decisiones"
-      ],
-      achievements: [],
-      skills: ["Lean Manufacturing", "Reducción de desperdicios", "Análisis de datos"]
-    },
-    "Laboratorios OSA S.A.S": {
-      responsibilities: [
-        "Gestión de indicadores de producción",
-        "Optimización de procesos productivos",
-        "Estabilidad, eficiencia y calidad de la operación"
-      ],
-      achievements: [],
-      skills: ["Gestión de indicadores", "Optimización de procesos", "Calidad"]
-    },
-    "Smurfit Westrock S.A.": {
-      responsibilities: [
-        "Seguimiento de la producción en planta",
-        "Control de tiempos de proceso",
-        "Mejora de la eficiencia en cada etapa productiva"
-      ],
-      achievements: [],
-      skills: ["Control de tiempos", "Eficiencia operativa", "Seguimiento en planta"]
-    }
-  };
-
-  /* Ventana estilo macOS Tahoe: barra lateral de vidrio flotante, semáforo
-     funcional (cerrar, minimizar, ampliar), barra de herramientas en
-     cápsulas de vidrio, navegación entre empresas y barra de ruta. */
-  const ICONS = {
-    summary: '<path d="M4 5h16M4 10h16M4 15h10M4 20h7"/>',
-    responsibilities: '<path d="M9 6h11M9 12h11M9 18h11"/><path d="m3.5 6 1.2 1.2L7 5M3.5 12l1.2 1.2L7 11M3.5 18l1.2 1.2L7 17"/>',
-    achievements: '<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"/>',
-    skills: '<path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/>'
-  };
-  const svgIcon = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
-
-  class ExperienceModal {
-    constructor() {
-      this.modal = null;
-      this.content = null;
-      this.body = null;
-      this.cards = $$(".experiencia-card");
-      this.index = 0;
-      this.isOpen = false;
-      this.returnFocus = null;
-      this.build();
-      this.bind();
-    }
-
-    build() {
-      this.modal = document.createElement("div");
-      this.modal.id = "experienceModal";
-      this.modal.className = "experience-modal";
-      this.modal.setAttribute("aria-hidden", "true");
-      const navItem = (key, label) =>
-        `<button type="button" class="mw-nav-item" data-target="${key}">${svgIcon(ICONS[key])}<span>${label}</span></button>`;
-      this.modal.innerHTML = `
-        <div class="modal-overlay" data-close></div>
-        <div class="modal-content mac-window" role="dialog" aria-modal="true" aria-labelledby="expModalRole" aria-describedby="expModalDescription" tabindex="-1">
-          <aside class="mw-sidebar">
-            <div class="mw-traffic">
-              <button type="button" class="tl tl-close" data-close aria-label="Cerrar ventana">${svgIcon('<path d="M8 8l8 8M16 8l-8 8"/>')}</button>
-              <button type="button" class="tl tl-min" data-minimize aria-label="Minimizar ventana">${svgIcon('<path d="M7 12h10"/>')}</button>
-              <button type="button" class="tl tl-zoom" data-zoom aria-label="Ampliar ventana" aria-pressed="false">${svgIcon('<path d="M8 15V8h7M16 9v7H9" />')}</button>
-            </div>
-            <div class="mw-identity">
-              <div class="modal-logo-wrapper"><img id="expModalLogo" alt=""></div>
-              <div class="mw-identity-text">
-                <p id="expModalCompany" class="modal-title"></p>
-                <p id="expModalDuration" class="modal-duration"></p>
-              </div>
-            </div>
-            <p class="mw-sidebar-label">Contenido</p>
-            <nav class="mw-nav" aria-label="Secciones de la experiencia">
-              ${navItem("summary", "Resumen")}
-              ${navItem("responsibilities", "Responsabilidades")}
-              ${navItem("achievements", "Logros")}
-              ${navItem("skills", "Habilidades")}
-            </nav>
-            <p class="mw-sidebar-foot"><span id="expModalCount"></span></p>
-          </aside>
-
-          <div class="mw-main">
-            <header class="mw-toolbar">
-              <div class="mw-capsule mw-history">
-                <button type="button" class="mw-icon-btn" data-step="-1" aria-label="Experiencia anterior">${svgIcon('<path d="m14.5 5-7 7 7 7"/>')}</button>
-                <span class="mw-sep" aria-hidden="true"></span>
-                <button type="button" class="mw-icon-btn" data-step="1" aria-label="Experiencia siguiente">${svgIcon('<path d="m9.5 5 7 7-7 7"/>')}</button>
-              </div>
-              <p class="mw-toolbar-title" id="expToolbarTitle" aria-hidden="true"></p>
-              <div class="mw-capsule">
-                <a class="mw-capsule-link" href="${LINKEDIN_URL}" target="_blank" rel="noopener">${svgIcon('<path d="M7 17 17 7M9 7h8v8"/>')}<span>LinkedIn</span></a>
-              </div>
-            </header>
-
-            <div class="modal-body">
-              <div class="modal-logo-cover">
-                <img id="expModalCover" alt="" class="modal-cover-image">
-                <span class="mw-cover-badge" id="expModalSector"></span>
-              </div>
-              <div class="modal-details">
-                <section class="detail-section" data-section="summary">
-                  <h2 id="expModalRole" class="detail-role"></h2>
-                  <p id="expModalDescription" class="detail-description"></p>
-                </section>
-                <section class="detail-section" data-section="responsibilities">
-                  <h3 class="detail-subtitle">Responsabilidades</h3>
-                  <ul class="mw-group responsibility-list"></ul>
-                </section>
-                <section class="detail-section" data-section="achievements">
-                  <h3 class="detail-subtitle">Logros</h3>
-                  <ul class="mw-group achievement-list"></ul>
-                </section>
-                <section class="detail-section" data-section="skills">
-                  <h3 class="detail-subtitle">Habilidades aplicadas</h3>
-                  <div class="skills-tags"></div>
-                </section>
-              </div>
-            </div>
-
-            <footer class="mw-pathbar" aria-hidden="true">
-              <span>Experiencia</span><i></i><span id="expPathCompany"></span><i></i><span id="expPathRole"></span>
-            </footer>
-          </div>
-        </div>`;
-      document.body.appendChild(this.modal);
-      this.content = $(".modal-content", this.modal);
-      this.body = $(".modal-body", this.modal);
-    }
-
-    bind() {
-      this.cards.forEach((card, i) => card.addEventListener("click", () => this.open(i)));
-
-      this.modal.addEventListener("click", (e) => {
-        if (e.target.closest("[data-close]")) return this.close();
-        if (e.target.closest("[data-minimize]")) return this.minimize();
-        const zoom = e.target.closest("[data-zoom]");
-        if (zoom) {
-          const on = this.content.classList.toggle("is-zoomed");
-          zoom.setAttribute("aria-pressed", String(on));
-          zoom.setAttribute("aria-label", on ? "Restaurar tamaño de la ventana" : "Ampliar ventana");
-          return;
-        }
-        const step = e.target.closest("[data-step]");
-        if (step) return this.open((this.index + Number(step.dataset.step) + this.cards.length) % this.cards.length);
-        const nav = e.target.closest(".mw-nav-item");
-        if (nav) {
-          const target = $(`[data-section="${nav.dataset.target}"]`, this.modal);
-          this.body.scrollTo({ top: nav.dataset.target === "summary" ? 0 : target.offsetTop - 72, behavior: reducedMotion ? "auto" : "smooth" });
-        }
-      });
-
-      // Flechas del teclado para pasar de empresa (fuera de campos de texto)
-      this.modal.addEventListener("keydown", (e) => {
-        if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
-        if (e.target.closest(".mw-nav")) return;
-        this.open((this.index + (e.key === "ArrowRight" ? 1 : -1) + this.cards.length) % this.cards.length);
-      });
-
-      // Resalta en la barra lateral la sección visible y activa el borde de desplazamiento
-      this.body.addEventListener("scroll", () => requestAnimationFrame(() => this.syncNav()), { passive: true });
-    }
-
-    syncNav() {
-      const top = this.body.scrollTop;
-      this.content.classList.toggle("is-scrolled", top > 8);
-      let current = "summary";
-      $$(".detail-section:not([hidden])", this.modal).forEach((s) => {
-        if (s.offsetTop - 120 <= top) current = s.dataset.section;
-      });
-      if (top + this.body.clientHeight >= this.body.scrollHeight - 4) {
-        const visible = $$(".detail-section:not([hidden])", this.modal);
-        current = visible[visible.length - 1]?.dataset.section || current;
-      }
-      $$(".mw-nav-item", this.modal).forEach((b) => {
-        const on = b.dataset.target === current;
-        b.classList.toggle("is-active", on);
-        if (on) b.setAttribute("aria-current", "true");
-        else b.removeAttribute("aria-current");
-      });
-    }
-
-    fillList(section, items, tag, className) {
-      const wrapper = $(`[data-section="${section}"]`, this.modal);
-      wrapper.lastElementChild.replaceChildren(...items.map((text) => el(tag, className, text)));
-      wrapper.hidden = items.length === 0;
-      const nav = $(`.mw-nav-item[data-target="${section}"]`, this.modal);
-      if (nav) nav.hidden = items.length === 0;
-    }
-
-    open(i) {
-      const card = this.cards[i];
-      if (!card) return;
-      this.index = i;
-      const company = card.dataset.company || $(".card-company", card)?.textContent.trim() || "";
-      const role = $(".card-role", card)?.textContent.trim() || "";
-      const details = EXPERIENCE_DETAILS[company] || { responsibilities: [], achievements: [], skills: [] };
-
-      this.content.style.setProperty("--exp-accent", getComputedStyle(card).getPropertyValue("--accent-color").trim() || "#0071e3");
-      $("#expModalCompany", this.modal).textContent = company;
-      $("#expModalDuration", this.modal).textContent = card.dataset.duration || "";
-      $("#expModalRole", this.modal).textContent = role;
-      $("#expModalDescription", this.modal).textContent = $(".card-description", card)?.textContent.trim() || "";
-      $("#expModalSector", this.modal).textContent = $(".card-eyebrow", card)?.textContent.trim() || "";
-      $("#expToolbarTitle", this.modal).textContent = company;
-      $("#expPathCompany", this.modal).textContent = company;
-      $("#expPathRole", this.modal).textContent = role;
-      $("#expModalCount", this.modal).textContent = `${i + 1} de ${this.cards.length} empresas`;
-      $("#expModalCover", this.modal).src = $(".cover-image", card)?.src || "";
-      const logo = $("#expModalLogo", this.modal);
-      logo.src = $(".card-logo", card)?.src || "";
-      logo.alt = `Logo de ${company}`;
-
-      this.fillList("responsibilities", details.responsibilities, "li");
-      this.fillList("achievements", details.achievements, "li");
-      this.fillList("skills", details.skills, "span", "skill-tag");
-      this.body.scrollTop = 0;
-      this.syncNav();
-
-      // Transición suave al cambiar de empresa con la ventana abierta
-      if (this.isOpen && !reducedMotion) {
-        this.body.classList.remove("is-switching");
-        void this.body.offsetWidth;
-        this.body.classList.add("is-switching");
-      }
-
-      if (!this.isOpen) {
-        this.returnFocus = document.activeElement;
-        this.isOpen = true;
-        this.content.classList.remove("is-minimizing");
-        this.modal.classList.add("active");
-        this.modal.setAttribute("aria-hidden", "false");
-        pushDialog(this.content, () => this.close());
-        lockScroll();
-        this.content.focus();
-      }
-    }
-
-    minimize() {
-      if (reducedMotion) return this.close();
-      this.content.classList.add("is-minimizing");
-      setTimeout(() => this.close(), 420);
-    }
-
-    close() {
-      if (!this.isOpen) return;
-      this.isOpen = false;
-      this.modal.classList.remove("active");
-      this.modal.setAttribute("aria-hidden", "true");
-      popDialog(this.content);
-      unlockScroll();
-      this.returnFocus?.focus?.();
-      setTimeout(() => {
-        this.content.classList.remove("is-minimizing", "is-zoomed");
-        $("[data-zoom]", this.modal).setAttribute("aria-pressed", "false");
-      }, 320);
-    }
+  .mw-nav::-webkit-scrollbar { display: none; }
+  .mw-nav-item {
+    flex-shrink: 0;
+    min-height: 34px;
+    padding: 0 14px 0 10px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.04);
   }
+  .mw-nav-item.is-active { background: var(--mw-text); color: #fff; }
+  .mw-nav-item.is-active svg { stroke: #fff; }
+  .mw-main { margin: 6px 0 0; border-radius: 19px 19px 0 0; }
+  .mac-window .modal-logo-cover { height: 190px; }
+  .mw-pathbar { padding-bottom: env(safe-area-inset-bottom); height: calc(30px + env(safe-area-inset-bottom)); }
+  .mac-window.is-minimizing { transform: translateY(100%); opacity: 1; }
+}
 
-  window.experienceModal = new ExperienceModal();
+@media (prefers-reduced-motion: reduce) {
+  .experience-modal.active .mac-window,
+  .mac-window .modal-body.is-switching { animation: none; }
+}
 
-  /* Experiencia: tarjeta única + fila de logos. Al pasar o enfocar un logo
-     la tarjeta muestra esa empresa; al hacer clic se abre su ventana. */
-  (function initExpStage() {
-    const stage = $("#expStage");
-    if (!stage) return;
-    const cards = $$(".experiencia-card");
-    const hero = $(".exp-hero", stage);
-    const img = $(".exp-hero-img", stage);
-    const roleEl = $(".exp-hero-role", stage);
-    const companyEl = $(".exp-hero-company", stage);
-    const datesEl = $(".exp-hero-dates", stage);
-    const btns = $$(".exp-logo-btn", stage);
-    const canHover = window.matchMedia("(hover: hover)").matches;
-    let active = 0;
-    let token = 0;
+/* Navegadores sin backdrop-filter: vidrio más opaco para conservar contraste */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .mac-window { background: #f2f2f5; }
+  .mw-capsule { background: #fff; }
+}
 
-    const accentOf = (card) => getComputedStyle(card).getPropertyValue("--accent-color").trim() || "#0071e3";
+/* --- Ventanas genéricas (Formación, aviso de datos, Competencias) --- */
+.mw-generic .mac-window { width: min(920px, 100%); height: min(640px, calc(100svh - 48px)); }
+.mw-traffic--toolbar { display: none; }
+.mac-window.mw-plain { grid-template-columns: minmax(0, 1fr); width: min(680px, 100%); }
+.mac-window.mw-plain .mw-sidebar { display: none; }
+.mac-window.mw-plain .mw-main { margin-left: 0; }
+.mac-window.mw-plain .mw-traffic--toolbar { display: flex; align-self: center; padding: 0 8px 0 6px; }
+.mw-history[hidden] { display: none; }
 
-    const show = (i) => {
-      const card = cards[i];
-      if (!card || i === active) return;
-      active = i;
-      btns.forEach((b, j) => b.classList.toggle("is-active", j === i));
+/* Ícono de la app en la barra lateral */
+.mw-app-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(160deg, #5ac8fa, #0071e3 55%, #5e5ce6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 0 0 0.5px rgba(0, 0, 0, 0.12), 0 4px 12px -4px rgba(0, 0, 0, 0.3);
+}
+.mw-app-icon svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.mw-app-icon.is-shield { background: linear-gradient(160deg, #6ee7b7, #30d158 50%, #0f9f6e); }
+.mw-app-icon.is-grid { background: linear-gradient(160deg, #c4b5fd, #bf5af2 50%, #7c3aed); }
+.mw-app-icon.is-bare { background: none; box-shadow: none; }
+.mw-app-icon.is-bare svg.mw-folder { width: 46px; height: 38px; stroke: none; filter: drop-shadow(0 4px 6px rgba(0, 113, 227, 0.25)); }
+.mw-nav-item svg.mw-folder { width: 19px; height: 16px; stroke: none; }
 
-      const role = $(".card-role", card)?.textContent.trim() || "";
-      const company = card.dataset.company || "";
-      const src = $(".cover-image", card)?.src || "";
-      const apply = () => {
-        img.src = src;
-        roleEl.textContent = role;
-        companyEl.textContent = company;
-        datesEl.textContent = card.dataset.duration || "";
-        hero.setAttribute("aria-label", `Ver detalles: ${role} en ${company}`);
-        stage.style.setProperty("--exp-accent", accentOf(card));
-        hero.classList.remove("is-fading");
-      };
-      if (reducedMotion) return apply();
+/* Página */
+.mw-page { padding: 68px clamp(18px, 3vw, 32px) 32px; }
+.mw-page-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--mw-accent);
+}
+.mw-page-eyebrow:empty { display: none; }
+.mw-page-title {
+  margin-top: 4px;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.mw-page-sub { margin-top: 6px; font-size: 0.9375rem; color: var(--mw-text-2); }
+.mw-page-sub:empty { display: none; }
+.mw-page-content { margin-top: 24px; }
+.mw-page-content .modal-text { font-size: 0.9375rem; line-height: 1.65; color: var(--mw-text-2); white-space: pre-line; }
 
-      const t = ++token;
-      hero.classList.add("is-fading");
-      const pre = new Image();
-      pre.src = src;
-      const ready = pre.decode ? pre.decode().catch(() => {}) : Promise.resolve();
-      Promise.all([ready, new Promise((r) => setTimeout(r, 220))]).then(() => {
-        if (t === token) apply();
-      });
-    };
+/* Documentos de Formación como lista agrupada */
+.mw-docs li.mw-doc {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 14px 16px;
+}
+.mw-docs li.mw-doc::before { display: none; }
+.mw-docs li.mw-doc + li::after { left: 52px; }
+.mw-docs .doc-icon { width: 22px; height: 28px; color: var(--mw-accent); }
+.mw-docs .doc-name { font-size: 0.9375rem; font-weight: 600; line-height: 1.35; color: var(--mw-text); }
+.mw-docs .doc-meta { margin-top: 3px; font-size: 0.8125rem; line-height: 1.5; color: var(--mw-text-2); }
+.mac-window .modal-body.is-switching .mw-doc { animation: mwRow 0.5s var(--ease) both; }
+.mac-window .modal-body.is-switching .mw-doc:nth-child(2) { animation-delay: 30ms; }
+.mac-window .modal-body.is-switching .mw-doc:nth-child(3) { animation-delay: 60ms; }
+.mac-window .modal-body.is-switching .mw-doc:nth-child(n+4) { animation-delay: 90ms; }
+@keyframes mwRow { from { opacity: 0; transform: translateY(6px); } }
 
-    const open = (i) => window.experienceModal?.open(i);
+/* Aviso de datos: tarjetas por sección */
+.mw-notes { display: grid; gap: 12px; }
+.mw-note {
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: rgba(118, 118, 128, 0.07);
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.05);
+}
+.mw-note h3 { font-size: 1rem; font-weight: 600; letter-spacing: -0.015em; }
+.mw-note p { margin-top: 8px; font-size: 0.9375rem; line-height: 1.65; color: var(--mw-text-2); }
+.mw-signature { display: grid; gap: 2px; margin-top: 12px; padding-left: 4px; font-size: 0.8125rem; color: var(--mw-text-2); }
+.mw-signature strong { font-size: 0.9375rem; color: var(--mw-text); }
 
-    btns.forEach((b) => {
-      const i = Number(b.dataset.index);
-      b.addEventListener("click", () => { show(i); open(i); });
-      b.addEventListener("focus", () => show(i));
-      if (canHover) b.addEventListener("pointerenter", () => show(i));
-    });
-    hero.addEventListener("click", () => open(active));
+/* Competencias: rejilla de apps tipo Launchpad */
+.mw-app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 26px 12px;
+}
+.mw-app-grid .ms-icon {
+  background: rgba(255, 255, 255, 0.85);
+  border: 0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 0 0.5px rgba(0, 0, 0, 0.1), 0 6px 16px -8px rgba(0, 0, 0, 0.3);
+}
+.mw-app-grid .ms-label { color: var(--mw-text); }
+.mw-generic.active .mw-app-grid .ms-item { animation: msPop 0.55s var(--ease) both; animation-delay: calc(var(--i, 0) * 30ms + 60ms); }
 
-    /* Logos: apilados en el centro; se despliegan al entrar en pantalla y se
-       recogen de nuevo cuando están por salir (arriba o abajo). */
-    const list = $(".exp-logos", stage);
-    const items = list ? $$(":scope > li", list) : [];
-    if (list && items.length && "IntersectionObserver" in window) {
-      const tilts = [-7, 5, -4, 6, -5, 3, -6, 4];
-      const measure = () => {
-        const cx = list.clientWidth / 2;
-        const cy = list.clientHeight / 2;
-        const dist = items.map((li) => {
-          // offsetLeft/Top no dependen del transform: posición real en el grupo
-          const dx = cx - (li.offsetLeft + li.offsetWidth / 2);
-          const dy = cy - (li.offsetTop + li.offsetHeight / 2);
-          return { li, dx, dy, d: Math.hypot(dx, dy) };
-        });
-        // Orden de salida: primero los más cercanos al centro
-        const order = [...dist].sort((a, b) => a.d - b.d);
-        order.forEach((o, rank) => {
-          o.li.style.setProperty("--d", rank);
-          o.li.style.setProperty("--rd", order.length - 1 - rank);
-        });
-        dist.forEach((o, i) => {
-          o.li.style.setProperty("--dx", `${o.dx}px`);
-          o.li.style.setProperty("--dy", `${o.dy + i * 2}px`); // leve escalonado de pila
-          o.li.style.setProperty("--rot", `${tilts[i % tilts.length]}deg`);
-          o.li.style.zIndex = String(items.length - i);
-        });
-      };
-      list.style.position = "relative";
-      measure();
-      list.classList.add("is-stacked", "no-anim");
-      requestAnimationFrame(() => requestAnimationFrame(() => list.classList.remove("no-anim")));
+@media (max-width: 760px) {
+  .mw-generic .mac-window { height: 94svh; }
+  .mac-window.mw-plain { grid-template-rows: minmax(0, 1fr); }
+  .mac-window.mw-plain .mw-main { margin-top: 0; }
+  .mw-app-grid { grid-template-columns: repeat(auto-fill, minmax(82px, 1fr)); gap: 22px 8px; }
+  .mw-app-grid .ms-icon { width: 64px; height: 64px; border-radius: 17px; }
+  .mw-app-grid .ms-icon img { width: 38px; height: 38px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mw-generic.active .mw-app-grid .ms-item,
+  .mac-window .modal-body.is-switching .mw-doc { animation: none; }
+}
 
-      const setOpen = (on) => list.classList.toggle("is-stacked", !on);
-      new IntersectionObserver(
-        ([entry]) => setOpen(entry.isIntersecting),
-        { rootMargin: "-14% 0px -14% 0px", threshold: 0.6 }
-      ).observe(list);
-      // Si alguien llega con el teclado, se despliegan para poder elegir
-      list.addEventListener("focusin", () => setOpen(true));
-      window.addEventListener("resize", measure);
-      if ("ResizeObserver" in window) new ResizeObserver(measure).observe(list);
-    }
+/* ==========================================================================
+   20 INTERACCIÓN PREMIUM
+   Luz que sigue al cursor · inclinación 3D ·
+   botones magnéticos · frase que se ilumina con el scroll · detalles
+   ========================================================================== */
 
-    stage.style.setProperty("--exp-accent", accentOf(cards[0]));
-    // Precarga discreta de las demás portadas para que el cambio sea inmediato
-    const preload = () => cards.forEach((c) => { const s = $(".cover-image", c)?.src; if (s) new Image().src = s; });
-    ("requestIdleCallback" in window) ? requestIdleCallback(preload) : setTimeout(preload, 1500);
-  })();
-})();
+/* --- Luz que sigue al cursor --- */
+.spotlight { position: relative; isolation: isolate; }
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), var(--spot), transparent 60%);
+  transition: opacity 0.5s ease;
+}
+@media (hover: hover) { .spotlight:hover::after { opacity: 1; } }
+
+/* --- Inclinación 3D (vistas previas; experiencia usa su propia regla).
+       Las tarjetas de Competencias quedan fijas al pasar el cursor. --- */
+.gallery-track { padding-block: var(--s-4); }
+.gallery-card { transform: none; }
+.preview-card {
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift, 0px));
+  transition: transform 0.7s var(--ease), border-color var(--dur) ease, box-shadow 0.6s var(--ease);
+}
+.preview-card:hover { --lift: -4px; transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift)); }
+.tilt.is-tilting { transition: transform 0.14s linear, border-color var(--dur) ease, box-shadow 0.6s var(--ease); }
+.tilt.is-tilting .cover-image { transition-duration: 0.3s; }
+
+/* Reflejo de luz sobre las tarjetas inclinables */
+.tilt-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.16), transparent 55%);
+  mix-blend-mode: soft-light;
+  transition: opacity 0.5s ease;
+}
+.tilt.is-tilting .tilt-shine { opacity: 1; }
+
+/* --- Botones magnéticos --- */
+.magnetic { transform: translate(var(--tx, 0px), var(--ty, 0px)); }
+.magnetic:active { transform: translate(var(--tx, 0px), var(--ty, 0px)) scale(0.97); }
+
+/* --- Frase de "Sobre mí" que se ilumina palabra a palabra --- */
+.statement .w {
+  -webkit-text-fill-color: var(--word-dim);
+  color: var(--word-dim);
+  transition: color 0.5s ease, -webkit-text-fill-color 0.5s ease;
+}
+.statement .w.is-lit { -webkit-text-fill-color: var(--text); color: var(--text); }
+
+/* --- Formación: las carpetas entran en cascada --- */
+.finder.is-inview .finder-list li { animation: finderIn 0.6s var(--ease) both; animation-delay: calc(var(--i, 0) * 45ms + 150ms); }
+@keyframes finderIn { from { opacity: 0; transform: translateY(10px); } }
+.finder-item .folder-icon { transition: transform 0.45s var(--ease); }
+@media (hover: hover) { .finder-item:hover .folder-icon { transform: translateY(-2px) scale(1.08) rotate(-3deg); } }
+
+/* --- Cifras --- */
+.summary-stat { box-shadow: var(--edge), var(--shadow-sm); transition: transform 0.6s var(--ease); }
+@media (hover: hover) { .summary-stat:hover { transform: translateY(-4px); } }
+.finder { box-shadow: var(--edge), var(--shadow-md); }
+.contact-card { box-shadow: var(--edge), var(--shadow-md); }
+
+/* --- Estrategias: la línea se dibuja al entrar y el título reacciona --- */
+.strategy { position: relative; }
+.strategy::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, #0071e3, #bf5af2 50%, var(--border));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.2s var(--ease) 0.2s;
+}
+.strategy.is-inview::before { transform: scaleX(1); }
+.strategy h3 { transition: transform 0.5s var(--ease), color 0.4s ease; }
+.strategy p { transition: color 0.4s ease; }
+@media (hover: hover) {
+  .strategy:hover h3 { transform: translateX(8px); }
+  .strategy:hover p { color: var(--text); }
+}
+
+/* --- Visión académica: etiquetas que flotan --- */
+@media (min-width: 1101px) {
+  .tag { animation: tagFloat 6s ease-in-out infinite alternate; }
+  .tag.left-mid  { animation-delay: -1.5s; }
+  .tag.right-top { animation-delay: -3s; }
+  .tag.right-mid { animation-delay: -4.5s; }
+}
+@keyframes tagFloat { to { transform: translateY(-10px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .statement .w { -webkit-text-fill-color: var(--text); color: var(--text); }
+}
+
+/* ==========================================================================
+   21 BARRAS DE DESPLAZAMIENTO · ESTILO macOS TAHOE
+   · Página: barra superpuesta propia (script20.js) que flota sobre el
+     contenido, aparece al desplazar, se ensancha al pasar el cursor y se
+     puede arrastrar. Se activa solo con mouse/trackpad; en táctil queda la
+     nativa (que ya es superpuesta). Sin JS se conserva la barra nativa.
+   · Zonas internas (ventanas, menú móvil): barra fina, redondeada y
+     transparente que se muestra al desplazar o al pasar el cursor.
+   ========================================================================== */
+html.has-overlay-scroll { scrollbar-width: none; }
+html.has-overlay-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+.os-rail {
+  position: fixed;
+  top: calc(var(--nav-h) + env(safe-area-inset-top) + 4px);
+  right: 2px;
+  bottom: 4px;
+  z-index: 950;
+  width: 16px;
+  opacity: 0;
+  transition: opacity 0.45s ease 0.15s;
+}
+/* Pista: solo se ve al pasar el cursor o arrastrar, como en macOS */
+.os-rail::before {
+  content: "";
+  position: absolute;
+  inset: 0 2px;
+  border-radius: 999px;
+  background: rgba(128, 128, 135, 0.14);
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.18);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.os-thumb {
+  position: absolute;
+  top: 0;
+  right: 4px;
+  width: 7px;
+  min-height: 36px;
+  border-radius: 999px;
+  /* Gris neutro con filo claro: se lee sobre secciones blancas y negras */
+  background: rgba(72, 72, 78, 0.62);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.32), 0 1px 3px rgba(0, 0, 0, 0.18);
+  cursor: default;
+  will-change: transform;
+  transition: width 0.2s var(--ease), right 0.2s var(--ease), background-color 0.2s ease;
+}
+.os-rail.is-visible,
+.os-rail:hover,
+.os-rail.is-dragging { opacity: 1; transition-delay: 0s; transition-duration: 0.15s; }
+.os-rail:hover::before,
+.os-rail.is-dragging::before { opacity: 1; }
+.os-rail:hover .os-thumb,
+.os-rail.is-dragging .os-thumb { width: 10px; right: 3px; background: rgba(60, 60, 67, 0.78); }
+
+/* Zonas internas desplazables */
+:where(.mac-window .modal-body, .mw-sidebar, .mobile-menu)::-webkit-scrollbar { width: 14px; height: 14px; }
+:where(.mac-window .modal-body, .mw-sidebar, .mobile-menu)::-webkit-scrollbar-track,
+:where(.mac-window .modal-body, .mw-sidebar, .mobile-menu)::-webkit-scrollbar-corner { background: transparent; }
+:where(.mac-window .modal-body, .mw-sidebar, .mobile-menu)::-webkit-scrollbar-thumb {
+  border: 4px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+  background-color: transparent;
+}
+:where(.mac-window .modal-body, .mw-sidebar, .mobile-menu):hover::-webkit-scrollbar-thumb,
+:where(.mac-window .modal-body, .mw-sidebar, .mobile-menu).is-scrolling::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+:where(.mac-window .modal-body, .mw-sidebar, .mobile-menu)::-webkit-scrollbar-thumb:hover {
+  border-width: 3px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+:where(.mac-window .modal-body, .mw-sidebar, .mobile-menu)::-webkit-scrollbar-thumb:active { background-color: rgba(0, 0, 0, 0.58); }
+
+/* Firefox: no admite los pseudoelementos; usa la barra fina estándar */
+@supports not selector(::-webkit-scrollbar) {
+  :where(.mac-window .modal-body, .mw-sidebar, .mobile-menu) {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .os-rail,
+  .os-thumb { transition: none; }
+}
+
+/* ==========================================================================
+   18 MOVIMIENTO
+   ========================================================================== */
+/* Revelado al entrar en pantalla. Sin JS, <noscript> lo deja visible. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: var(--delay, 0s);
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ==========================================================================
+   19 COMPATIBILIDAD CON OTRAS PÁGINAS QUE COMPARTEN ESTE CSS
+   (no se usan en index.html; se conservan para no romperlas)
+   ========================================================================== */
+.titulosSterling-text,
+.titulosSterlingNegro-text,
+.titulosSterlingNegro-text1,
+.titulosSterling-text1,
+.titulosSterling-text2 {
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.titulosSterling-text       { background-image: linear-gradient(170deg, #fff 0%, #3b4b5e 100%); font-weight: 500; }
+.titulosSterlingNegro-text  { background-image: linear-gradient(170deg, #000 0%, #3b4b5e 70%); font-weight: 500; }
+.titulosSterlingNegro-text1 { background-image: linear-gradient(170deg, #000 0%, #3b4b5e 70%); font-weight: 300; }
+.titulosSterling-text1      { background-image: linear-gradient(170deg, #fff 20%, #3b4b5e 100%); font-weight: 300; }
+.titulosSterling-text2      { background-image: linear-gradient(170deg, #fff 20%, #d3d3d3 100%); font-weight: 300; }
+.bg-gold { background: linear-gradient(90deg, #ffd27a, #ffb84d); }
+.text-gold { color: #d4af37; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Respaldo cuando un ícono remoto de competencias no carga */
+.ms-fallback {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #6e6e73;
+}
+
+/* ==========================================================================
+   22 LIQUID GLASS · LENGUAJE macOS TAHOE
+   Vidrio con borde de luz (claro arriba-izquierda y abajo-derecha), brillo
+   especular que sigue al puntero, cápsulas flotantes y fondos ambientales
+   suaves para que el vidrio tenga algo que refractar.
+   Va al final del archivo para prevalecer sobre las reglas anteriores.
+   ========================================================================== */
+:root {
+  --lg-fill: rgba(255, 255, 255, 0.56);
+  --lg-fill-strong: rgba(255, 255, 255, 0.74);
+  --lg-rim-a: rgba(255, 255, 255, 0.95);
+  --lg-rim-b: rgba(255, 255, 255, 0.55);
+  --lg-shine: rgba(255, 255, 255, 0.9);
+  --lg-hairline: rgba(0, 0, 0, 0.07);
+  --lg-shadow: 0 12px 32px -14px rgba(0, 0, 0, 0.2), 0 2px 6px -2px rgba(0, 0, 0, 0.06);
+  --lg-sheen: rgba(255, 255, 255, 0.6);
+  --lg-blur: blur(22px) saturate(185%);
+  --lg-radius: 28px;
+}
+.tone-dark,
+.tone-graphite,
+.hero,
+.global-nav.is-on-dark {
+  --lg-fill: rgba(255, 255, 255, 0.065);
+  --lg-fill-strong: rgba(36, 36, 40, 0.5);
+  --lg-rim-a: rgba(255, 255, 255, 0.34);
+  --lg-rim-b: rgba(255, 255, 255, 0.14);
+  --lg-shine: rgba(255, 255, 255, 0.22);
+  --lg-hairline: rgba(0, 0, 0, 0.5);
+  --lg-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.75), 0 2px 8px -2px rgba(0, 0, 0, 0.35);
+  --lg-sheen: rgba(255, 255, 255, 0.14);
+}
+html { scroll-padding-top: calc(var(--nav-h) + 32px); }
+
+/* --- Receta de vidrio compartida --- */
+.tile,
+.summary-stat,
+.contact-card,
+.finder,
+.chip-stats,
+.strategy,
+.preview-card,
+.paddle,
+.btn--glass,
+.btn--secondary,
+.site .nav-inner,
+.site .mobile-menu,
+.socials .icon-btn {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--lg-fill), var(--lg-fill)) padding-box,
+    linear-gradient(135deg, var(--lg-rim-a) 0, transparent 56px, transparent calc(100% - 56px), var(--lg-rim-b) 100%) border-box;
+  -webkit-backdrop-filter: var(--lg-blur);
+  backdrop-filter: var(--lg-blur);
+  box-shadow: inset 0 1px 1px var(--lg-shine), 0 0 0 0.5px var(--lg-hairline), var(--lg-shadow);
+}
+
+/* Brillo especular que sigue al puntero (usa --mx/--my de initSpotlight) */
+.spotlight::after {
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--lg-sheen), transparent 62%);
+  mix-blend-mode: soft-light;
+}
+.tone-light .spotlight::after,
+.spotlight.btn::after { mix-blend-mode: normal; opacity: 0; }
+@media (hover: hover) {
+  .tone-light .spotlight:hover::after { opacity: 0.55; }
+  .spotlight.btn:hover::after { opacity: 0.5; }
+}
+
+/* --- Fondos ambientales (Visión, Competencias y Desarrollos no cambian) --- */
+.section.tone-light {
+  background:
+    radial-gradient(42% 38% at 10% 16%, rgba(0, 113, 227, 0.09), transparent 70%),
+    radial-gradient(38% 40% at 90% 32%, rgba(191, 90, 242, 0.075), transparent 70%),
+    radial-gradient(50% 42% at 50% 104%, rgba(48, 209, 160, 0.07), transparent 70%),
+    #ffffff;
+}
+.section.tone-dark:not(.dev-section):not(.vision-section) {
+  background:
+    radial-gradient(42% 40% at 12% 18%, rgba(0, 113, 227, 0.17), transparent 70%),
+    radial-gradient(40% 42% at 88% 78%, rgba(191, 90, 242, 0.13), transparent 70%),
+    #000000;
+}
+
+/* --- Navegación: cápsula flotante que se adapta al fondo --- */
+.site .global-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: calc(env(safe-area-inset-top) + 10px) var(--gutter) 0;
+  color: var(--text);
+  background: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border: 0;
+  pointer-events: none;
+}
+.site .global-nav > * { pointer-events: auto; }
+.site .global-nav.is-on-dark {
+  --text: #f5f5f7;
+  --text-2: #a1a1a6;
+  --border: rgba(255, 255, 255, 0.14);
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+}
+.site .nav-inner {
+  position: relative;
+  max-width: 1120px;
+  padding-inline: 8px;
+  border-radius: 999px;
+  --lg-fill: rgba(255, 255, 255, 0.62);
+  transition: background 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
+}
+.site .global-nav.is-on-dark .nav-inner { --lg-fill: rgba(30, 30, 34, 0.46); }
+.site .nav-brand { padding-left: 4px; color: var(--text); }
+.site .nav-link { border-radius: 999px; transition: opacity var(--dur-fast) ease, background-color 0.25s ease; }
+.site .nav-link:hover { background: color-mix(in srgb, var(--text) 7%, transparent); }
+.site .nav-link[aria-current="location"] { background: color-mix(in srgb, var(--text) 10%, transparent); }
+.site .nav-link::after { display: none; }
+.site .icon-btn { color: var(--text); }
+/* Progreso de lectura dentro de la cápsula */
+.site .nav-inner .scroll-progress {
+  left: 22px;
+  right: 22px;
+  bottom: 3px;
+  height: 2px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+/* Menú móvil: hoja de vidrio que cae bajo la cápsula */
+.site .mobile-menu {
+  inset: calc(env(safe-area-inset-top) + 10px + var(--nav-h) + 8px) var(--gutter) auto;
+  max-height: calc(100svh - var(--nav-h) - env(safe-area-inset-top) - 36px);
+  padding: 18px 24px 22px;
+  border-radius: var(--lg-radius);
+  --lg-fill: rgba(255, 255, 255, 0.8);
+  transform: translateY(-10px) scale(0.98);
+  transform-origin: top center;
+}
+.site .global-nav.is-on-dark .mobile-menu { --lg-fill: rgba(30, 30, 34, 0.78); }
+.site .mobile-menu.is-open { transform: none; }
+.site .mobile-menu a { font-size: 1.5rem; }
+
+/* Hero bajo la cápsula */
+.hero {
+  min-height: max(600px, 100svh);
+  padding-top: calc(var(--nav-h) + env(safe-area-inset-top) + 56px);
+}
+
+/* Barra de desplazamiento de la página: ya no hay barra de navegación fija arriba */
+.os-rail { top: calc(env(safe-area-inset-top) + 6px); }
+
+/* --- Botones --- */
+.btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    background-color var(--dur-fast) ease,
+    color var(--dur-fast) ease,
+    box-shadow 0.3s ease,
+    filter 0.3s ease,
+    transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+.btn:active { transform: scale(0.95); }
+/* Vidrio prominente: color de acento con brillo superior */
+.btn--primary {
+  border: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.06) 48%, rgba(255, 255, 255, 0) 52%),
+    var(--accent);
+  box-shadow:
+    inset 0 1px 0.5px rgba(255, 255, 255, 0.55),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.12),
+    0 0 0 0.5px rgba(0, 0, 0, 0.1),
+    0 8px 20px -8px color-mix(in srgb, var(--accent) 80%, transparent);
+}
+.btn--primary:hover { background-color: var(--accent-hover); filter: brightness(1.06); }
+.btn--secondary { color: var(--accent); }
+.btn--secondary:hover,
+.btn--glass:hover {
+  background:
+    linear-gradient(var(--lg-fill-strong), var(--lg-fill-strong)) padding-box,
+    linear-gradient(135deg, var(--lg-rim-a) 0, transparent 56px, transparent calc(100% - 56px), var(--lg-rim-b) 100%) border-box;
+}
+.btn--secondary:hover { color: var(--accent); }
+.btn--glass { color: var(--text, #fff); }
+.on-dark .btn--glass,
+.section--dark .btn--glass { color: #fff; }
+.btn--glass:hover { filter: brightness(1.12); }
+
+/* --- Sobre mí, cifras, contacto --- */
+.tile { border-radius: var(--lg-radius); }
+.summary-stat { border-radius: 24px; }
+.contact-card { border-radius: 32px; }
+
+/* --- Formación: Finder de vidrio --- */
+.finder { border-radius: 24px; overflow: hidden; }
+.finder-bar {
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  border-bottom-color: var(--border);
+}
+
+/* --- Experiencia y Competencias: borde de luz sobre las fotos --- */
+.experiencia-card,
+.gallery-card {
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 22px 44px -22px rgba(0, 0, 0, 0.45);
+}
+.experiencia-card::after,
+.gallery-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, transparent 28%, transparent 72%, rgba(255, 255, 255, 0.08) 100%);
+}
+.paddle { color: var(--text); }
+.paddle:hover:not(:disabled) { background: linear-gradient(var(--lg-fill-strong), var(--lg-fill-strong)) padding-box, linear-gradient(135deg, var(--lg-rim-a) 0, transparent 56px, transparent calc(100% - 56px), var(--lg-rim-b) 100%) border-box; }
+
+/* --- Desarrollos: ventanas de vidrio sobre la fotografía --- */
+.preview-card { border-radius: 26px; overflow: hidden; }
+.preview-card:hover { border-color: transparent; }
+.preview-bar {
+  height: 46px;
+  background: rgba(255, 255, 255, 0.06);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.14);
+}
+.preview-frame { margin: 0 8px 8px; border-radius: 18px; overflow: hidden; }
+
+/* --- Competencias: panel de cifras --- */
+.chip-stats {
+  padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 48px);
+  border-radius: 32px;
+  border-top: 1px solid transparent;
+}
+.chip-box {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+/* --- Estrategias: tarjetas de vidrio --- */
+.strategy-list { display: grid; gap: 16px; }
+.strategy,
+.strategy:last-child {
+  padding: clamp(24px, 3.5vw, 40px);
+  border-radius: var(--lg-radius);
+  border-bottom: 1px solid transparent;
+}
+.strategy::before { display: none; }
+@media (hover: hover) {
+  .strategy { transition: transform 0.6s var(--ease); }
+  .strategy:hover { transform: translateY(-3px); }
+  .strategy:hover h3 { transform: none; }
+}
+
+/* --- Footer --- */
+.site-footer.tone-light {
+  background:
+    radial-gradient(40% 80% at 15% 0%, rgba(0, 113, 227, 0.06), transparent 70%),
+    #f5f5f7;
+}
+.socials { gap: var(--s-2); }
+.socials .icon-btn:hover { filter: brightness(1.04); }
+
+/* --- Refracción real del fondo (solo Chromium; ver initLiquidGlass) --- */
+html.lg-refract .site .nav-inner,
+html.lg-refract .hero-video-toggle,
+html.lg-refract .site .mobile-menu {
+  -webkit-backdrop-filter: url(#lg-refract) blur(16px) saturate(190%);
+  backdrop-filter: url(#lg-refract) blur(16px) saturate(190%);
+}
+
+/* Sin backdrop-filter: vidrio más opaco para conservar el contraste */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root { --lg-fill: rgba(255, 255, 255, 0.9); }
+  .tone-dark,
+  .tone-graphite,
+  .hero { --lg-fill: rgba(44, 44, 48, 0.9); }
+}
+/* Transparencia reducida (Ajustes de accesibilidad del sistema) */
+@media (prefers-reduced-transparency: reduce) {
+  :root { --lg-fill: #ffffff; }
+  .tone-dark,
+  .tone-graphite,
+  .hero,
+  .global-nav.is-on-dark { --lg-fill: #1c1c1e; }
+}
+/* Botón secundario sobre vidrio oscuro: texto blanco para mantener contraste */
+.tone-dark .btn--secondary,
+.tone-graphite .btn--secondary,
+.tone-dark .btn--secondary:hover,
+.tone-graphite .btn--secondary:hover { color: #fff; }
+
+/* ==========================================================================
+   23 BOTONES PLANOS
+   Sin brillos, bordes de luz, halos ni destellos: color sólido o vidrio
+   translúcido liso. Se conserva el desenfoque y la leve pulsación al clic.
+   ========================================================================== */
+.btn--primary,
+.btn--primary:hover {
+  background: var(--accent);
+  box-shadow: none;
+  filter: none;
+}
+.btn--primary:hover { background: var(--accent-hover); }
+
+.btn--glass,
+.btn--secondary,
+.paddle,
+.socials .icon-btn,
+.hero-video-toggle {
+  border: 1px solid transparent;
+  background: var(--lg-fill);
+  box-shadow: none;
+  filter: none;
+}
+.btn--glass:hover,
+.btn--secondary:hover,
+.paddle:hover:not(:disabled),
+.socials .icon-btn:hover,
+.hero-video-toggle:hover {
+  background: var(--lg-fill-strong);
+  box-shadow: none;
+  filter: none;
+}
+.btn::after { display: none; }
+
+/* Experiencia: la descripción solo se muestra en la ventana (modal) */
+.experiencia-card .card-description[hidden] { display: none; }
+
+
+/* ==========================================================================
+   EXPERIENCIA · TARJETA ÚNICA + LOGOS DE EMPRESAS
+   ========================================================================== */
+.exp-source { display: none !important; }
+
+.exp-stage {
+  --exp-accent: #34d399;
+  max-width: 920px;
+  margin-inline: auto;
+  display: grid;
+  gap: clamp(24px, 3.5vw, 36px);
+}
+
+.exp-hero {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--bg-alt);
+  cursor: pointer;
+  font: inherit;
+  color: #fff;
+  text-align: left;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 30px 70px -28px color-mix(in srgb, var(--exp-accent) 45%, rgba(0, 0, 0, 0.45));
+  transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.exp-hero:hover { transform: translateY(-2px); }
+.exp-hero:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+
+.exp-hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition: opacity 0.22s var(--ease), transform 0.9s var(--ease), filter 0.22s var(--ease);
+}
+.exp-hero:hover .exp-hero-img { transform: scale(1.025); }
+.exp-hero.is-fading .exp-hero-img { opacity: 0; filter: blur(6px); transform: scale(1.04); }
+
+.exp-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.55) 100%);
+  pointer-events: none;
+}
+
+.exp-hero-caption,
+.exp-hero-badge {
+  position: absolute;
+  bottom: clamp(14px, 2.4vw, 22px);
+  transition: opacity 0.22s var(--ease), transform 0.22s var(--ease);
+}
+.exp-hero.is-fading .exp-hero-caption,
+.exp-hero.is-fading .exp-hero-badge { opacity: 0; transform: translateY(4px); }
+
+.exp-hero-caption {
+  left: clamp(16px, 2.6vw, 26px);
+  display: grid;
+  gap: 2px;
+  max-width: 60%;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+}
+.exp-hero-role { font-size: clamp(1.125rem, 0.9rem + 1vw, 1.625rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+.exp-hero-company { font-size: var(--fs-small); font-weight: 500; opacity: 0.85; }
+
+.exp-hero-badge {
+  right: clamp(14px, 2.4vw, 22px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border-radius: var(--r-pill);
+  background: rgba(0, 0, 0, 0.32);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.28);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.exp-hero-check {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #0071e3;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+}
+.exp-hero-check svg { width: 14px; height: 14px; fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Fila de logos */
+.exp-logos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--s-4);
+}
+.exp-logo-btn {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 6px 2px;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--text);
+  cursor: pointer;
+  border-radius: var(--r-md);
+  -webkit-tap-highlight-color: transparent;
+}
+.exp-logo-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.exp-logo-ring {
+  position: relative;
+  width: clamp(58px, 7vw, 76px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 3px;
+  background: var(--lg-fill-strong, #fff);
+  box-shadow: 0 0 0 1px var(--border), 0 8px 20px -10px rgba(0, 0, 0, 0.3);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.exp-logo-ring img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+  display: block;
+}
+.exp-logo-btn:hover .exp-logo-ring { transform: translateY(-3px) scale(1.05); }
+.exp-logo-btn:active .exp-logo-ring { transform: scale(0.96); }
+.exp-logo-btn.is-active .exp-logo-ring {
+  box-shadow: 0 0 0 2.5px var(--exp-accent), 0 10px 24px -10px color-mix(in srgb, var(--exp-accent) 70%, transparent);
+}
+
+.exp-logo-name {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--text-2);
+  transition: color var(--dur-fast) var(--ease);
+}
+.exp-logo-btn.is-active .exp-logo-name,
+.exp-logo-btn:hover .exp-logo-name { color: var(--text); }
+
+@media (max-width: 640px) {
+  .exp-hero { aspect-ratio: 4 / 3; border-radius: var(--r-md); }
+  .exp-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--s-5); }
+  .exp-hero-caption { max-width: 100%; bottom: 56px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exp-hero, .exp-hero-img, .exp-logo-ring, .exp-hero-caption, .exp-hero-badge { transition: none; }
+}
+
+
+/* ==========================================================================
+   VISIÓN · ASTRONAUTA GUIADO POR EL SCROLL
+   ========================================================================== */
+.astro-flyer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 800; /* bajo la navegación (900) y las ventanas modales */
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.28));
+}
+.astro-flyer.is-hidden { visibility: hidden; }
+/* Mientras vuela, el original reserva su espacio sin verse ni flotar */
+.astronaut.is-docked { visibility: hidden; animation: none; }
+
+
+/* ==========================================================================
+   DESARROLLOS · FONDO QUE BAJA DESDE LA TARJETA "9+ AÑOS"
+   ========================================================================== */
+/* Capa dentro de la sección: detrás de su contenido, por encima de Experiencia */
+.dev-backdrop {
+  position: absolute;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: #000 center / cover no-repeat;
+  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.5);
+  will-change: left, top, width, height;
+}
+/* Velo oscuro que aparece al llegar, igual al de la sección */
+.dev-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: var(--dev-scrim, 0);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.55) 50%, rgba(0, 0, 0, 0.82) 100%);
+}
+.dev-backdrop.is-hidden { visibility: hidden; }
+/* Mientras la imagen viaja, la sección muestra solo el negro de base */
+.section.dev-section.is-bg-flying { background-image: none; }
+
+/* La tarjeta "9+" queda sobre la imagen (su texto siempre visible) */
+.summary-card .summary-stat { position: relative; z-index: 1; }
+.summary-stat.stat-photo-host { position: relative; z-index: 1; transition: background 0.35s var(--ease), box-shadow 0.35s var(--ease), transform 0.6s var(--ease); }
+.summary-stat.stat-photo-host.is-photo {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.5));
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.summary-stat.is-photo .stat-number {
+  background: linear-gradient(135deg, #ffffff 0%, #cfe8ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.summary-stat.is-photo .stat-label { color: rgba(255, 255, 255, 0.88); }
+.summary-stat .stat-label { transition: color 0.35s var(--ease); }
+
+/* Cifras: vidrio más claro para que la fotografía se vea mejor */
+.summary-card .summary-stat {
+  --lg-blur: blur(6px) saturate(150%);
+}
+.summary-card .summary-stat.is-photo {
+  --lg-blur: blur(1.5px) saturate(120%);
+  -webkit-backdrop-filter: var(--lg-blur);
+  backdrop-filter: var(--lg-blur);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.38));
+}
+.summary-stat.is-photo .stat-number,
+.summary-stat.is-photo .stat-label { text-shadow: none; filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.45)); }
+/* Con la foto, la tarjeta no se eleva al pasar el cursor (la imagen queda alineada) */
+.summary-card .summary-stat.is-photo:hover { transform: none; }
+
+/* Cifras: queda solo la tarjeta "9+", centrada con su tamaño original */
+.summary-card { grid-template-columns: minmax(0, 242px); justify-content: center; }
+@media (max-width: 560px) {
+  .summary-card { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ==========================================================================
+   HERO · PORTADA ESTILO APPLE
+   Nombre pequeño arriba (como el nombre del producto), titular grande con
+   acabado metálico, subtítulo corto, dos botones tipo píldora y letra fina.
+   ========================================================================== */
+.hero-content { max-width: 980px; }
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: clamp(1rem, 0.92rem + 0.35vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: #f5f5f7;
+}
+.hero-eyebrow .hero-mark {
+  width: 1.45em;
+  height: 1.45em;
+  margin: 0;
+  font-size: 0.72em;
+  vertical-align: 0;
+}
+
+.hero-headline {
+  margin: clamp(10px, 1.4vw, 18px) 0 0;
+  font-size: clamp(2.25rem, 1.5rem + 3.2vw, 4.25rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  /* Acabado metálico: blanco a plata, como los titulares de Apple */
+  background: linear-gradient(180deg, #ffffff 0%, #f2f2f5 38%, #b9b9c2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 2px 24px rgba(0, 0, 0, 0.35));
+  padding-bottom: 0.06em; /* evita que se recorten los descendentes */
+}
+
+.hero .hero-sub {
+  max-width: 30rem;
+  margin: clamp(14px, 1.6vw, 20px) auto 0;
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.1875rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+  color: rgba(245, 245, 247, 0.82);
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.4);
+}
+
+.hero .hero-actions {
+  flex-wrap: wrap;
+  gap: 14px 16px;
+  margin-top: clamp(22px, 2.6vw, 30px);
+}
+.btn--hero {
+  min-height: 40px;
+  min-width: 132px;
+  padding: 0 20px;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+/* Botón de contorno azul, como "Comprar" en las portadas de Apple */
+.btn.btn--outline-light {
+  color: #0071e3;
+  background: transparent;
+  border: 1px solid #0071e3;
+  box-shadow: none;
+}
+.btn.btn--outline-light:hover {
+  color: #fff;
+  background: #0071e3;
+  border-color: #0071e3;
+}
+.btn--hero:focus-visible { outline: 2px solid #0071e3; outline-offset: 3px; }
+
+.hero-fineprint {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 0;
+  margin: clamp(18px, 2.4vw, 26px) auto 0;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: rgba(245, 245, 247, 0.62);
+}
+.hero-fineprint span + span::before {
+  content: "·";
+  margin: 0 10px;
+  color: rgba(245, 245, 247, 0.4);
+}
+
+@media (max-width: 640px) {
+  .hero-fineprint { flex-direction: column; }
+  .hero-fineprint span + span::before { content: none; }
+  .btn--hero { min-width: 0; flex: 1 1 130px; max-width: 180px; }
+}
+
+/* ==========================================================================
+   NAVEGACIÓN · SOLO DOS BOTONES (estilo Apple: contorno + azul)
+   ========================================================================== */
+.global-nav .nav-actions { margin-left: auto; gap: 8px; }
+.global-nav .nav-pill {
+  min-height: 32px;
+  padding: 0 16px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  border-radius: 999px;
+}
+/* Tabletas y celulares: barra original (nombre, menú y progreso) */
+@media (max-width: 1023px) {
+  .global-nav .nav-pill--outline { display: none; }
+}
+/* "Desarrollos": contorno que se adapta al tono de la cápsula */
+.global-nav .nav-pill--outline {
+  color: var(--text);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--text) 70%, transparent);
+  box-shadow: none;
+}
+.global-nav .nav-pill--outline:hover {
+  background: color-mix(in srgb, var(--text) 10%, transparent);
+  border-color: var(--text);
+}
+.global-nav .nav-pill:focus-visible { outline: 2px solid #0071e3; outline-offset: 2px; }
+/* En pantallas muy angostas se muestra solo la foto de la marca */
+
+
+/* ==========================================================================
+   EXPERIENCIA · LOGOS QUE SE APILAN Y SE DESPLIEGAN
+   Grupo centrado con espacio uniforme. Movimiento suave: se despliegan desde
+   el centro hacia afuera y se recogen desde los extremos hacia adentro.
+   ========================================================================== */
+.exp-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px clamp(12px, 1.8vw, 22px);
+}
+.exp-logos > li { flex: 0 0 auto; width: clamp(84px, 7.5vw, 94px); }
+@media (max-width: 640px) {
+  .exp-logos { gap: 20px 18px; }
+  .exp-logos > li { width: 92px; }
+}
+
+/* Desplegados: desaceleración larga y suave, sin rebote */
+.exp-logos > li {
+  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  transition: transform 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--d, 0) * 85ms);
+  will-change: transform;
+}
+.exp-logos .exp-logo-name {
+  transform: translateY(0);
+  transition:
+    opacity 0.6s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    color var(--dur-fast) var(--ease);
+  transition-delay: calc(0.45s + var(--d, 0) * 85ms);
+}
+
+/* Apilados: todos en el centro, cada uno con una inclinación distinta */
+.exp-logos.is-stacked > li {
+  transform: translate3d(var(--dx, 0), var(--dy, 0), 0) scale(0.9) rotate(var(--rot, 0deg));
+  transition: transform 0.95s cubic-bezier(0.55, 0, 0.3, 1);
+  transition-delay: calc(var(--rd, 0) * 60ms);
+  pointer-events: none;
+}
+.exp-logos.is-stacked .exp-logo-name {
+  opacity: 0;
+  transform: translateY(-4px);
+  transition-duration: 0.3s, 0.3s, var(--dur-fast);
+  transition-delay: 0s;
+}
+.exp-logos.no-anim > li,
+.exp-logos.no-anim .exp-logo-name { transition: none !important; }
+
+/* Competencias: sin tarjeta alrededor de "Datos" y las cifras (contenido libre) */
+.chip-stats {
+  background: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.chip-stats::before,
+.chip-stats::after { content: none !important; }
+
+/* ==========================================================================
+   FORMACIÓN · DEL DESORDEN AL ORDEN
+   ========================================================================== */
+/* Las carpetas pueden salir de la ventana mientras están regadas */
+#estudio { overflow-x: clip; }
+.finder.chaos { overflow: visible; }
+.finder.chaos .finder-bar { border-radius: 24px 24px 0 0; }
+.finder.chaos .finder-list li { animation: none !important; position: relative; will-change: transform; }
+/* Carpeta suelta: se ve como un ícono flotando sobre el escritorio */
+.finder.chaos .finder-list li.is-loose { z-index: 2; }
+.finder.chaos .finder-list li.is-loose .finder-item {
+  background: var(--lg-fill-strong, rgba(40, 40, 44, 0.6));
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.6), inset 0 0 0 0.5px rgba(255, 255, 255, 0.12);
+}
+
+/* ==========================================================================
+   ESTRATEGIAS · NEUMORFISMO
+   Fondo plano y tarjetas del mismo color que "salen" de él con dos sombras
+   (luz arriba a la izquierda, sombra abajo a la derecha). Al pasar el cursor
+   la tarjeta se "hunde" como un botón presionado.
+   ========================================================================== */
+#estrategia {
+  --neu-bg: #e7ebf0;
+  --neu-light: rgba(255, 255, 255, 0.95);
+  --neu-dark: rgba(163, 176, 196, 0.7);
+  background: var(--neu-bg) !important;
+  counter-reset: strategy;
+}
+#estrategia .section-title { color: #1d1d1f; }
+
+#estrategia .strategy-list { gap: clamp(22px, 3vw, 34px); }
+#estrategia .strategy,
+#estrategia .strategy:last-child {
+  counter-increment: strategy;
+  align-items: start;
+  padding: clamp(26px, 3.8vw, 44px);
+  border: 0;
+  border-radius: 34px;
+  background: var(--neu-bg) !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  /* Mismo número de sombras en ambos estados para que la transición sea suave */
+  box-shadow:
+    14px 14px 30px var(--neu-dark),
+    -14px -14px 30px var(--neu-light),
+    inset 0 0 0 transparent,
+    inset 0 0 0 transparent !important;
+  transition: box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+#estrategia .strategy::after { content: none; }
+@media (hover: hover) {
+  #estrategia .strategy:hover {
+    transform: scale(0.995);
+    box-shadow:
+      0 0 0 transparent,
+      0 0 0 transparent,
+      inset 9px 9px 20px var(--neu-dark),
+      inset -9px -9px 20px var(--neu-light) !important;
+  }
+}
+
+/* Número hundido en la superficie */
+#estrategia .strategy h3::before {
+  content: counter(strategy, decimal-leading-zero);
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #0071e3;
+  background: var(--neu-bg);
+  box-shadow: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+#estrategia .strategy h3 { color: #1d1d1f; }
+#estrategia .strategy p { color: #555a63; }
+#estrategia .strategy:hover p { color: #1d1d1f; }
+
+
+/* ==========================================================================
+   NAVEGACIÓN · ETIQUETA QUE CAMBIA SEGÚN LA SECCIÓN
+   ========================================================================== */
+.nav-label {
+  position: relative;
+  display: inline-grid;
+  overflow: hidden;
+  /* Altura de una línea: el texto que sale y el que entra se cruzan aquí */
+  height: 1.4em;
+  line-height: 1.4em;
+}
+.nav-label-text {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease,
+    filter 0.4s ease;
+}
+.nav-label-text.is-entering { transform: translateY(100%); opacity: 0; filter: blur(3px); }
+.nav-label-text.is-current  { transform: translateY(0); opacity: 1; filter: none; }
+.nav-label-text.is-leaving  { transform: translateY(-100%); opacity: 0; filter: blur(3px); }
+
+/* Celular: si un título no cabe junto al menú, termina en "…" */
+@media (max-width: 1023px) {
+  .nav-label { max-width: calc(100vw - 150px); }
+  .nav-label-text { overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* ==========================================================================
+   SOBRE MÍ · NEUMORFISMO + ELEMENTOS (anillo, interruptores, íconos)
+   ========================================================================== */
+#sobremi {
+  --neu-bg: #e7ebf0;
+  --neu-light: rgba(255, 255, 255, 0.95);
+  --neu-dark: rgba(163, 176, 196, 0.7);
+  --neu-blue: #0071e3;
+  background: var(--neu-bg) !important;
+}
+#sobremi .about-grid { gap: clamp(22px, 3vw, 32px); }
+#sobremi .tile {
+  display: flex;
+  flex-direction: column;
+  border: 0;
+  border-radius: 34px;
+  background: var(--neu-bg) !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: 14px 14px 30px var(--neu-dark), -14px -14px 30px var(--neu-light) !important;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+}
+#sobremi .tile::after,
+#sobremi .tile::before { content: none !important; }
+@media (hover: hover) {
+  #sobremi .tile:hover {
+    transform: translateY(-3px);
+    box-shadow: 18px 18px 36px var(--neu-dark), -16px -16px 34px var(--neu-light) !important;
+  }
+}
+#sobremi .tile-title { color: #1d1d1f; }
+#sobremi .tile p { color: #555a63; }
+
+/* --- Anillo de progreso --- */
+.neu-ring {
+  position: relative;
+  width: 148px;
+  height: 148px;
+  margin: 28px auto 4px;
+  border-radius: 50%;
+  background: var(--neu-bg);
+  box-shadow: 9px 9px 18px var(--neu-dark), -9px -9px 18px var(--neu-light);
+}
+.neu-ring::before { /* pozo interior hundido */
+  content: "";
+  position: absolute;
+  inset: 22px;
+  border-radius: 50%;
+  background: var(--neu-bg);
+  box-shadow: inset 6px 6px 12px var(--neu-dark), inset -6px -6px 12px var(--neu-light);
+}
+.neu-ring svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.neu-ring circle { fill: none; stroke-width: 9; stroke-linecap: round; }
+.neu-ring-track { stroke: rgba(163, 176, 196, 0.25); }
+.neu-ring-fill {
+  stroke: var(--neu-blue);
+  stroke-dasharray: 314.16;
+  stroke-dashoffset: 314.16;
+  filter: drop-shadow(0 0 4px rgba(0, 113, 227, 0.45));
+  transition: stroke-dashoffset 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+}
+.about-grid.is-live .neu-ring-fill { stroke-dashoffset: 31.4; } /* 90 % */
+.neu-ring-label {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  line-height: 1.1;
+}
+.neu-ring-label b { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.03em; color: var(--neu-blue); }
+.neu-ring-label small { font-size: 0.6875rem; font-weight: 500; color: #6b717c; }
+
+/* --- Interruptores --- */
+.neu-switches { display: grid; gap: 14px; margin-top: 26px; }
+.neu-switches li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #3a3f47;
+}
+.neu-switch {
+  position: relative;
+  flex: 0 0 auto;
+  width: 58px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  background: var(--neu-bg);
+  box-shadow: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  transition: background-color 0.45s ease, box-shadow 0.45s ease;
+}
+.neu-switch i {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffffff, #e2e7ee);
+  box-shadow: 3px 3px 6px rgba(120, 135, 160, 0.5), -2px -2px 5px rgba(255, 255, 255, 0.9);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.neu-switch[aria-checked="true"] {
+  background: var(--neu-blue);
+  box-shadow: inset 3px 3px 7px rgba(0, 60, 140, 0.55), inset -2px -2px 6px rgba(80, 160, 255, 0.5);
+}
+.neu-switch[aria-checked="true"] i { transform: translateX(26px); }
+.neu-switch:focus-visible { outline: 2px solid var(--neu-blue); outline-offset: 3px; }
+
+/* --- Información clave: íconos en relieve y botón de LinkedIn --- */
+#sobremi .info-list .neu-info {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  column-gap: 14px;
+  align-items: start;
+}
+#sobremi .info-list .neu-info dt,
+#sobremi .info-list .neu-info dd { grid-column: 2; }
+.neu-dot {
+  grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--neu-bg);
+  box-shadow: 5px 5px 10px var(--neu-dark), -5px -5px 10px var(--neu-light);
+}
+.neu-dot svg { width: 18px; height: 18px; fill: none; stroke: var(--neu-blue); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.neu-link {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 6px;
+  min-height: 36px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--neu-blue);
+  background: var(--neu-bg);
+  box-shadow: 5px 5px 10px var(--neu-dark), -5px -5px 10px var(--neu-light);
+  transition: box-shadow 0.35s ease, color 0.35s ease;
+  word-break: break-all;
+}
+.neu-link:hover { box-shadow: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light); }
+.neu-link:focus-visible { outline: 2px solid var(--neu-blue); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .neu-ring-fill, .neu-switch i { transition: none; }
+}
+
+/* ==========================================================================
+   CONTACTO · TABLET SOSTENIDA POR UNA MANO
+   ========================================================================== */
+#contacto { overflow-x: clip; }
+.tablet-scene {
+  --lift: 0;
+  position: relative;
+  max-width: 820px;
+  margin: clamp(24px, 4vw, 48px) auto 0;
+  padding-bottom: clamp(24px, 4vw, 48px);
+  perspective: 1400px;
+}
+.tablet {
+  position: relative;
+  z-index: 1;
+  padding: clamp(10px, 1.6vw, 16px);
+  border-radius: clamp(28px, 4vw, 42px);
+  background: #0a0a0c;
+  /* Canto de aluminio + reflejo superior */
+  box-shadow:
+    inset 0 0 0 1.5px #2c2c30,
+    inset 0 1px 0 2px rgba(255, 255, 255, 0.06),
+    0 0 0 1px #4a4a50,
+    0 40px 90px -30px rgba(0, 113, 227, 0.45),
+    0 30px 60px -20px rgba(0, 0, 0, 0.9);
+  transform-origin: 50% 100%;
+  /* Acostada y algo girada → de pie y de frente */
+  transform:
+    translateY(calc(var(--lift) * 90px))
+    rotateX(calc(var(--lift) * 72deg))
+    rotateZ(calc(var(--lift) * -9deg))
+    scale(calc(1 - var(--lift) * 0.08));
+  will-change: transform;
+}
+.tablet-cam {
+  position: absolute;
+  top: calc(clamp(10px, 1.6vw, 16px) / 2 - 3px);
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #3d4a66, #0c0f16 70%);
+}
+
+/* Pantalla: fondo azul luminoso con el contenido de contacto */
+#contacto .contact-card.tablet-screen {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: clamp(36px, 6vw, 72px) clamp(22px, 5vw, 64px);
+  border: 0;
+  border-radius: clamp(18px, 2.8vw, 28px);
+  text-align: center;
+  color: #fff;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  /* Fondo de pantalla (Pixabay): velo solo abajo, donde va el texto, para que la imagen se vea */
+  background:
+    linear-gradient(180deg, rgba(0, 8, 24, 0) 0%, rgba(0, 8, 24, 0) 38%, rgba(0, 8, 24, 0.55) 68%, rgba(0, 8, 24, 0.88) 100%),
+    #050814 url("https://cdn.pixabay.com/photo/2019/04/06/06/44/astronaut-4106766_1280.jpg") center / cover no-repeat !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06) !important;
+}
+/* Pantalla apagada: capa negra que se aclara al encender */
+#contacto .contact-card.tablet-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(50% 40% at 50% 50%, rgba(170, 210, 255, calc(var(--flash, 0) * 0.85)), transparent 70%),
+    rgba(2, 3, 6, calc(1 - var(--on, 1)));
+}
+#contacto .tablet-screen > * { position: relative; z-index: 2; }
+/* Reflejo de vidrio sobre la pantalla */
+#contacto .contact-card.tablet-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 38%);
+}
+#contacto .tablet-screen h3 { color: #fff; }
+#contacto .tablet-screen p { color: rgba(255, 255, 255, 0.86); }
+#contacto .tablet-screen .contact-note { color: rgba(255, 255, 255, 0.7); }
+/* Botones sobre la pantalla: el principal conserva el azul de la página */
+#contacto .tablet-screen .btn--secondary {
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: transparent;
+}
+#contacto .tablet-screen .btn--secondary:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+
+
+/* Contenido de la pantalla: aparece en cascada cuando se enciende */
+#contacto .tablet-screen > * {
+  opacity: 0;
+  transform: translateY(12px);
+  filter: blur(4px);
+  transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
+  transition-delay: 0s;
+}
+#contacto .tablet.is-on .tablet-screen > * { opacity: 1; transform: none; filter: none; }
+#contacto .tablet.is-on .tablet-screen > :nth-child(1) { transition-delay: 0.05s; }
+#contacto .tablet.is-on .tablet-screen > :nth-child(2) { transition-delay: 0.18s; }
+#contacto .tablet.is-on .tablet-screen > :nth-child(3) { transition-delay: 0.32s; }
+#contacto .tablet.is-on .tablet-screen > :nth-child(4) { transition-delay: 0.46s; }
+/* Mientras se levanta, el brillo azul bajo la tablet aumenta al encenderse */
+.tablet {
+  box-shadow:
+    inset 0 0 0 1.5px #2c2c30,
+    inset 0 1px 0 2px rgba(255, 255, 255, 0.06),
+    0 0 0 1px #4a4a50,
+    0 40px 90px -30px rgba(0, 113, 227, calc(0.05 + var(--on, 1) * 0.45)),
+    0 30px 60px -20px rgba(0, 0, 0, 0.9);
+}
+.tablet-scene { padding-top: clamp(20px, 6vw, 70px); }
+
+/* ==========================================================================
+   FOOTER NEGRO
+   ========================================================================== */
+.site-footer.tone-dark {
+  background: #000 !important;
+  color: #a1a1a6;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.site-footer.tone-dark .footer-name { color: #f5f5f7; }
+.site-footer.tone-dark .footer-nav a,
+.site-footer.tone-dark .footer-tagline,
+.site-footer.tone-dark .footer-bottom { color: #a1a1a6; }
+.site-footer.tone-dark .footer-nav a:hover { color: #f5f5f7; }
+.site-footer.tone-dark .footer-bottom { border-top-color: rgba(255, 255, 255, 0.1); }
+.site-footer.tone-dark .socials .icon-btn { color: #f5f5f7; }
+
+/* ==========================================================================
+   DESARROLLOS · PROYECTO DESTACADO EN UN MAC (scroll → app a pantalla completa)
+   ========================================================================== */
+.mac-intro {
+  margin-top: clamp(28px, 4vw, 44px);
+  text-align: center;
+  font-size: var(--fs-small);
+  letter-spacing: 0.02em;
+  color: rgba(245, 245, 247, 0.7);
+}
+.mac-intro strong { color: #f5f5f7; font-weight: 600; }
+
+.mac-scroll { position: relative; height: 260vh; margin-top: clamp(8px, 2vw, 24px); }
+.mac-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  perspective: 1600px;
+}
+
+/* Monitor: pantalla 16:10 con marco delgado; centrado en la ventana */
+.mac-display {
+  --sw: min(64vw, 92vh, 1100px);           /* ancho de la pantalla */
+  --bz: calc(var(--sw) * 0.018);            /* marco */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--sw) + var(--bz) * 2);
+  padding: var(--bz);
+  border-radius: calc(var(--bz) * 2.2);
+  background: linear-gradient(180deg, #1c1c1f, #0c0c0e);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 0 1px #3a3a3f,
+    0 50px 120px -40px rgba(0, 113, 227, 0.45),
+    0 40px 80px -30px rgba(0, 0, 0, 0.9);
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+.mac-stand {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 22%;
+  height: calc(var(--sw) * 0.12);
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #2a2a2e, #141416 60%, #0b0b0d);
+  clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+.mac-stand::after { /* base */
+  content: "";
+  position: absolute;
+  left: -30%;
+  right: -30%;
+  bottom: -6px;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #3a3a3f, #18181b);
+}
+
+.mac-screen {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: calc(var(--bz) * 0.9);
+  background: #0a0f24;
+  font-size: calc(var(--sw) * 0.0115);     /* escala la interfaz con la pantalla */
+}
+/* Fondo de escritorio estilo macOS (ondas suaves de color) */
+.mac-wallpaper {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70% 90% at 15% 110%, #0071e3 0%, transparent 60%),
+    radial-gradient(60% 80% at 85% 100%, #bf5af2 0%, transparent 60%),
+    radial-gradient(80% 60% at 50% -10%, #5ac8fa 0%, transparent 60%),
+    radial-gradient(50% 50% at 70% 40%, rgba(255, 159, 10, 0.45), transparent 70%),
+    linear-gradient(180deg, #1b2a6b, #2b1050);
+  filter: saturate(1.1);
+}
+
+.mac-menubar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 1.6em;
+  height: 2.2em;
+  padding: 0 1.4em;
+  font-size: 1em;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(20, 20, 30, 0.28);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  white-space: nowrap;
+}
+.mac-menubar b { font-weight: 700; }
+.mac-mark { width: 0.95em; height: 0.95em; border-radius: 50%; background: rgba(255, 255, 255, 0.9); }
+.mac-clock { margin-left: auto; font-variant-numeric: tabular-nums; }
+
+/* Ventana de la app */
+.mac-app {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: calc(var(--bz) * 0.6);
+  background: #0a0f24;
+  box-shadow: 0 2em 4em rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.12);
+  transform-origin: 50% 50%;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.mac-app-shot { display: block; width: 100%; height: 100%; object-fit: cover; }
+.mac-app-bar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  height: 2.4em;
+  padding: 0 1em;
+  background: rgba(30, 32, 40, 0.72);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.mac-app-bar .traffic { gap: 0.55em; }
+.mac-app-bar .traffic i { width: 0.95em; height: 0.95em; }
+.mac-app-url {
+  flex: 1;
+  max-width: 24em;
+  margin: 0 auto;
+  padding: 0.25em 1em;
+  border-radius: 0.6em;
+  text-align: center;
+  font-size: 0.95em;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Dock */
+.mac-dock {
+  position: absolute;
+  left: 50%;
+  bottom: 0.9em;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.7em;
+  padding: 0.6em 0.8em;
+  border-radius: 1.6em;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.16);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22), 0 1em 2em -1em rgba(0, 0, 0, 0.5);
+}
+.dock-app {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 4.2em;
+  height: 4.2em;
+  border-radius: 1.05em;
+  background: linear-gradient(160deg, var(--c1), var(--c2));
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.45), 0 0.4em 0.8em -0.3em rgba(0, 0, 0, 0.5);
+}
+.dock-app svg { width: 52%; height: 52%; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.dock-quantix b { font-size: 2.2em; font-weight: 800; color: #fff; letter-spacing: -0.04em; }
+.dock-dot {
+  position: absolute;
+  bottom: -0.55em;
+  left: 50%;
+  width: 0.35em;
+  height: 0.35em;
+  margin-left: -0.175em;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  opacity: var(--running, 0);
+}
+.dock-sep { width: 1px; height: 3.6em; margin: 0 0.2em 0.3em; background: rgba(255, 255, 255, 0.3); }
+
+/* Botón final (aparece a pantalla completa) */
+.mac-open {
+  position: absolute;
+  left: 50%;
+  bottom: max(28px, env(safe-area-inset-bottom));
+  z-index: 5;
+  transform: translate(-50%, 16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 14px 34px -12px rgba(0, 113, 227, 0.8);
+}
+.mac-scroll.is-full .mac-open,
+.mac-open:focus-visible { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+
+@media (max-width: 760px) {
+  .mac-display { --sw: min(92vw, 70vh); }
+  .mac-menubar span:not(.mac-clock):not(.mac-mark) { display: none; }
+}
+
+/* Competencias: transición suave del tamaño de las tarjetas */
+#carousel .gallery-card {
+  will-change: transform, opacity;
+  transition: transform 0.18s linear, opacity 0.18s linear;
+}
+
+/* ==========================================================================
+   TÍTULOS DE SECCIÓN · DIFUMINADO SUAVE (oscuro a la izquierda, claro a la derecha)
+   ========================================================================== */
+:root,
+.tone-light { --title-fill: linear-gradient(90deg, #000000 0%, #1e232a 35%, #4b5561 75%, #5d6875 100%); }
+.tone-dark,
+.tone-graphite,
+.section--dark,
+.hero { --title-fill: linear-gradient(90deg, #a8a8ae 0%, #e6e6ea 55%, #ffffff 100%); }
+.section-title {
+  /* El degradado ocupa solo el ancho del texto: se nota de la primera a la última letra */
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  background: var(--title-fill) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+/* ==========================================================================
+   HERO · TITULAR CON DEGRADADOS DE COLOR (estilo Apple)
+   Cada palabra tiene su propio degradado y juntas forman un recorrido de
+   color continuo: azul → violeta → rosa → naranja. Brillo muy lento.
+   ========================================================================== */
+.hero-headline {
+  background: none !important;
+  -webkit-text-fill-color: initial;
+  color: #fff;
+  filter: drop-shadow(0 2px 22px rgba(0, 0, 0, 0.35));
+}
+.hero-headline .hl {
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: hlShimmer 9s ease-in-out infinite alternate;
+  padding-bottom: 0.06em;
+}
+.hero-headline .hl-1 { background-image: linear-gradient(90deg, #2997ff 0%, #0071e3 30%, #5ac8fa 60%, #2997ff 100%); }
+.hero-headline .hl-2 { background-image: linear-gradient(90deg, #7d7aff 0%, #a75ffc 35%, #e95ad6 70%, #7d7aff 100%); }
+.hero-headline .hl-3 { background-image: linear-gradient(90deg, #ff5f8a 0%, #ff6d5c 30%, #ffb341 65%, #ff5f8a 100%); }
+@keyframes hlShimmer {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-headline .hl { animation: none; }
+}
+
+/* Hero: "Descargar CV" en blanco (contorno blanco; al pasar el cursor, relleno blanco) */
+.hero .btn.btn--outline-light {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.9);
+  background: transparent;
+}
+.hero .btn.btn--outline-light:hover {
+  color: #1d1d1f;
+  background: #ffffff;
+  border-color: #ffffff;
+}
+.hero .btn.btn--outline-light:focus-visible { outline-color: #ffffff; }
+
+/* Hero: el contenido baja a la parte inferior de la pantalla (sin indicador de scroll) */
+.hero {
+  align-items: end;
+  padding-bottom: clamp(40px, 7vh, 72px);
+}
+/* Celular: margen para no chocar con el botón de pausa del video */
+@media (max-width: 640px) {
+  .hero { padding-bottom: 84px; }
+}
+
+/* Hero: información más pequeña */
+.hero-eyebrow { font-size: clamp(0.9375rem, 0.88rem + 0.25vw, 1.0625rem); }
+.hero-headline { font-size: clamp(1.75rem, 1.25rem + 2.2vw, 3rem); margin-top: clamp(8px, 1vw, 12px); }
+.hero .hero-sub {
+  max-width: 28rem;
+  margin-top: clamp(10px, 1.2vw, 14px);
+  font-size: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
+}
+.hero .hero-actions { margin-top: clamp(18px, 2vw, 24px); gap: 10px 12px; }
+.btn--hero { min-height: 36px; min-width: 120px; padding: 0 18px; font-size: 0.875rem; }
+
+/* Hero: la S de "Santiago" y la de "Sterling" dentro de un círculo */
+.hero-name { display: inline-flex; align-items: center; white-space: nowrap; }
+.hero-eyebrow .hero-name .hero-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 1.32em;
+  height: 1.32em;
+  margin: 0 0.06em 0 0;
+  border-radius: 50%;
+  font-size: 0.82em;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: middle;
+  background: #fff;
+  color: #000;
+}
+.hero-eyebrow .hero-name .hero-mark + * { margin: 0; }
+.hero-name .hero-mark:nth-of-type(2) { margin-left: 0.32em; }
+
+/* Proyecto destacado: el botón se ubica bajo la base del monitor (posición calculada en JS) */
+
+/* Cuadro "Datos": anillo con la paleta de degradados de Apple (azul → violeta → rosa → naranja) */
+.chip-box::before {
+  background: conic-gradient(from var(--ring-angle), #0894ff, #c959dd, #ff2e54, #ff9004, #c959dd, #0894ff);
+}
+.chip-box {
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.25),
+    -8px -6px 22px -6px rgba(8, 148, 255, 0.45),
+    8px -6px 22px -6px rgba(201, 89, 221, 0.4),
+    8px 8px 22px -6px rgba(255, 46, 84, 0.35),
+    -8px 8px 22px -6px rgba(255, 144, 4, 0.35);
+}
+
+/* ==========================================================================
+   CONTACTO · TABLET CON PROPORCIONES REALES Y TEXTO ABAJO
+   Pantalla 1.43 : 1 (como una tablet real): horizontal en PC, vertical en celular.
+   ========================================================================== */
+#contacto .contact-card.tablet-screen {
+  aspect-ratio: 1.43 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: clamp(18px, 3vw, 36px) clamp(18px, 4vw, 48px) clamp(20px, 3.4vw, 40px);
+}
+#contacto .tablet-screen h3 {
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  letter-spacing: -0.02em;
+}
+#contacto .tablet-screen p {
+  max-width: 30rem;
+  margin-top: 8px;
+  font-size: clamp(0.8125rem, 0.78rem + 0.2vw, 0.9375rem);
+  line-height: 1.45;
+}
+#contacto .tablet-screen .contact-actions { margin-top: clamp(12px, 1.6vw, 18px); gap: 10px; }
+#contacto .tablet-screen .btn { min-height: 36px; padding: 0 18px; font-size: 0.875rem; }
+
+@media (max-width: 640px) {
+  #contacto .tablet-scene { max-width: min(88vw, 420px); }
+  #contacto .contact-card.tablet-screen { aspect-ratio: 1 / 1.43; }
+}
