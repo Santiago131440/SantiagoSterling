@@ -16,18 +16,18 @@
   <meta property="og:url" content="https://santiago131440.github.io/SantiagoSterling/">
   <meta property="og:title" content="Santiago Sterling · Portafolio">
   <meta property="og:description" content="Software, análisis de datos y automatización aplicados a la producción industrial.">
-  <meta property="og:image" content="https://avatars.githubusercontent.com/u/98182135?v=4">
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/98182135?v=tablet4">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Santiago Sterling · Portafolio">
   <meta name="twitter:description" content="Software, análisis de datos y automatización aplicados a la producción industrial.">
-  <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/98182135?v=4">
+  <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/98182135?v=tablet4">
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='black'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-size='50' font-weight='600' fill='white' font-family='Inter, Arial, sans-serif'%3ES%3C/text%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles20.css?v=devbg5">
+  <link rel="stylesheet" href="styles20.css?v=tablet4">
   <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
 
@@ -62,27 +62,18 @@
 <!-- NAVEGACIÓN -->
 <header class="global-nav" id="globalNav">
   <nav class="nav-inner" aria-label="Principal">
-    <a href="#top" class="nav-brand">
-      <img src="https://avatars.githubusercontent.com/u/98182135?v=4" alt="" width="28" height="28">
-      <span>Santiago Sterling</span>
+    <a href="#top" class="nav-brand" aria-label="Santiago Sterling · Ir al inicio">
+      <img src="https://avatars.githubusercontent.com/u/98182135?v=tablet4" alt="" width="28" height="28">
+      <span class="nav-label" aria-hidden="true"><span class="nav-label-text is-current">Santiago Sterling</span></span>
     </a>
 
-    <ul class="nav-links" role="list">
-      <li><a href="#sobremi" class="nav-link">Sobre mí</a></li>
-      <li><a href="#estudio" class="nav-link">Formación</a></li>
-      <li><a href="#experiencia" class="nav-link">Experiencia</a></li>
-      <li><a href="#desarrollo" class="nav-link">Desarrollos</a></li>
-      <li><a href="#competencia" class="nav-link">Competencias</a></li>
-      <li><a href="#estrategia" class="nav-link">Estrategias</a></li>
-    </ul>
-
     <div class="nav-actions">
-      <a href="#contacto" class="btn btn--primary btn--sm nav-cta">Contacto</a>
+      <a href="#desarrollo" class="btn btn--sm nav-pill nav-pill--outline">Desarrollos</a>
+      <a href="#contacto" class="btn btn--primary btn--sm nav-pill nav-cta">Contacto</a>
       <button type="button" class="icon-btn menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menú">
         <span class="menu-icon" aria-hidden="true"><span></span><span></span></span>
       </button>
     </div>
-    <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
   </nav>
 
   <div class="mobile-menu" id="mobileMenu" hidden>
@@ -106,35 +97,24 @@
 <!-- HERO: video a pantalla completa con titular centrado -->
 <section class="hero on-dark" id="top" aria-labelledby="heroTitle">
   <div class="hero-media" aria-hidden="true">
-    <!-- Coloca tu video como "hero.mp4" junto a index.html (1920×1080, 10–20 s, sin audio, idealmente < 8 MB).
-         Si no carga, se muestra un fondo degradado animado. -->
+    <!-- Video de fondo (Pixabay). Si no carga, queda el degradado animado. -->
     <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" disablepictureinpicture>
-      <source src="hero.webm" type="video/webm">
-      <source src="hero.mp4" type="video/mp4">
+      <source src="https://cdn.pixabay.com/video/2024/05/25/213648_large.mp4" type="video/mp4">
     </video>
     <div class="hero-scrim"></div>
   </div>
 
   <div class="container hero-content">
-    <h1 class="hero-title reveal" id="heroTitle">
-      <span class="hero-line">¡Hola!, soy</span>
-      <span class="hero-line"><span class="hero-mark" aria-hidden="true">S</span>Santiago Sterling</span>
-    </h1>
-    <p class="hero-sub reveal" style="--delay:.1s">Impulso el crecimiento digital con software, datos y automatización aplicados a la producción industrial.</p>
+    <h1 class="hero-eyebrow reveal" id="heroTitle"><span class="sr-only">Santiago Sterling</span><span class="hero-name" aria-hidden="true"><span class="hero-mark">S</span>antiago <span class="hero-mark">S</span>terling</span></h1>
+    <p class="hero-headline reveal" style="--delay:.08s"><span class="hl hl-1">Tecnólogo en análisis y desarrollo de Software</span></p>
+      <p class="hero-sub reveal" style="--delay:.16s">Impulso el crecimiento digital con software, datos y automatización aplicados a la producción industrial.</p>
 
-    <div class="hero-actions reveal" style="--delay:.18s">
-      <a href="proyectoApp.html" class="btn btn--primary btn--lg magnetic">Ver proyectos</a>
+    <div class="hero-actions reveal" style="--delay:.24s">
+      <a href="proyectoApp.html" class="btn btn--primary btn--hero magnetic">Ver proyectos</a>
+      <a href="#" id="downloadCV" class="btn btn--hero btn--outline-light">Descargar CV</a>
     </div>
-    <p class="hero-lines reveal" style="--delay:.24s">
-      <span>Tecnólogo en Análisis y Desarrollo de Software</span>
-      <span>Tecnólogo en Gestión de la Producción Industrial</span>
-    </p>
-    <p class="hero-links reveal" style="--delay:.3s">
-      <a href="#" id="downloadCV" class="text-link">Descargar CV</a>
-    </p>
   </div>
 
-  <a href="#sobremi" class="hero-scroll" aria-label="Ir a Sobre mí"><span aria-hidden="true"></span></a>
 
   <button type="button" class="hero-video-toggle" id="heroVideoToggle" aria-pressed="false" aria-label="Pausar video de fondo" hidden>
     <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
@@ -148,24 +128,36 @@
     <header class="section-head reveal">
       <h2 class="section-title" id="sobremiTitle">Sobre mí</h2>
       <p class="statement">Conoce cómo transformo ideas en soluciones digitales de alto impacto, <span>creando software sólido, escalable y diseñado para crecer.</span></p>
-      <p class="section-lead">Tecnólogo en Análisis y Desarrollo de Software y Tecnólogo en Gestión de la Producción Industrial con 9 años de experiencia en manufactura, enfocado en optimización de procesos mediante tecnología, automatización y análisis de datos, con interés en inteligencia artificial e Industria 4.0.</p>
+      <p class="section-lead">De las líneas de producción al desarrollo de soluciones digitales, mi camino ha estado marcado por la curiosidad, el aprendizaje continuo y la búsqueda de mejores formas de hacer las cosas. Hoy, uno la experiencia de más de nueve años en la industria con mi formación en desarrollo de software para transformar procesos, convertir datos en decisiones y crear tecnología con propósito, proyectándome hacia la automatización, la inteligencia artificial y la Industria 4.0.</p>
     </header>
 
     <div class="about-grid">
       <article class="tile reveal">
         <h3 class="tile-title">Proceso</h3>
         <p>Experiencia en <strong>gestión de producción,</strong> control de inventarios y mejora continua.</p>
+        <div class="neu-ring" role="img" aria-label="Más de 9 años en planta">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="neu-ring-track" cx="60" cy="60" r="50"/>
+            <circle class="neu-ring-fill" cx="60" cy="60" r="50"/>
+          </svg>
+          <span class="neu-ring-label" aria-hidden="true"><b>9+</b><small>años en planta</small></span>
+        </div>
       </article>
       <article class="tile reveal" style="--delay:.08s">
         <h3 class="tile-title">Objetivo</h3>
         <p>Colaborar en proyectos que <strong>combinen automatización,</strong> analítica y desarrollo web.</p>
+        <ul class="neu-switches" role="list">
+          <li><span>Automatización</span><button type="button" class="neu-switch" role="switch" aria-checked="false" aria-label="Automatización"><i></i></button></li>
+          <li><span>Analítica</span><button type="button" class="neu-switch" role="switch" aria-checked="false" aria-label="Analítica"><i></i></button></li>
+          <li><span>Desarrollo web</span><button type="button" class="neu-switch" role="switch" aria-checked="false" aria-label="Desarrollo web"><i></i></button></li>
+        </ul>
       </article>
       <article class="tile reveal" style="--delay:.16s">
         <h3 class="tile-title">Información clave</h3>
         <dl class="info-list">
-          <div><dt>Ubicación</dt><dd>Cali, Colombia</dd></div>
-          <div><dt>Estudios</dt><dd>Tecnólogo en análisis y desarrollo de software. Tecnólogo en gestión de la producción industrial.</dd></div>
-          <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/santisterling/" target="_blank" rel="noopener" class="text-link">linkedin.com/in/santisterling</a></dd></div>
+          <div class="neu-info"><span class="neu-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg></span><dt>Ubicación</dt><dd>Cali, Colombia</dd></div>
+          <div class="neu-info"><span class="neu-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 9 12 4.5 21.5 9 12 13.5z"/><path d="M6.5 11v4.5c0 1.6 2.5 3 5.5 3s5.5-1.4 5.5-3V11"/></svg></span><dt>Estudios</dt><dd>Tecnólogo en análisis y desarrollo de software. Tecnólogo en gestión de la producción industrial.</dd></div>
+          <div class="neu-info"><span class="neu-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/></svg></span><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/santisterling/" target="_blank" rel="noopener" class="neu-link">linkedin.com/in/santisterling</a></dd></div>
         </dl>
       </article>
     </div>
@@ -177,7 +169,7 @@
   <div class="container container--narrow">
     <header class="section-head reveal">
       <h2 class="section-title" id="estudioTitle">Formación académica</h2>
-      <p class="section-lead">Títulos, diplomado y cursos agrupados por categoría. Abre una carpeta para ver su contenido.</p>
+      <p class="section-lead">Cada etapa de mi formación ha dejado una enseñanza y abierto nuevas puertas. Entre títulos, diplomados y cursos, se ha ido construyendo un camino de aprendizaje que sigue creciendo con el tiempo. Explora cada carpeta y descubre los conocimientos que han acompañado este recorrido.</p>
     </header>
 
     <div class="finder reveal">
@@ -207,14 +199,14 @@
   <div class="container container--wide">
     <header class="section-head reveal">
       <h2 class="section-title" id="experienciaTitle">Experiencia profesional</h2>
-      <p class="section-lead">Nueve años en plantas de producción de seis empresas líderes, de la línea de llenado al tablero de indicadores.</p>
+      <p class="section-lead">Hace nueve años comenzó un camino entre líneas de producción, máquinas y grandes desafíos. Desde entonces, seis grandes empresas han sido parte de una historia que va de la operación en planta al análisis de indicadores, dejando aprendizajes que aún marcan el presente.</p>
     </header>
   </div>
 
   <div class="container container--wide">
     <div class="exp-stage reveal" id="expStage">
       <button type="button" class="exp-hero" aria-label="Ver detalles: Analista de Producción en Cosmoagro S.A.">
-        <img class="exp-hero-img" src="https://cdn.pixabay.com/photo/2020/03/07/17/16/rapeseeds-4910374_1280.jpg" alt="" decoding="async">
+        <img class="exp-hero-img" src="https://cdn.pixabay.com/photo/2025/08/17/07/43/tractor-9779346_1280.jpg" alt="" decoding="async">
         <span class="exp-hero-scrim" aria-hidden="true"></span>
         <span class="exp-hero-caption">
           <span class="exp-hero-role">Analista de Producción</span>
@@ -255,7 +247,7 @@
     <div class="exp-source" id="expCarousel" hidden>
 
       <article class="experiencia-card grupo-1" tabindex="0" role="button" aria-label="Ver detalles: Analista de Producción en Cosmoagro S.A." data-company="Cosmoagro S.A." data-duration="Dic 2024 – Presente">
-        <img src="https://cdn.pixabay.com/photo/2020/03/07/17/16/rapeseeds-4910374_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
+        <img src="https://cdn.pixabay.com/photo/2025/08/17/07/43/tractor-9779346_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
         <div class="card-scrim" aria-hidden="true"></div>
         <div class="card-top">
           <h3 class="card-role">Analista de Producción</h3>
@@ -292,7 +284,7 @@
       </article>
 
       <article class="experiencia-card grupo-3" tabindex="0" role="button" aria-label="Ver detalles: Supervisor de Producción en Cadena S.A." data-company="Cadena S.A." data-duration="Ene 2020 – Feb 2023">
-        <img src="https://cdn.pixabay.com/photo/2016/06/16/12/59/thread-counters-1461287_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
+        <img src="https://cdn.pixabay.com/photo/2022/06/29/17/47/catalogue-7292252_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
         <div class="card-scrim" aria-hidden="true"></div>
         <div class="card-top">
           <h3 class="card-role">Supervisor de Producción</h3>
@@ -309,7 +301,7 @@
       </article>
 
       <article class="experiencia-card grupo-4" tabindex="0" role="button" aria-label="Ver detalles: Analista de Producción en Postobón S.A." data-company="Postobón S.A." data-duration="Mar 2019 – Ago 2019">
-        <img src="https://cdn.pixabay.com/photo/2022/02/15/00/40/lemonade-7014122_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
+        <img src="https://cdn.pixabay.com/photo/2015/10/24/11/09/drop-1004250_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
         <div class="card-scrim" aria-hidden="true"></div>
         <div class="card-top">
           <h3 class="card-role">Analista de Producción</h3>
@@ -326,7 +318,7 @@
       </article>
 
       <article class="experiencia-card grupo-5" tabindex="0" role="button" aria-label="Ver detalles: Analista de Producción en Laboratorios OSA" data-company="Laboratorios OSA S.A.S" data-duration="Jun 2018 – Mar 2019">
-        <img src="https://cdn.pixabay.com/photo/2020/10/02/09/01/tablets-5620566_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
+        <img src="https://cdn.pixabay.com/photo/2016/01/14/20/55/factory-1140760_1280.jpg" alt="" class="cover-image" loading="lazy" decoding="async">
         <div class="card-scrim" aria-hidden="true"></div>
         <div class="card-top">
           <h3 class="card-role">Analista de Producción</h3>
@@ -343,7 +335,7 @@
       </article>
 
       <article class="experiencia-card grupo-6" tabindex="0" role="button" aria-label="Ver detalles: Especialista en Producción en Smurfit Westrock" data-company="Smurfit Westrock S.A." data-duration="Mar 2017 – Mar 2018">
-        <img src="https://cdn.pixabay.com/photo/2013/09/14/18/41/colorful-182220_1280.jpg" class="cover-image" loading="lazy" decoding="async">
+        <img src="https://cdn.pixabay.com/photo/2019/02/19/18/01/paper-4007357_1280.jpg" class="cover-image" loading="lazy" decoding="async">
         <div class="card-scrim" aria-hidden="true"></div>
         <div class="card-top">
           <h3 class="card-role">Incremento de Producción</h3>
@@ -379,20 +371,42 @@
       </div>
     </header>
 
-    <div class="preview-list">
-      <article class="preview-card reveal">
-        <div class="preview-bar">
-          <span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="preview-label">Proyectos destacados</span>
-        </div>
-        <div class="preview-frame">
-          <iframe src="proyectoApp.html" title="Vista previa de proyectos" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
-          <div class="preview-hint" aria-hidden="true"><span>Ver todos los proyectos de software</span></div>
-        </div>
-        <a href="proyectoApp.html" class="preview-link"><span class="sr-only">Abrir proyectos destacados</span></a>
-      </article>
-    </div>
+    <p class="mac-intro reveal">Proyecto destacado · <strong>Quantix Sterling</strong></p>
+  </div>
 
+  <!-- Proyecto destacado: un Mac se acerca y la app se abre con el scroll hasta pantalla completa -->
+  <div class="mac-scroll" id="macScroll">
+    <div class="mac-sticky">
+      <div class="mac-display" id="macDisplay">
+        <div class="mac-screen" id="macScreen">
+          <div class="mac-wallpaper" aria-hidden="true"></div>
+          <div class="mac-menubar" aria-hidden="true">
+            <span class="mac-mark"></span><b>Quantix Sterling</b><span>Archivo</span><span>Edición</span><span>Ver</span><span>Ventana</span><span>Ayuda</span>
+            <span class="mac-clock" id="macClock"></span>
+          </div>
+          <div class="mac-app" id="macApp">
+            <div class="mac-app-bar" aria-hidden="true">
+              <span class="traffic"><i></i><i></i><i></i></span>
+              <span class="mac-app-url">quantixsterling.vercel.app</span>
+            </div>
+            <img src="quantix-login.jpg" class="mac-app-shot" alt="Pantalla de inicio de sesión de Quantix Sterling" width="1432" height="894" loading="lazy" decoding="async">
+          </div>
+          <div class="mac-dock" aria-hidden="true">
+            <span class="dock-app" style="--c1:#5ac8fa;--c2:#0071e3"><svg viewBox="0 0 24 24"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2h9A1.5 1.5 0 0 1 21 9.5v8A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z"/></svg></span>
+            <span class="dock-app" style="--c1:#34d399;--c2:#059669"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 16v-4M12 16V8M16 16v-6"/></svg></span>
+            <span class="dock-app" style="--c1:#7dd3fc;--c2:#2563eb"><svg viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></svg></span>
+            <span class="dock-app" style="--c1:#fbbf24;--c2:#f97316"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span>
+            <span class="dock-sep"></span>
+            <span class="dock-app dock-quantix" id="macDockApp" style="--c1:#f43f5e;--c2:#ea580c"><b>Q</b><i class="dock-dot"></i></span>
+          </div>
+        </div>
+        <span class="mac-stand" aria-hidden="true"></span>
+      </div>
+      <a class="btn btn--primary mac-open" id="macOpen" href="https://quantixsterling.vercel.app/#/login" target="_blank" rel="noopener">Abrir Quantix Sterling</a>
+    </div>
+  </div>
+
+  <div class="container container--narrow">
     <div class="dev-links reveal">
       <a href="proyectos20.html" class="btn btn--glass">Ver proyectos de software</a>
     </div>
@@ -525,14 +539,18 @@
     <header class="section-head reveal">
       <h2 class="section-title" id="contactoTitle">Contacto</h2>
     </header>
-    <div class="contact-card reveal">
+    <div class="tablet-scene" id="tabletScene">
+      <div class="tablet">
+        <span class="tablet-cam" aria-hidden="true"></span>
+        <div class="contact-card tablet-screen">
       <h3>Conectemos ideas</h3>
       <p>Estoy abierto a nuevas oportunidades profesionales, colaboraciones y proyectos donde la tecnología y el diseño aporten valor real.</p>
       <div class="contact-actions">
         <a href="mailto:santisterling@gmail.com?subject=Contacto%20desde%20tu%20portafolio" class="btn btn--primary magnetic">Escribirme por email</a>
         <a href="https://www.linkedin.com/in/santisterling/" target="_blank" rel="noopener" class="btn btn--secondary">Ver LinkedIn</a>
       </div>
-      <p class="contact-note">Respondo en un máximo de 8 horas.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -540,7 +558,7 @@
 </main>
 
 <!-- FOOTER -->
-<footer class="site-footer tone-light">
+<footer class="site-footer tone-dark">
   <div class="container container--wide">
     <div class="footer-top">
       <div>
@@ -575,6 +593,6 @@
   </div>
 </footer>
 
-<script src="script20.js?v=devbg5" defer></script>
+<script src="script20.js?v=tablet4" defer></script>
 </body>
 </html>
