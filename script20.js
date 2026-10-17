@@ -329,7 +329,7 @@
      ========================================================================== */
   (function initSpotlight() {
     if (!finePointer) return;
-    const surfaces = $$(".tile, .summary-stat, .finder, .contact-card, .chip-stats, .strategy, .preview-card, .site .nav-inner");
+    const surfaces = $$(".summary-stat, .finder, .contact-card, .site .nav-inner");
     surfaces.forEach((node) => {
       node.classList.add("spotlight");
       node.addEventListener("pointermove", (e) => {
@@ -345,7 +345,7 @@
      ========================================================================== */
   (function initTilt() {
     if (!finePointer || reducedMotion) return;
-    const cards = $$(".experiencia-card, .preview-card"); // Competencias queda fija
+    const cards = $$(".experiencia-card"); // Competencias y Desarrollos quedan fijas
     const MAX = 6; // grados
 
     cards.forEach((card) => {
@@ -570,6 +570,330 @@
     card.addEventListener("transitionrun", () => { if (!moving) { moving = true; follow(); } });
     card.addEventListener("transitionend", () => { moving = false; request(); });
     card.addEventListener("transitioncancel", () => { moving = false; request(); });
+    update();
+  })();
+
+  /* ==========================================================================
+     FORMACIÓN: DEL DESORDEN AL ORDEN
+     Las carpetas empiezan regadas e inclinadas, como un escritorio
+     desordenado; con el scroll cada una vuela a su lugar en la ventana.
+     Al subir, se vuelven a desordenar.
+     ========================================================================== */
+  (function initFinderChaos() {
+    const win = $("#estudio .finder");
+    if (!win) return;
+    const items = $$(".finder-list > li", win);
+    if (!items.length) return;
+    win.classList.add("chaos");
+
+    // Posiciones "desordenadas" fijas (semilla) para que siempre se vea igual
+    let seed = 1611;
+    const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+    const scatter = items.map((li, i) => {
+      const side = i % 2 ? 1 : -1;
+      return {
+        fx: side * (0.18 + rnd() * 0.32),        // fracción del ancho de la ventana
+        fy: (rnd() - 0.5) * 2,                    // -1 a 1
+        rot: (rnd() - 0.5) * 50,                  // grados
+        sc: 0.86 + rnd() * 0.2,
+        lag: rnd() * 0.22                          // unas llegan antes que otras
+      };
+    });
+
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2); // arranque y llegada suaves
+    let queued = false;
+
+    const update = () => {
+      queued = false;
+      const vh = window.innerHeight;
+      const r = win.getBoundingClientRect();
+      const w = win.offsetWidth;
+      const listTop = r.top;
+      // 0 cuando la ventana asoma (95% de la pantalla); 1 cuando su borde llega a 15%
+      const p = clamp((vh * 0.95 - listTop) / (vh * 0.8), 0, 1);
+      const amp = Math.min(vh * 0.32, 300);
+
+      items.forEach((li, i) => {
+        const c = scatter[i];
+        const t = ease(clamp((p - c.lag) / (1 - 0.22), 0, 1));
+        const k = 1 - t; // 1 = desordenada, 0 = en su lugar
+        if (k < 0.001) { li.style.transform = ""; li.classList.remove("is-loose"); return; }
+        li.classList.add("is-loose");
+        li.style.transform =
+          `translate3d(${(c.fx * w * k).toFixed(1)}px, ${(c.fy * amp * k).toFixed(1)}px, 0) ` +
+          `rotate(${(c.rot * k).toFixed(2)}deg) scale(${(1 + (c.sc - 1) * k).toFixed(3)})`;
+      });
+      win.classList.toggle("is-tidy", p >= 1);
+    };
+
+    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request);
+    update();
+  })();
+
+  /* ==========================================================================
+     NAVEGACIÓN: EL NOMBRE CAMBIA AL DE LA SECCIÓN ACTUAL
+     En el Hero (y el pie de página) se muestra "Santiago Sterling"; en cada
+     sección, su título. Cambia con un giro suave: el texto anterior sube y el
+     nuevo entra desde abajo. Funciona en PC y en celular.
+     ========================================================================== */
+  (function initNavSectionLabel() {
+    const nav = $("#globalNav");
+    const box = $(".nav-label", nav || document);
+    if (!nav || !box) return;
+    const NAME = "Santiago Sterling";
+
+    const zones = $$("main > section, .site-footer").map((el) => {
+      const titleId = el.getAttribute("aria-labelledby") || "";
+      const title = titleId && el.id !== "top" ? document.getElementById(titleId) : null;
+      return { el, full: title ? title.textContent.trim() : "" };
+    });
+
+    let currentText = NAME;
+    let cur = $(".nav-label-text", box);
+    const show = (text) => {
+      if (text === currentText) return;
+      currentText = text;
+      nav.classList.toggle("is-name", text === NAME);
+      if (reducedMotion) { cur.textContent = text; return; }
+      const next = document.createElement("span");
+      next.className = "nav-label-text is-entering";
+      next.textContent = text;
+      box.appendChild(next);
+      const old = cur;
+      cur = next;
+      requestAnimationFrame(() => {
+        old.classList.remove("is-current");
+        old.classList.add("is-leaving");
+        next.classList.remove("is-entering");
+        next.classList.add("is-current");
+      });
+      setTimeout(() => old.remove(), 600);
+    };
+
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const probe = (nav.querySelector(".nav-inner") || nav).getBoundingClientRect();
+      const y = probe.bottom + 24; // justo debajo de la barra
+      const z = zones.find(({ el }) => {
+        const r = el.getBoundingClientRect();
+        return r.top <= y && r.bottom > y;
+      });
+      const label = z && z.full ? z.full : NAME;
+      show(label);
+    };
+    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request);
+    nav.classList.add("is-name");
+    update();
+  })();
+
+  /* ==========================================================================
+     SOBRE MÍ: ELEMENTOS NEUMÓRFICOS
+     Al entrar en pantalla el anillo se llena y los interruptores se encienden
+     uno a uno. Los interruptores también se pueden activar con clic.
+     ========================================================================== */
+  (function initNeuWidgets() {
+    const grid = $("#sobremi .about-grid");
+    if (!grid) return;
+    const switches = $$(".neu-switch", grid);
+    switches.forEach((sw) => sw.addEventListener("click", () => {
+      sw.setAttribute("aria-checked", String(sw.getAttribute("aria-checked") !== "true"));
+    }));
+    const turnOn = () => {
+      grid.classList.add("is-live");
+      switches.forEach((sw, i) => setTimeout(() => sw.setAttribute("aria-checked", "true"), reducedMotion ? 0 : 500 + i * 320));
+    };
+    if (!("IntersectionObserver" in window)) return turnOn();
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { turnOn(); io.disconnect(); }
+    }, { threshold: 0.35 });
+    io.observe(grid);
+  })();
+
+  /* ==========================================================================
+     CONTACTO: LA TABLET SE LEVANTA Y SE ENCIENDE
+     Con el scroll: empieza acostada y apagada; se levanta hasta quedar de
+     frente; al final la pantalla se enciende (destello central + fondo) y
+     aparece la información. Al subir, se apaga y vuelve a acostarse.
+     ========================================================================== */
+  (function initTabletLift() {
+    const scene = $("#tabletScene");
+    if (!scene) return;
+    const tablet = $(".tablet", scene);
+    let queued = false;
+    let isOn = null;
+    const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    const update = () => {
+      queued = false;
+      const vh = window.innerHeight;
+      const r = scene.getBoundingClientRect();
+      // 0 cuando la tablet asoma por abajo; 1 cuando su borde superior llega a ~18 %
+      const p = clamp((vh - r.top) / (vh * 0.82), 0, 1);
+      const lift = 1 - easeInOut(clamp((p - 0.12) / 0.55, 0, 1)); // 1 acostada → 0 de frente
+      const on = clamp((p - 0.64) / 0.24, 0, 1);                  // 0 apagada → 1 encendida
+      const flash = Math.max(0, 1 - Math.abs(on - 0.18) / 0.18); // destello al encender
+      scene.style.setProperty("--lift", lift.toFixed(4));
+      scene.style.setProperty("--on", on.toFixed(4));
+      scene.style.setProperty("--flash", flash.toFixed(4));
+      const next = p >= 0.9;
+      if (next !== isOn) { isOn = next; tablet.classList.toggle("is-on", next); }
+    };
+    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request);
+    // Con teclado: si se enfoca un botón, la pantalla se muestra encendida
+    tablet.addEventListener("focusin", () => tablet.classList.add("is-on"));
+    update();
+  })();
+
+  /* ==========================================================================
+     DESARROLLOS: UN MAC SE ACERCA Y LA APP SE ABRE HASTA PANTALLA COMPLETA
+     Todo guiado por el scroll (y reversible):
+       1) el monitor se acerca y se endereza
+       2) el ícono de Quantix rebota en el Dock (la app arranca)
+       3) la ventana sale del ícono y crece hasta llenar la pantalla del Mac
+          (se detiene en el borde de la pantalla simulada, sin pantalla completa)
+     ========================================================================== */
+  (function initMacApp() {
+    const wrap = $("#macScroll");
+    if (!wrap) return;
+    const display = $("#macDisplay", wrap);
+    const screen = $("#macScreen", wrap);
+    const app = $("#macApp", wrap);
+    const icon = $("#macDockApp", wrap);
+    const menubar = $(".mac-menubar", wrap);
+    const dock = $(".mac-dock", wrap);
+    const bar = $(".mac-app-bar", wrap);
+    const clock = $("#macClock", wrap);
+
+    const tick = () => {
+      if (clock) clock.textContent = new Date().toLocaleTimeString("es", { hour: "2-digit", minute: "2-digit" });
+    };
+    tick();
+    setInterval(tick, 30000);
+
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    let queued = false;
+    let full = null;
+
+    const update = () => {
+      queued = false;
+      const vh = window.innerHeight;
+      const vw = window.innerWidth;
+      const r = wrap.getBoundingClientRect();
+      const p = clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
+
+      const a = ease(clamp(p / 0.34, 0, 1));             // acercamiento
+      const d = clamp((p - 0.34) / 0.14, 0, 1);           // rebote del ícono
+      const o = ease(clamp((p - 0.46) / 0.46, 0, 1));     // apertura hasta llenar la pantalla del Mac
+      const f = 0;                                        // sin pantalla completa
+
+      // Tamaños reales (sin transform)
+      const sw = screen.offsetWidth;
+      const sh = screen.offsetHeight;
+      const bz = (display.offsetWidth - sw) / 2;
+      const sFull = Math.max(vw / sw, vh / sh) * 1.002;
+
+      const s = lerp(0.6, 1, a) * lerp(1, sFull, f);
+      const ty = lerp(vh * 0.16, 0, a);
+      const rx = lerp(16, 0, a);
+      // En pantallas verticales, al llegar a pantalla completa se encuadra el formulario (≈76 % del ancho)
+      let tx = 0;
+      if (vw < vh) {
+        const wide = sw * s;
+        tx = -Math.min((0.76 - 0.5) * wide, Math.max(0, (wide - vw) / 2)) * f;
+      }
+      display.style.transform =
+        `translate(-50%, -50%) translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) rotateX(${rx.toFixed(2)}deg) scale(${s.toFixed(4)})`;
+      display.style.borderRadius = `${lerp(bz * 2.2, 0, f)}px`;
+
+      // Rebote del ícono (dos saltos) y punto de "app abierta"
+      const hop = Math.abs(Math.sin(d * Math.PI * 2)) * (1 - d * 0.35);
+      icon.style.transform = `translateY(${(-hop * 0.9).toFixed(3)}em)`;
+      icon.style.setProperty("--running", d > 0.05 ? "1" : "0");
+
+      // La ventana sale del ícono del Dock
+      const ix = icon.offsetLeft + dock.offsetLeft - dock.offsetWidth / 2 + icon.offsetWidth / 2; // centro x relativo a la pantalla
+      const iy = dock.offsetTop + icon.offsetTop + icon.offsetHeight / 2;
+      const fromX = ix - sw / 2;
+      const fromY = iy - sh / 2;
+      const k0 = icon.offsetWidth / sw;
+      const sx = lerp(k0, 1, o);
+      const sy = lerp(icon.offsetHeight / sh, 1, Math.pow(o, 0.8));
+      app.style.transform =
+        `translate(${lerp(fromX, 0, o).toFixed(1)}px, ${lerp(fromY, 0, o).toFixed(1)}px) scale(${sx.toFixed(4)}, ${sy.toFixed(4)})`;
+      app.style.opacity = String(clamp(o / 0.12, 0, 1));
+      app.style.borderRadius = `${lerp(bz * 0.6, 0, f)}px`;
+
+      // Barra del sistema, Dock y barra de la ventana desaparecen al ir a pantalla completa
+      dock.style.opacity = String(1 - clamp((o - 0.55) / 0.35, 0, 1));
+      menubar.style.opacity = String(1 - o);
+      bar.style.opacity = String(1 - f);
+
+      // Botón "Abrir" justo debajo de la base del monitor
+      const standEl = $(".mac-stand", wrap);
+      const openBtn = $("#macOpen", wrap);
+      if (standEl && openBtn) {
+        const sb = standEl.getBoundingClientRect().bottom - wrap.querySelector(".mac-sticky").getBoundingClientRect().top;
+        openBtn.style.top = `${Math.min(vh - openBtn.offsetHeight - 12, sb + 18).toFixed(0)}px`;
+        openBtn.style.bottom = "auto";
+      }
+
+      const isFull = o >= 0.98;
+      if (isFull !== full) { full = isFull; wrap.classList.toggle("is-full", isFull); }
+    };
+
+    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request);
+    update();
+  })();
+
+  /* ==========================================================================
+     COMPETENCIAS: LAS TARJETAS CRECEN AL ENTRAR Y SE ACHICAN EN LOS BORDES
+     El tamaño depende de cuánto de cada tarjeta se ve en pantalla: completa
+     = 100 %; al acercarse a un borde se va reduciendo. Funciona con los
+     botones de navegación, con el deslizamiento en móvil y al redimensionar.
+     ========================================================================== */
+  (function initGalleryScale() {
+    const track = $("#carousel");
+    if (!track) return;
+    const cards = $$(".gallery-card", track);
+    if (!cards.length) return;
+    const MIN = 0.82;               // tamaño mínimo en el borde
+    const ease = (t) => 1 - Math.pow(1 - t, 2);
+    let queued = false;
+
+    const update = () => {
+      queued = false;
+      const view = track.getBoundingClientRect();
+      const left = Math.max(view.left, 0);
+      const right = Math.min(view.right, window.innerWidth);
+      cards.forEach((card) => {
+        // Medición sin la escala actual: posición de diseño de la tarjeta
+        const x = card.offsetLeft - track.scrollLeft + view.left;
+        const w = card.offsetWidth;
+        const visible = clamp(Math.min(x + w, right) - Math.max(x, left), 0, w) / w; // 0..1
+        const t = ease(visible);
+        const scale = MIN + (1 - MIN) * t;
+        // Se encoge hacia el lado que queda dentro de la pantalla
+        const center = x + w / 2;
+        const origin = center < (left + right) / 2 ? "100% 50%" : "0% 50%";
+        card.style.transformOrigin = visible >= 0.999 ? "50% 50%" : origin;
+        card.style.transform = `scale(${scale.toFixed(4)})`;
+        card.style.opacity = (0.45 + 0.55 * t).toFixed(3);
+      });
+    };
+
+    const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+    track.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request);
+    if ("ResizeObserver" in window) new ResizeObserver(request).observe(track);
     update();
   })();
 
@@ -896,7 +1220,7 @@ Proyectos destacados:
       const items = cfg.items || [];
       this.mode = items.length ? cfg.mode || "switch" : "plain";
       this.win.classList.toggle("mw-plain", this.mode === "plain");
-      this.win.style.setProperty("--mw-accent", cfg.accent || "#0a84ff");
+      this.win.style.setProperty("--mw-accent", cfg.accent || "#0071e3");
 
       const icon = $(".mw-app-icon", this.root);
       icon.className = `mw-app-icon ${cfg.iconClass || ""}`.trim();
@@ -1763,7 +2087,7 @@ Proyectos destacados:
       const role = $(".card-role", card)?.textContent.trim() || "";
       const details = EXPERIENCE_DETAILS[company] || { responsibilities: [], achievements: [], skills: [] };
 
-      this.content.style.setProperty("--exp-accent", getComputedStyle(card).getPropertyValue("--accent-color").trim() || "#0a84ff");
+      this.content.style.setProperty("--exp-accent", getComputedStyle(card).getPropertyValue("--accent-color").trim() || "#0071e3");
       $("#expModalCompany", this.modal).textContent = company;
       $("#expModalDuration", this.modal).textContent = card.dataset.duration || "";
       $("#expModalRole", this.modal).textContent = role;
@@ -1883,6 +2207,50 @@ Proyectos destacados:
       if (canHover) b.addEventListener("pointerenter", () => show(i));
     });
     hero.addEventListener("click", () => open(active));
+
+    /* Logos: apilados en el centro; se despliegan al entrar en pantalla y se
+       recogen de nuevo cuando están por salir (arriba o abajo). */
+    const list = $(".exp-logos", stage);
+    const items = list ? $$(":scope > li", list) : [];
+    if (list && items.length && "IntersectionObserver" in window) {
+      const tilts = [-7, 5, -4, 6, -5, 3, -6, 4];
+      const measure = () => {
+        const cx = list.clientWidth / 2;
+        const cy = list.clientHeight / 2;
+        const dist = items.map((li) => {
+          // offsetLeft/Top no dependen del transform: posición real en el grupo
+          const dx = cx - (li.offsetLeft + li.offsetWidth / 2);
+          const dy = cy - (li.offsetTop + li.offsetHeight / 2);
+          return { li, dx, dy, d: Math.hypot(dx, dy) };
+        });
+        // Orden de salida: primero los más cercanos al centro
+        const order = [...dist].sort((a, b) => a.d - b.d);
+        order.forEach((o, rank) => {
+          o.li.style.setProperty("--d", rank);
+          o.li.style.setProperty("--rd", order.length - 1 - rank);
+        });
+        dist.forEach((o, i) => {
+          o.li.style.setProperty("--dx", `${o.dx}px`);
+          o.li.style.setProperty("--dy", `${o.dy + i * 2}px`); // leve escalonado de pila
+          o.li.style.setProperty("--rot", `${tilts[i % tilts.length]}deg`);
+          o.li.style.zIndex = String(items.length - i);
+        });
+      };
+      list.style.position = "relative";
+      measure();
+      list.classList.add("is-stacked", "no-anim");
+      requestAnimationFrame(() => requestAnimationFrame(() => list.classList.remove("no-anim")));
+
+      const setOpen = (on) => list.classList.toggle("is-stacked", !on);
+      new IntersectionObserver(
+        ([entry]) => setOpen(entry.isIntersecting),
+        { rootMargin: "-14% 0px -14% 0px", threshold: 0.6 }
+      ).observe(list);
+      // Si alguien llega con el teclado, se despliegan para poder elegir
+      list.addEventListener("focusin", () => setOpen(true));
+      window.addEventListener("resize", measure);
+      if ("ResizeObserver" in window) new ResizeObserver(measure).observe(list);
+    }
 
     stage.style.setProperty("--exp-accent", accentOf(cards[0]));
     // Precarga discreta de las demás portadas para que el cambio sea inmediato
